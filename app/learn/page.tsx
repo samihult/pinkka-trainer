@@ -16,7 +16,7 @@ export default function LearnPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    loadData()
+    void loadData()
   }, [])
 
   const loadData = async () => {
