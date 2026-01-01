@@ -53,7 +53,7 @@ export default function ManagePage() {
   const [draggedGroupIndex, setDraggedGroupIndex] = useState<number | null>(null)
 
   useEffect(() => {
-    void loadData()
+    loadData()
   }, [user])
 
   const loadData = async () => {
@@ -70,7 +70,6 @@ export default function ManagePage() {
       }
       setStacks(stacksData)
     } catch (error) {
-      console.error(error)
       toast({
         title: "Error",
         description: "Failed to load data",

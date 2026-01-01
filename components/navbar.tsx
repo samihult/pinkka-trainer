@@ -28,6 +28,10 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             {user ? (
               <>
+                <Button asChild variant="ghost">
+                  <Link href="/pinkka">Pinkka</Link>
+                </Button>
+
                 {(user.role === "editor" || user.role === "admin") && (
                   <Button asChild variant="outline">
                     <Link href="/manage">Manage Content</Link>
@@ -65,6 +69,9 @@ export function Navbar() {
               </>
             ) : (
               <div className="flex gap-2">
+                <Button asChild variant="ghost">
+                  <Link href="/pinkka">Pinkka</Link>
+                </Button>
                 <Button asChild variant="outline">
                   <Link href="/auth/signin">Sign In</Link>
                 </Button>
