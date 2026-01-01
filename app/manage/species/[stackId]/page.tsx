@@ -40,7 +40,7 @@ export default function ManageSpeciesPage() {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
 
   useEffect(() => {
-    loadData()
+    void loadData()
   }, [stackId])
 
   const loadData = async () => {
@@ -49,6 +49,7 @@ export default function ManageSpeciesPage() {
       setStack(stackData)
       setSpecies(speciesData)
     } catch (error) {
+      console.error(error)
       toast({
         title: "Error",
         description: "Failed to load data",
@@ -74,7 +75,7 @@ export default function ManageSpeciesPage() {
         description: "Species created successfully",
       })
       setShowForm(false)
-      loadData()
+      void loadData()
     } catch (error) {
       throw error
     }
@@ -90,7 +91,7 @@ export default function ManageSpeciesPage() {
         description: "Species updated successfully",
       })
       setEditingSpecies(null)
-      loadData()
+      void loadData()
     } catch (error) {
       throw error
     }
