@@ -1,67 +1,75 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { ProtectedRoute } from "@/components/protected-route"
-import { Navbar } from "@/components/navbar"
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
-import { getAllUsers, updateUserRole } from "@/lib/firestore-helpers"
-import type { User, UserRole } from "@/lib/types"
-import { LoadingSpinner } from "@/components/loading-spinner"
-import { Shield, Mail, Calendar } from "lucide-react"
+import { useEffect, useState } from "react";
+import { ProtectedRoute } from "@/components/protected-route";
+import { Navbar } from "@/components/navbar";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { getAllUsers, updateUserRole } from "@/lib/firestore-helpers";
+import type { User, UserRole } from "@/lib/types";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import { Shield, Mail, Calendar } from "lucide-react";
 
 export default function AdminPage() {
-  const [users, setUsers] = useState<User[]>([])
-  const [loading, setLoading] = useState(true)
-  const { toast } = useToast()
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
-    loadUsers()
-  }, [])
+    loadUsers();
+  }, []);
 
   const loadUsers = async () => {
     try {
-      const allUsers = await getAllUsers()
-      setUsers(allUsers)
+      const allUsers = await getAllUsers();
+      setUsers(allUsers);
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to load users",
         variant: "destructive",
-      })
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleRoleChange = async (userId: string, newRole: UserRole) => {
     try {
-      await updateUserRole(userId, newRole)
-      setUsers(users.map((u) => (u.uid === userId ? { ...u, role: newRole } : u)))
+      await updateUserRole(userId, newRole);
+      setUsers(
+        users.map((u) => (u.uid === userId ? { ...u, role: newRole } : u)),
+      );
       toast({
         title: "Success",
         description: "User role updated successfully",
-      })
+      });
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to update user role",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const getRoleBadgeColor = (role: UserRole) => {
     switch (role) {
       case "admin":
-        return "bg-destructive text-destructive-foreground"
+        return "bg-destructive text-destructive-foreground";
       case "editor":
-        return "bg-primary text-primary-foreground"
+        return "bg-primary text-primary-foreground";
       case "viewer":
-        return "bg-secondary text-secondary-foreground"
+        return "bg-secondary text-secondary-foreground";
     }
-  }
+  };
 
   return (
     <ProtectedRoute requiredRole="admin">
@@ -71,7 +79,9 @@ export default function AdminPage() {
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">Admin Panel</h1>
-            <p className="text-muted-foreground">Manage user roles and permissions</p>
+            <p className="text-muted-foreground">
+              Manage user roles and permissions
+            </p>
           </div>
 
           {loading ? (
@@ -90,7 +100,9 @@ export default function AdminPage() {
 
                         <div className="flex items-center gap-2">
                           <Shield className="h-4 w-4 text-muted-foreground" />
-                          <span className={`px-2 py-1 rounded text-xs font-medium ${getRoleBadgeColor(user.role)}`}>
+                          <span
+                            className={`px-2 py-1 rounded text-xs font-medium ${getRoleBadgeColor(user.role)}`}
+                          >
                             {user.role.toUpperCase()}
                           </span>
                         </div>
@@ -106,7 +118,9 @@ export default function AdminPage() {
                       <div className="flex items-center gap-2">
                         <Select
                           value={user.role}
-                          onValueChange={(value) => handleRoleChange(user.uid, value as UserRole)}
+                          onValueChange={(value) =>
+                            handleRoleChange(user.uid, value as UserRole)
+                          }
                         >
                           <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Select role" />
@@ -125,7 +139,9 @@ export default function AdminPage() {
 
               {users.length === 0 && (
                 <Card>
-                  <CardContent className="py-12 text-center text-muted-foreground">No users found</CardContent>
+                  <CardContent className="py-12 text-center text-muted-foreground">
+                    No users found
+                  </CardContent>
                 </Card>
               )}
             </div>
@@ -133,5 +149,5 @@ export default function AdminPage() {
         </main>
       </div>
     </ProtectedRoute>
-  )
+  );
 }

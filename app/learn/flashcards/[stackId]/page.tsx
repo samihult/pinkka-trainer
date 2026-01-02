@@ -1,59 +1,62 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useParams, useRouter } from "next/navigation"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Flashcard } from "@/components/flashcard"
-import { LoadingSpinner } from "@/components/loading-spinner"
-import { getStack, getSpecies } from "@/lib/firestore-helpers"
-import type { Stack, Species } from "@/lib/types"
-import { ArrowLeft, Shuffle } from "lucide-react"
-import Link from "next/link"
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { Navbar } from "@/components/navbar";
+import { Button } from "@/components/ui/button";
+import { Flashcard } from "@/components/flashcard";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import { getStack, getSpecies } from "@/lib/firestore-helpers";
+import type { Stack, Species } from "@/lib/types";
+import { ArrowLeft, Shuffle } from "lucide-react";
+import Link from "next/link";
 
 export default function FlashcardsPage() {
-  const params = useParams()
-  const router = useRouter()
-  const stackId = params.stackId as string
+  const params = useParams();
+  const router = useRouter();
+  const stackId = params.stackId as string;
 
-  const [stack, setStack] = useState<Stack | null>(null)
-  const [species, setSpecies] = useState<Species[]>([])
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const [stack, setStack] = useState<Stack | null>(null);
+  const [species, setSpecies] = useState<Species[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadData()
-  }, [stackId])
+    loadData();
+  }, [stackId]);
 
   const loadData = async () => {
     try {
-      const [stackData, speciesData] = await Promise.all([getStack(stackId), getSpecies(stackId)])
-      setStack(stackData)
-      setSpecies(speciesData)
+      const [stackData, speciesData] = await Promise.all([
+        getStack(stackId),
+        getSpecies(stackId),
+      ]);
+      setStack(stackData);
+      setSpecies(speciesData);
     } catch (error) {
-      console.error("Failed to load data:", error)
+      console.error("Failed to load data:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleShuffle = () => {
-    const shuffled = [...species].sort(() => Math.random() - 0.5)
-    setSpecies(shuffled)
-    setCurrentIndex(0)
-  }
+    const shuffled = [...species].sort(() => Math.random() - 0.5);
+    setSpecies(shuffled);
+    setCurrentIndex(0);
+  };
 
   const handleNext = () => {
     if (currentIndex < species.length - 1) {
-      setCurrentIndex(currentIndex + 1)
+      setCurrentIndex(currentIndex + 1);
     }
-  }
+  };
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1)
+      setCurrentIndex(currentIndex - 1);
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -61,7 +64,7 @@ export default function FlashcardsPage() {
         <Navbar />
         <LoadingSpinner className="py-12" />
       </div>
-    )
+    );
   }
 
   if (!stack || species.length === 0) {
@@ -76,14 +79,16 @@ export default function FlashcardsPage() {
             </Link>
           </Button>
           <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">No species available in this stack</p>
+            <p className="text-muted-foreground mb-4">
+              No species available in this stack
+            </p>
             <Button asChild>
               <Link href="/learn">Browse Other Stacks</Link>
             </Button>
           </div>
         </main>
       </div>
-    )
+    );
   }
 
   return (
@@ -102,7 +107,9 @@ export default function FlashcardsPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">{stack.name}</h1>
-              {stack.description && <p className="text-muted-foreground">{stack.description}</p>}
+              {stack.description && (
+                <p className="text-muted-foreground">{stack.description}</p>
+              )}
             </div>
 
             <Button onClick={handleShuffle} variant="outline">
@@ -121,5 +128,5 @@ export default function FlashcardsPage() {
         />
       </main>
     </div>
-  )
+  );
 }

@@ -1,69 +1,79 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useAuth } from "@/lib/auth-context"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { useToast } from "@/hooks/use-toast"
-import Link from "next/link"
-import { BookOpen } from "lucide-react"
+import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
+import { BookOpen } from "lucide-react";
 
 export default function SignInPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [googleLoading, setGoogleLoading] = useState(false)
-  const { signIn, signInWithGoogle } = useAuth()
-  const router = useRouter()
-  const { toast } = useToast()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const { signIn, signInWithGoogle } = useAuth();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     try {
-      await signIn(email, password)
+      await signIn(email, password);
       toast({
         title: "Welcome back!",
         description: "You have successfully signed in.",
-      })
-      router.push("/learn")
+      });
+      router.push("/learn");
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to sign in. Please check your credentials.",
+        description:
+          error.message || "Failed to sign in. Please check your credentials.",
         variant: "destructive",
-      })
-      setLoading(false)
+      });
+      setLoading(false);
     }
-  }
+  };
 
   const handleGoogleSignIn = async () => {
-    setGoogleLoading(true)
+    setGoogleLoading(true);
     try {
-      await signInWithGoogle()
+      await signInWithGoogle();
       toast({
         title: "Welcome!",
         description: "You have successfully signed in with Google.",
-      })
-      router.push("/learn")
+      });
+      router.push("/learn");
     } catch (error: any) {
-      if (error.code !== "auth/popup-closed-by-user" && error.code !== "auth/cancelled-popup-request") {
+      if (
+        error.code !== "auth/popup-closed-by-user" &&
+        error.code !== "auth/cancelled-popup-request"
+      ) {
         toast({
           title: "Signing in...",
           description: "Redirecting to Google sign-in page.",
-        })
+        });
         // Don't reset loading state - redirect is in progress
       } else {
-        setGoogleLoading(false)
+        setGoogleLoading(false);
       }
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20 p-4">
@@ -73,7 +83,9 @@ export default function SignInPage() {
             <BookOpen className="h-12 w-12 text-primary" />
           </div>
           <CardTitle className="text-2xl">Sign In to Pinkka</CardTitle>
-          <CardDescription>Enter your credentials to access your account</CardDescription>
+          <CardDescription>
+            Enter your credentials to access your account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -110,7 +122,9 @@ export default function SignInPage() {
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with
+                </span>
               </div>
             </div>
 
@@ -150,7 +164,10 @@ export default function SignInPage() {
 
             <p className="text-sm text-center text-muted-foreground">
               {"Don't have an account? "}
-              <Link href="/auth/signup" className="text-primary hover:underline">
+              <Link
+                href="/auth/signup"
+                className="text-primary hover:underline"
+              >
                 Sign Up
               </Link>
             </p>
@@ -158,5 +175,5 @@ export default function SignInPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

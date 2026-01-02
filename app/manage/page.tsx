@@ -1,19 +1,31 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import { ProtectedRoute } from "@/components/protected-route"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { LoadingSpinner } from "@/components/loading-spinner"
-import { useToast } from "@/hooks/use-toast"
-import { useAuth } from "@/lib/auth-context"
+import { useEffect, useState } from "react";
+import { ProtectedRoute } from "@/components/protected-route";
+import { Navbar } from "@/components/navbar";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/lib/auth-context";
 import {
   getGroups,
   getStacks,
@@ -24,84 +36,96 @@ import {
   deleteGroup,
   deleteStack,
   reorderItems,
-} from "@/lib/firestore-helpers"
-import type { Group, Stack } from "@/lib/types"
-import { Plus, Pencil, Trash2, FolderOpen, BookOpen, GripVertical } from "lucide-react"
-import Link from "next/link"
+} from "@/lib/firestore-helpers";
+import type { Group, Stack } from "@/lib/types";
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  FolderOpen,
+  BookOpen,
+  GripVertical,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function ManagePage() {
-  const { user } = useAuth()
-  const { toast } = useToast()
+  const { user } = useAuth();
+  const { toast } = useToast();
 
-  const [groups, setGroups] = useState<Group[]>([])
-  const [stacks, setStacks] = useState<{ [key: string]: Stack[] }>({})
-  const [loading, setLoading] = useState(true)
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [stacks, setStacks] = useState<{ [key: string]: Stack[] }>({});
+  const [loading, setLoading] = useState(true);
 
   // Group dialog state
-  const [showGroupDialog, setShowGroupDialog] = useState(false)
-  const [editingGroup, setEditingGroup] = useState<Group | null>(null)
-  const [groupName, setGroupName] = useState("")
-  const [groupDescription, setGroupDescription] = useState("")
+  const [showGroupDialog, setShowGroupDialog] = useState(false);
+  const [editingGroup, setEditingGroup] = useState<Group | null>(null);
+  const [groupName, setGroupName] = useState("");
+  const [groupDescription, setGroupDescription] = useState("");
 
   // Stack dialog state
-  const [showStackDialog, setShowStackDialog] = useState(false)
-  const [editingStack, setEditingStack] = useState<Stack | null>(null)
-  const [selectedGroupId, setSelectedGroupId] = useState("")
-  const [stackName, setStackName] = useState("")
-  const [stackDescription, setStackDescription] = useState("")
+  const [showStackDialog, setShowStackDialog] = useState(false);
+  const [editingStack, setEditingStack] = useState<Stack | null>(null);
+  const [selectedGroupId, setSelectedGroupId] = useState("");
+  const [stackName, setStackName] = useState("");
+  const [stackDescription, setStackDescription] = useState("");
 
-  const [draggedGroupIndex, setDraggedGroupIndex] = useState<number | null>(null)
+  const [draggedGroupIndex, setDraggedGroupIndex] = useState<number | null>(
+    null,
+  );
 
   useEffect(() => {
-    loadData()
-  }, [user])
+    loadData();
+  }, [user]);
 
   const loadData = async () => {
-    if (!user) return
+    if (!user) return;
 
     try {
-      const groupsData = await getGroups(user.uid)
-      setGroups(groupsData)
+      const groupsData = await getGroups(user.uid);
+      setGroups(groupsData);
 
       // Load stacks for each group
-      const stacksData: { [key: string]: Stack[] } = {}
+      const stacksData: { [key: string]: Stack[] } = {};
       for (const group of groupsData) {
-        stacksData[group.id] = await getStacks(group.id, user.uid)
+        stacksData[group.id] = await getStacks(group.id, user.uid);
       }
-      setStacks(stacksData)
+      setStacks(stacksData);
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to load data",
         variant: "destructive",
-      })
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // Group handlers
   const handleGroupDialogOpen = (group?: Group) => {
     if (group) {
-      setEditingGroup(group)
-      setGroupName(group.name)
-      setGroupDescription(group.description || "")
+      setEditingGroup(group);
+      setGroupName(group.name);
+      setGroupDescription(group.description || "");
     } else {
-      setEditingGroup(null)
-      setGroupName("")
-      setGroupDescription("")
+      setEditingGroup(null);
+      setGroupName("");
+      setGroupDescription("");
     }
-    setShowGroupDialog(true)
-  }
+    setShowGroupDialog(true);
+  };
 
   const handleGroupSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!user) return
+    e.preventDefault();
+    if (!user) return;
 
     try {
       if (editingGroup) {
-        await updateGroup(editingGroup.id, { name: groupName, description: groupDescription })
-        toast({ title: "Success", description: "Group updated successfully" })
+        await updateGroup(editingGroup.id, {
+          name: groupName,
+          description: groupDescription,
+        });
+        toast({ title: "Success", description: "Group updated successfully" });
       } else {
         await createGroup({
           name: groupName,
@@ -109,61 +133,69 @@ export default function ManagePage() {
           stackIds: [],
           createdBy: user.uid,
           order: groups.length,
-        })
-        toast({ title: "Success", description: "Group created successfully" })
+        });
+        toast({ title: "Success", description: "Group created successfully" });
       }
-      setShowGroupDialog(false)
-      loadData()
+      setShowGroupDialog(false);
+      loadData();
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to save group",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleDeleteGroup = async (groupId: string) => {
-    if (!confirm("This will delete the group and all its stacks and species. Continue?")) return
+    if (
+      !confirm(
+        "This will delete the group and all its stacks and species. Continue?",
+      )
+    )
+      return;
 
     try {
-      await deleteGroup(groupId)
-      toast({ title: "Success", description: "Group deleted successfully" })
-      loadData()
+      await deleteGroup(groupId);
+      toast({ title: "Success", description: "Group deleted successfully" });
+      loadData();
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to delete group",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   // Stack handlers
   const handleStackDialogOpen = (groupId: string, stack?: Stack) => {
-    setSelectedGroupId(groupId)
+    setSelectedGroupId(groupId);
     if (stack) {
-      setEditingStack(stack)
-      setStackName(stack.name)
-      setStackDescription(stack.description || "")
+      setEditingStack(stack);
+      setStackName(stack.name);
+      setStackDescription(stack.description || "");
     } else {
-      setEditingStack(null)
-      setStackName("")
-      setStackDescription("")
+      setEditingStack(null);
+      setStackName("");
+      setStackDescription("");
     }
-    setShowStackDialog(true)
-  }
+    setShowStackDialog(true);
+  };
 
   const handleStackSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!user) return
+    e.preventDefault();
+    if (!user) return;
 
     try {
       if (editingStack) {
-        await updateStack(editingStack.id, { name: stackName, description: stackDescription })
-        toast({ title: "Success", description: "Stack updated successfully" })
+        await updateStack(editingStack.id, {
+          name: stackName,
+          description: stackDescription,
+        });
+        toast({ title: "Success", description: "Stack updated successfully" });
       } else {
-        const groupStacks = stacks[selectedGroupId] || []
+        const groupStacks = stacks[selectedGroupId] || [];
         await createStack({
           name: stackName,
           description: stackDescription,
@@ -171,62 +203,63 @@ export default function ManagePage() {
           speciesIds: [],
           createdBy: user.uid,
           order: groupStacks.length,
-        })
-        toast({ title: "Success", description: "Stack created successfully" })
+        });
+        toast({ title: "Success", description: "Stack created successfully" });
       }
-      setShowStackDialog(false)
-      loadData()
+      setShowStackDialog(false);
+      loadData();
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to save stack",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleDeleteStack = async (stackId: string) => {
-    if (!confirm("This will delete the stack and all its species. Continue?")) return
+    if (!confirm("This will delete the stack and all its species. Continue?"))
+      return;
 
     try {
-      await deleteStack(stackId)
-      toast({ title: "Success", description: "Stack deleted successfully" })
-      loadData()
+      await deleteStack(stackId);
+      toast({ title: "Success", description: "Stack deleted successfully" });
+      loadData();
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to delete stack",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   // Drag handlers for groups
   const handleGroupDragStart = (index: number) => {
-    setDraggedGroupIndex(index)
-  }
+    setDraggedGroupIndex(index);
+  };
 
   const handleGroupDragOver = (e: React.DragEvent, index: number) => {
-    e.preventDefault()
-    if (draggedGroupIndex === null || draggedGroupIndex === index) return
+    e.preventDefault();
+    if (draggedGroupIndex === null || draggedGroupIndex === index) return;
 
-    const newGroups = [...groups]
-    const draggedGroup = newGroups[draggedGroupIndex]
-    newGroups.splice(draggedGroupIndex, 1)
-    newGroups.splice(index, 0, draggedGroup)
+    const newGroups = [...groups];
+    const draggedGroup = newGroups[draggedGroupIndex];
+    newGroups.splice(draggedGroupIndex, 1);
+    newGroups.splice(index, 0, draggedGroup);
 
-    setDraggedGroupIndex(index)
-    setGroups(newGroups)
-  }
+    setDraggedGroupIndex(index);
+    setGroups(newGroups);
+  };
 
   const handleGroupDragEnd = async () => {
     if (draggedGroupIndex !== null) {
-      const reorderedItems = groups.map((g, i) => ({ id: g.id, order: i }))
-      await reorderItems("groups", reorderedItems)
-      toast({ title: "Success", description: "Groups reordered successfully" })
+      const reorderedItems = groups.map((g, i) => ({ id: g.id, order: i }));
+      await reorderItems("groups", reorderedItems);
+      toast({ title: "Success", description: "Groups reordered successfully" });
     }
-    setDraggedGroupIndex(null)
-  }
+    setDraggedGroupIndex(null);
+  };
 
   if (loading) {
     return (
@@ -236,7 +269,7 @@ export default function ManagePage() {
           <LoadingSpinner className="py-12" />
         </div>
       </ProtectedRoute>
-    )
+    );
   }
 
   return (
@@ -248,7 +281,9 @@ export default function ManagePage() {
           <div className="mb-8 flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">Manage Content</h1>
-              <p className="text-muted-foreground">Create and organize your species collections</p>
+              <p className="text-muted-foreground">
+                Create and organize your species collections
+              </p>
             </div>
 
             <Button onClick={() => handleGroupDialogOpen()}>
@@ -276,18 +311,34 @@ export default function ManagePage() {
                           <FolderOpen className="h-5 w-5" />
                           {group.name}
                         </CardTitle>
-                        {group.description && <CardDescription className="mt-1">{group.description}</CardDescription>}
+                        {group.description && (
+                          <CardDescription className="mt-1">
+                            {group.description}
+                          </CardDescription>
+                        )}
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button size="sm" variant="outline" onClick={() => handleStackDialogOpen(group.id)}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleStackDialogOpen(group.id)}
+                      >
                         <Plus className="mr-2 h-4 w-4" />
                         Add Stack
                       </Button>
-                      <Button size="sm" variant="outline" onClick={() => handleGroupDialogOpen(group)}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleGroupDialogOpen(group)}
+                      >
                         <Pencil className="h-4 w-4" />
                       </Button>
-                      <Button size="sm" variant="destructive" onClick={() => handleDeleteGroup(group.id)}>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleDeleteGroup(group.id)}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
@@ -297,24 +348,41 @@ export default function ManagePage() {
                 <CardContent>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {(stacks[group.id] || []).map((stack) => (
-                      <Card key={stack.id} className="hover:shadow-md transition-shadow">
+                      <Card
+                        key={stack.id}
+                        className="hover:shadow-md transition-shadow"
+                      >
                         <CardHeader className="pb-3">
                           <CardTitle className="text-base flex items-center gap-2">
                             <BookOpen className="h-4 w-4 text-primary" />
                             {stack.name}
                           </CardTitle>
                           {stack.description && (
-                            <CardDescription className="text-sm">{stack.description}</CardDescription>
+                            <CardDescription className="text-sm">
+                              {stack.description}
+                            </CardDescription>
                           )}
                         </CardHeader>
                         <CardContent className="flex flex-wrap gap-2">
                           <Button size="sm" variant="outline" asChild>
-                            <Link href={`/manage/species/${stack.id}`}>Manage Species</Link>
+                            <Link href={`/manage/species/${stack.id}`}>
+                              Manage Species
+                            </Link>
                           </Button>
-                          <Button size="sm" variant="outline" onClick={() => handleStackDialogOpen(group.id, stack)}>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() =>
+                              handleStackDialogOpen(group.id, stack)
+                            }
+                          >
                             <Pencil className="h-3 w-3" />
                           </Button>
-                          <Button size="sm" variant="destructive" onClick={() => handleDeleteStack(stack.id)}>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDeleteStack(stack.id)}
+                          >
                             <Trash2 className="h-3 w-3" />
                           </Button>
                         </CardContent>
@@ -324,7 +392,11 @@ export default function ManagePage() {
                     {(stacks[group.id] || []).length === 0 && (
                       <div className="col-span-full text-center py-8 text-muted-foreground">
                         <p className="mb-2">No stacks in this group yet</p>
-                        <Button size="sm" variant="outline" onClick={() => handleStackDialogOpen(group.id)}>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleStackDialogOpen(group.id)}
+                        >
                           <Plus className="mr-2 h-4 w-4" />
                           Add First Stack
                         </Button>
@@ -354,8 +426,12 @@ export default function ManagePage() {
         <Dialog open={showGroupDialog} onOpenChange={setShowGroupDialog}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{editingGroup ? "Edit Group" : "Create New Group"}</DialogTitle>
-              <DialogDescription>Groups help organize your stacks into categories</DialogDescription>
+              <DialogTitle>
+                {editingGroup ? "Edit Group" : "Create New Group"}
+              </DialogTitle>
+              <DialogDescription>
+                Groups help organize your stacks into categories
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleGroupSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -379,8 +455,14 @@ export default function ManagePage() {
                 />
               </div>
               <div className="flex gap-2">
-                <Button type="submit">{editingGroup ? "Update Group" : "Create Group"}</Button>
-                <Button type="button" variant="outline" onClick={() => setShowGroupDialog(false)}>
+                <Button type="submit">
+                  {editingGroup ? "Update Group" : "Create Group"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowGroupDialog(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -392,8 +474,12 @@ export default function ManagePage() {
         <Dialog open={showStackDialog} onOpenChange={setShowStackDialog}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{editingStack ? "Edit Stack" : "Create New Stack"}</DialogTitle>
-              <DialogDescription>Stacks (pinkka) contain related species for learning</DialogDescription>
+              <DialogTitle>
+                {editingStack ? "Edit Stack" : "Create New Stack"}
+              </DialogTitle>
+              <DialogDescription>
+                Stacks (pinkka) contain related species for learning
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleStackSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -417,8 +503,14 @@ export default function ManagePage() {
                 />
               </div>
               <div className="flex gap-2">
-                <Button type="submit">{editingStack ? "Update Stack" : "Create Stack"}</Button>
-                <Button type="button" variant="outline" onClick={() => setShowStackDialog(false)}>
+                <Button type="submit">
+                  {editingStack ? "Update Stack" : "Create Stack"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowStackDialog(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -427,5 +519,5 @@ export default function ManagePage() {
         </Dialog>
       </div>
     </ProtectedRoute>
-  )
+  );
 }

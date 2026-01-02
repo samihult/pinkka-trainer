@@ -1,37 +1,43 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useAuth } from "@/lib/auth-context"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { useToast } from "@/hooks/use-toast"
-import Link from "next/link"
-import { BookOpen } from "lucide-react"
+import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
+import { BookOpen } from "lucide-react";
 
 export default function SignUpPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const { signUp } = useAuth()
-  const router = useRouter()
-  const { toast } = useToast()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { signUp } = useAuth();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (password !== confirmPassword) {
       toast({
         title: "Error",
         description: "Passwords do not match",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
     if (password.length < 6) {
@@ -39,29 +45,29 @@ export default function SignUpPage() {
         title: "Error",
         description: "Password must be at least 6 characters",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      await signUp(email, password)
+      await signUp(email, password);
       toast({
         title: "Account created!",
         description: "Welcome to Pinkka. Start learning now!",
-      })
-      router.push("/learn")
+      });
+      router.push("/learn");
     } catch (error: any) {
       toast({
         title: "Error",
         description: error.message || "Failed to create account",
         variant: "destructive",
-      })
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20 p-4">
@@ -117,7 +123,10 @@ export default function SignUpPage() {
 
             <p className="text-sm text-center text-muted-foreground">
               Already have an account?{" "}
-              <Link href="/auth/signin" className="text-primary hover:underline">
+              <Link
+                href="/auth/signin"
+                className="text-primary hover:underline"
+              >
                 Sign In
               </Link>
             </p>
@@ -125,5 +134,5 @@ export default function SignUpPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

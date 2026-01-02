@@ -1,57 +1,61 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Upload, X, GripVertical } from "lucide-react"
-import type { SpeciesImage } from "@/lib/types"
-import Image from "next/image"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Upload, X, GripVertical } from "lucide-react";
+import type { SpeciesImage } from "@/lib/types";
+import Image from "next/image";
 
 interface ImageUploadProps {
-  images: SpeciesImage[]
-  onImagesChange: (images: SpeciesImage[]) => void
-  onFileUpload: (file: File) => void
+  images: SpeciesImage[];
+  onImagesChange: (images: SpeciesImage[]) => void;
+  onFileUpload: (file: File) => void;
 }
 
-export function ImageUpload({ images, onImagesChange, onFileUpload }: ImageUploadProps) {
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
+export function ImageUpload({
+  images,
+  onImagesChange,
+  onFileUpload,
+}: ImageUploadProps) {
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
+    const files = e.target.files;
     if (files) {
       Array.from(files).forEach((file) => {
-        onFileUpload(file)
-      })
+        onFileUpload(file);
+      });
     }
-  }
+  };
 
   const handleRemoveImage = (index: number) => {
-    const newImages = images.filter((_, i) => i !== index)
-    onImagesChange(newImages.map((img, i) => ({ ...img, order: i })))
-  }
+    const newImages = images.filter((_, i) => i !== index);
+    onImagesChange(newImages.map((img, i) => ({ ...img, order: i })));
+  };
 
   const handleDragStart = (index: number) => {
-    setDraggedIndex(index)
-  }
+    setDraggedIndex(index);
+  };
 
   const handleDragOver = (e: React.DragEvent, index: number) => {
-    e.preventDefault()
-    if (draggedIndex === null || draggedIndex === index) return
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
 
-    const newImages = [...images]
-    const draggedImage = newImages[draggedIndex]
-    newImages.splice(draggedIndex, 1)
-    newImages.splice(index, 0, draggedImage)
+    const newImages = [...images];
+    const draggedImage = newImages[draggedIndex];
+    newImages.splice(draggedIndex, 1);
+    newImages.splice(index, 0, draggedImage);
 
-    setDraggedIndex(index)
-    onImagesChange(newImages.map((img, i) => ({ ...img, order: i })))
-  }
+    setDraggedIndex(index);
+    onImagesChange(newImages.map((img, i) => ({ ...img, order: i })));
+  };
 
   const handleDragEnd = () => {
-    setDraggedIndex(null)
-  }
+    setDraggedIndex(null);
+  };
 
   return (
     <div className="space-y-4">
@@ -60,7 +64,13 @@ export function ImageUpload({ images, onImagesChange, onFileUpload }: ImageUploa
           <label className="cursor-pointer">
             <Upload className="mr-2 h-4 w-4" />
             Upload Images
-            <input type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={handleFileChange}
+            />
           </label>
         </Button>
         <p className="text-sm text-muted-foreground">Drag to reorder</p>
@@ -96,10 +106,12 @@ export function ImageUpload({ images, onImagesChange, onFileUpload }: ImageUploa
             >
               <X className="h-4 w-4" />
             </Button>
-            <div className="p-2 text-center text-xs text-muted-foreground">Image {index + 1}</div>
+            <div className="p-2 text-center text-xs text-muted-foreground">
+              Image {index + 1}
+            </div>
           </Card>
         ))}
       </div>
     </div>
-  )
+  );
 }

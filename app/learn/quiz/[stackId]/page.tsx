@@ -1,111 +1,116 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useParams, useRouter } from "next/navigation"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { LoadingSpinner } from "@/components/loading-spinner"
-import { getStack, getSpecies } from "@/lib/firestore-helpers"
-import type { Stack, Species } from "@/lib/types"
-import { ArrowLeft, CheckCircle2, XCircle, RotateCw } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { Navbar } from "@/components/navbar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import { getStack, getSpecies } from "@/lib/firestore-helpers";
+import type { Stack, Species } from "@/lib/types";
+import { ArrowLeft, CheckCircle2, XCircle, RotateCw } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface QuizQuestion {
-  species: Species
-  options: Species[]
-  correctAnswer: Species
+  species: Species;
+  options: Species[];
+  correctAnswer: Species;
 }
 
 export default function QuizPage() {
-  const params = useParams()
-  const router = useRouter()
-  const stackId = params.stackId as string
+  const params = useParams();
+  const router = useRouter();
+  const stackId = params.stackId as string;
 
-  const [stack, setStack] = useState<Stack | null>(null)
-  const [species, setSpecies] = useState<Species[]>([])
-  const [questions, setQuestions] = useState<QuizQuestion[]>([])
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [selectedAnswer, setSelectedAnswer] = useState<Species | null>(null)
-  const [answered, setAnswered] = useState(false)
-  const [correctAnswers, setCorrectAnswers] = useState(0)
-  const [quizComplete, setQuizComplete] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [stack, setStack] = useState<Stack | null>(null);
+  const [species, setSpecies] = useState<Species[]>([]);
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<Species | null>(null);
+  const [answered, setAnswered] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [quizComplete, setQuizComplete] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadData()
-  }, [stackId])
+    loadData();
+  }, [stackId]);
 
   const loadData = async () => {
     try {
-      const [stackData, speciesData] = await Promise.all([getStack(stackId), getSpecies(stackId)])
-      setStack(stackData)
-      setSpecies(speciesData)
+      const [stackData, speciesData] = await Promise.all([
+        getStack(stackId),
+        getSpecies(stackId),
+      ]);
+      setStack(stackData);
+      setSpecies(speciesData);
 
       if (speciesData.length >= 2) {
-        generateQuestions(speciesData)
+        generateQuestions(speciesData);
       }
     } catch (error) {
-      console.error("Failed to load data:", error)
+      console.error("Failed to load data:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const generateQuestions = (allSpecies: Species[]) => {
-    const shuffled = [...allSpecies].sort(() => Math.random() - 0.5)
-    const quizQuestions: QuizQuestion[] = []
+    const shuffled = [...allSpecies].sort(() => Math.random() - 0.5);
+    const quizQuestions: QuizQuestion[] = [];
 
     shuffled.forEach((correctSpecies) => {
       // Get 3 random wrong answers
       const wrongOptions = allSpecies
         .filter((s) => s.id !== correctSpecies.id)
         .sort(() => Math.random() - 0.5)
-        .slice(0, 3)
+        .slice(0, 3);
 
-      const options = [...wrongOptions, correctSpecies].sort(() => Math.random() - 0.5)
+      const options = [...wrongOptions, correctSpecies].sort(
+        () => Math.random() - 0.5,
+      );
 
       quizQuestions.push({
         species: correctSpecies,
         options,
         correctAnswer: correctSpecies,
-      })
-    })
+      });
+    });
 
-    setQuestions(quizQuestions)
-  }
+    setQuestions(quizQuestions);
+  };
 
   const handleAnswerSelect = (answer: Species) => {
-    if (answered) return
+    if (answered) return;
 
-    setSelectedAnswer(answer)
-    setAnswered(true)
+    setSelectedAnswer(answer);
+    setAnswered(true);
 
     if (answer.id === currentQuestion.correctAnswer.id) {
-      setCorrectAnswers(correctAnswers + 1)
+      setCorrectAnswers(correctAnswers + 1);
     }
-  }
+  };
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1)
-      setSelectedAnswer(null)
-      setAnswered(false)
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedAnswer(null);
+      setAnswered(false);
     } else {
-      setQuizComplete(true)
+      setQuizComplete(true);
     }
-  }
+  };
 
   const handleRestart = () => {
-    generateQuestions(species)
-    setCurrentQuestionIndex(0)
-    setSelectedAnswer(null)
-    setAnswered(false)
-    setCorrectAnswers(0)
-    setQuizComplete(false)
-  }
+    generateQuestions(species);
+    setCurrentQuestionIndex(0);
+    setSelectedAnswer(null);
+    setAnswered(false);
+    setCorrectAnswers(0);
+    setQuizComplete(false);
+  };
 
   if (loading) {
     return (
@@ -113,7 +118,7 @@ export default function QuizPage() {
         <Navbar />
         <LoadingSpinner className="py-12" />
       </div>
-    )
+    );
   }
 
   if (!stack || species.length < 2) {
@@ -128,21 +133,23 @@ export default function QuizPage() {
             </Link>
           </Button>
           <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">This stack needs at least 2 species to create a quiz</p>
+            <p className="text-muted-foreground mb-4">
+              This stack needs at least 2 species to create a quiz
+            </p>
             <Button asChild>
               <Link href="/learn">Browse Other Stacks</Link>
             </Button>
           </div>
         </main>
       </div>
-    )
+    );
   }
 
-  const currentQuestion = questions[currentQuestionIndex]
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100
+  const currentQuestion = questions[currentQuestionIndex];
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   if (quizComplete) {
-    const percentage = Math.round((correctAnswers / questions.length) * 100)
+    const percentage = Math.round((correctAnswers / questions.length) * 100);
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
@@ -157,11 +164,15 @@ export default function QuizPage() {
 
           <Card className="max-w-2xl mx-auto">
             <CardHeader>
-              <CardTitle className="text-center text-3xl">Quiz Complete!</CardTitle>
+              <CardTitle className="text-center text-3xl">
+                Quiz Complete!
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="text-center">
-                <div className="text-6xl font-bold text-primary mb-2">{percentage}%</div>
+                <div className="text-6xl font-bold text-primary mb-2">
+                  {percentage}%
+                </div>
                 <p className="text-xl text-muted-foreground">
                   You got {correctAnswers} out of {questions.length} correct
                 </p>
@@ -172,8 +183,15 @@ export default function QuizPage() {
                   <RotateCw className="mr-2 h-4 w-4" />
                   Take Quiz Again
                 </Button>
-                <Button asChild variant="outline" className="w-full bg-transparent" size="lg">
-                  <Link href={`/learn/flashcards/${stackId}`}>Study Flashcards</Link>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full bg-transparent"
+                  size="lg"
+                >
+                  <Link href={`/learn/flashcards/${stackId}`}>
+                    Study Flashcards
+                  </Link>
                 </Button>
                 <Button asChild variant="ghost" className="w-full">
                   <Link href="/learn">Back to Learning</Link>
@@ -183,7 +201,7 @@ export default function QuizPage() {
           </Card>
         </main>
       </div>
-    )
+    );
   }
 
   return (
@@ -214,12 +232,18 @@ export default function QuizPage() {
             <>
               <Card className="mb-6">
                 <CardContent className="pt-6">
-                  <h2 className="text-xl font-semibold mb-4 text-center">What species is shown in this image?</h2>
+                  <h2 className="text-xl font-semibold mb-4 text-center">
+                    What species is shown in this image?
+                  </h2>
 
-                  {currentQuestion.species.images && currentQuestion.species.images.length > 0 ? (
+                  {currentQuestion.species.images &&
+                  currentQuestion.species.images.length > 0 ? (
                     <div className="relative h-80 rounded-lg overflow-hidden mb-4">
                       <Image
-                        src={currentQuestion.species.images[0].url || "/placeholder.svg"}
+                        src={
+                          currentQuestion.species.images[0].url ||
+                          "/placeholder.svg"
+                        }
                         alt="Species to identify"
                         fill
                         className="object-cover"
@@ -228,7 +252,9 @@ export default function QuizPage() {
                     </div>
                   ) : (
                     <div className="h-80 bg-muted rounded-lg flex items-center justify-center mb-4">
-                      <p className="text-muted-foreground">No image available</p>
+                      <p className="text-muted-foreground">
+                        No image available
+                      </p>
                     </div>
                   )}
                 </CardContent>
@@ -236,16 +262,18 @@ export default function QuizPage() {
 
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
                 {currentQuestion.options.map((option) => {
-                  const isSelected = selectedAnswer?.id === option.id
-                  const isCorrect = option.id === currentQuestion.correctAnswer.id
-                  const showResult = answered
+                  const isSelected = selectedAnswer?.id === option.id;
+                  const isCorrect =
+                    option.id === currentQuestion.correctAnswer.id;
+                  const showResult = answered;
 
-                  let buttonVariant: "outline" | "default" | "destructive" = "outline"
+                  let buttonVariant: "outline" | "default" | "destructive" =
+                    "outline";
                   if (showResult) {
                     if (isCorrect) {
-                      buttonVariant = "default"
+                      buttonVariant = "default";
                     } else if (isSelected && !isCorrect) {
-                      buttonVariant = "destructive"
+                      buttonVariant = "destructive";
                     }
                   }
 
@@ -261,21 +289,33 @@ export default function QuizPage() {
                     >
                       <div className="flex items-center gap-3 w-full">
                         <div className="flex-1">
-                          <p className="font-semibold">{option.scientificName}</p>
-                          {option.finnishName && <p className="text-sm opacity-80">{option.finnishName}</p>}
+                          <p className="font-semibold">
+                            {option.scientificName}
+                          </p>
+                          {option.finnishName && (
+                            <p className="text-sm opacity-80">
+                              {option.finnishName}
+                            </p>
+                          )}
                         </div>
-                        {showResult && isCorrect && <CheckCircle2 className="h-5 w-5 flex-shrink-0" />}
-                        {showResult && isSelected && !isCorrect && <XCircle className="h-5 w-5 flex-shrink-0" />}
+                        {showResult && isCorrect && (
+                          <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+                        )}
+                        {showResult && isSelected && !isCorrect && (
+                          <XCircle className="h-5 w-5 flex-shrink-0" />
+                        )}
                       </div>
                     </Button>
-                  )
+                  );
                 })}
               </div>
 
               {answered && (
                 <div className="text-center">
                   <Button onClick={handleNext} size="lg">
-                    {currentQuestionIndex < questions.length - 1 ? "Next Question" : "Finish Quiz"}
+                    {currentQuestionIndex < questions.length - 1
+                      ? "Next Question"
+                      : "Finish Quiz"}
                   </Button>
                 </div>
               )}
@@ -284,5 +324,5 @@ export default function QuizPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

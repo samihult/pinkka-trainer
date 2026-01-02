@@ -1,74 +1,85 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ImageUpload } from "./image-upload"
-import type { Species, SpeciesImage } from "@/lib/types"
-import { uploadSpeciesImage } from "@/lib/firestore-helpers"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ImageUpload } from "./image-upload";
+import type { Species, SpeciesImage } from "@/lib/types";
+import { uploadSpeciesImage } from "@/lib/firestore-helpers";
+import { useToast } from "@/hooks/use-toast";
 
 interface SpeciesFormProps {
-  species?: Species
-  stackId: string
-  onSubmit: (data: Partial<Species>) => Promise<void>
-  onCancel: () => void
+  species?: Species;
+  stackId: string;
+  onSubmit: (data: Partial<Species>) => Promise<void>;
+  onCancel: () => void;
 }
 
-export function SpeciesForm({ species, stackId, onSubmit, onCancel }: SpeciesFormProps) {
-  const [scientificName, setScientificName] = useState(species?.scientificName || "")
-  const [finnishName, setFinnishName] = useState(species?.finnishName || "")
-  const [englishName, setEnglishName] = useState(species?.englishName || "")
-  const [description, setDescription] = useState(species?.description || "")
-  const [images, setImages] = useState<SpeciesImage[]>(species?.images || [])
-  const [uploading, setUploading] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const { toast } = useToast()
+export function SpeciesForm({
+  species,
+  stackId,
+  onSubmit,
+  onCancel,
+}: SpeciesFormProps) {
+  const [scientificName, setScientificName] = useState(
+    species?.scientificName || "",
+  );
+  const [finnishName, setFinnishName] = useState(species?.finnishName || "");
+  const [englishName, setEnglishName] = useState(species?.englishName || "");
+  const [description, setDescription] = useState(species?.description || "");
+  const [images, setImages] = useState<SpeciesImage[]>(species?.images || []);
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
 
   const handleFileUpload = async (file: File) => {
-    setUploading(true)
+    setUploading(true);
     try {
       // For new species, we'll upload after creation
       // For existing species, upload immediately
       if (species?.id) {
-        const newImage = await uploadSpeciesImage(species.id, file, images.length)
-        setImages([...images, newImage])
+        const newImage = await uploadSpeciesImage(
+          species.id,
+          file,
+          images.length,
+        );
+        setImages([...images, newImage]);
         toast({
           title: "Image uploaded",
           description: "Image has been uploaded successfully",
-        })
+        });
       } else {
         // Store file temporarily for upload after species creation
-        const reader = new FileReader()
+        const reader = new FileReader();
         reader.onload = (e) => {
           const tempImage: SpeciesImage = {
             id: `temp-${Date.now()}`,
             url: e.target?.result as string,
             order: images.length,
-          }
-          setImages([...images, tempImage])
-        }
-        reader.readAsDataURL(file)
+          };
+          setImages([...images, tempImage]);
+        };
+        reader.readAsDataURL(file);
       }
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to upload image",
         variant: "destructive",
-      })
+      });
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSaving(true)
+    e.preventDefault();
+    setSaving(true);
 
     try {
       await onSubmit({
@@ -78,17 +89,17 @@ export function SpeciesForm({ species, stackId, onSubmit, onCancel }: SpeciesFor
         description,
         images,
         stackId,
-      })
+      });
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to save species",
         variant: "destructive",
-      })
+      });
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
-  }
+  };
 
   return (
     <Card>
@@ -143,12 +154,20 @@ export function SpeciesForm({ species, stackId, onSubmit, onCancel }: SpeciesFor
 
           <div className="space-y-2">
             <Label>Images</Label>
-            <ImageUpload images={images} onImagesChange={setImages} onFileUpload={handleFileUpload} />
+            <ImageUpload
+              images={images}
+              onImagesChange={setImages}
+              onFileUpload={handleFileUpload}
+            />
           </div>
 
           <div className="flex gap-2">
             <Button type="submit" disabled={saving || uploading}>
-              {saving ? "Saving..." : species ? "Update Species" : "Create Species"}
+              {saving
+                ? "Saving..."
+                : species
+                  ? "Update Species"
+                  : "Create Species"}
             </Button>
             <Button type="button" variant="outline" onClick={onCancel}>
               Cancel
@@ -157,5 +176,5 @@ export function SpeciesForm({ species, stackId, onSubmit, onCancel }: SpeciesFor
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }

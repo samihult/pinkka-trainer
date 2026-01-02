@@ -5,12 +5,14 @@ A comprehensive biology education platform for learning animal, plant, algae, mi
 ## Features
 
 ### For Students (Viewer Role)
+
 - Browse species organized in stacks and groups
 - Study with interactive flashcards featuring multiple images
 - Test knowledge with randomized quizzes
 - Track learning progress
 
 ### For Educators (Editor Role)
+
 - Create and organize custom species collections
 - Upload multiple images per species with reordering
 - Organize species into stacks (pinkka in Finnish)
@@ -18,6 +20,7 @@ A comprehensive biology education platform for learning animal, plant, algae, mi
 - Full content management with drag-and-drop reordering
 
 ### For Administrators (Admin Role)
+
 - Manage user roles and permissions
 - Grant editor or admin access to users
 - Oversee all content in the system
@@ -94,24 +97,28 @@ NEXT_PUBLIC_FIREBASE_APP_ID=
 ## Usage
 
 ### Learning Mode
+
 - Navigate to **Learn** page
 - Choose a group and stack
 - Select **Study Flashcards** or **Take Quiz**
 - Use arrow keys or buttons to navigate
 
 ### Content Management (Editors)
+
 - Navigate to **Manage** page
 - Create groups, stacks, and species
 - Upload images and organize content
 - Drag and drop to reorder
 
 ### Role Management (Admins)
+
 - Navigate to **Admin** page
 - View all users and change their roles
 
 ## Troubleshooting
 
 See `FIRESTORE_SETUP.md` for detailed troubleshooting:
+
 - Missing permissions → Apply security rules
 - Index required → Click the error link to create index
 - Client offline → Check environment variables

@@ -24,6 +24,7 @@ Your application is experiencing "Missing or insufficient permissions" errors be
 Firestore requires composite indexes for queries that filter and sort on multiple fields.
 
 **Easiest Method - Use Error Links:**
+
 1. When you see an error like "The query requires an index", it includes a direct link
 2. Click the link in the error message
 3. Firebase Console will open with the index pre-configured
@@ -32,6 +33,7 @@ Firestore requires composite indexes for queries that filter and sort on multipl
 6. Refresh your application
 
 **Required Indexes:**
+
 - `stacks` collection: `groupId` + `order` (for /learn page)
 - `species` collection: `stackId` + `order` (for flashcards/quizzes)
 - `groups` collection: `createdBy` + `order` (for editor management)
@@ -42,6 +44,7 @@ See `FIRESTORE_INDEXES.txt` for detailed index specifications if you prefer to c
 ### Step 4: Verify Setup
 
 Once the rules are published, the app should work correctly:
+
 - Users can sign in with Google or email/password
 - User profiles are automatically created
 - Editors can create and manage species, stacks, and groups
@@ -50,6 +53,7 @@ Once the rules are published, the app should work correctly:
 ### Security Rules Summary
 
 The rules ensure:
+
 - ✅ Users can read and update their own profile
 - ✅ Authenticated users can read all content
 - ✅ Only editors and admins can create content
@@ -59,19 +63,23 @@ The rules ensure:
 ### Troubleshooting
 
 **"Missing or insufficient permissions" Error:**
+
 - Apply security rules from `scripts/firestore.rules`
 - Wait 30-60 seconds for rules to propagate
 
 **"The query requires an index" Error:**
+
 - Click the link in the error message to create the index automatically
 - Or create indexes manually following `FIRESTORE_INDEXES.txt`
 
 **"Client is offline" Error:**
+
 - Verify Firebase environment variables are set correctly
 - Ensure Firestore database has been created
 - Check internet connection
 
 If you still see errors after applying the rules:
+
 1. Wait 30-60 seconds for rules to propagate
 2. Refresh your application
 3. Check the Firebase Console > Firestore Database > Rules tab to ensure rules were published successfully
