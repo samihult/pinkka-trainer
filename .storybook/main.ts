@@ -24,6 +24,11 @@ const config: StorybookConfig = {
       ...(config.resolve.alias ?? {}),
       "@": path.resolve(__dirname, "../"),
     };
+    config.define = {
+      ...(config.define ?? {}),
+      "process.env.STORYBOOK": JSON.stringify("true"),
+      "process.env.FIRESTORE_EMULATOR_HOST": JSON.stringify("127.0.0.1:8080"),
+    };
     return config;
   },
 };

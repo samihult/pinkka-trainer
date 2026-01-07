@@ -1,7 +1,11 @@
 import type { Preview } from "@storybook/nextjs-vite";
+import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/toaster";
 import "../app/globals.css";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const preview: Preview = {
   parameters: {
@@ -26,8 +30,12 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <AuthProvider>
-        <Story />
-        <Toaster />
+        <div
+          className={`${geist.variable} ${geistMono.variable} min-h-screen bg-background text-foreground font-sans antialiased`}
+        >
+          <Story />
+          <Toaster />
+        </div>
       </AuthProvider>
     ),
   ],
