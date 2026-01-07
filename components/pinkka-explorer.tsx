@@ -1,5 +1,7 @@
 "use client";
 
+import type React from "react";
+
 import { useEffect, useMemo, useState } from "react";
 import {
   fetchPinkkaGroups,
@@ -51,13 +53,18 @@ export function PinkkaExplorer({
   );
 
   const [groups, setGroups] = useState<PinkkaGroup[]>([]);
-  const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
-  const [selectedSubStackId, setSelectedSubStackId] = useState<number | null>(
-    null,
-  );
-  const [selectedSpeciesId, setSelectedSpeciesId] = useState<number | null>(
-    null,
-  );
+  const [selectedGroupIds, setSelectedGroupIds] = useState<number[]>([]);
+  const [selectedSubStackIds, setSelectedSubStackIds] = useState<number[]>([]);
+  const [selectedSpeciesIds, setSelectedSpeciesIds] = useState<number[]>([]);
+  const [activeGroupId, setActiveGroupId] = useState<number | null>(null);
+  const [activeSubStackId, setActiveSubStackId] = useState<number | null>(null);
+  const [activeSpeciesId, setActiveSpeciesId] = useState<number | null>(null);
+  const [activeColumn, setActiveColumn] = useState<
+    "groups" | "stacks" | "species" | null
+  >(null);
+  const [groupAnchorId, setGroupAnchorId] = useState<number | null>(null);
+  const [subStackAnchorId, setSubStackAnchorId] = useState<number | null>(null);
+  const [speciesAnchorId, setSpeciesAnchorId] = useState<number | null>(null);
   const [subStacksByGroup, setSubStacksByGroup] = useState<
     Record<number, PinkkaSubStack[]>
   >({});
@@ -101,12 +108,14 @@ export function PinkkaExplorer({
   }, [pinkkaApi]);
 
   useEffect(() => {
-    if (selectedGroupId === null) return;
+    if (activeGroupId === null) return;
 
-    setSelectedSubStackId(null);
-    setSelectedSpeciesId(null);
+    setSelectedSubStackIds([]);
+    setSelectedSpeciesIds([]);
+    setActiveSubStackId(null);
+    setActiveSpeciesId(null);
 
-    if (subStacksByGroup[selectedGroupId]) return;
+    if (subStacksByGroup[activeGroupId]) return;
 
     let cancelled = false;
     const loadGroup = async () => {
@@ -114,7 +123,7 @@ export function PinkkaExplorer({
       setError(null);
       try {
         const groupDetail =
-          await pinkkaApi.fetchGroupWithStacks(selectedGroupId);
+          await pinkkaApi.fetchGroupWithStacks(activeGroupId);
         const subStacks =
           groupDetail?.subPinkkas
             ?.slice()
@@ -122,7 +131,7 @@ export function PinkkaExplorer({
         if (!cancelled) {
           setSubStacksByGroup((prev) => ({
             ...prev,
-            [selectedGroupId]: subStacks,
+            [activeGroupId]: subStacks,
           }));
         }
       } catch (err) {
@@ -140,26 +149,27 @@ export function PinkkaExplorer({
     return () => {
       cancelled = true;
     };
-  }, [pinkkaApi, selectedGroupId, subStacksByGroup]);
+  }, [pinkkaApi, activeGroupId, subStacksByGroup]);
 
   useEffect(() => {
-    if (selectedSubStackId === null) return;
+    if (activeSubStackId === null) return;
 
-    setSelectedSpeciesId(null);
+    setSelectedSpeciesIds([]);
+    setActiveSpeciesId(null);
 
-    if (speciesBySubStack[selectedSubStackId]) return;
+    if (speciesBySubStack[activeSubStackId]) return;
 
     let cancelled = false;
     const loadSubStack = async () => {
       setLoadingSpecies(true);
       setError(null);
       try {
-        const subStack = await pinkkaApi.fetchSubStack(selectedSubStackId);
+        const subStack = await pinkkaApi.fetchSubStack(activeSubStackId);
         const speciesCards = subStack?.speciesCards ?? [];
         if (!cancelled) {
           setSpeciesBySubStack((prev) => ({
             ...prev,
-            [selectedSubStackId]: speciesCards,
+            [activeSubStackId]: speciesCards,
           }));
         }
       } catch (err) {
@@ -177,22 +187,22 @@ export function PinkkaExplorer({
     return () => {
       cancelled = true;
     };
-  }, [pinkkaApi, selectedSubStackId, speciesBySubStack]);
+  }, [pinkkaApi, activeSubStackId, speciesBySubStack]);
 
   useEffect(() => {
-    if (selectedSpeciesId === null) return;
-    if (speciesDetails[selectedSpeciesId]) return;
+    if (activeSpeciesId === null) return;
+    if (speciesDetails[activeSpeciesId]) return;
 
     let cancelled = false;
     const loadSpeciesDetail = async () => {
       setLoadingDetails(true);
       setError(null);
       try {
-        const detail = await pinkkaApi.fetchSpecies(selectedSpeciesId);
+        const detail = await pinkkaApi.fetchSpecies(activeSpeciesId);
         if (!cancelled) {
           setSpeciesDetails((prev) => ({
             ...prev,
-            [selectedSpeciesId]: detail,
+            [activeSpeciesId]: detail,
           }));
         }
       } catch (err) {
@@ -210,23 +220,158 @@ export function PinkkaExplorer({
     return () => {
       cancelled = true;
     };
-  }, [pinkkaApi, selectedSpeciesId, speciesDetails]);
+  }, [pinkkaApi, activeSpeciesId, speciesDetails]);
 
-  const selectedGroup = groups.find((group) => group.id === selectedGroupId);
-  const subStacks = selectedGroupId
-    ? (subStacksByGroup[selectedGroupId] ?? [])
+  const selectedGroup = groups.find((group) => group.id === activeGroupId);
+  const subStacks = activeGroupId
+    ? (subStacksByGroup[activeGroupId] ?? [])
     : [];
   const selectedSubStack = subStacks.find(
-    (stack) => stack.id === selectedSubStackId,
+    (stack) => stack.id === activeSubStackId,
   );
-  const speciesCards = selectedSubStackId
-    ? (speciesBySubStack[selectedSubStackId] ?? [])
+  const speciesCards = activeSubStackId
+    ? (speciesBySubStack[activeSubStackId] ?? [])
     : [];
   const selectedSpecies = speciesCards.find(
-    (species) => species.id === selectedSpeciesId,
+    (species) => species.id === activeSpeciesId,
   );
   const selectedSpeciesDetail =
-    selectedSpeciesId !== null ? speciesDetails[selectedSpeciesId] : null;
+    activeSpeciesId !== null ? speciesDetails[activeSpeciesId] : null;
+
+  const groupIds = groups.map((group) => group.id);
+  const subStackIds = subStacks.map((stack) => stack.id);
+  const speciesIds = speciesCards.map((species) => species.id);
+
+  const canShowStacks = selectedGroupIds.length === 1 && activeGroupId !== null;
+  const canShowSpecies =
+    selectedSubStackIds.length === 1 && activeSubStackId !== null;
+  const canShowDetails =
+    selectedSpeciesIds.length === 1 && activeSpeciesId !== null;
+
+  const getSelectionClass = (
+    isSelected: boolean,
+    column: "groups" | "stacks" | "species",
+  ) => {
+    if (!isSelected) {
+      return "hover:bg-muted/60";
+    }
+    if (activeColumn === column) {
+      return "bg-primary/15 text-primary";
+    }
+    return "bg-muted/60 text-foreground";
+  };
+
+  const getNextSelection = (
+    ids: number[],
+    selectedIds: number[],
+    targetId: number,
+    anchorId: number | null,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    const isMeta = event.metaKey || event.ctrlKey;
+    const isShift = event.shiftKey;
+    let nextSelectedIds: number[] = [];
+    let nextAnchorId = anchorId;
+    let nextActiveId: number | null = targetId;
+
+    if (isShift && anchorId !== null) {
+      const startIndex = ids.indexOf(anchorId);
+      const endIndex = ids.indexOf(targetId);
+      if (startIndex !== -1 && endIndex !== -1) {
+        const [start, end] =
+          startIndex <= endIndex
+            ? [startIndex, endIndex]
+            : [endIndex, startIndex];
+        nextSelectedIds = ids.slice(start, end + 1);
+      } else {
+        nextSelectedIds = [targetId];
+        nextAnchorId = targetId;
+      }
+    } else if (isMeta) {
+      if (selectedIds.includes(targetId)) {
+        nextSelectedIds = selectedIds.filter((id) => id !== targetId);
+      } else {
+        nextSelectedIds = [...selectedIds, targetId];
+      }
+      nextAnchorId = targetId;
+    } else {
+      nextSelectedIds = [targetId];
+      nextAnchorId = targetId;
+    }
+
+    if (nextSelectedIds.length === 0) {
+      nextActiveId = null;
+    } else if (!nextSelectedIds.includes(targetId)) {
+      nextActiveId = nextSelectedIds[nextSelectedIds.length - 1] ?? null;
+    }
+
+    return { nextSelectedIds, nextAnchorId, nextActiveId };
+  };
+
+  const handleGroupSelect = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    groupId: number,
+  ) => {
+    const { nextSelectedIds, nextAnchorId, nextActiveId } = getNextSelection(
+      groupIds,
+      selectedGroupIds,
+      groupId,
+      groupAnchorId,
+      event,
+    );
+    setSelectedGroupIds(nextSelectedIds);
+    setGroupAnchorId(nextAnchorId);
+    setActiveGroupId(nextActiveId);
+    setActiveColumn("groups");
+    setSelectedSubStackIds([]);
+    setSelectedSpeciesIds([]);
+    setActiveSubStackId(null);
+    setActiveSpeciesId(null);
+  };
+
+  const handleSubStackSelect = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    stackId: number,
+  ) => {
+    const { nextSelectedIds, nextAnchorId, nextActiveId } = getNextSelection(
+      subStackIds,
+      selectedSubStackIds,
+      stackId,
+      subStackAnchorId,
+      event,
+    );
+    setSelectedSubStackIds(nextSelectedIds);
+    setSubStackAnchorId(nextAnchorId);
+    setActiveSubStackId(nextActiveId);
+    setActiveColumn("stacks");
+    setSelectedSpeciesIds([]);
+    setActiveSpeciesId(null);
+  };
+
+  const handleSpeciesSelect = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    speciesId: number,
+  ) => {
+    const { nextSelectedIds, nextAnchorId, nextActiveId } = getNextSelection(
+      speciesIds,
+      selectedSpeciesIds,
+      speciesId,
+      speciesAnchorId,
+      event,
+    );
+    setSelectedSpeciesIds(nextSelectedIds);
+    setSpeciesAnchorId(nextAnchorId);
+    setActiveSpeciesId(nextActiveId);
+    setActiveColumn("species");
+    if (nextActiveId !== null) {
+      const selected = speciesCards.find(
+        (species) => species.id === nextActiveId,
+      );
+      if (selected) {
+        onSelectSpecies?.(selected);
+      }
+    }
+  };
 
   return (
     <div className="relative flex h-full min-h-0 overflow-x-auto border border-border bg-background">
@@ -247,17 +392,16 @@ export function PinkkaExplorer({
             <ul className="space-y-1 px-2 pb-4">
               {groups.map((group) => {
                 const label = getLocalizedText(group.name, preferredLang);
-                const isSelected = group.id === selectedGroupId;
+                const isSelected = selectedGroupIds.includes(group.id);
                 return (
                   <li key={group.id}>
                     <button
                       type="button"
-                      onClick={() => setSelectedGroupId(group.id)}
-                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
-                        isSelected
-                          ? "bg-primary/15 text-primary"
-                          : "hover:bg-muted/60"
-                      }`}
+                      onClick={(event) => handleGroupSelect(event, group.id)}
+                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${getSelectionClass(
+                        isSelected,
+                        "groups",
+                      )}`}
                     >
                       <MiddleEllipsisText
                         className="font-medium"
@@ -282,23 +426,33 @@ export function PinkkaExplorer({
           Stacks
         </div>
         <div className="flex-1 overflow-y-auto">
-          {loadingSubStacks ? (
+          {!selectedGroupIds.length && (
+            <div className="px-3 py-2 text-sm text-muted-foreground">
+              Select a group to view stacks.
+            </div>
+          )}
+          {selectedGroupIds.length > 1 && (
+            <div className="px-3 py-2 text-sm text-muted-foreground">
+              Multiple groups selected. Choose a single group to view stacks.
+            </div>
+          )}
+          {canShowStacks && loadingSubStacks ? (
             <LoadingSpinner className="py-8" />
-          ) : (
+          ) : null}
+          {canShowStacks && !loadingSubStacks ? (
             <ul className="space-y-1 px-2 pb-4">
               {subStacks.map((stack) => {
                 const label = getLocalizedText(stack.name, preferredLang);
-                const isSelected = stack.id === selectedSubStackId;
+                const isSelected = selectedSubStackIds.includes(stack.id);
                 return (
                   <li key={stack.id}>
                     <button
                       type="button"
-                      onClick={() => setSelectedSubStackId(stack.id)}
-                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
-                        isSelected
-                          ? "bg-primary/15 text-primary"
-                          : "hover:bg-muted/60"
-                      }`}
+                      onClick={(event) => handleSubStackSelect(event, stack.id)}
+                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${getSelectionClass(
+                        isSelected,
+                        "stacks",
+                      )}`}
                     >
                       <MiddleEllipsisText
                         className="font-medium"
@@ -316,13 +470,8 @@ export function PinkkaExplorer({
                   No stacks available.
                 </li>
               )}
-              {!selectedGroup && (
-                <li className="px-3 py-2 text-sm text-muted-foreground">
-                  Select a group to view stacks.
-                </li>
-              )}
             </ul>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -331,12 +480,23 @@ export function PinkkaExplorer({
           Species
         </div>
         <div className="flex-1 overflow-y-auto">
-          {loadingSpecies ? (
+          {!selectedSubStackIds.length && (
+            <div className="px-3 py-2 text-sm text-muted-foreground">
+              Select a stack to view species.
+            </div>
+          )}
+          {selectedSubStackIds.length > 1 && (
+            <div className="px-3 py-2 text-sm text-muted-foreground">
+              Multiple stacks selected. Choose a single stack to view species.
+            </div>
+          )}
+          {canShowSpecies && loadingSpecies ? (
             <LoadingSpinner className="py-8" />
-          ) : (
+          ) : null}
+          {canShowSpecies && !loadingSpecies ? (
             <ul className="space-y-1 px-2 pb-4">
               {speciesCards.map((species) => {
-                const isSelected = species.id === selectedSpeciesId;
+                const isSelected = selectedSpeciesIds.includes(species.id);
                 const vernacular = getLocalizedText(
                   species.vernacularName,
                   preferredLang,
@@ -345,15 +505,13 @@ export function PinkkaExplorer({
                   <li key={species.id}>
                     <button
                       type="button"
-                      onClick={() => {
-                        setSelectedSpeciesId(species.id);
-                        onSelectSpecies?.(species);
-                      }}
-                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
-                        isSelected
-                          ? "bg-primary/15 text-primary"
-                          : "hover:bg-muted/60"
-                      }`}
+                      onClick={(event) =>
+                        handleSpeciesSelect(event, species.id)
+                      }
+                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${getSelectionClass(
+                        isSelected,
+                        "species",
+                      )}`}
                     >
                       <MiddleEllipsisText
                         className="font-medium"
@@ -374,13 +532,8 @@ export function PinkkaExplorer({
                   No species available.
                 </li>
               )}
-              {!selectedSubStack && (
-                <li className="px-3 py-2 text-sm text-muted-foreground">
-                  Select a stack to view species.
-                </li>
-              )}
             </ul>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -389,9 +542,16 @@ export function PinkkaExplorer({
           Details
         </div>
         <div className="flex-1 overflow-y-auto">
-          {loadingDetails ? (
+          {selectedSpeciesIds.length > 1 && (
+            <div className="px-3 py-2 text-sm text-muted-foreground">
+              Multiple species selected. Choose a single species to view
+              details.
+            </div>
+          )}
+          {canShowDetails && loadingDetails ? (
             <LoadingSpinner className="py-8" />
-          ) : selectedSpeciesDetail ? (
+          ) : null}
+          {canShowDetails && !loadingDetails && selectedSpeciesDetail ? (
             <div className="space-y-4 px-4 pb-6 pt-2 text-sm">
               <div>
                 <div className="text-lg font-semibold">
@@ -420,15 +580,15 @@ export function PinkkaExplorer({
                 </div>
               )}
             </div>
-          ) : selectedSpecies ? (
+          ) : canShowDetails && selectedSpecies ? (
             <div className="px-4 py-6 text-sm text-muted-foreground">
               Loading details for {selectedSpecies.scientificName}...
             </div>
-          ) : (
+          ) : selectedSpeciesIds.length === 0 ? (
             <div className="px-3 py-2 text-sm text-muted-foreground">
               Select a species to preview details.
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
