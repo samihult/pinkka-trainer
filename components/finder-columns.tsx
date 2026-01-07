@@ -126,6 +126,9 @@ const createDetailsColumn = (
   columnType: item.type,
 });
 
+const DEFAULT_COLUMN_WIDTH = 288;
+const MIN_COLUMN_WIDTH = 220;
+
 /** Column-based picker with multi-select and per-type rendering/loading. */
 export function FinderColumns({
   rootItems,
@@ -142,11 +145,19 @@ export function FinderColumns({
       columnType: rootItems[0]?.type ?? rootType,
     }),
   ]);
+  const [columnWidths, setColumnWidths] = useState<number[]>([
+    DEFAULT_COLUMN_WIDTH,
+  ]);
   const [activeColumnIndex, setActiveColumnIndex] = useState<number | null>(
     null,
   );
   const loadTokenRef = useRef(0);
   const pendingLoadRef = useRef<Record<number, number>>({});
+  const resizeStateRef = useRef<{
+    index: number;
+    startX: number;
+    startWidth: number;
+  } | null>(null);
 
   useEffect(() => {
     setColumns([
@@ -156,6 +167,66 @@ export function FinderColumns({
     ]);
     setActiveColumnIndex(null);
   }, [rootItems, rootType]);
+
+  useEffect(() => {
+    setColumnWidths((prev) => {
+      if (prev.length === columns.length) return prev;
+      if (prev.length < columns.length) {
+        return [
+          ...prev,
+          ...Array.from(
+            { length: columns.length - prev.length },
+            () => DEFAULT_COLUMN_WIDTH,
+          ),
+        ];
+      }
+      return prev.slice(0, columns.length);
+    });
+  }, [columns.length]);
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const resizeState = resizeStateRef.current;
+      if (!resizeState) return;
+      const delta = event.clientX - resizeState.startX;
+      const nextWidth = Math.max(
+        MIN_COLUMN_WIDTH,
+        resizeState.startWidth + delta,
+      );
+      setColumnWidths((prev) => {
+        const next = [...prev];
+        next[resizeState.index] = nextWidth;
+        return next;
+      });
+    };
+
+    const handleMouseUp = () => {
+      if (!resizeStateRef.current) return;
+      resizeStateRef.current = null;
+      document.body.classList.remove("select-none");
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
+  const handleResizeStart = (
+    columnIndex: number,
+    event: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    event.preventDefault();
+    resizeStateRef.current = {
+      index: columnIndex,
+      startX: event.clientX,
+      startWidth: columnWidths[columnIndex] ?? DEFAULT_COLUMN_WIDTH,
+    };
+    document.body.classList.add("select-none");
+  };
 
   const getSelectionClass = (isSelected: boolean, isActiveColumn: boolean) => {
     if (!isSelected) return "hover:bg-muted/60";
@@ -362,6 +433,8 @@ export function FinderColumns({
         const parentConfig = parentType ? typeConfigs[parentType] : undefined;
         const isActiveColumn = activeColumnIndex === columnIndex;
         const parentSelectionCount = parentColumn?.selectedIds.length ?? 0;
+        const isLastColumn = columnIndex === columns.length - 1;
+        const shouldFillSpace = isLastColumn && column.mode === "details";
         const title =
           column.mode === "details"
             ? config?.detailsTitle ?? "Details"
@@ -371,9 +444,15 @@ export function FinderColumns({
           <div
             key={`${columnType ?? "column"}-${columnIndex}`}
             className={cn(
-              "flex h-full min-h-0 w-72 shrink-0 flex-col border-r",
+              "relative flex h-full min-h-0 flex-col border-r",
+              shouldFillSpace ? "flex-1 min-w-0" : "shrink-0",
               config?.columnClassName,
             )}
+            style={{
+              width: columnWidths[columnIndex] ?? DEFAULT_COLUMN_WIDTH,
+              minWidth: MIN_COLUMN_WIDTH,
+              flexBasis: columnWidths[columnIndex] ?? DEFAULT_COLUMN_WIDTH,
+            }}
           >
             <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               {title}
@@ -441,6 +520,11 @@ export function FinderColumns({
                 </div>
               )}
             </div>
+            <div
+              role="presentation"
+              onMouseDown={(event) => handleResizeStart(columnIndex, event)}
+              className="absolute right-0 top-0 h-full w-1.5 cursor-col-resize hover:bg-border/80"
+            />
           </div>
         );
       })}
