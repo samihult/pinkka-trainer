@@ -445,13 +445,15 @@ export function FinderColumns({
             key={`${columnType ?? "column"}-${columnIndex}`}
             className={cn(
               "relative flex h-full min-h-0 flex-col border-r",
-              shouldFillSpace ? "flex-1 min-w-0" : "shrink-0",
+              shouldFillSpace ? "flex-1" : "shrink-0",
               config?.columnClassName,
             )}
             style={{
               width: columnWidths[columnIndex] ?? DEFAULT_COLUMN_WIDTH,
               minWidth: MIN_COLUMN_WIDTH,
               flexBasis: columnWidths[columnIndex] ?? DEFAULT_COLUMN_WIDTH,
+              flexGrow: shouldFillSpace ? 1 : 0,
+              flexShrink: 0,
             }}
           >
             <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
