@@ -6,50 +6,82 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { LoadingSpinner } from "@/components/loading-spinner";
 
+/** Item with a type discriminator and payload for finder columns. */
 export type FinderItem<T = unknown> = {
+  /** Stable id for the item. */
   id: string | number;
+  /** Type discriminator used for column configuration. */
   type: string;
+  /** Arbitrary payload used by renderers/loaders. */
   payload: T;
 };
 
+/** Column configuration per item type, including render and optional loader. */
 export type FinderTypeConfig<T = unknown> = {
+  /** Title shown at the top of the column. */
   columnTitle: string;
+  /** Optional column-level styling overrides. */
   columnClassName?: string;
+  /** Render function for items of this type. */
   renderItem: (
     item: FinderItem<T>,
     state: { isSelected: boolean; isActive: boolean },
   ) => React.ReactNode;
+  /** Optional loader for child items. */
   loadChildren?: (item: FinderItem<T>) => Promise<FinderItem[]>;
+  /** Hint for expected child type. */
   childType?: string;
+  /** Message shown when no items exist. */
   emptyMessage?: string;
+  /** Message shown when parent selection is empty. */
   noSelectionMessage?: string;
+  /** Message shown when multiple parent items are selected. */
   multiSelectMessage?: string;
 };
 
 type FinderColumnState = {
+  /** Items displayed in the column. */
   items: FinderItem[];
+  /** Currently selected ids for the column. */
   selectedIds: Array<string | number>;
+  /** Active id used for child loading. */
   activeId: string | number | null;
+  /** Anchor id for shift-range selection. */
   anchorId: string | number | null;
+  /** Loading flag for child data. */
   loading: boolean;
+  /** Error message for column loads. */
   error: string | null;
 };
 
+/** Current selection state across columns. */
 export type FinderSelectionState = {
+  /** Active item from the most recently interacted column. */
   activeItem: FinderItem | null;
+  /** Index of the column that last received a selection. */
   activeColumnIndex: number | null;
+  /** Selected items for each column, by index. */
   selectedItemsByColumn: FinderItem[][];
 };
 
 type FinderColumnsProps = {
+  /** Root column items to display. */
   rootItems: FinderItem[];
+  /** Configuration for each item type. */
   typeConfigs: Record<string, FinderTypeConfig>;
+  /** Optional explicit column order by type. */
   columnOrder?: string[];
+  /** Optional wrapper class names. */
   className?: string;
+  /** Whether the root column is loading. */
   rootLoading?: boolean;
+  /** Optional root-level error message. */
   rootError?: string | null;
+  /** Optional trailing panel renderer. */
   renderTrailing?: (state: FinderSelectionState) => React.ReactNode;
+  /** Called when the active item changes. */
   onActiveItemChange?: (item: FinderItem | null) => void;
+  /** Called when selection state changes. */
   onSelectionChange?: (state: FinderSelectionState) => void;
 };
 
@@ -62,6 +94,7 @@ const createEmptyColumn = (): FinderColumnState => ({
   error: null,
 });
 
+/** Column-based picker with multi-select and per-type rendering/loading. */
 export function FinderColumns({
   rootItems,
   typeConfigs,

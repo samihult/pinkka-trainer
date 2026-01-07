@@ -6,11 +6,15 @@ import { useAuthCheck } from "@/lib/hooks/use-auth-check";
 import { LoadingSpinner } from "./loading-spinner";
 import type { UserRole } from "@/lib/types";
 
+/** Props for gating routes by auth and optional role. */
 interface ProtectedRouteProps {
+  /** Content gated behind auth. */
   children: React.ReactNode;
+  /** Optional minimum role required. */
   requiredRole?: UserRole;
 }
 
+/** Renders children only when the user is authenticated and authorized. */
 export function ProtectedRoute({
   children,
   requiredRole,

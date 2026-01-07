@@ -13,6 +13,7 @@ import {
 import { BookOpen, User, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 
+/** Primary site navigation with auth-aware actions. */
 export function Navbar() {
   const { user, signOut } = useAuth();
 

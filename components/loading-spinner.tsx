@@ -1,5 +1,6 @@
 import { Loader2 } from "lucide-react";
 
+/** Displays a centered loading spinner with optional wrapper classes. */
 export function LoadingSpinner({ className }: { className?: string }) {
   return (
     <div className={`flex items-center justify-center ${className}`}>

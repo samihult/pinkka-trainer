@@ -7,14 +7,21 @@ import type { Species } from "@/lib/types";
 import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
 import Image from "next/image";
 
+/** Props for the flashcard viewer. */
 interface FlashcardProps {
+  /** Species displayed on the card. */
   species: Species;
+  /** Advance to the next card. */
   onNext: () => void;
+  /** Navigate to the previous card. */
   onPrevious: () => void;
+  /** Zero-based index of the current card. */
   currentIndex: number;
+  /** Total number of cards in the session. */
   total: number;
 }
 
+/** Interactive flashcard with flip and image navigation controls. */
 export function Flashcard({
   species,
   onNext,

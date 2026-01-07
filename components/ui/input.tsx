@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/** Styled input field with consistent focus and validation states. */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input

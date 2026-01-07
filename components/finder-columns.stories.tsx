@@ -3,7 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { FinderColumns, type FinderItem } from "./finder-columns";
 
 type DemoPayload = {
+  /** Primary label for the item. */
   name: string;
+  /** Optional supporting description. */
   description?: string;
 };
 

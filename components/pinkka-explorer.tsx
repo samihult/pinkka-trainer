@@ -22,16 +22,25 @@ import {
 
 type PinkkaLanguage = "fi" | "en" | "sv";
 
+/** API surface required by the explorer for loading Pinkka data. */
 type PinkkaApi = {
+  /** Fetch list of groups. */
   fetchGroups: typeof fetchPinkkaGroups;
+  /** Fetch a group with its stacks. */
   fetchGroupWithStacks: typeof fetchPinkkaGroupWithStacks;
+  /** Fetch a stack with species. */
   fetchSubStack: typeof fetchPinkkaSubStack;
+  /** Fetch species detail by id. */
   fetchSpecies: typeof fetchPinkkaSpecies;
 };
 
+/** Props for rendering the Pinkka explorer columns. */
 interface PinkkaExplorerProps {
+  /** Preferred language for localized labels. */
   preferredLang?: PinkkaLanguage;
+  /** Callback when a species is selected. */
   onSelectSpecies?: (species: PinkkaSpeciesCard) => void;
+  /** Optional API overrides for Storybook/testing. */
   api?: Partial<PinkkaApi>;
 }
 
@@ -42,6 +51,7 @@ const defaultApi: PinkkaApi = {
   fetchSpecies: fetchPinkkaSpecies,
 };
 
+/** Finder-style explorer for Pinkka groups, stacks, and species details. */
 export function PinkkaExplorer({
   preferredLang = "fi",
   onSelectSpecies,

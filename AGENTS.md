@@ -22,3 +22,7 @@ Project conventions for Codex agents working in this repo.
 ## Tooling
 - Package manager: `pnpm` (see scripts in `package.json`).
 - Lint via `pnpm lint`, tests via `pnpm test`, Storybook via `pnpm storybook`.
+
+## Documentation
+- Add concise, helpful JSDoc comments for components, exported functions, and types.
+- Document all fields in types and interfaces with JSDoc.

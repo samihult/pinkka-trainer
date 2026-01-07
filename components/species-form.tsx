@@ -13,13 +13,19 @@ import type { Species, SpeciesImage } from "@/lib/types";
 import { uploadSpeciesImage } from "@/lib/firestore-helpers";
 import { useToast } from "@/hooks/use-toast";
 
+/** Props for creating or editing a species. */
 interface SpeciesFormProps {
+  /** Optional existing species to edit. */
   species?: Species;
+  /** Parent stack id for new species. */
   stackId: string;
+  /** Submit handler for form data. */
   onSubmit: (data: Partial<Species>) => Promise<void>;
+  /** Cancel handler for dismissing the form. */
   onCancel: () => void;
 }
 
+/** Form for creating or editing species metadata and images. */
 export function SpeciesForm({
   species,
   stackId,
@@ -37,6 +43,7 @@ export function SpeciesForm({
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
+  /** Upload a file or stage it for new species before saving. */
   const handleFileUpload = async (file: File) => {
     setUploading(true);
     try {
@@ -77,6 +84,7 @@ export function SpeciesForm({
     }
   };
 
+  /** Submit the form data to the caller. */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);

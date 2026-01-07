@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+/** Redirects unauthenticated or unauthorized users and returns auth state. */
 export function useAuthCheck(requiredRole?: "viewer" | "editor" | "admin") {
   const { user, loading } = useAuth();
   const router = useRouter();

@@ -19,18 +19,27 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "./firebase-config";
 import type { User, UserRole } from "./types";
 
+/** Context shape for authentication state and actions. */
 interface AuthContextType {
+  /** App-specific user profile. */
   user: User | null;
+  /** Raw Firebase user object. */
   firebaseUser: FirebaseUser | null;
+  /** Whether auth state is still loading. */
   loading: boolean;
+  /** Sign in with email/password. */
   signIn: (email: string, password: string) => Promise<void>;
+  /** Create a new user with email/password. */
   signUp: (email: string, password: string) => Promise<void>;
+  /** Start Google sign-in flow. */
   signInWithGoogle: () => Promise<void>;
+  /** Sign out of the current session. */
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+/** Load or create a user document for the Firebase user. */
 async function createOrGetUserDocument(
   firebaseUser: FirebaseUser,
 ): Promise<User> {
@@ -82,6 +91,7 @@ async function createOrGetUserDocument(
   }
 }
 
+/** Provides authentication state and actions to the app tree. */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
@@ -180,6 +190,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** Access the current authentication context. */
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {

@@ -22,11 +22,13 @@ import { db, storage } from "./firebase-config";
 import type { Species, Stack, Group, SpeciesImage, User } from "./types";
 
 // User operations
+/** Fetch a user's role by uid. */
 export async function getUserRole(userId: string): Promise<string | null> {
   const userDoc = await getDoc(doc(db, "users", userId));
   return userDoc.exists() ? userDoc.data().role : null;
 }
 
+/** Update a user's role by uid. */
 export async function updateUserRole(
   userId: string,
   role: string,
@@ -34,6 +36,7 @@ export async function updateUserRole(
   await updateDoc(doc(db, "users", userId), { role });
 }
 
+/** Fetch all users from Firestore. */
 export async function getAllUsers(): Promise<User[]> {
   const usersSnapshot = await getDocs(collection(db, "users"));
   return usersSnapshot.docs.map(
@@ -47,6 +50,7 @@ export async function getAllUsers(): Promise<User[]> {
 }
 
 // Group operations
+/** Create a new group and return its id. */
 export async function createGroup(
   group: Omit<Group, "id" | "createdAt" | "updatedAt">,
 ): Promise<string> {
@@ -60,6 +64,7 @@ export async function createGroup(
   return groupRef.id;
 }
 
+/** Fetch groups, optionally filtered by creator. */
 export async function getGroups(userId?: string): Promise<Group[]> {
   let q = query(collection(db, "groups"), orderBy("order"));
 
@@ -83,6 +88,7 @@ export async function getGroups(userId?: string): Promise<Group[]> {
   );
 }
 
+/** Fetch a single group by id. */
 export async function getGroup(groupId: string): Promise<Group | null> {
   const groupDoc = await getDoc(doc(db, "groups", groupId));
   if (!groupDoc.exists()) return null;
@@ -95,6 +101,7 @@ export async function getGroup(groupId: string): Promise<Group | null> {
   } as Group;
 }
 
+/** Update a group with partial fields. */
 export async function updateGroup(
   groupId: string,
   updates: Partial<Group>,
@@ -105,6 +112,7 @@ export async function updateGroup(
   });
 }
 
+/** Delete a group and its related stacks/species. */
 export async function deleteGroup(groupId: string): Promise<void> {
   // Get all stacks in this group
   const stacksQuery = query(
@@ -122,6 +130,7 @@ export async function deleteGroup(groupId: string): Promise<void> {
 }
 
 // Stack operations
+/** Create a stack and link it to its group. */
 export async function createStack(
   stack: Omit<Stack, "id" | "createdAt" | "updatedAt">,
 ): Promise<string> {
@@ -146,6 +155,7 @@ export async function createStack(
   return stackRef.id;
 }
 
+/** Fetch stacks, optionally filtered by group and/or creator. */
 export async function getStacks(
   groupId?: string,
   userId?: string,
@@ -185,6 +195,7 @@ export async function getStacks(
   );
 }
 
+/** Fetch a single stack by id. */
 export async function getStack(stackId: string): Promise<Stack | null> {
   const stackDoc = await getDoc(doc(db, "stacks", stackId));
   if (!stackDoc.exists()) return null;
@@ -197,6 +208,7 @@ export async function getStack(stackId: string): Promise<Stack | null> {
   } as Stack;
 }
 
+/** Update a stack with partial fields. */
 export async function updateStack(
   stackId: string,
   updates: Partial<Stack>,
@@ -207,6 +219,7 @@ export async function updateStack(
   });
 }
 
+/** Delete a stack and its related species. */
 export async function deleteStack(stackId: string): Promise<void> {
   // Get all species in this stack
   const speciesQuery = query(
@@ -238,6 +251,7 @@ export async function deleteStack(stackId: string): Promise<void> {
 }
 
 // Species operations
+/** Create a species and link it to its stack. */
 export async function createSpecies(
   species: Omit<Species, "id" | "createdAt" | "updatedAt">,
 ): Promise<string> {
@@ -262,6 +276,7 @@ export async function createSpecies(
   return speciesRef.id;
 }
 
+/** Fetch species, optionally filtered by stack. */
 export async function getSpecies(stackId?: string): Promise<Species[]> {
   let q = query(collection(db, "species"), orderBy("order"));
 
@@ -285,6 +300,7 @@ export async function getSpecies(stackId?: string): Promise<Species[]> {
   );
 }
 
+/** Fetch a single species by id. */
 export async function getSpeciesById(
   speciesId: string,
 ): Promise<Species | null> {
@@ -299,6 +315,7 @@ export async function getSpeciesById(
   } as Species;
 }
 
+/** Update a species with partial fields. */
 export async function updateSpecies(
   speciesId: string,
   updates: Partial<Species>,
@@ -309,6 +326,7 @@ export async function updateSpecies(
   });
 }
 
+/** Delete a species and its stored images. */
 export async function deleteSpecies(speciesId: string): Promise<void> {
   const speciesDoc = await getDoc(doc(db, "species", speciesId));
 
@@ -340,6 +358,7 @@ export async function deleteSpecies(speciesId: string): Promise<void> {
 }
 
 // Image operations
+/** Upload an image to storage and return its metadata. */
 export async function uploadSpeciesImage(
   speciesId: string,
   file: File,
@@ -358,6 +377,7 @@ export async function uploadSpeciesImage(
   };
 }
 
+/** Delete an image from storage and update species metadata. */
 export async function deleteSpeciesImage(
   speciesId: string,
   imageUrl: string,
@@ -385,6 +405,7 @@ export async function deleteSpeciesImage(
 }
 
 // Batch reordering
+/** Update ordering fields for a list of items in a collection. */
 export async function reorderItems(
   collectionName: string,
   items: { id: string; order: number }[],

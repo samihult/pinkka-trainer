@@ -9,12 +9,17 @@ import { Upload, X, GripVertical } from "lucide-react";
 import type { SpeciesImage } from "@/lib/types";
 import Image from "next/image";
 
+/** Props for the image upload and reorder widget. */
 interface ImageUploadProps {
+  /** Current list of images. */
   images: SpeciesImage[];
+  /** Callback when the image list changes. */
   onImagesChange: (images: SpeciesImage[]) => void;
+  /** Handler for uploading a selected file. */
   onFileUpload: (file: File) => void;
 }
 
+/** Upload control with sortable image previews. */
 export function ImageUpload({
   images,
   onImagesChange,

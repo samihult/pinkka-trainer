@@ -9,14 +9,20 @@ import {
 } from "react";
 import { cn } from "@/lib/utils";
 
+/** Props for middle-truncated text with edge-justified halves. */
 type MiddleEllipsisTextProps = {
+  /** Text to render and truncate. */
   text: string;
+  /** Optional wrapper class names. */
   className?: string;
+  /** Optional tooltip override. */
   title?: string;
 };
 
 type TextSegments = {
+  /** Leading portion of the text. */
   start: string;
+  /** Trailing portion of the text. */
   end: string;
 };
 
@@ -28,6 +34,7 @@ function getFontValue(element: HTMLElement) {
   return `${style.fontStyle} ${style.fontVariant} ${style.fontWeight} ${style.fontSize}/${style.lineHeight} ${style.fontFamily}`;
 }
 
+/** Renders text with a middle ellipsis when it overflows its container. */
 export function MiddleEllipsisText({
   text,
   className,

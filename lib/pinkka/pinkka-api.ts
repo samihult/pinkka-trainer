@@ -3,58 +3,99 @@
 
 const BASE_URL = "https://fmnh-ws-prod3.it.helsinki.fi/pinkka/api";
 
+/** Localized text map keyed by language code. */
 export interface MultilingualText {
+  /** Finnish translation. */
   fi?: string;
+  /** English translation. */
   en?: string;
+  /** Swedish translation. */
   sv?: string;
 }
 
+/** Pinkka group with optional sub-stacks. */
 export interface PinkkaGroup {
+  /** Group id. */
   id: number;
+  /** Localized group name. */
   name: MultilingualText;
+  /** Optional localized description. */
   description?: MultilingualText;
+  /** Whether scientific names are hidden. */
   hideScientific: boolean;
+  /** Whether vernacular names are hidden. */
   hideVernacular: boolean;
+  /** Publication status. */
   published: boolean;
+  /** Entity type identifier. */
   entityType: string;
+  /** Optional child stacks. */
   subPinkkas?: PinkkaSubStack[];
 }
 
+/** Pinkka sub-stack (subpinkka) metadata. */
 export interface PinkkaSubStack {
+  /** Sub-stack id. */
   id: number;
+  /** Localized sub-stack name. */
   name: MultilingualText;
+  /** Sort order within the group. */
   orderNo: number;
+  /** Optional localized description. */
   description?: MultilingualText;
+  /** Optional cover image id. */
   imageId?: string;
+  /** Entity type identifier. */
   entityType: string;
+  /** Optional species cards under this stack. */
   speciesCards?: PinkkaSpeciesCard[];
+  /** Optional parent group summary. */
   pinkka?: {
+    /** Group id. */
     id: number;
+    /** Localized group name. */
     name: MultilingualText;
   };
 }
 
+/** Lightweight species card metadata. */
 export interface PinkkaSpeciesCard {
+  /** Species card id. */
   id: number;
+  /** Taxonomy id for the species. */
   taxonId: string;
+  /** Scientific name. */
   scientificName: string;
+  /** Optional localized common names. */
   vernacularName?: MultilingualText;
+  /** Entity type identifier. */
   entityType: string;
 }
 
+/** Detailed species card response. */
 export interface PinkkaSpeciesDetail {
+  /** Taxonomy id for the species. */
   taxonId: string;
+  /** Scientific name. */
   scientificName: string;
+  /** Optional localized common names. */
   vernacularName?: MultilingualText;
+  /** Alternative vernacular names keyed by locale. */
   alternativeVernacularNames?: Record<string, any>;
+  /** Optional distribution map for Finland. */
   distributionMapFinland?: string | null;
+  /** Descriptive sections for the species. */
   description?: Array<{
+    /** Localized section title. */
     title: MultilingualText;
+    /** Localized section body. */
     body: MultilingualText;
+    /** Predicate identifier for the section. */
     predicate: string;
   }>;
 }
 
+/** Resolve localized text with preferred language fallback. */
 export function getLocalizedText(
   text: MultilingualText | string | undefined,
   preferredLang = "fi",
@@ -71,6 +112,7 @@ export function getLocalizedText(
   return text.fi || text.en || text.sv || Object.values(text)[0] || "";
 }
 
+/** Fetch the list of Pinkka groups. */
 export async function fetchPinkkaGroups(): Promise<PinkkaGroup[]> {
   try {
     const response = await fetch(`${BASE_URL}/pinkkas/`, {
@@ -86,6 +128,7 @@ export async function fetchPinkkaGroups(): Promise<PinkkaGroup[]> {
   }
 }
 
+/** Fetch a Pinkka group and its stacks. */
 export async function fetchPinkkaGroupWithStacks(
   groupId: number,
 ): Promise<PinkkaGroup | null> {
@@ -105,6 +148,7 @@ export async function fetchPinkkaGroupWithStacks(
   }
 }
 
+/** Fetch a sub-stack and its species cards. */
 export async function fetchPinkkaSubStack(
   subStackId: number,
 ): Promise<PinkkaSubStack | null> {
@@ -124,6 +168,7 @@ export async function fetchPinkkaSubStack(
   }
 }
 
+/** Fetch species detail for a card id. */
 export async function fetchPinkkaSpecies(
   speciesId: number,
 ): Promise<PinkkaSpeciesDetail | null> {

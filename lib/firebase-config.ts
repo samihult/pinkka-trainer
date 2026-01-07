@@ -5,6 +5,7 @@ import { getStorage } from "firebase/storage";
 
 const isStorybook = process.env.STORYBOOK === "true";
 
+/** Firebase configuration with Storybook fallbacks. */
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? (isStorybook ? "storybook" : undefined),
   authDomain:
@@ -39,11 +40,15 @@ if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
 }
 
 // Initialize Firebase only once
+/** Singleton Firebase app instance. */
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 // Initialize services
+/** Firestore database instance. */
 const db = getFirestore(app);
+/** Firebase auth instance. */
 const auth = getAuth(app);
+/** Firebase storage instance. */
 const storage = getStorage(app);
 
 const emulatorHost =
