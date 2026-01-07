@@ -1,26 +1,26 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import sanitizeHtml from "sanitize-html";
 import {
   fetchPinkkaGroups,
   fetchPinkkaGroupWithStacks,
   fetchPinkkaSpecies,
   fetchPinkkaSubStack,
-  getLocalizedText,
   type PinkkaGroup,
   type PinkkaSpeciesCard,
   type PinkkaSpeciesDetail,
   type PinkkaSubStack,
 } from "@/lib/pinkka/pinkka-api";
-import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
 import {
   FinderColumns,
   type FinderItem,
   type FinderSelectionState,
 } from "@/components/finder-columns";
-
-type PinkkaLanguage = "fi" | "en" | "sv";
+import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
+import { createGroupTypeConfig } from "@/components/pinkka/type-configs/group-type-config";
+import { createStackTypeConfig } from "@/components/pinkka/type-configs/stack-type-config";
+import { createSpeciesTypeConfig } from "@/components/pinkka/type-configs/species-type-config";
+import { createSpeciesDetailTypeConfig } from "@/components/pinkka/type-configs/species-detail-type-config";
 
 /** API surface required by the explorer for loading Pinkka data. */
 type PinkkaApi = {
@@ -208,112 +208,19 @@ export function PinkkaExplorer({
 
   const typeConfigs = useMemo(
     () => ({
-      group: {
-        columnTitle: "Groups",
-        columnClassName: "bg-muted/20",
-        childType: "stack",
-        noSelectionMessage: "Select a group to view stacks.",
-        multiSelectMessage:
-          "Multiple groups selected. Choose a single group to view stacks.",
-        renderItem: (item: FinderItem<PinkkaGroup>) => {
-          const label = getLocalizedText(item.payload.name, preferredLang);
-          return (
-            <MiddleEllipsisText
-              className="font-medium"
-              text={label || `Group ${item.payload.id}`}
-            />
-          );
-        },
+      group: createGroupTypeConfig({
+        preferredLang,
         loadChildren: loadGroupStacks,
-      },
-      stack: {
-        columnTitle: "Stacks",
-        columnClassName: "bg-background",
-        childType: "species",
-        emptyMessage: "No stacks available.",
-        noSelectionMessage: "Select a stack to view species.",
-        multiSelectMessage:
-          "Multiple stacks selected. Choose a single stack to view species.",
-        renderItem: (item: FinderItem<PinkkaSubStack>) => {
-          const label = getLocalizedText(item.payload.name, preferredLang);
-          return (
-            <>
-              <MiddleEllipsisText
-                className="font-medium"
-                text={label || `Stack ${item.payload.id}`}
-              />
-              <div className="text-xs text-muted-foreground">
-                {getLocalizedText(item.payload.description, preferredLang)}
-              </div>
-            </>
-          );
-        },
+      }),
+      stack: createStackTypeConfig({
+        preferredLang,
         loadChildren: loadStackSpecies,
-      },
-      species: {
-        columnTitle: "Species",
-        columnClassName: "bg-muted/10",
-        emptyMessage: "No species available.",
-        renderItem: (item: FinderItem<PinkkaSpeciesCard>) => {
-          const vernacular = getLocalizedText(
-            item.payload.vernacularName,
-            preferredLang,
-          );
-          return (
-            <>
-              <MiddleEllipsisText
-                className="font-medium"
-                text={item.payload.scientificName}
-              />
-              {vernacular && (
-                <MiddleEllipsisText
-                  className="text-xs text-muted-foreground"
-                  text={vernacular}
-                />
-              )}
-            </>
-          );
-        },
+      }),
+      species: createSpeciesTypeConfig({
+        preferredLang,
         loadChildren: loadSpeciesDetail,
-      },
-      "species-detail": {
-        columnTitle: "Species",
-        detailsTitle: "Details",
-        columnClassName: "bg-background",
-        renderItem: () => null,
-        renderDetails: (item: FinderItem<PinkkaSpeciesDetail>) => (
-          <div className="space-y-4 px-1 text-sm">
-            <div>
-              <div className="text-lg font-semibold">
-                {item.payload.scientificName}
-              </div>
-              <div className="text-muted-foreground">
-                {getLocalizedText(item.payload.vernacularName, preferredLang)}
-              </div>
-            </div>
-            {item.payload.description?.map((section) => (
-              <div key={section.predicate} className="space-y-1">
-                <div className="text-xs font-semibold uppercase text-muted-foreground">
-                  {getLocalizedText(section.title, preferredLang)}
-                </div>
-                <div
-                  className="text-sm text-foreground"
-                  dangerouslySetInnerHTML={{
-                    __html: sanitizeHtml(
-                      getLocalizedText(section.body, preferredLang) ?? "",
-                    ),
-                  }}
-                />
-              </div>
-            ))}
-            {!item.payload.description?.length && (
-              <div className="text-muted-foreground">
-                No description available for this species.
-              </div>
-            )}
-          </div>
-        ),
-      },
+      }),
+      "species-detail": createSpeciesDetailTypeConfig({ preferredLang }),
     }),
     [preferredLang, loadGroupStacks, loadStackSpecies, loadSpeciesDetail],
   );
