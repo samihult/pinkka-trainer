@@ -77,18 +77,12 @@ export type FinderSelectionState = {
 };
 
 type FinderColumnsProps = {
-  /** Root column items to display. */
-  rootItems: FinderItem[];
+  /** Virtual root item used to populate the first column. */
+  rootItem: FinderItem;
   /** Configuration for each item type. */
   typeConfigs: Record<string, FinderTypeConfig>;
-  /** Optional root column type, used when root items are empty. */
-  rootType?: string;
   /** Optional wrapper class names. */
   className?: string;
-  /** Whether the root column is loading. */
-  rootLoading?: boolean;
-  /** Optional root-level error message. */
-  rootError?: string | null;
   /** Called when the active item changes. */
   onActiveItemChange?: (item: FinderItem | null) => void;
   /** Called when selection state changes. */
@@ -131,19 +125,20 @@ const MIN_COLUMN_WIDTH = 220;
 
 /** Column-based picker with multi-select and per-type rendering/loading. */
 export function FinderColumns({
-  rootItems,
+  rootItem,
   typeConfigs,
-  rootType,
   className,
-  rootLoading = false,
-  rootError = null,
   onActiveItemChange,
   onSelectionChange,
 }: FinderColumnsProps) {
+  const rootTypeConfig = typeConfigs[rootItem.type];
+  const rootChildType = rootTypeConfig?.childType;
   const [columns, setColumns] = useState<FinderColumnState[]>([
-    createListColumn(rootItems, {
-      columnType: rootItems[0]?.type ?? rootType,
-    }),
+    {
+      ...createEmptyColumn(),
+      loading: true,
+      columnType: rootChildType,
+    },
   ]);
   const [columnWidths, setColumnWidths] = useState<number[]>([
     DEFAULT_COLUMN_WIDTH,
@@ -161,12 +156,72 @@ export function FinderColumns({
 
   useEffect(() => {
     setColumns([
-      createListColumn(rootItems, {
-        columnType: rootItems[0]?.type ?? rootType,
-      }),
+      {
+        ...createEmptyColumn(),
+        loading: true,
+        columnType: rootChildType,
+      },
     ]);
     setActiveColumnIndex(null);
-  }, [rootItems, rootType]);
+
+    if (!rootTypeConfig?.loadChildren) {
+      setColumns([
+        createListColumn([], {
+          columnType: rootChildType,
+        }),
+      ]);
+      return;
+    }
+
+    const token = (loadTokenRef.current += 1);
+    pendingLoadRef.current[0] = token;
+
+    rootTypeConfig
+      .loadChildren(rootItem)
+      .then((items) => {
+        setColumns((prev) => {
+          if (pendingLoadRef.current[0] !== token) {
+            return prev;
+          }
+
+          if (!items) {
+            return [
+              createListColumn([], {
+                columnType: rootChildType,
+              }),
+            ];
+          }
+
+          if (Array.isArray(items)) {
+            return [
+              createListColumn(items, {
+                columnType: items[0]?.type ?? rootChildType,
+              }),
+            ];
+          }
+
+          return [
+            createDetailsColumn(items, {
+              columnType: items.type,
+            }),
+          ];
+        });
+      })
+      .catch((error: Error) => {
+        setColumns((prev) => {
+          if (pendingLoadRef.current[0] !== token) {
+            return prev;
+          }
+          return [
+            {
+              ...createEmptyColumn(),
+              error: error.message || "Failed to load items.",
+              columnType: rootChildType,
+            },
+          ];
+        });
+      });
+  }, [rootItem, rootTypeConfig, rootChildType]);
 
   useEffect(() => {
     setColumnWidths((prev) => {
@@ -460,9 +515,7 @@ export function FinderColumns({
               {title}
             </div>
             <div className="flex-1 overflow-y-auto">
-              {columnIndex === 0 && rootLoading ? (
-                <LoadingSpinner className="py-8" />
-              ) : column.loading ? (
+              {column.loading ? (
                 <LoadingSpinner className="py-8" />
               ) : column.error ? (
                 <div className="px-3 py-2 text-sm text-destructive">
@@ -518,7 +571,7 @@ export function FinderColumns({
                 </div>
               ) : (
                 <div className="px-3 py-2 text-sm text-muted-foreground">
-                  {rootError ?? config?.emptyMessage ?? "No items available."}
+                  {config?.emptyMessage ?? "No items available."}
                 </div>
               )}
             </div>

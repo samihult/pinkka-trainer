@@ -65,9 +65,14 @@ export const Default: Story = {
   render: () => (
     <div className="h-[520px] border border-border bg-background">
       <FinderColumns
-        rootItems={groupItems}
-        rootType="group"
+        rootItem={{ id: "root", type: "root", payload: null }}
         typeConfigs={{
+          root: {
+            columnTitle: "Root",
+            renderItem: () => null,
+            childType: "group",
+            loadChildren: async () => groupItems,
+          },
           group: {
             columnTitle: "Groups",
             columnClassName: "bg-muted/20",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   fetchPinkkaGroups,
   fetchPinkkaGroupWithStacks,
@@ -17,6 +17,7 @@ import {
   type FinderSelectionState,
 } from "@/components/finder-columns";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
+import { createRootTypeConfig } from "@/components/pinkka/type-configs/root-type-config";
 import { createGroupTypeConfig } from "@/components/pinkka/type-configs/group-type-config";
 import { createStackTypeConfig } from "@/components/pinkka/type-configs/stack-type-config";
 import { createSpeciesTypeConfig } from "@/components/pinkka/type-configs/species-type-config";
@@ -65,7 +66,7 @@ export function PinkkaExplorer({
     [api],
   );
 
-  const [groups, setGroups] = useState<PinkkaGroup[]>([]);
+  const [groups, setGroups] = useState<PinkkaGroup[] | null>(null);
   const [subStacksByGroup, setSubStacksByGroup] = useState<
     Record<number, PinkkaSubStack[]>
   >({});
@@ -75,44 +76,34 @@ export function PinkkaExplorer({
   const [speciesDetails, setSpeciesDetails] = useState<
     Record<number, PinkkaSpeciesDetail | null>
   >({});
-  const [loadingGroups, setLoadingGroups] = useState(false);
-  const [groupError, setGroupError] = useState<string | null>(null);
+  const rootItem = useMemo<FinderItem<null>>(
+    () => ({
+      id: "root",
+      type: "root",
+      payload: null,
+    }),
+    [],
+  );
 
-  useEffect(() => {
-    let cancelled = false;
-    const loadGroups = async () => {
-      setLoadingGroups(true);
-      setGroupError(null);
-      try {
-        const data = await pinkkaApi.fetchGroups();
-        if (!cancelled) {
-          setGroups(data);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setGroupError("Failed to load Pinkka groups.");
-        }
-      } finally {
-        if (!cancelled) {
-          setLoadingGroups(false);
-        }
+  const loadRootGroups = useCallback(
+    async (_item: FinderItem<null>) => {
+      if (groups) {
+        return groups.map((group) => ({
+          id: group.id,
+          type: "group",
+          payload: group,
+        }));
       }
-    };
 
-    loadGroups();
-    return () => {
-      cancelled = true;
-    };
-  }, [pinkkaApi]);
-
-  const rootItems = useMemo<FinderItem<PinkkaGroup>[]>(
-    () =>
-      groups.map((group) => ({
+      const data = await pinkkaApi.fetchGroups();
+      setGroups(data);
+      return data.map((group) => ({
         id: group.id,
         type: "group",
         payload: group,
-      })),
-    [groups],
+      }));
+    },
+    [groups, pinkkaApi],
   );
 
   const loadGroupStacks = useCallback(
@@ -208,6 +199,9 @@ export function PinkkaExplorer({
 
   const typeConfigs = useMemo(
     () => ({
+      root: createRootTypeConfig({
+        loadChildren: loadRootGroups,
+      }),
       group: createGroupTypeConfig({
         preferredLang,
         loadChildren: loadGroupStacks,
@@ -222,7 +216,13 @@ export function PinkkaExplorer({
       }),
       "species-detail": createSpeciesDetailTypeConfig({ preferredLang }),
     }),
-    [preferredLang, loadGroupStacks, loadStackSpecies, loadSpeciesDetail],
+    [
+      preferredLang,
+      loadRootGroups,
+      loadGroupStacks,
+      loadStackSpecies,
+      loadSpeciesDetail,
+    ],
   );
 
   const handleSelectionChange = useCallback(
@@ -240,18 +240,10 @@ export function PinkkaExplorer({
 
   return (
     <div className="relative flex h-full min-h-0 border border-border bg-background">
-      {groupError && (
-        <div className="absolute left-4 top-4 rounded-md border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          {groupError}
-        </div>
-      )}
       <FinderColumns
         className="flex-1"
-        rootItems={rootItems}
-        rootType="group"
+        rootItem={rootItem}
         typeConfigs={typeConfigs}
-        rootLoading={loadingGroups}
-        rootError={groupError}
         onSelectionChange={handleSelectionChange}
       />
     </div>
