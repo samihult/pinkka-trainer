@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import sanitizeHtml from "sanitize-html";
 import {
   fetchPinkkaGroups,
   fetchPinkkaGroupWithStacks,
@@ -295,9 +296,14 @@ export function PinkkaExplorer({
                 <div className="text-xs font-semibold uppercase text-muted-foreground">
                   {getLocalizedText(section.title, preferredLang)}
                 </div>
-                <div className="text-sm text-foreground">
-                  {getLocalizedText(section.body, preferredLang)}
-                </div>
+                <div
+                  className="text-sm text-foreground"
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeHtml(
+                      getLocalizedText(section.body, preferredLang) ?? "",
+                    ),
+                  }}
+                />
               </div>
             ))}
             {!item.payload.description?.length && (
