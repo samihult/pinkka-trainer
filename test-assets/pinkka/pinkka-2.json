@@ -1,0 +1,254 @@
+{
+  "id": 2,
+  "name": {
+    "sv": "",
+    "fi": "A Pohjolan kasveja",
+    "en": "A Nordic vascular plants"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tämä pinkka esittelee Suomesta löytyneitä putkilokasveja. Osa niistä on levinnyt meille omin avuin, osa on eri aikoina ihmisen avustuksella saapuneita tulokkaita, myös puutarhoista karanneita viljelyskasveja. Valikoimassa on nyt kuvia yli 1900 lajista, alalajista, muunnoksesta ja risteymästä (syyskuu 2025). Hauskoja hetkiä Suomen kasvien monimuotoisuuden parissa! Jouko Rikkinen",
+    "en": "This Pinkka presents a selection of Nordic vascular plants that I have photographed over the years. The collection includes photographs of over 1900 species, subspecies, varieties and hybrids. Enjoy the diversity of Nordic vascular plants! Jouko Rikkinen"
+  },
+  "owner": null,
+  "permissions": [
+    "ellaiho@helsinki.fi",
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 522,
+      "name": {
+        "fi": "Saniaiset ja liekokasvit",
+        "sv": "Ormbunksväxter",
+        "en": "Pteridophytes and lycophytes"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 524,
+      "name": {
+        "fi": "Abies-Allium",
+        "sv": "Abies-Allium",
+        "en": "Abies-Allium"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 637,
+      "name": {
+        "fi": "Alnus-Arctagrostis",
+        "sv": "Alnus-Arctium",
+        "en": "Alnus-Arctium"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 535,
+      "name": {
+        "fi": "Arctium-Bistorta",
+        "sv": "Arctophila-Bistorta",
+        "en": "Arctophila-Bistorta"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 640,
+      "name": {
+        "fi": "Blitum-Carduus",
+        "sv": "Blitum-Carduus",
+        "en": "Blitum-Carduus"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 233,
+      "name": {
+        "fi": "Carex",
+        "sv": "Carex",
+        "en": "Carex"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 536,
+      "name": {
+        "fi": "Carlina-Chrysosplenium",
+        "sv": "Carlina-Chrysosplenium",
+        "en": "Carlina-Chrysosplenium"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 638,
+      "name": {
+        "fi": "Cicer-Cytisus",
+        "sv": "Cicer-Cytisus",
+        "en": "Cicer-Cytisus"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 256,
+      "name": {
+        "fi": "Dactylis-Epilobium",
+        "sv": "Dactylis-Epilobium",
+        "en": "Dactylis-Epilobium"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 639,
+      "name": {
+        "fi": "Epipactis-Fumaria",
+        "sv": "Epipactis-Fumaria",
+        "en": "Epipactis-Fumaria"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 245,
+      "name": {
+        "fi": "Gagea-Hepatica",
+        "sv": "Gagea-Hepatica",
+        "en": "Gagea-Hepatica"
+      },
+      "orderNo": 10,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 641,
+      "name": {
+        "fi": "Heracleum-Koenigia",
+        "sv": "Heracleum-Koenigia",
+        "en": "Heracleum-Koenigia"
+      },
+      "orderNo": 11,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 255,
+      "name": {
+        "fi": "Laburnum-Luzula",
+        "sv": "Laburnum-Luzula",
+        "en": "Laburnum-Luzula"
+      },
+      "orderNo": 12,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 642,
+      "name": {
+        "fi": "Lycianthes-Myrrhis",
+        "sv": "Lychnis-Myrrhis",
+        "en": "Lychnis-Myrrhis"
+      },
+      "orderNo": 13,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 643,
+      "name": {
+        "fi": "Najas-Petasites",
+        "sv": "",
+        "en": "Najas-Petasites"
+      },
+      "orderNo": 14,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 644,
+      "name": {
+        "fi": "Petrosedum-Poa",
+        "sv": "Petrosedum-Poa",
+        "en": "Petrosedum-Poa"
+      },
+      "orderNo": 15,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 645,
+      "name": {
+        "fi": "Polemonium-Quercus",
+        "sv": "Polemonium-Quercus",
+        "en": "Polemonium-Quercus"
+      },
+      "orderNo": 16,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 252,
+      "name": {
+        "fi": "Rabelera-Rudbeckia",
+        "sv": "Rabelera-Rudbeckia",
+        "en": "Rabelera-Rudbeckia"
+      },
+      "orderNo": 17,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 646,
+      "name": {
+        "fi": "Rumex-Saussurea",
+        "sv": "Rumex-Saussurea",
+        "en": "Rumex-Saussurea"
+      },
+      "orderNo": 18,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 257,
+      "name": {
+        "fi": "Saxifraga-Silene",
+        "sv": "Saxifraga-Silene",
+        "en": "Saxifraga-Silene"
+      },
+      "orderNo": 19,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 647,
+      "name": {
+        "fi": "Silybum-Syringa",
+        "sv": "Silybum-Symphytum",
+        "en": "Silybum-Symphytum"
+      },
+      "orderNo": 20,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 253,
+      "name": {
+        "fi": "Tanacetum-Vaccinium",
+        "sv": "Tanacetum-Vaccinium",
+        "en": "Tanacetum-Vaccinium"
+      },
+      "orderNo": 21,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 648,
+      "name": {
+        "fi": "Vahlodea-Zostera",
+        "sv": "Vahlodea-Zostera",
+        "en": "Vahlodea-Zostera"
+      },
+      "orderNo": 22,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

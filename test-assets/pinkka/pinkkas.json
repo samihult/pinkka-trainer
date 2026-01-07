@@ -1,0 +1,860 @@
+[
+  {
+    "id": 2,
+    "name": {
+      "sv": "",
+      "fi": "A Pohjolan kasveja",
+      "en": "A Nordic vascular plants"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 3,
+    "name": {
+      "fi": "A Pohjolan sammalia ja jäkäliä",
+      "en": "A Nordic bryophytes and lichens"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 4,
+    "name": {
+      "fi": "Vesieliöiden lajintunnistus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 5,
+    "name": {
+      "fi": "BIO-103 Eliöiden monimuotoisuus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 6,
+    "name": {
+      "fi": "BIO-519 Sienituntemus",
+      "sv": "Svampartkännedom",
+      "en": "Identification of fungi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 7,
+    "name": {
+      "sv": "",
+      "fi": "IPS-177 Fennoscandian flora",
+      "en": "IPS-177 Fennoscandian flora"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 8,
+    "name": {
+      "fi": "IPS-153 Flora of Subarctic Europe",
+      "en": "IPS-153 Flora of Subarctic Europe"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 9,
+    "name": {
+      "fi": "A Taitavuorten kasveja",
+      "en": "A Plants of Taita Hills"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 10,
+    "name": {
+      "fi": "BIO-513 Syventävä putkilokasvituntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 11,
+    "name": {
+      "fi": "BIO-514 Pohjois-Suomen putkilokasvit",
+      "en": ""
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 12,
+    "name": {
+      "fi": "BIO-515 Etelä-Suomen putkilokasvit"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 13,
+    "name": {
+      "fi": "BIO-503 Suomen kasvisto ja kasvillisuus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 14,
+    "name": {
+      "fi": "IPS-178 Suomen uhanalaiset kasvit",
+      "sv": "IPS-178 Finlands hotade kärlväxtarter",
+      "en": "IPS-178 Threatened vascular plants of Finland"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 15,
+    "name": {
+      "fi": "Luonnonvaraiset lääkekasvit",
+      "sv": "Farmakognosi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 16,
+    "name": {
+      "fi": "BIO-516 Hyötykasvit",
+      "en": "BIO-516 Plants of economic importance"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 17,
+    "name": {
+      "sv": "IPS-171 Finlands mossor och lavar",
+      "fi": "IPS-171 Suomen sammalet ja jäkälät",
+      "en": "IPS-171 Boreal bryophytes and lichens"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 18,
+    "name": {
+      "fi": "Makaronesian kasveja"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 19,
+    "name": {
+      "fi": "Kaskadian kasveja"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 20,
+    "name": {
+      "fi": "BIO-103 Eliöiden monimuotoisuus: eläimet"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 21,
+    "name": {
+      "fi": "Maatalouslajintuntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 24,
+    "name": {
+      "fi": "Verso- ja leviäintunnistus",
+      "en": "Seedling and Propagule Identification"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 25,
+    "name": {
+      "fi": "Puutarhakasvitiede 1",
+      "sv": "Trädgårdsväxter - artkännedom"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 26,
+    "name": {
+      "fi": "Viheralueiden kasvit"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 27,
+    "name": {
+      "fi": "Metsälajintuntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 28,
+    "name": {
+      "fi": "BIO-511 Lauhkean vyöhykkeen kasvit",
+      "en": "BIO-511 Temperate plants"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 29,
+    "name": {
+      "fi": "BIO-510 Tropiikin kasvit",
+      "en": "BIO-510 Tropical and subtropical plants"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 31,
+    "name": {
+      "fi": "Kasvitieteen retkeily Ahvenanmaalle",
+      "sv": "Exkursion till Åland",
+      "en": "Excursion to Åland"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 32,
+    "name": {
+      "fi": "Kasvien talvi",
+      "sv": "Växternas vinter"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 33,
+    "name": {
+      "fi": "Lammin biologinen asema"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 34,
+    "name": {
+      "fi": "Eräkarkun lajintuntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 35,
+    "name": {
+      "fi": "",
+      "en": "Anatomy of Chinese Woody Plants"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 36,
+    "name": {
+      "fi": "Kasvien lajintuntemus, Itä-Suomen yliopisto"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 37,
+    "name": {
+      "fi": "BIO-517 Suomen sammalet ja jäkälät",
+      "sv": "BIO-517 Finlands mossor och lavar",
+      "en": "BIO-517 Finnish bryophytes and lichens"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 40,
+    "name": {
+      "fi": "Viikin arboretum"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 43,
+    "name": {
+      "fi": "Yläkoulun Pinkka"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 44,
+    "name": {
+      "fi": "Kaisaniemen kasvitieteellisen puutarhan evoluutiopuutarha"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 45,
+    "name": {
+      "fi": "Kumpulan kasvitieteellisen puutarhan maantieteellinen osasto",
+      "sv": "Gumtäkt botaniska trädgård",
+      "en": "Kumpula Botanic Garden"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 46,
+    "name": {
+      "fi": "Kasvitieteen retkeily Lammille",
+      "sv": "Exkursion till Lampis",
+      "en": "Botanical excursion to Lammi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 47,
+    "name": {
+      "fi": "Plants of Taiga Excursion"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 48,
+    "name": {
+      "fi": "Metsäkasvien peruslajintuntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 49,
+    "name": {
+      "fi": "Kasvianatomian harjoitustyöt",
+      "sv": "Växtanatomi övningsarbeten"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 50,
+    "name": {
+      "fi": "Agroforestry species",
+      "en": "Agroforestry species"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 51,
+    "name": {
+      "fi": "Kasvien morfologinen adaptaatio",
+      "sv": "Växternas morfologiska adaptation"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 52,
+    "name": {
+      "fi": "Villivihannekset Suomen luonnossa"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 53,
+    "name": {
+      "fi": "BIO-103 Eliöiden monimuotoisuus - kasvit, levät ja sienet"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 54,
+    "name": {
+      "fi": "BIO-103 Eliöiden monimuotoisuus -kasviosuuden harjoituspinkat"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 55,
+    "name": {
+      "fi": "BIO-103 Demonstraatiot I-IX"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 56,
+    "name": {
+      "fi": "BIO-103 Eliöiden monimuotoisuus: eläintuntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 57,
+    "name": {
+      "fi": "BIO-517 ja IPS-171 Harjoituspinkat",
+      "sv": "Växtartkännedom I",
+      "en": "BIO-517 ja IPS-171 Exercise Pinkkas"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 58,
+    "name": {
+      "fi": "BIO-306 Saariston ekologia"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 59,
+    "name": {
+      "fi": "Naturan kokoelmakilpailu 2018: kylien ja kaupunkien eliölajit",
+      "sv": "Naturas insamlingstävling 2018: arter av byar och städer"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 60,
+    "name": {
+      "fi": "BIO-503 Maastokohteiden sammal- ja jäkälälajistoa"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 61,
+    "name": {
+      "fi": "BIO-204 Elinympäristöt ja lajisto - sammalryhmän lajistoa"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 62,
+    "name": {
+      "fi": "A Itä-Afrikan eläimiä",
+      "en": "Animals of East Africa"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 63,
+    "name": {
+      "fi": "IPS-174 Lauhkean vyöhykkeen ja tropiikin kasveja",
+      "en": "IPS-174 Temperate and tropical flora"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 64,
+    "name": {
+      "fi": "PBIO-178 Suomen uhanalaiset kasvit",
+      "en": "PBIO-178 Threatened vascular plants of Finland"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 65,
+    "name": {
+      "fi": "Metsät Suomen luonnossa"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 66,
+    "name": {
+      "fi": "",
+      "en": "Tropical Plants of Economic Importance (AGRI-247)"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 67,
+    "name": {
+      "fi": "Läntisen Pohjois-Amerikan kasvilajistoa"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 68,
+    "name": {
+      "fi": "IPS-154 Subarctic habitats and biota",
+      "sv": "",
+      "en": "IPS-154 Subarctic Habitats and Biota"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 69,
+    "name": {
+      "fi": "Maapallon havupuut"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 71,
+    "name": {
+      "fi": "AGRI-273 Entomologia: syventävä lajintuntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 72,
+    "name": {
+      "fi": "Leg4Life-pinkka"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 73,
+    "name": {
+      "fi": "Turun yliopisto, Eliöiden tuntemuksen perusteet (BIOL1111)"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 74,
+    "name": {
+      "fi": "Turun yliopisto, Kotimaisten putkilokasvien lajintuntemus (EKOL2354)"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 75,
+    "name": {
+      "fi": "Kasvien peruslajintuntemus, Oulun yliopisto"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 76,
+    "name": {
+      "fi": ""
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 77,
+    "name": {
+      "fi": "Tropiikin kasviheimot (huom: heimojen kuvaukset vain englanninkielisessä versiossa)",
+      "en": "Tropical plant families (EKOL4311, University of Turku)"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 78,
+    "name": {
+      "fi": "Global peatland ecology",
+      "en": "Global peatland ecology"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 79,
+    "name": {
+      "fi": "Vieraslajien tunnistus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 80,
+    "name": {
+      "fi": "Linnut viestintuojina"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 81,
+    "name": {
+      "fi": "Testipinkka"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 82,
+    "name": {
+      "fi": "nisäkäs testiversio"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 83,
+    "name": {
+      "fi": "Puuvartiset"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 84,
+    "name": {
+      "fi": "Luomuksen 100 lajia -haaste: kasvit",
+      "sv": "Luomuksen 100 lajia -haaste: kasvit"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 85,
+    "name": {
+      "fi": "Luomuksen 100 lajia -haaste: hyönteiset",
+      "sv": "Luomuksen 100 lajia -haaste: hyönteiset"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 86,
+    "name": {
+      "fi": "Luomuksen 100 lajia -haaste: sienet",
+      "sv": "Luomuksen 100 lajia -haaste: sienet"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 87,
+    "name": {
+      "fi": "Luomuksen 100 lajia -haaste: lapset ja nuoret"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 88,
+    "name": {
+      "fi": "Pölyttäjät viestintuojina"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 89,
+    "name": {
+      "fi": "UEF: Forest ecology and management (LM00DK89)",
+      "en": "UEF: Forest ecology and management (LM00DK89) Forest and peatland plant species identification"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  {
+    "id": 90,
+    "name": {
+      "fi": "Suomen puuvartiset."
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  }
+]

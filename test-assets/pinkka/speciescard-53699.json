@@ -1,0 +1,743 @@
+{
+  "taxonId": "MX.43719",
+  "vernacularName": {
+    "sv": "platt fjädermossa",
+    "fi": "siloriippusammal"
+  },
+  "scientificName": "Alleniella complanata",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "sv": "Beskrivning",
+        "fi": "Yleiskuvaus",
+        "en": "Description"
+      },
+      "body": {},
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {},
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {},
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.44109",
+      "vernacularName": {
+        "fi": "lehtisammalet",
+        "sv": "bladmossor",
+        "en": "Mosses"
+      },
+      "scientificName": "Bryophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.70676",
+      "vernacularName": null,
+      "scientificName": "Bryopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.325144",
+      "vernacularName": null,
+      "scientificName": "Bryidae",
+      "rankName": {
+        "fi": "alaluokka",
+        "sv": "underklass",
+        "en": "subclass"
+      },
+      "rank": "MX.subclass"
+    },
+    {
+      "taxonId": "MX.70688",
+      "vernacularName": null,
+      "scientificName": "Hypnales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.212949",
+      "vernacularName": null,
+      "scientificName": "Neckeraceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.313322",
+      "vernacularName": {
+        "fi": "siloriippusammalet"
+      },
+      "scientificName": "Alleniella",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.43719",
+      "vernacularName": {
+        "sv": "platt fjädermossa",
+        "fi": "siloriippusammal"
+      },
+      "scientificName": "Alleniella complanata",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 53699,
+  "images": [
+    {
+      "id": "MM.1606953",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36656.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Alleniella complanata",
+          "Alleniella",
+          "siloriippusammalet",
+          "Siloriippusammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606953/JR36656.JPG",
+        "full": "https://image.laji.fi/MM.1606953/JR36656.JPG",
+        "large": "https://image.laji.fi/MM.1606953/JR36656_large.jpg",
+        "square": "https://image.laji.fi/MM.1606953/JR36656_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606953/JR36656_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606951",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36663.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Alleniella complanata",
+          "Alleniella",
+          "siloriippusammalet",
+          "Siloriippusammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606951/JR36663.JPG",
+        "full": "https://image.laji.fi/MM.1606951/JR36663.JPG",
+        "large": "https://image.laji.fi/MM.1606951/JR36663_large.jpg",
+        "square": "https://image.laji.fi/MM.1606951/JR36663_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606951/JR36663_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606945",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR46893.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Alleniella complanata",
+          "Alleniella",
+          "Siloriippusammal",
+          "siloriippusammalet"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606945/JR46893.JPG",
+        "full": "https://image.laji.fi/MM.1606945/JR46893.JPG",
+        "large": "https://image.laji.fi/MM.1606945/JR46893_large.jpg",
+        "square": "https://image.laji.fi/MM.1606945/JR46893_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606945/JR46893_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606949",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36665.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Alleniella complanata",
+          "siloriippusammalet",
+          "Alleniella",
+          "Siloriippusammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606949/JR36665.JPG",
+        "full": "https://image.laji.fi/MM.1606949/JR36665.JPG",
+        "large": "https://image.laji.fi/MM.1606949/JR36665_large.jpg",
+        "square": "https://image.laji.fi/MM.1606949/JR36665_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606949/JR36665_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606948",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36666.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "siloriippusammalet",
+          "Siloriippusammal",
+          "Alleniella complanata",
+          "Alleniella"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606948/JR36666.JPG",
+        "full": "https://image.laji.fi/MM.1606948/JR36666.JPG",
+        "large": "https://image.laji.fi/MM.1606948/JR36666_large.jpg",
+        "square": "https://image.laji.fi/MM.1606948/JR36666_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606948/JR36666_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606944",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR81167.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Alleniella complanata",
+          "Alleniella",
+          "Siloriippusammal",
+          "siloriippusammalet"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606944/JR81167.JPG",
+        "full": "https://image.laji.fi/MM.1606944/JR81167.JPG",
+        "large": "https://image.laji.fi/MM.1606944/JR81167_large.jpg",
+        "square": "https://image.laji.fi/MM.1606944/JR81167_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606944/JR81167_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606943",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR81168.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "siloriippusammalet",
+          "Siloriippusammal",
+          "Alleniella complanata",
+          "Alleniella"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606943/JR81168.JPG",
+        "full": "https://image.laji.fi/MM.1606943/JR81168.JPG",
+        "large": "https://image.laji.fi/MM.1606943/JR81168_large.jpg",
+        "square": "https://image.laji.fi/MM.1606943/JR81168_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606943/JR81168_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606950",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36664.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Alleniella",
+          "siloriippusammalet",
+          "Alleniella complanata",
+          "Siloriippusammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606950/JR36664.JPG",
+        "full": "https://image.laji.fi/MM.1606950/JR36664.JPG",
+        "large": "https://image.laji.fi/MM.1606950/JR36664_large.jpg",
+        "square": "https://image.laji.fi/MM.1606950/JR36664_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606950/JR36664_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606952",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36662.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Alleniella complanata",
+          "Siloriippusammal",
+          "Alleniella",
+          "siloriippusammalet"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606952/JR36662.JPG",
+        "full": "https://image.laji.fi/MM.1606952/JR36662.JPG",
+        "large": "https://image.laji.fi/MM.1606952/JR36662_large.jpg",
+        "square": "https://image.laji.fi/MM.1606952/JR36662_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606952/JR36662_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606946",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36721.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Siloriippusammal",
+          "Alleniella complanata",
+          "siloriippusammalet",
+          "Alleniella"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606946/JR36721.JPG",
+        "full": "https://image.laji.fi/MM.1606946/JR36721.JPG",
+        "large": "https://image.laji.fi/MM.1606946/JR36721_large.jpg",
+        "square": "https://image.laji.fi/MM.1606946/JR36721_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606946/JR36721_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606947",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36686.JPG",
+        "documentIds": [
+          "4694"
+        ],
+        "tags": [
+          "Alleniella complanata",
+          "Alleniella",
+          "Siloriippusammal",
+          "siloriippusammalet"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43719"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606947/JR36686.JPG",
+        "full": "https://image.laji.fi/MM.1606947/JR36686.JPG",
+        "large": "https://image.laji.fi/MM.1606947/JR36686_large.jpg",
+        "square": "https://image.laji.fi/MM.1606947/JR36686_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606947/JR36686_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 666,
+    "name": {
+      "fi": "Abietinella-Calypogeia",
+      "en": "Abietinella-Calypogeia"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 3,
+      "name": {
+        "fi": "A Pohjolan sammalia ja jäkäliä",
+        "en": "A Nordic bryophytes and lichens"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.1607213",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

@@ -1,0 +1,819 @@
+{
+  "id": 524,
+  "name": {
+    "fi": "Abies-Allium",
+    "sv": "Abies-Allium",
+    "en": "Abies-Allium"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 2,
+    "name": {
+      "sv": "",
+      "fi": "A Pohjolan kasveja",
+      "en": "A Nordic vascular plants"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.1265678",
+  "speciesCards": [
+    {
+      "taxonId": "MX.37808",
+      "vernacularName": {
+        "fi": "saksanpihta",
+        "sv": "silvergran"
+      },
+      "scientificName": "Abies alba",
+      "id": 55488,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37806",
+      "vernacularName": {
+        "fi": "palsamipihta",
+        "sv": "balsamgran"
+      },
+      "scientificName": "Abies balsamea",
+      "id": 46059,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37805",
+      "vernacularName": {
+        "sv": "pichtagran",
+        "fi": "siperianpihta"
+      },
+      "scientificName": "Abies sibirica",
+      "id": 44706,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38699",
+      "vernacularName": {
+        "fi": "kelta-aulio",
+        "sv": "lindmalva"
+      },
+      "scientificName": "Abutilon theophrasti",
+      "id": 55492,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40837",
+      "vernacularName": {
+        "sv": "naverlönn",
+        "fi": "niverävaahtera"
+      },
+      "scientificName": "Acer campestre",
+      "id": 55968,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40838",
+      "vernacularName": {
+        "sv": "asklönn",
+        "fi": "saarnivaahtera"
+      },
+      "scientificName": "Acer negundo",
+      "id": 55963,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39122",
+      "vernacularName": {
+        "sv": "skogslönn",
+        "fi": "metsävaahtera",
+        "en": "Norway maple"
+      },
+      "scientificName": "Acer platanoides",
+      "id": 44705,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39123",
+      "vernacularName": {
+        "fi": "vuorivaahtera",
+        "sv": "tysklönn"
+      },
+      "scientificName": "Acer pseudoplatanus",
+      "id": 55969,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40840",
+      "vernacularName": {
+        "fi": "punavaahtera",
+        "sv": "rödlönn"
+      },
+      "scientificName": "Acer rubrum",
+      "id": 55966,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40841",
+      "vernacularName": {
+        "sv": "silverlönn",
+        "fi": "hopeavaahtera"
+      },
+      "scientificName": "Acer saccharinum",
+      "id": 55967,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42335",
+      "vernacularName": {
+        "fi": "mongolianpikkuvaahtera",
+        "sv": "ginnalalönn"
+      },
+      "scientificName": "Acer tataricum subsp. ginnala",
+      "id": 55965,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42336",
+      "vernacularName": {
+        "fi": "tataaripikkuvaahtera",
+        "sv": "rysk lönn"
+      },
+      "scientificName": "Acer tataricum subsp. tataricum",
+      "id": 55964,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42911",
+      "vernacularName": {
+        "sv": "praktröllika",
+        "fi": "kultakärsämö"
+      },
+      "scientificName": "Achillea filipendulina",
+      "id": 50655,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39813",
+      "vernacularName": {
+        "sv": "vanlig röllika",
+        "fi": "etelänsiankärsämö"
+      },
+      "scientificName": "Achillea millefolium subsp. millefolium",
+      "id": 52735,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39814",
+      "vernacularName": {
+        "sv": "fjällröllika",
+        "fi": "pohjansiankärsämö"
+      },
+      "scientificName": "Achillea millefolium subsp. sudetica",
+      "id": 50703,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39809",
+      "vernacularName": {
+        "sv": "nysört",
+        "fi": "ojakärsämö"
+      },
+      "scientificName": "Achillea ptarmica",
+      "id": 44703,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.210811",
+      "vernacularName": {
+        "fi": "koreakärsämö",
+        "sv": "vitpytta"
+      },
+      "scientificName": "Achillea ptarmica var. multiplex",
+      "id": 50656,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39502",
+      "vernacularName": {
+        "fi": "ketokäenminttu",
+        "sv": "harmynta"
+      },
+      "scientificName": "Acinos arvensis",
+      "id": 44708,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42328",
+      "vernacularName": {
+        "fi": "lehtoukonhattu",
+        "sv": "nordisk stormhatt"
+      },
+      "scientificName": "Aconitum septentrionale",
+      "id": 44707,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37869",
+      "vernacularName": {
+        "fi": "huppu-ukonhattu"
+      },
+      "scientificName": "Aconitum napellus",
+      "id": 58903,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37868",
+      "vernacularName": {
+        "sv": "trädgårdsstormhatt",
+        "fi": "tarhaukonhattu"
+      },
+      "scientificName": "Aconitum ×cammarum",
+      "id": 55973,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40094",
+      "vernacularName": {
+        "fi": "rohtokalmojuuri",
+        "sv": "kalmus"
+      },
+      "scientificName": "Acorus calamus",
+      "id": 45939,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37860",
+      "vernacularName": {
+        "sv": "röd trolldruva",
+        "fi": "punakonnanmarja"
+      },
+      "scientificName": "Actaea erythrocarpa",
+      "id": 44713,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37859",
+      "vernacularName": {
+        "sv": "svart trolldruva",
+        "fi": "mustakonnanmarja"
+      },
+      "scientificName": "Actaea spicata",
+      "id": 44711,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40852",
+      "vernacularName": {
+        "fi": "kevätruusuleinikki",
+        "sv": "våradonis"
+      },
+      "scientificName": "Adonis vernalis",
+      "id": 56393,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39352",
+      "vernacularName": {
+        "sv": "desmeknopp",
+        "fi": "tesmayrtti"
+      },
+      "scientificName": "Adoxa moschatellina",
+      "id": 44714,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39201",
+      "vernacularName": {
+        "fi": "vuohenputki",
+        "sv": "kirskål"
+      },
+      "scientificName": "Aegopodium podagraria",
+      "id": 44710,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40854",
+      "vernacularName": {
+        "sv": "hästkastanj",
+        "fi": "balkaninhevoskastanja"
+      },
+      "scientificName": "Aesculus hippocastanum",
+      "id": 55227,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39209",
+      "vernacularName": {
+        "sv": "vildpersilja",
+        "fi": "hukanputki"
+      },
+      "scientificName": "Aethusa cynapium",
+      "id": 45940,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40855",
+      "vernacularName": {
+        "sv": "anisisop",
+        "fi": "yrtti-iiso"
+      },
+      "scientificName": "Agastache foeniculum",
+      "id": 63321,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38826",
+      "vernacularName": {
+        "sv": "småborre",
+        "fi": "maarianverijuuri"
+      },
+      "scientificName": "Agrimonia eupatoria",
+      "id": 44709,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38825",
+      "vernacularName": {
+        "fi": "idänverijuuri",
+        "sv": "rysk småborre"
+      },
+      "scientificName": "Agrimonia pilosa",
+      "id": 44712,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40857",
+      "vernacularName": {
+        "sv": "kamvete",
+        "fi": "ketoharjasvehnä"
+      },
+      "scientificName": "Agropyron cristatum",
+      "id": 65232,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38112",
+      "vernacularName": {
+        "fi": "isoaurankukka",
+        "sv": "klätt"
+      },
+      "scientificName": "Agrostemma githago",
+      "id": 44718,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40588",
+      "vernacularName": {
+        "sv": "brunven",
+        "fi": "luhtarölli"
+      },
+      "scientificName": "Agrostis canina",
+      "id": 44719,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40593",
+      "vernacularName": {
+        "sv": "rödven",
+        "fi": "nurmirölli"
+      },
+      "scientificName": "Agrostis capillaris",
+      "id": 44720,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40591",
+      "vernacularName": {
+        "sv": "köseven",
+        "fi": "hoikkarölli"
+      },
+      "scientificName": "Agrostis clavata",
+      "id": 63286,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40596",
+      "vernacularName": {
+        "fi": "isorölli",
+        "sv": "storven"
+      },
+      "scientificName": "Agrostis gigantea",
+      "id": 44715,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40590",
+      "vernacularName": {
+        "sv": "fjällven",
+        "fi": "pohjanrölli"
+      },
+      "scientificName": "Agrostis mertensii",
+      "id": 44716,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40601",
+      "vernacularName": {
+        "sv": "krypven",
+        "fi": "rönsyrölli"
+      },
+      "scientificName": "Agrostis stolonifera",
+      "id": 44717,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40589",
+      "vernacularName": {
+        "fi": "jäykkärölli",
+        "sv": "bergven"
+      },
+      "scientificName": "Agrostis vinealis",
+      "id": 44721,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40861",
+      "vernacularName": {
+        "sv": "fintåtel",
+        "fi": "korulauhio"
+      },
+      "scientificName": "Aira elegans",
+      "id": 58848,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40571",
+      "vernacularName": {
+        "fi": "kääpiölauhio",
+        "sv": "vårtåtel"
+      },
+      "scientificName": "Aira praecox",
+      "id": 58847,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39450",
+      "vernacularName": {
+        "fi": "hammasakankaali",
+        "sv": "kritsuga"
+      },
+      "scientificName": "Ajuga genevensis",
+      "id": 54924,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39451",
+      "vernacularName": {
+        "fi": "kartioakankaali",
+        "sv": "blåsuga"
+      },
+      "scientificName": "Ajuga pyramidalis",
+      "id": 44723,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39452",
+      "vernacularName": {
+        "sv": "hybridsuga"
+      },
+      "scientificName": "Ajuga pyramidalis × reptans",
+      "id": 65163,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39453",
+      "vernacularName": {
+        "sv": "revsuga",
+        "fi": "rönsyakankaali"
+      },
+      "scientificName": "Ajuga reptans",
+      "id": 44818,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40862",
+      "vernacularName": {
+        "fi": "tarhasalkoruusu",
+        "sv": "stockros"
+      },
+      "scientificName": "Alcea rosea",
+      "id": 52908,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38888",
+      "vernacularName": {
+        "fi": "piennarpoimulehti",
+        "sv": "stjärndaggkåpa"
+      },
+      "scientificName": "Alchemilla acutiloba",
+      "id": 51349,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38875",
+      "vernacularName": {
+        "sv": "fjällkåpa",
+        "fi": "tunturipoimulehti"
+      },
+      "scientificName": "Alchemilla alpina",
+      "id": 44726,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38904",
+      "vernacularName": {
+        "fi": "peltopoimulehti",
+        "sv": "storjungfrukam"
+      },
+      "scientificName": "Alchemilla arvensis",
+      "id": 52672,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38885",
+      "vernacularName": {
+        "sv": "vågdaggkåpa",
+        "fi": "suppilopoimulehti"
+      },
+      "scientificName": "Alchemilla cymatophylla",
+      "id": 51351,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38895",
+      "vernacularName": {
+        "sv": "glatt daggkåpa",
+        "fi": "lähteikköpoimulehti"
+      },
+      "scientificName": "Alchemilla glabra",
+      "id": 51350,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38876",
+      "vernacularName": {
+        "fi": "harmaapoimulehti",
+        "sv": "sammetsdaggkåpa"
+      },
+      "scientificName": "Alchemilla glaucescens",
+      "id": 44725,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38877",
+      "vernacularName": {
+        "sv": "styvhårig daggkåpa",
+        "fi": "sykeröpoimulehti"
+      },
+      "scientificName": "Alchemilla hirsuticaulis",
+      "id": 44724,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40865",
+      "vernacularName": {
+        "sv": "jättedaggkåpa",
+        "fi": "jättipoimulehti"
+      },
+      "scientificName": "Alchemilla mollis",
+      "id": 45227,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38882",
+      "vernacularName": {
+        "sv": "betesdaggkåpa",
+        "fi": "laidunpoimulehti"
+      },
+      "scientificName": "Alchemilla monticola",
+      "id": 65106,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38901",
+      "vernacularName": {
+        "fi": "munuaispoimulehti",
+        "sv": "njurdaggkåpa"
+      },
+      "scientificName": "Alchemilla murbeckiana",
+      "id": 55228,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38887",
+      "vernacularName": {
+        "fi": "puolikuupoimulehti",
+        "sv": "måndaggkåpa"
+      },
+      "scientificName": "Alchemilla semilunaris",
+      "id": 51352,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38884",
+      "vernacularName": {
+        "sv": "ängsdaggkåpa",
+        "fi": "hakamaapoimulehti"
+      },
+      "scientificName": "Alchemilla subcrenata",
+      "id": 65107,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38890",
+      "vernacularName": {
+        "fi": "pyökkipoimulehti",
+        "sv": "kustdaggkåpa"
+      },
+      "scientificName": "Alchemilla xanthochlora",
+      "id": 51353,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40111",
+      "vernacularName": {
+        "fi": "ratamosarpio",
+        "sv": "svalting"
+      },
+      "scientificName": "Alisma plantago-aquatica",
+      "id": 44729,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40112",
+      "vernacularName": {
+        "fi": "upossarpio",
+        "sv": "småsvalting"
+      },
+      "scientificName": "Alisma wahlenbergii",
+      "id": 44730,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39545",
+      "vernacularName": {
+        "sv": "japansk lykta",
+        "fi": "isolyhtykukka"
+      },
+      "scientificName": "Alkekengi officinarum",
+      "id": 55489,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38364",
+      "vernacularName": {
+        "sv": "löktrav",
+        "fi": "litulaukka"
+      },
+      "scientificName": "Alliaria petiolata",
+      "id": 44732,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40675",
+      "vernacularName": {
+        "sv": "purjolök",
+        "fi": "purjo"
+      },
+      "scientificName": "Allium ampeloprasum var. porrum",
+      "id": 63325,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40866",
+      "vernacularName": {
+        "fi": "sipuli",
+        "sv": "lök"
+      },
+      "scientificName": "Allium cepa",
+      "id": 63324,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972164",
+      "vernacularName": {
+        "fi": "ukkolaukka",
+        "sv": "purpurlök"
+      },
+      "scientificName": "Allium hollandicum",
+      "id": 55491,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40869",
+      "vernacularName": {
+        "fi": "keltalaukka",
+        "sv": "guldlök"
+      },
+      "scientificName": "Allium moly",
+      "id": 55490,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39996",
+      "vernacularName": {
+        "sv": "backlök",
+        "fi": "nurmilaukka"
+      },
+      "scientificName": "Allium oleraceum",
+      "id": 44727,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42500",
+      "vernacularName": {
+        "fi": "kynsilaukka",
+        "sv": "vitlök"
+      },
+      "scientificName": "Allium sativum",
+      "id": 63322,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39990",
+      "vernacularName": {
+        "fi": "ruoholaukka",
+        "sv": "gräslök"
+      },
+      "scientificName": "Allium schoenoprasum",
+      "id": 44731,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39994",
+      "vernacularName": {
+        "sv": "jättegräslök",
+        "fi": "ruijanruoholaukka"
+      },
+      "scientificName": "Allium schoenoprasum subsp. sibiricum",
+      "id": 57137,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39997",
+      "vernacularName": {
+        "sv": "skogslök",
+        "fi": "käärmeenlaukka"
+      },
+      "scientificName": "Allium scorodoprasum",
+      "id": 44728,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39995",
+      "vernacularName": {
+        "fi": "karhunlaukka",
+        "sv": "ramslök"
+      },
+      "scientificName": "Allium ursinum",
+      "id": 44736,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39998",
+      "vernacularName": {
+        "fi": "hietalaukka",
+        "sv": "sandlök"
+      },
+      "scientificName": "Allium vineale",
+      "id": 44734,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.1265678",
+    "urls": {
+      "original": "https://image.laji.fi/MM.1265678/JR79229.JPG",
+      "full": "https://image.laji.fi/MM.1265678/JR79229.JPG",
+      "large": "https://image.laji.fi/MM.1265678/JR79229_large.jpg",
+      "square": "https://image.laji.fi/MM.1265678/JR79229_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.1265678/JR79229_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1586352529,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1568629553,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR79229.JPG",
+      "documentIds": [
+        "4407"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.40111"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

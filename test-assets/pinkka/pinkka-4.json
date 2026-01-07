@@ -1,0 +1,66 @@
+{
+  "id": 4,
+  "name": {
+    "fi": "Vesieliöiden lajintunnistus"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": ""
+  },
+  "owner": null,
+  "permissions": [
+    "titikka@helsinki.fi",
+    "blomster@helsinki.fi",
+    "etleskin@helsinki.fi",
+    "lklnurmi@helsinki.fi",
+    "jylappal@helsinki.fi",
+    "lkheleni@helsinki.fi",
+    "skorkone@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 214,
+      "name": {
+        "fi": "Kasviplankton"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 209,
+      "name": {
+        "fi": "Eläinplankton"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 24,
+      "name": {
+        "fi": "Kalat"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 25,
+      "name": {
+        "fi": "Makroskooppiset levät"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 26,
+      "name": {
+        "fi": "Pohjaeläimet"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

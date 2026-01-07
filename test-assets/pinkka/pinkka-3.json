@@ -1,0 +1,148 @@
+{
+  "id": 3,
+  "name": {
+    "fi": "A Pohjolan sammalia ja jäkäliä",
+    "en": "A Nordic bryophytes and lichens"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tämä Pinkka esittelee Suomen ja lähialueiden sammalia ja jäkäliä. Vähitellen täydentyvään kokoelmaan tulee valokuvia yli 1000 lajiryhmästä, lajista tai alalajista. Antoisia hetkiä Pohjolan sammal- ja jäkälälajiston parissa! Jouko Rikkinen",
+    "en": "This Pinkka presents a selection of Nordic bryophytes and lichens that I have photographed over the years. The collection will include photographs of over 1000 species, subspecies and varieties. Enjoy the diversity of Nordic bryophytes and lichens! Jouko Rikkinen"
+  },
+  "owner": null,
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 666,
+      "name": {
+        "fi": "Abietinella-Calypogeia",
+        "en": "Abietinella-Calypogeia"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 675,
+      "name": {
+        "fi": "Campyliadelphus-Drepanocladus",
+        "en": "Campyliadelphus-Drepanocladus"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 677,
+      "name": {
+        "fi": "Encalypta-Kurzia",
+        "en": "Encalypta-Kiaeria"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 668,
+      "name": {
+        "fi": "Lejeunea-Oxyrrhynchium",
+        "en": "Lejeunea-Oxyrrhynchium"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 669,
+      "name": {
+        "fi": "Paludella-Pylaisia",
+        "en": "Paludella-Pylaisia"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 676,
+      "name": {
+        "fi": "Racomitrium-Scorpidium",
+        "en": "Racomitrium-Scorpidium"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 671,
+      "name": {
+        "fi": "Sphagnum-Zygodon",
+        "en": "Sphagnum-Zygodon"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 670,
+      "name": {
+        "fi": "Acarospora-Circinaria",
+        "en": "Acarospora-Cystocoleus"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 674,
+      "name": {
+        "fi": "Cladonia",
+        "en": "Cladonia"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 672,
+      "name": {
+        "fi": "Coenogonium-Lathagrium",
+        "en": "Collema-Lathagrium"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 681,
+      "name": {
+        "fi": "Lecanactis-Myriolecis",
+        "en": "Lecanactis-Myriolecis"
+      },
+      "orderNo": 10,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 667,
+      "name": {
+        "fi": "Nephroma-Physconia",
+        "en": "Nephroma-Pycnothelia"
+      },
+      "orderNo": 11,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 682,
+      "name": {
+        "fi": "Placidum-Ramalina",
+        "en": "Placidum-Ramalina"
+      },
+      "orderNo": 12,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 673,
+      "name": {
+        "fi": "Rhizocarpon-Xanthoria",
+        "en": "Rhizocarpon-Xanthoria"
+      },
+      "orderNo": 13,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

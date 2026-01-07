@@ -1,0 +1,240 @@
+{
+  "taxonId": "MX.313102",
+  "vernacularName": {},
+  "scientificName": "Chroococcus",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "sv": "Beskrivning",
+        "fi": "Yleiskuvaus",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Syanobakteeri.<br/></p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {
+        "fi": "<p><span>Solut ovat py&#246;reit&#228; tai puolipy&#246;reit&#228;, usein kahden tai nelj&#228;n solun muodostamina yhdyskuntina, v&#228;lill&#228; solulukum&#228;&#228;r&#228; voi olla pariton solujen jakautuessa eri aikaan.&#160;<span><span> </span>Solut ovat yleens&#228; selv&#228;rajaisen hyytel&#246;n sis&#228;ll&#228;.</span> Solujen leveys ilman hyytel&#246;&#228; on lajista riippuen 0.7-58 &#181;m.<span> </span></span><br/></p>"
+      },
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {},
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Useimmat esiintyv&#228;t makeassa vedess&#228; ja ovat pohjamuotoja, osa lajeista esiintyy my&#246;s It&#228;meress&#228;. Muutama laji esiintyy tyypillisesti suovesiss&#228; tai suovesien vaikutusalueilla.<span></span></p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p></p><p><span>Tikkanen, T. 1986. Kasviplanktonopas. Suomen Luonnonsuojelun Tuki Oy. Helsinki. 278 s. <a href=\" http://www.kasviplanktonopas.net/uusin/index.php\"> http://www.kasviplanktonopas.net/uusin/index.php</a><br/></span></p><p><span>Whitton B.A. Phylum cyanophyta (Cyanobacteria). Kirjassa: John D.M., Whitton B.A., Brook A.J. (eds) 2003. The Freshwater Algal Flora of the British Isles: An Identification Guide to Freshwater and Terrestrial Algae. Cambridge University Press. United Kingdom. 702 s.</span></p><p><span><br/></span></p><p><span><a href=\"http://www.kasviplanktonopas.net/uusin/index.php\"><br/></a></span></p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53063",
+      "vernacularName": {
+        "fi": "bakteerit"
+      },
+      "scientificName": "Bacteria",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.211895",
+      "vernacularName": null,
+      "scientificName": "Cyanobacteria",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.292118",
+      "vernacularName": {
+        "fi": "sinilevät"
+      },
+      "scientificName": "Cyanophyceae",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.313100",
+      "vernacularName": null,
+      "scientificName": "Chroococcales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.313101",
+      "vernacularName": null,
+      "scientificName": "Chroococcaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.313102",
+      "vernacularName": null,
+      "scientificName": "Chroococcus",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    }
+  ],
+  "id": 25910,
+  "images": [
+    {
+      "id": "MM.119450",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800110,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Sanna Korkonen",
+        "secret": false,
+        "capturers": [
+          "Sanna Korkonen"
+        ],
+        "captureDateTime": 1767800110,
+        "uploadedBy": "skorkone@helsinki.fi",
+        "originalFilename": "20160810_112437 muokattu.jpg",
+        "documentIds": [
+          "1442"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.313102"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.119450/20160810_112437_muokattu.jpg",
+        "full": "https://image.laji.fi/MM.119450/20160810_112437_muokattu.jpg",
+        "large": "https://image.laji.fi/MM.119450/20160810_112437_muokattu_large.jpg",
+        "square": "https://image.laji.fi/MM.119450/20160810_112437_muokattu_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.119450/20160810_112437_muokattu_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.119451",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800110,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Sanna Korkonen",
+        "secret": false,
+        "capturers": [
+          "Sanna Korkonen"
+        ],
+        "uploadedBy": "skorkone@helsinki.fi",
+        "originalFilename": "kuva0522 muokattu.jpg",
+        "documentIds": [
+          "1442"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.313102"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.119451/kuva0522_muokattu.jpg",
+        "full": "https://image.laji.fi/MM.119451/kuva0522_muokattu.jpg",
+        "large": "https://image.laji.fi/MM.119451/kuva0522_muokattu.jpg",
+        "square": "https://image.laji.fi/MM.119451/kuva0522_muokattu_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.119451/kuva0522_muokattu_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 214,
+    "name": {
+      "fi": "Kasviplankton"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 4,
+      "name": {
+        "fi": "Vesieliöiden lajintunnistus"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "Suomen vesissä esiintyviä kasviplanktonryhmiä. Pinkka ei kata kaikkia meillä esiintyviä lajeja."
+    },
+    "imageId": "MM.118619",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

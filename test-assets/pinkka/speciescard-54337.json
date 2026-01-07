@@ -1,0 +1,520 @@
+{
+  "taxonId": "MX.43487",
+  "vernacularName": {
+    "sv": "kärrspärrmossa",
+    "fi": "rantaväkäsammal"
+  },
+  "scientificName": "Campyliadelphus elodes",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "sv": "Beskrivning",
+        "fi": "Yleiskuvaus",
+        "en": "Description"
+      },
+      "body": {},
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {},
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {},
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Leväosakas",
+        "sv": "Algkomponent",
+        "en": "Algal partner"
+      },
+      "body": {},
+      "predicate": "MX.algalPartnerOfLichen"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i Finland",
+        "fi": "Uhanalaisuus Suomessa",
+        "en": "Conservation status in Finland"
+      },
+      "body": {},
+      "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.44109",
+      "vernacularName": {
+        "fi": "lehtisammalet",
+        "sv": "bladmossor",
+        "en": "Mosses"
+      },
+      "scientificName": "Bryophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.70676",
+      "vernacularName": null,
+      "scientificName": "Bryopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.325144",
+      "vernacularName": null,
+      "scientificName": "Bryidae",
+      "rankName": {
+        "fi": "alaluokka",
+        "sv": "underklass",
+        "en": "subclass"
+      },
+      "rank": "MX.subclass"
+    },
+    {
+      "taxonId": "MX.70688",
+      "vernacularName": null,
+      "scientificName": "Hypnales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.212936",
+      "vernacularName": null,
+      "scientificName": "Amblystegiaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.43281",
+      "vernacularName": null,
+      "scientificName": "Campyliadelphus",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.43487",
+      "vernacularName": {
+        "sv": "kärrspärrmossa",
+        "fi": "rantaväkäsammal"
+      },
+      "scientificName": "Campyliadelphus elodes",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 54337,
+  "images": [
+    {
+      "id": "MM.1610284",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32987.JPG",
+        "documentIds": [
+          "4808"
+        ],
+        "tags": [
+          "Campyliadelphus",
+          "rantaväkäsammal",
+          "Campyliadelphus elodes"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43487"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610284/JR32987.JPG",
+        "full": "https://image.laji.fi/MM.1610284/JR32987.JPG",
+        "large": "https://image.laji.fi/MM.1610284/JR32987_large.jpg",
+        "square": "https://image.laji.fi/MM.1610284/JR32987_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610284/JR32987_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610281",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR33183.JPG",
+        "documentIds": [
+          "4808"
+        ],
+        "tags": [
+          "rantaväkäsammal",
+          "Campyliadelphus",
+          "Campyliadelphus elodes"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43487"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610281/JR33183.JPG",
+        "full": "https://image.laji.fi/MM.1610281/JR33183.JPG",
+        "large": "https://image.laji.fi/MM.1610281/JR33183_large.jpg",
+        "square": "https://image.laji.fi/MM.1610281/JR33183_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610281/JR33183_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610282",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR33164.JPG",
+        "documentIds": [
+          "4808"
+        ],
+        "tags": [
+          "Campyliadelphus",
+          "Campyliadelphus elodes",
+          "rantaväkäsammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43487"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610282/JR33164.JPG",
+        "full": "https://image.laji.fi/MM.1610282/JR33164.JPG",
+        "large": "https://image.laji.fi/MM.1610282/JR33164_large.jpg",
+        "square": "https://image.laji.fi/MM.1610282/JR33164_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610282/JR33164_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610280",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR33184.JPG",
+        "documentIds": [
+          "4808"
+        ],
+        "tags": [
+          "Campyliadelphus",
+          "Campyliadelphus elodes",
+          "rantaväkäsammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43487"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610280/JR33184.JPG",
+        "full": "https://image.laji.fi/MM.1610280/JR33184.JPG",
+        "large": "https://image.laji.fi/MM.1610280/JR33184_large.jpg",
+        "square": "https://image.laji.fi/MM.1610280/JR33184_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610280/JR33184_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610283",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767800109,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767800109,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR33044.JPG",
+        "documentIds": [
+          "4808"
+        ],
+        "tags": [
+          "Campyliadelphus",
+          "rantaväkäsammal",
+          "Campyliadelphus elodes"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43487"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610283/JR33044.JPG",
+        "full": "https://image.laji.fi/MM.1610283/JR33044.JPG",
+        "large": "https://image.laji.fi/MM.1610283/JR33044_large.jpg",
+        "square": "https://image.laji.fi/MM.1610283/JR33044_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610283/JR33044_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 675,
+    "name": {
+      "fi": "Campyliadelphus-Drepanocladus",
+      "en": "Campyliadelphus-Drepanocladus"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 3,
+      "name": {
+        "fi": "A Pohjolan sammalia ja jäkäliä",
+        "en": "A Nordic bryophytes and lichens"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.53562",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}
