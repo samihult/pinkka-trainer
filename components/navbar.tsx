@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BookOpen, User, LogOut, Settings } from "lucide-react";
+import { BookOpen, User, LogOut, Settings, Library } from "lucide-react";
 import Link from "next/link";
 
 /** Primary site navigation with auth-aware actions. */
@@ -26,16 +26,12 @@ export function Navbar() {
             className="flex items-center gap-2 text-xl font-semibold"
           >
             <BookOpen className="h-6 w-6 text-primary" />
-            <span>Pinkka</span>
+            <span>PinkkaTrainer</span>
           </Link>
 
           <div className="flex items-center gap-4">
             {user ? (
               <>
-                <Button asChild variant="ghost">
-                  <Link href="/pinkka">Pinkka</Link>
-                </Button>
-
                 {(user.role === "editor" || user.role === "admin") && (
                   <Button asChild variant="outline">
                     <Link href="/manage">Manage Content</Link>
@@ -59,12 +55,20 @@ export function Navbar() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {user.role === "admin" && (
-                      <DropdownMenuItem asChild>
-                        <Link href="/admin" className="cursor-pointer">
-                          <Settings className="mr-2 h-4 w-4" />
-                          Admin Panel
-                        </Link>
-                      </DropdownMenuItem>
+                      <>
+                        <DropdownMenuItem asChild>
+                          <Link href="/admin" className="cursor-pointer">
+                            <Settings className="mr-2 h-4 w-4" />
+                            Admin Panel
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/pinkka" className="cursor-pointer">
+                            <Library className="mr-2 h-4 w-4" />
+                            Pinkka Content
+                          </Link>
+                        </DropdownMenuItem>
+                      </>
                     )}
                     <DropdownMenuItem
                       onClick={() => signOut()}
@@ -78,9 +82,6 @@ export function Navbar() {
               </>
             ) : (
               <div className="flex gap-2">
-                <Button asChild variant="ghost">
-                  <Link href="/pinkka">Pinkka</Link>
-                </Button>
                 <Button asChild variant="outline">
                   <Link href="/auth/signin">Sign In</Link>
                 </Button>
