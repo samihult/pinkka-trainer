@@ -101,14 +101,12 @@ export function PinkkaSpeciesDetail({
             <img
               src={activeImage.url}
               alt={activeAlt}
-              className="h-52 w-full object-cover sm:h-60"
+              className="h-52 w-full object-contain sm:h-60"
               loading="lazy"
             />
           </div>
           <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
-            <div className="min-h-[1rem]">
-              {activeCaption || "Image"}
-            </div>
+            <div className="min-h-[1rem]">{activeCaption || "Image"}</div>
             <div className="flex items-center gap-2">
               <button
                 type="button"
