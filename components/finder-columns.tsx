@@ -28,9 +28,15 @@ export type FinderTypeConfig<T = unknown> = {
     state: { isSelected: boolean; isActive: boolean },
   ) => React.ReactNode;
   /** Optional loader for child items. */
-  loadChildren?: (item: FinderItem<T>) => Promise<FinderItem[]>;
+  loadChildren?: (
+    item: FinderItem<T>,
+  ) => Promise<FinderItem[] | FinderItem | null>;
   /** Hint for expected child type. */
   childType?: string;
+  /** Optional renderer for detail columns. */
+  renderDetails?: (item: FinderItem<T>) => React.ReactNode;
+  /** Optional title for detail columns. */
+  detailsTitle?: string;
   /** Message shown when no items exist. */
   emptyMessage?: string;
   /** Message shown when parent selection is empty. */
@@ -52,6 +58,12 @@ type FinderColumnState = {
   loading: boolean;
   /** Error message for column loads. */
   error: string | null;
+  /** Column mode for list or details view. */
+  mode: "list" | "details";
+  /** Optional details item payload. */
+  detailsItem?: FinderItem;
+  /** Column type identifier. */
+  columnType?: string;
 };
 
 /** Current selection state across columns. */
@@ -69,16 +81,14 @@ type FinderColumnsProps = {
   rootItems: FinderItem[];
   /** Configuration for each item type. */
   typeConfigs: Record<string, FinderTypeConfig>;
-  /** Optional explicit column order by type. */
-  columnOrder?: string[];
+  /** Optional root column type, used when root items are empty. */
+  rootType?: string;
   /** Optional wrapper class names. */
   className?: string;
   /** Whether the root column is loading. */
   rootLoading?: boolean;
   /** Optional root-level error message. */
   rootError?: string | null;
-  /** Optional trailing panel renderer. */
-  renderTrailing?: (state: FinderSelectionState) => React.ReactNode;
   /** Called when the active item changes. */
   onActiveItemChange?: (item: FinderItem | null) => void;
   /** Called when selection state changes. */
@@ -92,22 +102,45 @@ const createEmptyColumn = (): FinderColumnState => ({
   anchorId: null,
   loading: false,
   error: null,
+  mode: "list",
+});
+
+const createListColumn = (
+  items: FinderItem[],
+  overrides: Partial<FinderColumnState> = {},
+): FinderColumnState => ({
+  ...createEmptyColumn(),
+  items,
+  ...overrides,
+  mode: "list",
+});
+
+const createDetailsColumn = (
+  item: FinderItem,
+  overrides: Partial<FinderColumnState> = {},
+): FinderColumnState => ({
+  ...createEmptyColumn(),
+  ...overrides,
+  mode: "details",
+  detailsItem: item,
+  columnType: item.type,
 });
 
 /** Column-based picker with multi-select and per-type rendering/loading. */
 export function FinderColumns({
   rootItems,
   typeConfigs,
-  columnOrder,
+  rootType,
   className,
   rootLoading = false,
   rootError = null,
   onActiveItemChange,
   onSelectionChange,
-  renderTrailing,
 }: FinderColumnsProps) {
   const [columns, setColumns] = useState<FinderColumnState[]>([
-    { ...createEmptyColumn(), items: rootItems },
+    createListColumn(rootItems, {
+      columnType: rootItems[0]?.type ?? rootType,
+    }),
   ]);
   const [activeColumnIndex, setActiveColumnIndex] = useState<number | null>(
     null,
@@ -115,19 +148,14 @@ export function FinderColumns({
   const loadTokenRef = useRef(0);
   const pendingLoadRef = useRef<Record<number, number>>({});
 
-  const columnCount = columnOrder?.length ?? columns.length;
-
   useEffect(() => {
-    const nextColumns = Array.from(
-      { length: columnOrder?.length ?? 1 },
-      (_, index) =>
-        index === 0
-          ? { ...createEmptyColumn(), items: rootItems }
-          : createEmptyColumn(),
-    );
-    setColumns(nextColumns);
+    setColumns([
+      createListColumn(rootItems, {
+        columnType: rootItems[0]?.type ?? rootType,
+      }),
+    ]);
     setActiveColumnIndex(null);
-  }, [rootItems, columnOrder?.length]);
+  }, [rootItems, rootType]);
 
   const getSelectionClass = (isSelected: boolean, isActiveColumn: boolean) => {
     if (!isSelected) return "hover:bg-muted/60";
@@ -199,8 +227,6 @@ export function FinderColumns({
     const typeConfig = typeConfigs[item.type];
     const shouldLoad = nextSelectedIds.length === 1 && typeConfig?.loadChildren;
     const nextColumnIndex = columnIndex + 1;
-    const nextColumnCount = columnOrder?.length ?? undefined;
-
     setColumns((prev) => {
       const baseColumns = prev.slice(0, columnIndex + 1).map((column, index) =>
         index === columnIndex
@@ -214,29 +240,13 @@ export function FinderColumns({
           : column,
       );
 
-      if (columnOrder?.length) {
-        const filled = [...baseColumns];
-        for (let i = filled.length; i < columnOrder.length; i += 1) {
-          filled.push(createEmptyColumn());
-        }
-        for (let i = columnIndex + 1; i < filled.length; i += 1) {
-          filled[i] = createEmptyColumn();
-        }
-        if (shouldLoad && nextColumnIndex < columnOrder.length) {
-          filled[nextColumnIndex] = {
-            ...createEmptyColumn(),
-            loading: true,
-          };
-        }
-        return filled;
-      }
-
       if (shouldLoad) {
         return [
           ...baseColumns,
           {
             ...createEmptyColumn(),
             loading: true,
+            columnType: typeConfig?.childType,
           },
         ];
       }
@@ -270,24 +280,32 @@ export function FinderColumns({
             return prev;
           }
 
-          const nextColumn: FinderColumnState = {
-            ...createEmptyColumn(),
-            items,
-          };
           const nextColumns = prev.slice(0, columnIndex + 1);
 
-          if (columnOrder?.length) {
-            const filled = [...nextColumns];
-            for (let i = filled.length; i < columnOrder.length; i += 1) {
-              filled.push(createEmptyColumn());
-            }
-            if (nextColumnIndex < filled.length) {
-              filled[nextColumnIndex] = nextColumn;
-            }
-            return filled;
+          if (!items) {
+            return [
+              ...nextColumns,
+              createListColumn([], {
+                columnType: typeConfig?.childType,
+              }),
+            ];
           }
 
-          return [...nextColumns, nextColumn];
+          if (Array.isArray(items)) {
+            return [
+              ...nextColumns,
+              createListColumn(items, {
+                columnType: items[0]?.type ?? typeConfig?.childType,
+              }),
+            ];
+          }
+
+          return [
+            ...nextColumns,
+            createDetailsColumn(items, {
+              columnType: items.type,
+            }),
+          ];
         });
       })
       .catch((error: Error) => {
@@ -299,17 +317,8 @@ export function FinderColumns({
           const errorColumn: FinderColumnState = {
             ...createEmptyColumn(),
             error: error.message || "Failed to load items.",
+            columnType: typeConfig?.childType,
           };
-          if (columnOrder?.length) {
-            const filled = [...nextColumns];
-            for (let i = filled.length; i < columnOrder.length; i += 1) {
-              filled.push(createEmptyColumn());
-            }
-            if (nextColumnIndex < filled.length) {
-              filled[nextColumnIndex] = errorColumn;
-            }
-            return filled;
-          }
           return [...nextColumns, errorColumn];
         });
       });
@@ -344,19 +353,19 @@ export function FinderColumns({
 
   return (
     <div className={cn("flex h-full min-h-0 overflow-x-auto", className)}>
-      {Array.from({ length: columnCount }, (_, columnIndex) => {
-        const column = columns[columnIndex] ?? createEmptyColumn();
-        const columnType =
-          columnOrder?.[columnIndex] ?? column.items[0]?.type ?? null;
+      {columns.map((column, columnIndex) => {
+        const columnType = column.columnType ?? column.items[0]?.type ?? null;
         const config = columnType ? typeConfigs[columnType] : undefined;
         const parentColumn = columns[columnIndex - 1];
         const parentType =
-          columnIndex > 0
-            ? (columnOrder?.[columnIndex - 1] ?? parentColumn?.items[0]?.type)
-            : null;
+          parentColumn?.columnType ?? parentColumn?.items[0]?.type ?? null;
         const parentConfig = parentType ? typeConfigs[parentType] : undefined;
         const isActiveColumn = activeColumnIndex === columnIndex;
         const parentSelectionCount = parentColumn?.selectedIds.length ?? 0;
+        const title =
+          column.mode === "details"
+            ? config?.detailsTitle ?? "Details"
+            : config?.columnTitle ?? "Items";
 
         return (
           <div
@@ -367,7 +376,7 @@ export function FinderColumns({
             )}
           >
             <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              {config?.columnTitle ?? "Items"}
+              {title}
             </div>
             <div className="flex-1 overflow-y-auto">
               {columnIndex === 0 && rootLoading ? (
@@ -377,6 +386,19 @@ export function FinderColumns({
               ) : column.error ? (
                 <div className="px-3 py-2 text-sm text-destructive">
                   {column.error}
+                </div>
+              ) : column.mode === "details" && column.detailsItem ? (
+                <div className="px-3 py-2 text-sm">
+                  {config?.renderDetails
+                    ? config.renderDetails(
+                        column.detailsItem as FinderItem<unknown>,
+                      )
+                    : config?.renderItem
+                      ? config.renderItem(
+                          column.detailsItem as FinderItem<unknown>,
+                          { isSelected: false, isActive: isActiveColumn },
+                        )
+                      : null}
                 </div>
               ) : column.items.length ? (
                 <ul className="space-y-1 px-2 pb-4">
@@ -422,7 +444,6 @@ export function FinderColumns({
           </div>
         );
       })}
-      {renderTrailing ? renderTrailing(selectionState) : null}
     </div>
   );
 }

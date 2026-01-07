@@ -66,7 +66,7 @@ export const Default: Story = {
     <div className="h-[520px] border border-border bg-background">
       <FinderColumns
         rootItems={groupItems}
-        columnOrder={["group", "stack", "species"]}
+        rootType="group"
         typeConfigs={{
           group: {
             columnTitle: "Groups",
@@ -89,20 +89,26 @@ export const Default: Story = {
             columnTitle: "Species",
             columnClassName: "bg-muted/10",
             renderItem: (item) => <div>{item.payload.name}</div>,
+            loadChildren: async (item) => ({
+              id: `detail-${item.id}`,
+              type: "species-detail",
+              payload: item.payload,
+            }),
+          },
+          "species-detail": {
+            columnTitle: "Species",
+            detailsTitle: "Details",
+            renderItem: (item) => <div>{item.payload.name}</div>,
+            renderDetails: (item) => (
+              <div className="space-y-2">
+                <div className="text-sm font-semibold">{item.payload.name}</div>
+                <div className="text-xs text-muted-foreground">
+                  Detail view example for the selected species.
+                </div>
+              </div>
+            ),
           },
         }}
-        renderTrailing={({ activeItem }) => (
-          <div className="flex min-w-[260px] flex-1 flex-col bg-background">
-            <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Details
-            </div>
-            <div className="px-3 py-2 text-sm text-muted-foreground">
-              {activeItem
-                ? `Selected ${activeItem.type}: ${activeItem.payload.name}`
-                : "Select an item to preview details."}
-            </div>
-          </div>
-        )}
       />
     </div>
   ),

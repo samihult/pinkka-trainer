@@ -12,7 +12,6 @@ import {
   type PinkkaSpeciesDetail,
   type PinkkaSubStack,
 } from "@/lib/pinkka/pinkka-api";
-import { LoadingSpinner } from "@/components/loading-spinner";
 import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
 import {
   FinderColumns,
@@ -66,10 +65,6 @@ export function PinkkaExplorer({
   );
 
   const [groups, setGroups] = useState<PinkkaGroup[]>([]);
-  const [activeSpeciesId, setActiveSpeciesId] = useState<number | null>(null);
-  const [activeSpeciesCard, setActiveSpeciesCard] =
-    useState<PinkkaSpeciesCard | null>(null);
-  const [selectedSpeciesCount, setSelectedSpeciesCount] = useState(0);
   const [subStacksByGroup, setSubStacksByGroup] = useState<
     Record<number, PinkkaSubStack[]>
   >({});
@@ -80,9 +75,7 @@ export function PinkkaExplorer({
     Record<number, PinkkaSpeciesDetail | null>
   >({});
   const [loadingGroups, setLoadingGroups] = useState(false);
-  const [loadingDetails, setLoadingDetails] = useState(false);
   const [groupError, setGroupError] = useState<string | null>(null);
-  const [detailError, setDetailError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -110,42 +103,6 @@ export function PinkkaExplorer({
       cancelled = true;
     };
   }, [pinkkaApi]);
-
-  useEffect(() => {
-    if (activeSpeciesId === null) return;
-    if (speciesDetails[activeSpeciesId]) return;
-
-    let cancelled = false;
-    const loadSpeciesDetail = async () => {
-      setLoadingDetails(true);
-      setDetailError(null);
-      try {
-        const detail = await pinkkaApi.fetchSpecies(activeSpeciesId);
-        if (!cancelled) {
-          setSpeciesDetails((prev) => ({
-            ...prev,
-            [activeSpeciesId]: detail,
-          }));
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setDetailError("Failed to load species details.");
-        }
-      } finally {
-        if (!cancelled) {
-          setLoadingDetails(false);
-        }
-      }
-    };
-
-    loadSpeciesDetail();
-    return () => {
-      cancelled = true;
-    };
-  }, [pinkkaApi, activeSpeciesId, speciesDetails]);
-
-  const selectedSpeciesDetail =
-    activeSpeciesId !== null ? speciesDetails[activeSpeciesId] : null;
 
   const rootItems = useMemo<FinderItem<PinkkaGroup>[]>(
     () =>
@@ -219,7 +176,34 @@ export function PinkkaExplorer({
     [pinkkaApi, speciesBySubStack],
   );
 
-  const columnOrder = useMemo(() => ["group", "stack", "species"], []);
+  const loadSpeciesDetail = useCallback(
+    async (item: FinderItem<PinkkaSpeciesCard>) => {
+      const speciesId = item.payload.id;
+      const cached = speciesDetails[speciesId];
+      if (cached) {
+        return {
+          id: speciesId,
+          type: "species-detail",
+          payload: cached,
+        };
+      }
+
+      const detail = await pinkkaApi.fetchSpecies(speciesId);
+      if (!detail) {
+        throw new Error("Failed to load species details.");
+      }
+      setSpeciesDetails((prev) => ({
+        ...prev,
+        [speciesId]: detail,
+      }));
+      return {
+        id: speciesId,
+        type: "species-detail",
+        payload: detail,
+      };
+    },
+    [pinkkaApi, speciesDetails],
+  );
 
   const typeConfigs = useMemo(
     () => ({
@@ -289,31 +273,56 @@ export function PinkkaExplorer({
             </>
           );
         },
+        loadChildren: loadSpeciesDetail,
+      },
+      "species-detail": {
+        columnTitle: "Species",
+        detailsTitle: "Details",
+        columnClassName: "bg-background",
+        renderItem: () => null,
+        renderDetails: (item: FinderItem<PinkkaSpeciesDetail>) => (
+          <div className="space-y-4 px-1 text-sm">
+            <div>
+              <div className="text-lg font-semibold">
+                {item.payload.scientificName}
+              </div>
+              <div className="text-muted-foreground">
+                {getLocalizedText(item.payload.vernacularName, preferredLang)}
+              </div>
+            </div>
+            {item.payload.description?.map((section) => (
+              <div key={section.predicate} className="space-y-1">
+                <div className="text-xs font-semibold uppercase text-muted-foreground">
+                  {getLocalizedText(section.title, preferredLang)}
+                </div>
+                <div className="text-sm text-foreground">
+                  {getLocalizedText(section.body, preferredLang)}
+                </div>
+              </div>
+            ))}
+            {!item.payload.description?.length && (
+              <div className="text-muted-foreground">
+                No description available for this species.
+              </div>
+            )}
+          </div>
+        ),
       },
     }),
-    [preferredLang, loadGroupStacks, loadStackSpecies],
+    [preferredLang, loadGroupStacks, loadStackSpecies, loadSpeciesDetail],
   );
 
   const handleSelectionChange = useCallback(
     (state: FinderSelectionState) => {
-      const speciesColumnIndex = columnOrder.indexOf("species");
-      const selectedSpecies =
-        state.selectedItemsByColumn[speciesColumnIndex] ?? [];
-      setSelectedSpeciesCount(selectedSpecies.length);
-      setDetailError(null);
-
-      if (state.activeItem?.type === "species" && selectedSpecies.length === 1) {
+      if (state.activeColumnIndex === null) return;
+      const selectedInColumn =
+        state.selectedItemsByColumn[state.activeColumnIndex] ?? [];
+      if (state.activeItem?.type === "species" && selectedInColumn.length === 1) {
         const species = state.activeItem.payload as PinkkaSpeciesCard;
-        setActiveSpeciesId(species.id);
-        setActiveSpeciesCard(species);
         onSelectSpecies?.(species);
-      } else {
-        setActiveSpeciesId(null);
-        setActiveSpeciesCard(null);
-        setLoadingDetails(false);
       }
     },
-    [columnOrder, onSelectSpecies],
+    [onSelectSpecies],
   );
 
   return (
@@ -326,72 +335,11 @@ export function PinkkaExplorer({
       <FinderColumns
         className="flex-1"
         rootItems={rootItems}
+        rootType="group"
         typeConfigs={typeConfigs}
-        columnOrder={columnOrder}
         rootLoading={loadingGroups}
         rootError={groupError}
         onSelectionChange={handleSelectionChange}
-        renderTrailing={() => (
-          <div className="flex min-w-[280px] flex-1 flex-col bg-background">
-            <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Details
-            </div>
-            <div className="flex-1 overflow-y-auto">
-              {selectedSpeciesCount > 1 && (
-                <div className="px-3 py-2 text-sm text-muted-foreground">
-                  Multiple species selected. Choose a single species to view
-                  details.
-                </div>
-              )}
-              {detailError && selectedSpeciesCount === 1 ? (
-                <div className="px-3 py-2 text-sm text-destructive">
-                  {detailError}
-                </div>
-              ) : null}
-              {selectedSpeciesCount === 1 && loadingDetails ? (
-                <LoadingSpinner className="py-8" />
-              ) : null}
-              {selectedSpeciesCount === 1 && selectedSpeciesDetail ? (
-                <div className="space-y-4 px-4 pb-6 pt-2 text-sm">
-                  <div>
-                    <div className="text-lg font-semibold">
-                      {selectedSpeciesDetail.scientificName}
-                    </div>
-                    <div className="text-muted-foreground">
-                      {getLocalizedText(
-                        selectedSpeciesDetail.vernacularName,
-                        preferredLang,
-                      )}
-                    </div>
-                  </div>
-                  {selectedSpeciesDetail.description?.map((section) => (
-                    <div key={section.predicate} className="space-y-1">
-                      <div className="text-xs font-semibold uppercase text-muted-foreground">
-                        {getLocalizedText(section.title, preferredLang)}
-                      </div>
-                      <div className="text-sm text-foreground">
-                        {getLocalizedText(section.body, preferredLang)}
-                      </div>
-                    </div>
-                  ))}
-                  {!selectedSpeciesDetail.description?.length && (
-                    <div className="text-muted-foreground">
-                      No description available for this species.
-                    </div>
-                  )}
-                </div>
-              ) : selectedSpeciesCount === 1 && activeSpeciesCard ? (
-                <div className="px-4 py-6 text-sm text-muted-foreground">
-                  Loading details for {activeSpeciesCard.scientificName}...
-                </div>
-              ) : selectedSpeciesCount === 0 ? (
-                <div className="px-3 py-2 text-sm text-muted-foreground">
-                  Select a species to preview details.
-                </div>
-              ) : null}
-            </div>
-          </div>
-        )}
       />
     </div>
   );
