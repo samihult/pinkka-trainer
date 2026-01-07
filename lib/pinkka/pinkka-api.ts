@@ -93,6 +93,37 @@ export interface PinkkaSpeciesDetail {
     /** Predicate identifier for the section. */
     predicate: string;
   }>;
+  /** Optional image gallery for the species. */
+  images?: Array<{
+    /** Image id. */
+    id: string;
+    /** Optional localized image caption. */
+    caption?: MultilingualText;
+    /** Optional taxonomy id for the image. */
+    taxonId?: string | null;
+    /** Image URLs at various sizes. */
+    urls?: {
+      /** Original image URL. */
+      original?: string;
+      /** Full-size image URL. */
+      full?: string;
+      /** Large image URL. */
+      large?: string;
+      /** Square-cropped image URL. */
+      square?: string;
+      /** Thumbnail image URL. */
+      thumbnail?: string;
+    };
+    /** Optional metadata about the image. */
+    meta?: {
+      /** Rights owner for the image. */
+      rightsOwner?: string;
+      /** Capturers/photographers for the image. */
+      capturers?: string[];
+      /** License identifier for the image. */
+      license?: string;
+    };
+  }>;
 }
 
 /** Resolve localized text with preferred language fallback. */

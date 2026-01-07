@@ -7,6 +7,22 @@ const sampleDetail: PinkkaSpeciesDetailPayload = {
   taxonId: "MX.2",
   scientificName: "Betula pendula",
   vernacularName: { fi: "Rauduskoivu", en: "Silver birch" },
+  images: [
+    {
+      id: "demo-1",
+      caption: { fi: "Lehti", en: "Leaf" },
+      urls: {
+        large: "/placeholder.jpg",
+      },
+    },
+    {
+      id: "demo-2",
+      caption: { fi: "Runko", en: "Trunk" },
+      urls: {
+        large: "/placeholder-user.jpg",
+      },
+    },
+  ],
   description: [
     {
       predicate: "habitat",
