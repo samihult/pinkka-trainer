@@ -4,7 +4,7 @@ import { PinkkaExplorer } from "./pinkka-explorer";
 import { pinkkaHandlers } from "@/stories/mocks/pinkka-handlers";
 
 const meta: Meta<typeof PinkkaExplorer> = {
-  title: "Components/PinkkaExplorer",
+  title: "Components/Pinkka/PinkkaExplorer",
   component: PinkkaExplorer,
   args: {
     preferredLang: "fi",
