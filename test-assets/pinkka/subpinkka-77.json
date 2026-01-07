@@ -1,0 +1,301 @@
+{
+  "id": 77,
+  "name": {
+    "fi": "Metsät: tuoreet kankaat"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 13,
+    "name": {
+      "fi": "BIO-503 Suomen kasvisto ja kasvillisuus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.123226",
+  "speciesCards": [
+    {
+      "taxonId": "MX.38010",
+      "vernacularName": {
+        "sv": "gråal",
+        "fi": "harmaaleppä",
+        "en": "Grey alder"
+      },
+      "scientificName": "Alnus incana",
+      "id": 38994,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40567",
+      "vernacularName": {
+        "fi": "metsälauha",
+        "sv": "kruståtel"
+      },
+      "scientificName": "Avenella flexuosa",
+      "id": 38996,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37993",
+      "vernacularName": {
+        "fi": "rauduskoivu",
+        "sv": "vårtbjörk"
+      },
+      "scientificName": "Betula pendula",
+      "id": 38995,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37999",
+      "vernacularName": {
+        "sv": "glasbjörk",
+        "fi": "hieskoivu"
+      },
+      "scientificName": "Betula pubescens",
+      "id": 38993,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40614",
+      "vernacularName": {
+        "fi": "metsäkastikka",
+        "sv": "piprör"
+      },
+      "scientificName": "Calamagrostis arundinacea",
+      "id": 38992,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39088",
+      "vernacularName": {
+        "sv": "mjölke",
+        "fi": "maitohorsma"
+      },
+      "scientificName": "Chamaenerion angustifolium",
+      "id": 38997,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38646",
+      "vernacularName": {
+        "fi": "variksenmarja",
+        "sv": "kråkbär"
+      },
+      "scientificName": "Empetrum nigrum",
+      "id": 39002,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40045",
+      "vernacularName": {
+        "sv": "knärot",
+        "fi": "yövilkka"
+      },
+      "scientificName": "Goodyera repens",
+      "id": 39014,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37826",
+      "vernacularName": {
+        "sv": "en",
+        "fi": "kataja"
+      },
+      "scientificName": "Juniperus communis",
+      "id": 38998,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39343",
+      "vernacularName": {
+        "fi": "vanamo",
+        "sv": "linnea"
+      },
+      "scientificName": "Linnaea borealis",
+      "id": 38999,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39976",
+      "vernacularName": {
+        "fi": "oravanmarja",
+        "sv": "ekorrbär"
+      },
+      "scientificName": "Maianthemum bifolium",
+      "id": 39000,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39633",
+      "vernacularName": {
+        "fi": "kangasmaitikka",
+        "sv": "ängskovall"
+      },
+      "scientificName": "Melampyrum pratense",
+      "id": 39001,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39632",
+      "vernacularName": {
+        "fi": "metsämaitikka",
+        "sv": "skogskovall"
+      },
+      "scientificName": "Melampyrum sylvaticum",
+      "id": 39003,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38634",
+      "vernacularName": {
+        "fi": "nuokkutalvikki",
+        "sv": "björkpyrola"
+      },
+      "scientificName": "Orthilia secunda",
+      "id": 39007,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37812",
+      "vernacularName": {
+        "fi": "metsäkuusi",
+        "sv": "gran",
+        "en": "Norway spruce"
+      },
+      "scientificName": "Picea abies",
+      "id": 39008,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37819",
+      "vernacularName": {
+        "fi": "metsämänty",
+        "sv": "tall",
+        "en": "Scots pine"
+      },
+      "scientificName": "Pinus sylvestris",
+      "id": 39004,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38590",
+      "vernacularName": {
+        "sv": "asp",
+        "fi": "metsähaapa",
+        "en": "Common aspen"
+      },
+      "scientificName": "Populus tremula",
+      "id": 39006,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38605",
+      "vernacularName": {
+        "fi": "suopursu",
+        "sv": "skvattram"
+      },
+      "scientificName": "Rhododendron tomentosum",
+      "id": 39013,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38563",
+      "vernacularName": {
+        "fi": "raita",
+        "sv": "sälg",
+        "en": "Goat willow"
+      },
+      "scientificName": "Salix caprea",
+      "id": 39005,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38910",
+      "vernacularName": {
+        "fi": "pihlaja",
+        "sv": "rönn"
+      },
+      "scientificName": "Sorbus aucuparia",
+      "id": 39011,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37691",
+      "vernacularName": {
+        "sv": "revlummer",
+        "fi": "riidenlieko"
+      },
+      "scientificName": "Spinulum annotinum",
+      "id": 38991,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38622",
+      "vernacularName": {
+        "fi": "mustikka",
+        "sv": "blåbär"
+      },
+      "scientificName": "Vaccinium myrtillus",
+      "id": 39009,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38621",
+      "vernacularName": {
+        "sv": "odon",
+        "fi": "juolukka"
+      },
+      "scientificName": "Vaccinium uliginosum",
+      "id": 39010,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38620",
+      "vernacularName": {
+        "sv": "lingon",
+        "fi": "puolukka"
+      },
+      "scientificName": "Vaccinium vitis-idaea",
+      "id": 39012,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.123226",
+    "urls": {
+      "original": "https://image.laji.fi/MM.123226/JR_11.7.2008_075.jpg",
+      "full": "https://image.laji.fi/MM.123226/JR_11.7.2008_075.jpg",
+      "large": "https://image.laji.fi/MM.123226/JR_11.7.2008_075.jpg",
+      "square": "https://image.laji.fi/MM.123226/JR_11.7.2008_075_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.123226/JR_11.7.2008_075_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1485008820,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1218440879,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR 11.7.2008 075.jpg",
+      "documentIds": [
+        "1810"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.38622"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

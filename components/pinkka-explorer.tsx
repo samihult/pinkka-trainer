@@ -13,6 +13,7 @@ import {
   type PinkkaSubStack,
 } from "@/lib/pinkka/pinkka-api";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
 
 type PinkkaLanguage = "fi" | "en" | "sv";
 
@@ -228,191 +229,206 @@ export function PinkkaExplorer({
     selectedSpeciesId !== null ? speciesDetails[selectedSpeciesId] : null;
 
   return (
-    <div className="relative flex min-h-[420px] overflow-x-auto border border-border bg-background">
+    <div className="relative flex h-full min-h-0 overflow-x-auto border border-border bg-background">
       {error && (
         <div className="absolute left-4 top-4 rounded-md border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {error}
         </div>
       )}
 
-      <div className="w-72 shrink-0 border-r bg-muted/20">
+      <div className="flex h-full min-h-0 w-72 shrink-0 flex-col border-r bg-muted/20">
         <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Groups
         </div>
-        {loadingGroups ? (
-          <LoadingSpinner className="py-8" />
-        ) : (
-          <ul className="space-y-1 px-2 pb-4">
-            {groups.map((group) => {
-              const label = getLocalizedText(group.name, preferredLang);
-              const isSelected = group.id === selectedGroupId;
-              return (
-                <li key={group.id}>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedGroupId(group.id)}
-                    className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
-                      isSelected
-                        ? "bg-primary/15 text-primary"
-                        : "hover:bg-muted/60"
-                    }`}
-                  >
-                    {label || `Group ${group.id}`}
-                  </button>
+        <div className="flex-1 overflow-y-auto">
+          {loadingGroups ? (
+            <LoadingSpinner className="py-8" />
+          ) : (
+            <ul className="space-y-1 px-2 pb-4">
+              {groups.map((group) => {
+                const label = getLocalizedText(group.name, preferredLang);
+                const isSelected = group.id === selectedGroupId;
+                return (
+                  <li key={group.id}>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedGroupId(group.id)}
+                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
+                        isSelected
+                          ? "bg-primary/15 text-primary"
+                          : "hover:bg-muted/60"
+                      }`}
+                    >
+                      <MiddleEllipsisText
+                        text={label || `Group ${group.id}`}
+                      />
+                    </button>
+                  </li>
+                );
+              })}
+              {groups.length === 0 && (
+                <li className="px-3 py-2 text-sm text-muted-foreground">
+                  No groups available.
                 </li>
-              );
-            })}
-            {groups.length === 0 && (
-              <li className="px-3 py-2 text-sm text-muted-foreground">
-                No groups available.
-              </li>
-            )}
-          </ul>
-        )}
+              )}
+            </ul>
+          )}
+        </div>
       </div>
 
-      <div className="w-72 shrink-0 border-r bg-background">
+      <div className="flex h-full min-h-0 w-72 shrink-0 flex-col border-r bg-background">
         <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Stacks
         </div>
-        {loadingSubStacks ? (
-          <LoadingSpinner className="py-8" />
-        ) : (
-          <ul className="space-y-1 px-2 pb-4">
-            {subStacks.map((stack) => {
-              const label = getLocalizedText(stack.name, preferredLang);
-              const isSelected = stack.id === selectedSubStackId;
-              return (
-                <li key={stack.id}>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedSubStackId(stack.id)}
-                    className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
-                      isSelected
-                        ? "bg-primary/15 text-primary"
-                        : "hover:bg-muted/60"
-                    }`}
-                  >
-                    <div className="font-medium">
-                      {label || `Stack ${stack.id}`}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {getLocalizedText(stack.description, preferredLang)}
-                    </div>
-                  </button>
+        <div className="flex-1 overflow-y-auto">
+          {loadingSubStacks ? (
+            <LoadingSpinner className="py-8" />
+          ) : (
+            <ul className="space-y-1 px-2 pb-4">
+              {subStacks.map((stack) => {
+                const label = getLocalizedText(stack.name, preferredLang);
+                const isSelected = stack.id === selectedSubStackId;
+                return (
+                  <li key={stack.id}>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedSubStackId(stack.id)}
+                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
+                        isSelected
+                          ? "bg-primary/15 text-primary"
+                          : "hover:bg-muted/60"
+                      }`}
+                    >
+                      <MiddleEllipsisText
+                        className="font-medium"
+                        text={label || `Stack ${stack.id}`}
+                      />
+                      <div className="text-xs text-muted-foreground">
+                        {getLocalizedText(stack.description, preferredLang)}
+                      </div>
+                    </button>
+                  </li>
+                );
+              })}
+              {selectedGroup && subStacks.length === 0 && (
+                <li className="px-3 py-2 text-sm text-muted-foreground">
+                  No stacks available.
                 </li>
-              );
-            })}
-            {selectedGroup && subStacks.length === 0 && (
-              <li className="px-3 py-2 text-sm text-muted-foreground">
-                No stacks available.
-              </li>
-            )}
-            {!selectedGroup && (
-              <li className="px-3 py-2 text-sm text-muted-foreground">
-                Select a group to view stacks.
-              </li>
-            )}
-          </ul>
-        )}
+              )}
+              {!selectedGroup && (
+                <li className="px-3 py-2 text-sm text-muted-foreground">
+                  Select a group to view stacks.
+                </li>
+              )}
+            </ul>
+          )}
+        </div>
       </div>
 
-      <div className="w-72 shrink-0 border-r bg-muted/10">
+      <div className="flex h-full min-h-0 w-72 shrink-0 flex-col border-r bg-muted/10">
         <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Species
         </div>
-        {loadingSpecies ? (
-          <LoadingSpinner className="py-8" />
-        ) : (
-          <ul className="space-y-1 px-2 pb-4">
-            {speciesCards.map((species) => {
-              const isSelected = species.id === selectedSpeciesId;
-              const vernacular = getLocalizedText(
-                species.vernacularName,
-                preferredLang,
-              );
-              return (
-                <li key={species.id}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedSpeciesId(species.id);
-                      onSelectSpecies?.(species);
-                    }}
-                    className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
-                      isSelected
-                        ? "bg-primary/15 text-primary"
-                        : "hover:bg-muted/60"
-                    }`}
-                  >
-                    <div className="font-medium">{species.scientificName}</div>
-                    {vernacular && (
-                      <div className="text-xs text-muted-foreground">
-                        {vernacular}
-                      </div>
-                    )}
-                  </button>
+        <div className="flex-1 overflow-y-auto">
+          {loadingSpecies ? (
+            <LoadingSpinner className="py-8" />
+          ) : (
+            <ul className="space-y-1 px-2 pb-4">
+              {speciesCards.map((species) => {
+                const isSelected = species.id === selectedSpeciesId;
+                const vernacular = getLocalizedText(
+                  species.vernacularName,
+                  preferredLang,
+                );
+                return (
+                  <li key={species.id}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedSpeciesId(species.id);
+                        onSelectSpecies?.(species);
+                      }}
+                      className={`w-full rounded-md px-3 py-2 text-left text-sm transition ${
+                        isSelected
+                          ? "bg-primary/15 text-primary"
+                          : "hover:bg-muted/60"
+                      }`}
+                    >
+                      <MiddleEllipsisText
+                        className="font-medium"
+                        text={species.scientificName}
+                      />
+                      {vernacular && (
+                        <MiddleEllipsisText
+                          className="text-xs text-muted-foreground"
+                          text={vernacular}
+                        />
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+              {selectedSubStack && speciesCards.length === 0 && (
+                <li className="px-3 py-2 text-sm text-muted-foreground">
+                  No species available.
                 </li>
-              );
-            })}
-            {selectedSubStack && speciesCards.length === 0 && (
-              <li className="px-3 py-2 text-sm text-muted-foreground">
-                No species available.
-              </li>
-            )}
-            {!selectedSubStack && (
-              <li className="px-3 py-2 text-sm text-muted-foreground">
-                Select a stack to view species.
-              </li>
-            )}
-          </ul>
-        )}
+              )}
+              {!selectedSubStack && (
+                <li className="px-3 py-2 text-sm text-muted-foreground">
+                  Select a stack to view species.
+                </li>
+              )}
+            </ul>
+          )}
+        </div>
       </div>
 
-      <div className="min-w-[280px] flex-1 bg-background">
+      <div className="flex min-w-[280px] flex-1 flex-col bg-background">
         <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Details
         </div>
-        {loadingDetails ? (
-          <LoadingSpinner className="py-8" />
-        ) : selectedSpeciesDetail ? (
-          <div className="space-y-4 px-4 pb-6 pt-2 text-sm">
-            <div>
-              <div className="text-lg font-semibold">
-                {selectedSpeciesDetail.scientificName}
+        <div className="flex-1 overflow-y-auto">
+          {loadingDetails ? (
+            <LoadingSpinner className="py-8" />
+          ) : selectedSpeciesDetail ? (
+            <div className="space-y-4 px-4 pb-6 pt-2 text-sm">
+              <div>
+                <div className="text-lg font-semibold">
+                  {selectedSpeciesDetail.scientificName}
+                </div>
+                <div className="text-muted-foreground">
+                  {getLocalizedText(
+                    selectedSpeciesDetail.vernacularName,
+                    preferredLang,
+                  )}
+                </div>
               </div>
-              <div className="text-muted-foreground">
-                {getLocalizedText(
-                  selectedSpeciesDetail.vernacularName,
-                  preferredLang,
-                )}
-              </div>
+              {selectedSpeciesDetail.description?.map((section) => (
+                <div key={section.predicate} className="space-y-1">
+                  <div className="text-xs font-semibold uppercase text-muted-foreground">
+                    {getLocalizedText(section.title, preferredLang)}
+                  </div>
+                  <div className="text-sm text-foreground">
+                    {getLocalizedText(section.body, preferredLang)}
+                  </div>
+                </div>
+              ))}
+              {!selectedSpeciesDetail.description?.length && (
+                <div className="text-muted-foreground">
+                  No description available for this species.
+                </div>
+              )}
             </div>
-            {selectedSpeciesDetail.description?.map((section) => (
-              <div key={section.predicate} className="space-y-1">
-                <div className="text-xs font-semibold uppercase text-muted-foreground">
-                  {getLocalizedText(section.title, preferredLang)}
-                </div>
-                <div className="text-sm text-foreground">
-                  {getLocalizedText(section.body, preferredLang)}
-                </div>
-              </div>
-            ))}
-            {!selectedSpeciesDetail.description?.length && (
-              <div className="text-muted-foreground">
-                No description available for this species.
-              </div>
-            )}
-          </div>
-        ) : selectedSpecies ? (
-          <div className="px-4 py-6 text-sm text-muted-foreground">
-            Loading details for {selectedSpecies.scientificName}...
-          </div>
-        ) : (
-          <div className="px-3 py-2 text-sm text-muted-foreground">
-            Select a species to preview details.
-          </div>
-        )}
+          ) : selectedSpecies ? (
+            <div className="px-4 py-6 text-sm text-muted-foreground">
+              Loading details for {selectedSpecies.scientificName}...
+            </div>
+          ) : (
+            <div className="px-3 py-2 text-sm text-muted-foreground">
+              Select a species to preview details.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

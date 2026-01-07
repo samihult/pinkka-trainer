@@ -1,0 +1,133 @@
+{
+  "id": 227,
+  "name": {
+    "fi": "Sammalet ja jäkälät",
+    "sv": "Mossor och lavar"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 21,
+    "name": {
+      "fi": "Maatalouslajintuntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.53892",
+  "speciesCards": [
+    {
+      "taxonId": "MX.44366",
+      "vernacularName": {
+        "fi": "keuhkosammal",
+        "sv": "lungmossa"
+      },
+      "scientificName": "Marchantia polymorpha",
+      "id": 27542,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43554",
+      "vernacularName": {
+        "sv": "kvastmossa",
+        "fi": "kivikynsisammal"
+      },
+      "scientificName": "Dicranum scoparium",
+      "id": 27549,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43496",
+      "vernacularName": {
+        "sv": "brännmossa",
+        "fi": "metsäkulosammal"
+      },
+      "scientificName": "Ceratodon purpureus",
+      "id": 27580,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43981",
+      "vernacularName": {
+        "sv": "gräshakmossa",
+        "fi": "niittyliekosammal"
+      },
+      "scientificName": "Rhytidiadelphus squarrosus",
+      "id": 27536,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43901",
+      "vernacularName": {
+        "sv": "väggmossa",
+        "fi": "seinäsammal"
+      },
+      "scientificName": "Pleurozium schreberi",
+      "id": 27589,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43386",
+      "vernacularName": {
+        "fi": "rahkasammalet",
+        "sv": "vitmossor"
+      },
+      "scientificName": "Sphagnum",
+      "id": 27577,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65104",
+      "vernacularName": {
+        "fi": "palleroporonjäkälä",
+        "sv": "fönsterlav"
+      },
+      "scientificName": "Cladonia stellaris",
+      "id": 27572,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65484",
+      "vernacularName": {},
+      "scientificName": "Cetraria islandica",
+      "id": 27576,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.53892",
+    "urls": {
+      "original": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja.jpg",
+      "full": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja.jpg",
+      "large": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja.jpg",
+      "square": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1412792058,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_meta_fix",
+      "originalFilename": "MX.44366_13 Marcpoly JR 22_7_2008 046 Itulevymaljoja.jpg",
+      "documentIds": [
+        "16559"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.44366"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

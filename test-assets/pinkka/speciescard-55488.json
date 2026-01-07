@@ -181,8 +181,8 @@
     },
     {
       "title": {
-        "sv": "Beskrivning",
         "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
         "en": "Description"
       },
       "body": {},
@@ -522,14 +522,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807416,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807416,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR85576.JPG",
         "documentIds": [
@@ -561,14 +561,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807416,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807416,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR85575.JPG",
         "documentIds": [
@@ -600,14 +600,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807416,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807416,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR84370.JPG",
         "documentIds": [
@@ -639,14 +639,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807416,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807416,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR84371.JPG",
         "documentIds": [
@@ -678,14 +678,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807416,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807416,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR84372.JPG",
         "documentIds": [
@@ -717,14 +717,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807416,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807416,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR84373.JPG",
         "documentIds": [
@@ -756,14 +756,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807416,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807416,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR84374.JPG",
         "documentIds": [

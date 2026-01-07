@@ -1,0 +1,130 @@
+{
+  "id": 6,
+  "name": {
+    "fi": "BIO-519 Sienituntemus",
+    "sv": "Svampartkännedom",
+    "en": "Identification of fungi"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "",
+    "sv": "52063 Svampartkännedom - Mykologins grunder, 2 sp\nBio- och miljövetenskapliga fakulteten\nHelsingfors universitet"
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi",
+    "tbonsdor@helsinki.fi",
+    "tuniskan@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 29,
+      "name": {
+        "fi": "Boletales",
+        "sv": "Boletales"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 30,
+      "name": {
+        "fi": "Russulales",
+        "sv": "Russulales"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 38,
+      "name": {
+        "fi": "Agaricales – tummaitiöisiä helttasieniä",
+        "sv": "Agaricales – mörka sporer"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 31,
+      "name": {
+        "fi": "Agaricales – ruskeaitiöisiä helttasieniä",
+        "sv": "Agaricales – bruna sporer"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 32,
+      "name": {
+        "fi": "Agaricales – vaaleaitiöisiä helttasieniä",
+        "sv": "Agaricales – ljusa sporer"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 33,
+      "name": {
+        "fi": "Agaricales – punertavaitiöisiä helttasieniä",
+        "sv": "Agaricales – rödaktiga sporer"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 827,
+      "name": {
+        "fi": "Vahveroita, orakkaita ja silokoita"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 35,
+      "name": {
+        "fi": "Haarakkaita ja nuijakkaita",
+        "sv": "Andra ordningar"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 825,
+      "name": {
+        "fi": "Kääväkkäitä"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 826,
+      "name": {
+        "fi": "Kupusieniä"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 36,
+      "name": {
+        "fi": "Hyytelösieniä",
+        "sv": "Dacrymycetales"
+      },
+      "orderNo": 10,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 37,
+      "name": {
+        "fi": "Kotelosieniä",
+        "sv": "Pezizales"
+      },
+      "orderNo": 11,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

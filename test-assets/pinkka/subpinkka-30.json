@@ -1,0 +1,384 @@
+{
+  "id": 30,
+  "name": {
+    "fi": "Russulales",
+    "sv": "Russulales"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 6,
+    "name": {
+      "fi": "BIO-519 Sienituntemus",
+      "sv": "Svampartkännedom",
+      "en": "Identification of fungi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.116468",
+  "speciesCards": [
+    {
+      "taxonId": "MX.72692",
+      "vernacularName": {
+        "sv": "ekriska",
+        "fi": "tammenrousku"
+      },
+      "scientificName": "Lactarius quietus",
+      "id": 25786,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72942",
+      "vernacularName": {
+        "sv": "hasselriska",
+        "fi": "pähkinänrousku"
+      },
+      "scientificName": "Lactarius pyrogalus",
+      "id": 25785,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72086",
+      "vernacularName": {
+        "sv": "äggkremla",
+        "fi": "munahapero"
+      },
+      "scientificName": "Russula vitellina",
+      "id": 25777,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71806",
+      "vernacularName": {
+        "fi": "pippurirousku"
+      },
+      "scientificName": "Lactifluus piperatus",
+      "id": 25784,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72083",
+      "vernacularName": {
+        "sv": "svedkremla",
+        "fi": "savuhapero"
+      },
+      "scientificName": "Russula adusta",
+      "id": 25779,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72940",
+      "vernacularName": {
+        "sv": "mörk kokosriska",
+        "fi": "kangaspalsamirousku"
+      },
+      "scientificName": "Lactarius mammosus",
+      "id": 25782,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72937",
+      "vernacularName": {
+        "fi": "kuusenleppärousku",
+        "sv": "blodriska"
+      },
+      "scientificName": "Lactarius deterrimus",
+      "id": 25780,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73187",
+      "vernacularName": {
+        "fi": "lehtorousku"
+      },
+      "scientificName": "Lactifluus bertillonii",
+      "id": 5768,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72469",
+      "vernacularName": {
+        "sv": "kamferriska",
+        "fi": "sikurirousku"
+      },
+      "scientificName": "Lactarius camphoratus",
+      "id": 7303,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72035",
+      "vernacularName": {
+        "fi": "männynleppärousku",
+        "sv": "läcker riska"
+      },
+      "scientificName": "Lactarius deliciosus",
+      "id": 7302,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73431",
+      "vernacularName": {
+        "sv": "buktriska",
+        "fi": "nurmirousku"
+      },
+      "scientificName": "Lactarius flexuosus",
+      "id": 5642,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72686",
+      "vernacularName": {
+        "fi": "viitapalsamirousku",
+        "sv": "kokosriska"
+      },
+      "scientificName": "Lactarius glyciosmus",
+      "id": 4320,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72272",
+      "vernacularName": {
+        "fi": "lakritsirousku",
+        "sv": "lakritsriska"
+      },
+      "scientificName": "Lactarius helvus",
+      "id": 2659,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72693",
+      "vernacularName": {
+        "fi": "kangasrousku",
+        "sv": "pepparriska"
+      },
+      "scientificName": "Lactarius rufus",
+      "id": 4808,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209692",
+      "vernacularName": {
+        "fi": "voirouskut"
+      },
+      "scientificName": "Lactarius scrobiculatus coll.",
+      "id": 2153,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73192",
+      "vernacularName": {
+        "sv": "småriska",
+        "fi": "pikkurousku"
+      },
+      "scientificName": "Lactarius tabidus",
+      "id": 6333,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72276",
+      "vernacularName": {
+        "sv": "skäggriska",
+        "fi": "karvarousku"
+      },
+      "scientificName": "Lactarius torminosus",
+      "id": 2664,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72694",
+      "vernacularName": {
+        "fi": "haaparousku",
+        "sv": "skogsriska"
+      },
+      "scientificName": "Lactarius trivialis",
+      "id": 4810,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71809",
+      "vernacularName": {
+        "sv": "svartriska",
+        "fi": "mustarousku"
+      },
+      "scientificName": "Lactarius turpis",
+      "id": 4845,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72695",
+      "vernacularName": {
+        "fi": "korpirousku",
+        "sv": "lilariska"
+      },
+      "scientificName": "Lactarius uvidus",
+      "id": 4809,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72043",
+      "vernacularName": {
+        "fi": "harmaarousku",
+        "sv": "gråriska"
+      },
+      "scientificName": "Lactarius vietus",
+      "id": 7306,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72507",
+      "vernacularName": {
+        "sv": "grönkremla",
+        "fi": "koivuhapero"
+      },
+      "scientificName": "Russula aeruginea",
+      "id": 1897,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209688",
+      "vernacularName": {
+        "fi": "suppilohaperot"
+      },
+      "scientificName": "Russula chloroides coll.",
+      "id": 1994,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73001",
+      "vernacularName": {
+        "fi": "keltahapero",
+        "sv": "gulkremla"
+      },
+      "scientificName": "Russula claroflava",
+      "id": 7307,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73465",
+      "vernacularName": {
+        "fi": "polttiaishapero",
+        "sv": "nässelkremla"
+      },
+      "scientificName": "Russula consobrina",
+      "id": 4068,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73235",
+      "vernacularName": {
+        "sv": "tegelkremla",
+        "fi": "kangashapero"
+      },
+      "scientificName": "Russula decolorans",
+      "id": 7304,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73004",
+      "vernacularName": {
+        "fi": "haisuhapero",
+        "sv": "stinkkremla"
+      },
+      "scientificName": "Russula foetens",
+      "id": 7308,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71863",
+      "vernacularName": {
+        "fi": "koivunlehtohapero",
+        "sv": "praktkremla"
+      },
+      "scientificName": "Russula intermedia",
+      "id": 5928,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72321",
+      "vernacularName": {
+        "fi": "isohapero",
+        "sv": "storkremla"
+      },
+      "scientificName": "Russula paludosa",
+      "id": 3813,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73243",
+      "vernacularName": {
+        "fi": "punajalkahapero",
+        "sv": "lackkremla"
+      },
+      "scientificName": "Russula rhodopus",
+      "id": 5160,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73458",
+      "vernacularName": {
+        "sv": "kantkremla",
+        "fi": "palterohapero"
+      },
+      "scientificName": "Russula vesca",
+      "id": 2557,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72510",
+      "vernacularName": {
+        "fi": "viinihapero",
+        "sv": "vinkremla"
+      },
+      "scientificName": "Russula vinosa",
+      "id": 7305,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71848",
+      "vernacularName": {
+        "fi": "sillihaperoryhmä"
+      },
+      "scientificName": "Russula xerampelina coll.",
+      "id": 7301,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.116468",
+    "urls": {
+      "original": "https://image.laji.fi/MM.116468/JR33293.JPG",
+      "full": "https://image.laji.fi/MM.116468/JR33293.JPG",
+      "large": "https://image.laji.fi/MM.116468/JR33293_large.jpg",
+      "square": "https://image.laji.fi/MM.116468/JR33293_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.116468/JR33293_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1473315015,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1475506327,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR33293.JPG",
+      "documentIds": [
+        "1205"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.72035"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

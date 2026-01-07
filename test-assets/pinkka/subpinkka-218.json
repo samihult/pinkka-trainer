@@ -1,0 +1,435 @@
+{
+  "id": 218,
+  "name": {
+    "fi": "Koppisiemeniset"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 15,
+    "name": {
+      "fi": "Luonnonvaraiset lääkekasvit",
+      "sv": "Farmakognosi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.52130",
+  "speciesCards": [
+    {
+      "taxonId": "MX.39812",
+      "vernacularName": {
+        "sv": "röllika",
+        "fi": "siankärsämö"
+      },
+      "scientificName": "Achillea millefolium",
+      "id": 26245,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38611",
+      "vernacularName": {
+        "fi": "sianpuolukka",
+        "sv": "mjölon"
+      },
+      "scientificName": "Arctostaphylos uva-ursi",
+      "id": 26259,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39835",
+      "vernacularName": {
+        "fi": "pujo",
+        "sv": "gråbo"
+      },
+      "scientificName": "Artemisia vulgaris",
+      "id": 26258,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38598",
+      "vernacularName": {
+        "sv": "ljung",
+        "fi": "kanerva"
+      },
+      "scientificName": "Calluna vulgaris",
+      "id": 26267,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38452",
+      "vernacularName": {
+        "sv": "lomme",
+        "fi": "lutukka"
+      },
+      "scientificName": "Capsella bursa-pastoris",
+      "id": 26275,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39229",
+      "vernacularName": {
+        "fi": "kumina",
+        "sv": "kummin"
+      },
+      "scientificName": "Carum carvi",
+      "id": 26271,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39970",
+      "vernacularName": {
+        "fi": "kielo",
+        "sv": "liljekonvalj"
+      },
+      "scientificName": "Convallaria majalis",
+      "id": 26437,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38780",
+      "vernacularName": {
+        "sv": "rundsileshår",
+        "fi": "pyöreälehtikihokki"
+      },
+      "scientificName": "Drosera rotundifolia",
+      "id": 26285,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40537",
+      "vernacularName": {
+        "fi": "niittyjuola",
+        "sv": "kvickrot"
+      },
+      "scientificName": "Elytrigia repens",
+      "id": 26436,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39088",
+      "vernacularName": {
+        "sv": "mjölke",
+        "fi": "maitohorsma"
+      },
+      "scientificName": "Chamaenerion angustifolium",
+      "id": 26286,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38795",
+      "vernacularName": {
+        "fi": "mesiangervo",
+        "sv": "älggräs"
+      },
+      "scientificName": "Filipendula ulmaria",
+      "id": 26295,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37979",
+      "vernacularName": {
+        "fi": "humala",
+        "sv": "humle"
+      },
+      "scientificName": "Humulus lupulus",
+      "id": 26435,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39079",
+      "vernacularName": {
+        "fi": "rantakukka",
+        "sv": "fackelblomster"
+      },
+      "scientificName": "Lythrum salicaria",
+      "id": 26434,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39520",
+      "vernacularName": {
+        "fi": "rantaminttu",
+        "sv": "åkermynta"
+      },
+      "scientificName": "Mentha arvensis",
+      "id": 26323,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39328",
+      "vernacularName": {
+        "fi": "raate",
+        "sv": "vattenklöver"
+      },
+      "scientificName": "Menyanthes trifoliata",
+      "id": 26326,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39130",
+      "vernacularName": {
+        "fi": "käenkaali",
+        "sv": "harsyra"
+      },
+      "scientificName": "Oxalis acetosella",
+      "id": 26333,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38216",
+      "vernacularName": {},
+      "scientificName": "Polygonum aviculare sec. Kurtto & al. 2019",
+      "id": 26336,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38590",
+      "vernacularName": {
+        "sv": "asp",
+        "fi": "metsähaapa",
+        "en": "Common aspen"
+      },
+      "scientificName": "Populus tremula",
+      "id": 26340,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38844",
+      "vernacularName": {
+        "fi": "ketohanhikki",
+        "sv": "gåsört"
+      },
+      "scientificName": "Argentina anserina",
+      "id": 26339,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38863",
+      "vernacularName": {
+        "fi": "rätvänä",
+        "sv": "blodrot"
+      },
+      "scientificName": "Potentilla erecta",
+      "id": 26341,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38655",
+      "vernacularName": {
+        "sv": "gullviva",
+        "fi": "kevätesikko"
+      },
+      "scientificName": "Primula veris",
+      "id": 26432,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39500",
+      "vernacularName": {
+        "fi": "niittyhumala",
+        "sv": "brunört"
+      },
+      "scientificName": "Prunella vulgaris",
+      "id": 26342,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38804",
+      "vernacularName": {
+        "fi": "vadelma",
+        "sv": "skogshallon"
+      },
+      "scientificName": "Rubus idaeus",
+      "id": 26355,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38279",
+      "vernacularName": {
+        "sv": "ängssyra",
+        "fi": "niittysuolaheinä"
+      },
+      "scientificName": "Rumex acetosa",
+      "id": 26361,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39727",
+      "vernacularName": {
+        "fi": "kultapiisku",
+        "sv": "gullris"
+      },
+      "scientificName": "Solidago virgaurea",
+      "id": 26377,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38910",
+      "vernacularName": {
+        "fi": "pihlaja",
+        "sv": "rönn"
+      },
+      "scientificName": "Sorbus aucuparia",
+      "id": 26373,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39830",
+      "vernacularName": {
+        "fi": "pietaryrtti",
+        "sv": "renfana"
+      },
+      "scientificName": "Tanacetum vulgare",
+      "id": 26381,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42419",
+      "vernacularName": {
+        "fi": "voikukat",
+        "sv": "maskrosor"
+      },
+      "scientificName": "Taraxacum",
+      "id": 26384,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39512",
+      "vernacularName": {
+        "fi": "kangasajuruoho",
+        "sv": "backtimjan"
+      },
+      "scientificName": "Thymus serpyllum",
+      "id": 26433,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38686",
+      "vernacularName": {
+        "fi": "metsälehmus",
+        "sv": "skogslind",
+        "en": "Small-leaved lime"
+      },
+      "scientificName": "Tilia cordata",
+      "id": 26385,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39052",
+      "vernacularName": {
+        "fi": "puna-apila",
+        "sv": "rödklöver"
+      },
+      "scientificName": "Trifolium pratense",
+      "id": 26390,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39847",
+      "vernacularName": {
+        "fi": "leskenlehti",
+        "sv": "hästhov"
+      },
+      "scientificName": "Tussilago farfara",
+      "id": 26392,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37984",
+      "vernacularName": {
+        "fi": "isonokkonen",
+        "sv": "brännässla"
+      },
+      "scientificName": "Urtica dioica",
+      "id": 26395,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38622",
+      "vernacularName": {
+        "fi": "mustikka",
+        "sv": "blåbär"
+      },
+      "scientificName": "Vaccinium myrtillus",
+      "id": 26394,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38618",
+      "vernacularName": {
+        "fi": "isokarpalo",
+        "sv": "tranbär"
+      },
+      "scientificName": "Vaccinium oxycoccos",
+      "id": 26397,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39358",
+      "vernacularName": {
+        "sv": "läkevänderot",
+        "fi": "rohtovirmajuuri"
+      },
+      "scientificName": "Valeriana officinalis",
+      "id": 26400,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39608",
+      "vernacularName": {
+        "fi": "rohtotädyke",
+        "sv": "ärenpris"
+      },
+      "scientificName": "Veronica officinalis",
+      "id": 26401,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38336",
+      "vernacularName": {
+        "fi": "keto-orvokki",
+        "sv": "styvmorsviol"
+      },
+      "scientificName": "Viola tricolor",
+      "id": 26409,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.52130",
+    "urls": {
+      "original": "https://image.laji.fi/MM.52130/MX.39328_Menytrif_JR_25_6_2006_082.JPG",
+      "full": "https://image.laji.fi/MM.52130/MX.39328_Menytrif_JR_25_6_2006_082.JPG",
+      "large": "https://image.laji.fi/MM.52130/MX.39328_Menytrif_JR_25_6_2006_082_large.jpg",
+      "square": "https://image.laji.fi/MM.52130/MX.39328_Menytrif_JR_25_6_2006_082_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.52130/MX.39328_Menytrif_JR_25_6_2006_082_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1412791247,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_meta_fix",
+      "originalFilename": "MX.39328_Menytrif JR 25_6_2006 082.JPG",
+      "documentIds": [
+        "4242"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.39328"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

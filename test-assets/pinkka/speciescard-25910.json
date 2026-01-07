@@ -7,8 +7,8 @@
   "description": [
     {
       "title": {
-        "sv": "Beskrivning",
         "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
         "en": "Description"
       },
       "body": {
@@ -154,14 +154,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800110,
+        "uploadDateTime": 1767807420,
         "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
         "rightsOwner": "Sanna Korkonen",
         "secret": false,
         "capturers": [
           "Sanna Korkonen"
         ],
-        "captureDateTime": 1767800110,
+        "captureDateTime": 1767807420,
         "uploadedBy": "skorkone@helsinki.fi",
         "originalFilename": "20160810_112437 muokattu.jpg",
         "documentIds": [
@@ -187,7 +187,7 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800110,
+        "uploadDateTime": 1767807420,
         "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
         "rightsOwner": "Sanna Korkonen",
         "secret": false,

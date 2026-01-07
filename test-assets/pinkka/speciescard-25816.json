@@ -7,8 +7,8 @@
   "description": [
     {
       "title": {
-        "sv": "Beskrivning",
         "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
         "en": "Description"
       },
       "body": {},
@@ -172,14 +172,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800110,
+        "uploadDateTime": 1767807420,
         "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
         "rightsOwner": "Laura Helenius",
         "secret": false,
         "capturers": [
           "Laura Helenius"
         ],
-        "captureDateTime": 1767800110,
+        "captureDateTime": 1767807420,
         "uploadedBy": "lkheleni@helsinki.fi",
         "originalFilename": "Euchlanis edit 2.jpg",
         "documentIds": [
@@ -205,14 +205,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800110,
+        "uploadDateTime": 1767807420,
         "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
         "rightsOwner": "Laura Helenius",
         "secret": false,
         "capturers": [
           "Laura Helenius"
         ],
-        "captureDateTime": 1767800110,
+        "captureDateTime": 1767807420,
         "uploadedBy": "lkheleni@helsinki.fi",
         "originalFilename": "Euchlanis edit.jpg",
         "documentIds": [

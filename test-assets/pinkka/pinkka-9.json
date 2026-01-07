@@ -1,0 +1,112 @@
+{
+  "id": 9,
+  "name": {
+    "fi": "A Taitavuorten kasveja",
+    "en": "A Plants of Taita Hills"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tämä pinkka esittelee Helsingin yliopiston Keniassa sijaitsevan Taita tutkimusaseman ympäristössä kasvavia kasvilajeja (lajivalikoima täydentyy vähitellen).",
+    "en": "This Pinkka presents a selection of vascular plants from the vicinity of Taita Research Station in Taita Hills, Kenya."
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 580,
+      "name": {
+        "fi": "Taitavuorten sanikkaisia",
+        "en": "Pteridophytes and lycophytes"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 583,
+      "name": {
+        "fi": "Vuoristometsien puita",
+        "en": "Trees of montane forests"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 919,
+      "name": {
+        "fi": "Vuoristometsien pensaita",
+        "en": "Shrubs of montane forests"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 920,
+      "name": {
+        "fi": "Vuoristometsien köynnöksiä",
+        "en": "Climbers of montane forests"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 584,
+      "name": {
+        "fi": "Ylängön ruohoja",
+        "en": "Highland forbs"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 582,
+      "name": {
+        "fi": "Eksoottisia puita ja pensaita",
+        "en": "Exotic trees and shrubs"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 922,
+      "name": {
+        "fi": "Eksoottisia ruohoja",
+        "en": "Exotic forbs"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 581,
+      "name": {
+        "fi": "Alangon puuvartisia",
+        "en": "Woody plants of the lowland"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 923,
+      "name": {
+        "fi": "Alangon ruohoja",
+        "en": "Forbs of the lowland"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 911,
+      "name": {
+        "fi": "Tutkimusaseman puutarha",
+        "en": "Station garden"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

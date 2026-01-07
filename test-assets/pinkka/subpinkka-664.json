@@ -1,0 +1,929 @@
+{
+  "id": 664,
+  "name": {
+    "fi": "Muut selkärangattomat"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 20,
+    "name": {
+      "fi": "BIO-103 Eliöiden monimuotoisuus: eläimet"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.156011",
+  "speciesCards": [
+    {
+      "taxonId": "MX.70000",
+      "vernacularName": {
+        "sv": "hakmaskar",
+        "fi": "väkäkärsämadot",
+        "en": "Thorny-headed worms"
+      },
+      "scientificName": "Acanthocephala",
+      "id": 53149,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53734",
+      "vernacularName": {
+        "sv": "kvalster",
+        "fi": "punkit",
+        "en": "Mites"
+      },
+      "scientificName": "Acari",
+      "id": 53144,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.201349",
+      "vernacularName": {
+        "fi": "suppilohämähäkit"
+      },
+      "scientificName": "Agelenidae",
+      "id": 53148,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212531",
+      "vernacularName": {
+        "fi": "ancyluskotilo",
+        "sv": "flodhättesnäcka"
+      },
+      "scientificName": "Ancylus fluviatilis",
+      "id": 53147,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212533",
+      "vernacularName": {
+        "sv": "rundläppad skivsnäcka",
+        "fi": "pyörrekiekkokotilo",
+        "en": "Whirlpool ramshorn snail"
+      },
+      "scientificName": "Anisus vortex",
+      "id": 53145,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212399",
+      "vernacularName": {},
+      "scientificName": "Anodonta",
+      "id": 53146,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.201489",
+      "vernacularName": {
+        "fi": "ristihämähäkit"
+      },
+      "scientificName": "Araneidae",
+      "id": 53152,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52830",
+      "vernacularName": {
+        "fi": "lehtokotilo"
+      },
+      "scientificName": "Arianta arbustorum",
+      "id": 53150,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52802",
+      "vernacularName": {
+        "fi": "metsäetana"
+      },
+      "scientificName": "Arion fuscus",
+      "id": 53154,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52801",
+      "vernacularName": {
+        "sv": "mördarsnigel",
+        "fi": "espanjansiruetana",
+        "en": "Spanish slug"
+      },
+      "scientificName": "Arion vulgaris",
+      "id": 53151,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.211958",
+      "vernacularName": {
+        "sv": "öronmanet",
+        "fi": "korvameduusa",
+        "en": "Moon jelly"
+      },
+      "scientificName": "Aurelia aurita",
+      "id": 53156,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212580",
+      "vernacularName": {
+        "fi": "kierrekotilo",
+        "sv": "remskivsnäcka",
+        "en": "Twisted ramshorn"
+      },
+      "scientificName": "Bathyomphalus contortus",
+      "id": 53153,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212545",
+      "vernacularName": {
+        "fi": "hoikkasarvikotilo",
+        "sv": "stor snytesnäcka"
+      },
+      "scientificName": "Bithynia tentaculata",
+      "id": 53155,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52837",
+      "vernacularName": {
+        "fi": "valkotarhakotilo"
+      },
+      "scientificName": "Cepaea hortensis",
+      "id": 53158,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212383",
+      "vernacularName": {
+        "sv": "skev hjärtmussla",
+        "fi": "idänsydänsimpukka",
+        "en": "Lagoon cockle"
+      },
+      "scientificName": "Cerastoderma glaucum",
+      "id": 53161,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4987077",
+      "vernacularName": {
+        "sv": "bandmaskar",
+        "fi": "heisimadot",
+        "en": "Tapeworms"
+      },
+      "scientificName": "Cestoda",
+      "id": 53160,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52702",
+      "vernacularName": {
+        "fi": "sulkukotilot"
+      },
+      "scientificName": "Clausiliidae",
+      "id": 53157,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52665",
+      "vernacularName": {},
+      "scientificName": "Cochlicopa",
+      "id": 53159,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52871",
+      "vernacularName": {
+        "fi": "kaspianpolyyppi",
+        "sv": "klubbpolyp"
+      },
+      "scientificName": "Cordylophora caspia",
+      "id": 53162,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212192",
+      "vernacularName": {
+        "fi": "kulkusammaleläin"
+      },
+      "scientificName": "Cristatella mucedo",
+      "id": 53164,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212317",
+      "vernacularName": {
+        "sv": "brackvattensnemertin",
+        "fi": "viherlimamato"
+      },
+      "scientificName": "Cyanophthalma obscura",
+      "id": 53166,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.201818",
+      "vernacularName": {
+        "fi": "piilohämähäkit"
+      },
+      "scientificName": "Cybaeidae",
+      "id": 53165,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.232706",
+      "vernacularName": {
+        "fi": "maitolattana"
+      },
+      "scientificName": "Dendrocoelum lacteum",
+      "id": 53163,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.290937",
+      "vernacularName": {
+        "fi": "lapamato"
+      },
+      "scientificName": "Diphyllobothrium latum",
+      "id": 53167,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4986274",
+      "vernacularName": {
+        "fi": "kaksoiseläin",
+        "sv": "dubbeldjur"
+      },
+      "scientificName": "Diplozoon paradoxum",
+      "id": 53168,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52729",
+      "vernacularName": {
+        "fi": "napakotilo"
+      },
+      "scientificName": "Discus ruderatus",
+      "id": 53169,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.291092",
+      "vernacularName": {},
+      "scientificName": "Echinococcus",
+      "id": 53170,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212187",
+      "vernacularName": {
+        "fi": "levärupi"
+      },
+      "scientificName": "Einhornia crustulenta",
+      "id": 53172,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70447",
+      "vernacularName": {
+        "fi": "murtovesisieni"
+      },
+      "scientificName": "Ephydatia fluviatilis",
+      "id": 53175,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52740",
+      "vernacularName": {
+        "fi": "kartiokotilo"
+      },
+      "scientificName": "Euconulus fulvus",
+      "id": 53174,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52810",
+      "vernacularName": {
+        "fi": "pensaskotilo"
+      },
+      "scientificName": "Fruticicola fruticum",
+      "id": 53171,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70206",
+      "vernacularName": {},
+      "scientificName": "Geophilomorpha",
+      "id": 53173,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200738",
+      "vernacularName": {
+        "sv": "potatiscystnematode",
+        "fi": "keltaperuna-ankeroinen",
+        "en": "Potato cyst nematode"
+      },
+      "scientificName": "Globodera rostochiensis",
+      "id": 53176,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.211982",
+      "vernacularName": {},
+      "scientificName": "Gonothyraea loveni",
+      "id": 53177,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4986251",
+      "vernacularName": {},
+      "scientificName": "Gyrodactylus salaris",
+      "id": 53179,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.232490",
+      "vernacularName": {
+        "fi": "hevosjuotikas",
+        "sv": "hästigel"
+      },
+      "scientificName": "Haemopis sanguisuga",
+      "id": 53180,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.211915",
+      "vernacularName": {
+        "fi": "okamakkaramato",
+        "sv": "korvmask"
+      },
+      "scientificName": "Halicryptus spinulosus",
+      "id": 53178,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212147",
+      "vernacularName": {
+        "fi": "merisukasjalkainen",
+        "sv": "rovborstmask",
+        "en": "Ragworm"
+      },
+      "scientificName": "Hediste diversicolor complex",
+      "id": 53181,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52842",
+      "vernacularName": {
+        "fi": "viinimäkikotilo"
+      },
+      "scientificName": "Helix pomatia",
+      "id": 53184,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.232488",
+      "vernacularName": {
+        "fi": "verijuotikas",
+        "sv": "blodigel"
+      },
+      "scientificName": "Hirudo medicinalis",
+      "id": 53183,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.211969",
+      "vernacularName": {},
+      "scientificName": "Hydra",
+      "id": 53182,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200602",
+      "vernacularName": {
+        "fi": "sukkulakotilot",
+        "sv": "tusensnäckor"
+      },
+      "scientificName": "Hydrobiidae",
+      "id": 53187,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.202372",
+      "vernacularName": {},
+      "scientificName": "Ixodidae",
+      "id": 53185,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.290939",
+      "vernacularName": {
+        "fi": "hihnamato"
+      },
+      "scientificName": "Ligula intestinalis",
+      "id": 53186,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52777",
+      "vernacularName": {
+        "fi": "harjaetanat"
+      },
+      "scientificName": "Limacidae",
+      "id": 53188,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212377",
+      "vernacularName": {
+        "fi": "liejusimpukka",
+        "sv": "östersjömussla",
+        "en": "Baltic clam"
+      },
+      "scientificName": "Macoma balthica",
+      "id": 53189,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.202483",
+      "vernacularName": {
+        "fi": "riippuhämähäkit"
+      },
+      "scientificName": "Linyphiidae",
+      "id": 53192,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.202500",
+      "vernacularName": {},
+      "scientificName": "Lithobius",
+      "id": 53193,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.232527",
+      "vernacularName": {
+        "fi": "kasteliero"
+      },
+      "scientificName": "Lumbricus terrestris",
+      "id": 53191,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.202514",
+      "vernacularName": {
+        "fi": "juoksuhämähäkit"
+      },
+      "scientificName": "Lycosidae",
+      "id": 53190,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212503",
+      "vernacularName": {
+        "fi": "piippolimakotilo",
+        "sv": "stor dammsnäcka"
+      },
+      "scientificName": "Lymnaea stagnalis",
+      "id": 53195,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212495",
+      "vernacularName": {
+        "fi": "limakotilot",
+        "sv": "dammsnäckor",
+        "en": "Pond snails"
+      },
+      "scientificName": "Lymnaeidae",
+      "id": 53194,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212151",
+      "vernacularName": {
+        "fi": "suistosukasmato"
+      },
+      "scientificName": "Manayunkia aestuarina",
+      "id": 53197,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53460",
+      "vernacularName": {
+        "fi": "liejuputkimadot"
+      },
+      "scientificName": "Marenzelleria",
+      "id": 53196,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212403",
+      "vernacularName": {
+        "sv": "flodpärlmussla",
+        "fi": "jokihelmisimpukka",
+        "en": "Freshwater pearl mussel"
+      },
+      "scientificName": "Margaritifera margaritifera",
+      "id": 53198,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212177",
+      "vernacularName": {},
+      "scientificName": "Mertensia ovum",
+      "id": 53199,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212380",
+      "vernacularName": {
+        "fi": "hietasimpukka",
+        "sv": "sandmussla",
+        "en": "Softshell clam"
+      },
+      "scientificName": "Mya arenaria",
+      "id": 53204,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212392",
+      "vernacularName": {
+        "fi": "sinisimpukka",
+        "sv": "blåmussla",
+        "en": "Blue mussel"
+      },
+      "scientificName": "Mytilus trossulus",
+      "id": 53202,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53076",
+      "vernacularName": {
+        "sv": "rundmaskar",
+        "fi": "sukkulamadot",
+        "en": "Roundworms"
+      },
+      "scientificName": "Nematoda",
+      "id": 53201,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52761",
+      "vernacularName": {},
+      "scientificName": "Nesovitrea",
+      "id": 53200,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.211515",
+      "vernacularName": {
+        "fi": "harvasukasmadot"
+      },
+      "scientificName": "Oligochaeta",
+      "id": 53203,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.202793",
+      "vernacularName": {
+        "sv": "bandkejsarfoting",
+        "fi": "hietatuhatjalkainen"
+      },
+      "scientificName": "Ommatoiulus sabulosus",
+      "id": 53207,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70199",
+      "vernacularName": {
+        "sv": "lockespindlar",
+        "fi": "lukit",
+        "en": "Harvestmen"
+      },
+      "scientificName": "Opiliones",
+      "id": 53206,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212527",
+      "vernacularName": {
+        "fi": "touhukotilo",
+        "sv": "vanlig blåssnäcka",
+        "en": "Fountain bladder snail"
+      },
+      "scientificName": "Physa fontinalis",
+      "id": 53205,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.203101",
+      "vernacularName": {
+        "fi": "kiitohämähäkit"
+      },
+      "scientificName": "Pisauridae",
+      "id": 53209,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.232502",
+      "vernacularName": {
+        "sv": "fiskigel",
+        "fi": "kalajuotikas"
+      },
+      "scientificName": "Piscicola geometra",
+      "id": 53210,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.232694",
+      "vernacularName": {},
+      "scientificName": "Planaria torva",
+      "id": 53208,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212583",
+      "vernacularName": {
+        "sv": "posthornssnäcka",
+        "fi": "isokiekkokotilo",
+        "en": "Great ramshorn"
+      },
+      "scientificName": "Planorbarius corneus",
+      "id": 53211,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212497",
+      "vernacularName": {
+        "sv": "posthornssnäckor",
+        "fi": "kiekkokotilot",
+        "en": "Ramshorn snails"
+      },
+      "scientificName": "Planorbidae",
+      "id": 53213,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212180",
+      "vernacularName": {
+        "fi": "pikkumaneetti",
+        "sv": "havskrusbär",
+        "en": "Sea gooseberry"
+      },
+      "scientificName": "Pleurobrachia pileus",
+      "id": 53212,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212590",
+      "vernacularName": {
+        "fi": "rönsysammaleläin"
+      },
+      "scientificName": "Plumatella repens",
+      "id": 53216,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.203128",
+      "vernacularName": {},
+      "scientificName": "Polydesmidae",
+      "id": 53215,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.203133",
+      "vernacularName": {},
+      "scientificName": "Polyxenidae",
+      "id": 53217,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70200",
+      "vernacularName": {
+        "fi": "valeskorpionit",
+        "sv": "klokrypare",
+        "en": "Pseudoscorpions"
+      },
+      "scientificName": "Pseudoscorpiones",
+      "id": 53214,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52726",
+      "vernacularName": {
+        "fi": "kääpiökotilo"
+      },
+      "scientificName": "Punctum pygmaeum",
+      "id": 53218,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212139",
+      "vernacularName": {
+        "fi": "hiekkaputkimato"
+      },
+      "scientificName": "Pygospio elegans",
+      "id": 53219,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212517",
+      "vernacularName": {},
+      "scientificName": "Radix",
+      "id": 53220,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70014",
+      "vernacularName": {
+        "sv": "hjuldur",
+        "fi": "rataseläimet",
+        "en": "Rotifers"
+      },
+      "scientificName": "Rotifera",
+      "id": 53221,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.203267",
+      "vernacularName": {
+        "fi": "hyppyhämähäkit",
+        "sv": "hoppspindlar",
+        "en": "jumping spiders"
+      },
+      "scientificName": "Salticidae",
+      "id": 53223,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70448",
+      "vernacularName": {
+        "fi": "järvisieni"
+      },
+      "scientificName": "Spongilla lacustris",
+      "id": 53224,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70265",
+      "vernacularName": {
+        "fi": "sokkojuoksiaiset",
+        "sv": "dvärgfotingar",
+        "en": "Symphylans"
+      },
+      "scientificName": "Symphyla",
+      "id": 53222,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70015",
+      "vernacularName": {
+        "sv": "trögkrypare",
+        "fi": "karhukaiset",
+        "en": "Waterbears"
+      },
+      "scientificName": "Tardigrada",
+      "id": 53225,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212479",
+      "vernacularName": {
+        "sv": "brackvattensnuding",
+        "fi": "liuskamerietana"
+      },
+      "scientificName": "Tenellia adspersa",
+      "id": 53228,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212501",
+      "vernacularName": {
+        "sv": "båtsnäcka",
+        "fi": "leväkotilo"
+      },
+      "scientificName": "Theodoxus fluviatilis",
+      "id": 53226,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.203503",
+      "vernacularName": {
+        "fi": "rapuhämähäkit"
+      },
+      "scientificName": "Thomisidae",
+      "id": 53227,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4993563",
+      "vernacularName": {
+        "fi": "imumadot",
+        "en": "Flukes"
+      },
+      "scientificName": "Trematoda",
+      "id": 53231,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212395",
+      "vernacularName": {},
+      "scientificName": "Unio",
+      "id": 53229,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52670",
+      "vernacularName": {
+        "fi": "harjakotilo"
+      },
+      "scientificName": "Vallonia costata",
+      "id": 53233,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212554",
+      "vernacularName": {
+        "sv": "stor kamgälsnäcka",
+        "fi": "liejukotilo"
+      },
+      "scientificName": "Valvata piscinalis",
+      "id": 53232,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212552",
+      "vernacularName": {
+        "fi": "liejukotilot",
+        "sv": "kamgälsnäckor"
+      },
+      "scientificName": "Valvatidae",
+      "id": 53235,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52680",
+      "vernacularName": {
+        "fi": "siemenkotilot"
+      },
+      "scientificName": "Vertiginidae",
+      "id": 53230,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52773",
+      "vernacularName": {
+        "fi": "lasikotilo"
+      },
+      "scientificName": "Vitrina pellucida",
+      "id": 53234,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52676",
+      "vernacularName": {
+        "fi": "varpukotilo"
+      },
+      "scientificName": "Zoogenetes harpa",
+      "id": 53236,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.156011",
+    "urls": {
+      "original": "https://image.laji.fi/MM.156011/110811_X23_Vitrina_pellucida_1509400_Anders_Albrecht.JPG",
+      "full": "https://image.laji.fi/MM.156011/110811_X23_Vitrina_pellucida_1509400_Anders_Albrecht.JPG",
+      "large": "https://image.laji.fi/MM.156011/110811_X23_Vitrina_pellucida_1509400_Anders_Albrecht_large.jpg",
+      "square": "https://image.laji.fi/MM.156011/110811_X23_Vitrina_pellucida_1509400_Anders_Albrecht_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.156011/110811_X23_Vitrina_pellucida_1509400_Anders_Albrecht_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1511167711,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Anders Albrecht",
+      "secret": false,
+      "capturers": [
+        "Anders Albrecht"
+      ],
+      "uploadedBy": "MA.80",
+      "originalFilename": "110811 X23 Vitrina pellucida 1509400 Anders Albrecht.JPG",
+      "documentIds": [
+        "MX.52773"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.52773"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

@@ -1,0 +1,410 @@
+{
+  "id": 919,
+  "name": {
+    "fi": "Vuoristometsien pensaita",
+    "en": "Shrubs of montane forests"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 9,
+    "name": {
+      "fi": "A Taitavuorten kasveja",
+      "en": "A Plants of Taita Hills"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.266556",
+  "speciesCards": [
+    {
+      "taxonId": "MX.5009523",
+      "vernacularName": {
+        "fi": "nuorakissanhäntä"
+      },
+      "scientificName": "Acalypha volkensii",
+      "id": 64789,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009524",
+      "vernacularName": {
+        "fi": "tuonivahapensas"
+      },
+      "scientificName": "Acokanthera oppositifolia",
+      "id": 64563,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009412",
+      "vernacularName": {
+        "fi": "tansaniankoralliterttu"
+      },
+      "scientificName": "Chassalia discolor",
+      "id": 64555,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009804",
+      "vernacularName": {
+        "fi": "keniankoralliterttu"
+      },
+      "scientificName": "Chassalia parvifolia",
+      "id": 64557,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009421",
+      "vernacularName": {
+        "fi": "etiopiantippakukka"
+      },
+      "scientificName": "Clutia abyssinica",
+      "id": 64561,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009827",
+      "vernacularName": {
+        "fi": "tansaniantaikurinkukka"
+      },
+      "scientificName": "Crossandra tridentata",
+      "id": 64579,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009920",
+      "vernacularName": {
+        "fi": "tansanianhapsunappi"
+      },
+      "scientificName": "Dicranolepis usambarica",
+      "id": 64562,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009848",
+      "vernacularName": {
+        "fi": "humala-akea"
+      },
+      "scientificName": "Dodonaea viscosa",
+      "id": 64559,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009852",
+      "vernacularName": {
+        "fi": "punakeiomena"
+      },
+      "scientificName": "Dovyalis abyssinica",
+      "id": 64578,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009457",
+      "vernacularName": {
+        "fi": "kielitraakkipuu"
+      },
+      "scientificName": "Dracaena steudneri",
+      "id": 64581,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009326",
+      "vernacularName": {
+        "fi": "tuuheakellokanerva"
+      },
+      "scientificName": "Erica mannii",
+      "id": 64556,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009332",
+      "vernacularName": {
+        "fi": "silotyräkki"
+      },
+      "scientificName": "Euphorbia engleri",
+      "id": 64558,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009337",
+      "vernacularName": {
+        "fi": "usambarantyräkki"
+      },
+      "scientificName": "Euphorbia usambarica",
+      "id": 64560,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009543",
+      "vernacularName": {
+        "fi": "sormipuuselleri"
+      },
+      "scientificName": "Heteromorpha trifoliata",
+      "id": 64580,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009564",
+      "vernacularName": {
+        "fi": "rusokuurnahuuli"
+      },
+      "scientificName": "Isoglossa laxa",
+      "id": 64582,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009570",
+      "vernacularName": {
+        "fi": "kilimanjaronvillakukka"
+      },
+      "scientificName": "Lasianthus kilimandscharicus",
+      "id": 64584,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009573",
+      "vernacularName": {
+        "fi": "raippalobelia"
+      },
+      "scientificName": "Lobelia giberroa",
+      "id": 64583,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4971906",
+      "vernacularName": {},
+      "scientificName": "Loranthaceae",
+      "id": 64585,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009585",
+      "vernacularName": {
+        "fi": "taitanmesikiekko"
+      },
+      "scientificName": "Meineckia ovata",
+      "id": 64635,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009588",
+      "vernacularName": {
+        "fi": "pajumyrtti"
+      },
+      "scientificName": "Morella salicifolia",
+      "id": 64636,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009743",
+      "vernacularName": {
+        "fi": "marokontuonenmarja"
+      },
+      "scientificName": "Osyris lanceolata",
+      "id": 64637,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009613",
+      "vernacularName": {
+        "fi": "kapinpippuri"
+      },
+      "scientificName": "Piper capense",
+      "id": 64638,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009631",
+      "vernacularName": {
+        "fi": "usambarankahvikki"
+      },
+      "scientificName": "Psychotria alsophila",
+      "id": 64642,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009632",
+      "vernacularName": {
+        "fi": "laakerikahvikki"
+      },
+      "scientificName": "Psychotria lauracea",
+      "id": 64641,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009769",
+      "vernacularName": {
+        "fi": "taitankahvikki"
+      },
+      "scientificName": "Psychotria petitii",
+      "id": 64640,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009924",
+      "vernacularName": {
+        "fi": "tansaniankahvikki"
+      },
+      "scientificName": "Psychotria pseudoplatyphylla",
+      "id": 64639,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009773",
+      "vernacularName": {
+        "fi": "gaboninkäärmepuu"
+      },
+      "scientificName": "Rauvolfia mannii",
+      "id": 64645,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009777",
+      "vernacularName": {
+        "fi": "koitovadelma"
+      },
+      "scientificName": "Rubus apetalus",
+      "id": 64644,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009778",
+      "vernacularName": {
+        "fi": "vuolasvadelma"
+      },
+      "scientificName": "Rubus pinnatus",
+      "id": 64643,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009867",
+      "vernacularName": {
+        "fi": "natalinsumakkio"
+      },
+      "scientificName": "Searsia natalensis",
+      "id": 64647,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009648",
+      "vernacularName": {
+        "fi": "poltesumakkio"
+      },
+      "scientificName": "Searsia pyroides",
+      "id": 64648,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022713",
+      "vernacularName": {
+        "fi": "usambaranvillakko"
+      },
+      "scientificName": "Solanecio buchwaldii",
+      "id": 64634,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009875",
+      "vernacularName": {
+        "fi": "puuvillakko"
+      },
+      "scientificName": "Solanecio mannii",
+      "id": 64646,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39547",
+      "vernacularName": {
+        "fi": "marjakoisot",
+        "sv": "skattor"
+      },
+      "scientificName": "Solanum",
+      "id": 64787,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022714",
+      "vernacularName": {
+        "fi": "tuimakoiso"
+      },
+      "scientificName": "Solanum aculeatissimum",
+      "id": 64786,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009877",
+      "vernacularName": {
+        "fi": "jättikoiso"
+      },
+      "scientificName": "Solanum giganteum",
+      "id": 64785,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009878",
+      "vernacularName": {
+        "fi": "neulakoiso"
+      },
+      "scientificName": "Solanum schumannianum",
+      "id": 64649,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009193",
+      "vernacularName": {
+        "fi": "vernoniat"
+      },
+      "scientificName": "Vernonia",
+      "id": 64650,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972089",
+      "vernacularName": {
+        "fi": "mistelit",
+        "sv": "mistlar"
+      },
+      "scientificName": "Viscum",
+      "id": 64829,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.266556",
+    "urls": {
+      "original": "https://image.laji.fi/MM.266556/JR18359.JPG",
+      "full": "https://image.laji.fi/MM.266556/JR18359.JPG",
+      "large": "https://image.laji.fi/MM.266556/JR18359_large.jpg",
+      "square": "https://image.laji.fi/MM.266556/JR18359_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.266556/JR18359_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1549193310,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1425296998,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR18359.JPG",
+      "documentIds": [
+        "3074"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.5009412"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

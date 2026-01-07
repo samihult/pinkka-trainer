@@ -1,0 +1,113 @@
+{
+  "id": 17,
+  "name": {
+    "sv": "IPS-171 Finlands mossor och lavar",
+    "fi": "IPS-171 Suomen sammalet ja jäkälät",
+    "en": "IPS-171 Boreal bryophytes and lichens"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "This independently studied web course provides species identification skills for recognizing typical bryophytes and lichens native in Finland and neighboring boreal regions.",
+    "en": "This independently studied web course provides species identification skills for recognizing typical bryophytes and lichens native in Finland and neighboring boreal regions."
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 821,
+      "name": {
+        "fi": "Bare ground",
+        "en": "Bare ground"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 829,
+      "name": {
+        "fi": "Dry forests",
+        "en": "Dry forests"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 828,
+      "name": {
+        "fi": "Moist forests",
+        "en": "Moist forests"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 834,
+      "name": {
+        "fi": "Poor fens and bogs",
+        "en": "Poor fens and bogs"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 830,
+      "name": {
+        "fi": "Rich fens and springs",
+        "en": "Rich fens and springs"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 835,
+      "name": {
+        "fi": "Shores and aquatic habitats",
+        "en": "Shores and aquatic habitats"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 837,
+      "name": {
+        "fi": "Lithophytic species",
+        "en": "Lithophytic species"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 836,
+      "name": {
+        "fi": "Epiphytic species",
+        "en": "Epiphytic species"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 840,
+      "name": {
+        "fi": "Saproxylic species",
+        "en": "Saproxylic species"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 838,
+      "name": {
+        "fi": "Subarctic habitats",
+        "en": "Subarctic habitats"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

@@ -1,0 +1,329 @@
+{
+  "id": 828,
+  "name": {
+    "fi": "Moist forests",
+    "en": "Moist forests"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 17,
+    "name": {
+      "sv": "IPS-171 Finlands mossor och lavar",
+      "fi": "IPS-171 Suomen sammalet ja jäkälät",
+      "en": "IPS-171 Boreal bryophytes and lichens"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.53716",
+  "speciesCards": [
+    {
+      "taxonId": "MX.44255",
+      "vernacularName": {
+        "fi": "vaarapykäsammal",
+        "sv": "skogslummermossa"
+      },
+      "scientificName": "Barbilophozia lycopodioides",
+      "id": 59181,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43500",
+      "vernacularName": {
+        "fi": "lehtohaivensammal",
+        "sv": "hårgräsmossa"
+      },
+      "scientificName": "Cirriphyllum piliferum",
+      "id": 59145,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43502",
+      "vernacularName": {
+        "sv": "palmmossa",
+        "fi": "palmusammal"
+      },
+      "scientificName": "Climacium dendroides",
+      "id": 59149,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43551",
+      "vernacularName": {
+        "fi": "isokynsisammal",
+        "sv": "stor kvastmossa"
+      },
+      "scientificName": "Dicranum majus",
+      "id": 59783,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43553",
+      "vernacularName": {
+        "fi": "kangaskynsisammal",
+        "sv": "vågig kvastmossa"
+      },
+      "scientificName": "Dicranum polysetum",
+      "id": 59180,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43983",
+      "vernacularName": {
+        "sv": "kransmossa",
+        "fi": "metsäliekosammal"
+      },
+      "scientificName": "Hylocomiadelphus triquetrus",
+      "id": 59133,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43668",
+      "vernacularName": {
+        "fi": "metsäkerrossammal",
+        "sv": "husmossa"
+      },
+      "scientificName": "Hylocomium splendens",
+      "id": 59185,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66299",
+      "vernacularName": {
+        "sv": "torsklav",
+        "fi": "pilkkunahkajäkälä"
+      },
+      "scientificName": "Peltigera aphthosa",
+      "id": 60333,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66300",
+      "vernacularName": {
+        "fi": "huopanahkajäkälä",
+        "sv": "filtlav"
+      },
+      "scientificName": "Peltigera canina",
+      "id": 60474,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66314",
+      "vernacularName": {
+        "fi": "kelmunahkajäkälä",
+        "sv": "tunn filtlav"
+      },
+      "scientificName": "Peltigera membranacea",
+      "id": 60332,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66317",
+      "vernacularName": {
+        "sv": "nordlig trevarlav",
+        "fi": "metsänahkajäkälä"
+      },
+      "scientificName": "Peltigera neopolydactyla",
+      "id": 60470,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44392",
+      "vernacularName": {
+        "fi": "isokastesammal",
+        "sv": "praktbräkenmossa"
+      },
+      "scientificName": "Plagiochila asplenioides",
+      "id": 59135,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43877",
+      "vernacularName": {
+        "fi": "metsälehväsammal",
+        "sv": "lundpraktmossa"
+      },
+      "scientificName": "Plagiomnium cuspidatum",
+      "id": 59182,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43880",
+      "vernacularName": {
+        "fi": "korpilehväsammal",
+        "sv": "kärrpraktmossa"
+      },
+      "scientificName": "Plagiomnium ellipticum",
+      "id": 59820,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43888",
+      "vernacularName": {
+        "sv": "vedsidenmossa",
+        "fi": "kantolaakasammal"
+      },
+      "scientificName": "Plagiothecium laetum",
+      "id": 59992,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43901",
+      "vernacularName": {
+        "sv": "väggmossa",
+        "fi": "seinäsammal"
+      },
+      "scientificName": "Pleurozium schreberi",
+      "id": 59183,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43933",
+      "vernacularName": {
+        "fi": "korpikarhunsammal",
+        "sv": "vanlig björnmossa"
+      },
+      "scientificName": "Polytrichum commune",
+      "id": 59776,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43928",
+      "vernacularName": {
+        "sv": "västlig skogsbjörnmossa",
+        "fi": "lehtokarhunsammal"
+      },
+      "scientificName": "Polytrichum formosum",
+      "id": 59146,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43956",
+      "vernacularName": {
+        "fi": "sulkasammal",
+        "sv": "kammossa"
+      },
+      "scientificName": "Ptilium crista-castrensis",
+      "id": 59186,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43977",
+      "vernacularName": {
+        "fi": "kilpilehväsammal",
+        "sv": "bäckrundmossa"
+      },
+      "scientificName": "Rhizomnium punctatum",
+      "id": 59815,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43979",
+      "vernacularName": {
+        "fi": "lehtoruusukesammal",
+        "sv": "rosmossa"
+      },
+      "scientificName": "Rhodobryum roseum",
+      "id": 59852,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43982",
+      "vernacularName": {
+        "fi": "korpiliekosammal",
+        "sv": "skogshakmossa"
+      },
+      "scientificName": "Rhytidiadelphus subpinnatus",
+      "id": 59821,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44035",
+      "vernacularName": {
+        "fi": "kangasrahkasammal",
+        "sv": "tallvitmossa"
+      },
+      "scientificName": "Sphagnum capillifolium",
+      "id": 59763,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44045",
+      "vernacularName": {
+        "fi": "korpirahkasammal",
+        "sv": "granvitmossa"
+      },
+      "scientificName": "Sphagnum girgensohnii",
+      "id": 59764,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44062",
+      "vernacularName": {
+        "fi": "okarahkasammal",
+        "sv": "spärrvitmossa"
+      },
+      "scientificName": "Sphagnum squarrosum",
+      "id": 59762,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44070",
+      "vernacularName": {
+        "fi": "pallorahkasammal",
+        "sv": "bollvitmossa"
+      },
+      "scientificName": "Sphagnum wulfianum",
+      "id": 59765,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66765",
+      "vernacularName": {
+        "sv": "långskägg",
+        "fi": "rihmanaava"
+      },
+      "scientificName": "Usnea longissima",
+      "id": 60397,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.53716",
+    "urls": {
+      "original": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034.JPG",
+      "full": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034.JPG",
+      "large": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034_large.jpg",
+      "square": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1412791982,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_meta_fix",
+      "originalFilename": "MX.43979_Rhodrose JR 23_9_2007 034.JPG",
+      "documentIds": [
+        "39618"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.43979"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

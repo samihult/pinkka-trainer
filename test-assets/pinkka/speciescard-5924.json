@@ -1,0 +1,524 @@
+{
+  "taxonId": "MX.39201",
+  "vernacularName": {
+    "fi": "vuohenputki",
+    "sv": "kirskål"
+  },
+  "scientificName": "Aegopodium podagraria",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {
+    "fi": [
+      "lehtovuohenputki"
+    ]
+  },
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Monivuotinen ruoho. Lehdet kirkkaanvihreit&#228;, aluslehdet pitk&#228;ruotisia. Lapa kolmiomainen, 3 kertaa 3-sorminen. Lehdyk&#228;t pitkulaisia&#8211;puikeita, sahalaitaisia, joskus liuskaisia, alapinta tavallisesti karvainen. Juurakot pitki&#228;, vaakasuoria. My&#246;s hoikkia maar&#246;nsyj&#228;.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Puutarhoissa (vaatelias). Kotoisin l&#228;hteisist&#228; lehtokorvista.<br/></p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {
+        "fi": "<p>Levi&#228;&#228; maar&#246;nsyjen avulla, jotka voivat kehitty&#228; juurakoiksi. Lis&#228;&#228;ntyy my&#246;s siemenest&#228; (hedelmys).<br/></p>"
+      },
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.289479",
+      "vernacularName": null,
+      "scientificName": "Apiales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.39171",
+      "vernacularName": {
+        "fi": "sarjakukkaiskasvit",
+        "sv": "flockblommiga"
+      },
+      "scientificName": "Apiaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.39200",
+      "vernacularName": {
+        "sv": "kirskålssläktet",
+        "fi": "vuohenputket"
+      },
+      "scientificName": "Aegopodium",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.39201",
+      "vernacularName": {
+        "fi": "vuohenputki",
+        "sv": "kirskål"
+      },
+      "scientificName": "Aegopodium podagraria",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 5924,
+  "images": [
+    {
+      "id": "MM.76001",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Johanna Kolehmainen",
+        "secret": false,
+        "capturers": [
+          "Johanna Kolehmainen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_42440.jpg",
+        "documentIds": [
+          "42440"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39201"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.76001/orig_42440.jpg",
+        "full": "https://image.laji.fi/MM.76001/orig_42440.jpg",
+        "large": "https://image.laji.fi/MM.76001/orig_42440.jpg",
+        "square": "https://image.laji.fi/MM.76001/orig_42440_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.76001/orig_42440_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.74777",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Tuomo Härkönen",
+        "secret": false,
+        "capturers": [
+          "Tuomo Härkönen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_24913.jpg",
+        "documentIds": [
+          "24913"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39201"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.74777/orig_24913.jpg",
+        "full": "https://image.laji.fi/MM.74777/orig_24913.jpg",
+        "large": "https://image.laji.fi/MM.74777/orig_24913.jpg",
+        "square": "https://image.laji.fi/MM.74777/orig_24913_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.74777/orig_24913_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.111518",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Johanna Kolehmainen",
+        "secret": false,
+        "capturers": [
+          "Johanna Kolehmainen"
+        ],
+        "captureDateTime": 1767807488,
+        "uploadedBy": "jkolehma@helsinki.fi",
+        "originalFilename": "Aego poda_1b_Roihuvuori_JK.JPG",
+        "documentIds": [
+          "999"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39201"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.111518/Aego_poda_1b_Roihuvuori_JK.JPG",
+        "full": "https://image.laji.fi/MM.111518/Aego_poda_1b_Roihuvuori_JK.JPG",
+        "large": "https://image.laji.fi/MM.111518/Aego_poda_1b_Roihuvuori_JK_large.jpg",
+        "square": "https://image.laji.fi/MM.111518/Aego_poda_1b_Roihuvuori_JK_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.111518/Aego_poda_1b_Roihuvuori_JK_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52004",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39201_Aegopodium podagraria JR 18_5_2008 116.JPG",
+        "documentIds": [
+          "30324"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39201"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52004/MX.39201_Aegopodium_podagraria_JR_18_5_2008_116.JPG",
+        "full": "https://image.laji.fi/MM.52004/MX.39201_Aegopodium_podagraria_JR_18_5_2008_116.JPG",
+        "large": "https://image.laji.fi/MM.52004/MX.39201_Aegopodium_podagraria_JR_18_5_2008_116.JPG",
+        "square": "https://image.laji.fi/MM.52004/MX.39201_Aegopodium_podagraria_JR_18_5_2008_116_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52004/MX.39201_Aegopodium_podagraria_JR_18_5_2008_116_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52012",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39201_Aegopodium podagraria JR 25_5_2007 087.jpg",
+        "documentIds": [
+          "30325"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39201"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52012/MX.39201_Aegopodium_podagraria_JR_25_5_2007_087.jpg",
+        "full": "https://image.laji.fi/MM.52012/MX.39201_Aegopodium_podagraria_JR_25_5_2007_087.jpg",
+        "large": "https://image.laji.fi/MM.52012/MX.39201_Aegopodium_podagraria_JR_25_5_2007_087.jpg",
+        "square": "https://image.laji.fi/MM.52012/MX.39201_Aegopodium_podagraria_JR_25_5_2007_087_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52012/MX.39201_Aegopodium_podagraria_JR_25_5_2007_087_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.74779",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Tuomo Härkönen",
+        "secret": false,
+        "capturers": [
+          "Tuomo Härkönen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_24914.jpg",
+        "documentIds": [
+          "24914"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39201"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.74779/orig_24914.jpg",
+        "full": "https://image.laji.fi/MM.74779/orig_24914.jpg",
+        "large": "https://image.laji.fi/MM.74779/orig_24914.jpg",
+        "square": "https://image.laji.fi/MM.74779/orig_24914_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.74779/orig_24914_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.78421",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Johanna Kolehmainen",
+        "secret": false,
+        "capturers": [
+          "Johanna Kolehmainen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_37327.jpg",
+        "documentIds": [
+          "37327"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39201"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.78421/orig_37327.jpg",
+        "full": "https://image.laji.fi/MM.78421/orig_37327.jpg",
+        "large": "https://image.laji.fi/MM.78421/orig_37327.jpg",
+        "square": "https://image.laji.fi/MM.78421/orig_37327_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.78421/orig_37327_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77805",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "orig_4037.jpg",
+        "documentIds": [
+          "4037"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39201"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77805/orig_4037.jpg",
+        "full": "https://image.laji.fi/MM.77805/orig_4037.jpg",
+        "large": "https://image.laji.fi/MM.77805/orig_4037_large.jpg",
+        "square": "https://image.laji.fi/MM.77805/orig_4037_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77805/orig_4037_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 154,
+    "name": {
+      "fi": "Kaikki versot",
+      "en": "All seedlings"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 24,
+      "name": {
+        "fi": "Verso- ja leviäintunnistus",
+        "en": "Seedling and Propagule Identification"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.72934",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

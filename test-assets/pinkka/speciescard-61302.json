@@ -1,0 +1,1009 @@
+{
+  "taxonId": "MX.5009349",
+  "vernacularName": {
+    "fi": "okra"
+  },
+  "scientificName": "Abelmoschus esculentus",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {
+    "fi": [
+      "vihannesokra"
+    ]
+  },
+  "description": [
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Monivuotinen ruoho, kasvatetaan tavallisesti yksivuotisena.&#xa0;</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Käyttö",
+        "sv": "Användning",
+        "en": "Use"
+      },
+      "body": {
+        "fi": "<p>Vielä vihreät siemenkodat kypsennetään vihanneksina, myös nuoret lehdet voi hyödyntää lehtivihanneksina. Siemenistä voi puristaa öljyä.</p>"
+      },
+      "predicate": "MX.economicUseText"
+    },
+    {
+      "title": {
+        "fi": "Viljely",
+        "sv": "Odling",
+        "en": "Cultivation"
+      },
+      "body": {
+        "fi": "<p>Tropiikissa ja lämpimänlauhkean ilmaston alueilla, etenkin Etelä-Aasiassa ja Afrikassa, mutta myös esimerkiksi Yhdysvaltain etelävaltioissa.&#xa0;</p>"
+      },
+      "predicate": "MX.cultivationText"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {
+        "fi": "<p>Otettu viljelyyn Koillis-Afrikasta, missä viljellyn lajin diploideja kantamuotoja (mm. <i>Abelmoschus ficulneus</i>) yhä kasvaa. Allopolyploidi risteymälaji, joka ei ilmeisesti kasva missään täysin alkuperäisenä. Kotiutuneena tulokkaana monin paikoin tropiikissa.&#xa0;</p>"
+      },
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Haitat",
+        "sv": "Olägenheter",
+        "en": "Harmfulness"
+      },
+      "body": {},
+      "predicate": "MX.invasiveEffectText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Kumpulan hyötykasvikokoelma (<i>Hortus ethnobotanicus</i>).&#xa0;</p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70063",
+      "vernacularName": null,
+      "scientificName": "Malvales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.38687",
+      "vernacularName": {
+        "fi": "malvakasvit",
+        "sv": "malvaväxter"
+      },
+      "scientificName": "Malvaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.5008986",
+      "vernacularName": {
+        "fi": "okrat"
+      },
+      "scientificName": "Abelmoschus",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.5009349",
+      "vernacularName": {
+        "fi": "okra"
+      },
+      "scientificName": "Abelmoschus esculentus",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 61302,
+  "images": [
+    {
+      "id": "MM.3285286",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR27149.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "Abelmoschus esculentus",
+          "okra"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285286/JR27149.JPG",
+        "full": "https://image.laji.fi/MM.3285286/JR27149.JPG",
+        "large": "https://image.laji.fi/MM.3285286/JR27149_large.jpg",
+        "square": "https://image.laji.fi/MM.3285286/JR27149_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285286/JR27149_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285288",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR27147.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "okra",
+          "Abelmoschus esculentus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285288/JR27147.JPG",
+        "full": "https://image.laji.fi/MM.3285288/JR27147.JPG",
+        "large": "https://image.laji.fi/MM.3285288/JR27147_large.jpg",
+        "square": "https://image.laji.fi/MM.3285288/JR27147_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285288/JR27147_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285285",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR27150.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "Abelmoschus esculentus",
+          "okra",
+          "Abelmoschus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285285/JR27150.JPG",
+        "full": "https://image.laji.fi/MM.3285285/JR27150.JPG",
+        "large": "https://image.laji.fi/MM.3285285/JR27150_large.jpg",
+        "square": "https://image.laji.fi/MM.3285285/JR27150_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285285/JR27150_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285287",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR27148.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "okra",
+          "Abelmoschus",
+          "Abelmoschus esculentus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285287/JR27148.JPG",
+        "full": "https://image.laji.fi/MM.3285287/JR27148.JPG",
+        "large": "https://image.laji.fi/MM.3285287/JR27148_large.jpg",
+        "square": "https://image.laji.fi/MM.3285287/JR27148_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285287/JR27148_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285290",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR26512.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "okra",
+          "Abelmoschus esculentus",
+          "Abelmoschus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285290/JR26512.JPG",
+        "full": "https://image.laji.fi/MM.3285290/JR26512.JPG",
+        "large": "https://image.laji.fi/MM.3285290/JR26512_large.jpg",
+        "square": "https://image.laji.fi/MM.3285290/JR26512_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285290/JR26512_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285289",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR26513.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "okra",
+          "Abelmoschus esculentus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285289/JR26513.JPG",
+        "full": "https://image.laji.fi/MM.3285289/JR26513.JPG",
+        "large": "https://image.laji.fi/MM.3285289/JR26513_large.jpg",
+        "square": "https://image.laji.fi/MM.3285289/JR26513_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285289/JR26513_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285293",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR25421.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "okra",
+          "Abelmoschus esculentus",
+          "Abelmoschus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285293/JR25421.JPG",
+        "full": "https://image.laji.fi/MM.3285293/JR25421.JPG",
+        "large": "https://image.laji.fi/MM.3285293/JR25421_large.jpg",
+        "square": "https://image.laji.fi/MM.3285293/JR25421_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285293/JR25421_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285292",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR25422.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "Abelmoschus esculentus",
+          "okra"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285292/JR25422.JPG",
+        "full": "https://image.laji.fi/MM.3285292/JR25422.JPG",
+        "large": "https://image.laji.fi/MM.3285292/JR25422_large.jpg",
+        "square": "https://image.laji.fi/MM.3285292/JR25422_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285292/JR25422_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285291",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR26511.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "Abelmoschus esculentus",
+          "okra"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285291/JR26511.JPG",
+        "full": "https://image.laji.fi/MM.3285291/JR26511.JPG",
+        "large": "https://image.laji.fi/MM.3285291/JR26511_large.jpg",
+        "square": "https://image.laji.fi/MM.3285291/JR26511_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285291/JR26511_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3285294",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR22091.JPG",
+        "documentIds": [
+          "7552"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "Abelmoschus esculentus",
+          "okra"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3285294/JR22091.JPG",
+        "full": "https://image.laji.fi/MM.3285294/JR22091.JPG",
+        "large": "https://image.laji.fi/MM.3285294/JR22091_large.jpg",
+        "square": "https://image.laji.fi/MM.3285294/JR22091_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3285294/JR22091_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031320",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR21510.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "Abelmoschus esculentus",
+          "okra"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031320/JR21510.JPG",
+        "full": "https://image.laji.fi/MM.3031320/JR21510.JPG",
+        "large": "https://image.laji.fi/MM.3031320/JR21510_large.jpg",
+        "square": "https://image.laji.fi/MM.3031320/JR21510_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031320/JR21510_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031321",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR21509.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "okra",
+          "Abelmoschus esculentus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031321/JR21509.JPG",
+        "full": "https://image.laji.fi/MM.3031321/JR21509.JPG",
+        "large": "https://image.laji.fi/MM.3031321/JR21509_large.jpg",
+        "square": "https://image.laji.fi/MM.3031321/JR21509_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031321/JR21509_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031326",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00573.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "Abelmoschus esculentus",
+          "okra"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031326/JR00573.JPG",
+        "full": "https://image.laji.fi/MM.3031326/JR00573.JPG",
+        "large": "https://image.laji.fi/MM.3031326/JR00573_large.jpg",
+        "square": "https://image.laji.fi/MM.3031326/JR00573_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031326/JR00573_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031325",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00574.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "Abelmoschus esculentus",
+          "okra",
+          "Abelmoschus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031325/JR00574.JPG",
+        "full": "https://image.laji.fi/MM.3031325/JR00574.JPG",
+        "large": "https://image.laji.fi/MM.3031325/JR00574_large.jpg",
+        "square": "https://image.laji.fi/MM.3031325/JR00574_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031325/JR00574_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031323",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00577.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "okra",
+          "Abelmoschus esculentus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031323/JR00577.JPG",
+        "full": "https://image.laji.fi/MM.3031323/JR00577.JPG",
+        "large": "https://image.laji.fi/MM.3031323/JR00577_large.jpg",
+        "square": "https://image.laji.fi/MM.3031323/JR00577_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031323/JR00577_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031322",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00578.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "Abelmoschus esculentus",
+          "okra"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031322/JR00578.JPG",
+        "full": "https://image.laji.fi/MM.3031322/JR00578.JPG",
+        "large": "https://image.laji.fi/MM.3031322/JR00578_large.jpg",
+        "square": "https://image.laji.fi/MM.3031322/JR00578_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031322/JR00578_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031314",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR592008C173.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "Abelmoschus esculentus",
+          "okra"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031314/JR592008C173.JPG",
+        "full": "https://image.laji.fi/MM.3031314/JR592008C173.JPG",
+        "large": "https://image.laji.fi/MM.3031314/JR592008C173_large.jpg",
+        "square": "https://image.laji.fi/MM.3031314/JR592008C173_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031314/JR592008C173_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031313",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR592008C174.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "okra",
+          "Abelmoschus esculentus",
+          "Abelmoschus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031313/JR592008C174.JPG",
+        "full": "https://image.laji.fi/MM.3031313/JR592008C174.JPG",
+        "large": "https://image.laji.fi/MM.3031313/JR592008C174_large.jpg",
+        "square": "https://image.laji.fi/MM.3031313/JR592008C174_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031313/JR592008C174_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3031324",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00575.JPG",
+        "documentIds": [
+          "6861"
+        ],
+        "tags": [
+          "Abelmoschus",
+          "okra",
+          "Abelmoschus esculentus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009349"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3031324/JR00575.JPG",
+        "full": "https://image.laji.fi/MM.3031324/JR00575.JPG",
+        "large": "https://image.laji.fi/MM.3031324/JR00575_large.jpg",
+        "square": "https://image.laji.fi/MM.3031324/JR00575_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3031324/JR00575_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 804,
+    "name": {
+      "fi": "Vihannes- ja salaattikasveja",
+      "en": "Vegetables"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 16,
+      "name": {
+        "fi": "BIO-516 Hyötykasvit",
+        "en": "BIO-516 Plants of economic importance"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "",
+      "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+    },
+    "imageId": "MM.1259272",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

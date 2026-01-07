@@ -1,0 +1,480 @@
+{
+  "id": 656,
+  "name": {
+    "fi": "Versot: viljelykasvit",
+    "en": "Seedlings: cultivated plants"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 24,
+    "name": {
+      "fi": "Verso- ja leviäintunnistus",
+      "en": "Seedling and Propagule Identification"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.113173",
+  "speciesCards": [
+    {
+      "taxonId": "MX.38159",
+      "vernacularName": {
+        "fi": "ruokajuurikas",
+        "sv": "beta"
+      },
+      "scientificName": "Beta vulgaris",
+      "id": 63420,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40622",
+      "vernacularName": {
+        "sv": "ängskavle",
+        "fi": "nurmipuntarpää"
+      },
+      "scientificName": "Alopecurus pratensis",
+      "id": 52779,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40552",
+      "vernacularName": {
+        "sv": "havre",
+        "fi": "kaura"
+      },
+      "scientificName": "Avena sativa",
+      "id": 52767,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38490",
+      "vernacularName": {
+        "fi": "juureskaali"
+      },
+      "scientificName": "Brassica napus",
+      "id": 52780,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38493",
+      "vernacularName": {
+        "fi": "satokaali"
+      },
+      "scientificName": "Brassica rapa",
+      "id": 52796,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38444",
+      "vernacularName": {
+        "fi": "ruistankio",
+        "sv": "oljedådra"
+      },
+      "scientificName": "Camelina sativa",
+      "id": 52765,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37981",
+      "vernacularName": {
+        "fi": "hamppu",
+        "sv": "hampa"
+      },
+      "scientificName": "Cannabis sativa",
+      "id": 52782,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39229",
+      "vernacularName": {
+        "fi": "kumina",
+        "sv": "kummin"
+      },
+      "scientificName": "Carum carvi",
+      "id": 52769,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.290835",
+      "vernacularName": {
+        "sv": "mjölmålla",
+        "fi": "kvinoa"
+      },
+      "scientificName": "Chenopodium quinoa",
+      "id": 52797,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39912",
+      "vernacularName": {
+        "sv": "cikoria",
+        "fi": "sikuri"
+      },
+      "scientificName": "Cichorium intybus",
+      "id": 63413,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40488",
+      "vernacularName": {
+        "fi": "koiranheinä",
+        "sv": "hundäxing"
+      },
+      "scientificName": "Dactylis glomerata",
+      "id": 52783,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39266",
+      "vernacularName": {
+        "fi": "ruokaporkkana",
+        "sv": "äkta morot"
+      },
+      "scientificName": "Daucus carota subsp. sativus",
+      "id": 52802,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38244",
+      "vernacularName": {
+        "sv": "bovete",
+        "fi": "tattari"
+      },
+      "scientificName": "Fagopyrum esculentum",
+      "id": 52781,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38953",
+      "vernacularName": {
+        "sv": "fodergetruta",
+        "fi": "rehuvuohenherne"
+      },
+      "scientificName": "Galega orientalis",
+      "id": 52784,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39788",
+      "vernacularName": {
+        "sv": "solros",
+        "fi": "isoauringonkukka"
+      },
+      "scientificName": "Helianthus annuus",
+      "id": 52770,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39790",
+      "vernacularName": {
+        "sv": "jordärtskocka",
+        "fi": "maa-artisokka"
+      },
+      "scientificName": "Helianthus tuberosus",
+      "id": 52785,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40546",
+      "vernacularName": {
+        "fi": "ohra",
+        "sv": "korn"
+      },
+      "scientificName": "Hordeum vulgare",
+      "id": 52800,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39010",
+      "vernacularName": {
+        "fi": "herne",
+        "sv": "ärt"
+      },
+      "scientificName": "Lathyrus oleraceus",
+      "id": 52773,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39127",
+      "vernacularName": {
+        "fi": "peltopellava",
+        "sv": "lin"
+      },
+      "scientificName": "Linum usitatissimum",
+      "id": 52798,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40436",
+      "vernacularName": {
+        "sv": "rörsvingel",
+        "fi": "ruokoraiheinä"
+      },
+      "scientificName": "Lolium arundinaceum",
+      "id": 52772,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40450",
+      "vernacularName": {
+        "fi": "italianraiheinä",
+        "sv": "italienskt rajgräs"
+      },
+      "scientificName": "Lolium multiflorum",
+      "id": 52768,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40449",
+      "vernacularName": {
+        "fi": "englanninraiheinä",
+        "sv": "engelskt rajgräs"
+      },
+      "scientificName": "Lolium perenne",
+      "id": 52786,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40434",
+      "vernacularName": {
+        "fi": "nurmiraiheinä",
+        "sv": "ängssvingel"
+      },
+      "scientificName": "Lolium pratense",
+      "id": 52789,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38949",
+      "vernacularName": {
+        "fi": "sinilupiini",
+        "sv": "blålupin"
+      },
+      "scientificName": "Lupinus angustifolius",
+      "id": 52801,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38948",
+      "vernacularName": {
+        "fi": "keltalupiini",
+        "sv": "gullupin"
+      },
+      "scientificName": "Lupinus luteus",
+      "id": 52766,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39029",
+      "vernacularName": {
+        "fi": "sinimailanen",
+        "sv": "blålusern"
+      },
+      "scientificName": "Medicago sativa",
+      "id": 52771,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39396",
+      "vernacularName": {
+        "sv": "honungsfacelia",
+        "fi": "aitohunajakukka"
+      },
+      "scientificName": "Phacelia tanacetifolia",
+      "id": 52775,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40632",
+      "vernacularName": {
+        "sv": "rörflen",
+        "fi": "ruokohelpi"
+      },
+      "scientificName": "Phalaroides arundinacea",
+      "id": 52787,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40616",
+      "vernacularName": {},
+      "scientificName": "Phleum pratense -ryhmä",
+      "id": 52799,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40461",
+      "vernacularName": {
+        "fi": "niittynurmikka",
+        "sv": "ängsgröe"
+      },
+      "scientificName": "Poa pratensis",
+      "id": 52776,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40544",
+      "vernacularName": {
+        "fi": "ruis",
+        "sv": "råg"
+      },
+      "scientificName": "Secale cereale",
+      "id": 52774,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43094",
+      "vernacularName": {},
+      "scientificName": "Secale cereale × Triticum aestivum",
+      "id": 52788,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38501",
+      "vernacularName": {
+        "sv": "vitsenap",
+        "fi": "keltasinappi"
+      },
+      "scientificName": "Sinapis alba",
+      "id": 52791,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39559",
+      "vernacularName": {
+        "fi": "peruna",
+        "sv": "potatis"
+      },
+      "scientificName": "Solanum tuberosum",
+      "id": 52803,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39039",
+      "vernacularName": {
+        "sv": "alsikeklöver",
+        "fi": "alsikeapila"
+      },
+      "scientificName": "Trifolium hybridum",
+      "id": 52777,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39052",
+      "vernacularName": {
+        "fi": "puna-apila",
+        "sv": "rödklöver"
+      },
+      "scientificName": "Trifolium pratense",
+      "id": 52793,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39038",
+      "vernacularName": {
+        "sv": "vitklöver",
+        "fi": "valkoapila"
+      },
+      "scientificName": "Trifolium repens",
+      "id": 52805,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39045",
+      "vernacularName": {
+        "sv": "stor doftklöver",
+        "fi": "persiantuoksuapila"
+      },
+      "scientificName": "Trifolium resupinatum var. majus",
+      "id": 52778,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39017",
+      "vernacularName": {
+        "sv": "vit sötväppling",
+        "fi": "valkomesikkä"
+      },
+      "scientificName": "Trigonella alba",
+      "id": 52790,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40542",
+      "vernacularName": {
+        "fi": "vehnä",
+        "sv": "vete"
+      },
+      "scientificName": "Triticum aestivum",
+      "id": 52804,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38989",
+      "vernacularName": {
+        "fi": "härkäpapu",
+        "sv": "bondböna"
+      },
+      "scientificName": "Vicia faba",
+      "id": 52794,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38985",
+      "vernacularName": {
+        "fi": "rehuvirna",
+        "sv": "åkervicker"
+      },
+      "scientificName": "Vicia sativa",
+      "id": 52806,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40666",
+      "vernacularName": {
+        "sv": "majs",
+        "fi": "maissi"
+      },
+      "scientificName": "Zea mays",
+      "id": 52795,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.113173",
+    "urls": {
+      "original": "https://image.laji.fi/MM.113173/Heli_annu_1_viljpalsta_JK.JPG",
+      "full": "https://image.laji.fi/MM.113173/Heli_annu_1_viljpalsta_JK.JPG",
+      "large": "https://image.laji.fi/MM.113173/Heli_annu_1_viljpalsta_JK_large.jpg",
+      "square": "https://image.laji.fi/MM.113173/Heli_annu_1_viljpalsta_JK_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.113173/Heli_annu_1_viljpalsta_JK_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1466489833,
+      "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+      "rightsOwner": "Johanna Kolehmainen",
+      "secret": false,
+      "capturers": [
+        "Johanna Kolehmainen"
+      ],
+      "captureDateTime": 1469018716,
+      "uploadedBy": "jkolehma@helsinki.fi",
+      "originalFilename": "Heli annu_1_viljpalsta_JK.JPG",
+      "documentIds": [
+        "1098"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.39788"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

@@ -1,0 +1,669 @@
+{
+  "taxonId": "MX.37694",
+  "vernacularName": {
+    "fi": "katinlieko",
+    "sv": "mattlummer"
+  },
+  "scientificName": "Lycopodium clavatum",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "sv": "<p>Stam ringlande, grenar upprätta, 10–30 cm långa, ofta förgrenade. Blad barrlika, med vita håruddar, strödda, 3–5 mm långa, hårudd 2–4 mm, tätt, strödda.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Varsi suikertava, haarat pystyjä, 10–30 cm pitkiä, usein haarovia.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Lehdet neulasmaiset, karvakärkiset, siirottavat, 3–5 mm pitkät, karvakärki 2–4 mm, tiheän kierteisesti haaroilla.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Juuri",
+        "sv": "Rot",
+        "en": "Root"
+      },
+      "body": {},
+      "predicate": "MX.descriptionRoot"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {
+        "fi": "<p>Itiötähkät pienilehtisten, 3–12 cm pitkien perien päissä, tav. pareittain tai kolmittain. Itiöpesäkkeet yksittäin suomumaisten lehtien hangassa, munuaisenmuotoiset.</p>",
+        "sv": "<p>Sporax på småbladiga 3–12 cm långa skaft, vanligen parvis eller tre per skaft. Sporangier enskilt i fjällika blads veck, njurformade.</p>"
+      },
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Kangasmetsissä (ei kaikkein kuivimmissa), koivikoissa, hakamailla, polkujen varsilla ja teiden pientareilla. Suosii melko valoisia kasvupaikkoja.</p>",
+        "sv": "<p>I moskogar (inte de torraste), björkskogar, betesmarker, stigkanter och på vägrenar. Föredrar rätt ljusa växtplatser.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {},
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Etelästä Keski-Lappiin, harvinaistuu pohjoisessa.</p>",
+        "sv": "<p>Förekommer från södra delarna av landet till mellersta Lappland, längre norrut mer sällsynt.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "sv": "<p>I Lappland förekommer underarten riplummer (L. clavatum ssp. monostachyon), vars grenar är 5–15 cm långa, blad 2,5–3,5 mm, nästan längs med grenarna och sporax enskilt på 0,5–3 cm långa skaft.</p>",
+        "fi": "<p>Lapissa esiintyy alalaji pohjankatinlieko (L. clavatum ssp. monostachyon), jonka haarat ovat 5–15 cm pitkät, lehdet 2,5–3,5 mm, lähes haaranmyötäiset ja itiötähkät yksittäin 0,5–3cm pitkien perien päissä.</p>"
+      },
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {},
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986643",
+      "vernacularName": null,
+      "scientificName": "Lycopodiophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4977115",
+      "vernacularName": null,
+      "scientificName": "Lycopodiopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70032",
+      "vernacularName": null,
+      "scientificName": "Lycopodiales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.37683",
+      "vernacularName": {
+        "fi": "liekokasvit",
+        "sv": "lummerväxter"
+      },
+      "scientificName": "Lycopodiaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.37690",
+      "vernacularName": {
+        "fi": "tähkälieot",
+        "sv": "lumrar"
+      },
+      "scientificName": "Lycopodium",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.37694",
+      "vernacularName": {
+        "fi": "katinlieko",
+        "sv": "mattlummer"
+      },
+      "scientificName": "Lycopodium clavatum",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 6244,
+  "images": [
+    {
+      "id": "MM.50293",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37694_Lycoclav  JR05179.JPG",
+        "documentIds": [
+          "39280"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50293/MX.37694_Lycoclav__JR05179.JPG",
+        "full": "https://image.laji.fi/MM.50293/MX.37694_Lycoclav__JR05179.JPG",
+        "large": "https://image.laji.fi/MM.50293/MX.37694_Lycoclav__JR05179_large.jpg",
+        "square": "https://image.laji.fi/MM.50293/MX.37694_Lycoclav__JR05179_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50293/MX.37694_Lycoclav__JR05179_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50265",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37694_LycoclavH ML 21_1_08 007.jpg",
+        "documentIds": [
+          "9439"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50265/MX.37694_LycoclavH_ML_21_1_08_007.jpg",
+        "full": "https://image.laji.fi/MM.50265/MX.37694_LycoclavH_ML_21_1_08_007.jpg",
+        "large": "https://image.laji.fi/MM.50265/MX.37694_LycoclavH_ML_21_1_08_007.jpg",
+        "square": "https://image.laji.fi/MM.50265/MX.37694_LycoclavH_ML_21_1_08_007_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50265/MX.37694_LycoclavH_ML_21_1_08_007_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50318",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37694_Lycoclav  JR67668.JPG",
+        "documentIds": [
+          "39289"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50318/MX.37694_Lycoclav__JR67668.JPG",
+        "full": "https://image.laji.fi/MM.50318/MX.37694_Lycoclav__JR67668.JPG",
+        "large": "https://image.laji.fi/MM.50318/MX.37694_Lycoclav__JR67668_large.jpg",
+        "square": "https://image.laji.fi/MM.50318/MX.37694_Lycoclav__JR67668_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50318/MX.37694_Lycoclav__JR67668_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50281",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37694_A Lycoclav  JR67664.JPG",
+        "documentIds": [
+          "39279"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50281/MX.37694_A_Lycoclav__JR67664.JPG",
+        "full": "https://image.laji.fi/MM.50281/MX.37694_A_Lycoclav__JR67664.JPG",
+        "large": "https://image.laji.fi/MM.50281/MX.37694_A_Lycoclav__JR67664_large.jpg",
+        "square": "https://image.laji.fi/MM.50281/MX.37694_A_Lycoclav__JR67664_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50281/MX.37694_A_Lycoclav__JR67664_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50303",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37694_Lycoclav  JR08319.JPG",
+        "documentIds": [
+          "39281"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50303/MX.37694_Lycoclav__JR08319.JPG",
+        "full": "https://image.laji.fi/MM.50303/MX.37694_Lycoclav__JR08319.JPG",
+        "large": "https://image.laji.fi/MM.50303/MX.37694_Lycoclav__JR08319_large.jpg",
+        "square": "https://image.laji.fi/MM.50303/MX.37694_Lycoclav__JR08319_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50303/MX.37694_Lycoclav__JR08319_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.119898",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807475,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR23448.JPG",
+        "documentIds": [
+          "1527"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.119898/JR23448.JPG",
+        "full": "https://image.laji.fi/MM.119898/JR23448.JPG",
+        "large": "https://image.laji.fi/MM.119898/JR23448_large.jpg",
+        "square": "https://image.laji.fi/MM.119898/JR23448_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.119898/JR23448_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50312",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37694_Lycoclav  JR08320.JPG",
+        "documentIds": [
+          "39282"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50312/MX.37694_Lycoclav__JR08320.JPG",
+        "full": "https://image.laji.fi/MM.50312/MX.37694_Lycoclav__JR08320.JPG",
+        "large": "https://image.laji.fi/MM.50312/MX.37694_Lycoclav__JR08320_large.jpg",
+        "square": "https://image.laji.fi/MM.50312/MX.37694_Lycoclav__JR08320_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50312/MX.37694_Lycoclav__JR08320_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50264",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37694_Lycoclav  JR43640.JPG",
+        "documentIds": [
+          "39284"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50264/MX.37694_Lycoclav__JR43640.JPG",
+        "full": "https://image.laji.fi/MM.50264/MX.37694_Lycoclav__JR43640.JPG",
+        "large": "https://image.laji.fi/MM.50264/MX.37694_Lycoclav__JR43640_large.jpg",
+        "square": "https://image.laji.fi/MM.50264/MX.37694_Lycoclav__JR43640_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50264/MX.37694_Lycoclav__JR43640_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50275",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807475,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37694_LycoclavH ML 23_1_08 004.jpg",
+        "documentIds": [
+          "9440"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37694"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50275/MX.37694_LycoclavH_ML_23_1_08_004.jpg",
+        "full": "https://image.laji.fi/MM.50275/MX.37694_LycoclavH_ML_23_1_08_004.jpg",
+        "large": "https://image.laji.fi/MM.50275/MX.37694_LycoclavH_ML_23_1_08_004.jpg",
+        "square": "https://image.laji.fi/MM.50275/MX.37694_LycoclavH_ML_23_1_08_004_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50275/MX.37694_LycoclavH_ML_23_1_08_004_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 145,
+    "name": {
+      "fi": "Sanikkaiset",
+      "sv": "Ormbunksväxter"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 21,
+      "name": {
+        "fi": "Maatalouslajintuntemus"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.50312",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

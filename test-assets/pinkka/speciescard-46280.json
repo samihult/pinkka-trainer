@@ -1,0 +1,717 @@
+{
+  "taxonId": "MX.43789",
+  "vernacularName": {
+    "fi": "kalliokarstasammal",
+    "sv": "sotmossa"
+  },
+  "scientificName": "Andreaea rupestris",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Väriltään ruskeanvihreä, ruskea tai musta sammal. Varret pystyt. Lehdet kuivina vartta vasten painuneet, märkänä harittavat, osa lehdistä usein yhteen suuntaan käyristyneitä, muodoltaan leveän pitkänomaiset, kohti kärkeä kapenevat, mutta kärki tylpähkö. Keskisuoni puuttuu.</p>",
+        "sv": "<p>Liten (0,5–3 cm hög) akrokarp mossa. Bildar små, brungröna till mörkbruna tuvor. Blad som torra tilltryckta, som fuktiga ofta något ensidigt böjda, bredast under mitten, smala spjutformiga till ovala–spjutformiga. Bladnerv saknas. Skott upprätta och sitter tillsammans, bildar enhetliga, rundade tuvor, faller lätt i bitar då de lösgörs från underlaget. Sporgömmen ganska allmänt förekommande, små, mörkbruna, öppnas med fyra längssprickor.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Pystyt, lähekkäin toisiaan sijaitsevat versot muodostavat yhtenäisiä tuppaita, jotka hajoavat helposti irrotettaessa alustastaan.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>Pieni; 0,5–3 cm korkea.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {},
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {},
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {
+        "fi": "<p>Usein itiöpesäkkeellinen. Pesäke kehittyy varren kärkeen. Pesäke aukeaa sivusta neljällä pitkittäisraolla, mikä tunnusomaista karstasammalten ryhmälle. (Pesäkkeessä ei siis ole kantta niin kuin useimmilla lehtisammalilla.)</p>"
+      },
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Mikroskooppiset tuntomerkit",
+        "sv": "Mikroskopiska kännetecken",
+        "en": "Microscopic identification"
+      },
+      "body": {
+        "sv": "<p>Cellerna vid bladbasen relativt långsmala, de övre bladcellerna hexagonala, tjockväggiga, tydligt papillösa på undersidan.</p>",
+        "fi": "<p>Lehtisolut pienet, pyöreät – neliskanttiset, voimakkaasti nystyiset (papilliset) selkäpuolelta.</p>"
+      },
+      "predicate": "MX.descriptionMicroscopicIdentification"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {
+        "fi": "<p>Karut kalliot, lohkareet, kivet.</p>",
+        "sv": "<p>På bergsområden, stenar och block.</p>"
+      },
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "sv": "<p>Allmän i hela landet.</p>",
+        "fi": "<p>Koko Suomessa, yleinen.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {
+        "sv": "<p>Förekommer på norra och södra halvklotet i de boreala och kalltempererade områdena.</p>",
+        "fi": "<p>Pohjoisen ja eteläisen pallonpuoliskon lauhkeat ja viileät alueet, erityisesti vuoristot.</p>"
+      },
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>akrokarppi</p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.44109",
+      "vernacularName": {
+        "fi": "lehtisammalet",
+        "sv": "bladmossor",
+        "en": "Mosses"
+      },
+      "scientificName": "Bryophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.70673",
+      "vernacularName": null,
+      "scientificName": "Andreaeopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.325107",
+      "vernacularName": null,
+      "scientificName": "Andreaeidae",
+      "rankName": {
+        "fi": "alaluokka",
+        "sv": "underklass",
+        "en": "subclass"
+      },
+      "rank": "MX.subclass"
+    },
+    {
+      "taxonId": "MX.70674",
+      "vernacularName": {
+        "fi": "karstasammalet"
+      },
+      "scientificName": "Andreaeales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.212917",
+      "vernacularName": null,
+      "scientificName": "Andreaeaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.43343",
+      "vernacularName": {
+        "fi": "karstasammalet",
+        "sv": "sotmossor"
+      },
+      "scientificName": "Andreaea",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.43789",
+      "vernacularName": {
+        "fi": "kalliokarstasammal",
+        "sv": "sotmossa"
+      },
+      "scientificName": "Andreaea rupestris",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 46280,
+  "images": [
+    {
+      "id": "MM.53628",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR 11_7_2007B 021.jpg",
+        "documentIds": [
+          "32119"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53628/MX.43789_Andreaea_rupestris_JR_11_7_2007B_021.jpg",
+        "full": "https://image.laji.fi/MM.53628/MX.43789_Andreaea_rupestris_JR_11_7_2007B_021.jpg",
+        "large": "https://image.laji.fi/MM.53628/MX.43789_Andreaea_rupestris_JR_11_7_2007B_021.jpg",
+        "square": "https://image.laji.fi/MM.53628/MX.43789_Andreaea_rupestris_JR_11_7_2007B_021_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53628/MX.43789_Andreaea_rupestris_JR_11_7_2007B_021_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53586",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR 30_6_2007 010.jpg",
+        "documentIds": [
+          "32121"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53586/MX.43789_Andreaea_rupestris_JR_30_6_2007_010.jpg",
+        "full": "https://image.laji.fi/MM.53586/MX.43789_Andreaea_rupestris_JR_30_6_2007_010.jpg",
+        "large": "https://image.laji.fi/MM.53586/MX.43789_Andreaea_rupestris_JR_30_6_2007_010.jpg",
+        "square": "https://image.laji.fi/MM.53586/MX.43789_Andreaea_rupestris_JR_30_6_2007_010_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53586/MX.43789_Andreaea_rupestris_JR_30_6_2007_010_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53596",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR 30_6_2007 011.jpg",
+        "documentIds": [
+          "32122"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53596/MX.43789_Andreaea_rupestris_JR_30_6_2007_011.jpg",
+        "full": "https://image.laji.fi/MM.53596/MX.43789_Andreaea_rupestris_JR_30_6_2007_011.jpg",
+        "large": "https://image.laji.fi/MM.53596/MX.43789_Andreaea_rupestris_JR_30_6_2007_011.jpg",
+        "square": "https://image.laji.fi/MM.53596/MX.43789_Andreaea_rupestris_JR_30_6_2007_011_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53596/MX.43789_Andreaea_rupestris_JR_30_6_2007_011_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53577",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR28255.JPG",
+        "documentIds": [
+          "32172"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53577/MX.43789_Andreaea_rupestris_JR28255.JPG",
+        "full": "https://image.laji.fi/MM.53577/MX.43789_Andreaea_rupestris_JR28255.JPG",
+        "large": "https://image.laji.fi/MM.53577/MX.43789_Andreaea_rupestris_JR28255.JPG",
+        "square": "https://image.laji.fi/MM.53577/MX.43789_Andreaea_rupestris_JR28255_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53577/MX.43789_Andreaea_rupestris_JR28255_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53615",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR28224.JPG",
+        "documentIds": [
+          "32169"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53615/MX.43789_Andreaea_rupestris_JR28224.JPG",
+        "full": "https://image.laji.fi/MM.53615/MX.43789_Andreaea_rupestris_JR28224.JPG",
+        "large": "https://image.laji.fi/MM.53615/MX.43789_Andreaea_rupestris_JR28224.JPG",
+        "square": "https://image.laji.fi/MM.53615/MX.43789_Andreaea_rupestris_JR28224_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53615/MX.43789_Andreaea_rupestris_JR28224_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53606",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR28223.JPG",
+        "documentIds": [
+          "32168"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53606/MX.43789_Andreaea_rupestris_JR28223.JPG",
+        "full": "https://image.laji.fi/MM.53606/MX.43789_Andreaea_rupestris_JR28223.JPG",
+        "large": "https://image.laji.fi/MM.53606/MX.43789_Andreaea_rupestris_JR28223.JPG",
+        "square": "https://image.laji.fi/MM.53606/MX.43789_Andreaea_rupestris_JR28223_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53606/MX.43789_Andreaea_rupestris_JR28223_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53624",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR28225.JPG",
+        "documentIds": [
+          "32170"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53624/MX.43789_Andreaea_rupestris_JR28225.JPG",
+        "full": "https://image.laji.fi/MM.53624/MX.43789_Andreaea_rupestris_JR28225.JPG",
+        "large": "https://image.laji.fi/MM.53624/MX.43789_Andreaea_rupestris_JR28225.JPG",
+        "square": "https://image.laji.fi/MM.53624/MX.43789_Andreaea_rupestris_JR28225_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53624/MX.43789_Andreaea_rupestris_JR28225_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53576",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR 15_8_2009 027.JPG",
+        "documentIds": [
+          "32120"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53576/MX.43789_Andreaea_rupestris_JR_15_8_2009_027.JPG",
+        "full": "https://image.laji.fi/MM.53576/MX.43789_Andreaea_rupestris_JR_15_8_2009_027.JPG",
+        "large": "https://image.laji.fi/MM.53576/MX.43789_Andreaea_rupestris_JR_15_8_2009_027.JPG",
+        "square": "https://image.laji.fi/MM.53576/MX.43789_Andreaea_rupestris_JR_15_8_2009_027_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53576/MX.43789_Andreaea_rupestris_JR_15_8_2009_027_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53634",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.43789_Andreaea rupestris JR28231.JPG",
+        "documentIds": [
+          "32171"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53634/MX.43789_Andreaea_rupestris_JR28231.JPG",
+        "full": "https://image.laji.fi/MM.53634/MX.43789_Andreaea_rupestris_JR28231.JPG",
+        "large": "https://image.laji.fi/MM.53634/MX.43789_Andreaea_rupestris_JR28231.JPG",
+        "square": "https://image.laji.fi/MM.53634/MX.43789_Andreaea_rupestris_JR28231_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53634/MX.43789_Andreaea_rupestris_JR28231_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53611",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-4.0",
+        "rightsOwner": "Luomus",
+        "secret": false,
+        "capturers": [
+          "Luomus"
+        ],
+        "uploadedBy": "kuvaluomusfi_import",
+        "originalFilename": "MX.43789_AndrRupeL.jpg",
+        "documentIds": [
+          "http://tun.fi/MX.43789"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53611/MX.43789_AndrRupeL.jpg",
+        "full": "https://image.laji.fi/MM.53611/MX.43789_AndrRupeL.jpg",
+        "large": "https://image.laji.fi/MM.53611/MX.43789_AndrRupeL_large.jpg",
+        "square": "https://image.laji.fi/MM.53611/MX.43789_AndrRupeL_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53611/MX.43789_AndrRupeL_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53619",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807422,
+        "license": "MZ.intellectualRightsCC-BY-4.0",
+        "rightsOwner": "Luomus",
+        "secret": false,
+        "capturers": [
+          "Luomus"
+        ],
+        "uploadedBy": "kuvaluomusfi_import",
+        "originalFilename": "MX.43789_AndrRupeS.jpg",
+        "documentIds": [
+          "http://tun.fi/MX.43789"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43789"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53619/MX.43789_AndrRupeS.jpg",
+        "full": "https://image.laji.fi/MM.53619/MX.43789_AndrRupeS.jpg",
+        "large": "https://image.laji.fi/MM.53619/MX.43789_AndrRupeS_large.jpg",
+        "square": "https://image.laji.fi/MM.53619/MX.43789_AndrRupeS_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53619/MX.43789_AndrRupeS_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 544,
+    "name": {
+      "fi": "Sammalet"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 5,
+      "name": {
+        "fi": "BIO-103 Eliöiden monimuotoisuus"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.53716",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

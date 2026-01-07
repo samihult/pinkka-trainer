@@ -1,0 +1,92 @@
+{
+  "id": 10,
+  "name": {
+    "fi": "BIO-513 Syventävä putkilokasvituntemus"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tässä kokonaisuudessa esitelty lajisto täydentää peruslajintuntemuksen (BIO-103 Eliöiden monimuotoisuus) valikoimaa etenkin koko Suomessa yleisten putkilokasvilajien osalta. Peruskurssin ja tämän kokonaisuuden suoritettuasi tunnet valtaosan Suomen yleisimmistä putkilokasveista, useimmat maassamme haitallisiksi vieraslajeiksi luokitellut lajit sekä valikoituja esimerkkejä muista huomionarvoisista lajeista!"
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 610,
+      "name": {
+        "fi": "Abies-Butomus"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 612,
+      "name": {
+        "fi": "Cakile-Circaea"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 614,
+      "name": {
+        "fi": "Conium-Epilobium"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 624,
+      "name": {
+        "fi": "Epipactis-Hieracium"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 611,
+      "name": {
+        "fi": "Hippophaë-Lythrum"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 617,
+      "name": {
+        "fi": "Malus-Platanthera"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 609,
+      "name": {
+        "fi": "Poa-Rumex"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 613,
+      "name": {
+        "fi": "Sagina-Symphytum"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 615,
+      "name": {
+        "fi": "Thalictrum-Woodsia"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

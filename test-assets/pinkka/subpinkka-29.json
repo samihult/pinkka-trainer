@@ -1,0 +1,302 @@
+{
+  "id": 29,
+  "name": {
+    "fi": "Boletales",
+    "sv": "Boletales"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 6,
+    "name": {
+      "fi": "BIO-519 Sienituntemus",
+      "sv": "Svampartkännedom",
+      "en": "Identification of fungi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.72040",
+  "speciesCards": [
+    {
+      "taxonId": "MX.67924",
+      "vernacularName": {
+        "sv": "stensopp",
+        "fi": "herkkutatti"
+      },
+      "scientificName": "Boletus edulis ssp. edulis",
+      "id": 5563,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71909",
+      "vernacularName": {
+        "fi": "männynherkkutatti",
+        "sv": "rödbrun stensopp"
+      },
+      "scientificName": "Boletus pinophilus",
+      "id": 5469,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73300",
+      "vernacularName": {
+        "fi": "tammenherkkutatti",
+        "sv": "finluden stensopp"
+      },
+      "scientificName": "Boletus reticulatus",
+      "id": 3695,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71680",
+      "vernacularName": {
+        "sv": "pepparsopp",
+        "fi": "äikätatti"
+      },
+      "scientificName": "Chalciporus piperatus",
+      "id": 7300,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71683",
+      "vernacularName": {
+        "fi": "rusakkonuljaskaryhmä"
+      },
+      "scientificName": "Chroogomphus rutilus coll.",
+      "id": 25802,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72660",
+      "vernacularName": {
+        "sv": "citronslemskivling",
+        "fi": "limanuljaska"
+      },
+      "scientificName": "Gomphidius glutinosus",
+      "id": 2196,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71789",
+      "vernacularName": {
+        "fi": "punanuljaska",
+        "sv": "rosenslemskivling"
+      },
+      "scientificName": "Gomphidius roseus",
+      "id": 25801,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72226",
+      "vernacularName": {
+        "sv": "narrkantarell",
+        "fi": "valevahvero"
+      },
+      "scientificName": "Hygrophoropsis aurantiaca",
+      "id": 2602,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72549",
+      "vernacularName": {
+        "fi": "ruskotatti",
+        "sv": "brunsopp"
+      },
+      "scientificName": "Imleria badia",
+      "id": 59098,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.69724",
+      "vernacularName": {
+        "fi": "lehmäntatit"
+      },
+      "scientificName": "Leccinum",
+      "id": 2063,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72278",
+      "vernacularName": {
+        "sv": "aspsopp",
+        "fi": "haavanpunikkitatti"
+      },
+      "scientificName": "Leccinum albostipitatum",
+      "id": 2666,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72951",
+      "vernacularName": {
+        "fi": "valkolehmäntatti"
+      },
+      "scientificName": "Leccinum holopus",
+      "id": 25805,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72283",
+      "vernacularName": {
+        "fi": "vaivaislehmäntatti",
+        "sv": "rensopp"
+      },
+      "scientificName": "Leccinum rotundifoliae",
+      "id": 59096,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72952",
+      "vernacularName": {
+        "sv": "tegelsopp",
+        "fi": "koivunpunikkitatti"
+      },
+      "scientificName": "Leccinum versipelle",
+      "id": 6508,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71814",
+      "vernacularName": {
+        "fi": "männynpunikkitatti",
+        "sv": "tallsopp"
+      },
+      "scientificName": "Leccinum vulpinum",
+      "id": 59095,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73298",
+      "vernacularName": {
+        "fi": "veritatti"
+      },
+      "scientificName": "Neoboletus luridiformis",
+      "id": 25803,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72524",
+      "vernacularName": {
+        "fi": "pulkkosieniryhmä"
+      },
+      "scientificName": "Paxillus involutus coll.",
+      "id": 7299,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72308",
+      "vernacularName": {
+        "sv": "örsopp",
+        "fi": "nummitatti"
+      },
+      "scientificName": "Suillus bovinus",
+      "id": 2868,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71856",
+      "vernacularName": {
+        "fi": "suotatti",
+        "sv": "slemsopp"
+      },
+      "scientificName": "Suillus flavidus",
+      "id": 25804,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73231",
+      "vernacularName": {
+        "fi": "lehtikuusentatti",
+        "sv": "lärksopp"
+      },
+      "scientificName": "Suillus grevillei",
+      "id": 59097,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73462",
+      "vernacularName": {
+        "sv": "smörsopp",
+        "fi": "voitatti"
+      },
+      "scientificName": "Suillus luteus",
+      "id": 4067,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72309",
+      "vernacularName": {
+        "fi": "kangastatti",
+        "sv": "sandsopp"
+      },
+      "scientificName": "Suillus variegatus",
+      "id": 2867,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73489",
+      "vernacularName": {
+        "sv": "sammetsfotad pluggskivling",
+        "fi": "samettijalka"
+      },
+      "scientificName": "Tapinella atrotomentosa",
+      "id": 5522,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73498",
+      "vernacularName": {
+        "fi": "sappitatti",
+        "sv": "gallsopp"
+      },
+      "scientificName": "Tylopilus felleus",
+      "id": 7298,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72349",
+      "vernacularName": {
+        "fi": "samettitatti"
+      },
+      "scientificName": "Xerocomus subtomentosus",
+      "id": 4863,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.72040",
+    "urls": {
+      "original": "https://image.laji.fi/MM.72040/orig_21876.jpg",
+      "full": "https://image.laji.fi/MM.72040/orig_21876.jpg",
+      "large": "https://image.laji.fi/MM.72040/orig_21876_large.jpg",
+      "square": "https://image.laji.fi/MM.72040/orig_21876_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.72040/orig_21876_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1435910715,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_legacy_import",
+      "originalFilename": "orig_21876.jpg",
+      "documentIds": [
+        "21876"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.69724"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

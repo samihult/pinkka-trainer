@@ -1,0 +1,534 @@
+{
+  "taxonId": "MX.67924",
+  "vernacularName": {
+    "sv": "stensopp",
+    "fi": "herkkutatti"
+  },
+  "scientificName": "Boletus edulis ssp. edulis",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Herkkutatti on iso ja tukeva ruskehtava tatti, jonka jalassa on vaalea verkkokuvio ja pillistö on vanhemmiten kellanvihertävä.</p>",
+        "sv": "<p>Stor sopp (under hatten från köttet lätt lossnande rörlager). Hattens ovansida brun eller rödbrun. Rör ljusa som unga, gulaktiga som äldre. Fotens övre del tydligt vitt ådernät. Kött tjockt och fast, mörknar nästan inte alls vid beröring.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Itiöemä",
+        "sv": "Fruktkropp",
+        "en": "Fruitbody"
+      },
+      "body": {
+        "fi": "<p>LAKKI on kupera, paksumaltoinen ja joskus hieman epäsäännöllinen. Lakin värivaihtelu on suurta, aina vaaleanruskeasta kellan- ja punaruskean kautta suklaanruskeaan. Lakin pinta on tahmea. PILLISTÖ on nuorena harmahtavan valkoinen, vanhemmiten aluksi vaaleankeltainen ja lopulta kellanvihreä. Tiheässä olevat pillit ovat pieniä ja pyöreitä. JALKA on tukeva, nuorella tatilla jopa tynnyrimäinen, tasapaksu tai alaosasta pullistunut. Valkea ja tiheä verkkokuvio on parhaiten nähtävissä vaaleanruskean jalan yläosassa. MALTO on paksua ja pysyvästi valkoista paitsi lakin pintakelmun alta punaruskeaa. Aluksi hyvinkin kiinteä malto pehmenee vanhemmiten. HAJU on miellyttävä, pähkinämäinen. MAKU on mieto.</p>"
+      },
+      "predicate": "MX.descriptionFruitbody"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {
+        "fi": "<p>Itiöt ovat 14–17 x 4,5–6 um, sileitä ja kellertäviä.</p>"
+      },
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {
+        "sv": "<p>Granens mykorrhizasvamp. I barr- och lövskogar, speciellt i blandskogar och lundartade granskogar. Allmän i så gott som hela landet.</p>",
+        "fi": "<p>Ainakin kuusen mykorritsasieni.</p>"
+      },
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Kasvaa havumetsissä, erityisesti tuoreissa moreenipohjaisissa kangasmetsissä, hakamailla ja puistonurmikoilla heinäkuusta lokakuulle.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Hyvin yleinen koko maassa kuusen levinneisyysalueella. Puuttunee Tunturi-Lapista, jossa kasvaa muita herkkutattilajeja.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "sv": "<p>Utmärkt matsvamp. Handelssvamp.</p>",
+        "fi": "<p>Kauppasienilaji. Kansainvälisestikin hyvin suosittu herkkutatti on erinomainen ruokasieni, jonka tärkeyttä meillä on lisännyt sienen vienti Italiaan. Sieni onkin erittäin hyvän makuinen, ruokaisa ja parhaimmillaan runsassatoinen. Satohuippuja voi olla syksyn mittaan useita. Kuitenkin alkukaudesta jopa nuoret itiöemät voivat olla hyvinkin toukkaisia. Siksi sato tulisi poimia ja käsitellä mahdollisimman nopeasti. Hyväkuntoisista itiöemistä ruuaksi voi käyttää koko sienen, myös pillistön. Myöskään vähäinen määrä toukanreikiä ei sienen ruokakäyttöä haittaa. Sieni on erinomainen kaikenlaisiin ruokiin eikä esikäsittelyä tarvita. Pakastaminen tai viipaleina kuivaaminen ovat sienen säilömistavoista parhaimmat. Uusimman Kansanterveyslaitoksella tehdyn tutkimuksen mukaan herkkutatti saattaa sisältää melko runsaasti hopeaa ja tämän hetkinen suositus on, ettei herkkutatteja saisi syödä enempää kuin reilun kilon viikossa. Yleinen tatinriesa (Hypomyces chrysospermus) loisii herkkutateilla ja tekee sienen syömäkelvottomaksi. Loisen läsnäolon huomaa aluksi tatin turvonneen pehmeästä jalasta ja lopulta koko sienen peittävästä homemaisesta rihmastosta, joka on aluksi valkoinen ja muuttuu lopulta keltaiseksi. --- Muita samankaltaisia lajeja: Herkkutattien ryhmään kuuluu useita eri puulajeihin erikoistuneita lähilajeja, joiden erottaminen toisistaan ei ole aina helppoa. Punaruskeampi MÄNNYNHERKKUTATTI (B. pinophilus) kasvaa männiköissä, KOIVUNHERKKUTATILLA (B. betulicola) on nahkamaisen paksu pintakelmu ja TAMMENHERKKUTATILLA (B. reticulatus) jalan vaalea verkkokuvio erottuu selvänä tyveen saakka. Ruuaksi kerättäessä eri herkkutattilajien erottaminen ei ole kuitenkaan tarpeen, koska kaikki lajit ovat yhtä erinomaisia ruokasienikäyttöön. Tärkeintä on osata erottaa SAPPITATTI (Tylopilus felleus), joka karvaan makuisena helposti pilaa ruuan maun. Sappitatin jalan verkkokuvio on kuitenkin tummanruskea-oliivinruskea ja pillistö pullistuu ja punertuu vanhemmiten. Myös erinomaisena ruokasienenä pidetty, Etelä- ja Keski-Suomessa kasvava RUSKOTATTI (Xerocomus badius) voi muistuttaa herkkutattia, mutta sen vaaleat, kellanvihreät pillit sinistyvät kosketeltaessa.</p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.67924",
+      "vernacularName": {
+        "sv": "stensopp",
+        "fi": "herkkutatti"
+      },
+      "scientificName": "Boletus edulis ssp. edulis",
+      "rankName": {
+        "fi": "alalaji",
+        "sv": "underart",
+        "en": "subspecies"
+      },
+      "rank": "MX.subspecies"
+    }
+  ],
+  "id": 5563,
+  "images": [
+    {
+      "id": "MM.2853251",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807425,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32236.JPG",
+        "documentIds": [
+          "6194"
+        ],
+        "tags": [
+          "Boletus",
+          "Boletus edulis",
+          "herkkutatti"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2853251/JR32236.JPG",
+        "full": "https://image.laji.fi/MM.2853251/JR32236.JPG",
+        "large": "https://image.laji.fi/MM.2853251/JR32236_large.jpg",
+        "square": "https://image.laji.fi/MM.2853251/JR32236_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2853251/JR32236_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2853248",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807425,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32239.JPG",
+        "documentIds": [
+          "6194"
+        ],
+        "tags": [
+          "Boletus edulis",
+          "Boletus",
+          "herkkutatti"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2853248/JR32239.JPG",
+        "full": "https://image.laji.fi/MM.2853248/JR32239.JPG",
+        "large": "https://image.laji.fi/MM.2853248/JR32239_large.jpg",
+        "square": "https://image.laji.fi/MM.2853248/JR32239_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2853248/JR32239_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2853249",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807425,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32238.JPG",
+        "documentIds": [
+          "6194"
+        ],
+        "tags": [
+          "Boletus",
+          "herkkutatti",
+          "Boletus edulis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2853249/JR32238.JPG",
+        "full": "https://image.laji.fi/MM.2853249/JR32238.JPG",
+        "large": "https://image.laji.fi/MM.2853249/JR32238_large.jpg",
+        "square": "https://image.laji.fi/MM.2853249/JR32238_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2853249/JR32238_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2853250",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807425,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32237.JPG",
+        "documentIds": [
+          "6194"
+        ],
+        "tags": [
+          "herkkutatti",
+          "Boletus",
+          "Boletus edulis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2853250/JR32237.JPG",
+        "full": "https://image.laji.fi/MM.2853250/JR32237.JPG",
+        "large": "https://image.laji.fi/MM.2853250/JR32237_large.jpg",
+        "square": "https://image.laji.fi/MM.2853250/JR32237_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2853250/JR32237_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.82349",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "modifiedDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_13920.jpg",
+        "documentIds": [
+          "13920"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924",
+            "MX.72563"
+          ]
+        },
+        "type": "MM.typeEnumSpecimen"
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.82349/orig_13920.jpg",
+        "full": "https://image.laji.fi/MM.82349/orig_13920.jpg",
+        "large": "https://image.laji.fi/MM.82349/orig_13920_large.jpg",
+        "square": "https://image.laji.fi/MM.82349/orig_13920_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.82349/orig_13920_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77486",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "modifiedDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_13914.jpg",
+        "documentIds": [
+          "13914"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924",
+            "MX.72563"
+          ]
+        },
+        "type": "MM.typeEnumSpecimen"
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77486/orig_13914.jpg",
+        "full": "https://image.laji.fi/MM.77486/orig_13914.jpg",
+        "large": "https://image.laji.fi/MM.77486/orig_13914_large.jpg",
+        "square": "https://image.laji.fi/MM.77486/orig_13914_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77486/orig_13914_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77480",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "modifiedDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_13919.jpg",
+        "documentIds": [
+          "13919"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924",
+            "MX.72563"
+          ]
+        },
+        "type": "MM.typeEnumSpecimen"
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77480/orig_13919.jpg",
+        "full": "https://image.laji.fi/MM.77480/orig_13919.jpg",
+        "large": "https://image.laji.fi/MM.77480/orig_13919_large.jpg",
+        "square": "https://image.laji.fi/MM.77480/orig_13919_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77480/orig_13919_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77485",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "modifiedDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_13915.jpg",
+        "documentIds": [
+          "13915"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.72563",
+            "MX.67924"
+          ]
+        },
+        "type": "MM.typeEnumSpecimen"
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77485/orig_13915.jpg",
+        "full": "https://image.laji.fi/MM.77485/orig_13915.jpg",
+        "large": "https://image.laji.fi/MM.77485/orig_13915_large.jpg",
+        "square": "https://image.laji.fi/MM.77485/orig_13915_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77485/orig_13915_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.78713",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "modifiedDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_13916.jpg",
+        "documentIds": [
+          "13916"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924",
+            "MX.72563"
+          ]
+        },
+        "type": "MM.typeEnumSpecimen"
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.78713/orig_13916.jpg",
+        "full": "https://image.laji.fi/MM.78713/orig_13916.jpg",
+        "large": "https://image.laji.fi/MM.78713/orig_13916_large.jpg",
+        "square": "https://image.laji.fi/MM.78713/orig_13916_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.78713/orig_13916_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77484",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "modifiedDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_13917.jpg",
+        "documentIds": [
+          "13917"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.72563",
+            "MX.67924"
+          ]
+        },
+        "type": "MM.typeEnumSpecimen"
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77484/orig_13917.jpg",
+        "full": "https://image.laji.fi/MM.77484/orig_13917.jpg",
+        "large": "https://image.laji.fi/MM.77484/orig_13917_large.jpg",
+        "square": "https://image.laji.fi/MM.77484/orig_13917_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77484/orig_13917_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77481",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "modifiedDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_13918.jpg",
+        "documentIds": [
+          "13918"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.67924",
+            "MX.72563"
+          ]
+        },
+        "type": "MM.typeEnumSpecimen"
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77481/orig_13918.jpg",
+        "full": "https://image.laji.fi/MM.77481/orig_13918.jpg",
+        "large": "https://image.laji.fi/MM.77481/orig_13918_large.jpg",
+        "square": "https://image.laji.fi/MM.77481/orig_13918_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77481/orig_13918_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 29,
+    "name": {
+      "fi": "Boletales",
+      "sv": "Boletales"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 6,
+      "name": {
+        "fi": "BIO-519 Sienituntemus",
+        "sv": "Svampartkännedom",
+        "en": "Identification of fungi"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.72040",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

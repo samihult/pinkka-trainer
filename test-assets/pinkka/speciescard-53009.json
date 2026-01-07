@@ -1,0 +1,333 @@
+{
+  "taxonId": "MX.70222",
+  "vernacularName": {
+    "fi": "siimahäntäiset"
+  },
+  "scientificName": "Archaeognatha",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Siimahäntäiset (Archaeognatha) ovat pieniä, pitkulaisia ja lieriömäisiä, väritykseltään rusehtavia tai kellertäviä, usein kirjavasti kuvioituja hyönteisiä. Tämän varhain kehittyneen hyönteislahkon edustajilla ruumis on suomujen peittämä ja se kapenee taaksepäin.</p><p>Siimahäntäisten alaspäin osoittavassa päässä on pitkät, monijaokkeiset ja rihmamaiset tuntosarvet, isot verkkosilmät, jotka koskettavat toisiaan pään yläosassa sekä kolme pistesilmää, joista kaksi on sivuilla sijaitsevaa ja yksi eteenpäin suuntautunut. Niiden suuosat ovat purevat, mutta yksinkertaiset: leuat kiinnittyvät vain yhdellä nivelkohdalla pääkapseliin ja tämä alkeellinen ominaisuus erottaa lahkon kaikista muista hyönteisistä. Siimahäntäisten leukarihmat ovat 7-jaokkeiset, jalkoja pidemmät ja erottuvat. Keskiruumis on kyttyräinen, kohonnut ja siivetön. Takaruumiin jaokkeiden (2-9) alapinnalla on liikkumisessa avustavia ulokkeita, jotka ovat yhteydessä lihaksiin. Aikuisilla yksilöillä näiden ulokkeiden välissä on laajentuvia tarttumarakkoja jaokkeissa 1-7. Siimahäntäisten lonkat ovat suuret ja takaruumiin kärjessä on kolme pitkää perälisäkettä, joista keskimmäinen (epiprokti) on selvästi muita pidempi, ja jotka ovat hienokarvaisia. Naarailla on yksinkertainen munanasetin.</p><p>Ruumiin pituus ilman perälisäkkeitä 7-15 mm.</p><p><b>Toukat </b>aikuisen näköisiä, mutta niiltä puuttuvat ensimmäisissä toukkavaiheissa suomut.</p><p>Suomesta tunnetaan 2 lajia, mutta lahko huonosti tunnettu ja tutkittu.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Nimien alkuperä",
+        "sv": "Etymologi",
+        "en": "Etymology of names"
+      },
+      "body": {
+        "fi": "<p>Kreik. <i>arkhios</i> = muinainen, <i>gnathos</i> = leuka. Lahkon tieteellinen nimi Archaeognatha viittaa&#xa0;lahkon leukojen alkeellisuuteen.</p>"
+      },
+      "predicate": "MX.etymologyText"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Elävät kosteilla paikoilla: metsien karikkeessa, kaarnan ja kivien alla, rantojen kivikoissa ja rannoille ajautuneen kasviaineksen seassa.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Elintavat",
+        "sv": "Beteende",
+        "en": "Behaviour"
+      },
+      "body": {
+        "fi": "<p>Ravintona lahoava kasviaines, levät, jäkälät ja sammalet.</p><p>Ovat usein yöaktiivisia ja piilottelevia. Liikkuvat vilkkaasti kyeten hyppäämään jopa n. 10 cm matkoja.</p><p>Voivat käyttää takaruumiin ulokkeita apuna liikkumisessa ja voivat ulokkeiden välisten tarttumarakkojen avulla tarrautua pintoihin kiinni, jolloin pystyvät kävelemään jopa ylösalaisin.&#xa0;</p>"
+      },
+      "predicate": "MX.behaviour"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {
+        "fi": "<p>Ekologisesta ja taloudellisesta merkityksestä ei mainittua tietoa lähdemateriaaleissa.</p>"
+      },
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {
+        "fi": "<p>Ei muodonvaihdosta. Munasta kuoriutuva toukka muistuttaa aikuista. Toukkavaiheita vähintään kuusi, mutta tavallisesti enemmän, joillain jopa kymmenen. Sukukypsyyden saavuttaminen voi kestää jopa kaksi vuotta, jonka jälkeen yksilöt voivat elää vielä ainakin kaksi vuotta. Useat lajit luovat nahkansa monta kertaa vielä sukukypsyyden saavuttamisen jälkeenkin, mikä on harvinaista hyönteisille.</p><p>Elinkierto voi kestää vuosia. Kehitys munasta toukaksi 60–380 päivää.</p><p>Lähdemateriaaleissa ei talvehtimisesta - aihetta ei kenties ole tutkittu.&#xa0;</p>"
+      },
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {
+        "fi": "<p>Lisääntymistä voi edeltää jonkinlainen kosiotanssi. Hedelmöitys&#xa0;tapahtuu ilman varsinaista parittelua, mutta on hyvin lähellä sitä:&#xa0;koiras laskee siittiöpisaransa tai siittiökotelonsa naaraan munanasettimelle, josta naaras ottaa sen lisääntymisaukkoonsa. Naaraat kiinnittävät pyöreät munansa 10-15 kappaleen ryhmissä kivenkoloihin ja muihin onkaloihin.</p>"
+      },
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Chinery, M.1978: Pohjois-Euroopan hyönteiset. —&#xa0;<i>Kustannusosakeyhtiö&#xa0;</i><i>Tammi</i>. 353 s.</p><p>Chinery, M. 1999. Euroopan hyönteisopas. —&#xa0;<i>Otava</i>. 290 s.</p><p>Foottit, R. G. & Adler, P. H. 2018: Insect Biodiversity: Science and Society. Volume II. — <i>John Wiley & Sons</i>. 1024 s.</p><p>Gullan, P. J. & Cranston, P. S. 2004: The Insects:An Outline of Entomology, 3rd Edition. —&#xa0;<i>Blackwell Publishing</i>. 584 s.</p><p>McGavin, G. C. 2001: Essential Entomology. — <i>Oxford University Press</i>. 318 s.</p><p>Resh, V. H., & Cardé, R. T. (toim.). 2009: Encyclopedia of insects. — <i>Academic Press</i>. 1168 s.</p>"
+      },
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Viitteet",
+        "sv": "Referenser",
+        "en": "References"
+      },
+      "body": {},
+      "predicate": "MX.descriptionReferences"
+    },
+    {
+      "title": {
+        "fi": "Kuvaustekstin laatijat",
+        "sv": "Författare av artbeskrivningen",
+        "en": "Description text authors"
+      },
+      "body": {
+        "fi": "<p>FM, suunnittelija Jani Järvi / Luonnontieteellinen keskusmuseo Luomus</p>"
+      },
+      "predicate": "MX.speciesCardAuthors"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37602",
+      "vernacularName": {
+        "fi": "eläimet",
+        "sv": "djur",
+        "en": "Animals"
+      },
+      "scientificName": "Animalia",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.37605",
+      "vernacularName": {
+        "sv": "leddjur",
+        "fi": "niveljalkaiset",
+        "en": "Arthropods"
+      },
+      "scientificName": "Arthropoda",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.37607",
+      "vernacularName": {
+        "sv": "insekter",
+        "fi": "kuusijalkaiset",
+        "en": "Hexapods"
+      },
+      "scientificName": "Hexapoda",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.37613",
+      "vernacularName": {
+        "fi": "hyönteiset",
+        "sv": "egentliga insekter",
+        "en": "Insects"
+      },
+      "scientificName": "Insecta",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.5126267",
+      "vernacularName": null,
+      "scientificName": "Apterygota",
+      "rankName": {
+        "fi": "alaluokka",
+        "sv": "underklass",
+        "en": "subclass"
+      },
+      "rank": "MX.subclass"
+    },
+    {
+      "taxonId": "MX.70222",
+      "vernacularName": {
+        "fi": "siimahäntäiset"
+      },
+      "scientificName": "Archaeognatha",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    }
+  ],
+  "id": 53009,
+  "images": [
+    {
+      "id": "MM.257887",
+      "caption": {
+        "fi": "Museonäyte kivikkosiimahännästä (Dilta hibernica). Kyseisen näyteyksilön jalat ovat sen ruumiin alla näkymättömissä."
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807471,
+        "license": "MZ.intellectualRightsCC-BY-SA-4.0",
+        "rightsOwner": "Jani Järvi / Luomus",
+        "secret": false,
+        "capturers": [
+          "Jani Järvi"
+        ],
+        "uploadedBy": "jkjarvi@helsinki.fi",
+        "originalFilename": "4. Dilta_hibernica_muok_JJärvi.jpg",
+        "documentIds": [
+          "3021"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.231366",
+            "MX.231365",
+            "MX.231363",
+            "MX.70222",
+            "MX.231364"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.257887/4._Dilta_hibernica_muok_JJarvi.jpg",
+        "full": "https://image.laji.fi/MM.257887/4._Dilta_hibernica_muok_JJarvi.jpg",
+        "large": "https://image.laji.fi/MM.257887/4._Dilta_hibernica_muok_JJarvi_large.jpg",
+        "square": "https://image.laji.fi/MM.257887/4._Dilta_hibernica_muok_JJarvi_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.257887/4._Dilta_hibernica_muok_JJarvi_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 662,
+    "name": {
+      "fi": "Hyönteiset ja alkuhyönteiset"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 20,
+      "name": {
+        "fi": "BIO-103 Eliöiden monimuotoisuus: eläimet"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": false,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.135093",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

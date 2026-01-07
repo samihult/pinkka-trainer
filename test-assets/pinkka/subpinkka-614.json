@@ -1,0 +1,335 @@
+{
+  "id": 614,
+  "name": {
+    "fi": "Conium-Epilobium"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 10,
+    "name": {
+      "fi": "BIO-513 Syventävä putkilokasvituntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.78097",
+  "speciesCards": [
+    {
+      "taxonId": "MX.39215",
+      "vernacularName": {
+        "sv": "odört",
+        "fi": "myrkkykatko"
+      },
+      "scientificName": "Conium maculatum",
+      "id": 52975,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40081",
+      "vernacularName": {
+        "sv": "korallrot",
+        "fi": "harajuuri"
+      },
+      "scientificName": "Corallorhiza trifida",
+      "id": 50111,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39168",
+      "vernacularName": {
+        "fi": "idänkanukka",
+        "sv": "rysk kornell"
+      },
+      "scientificName": "Cornus alba",
+      "id": 51155,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39166",
+      "vernacularName": {
+        "sv": "hönsbär",
+        "fi": "ruohokanukka"
+      },
+      "scientificName": "Cornus suecica",
+      "id": 50113,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37969",
+      "vernacularName": {
+        "fi": "pystykiurunkannus",
+        "sv": "stornunneört"
+      },
+      "scientificName": "Corydalis solida",
+      "id": 50117,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38924",
+      "vernacularName": {
+        "sv": "häckoxbär",
+        "fi": "kiiltotuhkapensas"
+      },
+      "scientificName": "Cotoneaster lucidus",
+      "id": 59152,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4973216",
+      "vernacularName": {
+        "fi": "kalliotuhkapensas",
+        "sv": "rött oxbär"
+      },
+      "scientificName": "Cotoneaster scandinavicus",
+      "id": 59150,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39954",
+      "vernacularName": {
+        "sv": "klofibbla",
+        "fi": "ketokeltto"
+      },
+      "scientificName": "Crepis tectorum",
+      "id": 59153,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39383",
+      "vernacularName": {
+        "fi": "euroopanvieras",
+        "sv": "nässelsnärja"
+      },
+      "scientificName": "Cuscuta europaea",
+      "id": 50115,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40028",
+      "vernacularName": {
+        "fi": "tikankontti",
+        "sv": "guckusko"
+      },
+      "scientificName": "Cypripedium calceolus",
+      "id": 59151,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37766",
+      "vernacularName": {
+        "fi": "haurasloikko",
+        "sv": "stenbräken"
+      },
+      "scientificName": "Cystopteris fragilis",
+      "id": 50137,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40062",
+      "vernacularName": {
+        "fi": "pussikämmekkä",
+        "sv": "grönkulla"
+      },
+      "scientificName": "Dactylorhiza viridis",
+      "id": 50107,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38362",
+      "vernacularName": {
+        "fi": "litutilli",
+        "sv": "stillfrö"
+      },
+      "scientificName": "Descurainia sophia",
+      "id": 50124,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38651",
+      "vernacularName": {
+        "fi": "uuvana",
+        "sv": "fjällgröna"
+      },
+      "scientificName": "Diapensia lapponica",
+      "id": 50128,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37698",
+      "vernacularName": {
+        "sv": "fjällummer",
+        "fi": "tunturilieko"
+      },
+      "scientificName": "Diphasiastrum alpinum",
+      "id": 50141,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37699",
+      "vernacularName": {
+        "fi": "keltalieko",
+        "sv": "plattlummer"
+      },
+      "scientificName": "Diphasiastrum complanatum",
+      "id": 50718,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38439",
+      "vernacularName": {
+        "fi": "kevätkynsimö",
+        "sv": "nagelört"
+      },
+      "scientificName": "Draba verna",
+      "id": 50126,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38781",
+      "vernacularName": {
+        "fi": "pitkälehtikihokki",
+        "sv": "storsileshår"
+      },
+      "scientificName": "Drosera anglica",
+      "id": 50129,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38832",
+      "vernacularName": {
+        "fi": "tunturilapinvuokko",
+        "sv": "fjällsippa"
+      },
+      "scientificName": "Dryas octopetala",
+      "id": 50127,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37754",
+      "vernacularName": {
+        "fi": "isoalvejuuri",
+        "sv": "nordbräken"
+      },
+      "scientificName": "Dryopteris expansa",
+      "id": 50142,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39402",
+      "vernacularName": {
+        "fi": "neidonkieli",
+        "sv": "blåeld"
+      },
+      "scientificName": "Echium vulgare",
+      "id": 59155,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38308",
+      "vernacularName": {
+        "fi": "kolmihedevesirikko",
+        "sv": "tretalig slamkrypa"
+      },
+      "scientificName": "Elatine triandra",
+      "id": 59154,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40268",
+      "vernacularName": {
+        "fi": "hapsiluikka",
+        "sv": "nålsäv"
+      },
+      "scientificName": "Eleocharis acicularis",
+      "id": 50131,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40275",
+      "vernacularName": {
+        "sv": "agnsäv",
+        "fi": "meriluikka"
+      },
+      "scientificName": "Eleocharis uniglumis",
+      "id": 59156,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40533",
+      "vernacularName": {
+        "sv": "lundelm",
+        "fi": "koiranvehniö"
+      },
+      "scientificName": "Elymus caninus",
+      "id": 50135,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39100",
+      "vernacularName": {
+        "fi": "vaalea-amerikanhorsma",
+        "sv": "vit dunört"
+      },
+      "scientificName": "Epilobium ciliatum",
+      "id": 59297,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39092",
+      "vernacularName": {
+        "sv": "backdunört",
+        "fi": "mäkihorsma"
+      },
+      "scientificName": "Epilobium collinum",
+      "id": 59295,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39110",
+      "vernacularName": {
+        "fi": "pohjanhorsma",
+        "sv": "fjälldunört"
+      },
+      "scientificName": "Epilobium hornemannii",
+      "id": 59296,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.78097",
+    "urls": {
+      "original": "https://image.laji.fi/MM.78097/orig_37714.jpg",
+      "full": "https://image.laji.fi/MM.78097/orig_37714.jpg",
+      "large": "https://image.laji.fi/MM.78097/orig_37714_large.jpg",
+      "square": "https://image.laji.fi/MM.78097/orig_37714_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.78097/orig_37714_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1435956197,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_legacy_import",
+      "originalFilename": "orig_37714.jpg",
+      "documentIds": [
+        "37714"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.38781"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

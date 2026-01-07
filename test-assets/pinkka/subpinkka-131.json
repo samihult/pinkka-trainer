@@ -1,0 +1,42 @@
+{
+  "id": 131,
+  "name": {
+    "fi": "Sammalet"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 19,
+    "name": {
+      "fi": "Kaskadian kasveja"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": null,
+  "speciesCards": [
+    {
+      "taxonId": "MX.210003",
+      "vernacularName": {},
+      "scientificName": "Hookeria lucens",
+      "id": 9745,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43895",
+      "vernacularName": {
+        "sv": "vågig sidenmossa",
+        "fi": "poimulaakasammal"
+      },
+      "scientificName": "Plagiothecium undulatum",
+      "id": 9746,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": null,
+  "entityType": "SUB_PINKKA"
+}

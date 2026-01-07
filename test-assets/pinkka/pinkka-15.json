@@ -1,0 +1,57 @@
+{
+  "id": 15,
+  "name": {
+    "fi": "Luonnonvaraiset lääkekasvit",
+    "sv": "Farmakognosi"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "590318 Farmakognosian perusteet, luennot 3 op \nFarmasian tiedekunta\nHelsingin yliopisto"
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi",
+    "saralind@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 218,
+      "name": {
+        "fi": "Koppisiemeniset"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 119,
+      "name": {
+        "fi": "Sanikkaiset",
+        "sv": "Ormbunksväxter"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 120,
+      "name": {
+        "fi": "Paljassiemeniset",
+        "sv": "Nakenfröiga växter"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 122,
+      "name": {
+        "fi": "Jäkälät",
+        "sv": "Lavar"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

@@ -1,17 +1,17 @@
 {
-  "taxonId": "MX.43487",
+  "taxonId": "MX.43583",
   "vernacularName": {
-    "sv": "kärrspärrmossa",
-    "fi": "rantaväkäsammal"
+    "fi": "tunturikellosammal",
+    "sv": "fjällklockmossa"
   },
-  "scientificName": "Campyliadelphus elodes",
+  "scientificName": "Encalypta alpina",
   "distributionMapFinland": null,
   "alternativeVernacularNames": {},
   "description": [
     {
       "title": {
-        "sv": "Beskrivning",
         "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
         "en": "Description"
       },
       "body": {},
@@ -64,15 +64,6 @@
     },
     {
       "title": {
-        "fi": "Lisääntyminen",
-        "sv": "Reproduktion",
-        "en": "Reproduction"
-      },
-      "body": {},
-      "predicate": "MX.reproduction"
-    },
-    {
-      "title": {
         "fi": "Itiöpesäkkeet",
         "sv": "Sporangium",
         "en": "Sporangium"
@@ -82,12 +73,12 @@
     },
     {
       "title": {
-        "fi": "Leväosakas",
-        "sv": "Algkomponent",
-        "en": "Algal partner"
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
       },
       "body": {},
-      "predicate": "MX.algalPartnerOfLichen"
+      "predicate": "MX.reproduction"
     },
     {
       "title": {
@@ -115,15 +106,6 @@
       },
       "body": {},
       "predicate": "MX.distributionFinland"
-    },
-    {
-      "title": {
-        "sv": "Bevarande i Finland",
-        "fi": "Uhanalaisuus Suomessa",
-        "en": "Conservation status in Finland"
-      },
-      "body": {},
-      "predicate": "MX.conservationStatusDescriptionFinland"
     },
     {
       "title": {
@@ -241,9 +223,9 @@
       "rank": "MX.class"
     },
     {
-      "taxonId": "MX.325144",
+      "taxonId": "MX.325118",
       "vernacularName": null,
-      "scientificName": "Bryidae",
+      "scientificName": "Encalyptidae",
       "rankName": {
         "fi": "alaluokka",
         "sv": "underklass",
@@ -252,9 +234,9 @@
       "rank": "MX.subclass"
     },
     {
-      "taxonId": "MX.70688",
+      "taxonId": "MX.70683",
       "vernacularName": null,
-      "scientificName": "Hypnales",
+      "scientificName": "Encalyptales",
       "rankName": {
         "fi": "lahko",
         "sv": "ordning",
@@ -263,9 +245,9 @@
       "rank": "MX.order"
     },
     {
-      "taxonId": "MX.212936",
+      "taxonId": "MX.212931",
       "vernacularName": null,
-      "scientificName": "Amblystegiaceae",
+      "scientificName": "Encalyptaceae",
       "rankName": {
         "fi": "heimo",
         "sv": "familj",
@@ -274,9 +256,11 @@
       "rank": "MX.family"
     },
     {
-      "taxonId": "MX.43281",
-      "vernacularName": null,
-      "scientificName": "Campyliadelphus",
+      "taxonId": "MX.43428",
+      "vernacularName": {
+        "fi": "kellosammalet"
+      },
+      "scientificName": "Encalypta",
       "rankName": {
         "fi": "suku",
         "sv": "släkte",
@@ -285,12 +269,12 @@
       "rank": "MX.genus"
     },
     {
-      "taxonId": "MX.43487",
+      "taxonId": "MX.43583",
       "vernacularName": {
-        "sv": "kärrspärrmossa",
-        "fi": "rantaväkäsammal"
+        "fi": "tunturikellosammal",
+        "sv": "fjällklockmossa"
       },
-      "scientificName": "Campyliadelphus elodes",
+      "scientificName": "Encalypta alpina",
       "rankName": {
         "fi": "laji",
         "sv": "art",
@@ -299,206 +283,133 @@
       "rank": "MX.species"
     }
   ],
-  "id": 54337,
+  "id": 54411,
   "images": [
     {
-      "id": "MM.1610284",
+      "id": "MM.1612243",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR32987.JPG",
+        "originalFilename": "JR31485.JPG",
         "documentIds": [
-          "4808"
+          "4873"
         ],
         "tags": [
-          "Campyliadelphus",
-          "rantaväkäsammal",
-          "Campyliadelphus elodes"
+          "Encalypta",
+          "tunturikellosammal",
+          "Encalypta alpina",
+          "kellosammalet"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.43487"
+            "MX.43583"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.1610284/JR32987.JPG",
-        "full": "https://image.laji.fi/MM.1610284/JR32987.JPG",
-        "large": "https://image.laji.fi/MM.1610284/JR32987_large.jpg",
-        "square": "https://image.laji.fi/MM.1610284/JR32987_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.1610284/JR32987_thumb.jpg"
+        "original": "https://image.laji.fi/MM.1612243/JR31485.JPG",
+        "full": "https://image.laji.fi/MM.1612243/JR31485.JPG",
+        "large": "https://image.laji.fi/MM.1612243/JR31485_large.jpg",
+        "square": "https://image.laji.fi/MM.1612243/JR31485_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1612243/JR31485_thumb.jpg"
       }
     },
     {
-      "id": "MM.1610281",
+      "id": "MM.1612242",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR33183.JPG",
+        "originalFilename": "JR49733.JPG",
         "documentIds": [
-          "4808"
+          "4873"
         ],
         "tags": [
-          "rantaväkäsammal",
-          "Campyliadelphus",
-          "Campyliadelphus elodes"
+          "kellosammalet",
+          "Encalypta",
+          "tunturikellosammal",
+          "Encalypta alpina"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.43487"
+            "MX.43583"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.1610281/JR33183.JPG",
-        "full": "https://image.laji.fi/MM.1610281/JR33183.JPG",
-        "large": "https://image.laji.fi/MM.1610281/JR33183_large.jpg",
-        "square": "https://image.laji.fi/MM.1610281/JR33183_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.1610281/JR33183_thumb.jpg"
+        "original": "https://image.laji.fi/MM.1612242/JR49733.JPG",
+        "full": "https://image.laji.fi/MM.1612242/JR49733.JPG",
+        "large": "https://image.laji.fi/MM.1612242/JR49733_large.jpg",
+        "square": "https://image.laji.fi/MM.1612242/JR49733_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1612242/JR49733_thumb.jpg"
       }
     },
     {
-      "id": "MM.1610282",
+      "id": "MM.1612244",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR33164.JPG",
+        "originalFilename": "JR10.8.2010C106.JPG",
         "documentIds": [
-          "4808"
+          "4873"
         ],
         "tags": [
-          "Campyliadelphus",
-          "Campyliadelphus elodes",
-          "rantaväkäsammal"
+          "Encalypta",
+          "tunturikellosammal",
+          "Encalypta alpina",
+          "kellosammalet"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.43487"
+            "MX.43583"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.1610282/JR33164.JPG",
-        "full": "https://image.laji.fi/MM.1610282/JR33164.JPG",
-        "large": "https://image.laji.fi/MM.1610282/JR33164_large.jpg",
-        "square": "https://image.laji.fi/MM.1610282/JR33164_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.1610282/JR33164_thumb.jpg"
-      }
-    },
-    {
-      "id": "MM.1610280",
-      "caption": {},
-      "taxonId": null,
-      "meta": {
-        "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
-        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
-        "rightsOwner": "Jouko Rikkinen",
-        "secret": false,
-        "capturers": [
-          "Jouko Rikkinen"
-        ],
-        "captureDateTime": 1767800109,
-        "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR33184.JPG",
-        "documentIds": [
-          "4808"
-        ],
-        "tags": [
-          "Campyliadelphus",
-          "Campyliadelphus elodes",
-          "rantaväkäsammal"
-        ],
-        "identifications": {
-          "taxonIds": [
-            "MX.43487"
-          ]
-        }
-      },
-      "urls": {
-        "original": "https://image.laji.fi/MM.1610280/JR33184.JPG",
-        "full": "https://image.laji.fi/MM.1610280/JR33184.JPG",
-        "large": "https://image.laji.fi/MM.1610280/JR33184_large.jpg",
-        "square": "https://image.laji.fi/MM.1610280/JR33184_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.1610280/JR33184_thumb.jpg"
-      }
-    },
-    {
-      "id": "MM.1610283",
-      "caption": {},
-      "taxonId": null,
-      "meta": {
-        "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
-        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
-        "rightsOwner": "Jouko Rikkinen",
-        "secret": false,
-        "capturers": [
-          "Jouko Rikkinen"
-        ],
-        "captureDateTime": 1767800109,
-        "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR33044.JPG",
-        "documentIds": [
-          "4808"
-        ],
-        "tags": [
-          "Campyliadelphus",
-          "rantaväkäsammal",
-          "Campyliadelphus elodes"
-        ],
-        "identifications": {
-          "taxonIds": [
-            "MX.43487"
-          ]
-        }
-      },
-      "urls": {
-        "original": "https://image.laji.fi/MM.1610283/JR33044.JPG",
-        "full": "https://image.laji.fi/MM.1610283/JR33044.JPG",
-        "large": "https://image.laji.fi/MM.1610283/JR33044_large.jpg",
-        "square": "https://image.laji.fi/MM.1610283/JR33044_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.1610283/JR33044_thumb.jpg"
+        "original": "https://image.laji.fi/MM.1612244/JR10.8.2010C106.JPG",
+        "full": "https://image.laji.fi/MM.1612244/JR10.8.2010C106.JPG",
+        "large": "https://image.laji.fi/MM.1612244/JR10.8.2010C106_large.jpg",
+        "square": "https://image.laji.fi/MM.1612244/JR10.8.2010C106_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1612244/JR10.8.2010C106_thumb.jpg"
       }
     }
   ],
   "subPinkka": {
-    "id": 675,
+    "id": 677,
     "name": {
-      "fi": "Campyliadelphus-Drepanocladus",
-      "en": "Campyliadelphus-Drepanocladus"
+      "fi": "Encalypta-Kurzia",
+      "en": "Encalypta-Kiaeria"
     },
-    "orderNo": 1,
+    "orderNo": 2,
     "pinkka": {
       "id": 3,
       "name": {
@@ -513,7 +424,7 @@
     "description": {
       "fi": ""
     },
-    "imageId": "MM.53562",
+    "imageId": "MM.53607",
     "entityType": "SUB_PINKKA"
   },
   "entityType": "SPECIES_CARD"

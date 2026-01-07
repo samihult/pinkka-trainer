@@ -1,0 +1,385 @@
+{
+  "id": 663,
+  "name": {
+    "fi": "Äyriäiset"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 20,
+    "name": {
+      "fi": "BIO-103 Eliöiden monimuotoisuus: eläimet"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.71240",
+  "speciesCards": [
+    {
+      "taxonId": "MX.214176",
+      "vernacularName": {},
+      "scientificName": "Acartia",
+      "id": 53111,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53030",
+      "vernacularName": {
+        "sv": "slät havstulpan",
+        "fi": "merirokko",
+        "en": "Bay barnacle"
+      },
+      "scientificName": "Amphibalanus improvisus",
+      "id": 53110,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70201",
+      "vernacularName": {
+        "fi": "lehtijalkaiset",
+        "sv": "gälbladfotingar"
+      },
+      "scientificName": "Anostraca",
+      "id": 53113,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214370",
+      "vernacularName": {
+        "fi": "kalatäi"
+      },
+      "scientificName": "Argulus foliaceus",
+      "id": 53109,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214429",
+      "vernacularName": {
+        "fi": "pallosiirat"
+      },
+      "scientificName": "Armadillidiidae",
+      "id": 53112,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214448",
+      "vernacularName": {
+        "fi": "vesisiira",
+        "sv": "sötvattengråsugga"
+      },
+      "scientificName": "Asellus aquaticus",
+      "id": 53114,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.206836",
+      "vernacularName": {
+        "sv": "flodkräfta",
+        "fi": "jokirapu",
+        "en": "Noble crayfish"
+      },
+      "scientificName": "Astacus astacus",
+      "id": 53115,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213895",
+      "vernacularName": {
+        "fi": "kärsävesikirput"
+      },
+      "scientificName": "Bosmina",
+      "id": 53116,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70244",
+      "vernacularName": {
+        "fi": "keijuhankajalkaiset"
+      },
+      "scientificName": "Calanoida",
+      "id": 53117,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213778",
+      "vernacularName": {
+        "fi": "vesikirput",
+        "sv": "hinnkräftor",
+        "en": "Water fleas"
+      },
+      "scientificName": "Cladocera",
+      "id": 53118,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214499",
+      "vernacularName": {
+        "fi": "hietakatkarapu",
+        "sv": "hästräka"
+      },
+      "scientificName": "Crangon crangon",
+      "id": 53119,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70245",
+      "vernacularName": {
+        "fi": "kyklooppihankajalkaiset"
+      },
+      "scientificName": "Cyclopoida",
+      "id": 53120,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213870",
+      "vernacularName": {
+        "fi": "piippovesikirput"
+      },
+      "scientificName": "Daphnia",
+      "id": 53122,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53038",
+      "vernacularName": {
+        "sv": "kinesisk ullhandskrabba",
+        "fi": "villasaksirapu",
+        "en": "Chinese mitten crab"
+      },
+      "scientificName": "Eriocheir sinensis",
+      "id": 53121,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214144",
+      "vernacularName": {},
+      "scientificName": "Eurytemora",
+      "id": 53123,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53445",
+      "vernacularName": {},
+      "scientificName": "Gammarus",
+      "id": 53124,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70246",
+      "vernacularName": {
+        "fi": "pohjahankajalkaiset"
+      },
+      "scientificName": "Harpacticoida",
+      "id": 53128,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200601",
+      "vernacularName": {
+        "fi": "kaspianmassiainen",
+        "sv": "röd immigrantpungräka",
+        "en": "Bloody-red shrimp"
+      },
+      "scientificName": "Hemimysis anomala",
+      "id": 53125,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213853",
+      "vernacularName": {
+        "fi": "hyytelövesikirppu"
+      },
+      "scientificName": "Holopedium gibberum",
+      "id": 53127,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214442",
+      "vernacularName": {
+        "fi": "leväsiira"
+      },
+      "scientificName": "Idotea balthica",
+      "id": 53126,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214008",
+      "vernacularName": {
+        "fi": "lasivesikirppu"
+      },
+      "scientificName": "Leptodora kindtii",
+      "id": 53129,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214157",
+      "vernacularName": {},
+      "scientificName": "Limnocalanus macrurus",
+      "id": 53134,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214459",
+      "vernacularName": {
+        "sv": "vitmärla",
+        "fi": "valkokatka"
+      },
+      "scientificName": "Monoporeia affinis",
+      "id": 53133,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70240",
+      "vernacularName": {
+        "sv": "pungräkor",
+        "fi": "massiäyriäiset",
+        "en": "Mysids"
+      },
+      "scientificName": "Mysida",
+      "id": 53132,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214379",
+      "vernacularName": {
+        "fi": "jäännemassiainen"
+      },
+      "scientificName": "Mysis relicta",
+      "id": 53131,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214376",
+      "vernacularName": {
+        "fi": "hietamassiainen"
+      },
+      "scientificName": "Neomysis integer",
+      "id": 53135,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70257",
+      "vernacularName": {
+        "fi": "raakkuäyriäiset",
+        "sv": "musselkräftor",
+        "en": "Seed shrimps"
+      },
+      "scientificName": "Ostracoda",
+      "id": 53130,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53031",
+      "vernacularName": {
+        "fi": "täplärapu",
+        "sv": "signalkräfta",
+        "en": "Signal crayfish"
+      },
+      "scientificName": "Pacifastacus leniusculus",
+      "id": 53136,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.212195",
+      "vernacularName": {
+        "sv": "vanlig tångräka",
+        "fi": "leväkatkarapu",
+        "en": "Baltic prawn"
+      },
+      "scientificName": "Palaemon adspersus",
+      "id": 53137,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200258",
+      "vernacularName": {
+        "sv": "elegant tångräka",
+        "fi": "sirokatkarapu",
+        "en": "Grass prawn"
+      },
+      "scientificName": "Palaemon elegans",
+      "id": 53139,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213994",
+      "vernacularName": {},
+      "scientificName": "Polyphemus pediculus",
+      "id": 53141,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214422",
+      "vernacularName": {
+        "fi": "keltatäpläsiira"
+      },
+      "scientificName": "Porcellio spinicornis",
+      "id": 53138,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214418",
+      "vernacularName": {
+        "fi": "kyhmysiirat"
+      },
+      "scientificName": "Porcellionidae",
+      "id": 53140,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214384",
+      "vernacularName": {
+        "fi": "rantamassiainen"
+      },
+      "scientificName": "Praunus flexuosus",
+      "id": 53142,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214439",
+      "vernacularName": {
+        "fi": "kilkki",
+        "sv": "skorv"
+      },
+      "scientificName": "Saduria entomon",
+      "id": 53143,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.71240",
+    "urls": {
+      "original": "https://image.laji.fi/MM.71240/asellus_aquaticus_5.jpg",
+      "full": "https://image.laji.fi/MM.71240/asellus_aquaticus_5.jpg",
+      "large": "https://image.laji.fi/MM.71240/asellus_aquaticus_5_large.jpg",
+      "square": "https://image.laji.fi/MM.71240/asellus_aquaticus_5_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.71240/asellus_aquaticus_5_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1435223982,
+      "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+      "rightsOwner": "Noora Hellén",
+      "secret": false,
+      "capturers": [
+        "Noora Hellén"
+      ],
+      "uploadedBy": "nhellen@helsinki.fi",
+      "originalFilename": "asellus_aquaticus_5.jpg",
+      "documentIds": [
+        "16"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.214448"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

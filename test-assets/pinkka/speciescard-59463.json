@@ -1,10 +1,10 @@
 {
-  "taxonId": "MX.37786",
+  "taxonId": "MX.40393",
   "vernacularName": {
-    "sv": "kalksvartbräken",
-    "fi": "kalkkitummaraunioinen"
+    "fi": "vuomasara",
+    "sv": "fjällklubbstarr"
   },
-  "scientificName": "Asplenium quadrivalens",
+  "scientificName": "Carex adelostoma",
   "distributionMapFinland": null,
   "alternativeVernacularNames": {},
   "description": [
@@ -15,7 +15,7 @@
         "en": "Growing form"
       },
       "body": {
-        "fi": "<p>Pieni sanianen.</p>"
+        "fi": "Monivuotinen, löyhästi mätästävä tai yksittäisversoinen ruoho."
       },
       "predicate": "MX.growthFormAndGrowthHabit"
     },
@@ -26,7 +26,7 @@
         "en": "Size"
       },
       "body": {
-        "fi": "<p>(5–)10–20 cm.</p>"
+        "fi": "20–40 cm."
       },
       "predicate": "MX.descriptionOrganismSize"
     },
@@ -36,7 +36,9 @@
         "sv": "Stam",
         "en": "Stem"
       },
-      "body": {},
+      "body": {
+        "fi": "Juurakko pitkä; varret pystyjä ja jäykkiä; tyvitupet tumman punertavia, usein ripsilaitaisia.&#xa0;"
+      },
       "predicate": "MX.descriptionStem"
     },
     {
@@ -55,7 +57,7 @@
         "en": "Leaf"
       },
       "body": {
-        "fi": "<p>Lehtiruoti noin neljännes lavan pituudesta, mustanruskea; lehtilapa tasasoukka, parilehdykkäinen, keskiranka mustanruskea, kapealti vaaleanpalteinen; lehdykät&#xa0; tummanvihreitä, pitkulaisia ja tylppiä, hieman hammaslaitaisia.</p>"
+        "fi": "Lehdet vartta lyhyempiä, 2–4 mm leveitä, jäykkiä, sinivihreitä."
       },
       "predicate": "MX.descriptionLeaf"
     },
@@ -66,9 +68,31 @@
         "en": "Flower"
       },
       "body": {
-        "fi": "<p>Itiöpesäkeryhmät ovat lehtilavan alapinnalla lehtisuonten sivussa, kapeanpuikeita tai tasasoukkia, katesuomuisia.</p>"
+        "fi": "Kukinto 3–10 cm, pysty ja harsu, 3–6-tähkäinen; tähkät 10–25 mm; alimman tähkän tukilehti tavallisesti ei kukinnon pituinen. Latvatähkä ei paljon muita isompi, toisinaan kokonaan hedekukkainen. Hedekukka kolmiheteinen, emikukka kolmiluottinen, pullakon ympäröimä. Tähkäsuomut tavallisesti pullakkoa lyhyempiä, suippoja, harvoin lyhyelti otakärkisiä. Pullakot 2–3 mm, tylppiä, lähes odattomia.&#xa0;"
       },
       "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {
+        "fi": "Kukkii keskikesällä (VI–VII)."
+      },
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Pölytys",
+        "sv": "Pollination",
+        "en": "Pollination"
+      },
+      "body": {
+        "fi": "Tuulipölytteinen."
+      },
+      "predicate": "MX.reproductionPollination"
     },
     {
       "title": {
@@ -77,29 +101,9 @@
         "en": "Fruit and seed"
       },
       "body": {
-        "fi": "<p>Itiökasvi.</p>"
+        "fi": "Hedelmä on pullakon sisällä kypsyvä pähkylä."
       },
       "predicate": "MX.descriptionFruitAndSeed"
-    },
-    {
-      "title": {
-        "fi": "Itiöpesäkkeet",
-        "sv": "Sporangium",
-        "en": "Sporangium"
-      },
-      "body": {
-        "fi": "<p>Itiöpesäkeryhmät lehtilavan alapinnalla lehtisuonten sivussa, kapeanpuikeita tai tasasoukkia, katesuomuisia.</p>"
-      },
-      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
-    },
-    {
-      "title": {
-        "fi": "Itiöt",
-        "sv": "Sporer",
-        "en": "Spores"
-      },
-      "body": {},
-      "predicate": "MX.descriptionSpore"
     },
     {
       "title": {
@@ -107,9 +111,7 @@
         "sv": "Växtunderlag",
         "en": "Substrate"
       },
-      "body": {
-        "fi": "<p>Kalkinsuosija.</p>"
-      },
+      "body": {},
       "predicate": "MX.habitatSubstrate"
     },
     {
@@ -119,7 +121,7 @@
         "en": "Habitat"
       },
       "body": {
-        "fi": "<p>Puolivarjoisilla kalkkivaikutteisilla kallioseinämillä.</p>"
+        "fi": "Ohutturpeisilla, minerotrofisilla soilla, purojen varsilla, hiekkaisilla rannoilla, koskikallioilla, etenkin tunturikoivikoissa ja paljakan alaosissa."
       },
       "predicate": "MX.habitat"
     },
@@ -130,7 +132,7 @@
         "en": "Distribution in Finland"
       },
       "body": {
-        "fi": "<p>Vakinainen alkuperäinen. Ahvenanmaalta Pohjois-Savoon.</p>",
+        "fi": "<p>Vakinainen alkuperäinen.</p>",
         "en": "<p>Spontaneous old resident.</p>"
       },
       "predicate": "MX.distributionFinland"
@@ -141,10 +143,17 @@
         "fi": "Uhanalaisuus Suomessa",
         "en": "Conservation status in Finland"
       },
-      "body": {
-        "fi": "<p>Silmälläpidettävä (NT).</p>"
-      },
+      "body": {},
       "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
     },
     {
       "title": {
@@ -154,6 +163,15 @@
       },
       "body": {},
       "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Käpy",
+        "sv": "Kotte",
+        "en": "Cone"
+      },
+      "body": {},
+      "predicate": "MX.descriptionCone"
     }
   ],
   "taxonomy": [
@@ -251,9 +269,9 @@
       "rank": "MX.phylum"
     },
     {
-      "taxonId": "MX.4986644",
+      "taxonId": "MX.4986645",
       "vernacularName": null,
-      "scientificName": "Polypodiophytina",
+      "scientificName": "Spermatophytina",
       "rankName": {
         "fi": "alajakso / alakaari",
         "sv": "underfylum",
@@ -262,9 +280,11 @@
       "rank": "MX.subphylum"
     },
     {
-      "taxonId": "MX.4977160",
-      "vernacularName": null,
-      "scientificName": "Polypodiopsida",
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
       "rankName": {
         "fi": "luokka",
         "sv": "klass",
@@ -273,9 +293,9 @@
       "rank": "MX.class"
     },
     {
-      "taxonId": "MX.70086",
+      "taxonId": "MX.53720",
       "vernacularName": null,
-      "scientificName": "Polypodiales",
+      "scientificName": "Poales",
       "rankName": {
         "fi": "lahko",
         "sv": "ordning",
@@ -284,12 +304,12 @@
       "rank": "MX.order"
     },
     {
-      "taxonId": "MX.37782",
+      "taxonId": "MX.40242",
       "vernacularName": {
-        "sv": "svartbräkenväxter",
-        "fi": "raunioiskasvit"
+        "fi": "sarakasvit",
+        "sv": "halvgräs"
       },
-      "scientificName": "Aspleniaceae",
+      "scientificName": "Cyperaceae",
       "rankName": {
         "fi": "heimo",
         "sv": "familj",
@@ -298,12 +318,12 @@
       "rank": "MX.family"
     },
     {
-      "taxonId": "MX.37783",
+      "taxonId": "MX.40288",
       "vernacularName": {
-        "fi": "raunioiset",
-        "sv": "svartbräknar"
+        "fi": "sarat",
+        "sv": "starrar"
       },
-      "scientificName": "Asplenium",
+      "scientificName": "Carex",
       "rankName": {
         "fi": "suku",
         "sv": "släkte",
@@ -312,11 +332,11 @@
       "rank": "MX.genus"
     },
     {
-      "taxonId": "MX.37784",
+      "taxonId": "MX.5001858",
       "vernacularName": {
-        "fi": "tummaraunioisryhmä"
+        "fi": "karttusararyhmä"
       },
-      "scientificName": "Asplenium trichomanes -ryhmä",
+      "scientificName": "Carex buxbaumii -ryhmä",
       "rankName": {
         "sv": "aggregat",
         "fi": "lajiryhmä",
@@ -325,12 +345,12 @@
       "rank": "MX.aggregate"
     },
     {
-      "taxonId": "MX.37786",
+      "taxonId": "MX.40393",
       "vernacularName": {
-        "sv": "kalksvartbräken",
-        "fi": "kalkkitummaraunioinen"
+        "fi": "vuomasara",
+        "sv": "fjällklubbstarr"
       },
-      "scientificName": "Asplenium quadrivalens",
+      "scientificName": "Carex adelostoma",
       "rankName": {
         "fi": "laji",
         "sv": "art",
@@ -339,485 +359,416 @@
       "rank": "MX.species"
     }
   ],
-  "id": 45969,
+  "id": 59463,
   "images": [
     {
-      "id": "MM.355315",
+      "id": "MM.355882",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80429.JPG",
+        "originalFilename": "JR00197.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355315/JR80429.JPG",
-        "full": "https://image.laji.fi/MM.355315/JR80429.JPG",
-        "large": "https://image.laji.fi/MM.355315/JR80429_large.jpg",
-        "square": "https://image.laji.fi/MM.355315/JR80429_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355315/JR80429_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355882/JR00197.JPG",
+        "full": "https://image.laji.fi/MM.355882/JR00197.JPG",
+        "large": "https://image.laji.fi/MM.355882/JR00197_large.jpg",
+        "square": "https://image.laji.fi/MM.355882/JR00197_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355882/JR00197_thumb.jpg"
       }
     },
     {
-      "id": "MM.355320",
+      "id": "MM.355881",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80375.JPG",
+        "originalFilename": "JR00198.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355320/JR80375.JPG",
-        "full": "https://image.laji.fi/MM.355320/JR80375.JPG",
-        "large": "https://image.laji.fi/MM.355320/JR80375_large.jpg",
-        "square": "https://image.laji.fi/MM.355320/JR80375_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355320/JR80375_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355881/JR00198.JPG",
+        "full": "https://image.laji.fi/MM.355881/JR00198.JPG",
+        "large": "https://image.laji.fi/MM.355881/JR00198_large.jpg",
+        "square": "https://image.laji.fi/MM.355881/JR00198_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355881/JR00198_thumb.jpg"
       }
     },
     {
-      "id": "MM.355322",
+      "id": "MM.355878",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80370.JPG",
+        "originalFilename": "JR00664.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355322/JR80370.JPG",
-        "full": "https://image.laji.fi/MM.355322/JR80370.JPG",
-        "large": "https://image.laji.fi/MM.355322/JR80370_large.jpg",
-        "square": "https://image.laji.fi/MM.355322/JR80370_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355322/JR80370_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355878/JR00664.JPG",
+        "full": "https://image.laji.fi/MM.355878/JR00664.JPG",
+        "large": "https://image.laji.fi/MM.355878/JR00664_large.jpg",
+        "square": "https://image.laji.fi/MM.355878/JR00664_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355878/JR00664_thumb.jpg"
       }
     },
     {
-      "id": "MM.355314",
+      "id": "MM.355873",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80430.JPG",
+        "originalFilename": "JR05961.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355314/JR80430.JPG",
-        "full": "https://image.laji.fi/MM.355314/JR80430.JPG",
-        "large": "https://image.laji.fi/MM.355314/JR80430_large.jpg",
-        "square": "https://image.laji.fi/MM.355314/JR80430_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355314/JR80430_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355873/JR05961.JPG",
+        "full": "https://image.laji.fi/MM.355873/JR05961.JPG",
+        "large": "https://image.laji.fi/MM.355873/JR05961.JPG",
+        "square": "https://image.laji.fi/MM.355873/JR05961_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355873/JR05961_thumb.jpg"
       }
     },
     {
-      "id": "MM.355321",
+      "id": "MM.355872",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80374.JPG",
+        "originalFilename": "JR05969.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355321/JR80374.JPG",
-        "full": "https://image.laji.fi/MM.355321/JR80374.JPG",
-        "large": "https://image.laji.fi/MM.355321/JR80374_large.jpg",
-        "square": "https://image.laji.fi/MM.355321/JR80374_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355321/JR80374_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355872/JR05969.JPG",
+        "full": "https://image.laji.fi/MM.355872/JR05969.JPG",
+        "large": "https://image.laji.fi/MM.355872/JR05969.JPG",
+        "square": "https://image.laji.fi/MM.355872/JR05969_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355872/JR05969_thumb.jpg"
       }
     },
     {
-      "id": "MM.355316",
+      "id": "MM.355875",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80428.JPG",
+        "originalFilename": "JR05659.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355316/JR80428.JPG",
-        "full": "https://image.laji.fi/MM.355316/JR80428.JPG",
-        "large": "https://image.laji.fi/MM.355316/JR80428_large.jpg",
-        "square": "https://image.laji.fi/MM.355316/JR80428_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355316/JR80428_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355875/JR05659.JPG",
+        "full": "https://image.laji.fi/MM.355875/JR05659.JPG",
+        "large": "https://image.laji.fi/MM.355875/JR05659.JPG",
+        "square": "https://image.laji.fi/MM.355875/JR05659_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355875/JR05659_thumb.jpg"
       }
     },
     {
-      "id": "MM.355313",
+      "id": "MM.355874",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80431.JPG",
+        "originalFilename": "JR05660.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355313/JR80431.JPG",
-        "full": "https://image.laji.fi/MM.355313/JR80431.JPG",
-        "large": "https://image.laji.fi/MM.355313/JR80431_large.jpg",
-        "square": "https://image.laji.fi/MM.355313/JR80431_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355313/JR80431_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355874/JR05660.JPG",
+        "full": "https://image.laji.fi/MM.355874/JR05660.JPG",
+        "large": "https://image.laji.fi/MM.355874/JR05660.JPG",
+        "square": "https://image.laji.fi/MM.355874/JR05660_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355874/JR05660_thumb.jpg"
       }
     },
     {
-      "id": "MM.355318",
+      "id": "MM.355871",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80377.JPG",
+        "originalFilename": "JR11033.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355318/JR80377.JPG",
-        "full": "https://image.laji.fi/MM.355318/JR80377.JPG",
-        "large": "https://image.laji.fi/MM.355318/JR80377_large.jpg",
-        "square": "https://image.laji.fi/MM.355318/JR80377_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355318/JR80377_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355871/JR11033.JPG",
+        "full": "https://image.laji.fi/MM.355871/JR11033.JPG",
+        "large": "https://image.laji.fi/MM.355871/JR11033_large.jpg",
+        "square": "https://image.laji.fi/MM.355871/JR11033_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355871/JR11033_thumb.jpg"
       }
     },
     {
-      "id": "MM.355317",
+      "id": "MM.355880",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80378.JPG",
+        "originalFilename": "JR00199.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355317/JR80378.JPG",
-        "full": "https://image.laji.fi/MM.355317/JR80378.JPG",
-        "large": "https://image.laji.fi/MM.355317/JR80378_large.jpg",
-        "square": "https://image.laji.fi/MM.355317/JR80378_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355317/JR80378_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355880/JR00199.JPG",
+        "full": "https://image.laji.fi/MM.355880/JR00199.JPG",
+        "large": "https://image.laji.fi/MM.355880/JR00199_large.jpg",
+        "square": "https://image.laji.fi/MM.355880/JR00199_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355880/JR00199_thumb.jpg"
       }
     },
     {
-      "id": "MM.355319",
+      "id": "MM.355877",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
+        "captureDateTime": 1767807438,
         "uploadedBy": "jrikkine@helsinki.fi",
-        "originalFilename": "JR80376.JPG",
+        "originalFilename": "JR00880.JPG",
         "documentIds": [
-          "3691"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.355319/JR80376.JPG",
-        "full": "https://image.laji.fi/MM.355319/JR80376.JPG",
-        "large": "https://image.laji.fi/MM.355319/JR80376_large.jpg",
-        "square": "https://image.laji.fi/MM.355319/JR80376_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.355319/JR80376_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355877/JR00880.JPG",
+        "full": "https://image.laji.fi/MM.355877/JR00880.JPG",
+        "large": "https://image.laji.fi/MM.355877/JR00880_large.jpg",
+        "square": "https://image.laji.fi/MM.355877/JR00880_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355877/JR00880_thumb.jpg"
       }
     },
     {
-      "id": "MM.350019",
+      "id": "MM.355876",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
-        "rightsOwner": "Henry Väre",
+        "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
-          "Henry Väre"
+          "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
-        "uploadedBy": "huvare@helsinki.fi",
-        "originalFilename": "Aspl quad 3.jpg",
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00882.JPG",
         "documentIds": [
-          "3650"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.350019/Aspl_quad_3.jpg",
-        "full": "https://image.laji.fi/MM.350019/Aspl_quad_3.jpg",
-        "large": "https://image.laji.fi/MM.350019/Aspl_quad_3_large.jpg",
-        "square": "https://image.laji.fi/MM.350019/Aspl_quad_3_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.350019/Aspl_quad_3_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355876/JR00882.JPG",
+        "full": "https://image.laji.fi/MM.355876/JR00882.JPG",
+        "large": "https://image.laji.fi/MM.355876/JR00882_large.jpg",
+        "square": "https://image.laji.fi/MM.355876/JR00882_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355876/JR00882_thumb.jpg"
       }
     },
     {
-      "id": "MM.350018",
+      "id": "MM.355879",
       "caption": {},
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
+        "uploadDateTime": 1767807438,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
-        "rightsOwner": "Henry Väre",
+        "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
-          "Henry Väre"
+          "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800108,
-        "uploadedBy": "huvare@helsinki.fi",
-        "originalFilename": "Aspl quad 4.jpg",
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00200.JPG",
         "documentIds": [
-          "3650"
+          "3694"
         ],
         "identifications": {
           "taxonIds": [
-            "MX.37786"
+            "MX.40393"
           ]
         }
       },
       "urls": {
-        "original": "https://image.laji.fi/MM.350018/Aspl_quad_4.jpg",
-        "full": "https://image.laji.fi/MM.350018/Aspl_quad_4.jpg",
-        "large": "https://image.laji.fi/MM.350018/Aspl_quad_4_large.jpg",
-        "square": "https://image.laji.fi/MM.350018/Aspl_quad_4_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.350018/Aspl_quad_4_thumb.jpg"
-      }
-    },
-    {
-      "id": "MM.350020",
-      "caption": {},
-      "taxonId": null,
-      "meta": {
-        "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
-        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
-        "rightsOwner": "Henry Väre",
-        "secret": false,
-        "capturers": [
-          "Henry Väre"
-        ],
-        "captureDateTime": 1767800108,
-        "uploadedBy": "huvare@helsinki.fi",
-        "originalFilename": "Aspl quad 2.jpg",
-        "documentIds": [
-          "3650"
-        ],
-        "identifications": {
-          "taxonIds": [
-            "MX.37786"
-          ]
-        }
-      },
-      "urls": {
-        "original": "https://image.laji.fi/MM.350020/Aspl_quad_2.jpg",
-        "full": "https://image.laji.fi/MM.350020/Aspl_quad_2.jpg",
-        "large": "https://image.laji.fi/MM.350020/Aspl_quad_2_large.jpg",
-        "square": "https://image.laji.fi/MM.350020/Aspl_quad_2_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.350020/Aspl_quad_2_thumb.jpg"
-      }
-    },
-    {
-      "id": "MM.350021",
-      "caption": {},
-      "taxonId": null,
-      "meta": {
-        "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800108,
-        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
-        "rightsOwner": "Henry Väre",
-        "secret": false,
-        "capturers": [
-          "Henry Väre"
-        ],
-        "captureDateTime": 1767800108,
-        "uploadedBy": "huvare@helsinki.fi",
-        "originalFilename": "Aspl quad 1.jpg",
-        "documentIds": [
-          "3650"
-        ],
-        "identifications": {
-          "taxonIds": [
-            "MX.37786"
-          ]
-        }
-      },
-      "urls": {
-        "original": "https://image.laji.fi/MM.350021/Aspl_quad_1.jpg",
-        "full": "https://image.laji.fi/MM.350021/Aspl_quad_1.jpg",
-        "large": "https://image.laji.fi/MM.350021/Aspl_quad_1_large.jpg",
-        "square": "https://image.laji.fi/MM.350021/Aspl_quad_1_square.jpg",
-        "thumbnail": "https://image.laji.fi/MM.350021/Aspl_quad_1_thumb.jpg"
+        "original": "https://image.laji.fi/MM.355879/JR00200.JPG",
+        "full": "https://image.laji.fi/MM.355879/JR00200.JPG",
+        "large": "https://image.laji.fi/MM.355879/JR00200_large.jpg",
+        "square": "https://image.laji.fi/MM.355879/JR00200_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355879/JR00200_thumb.jpg"
       }
     }
   ],
   "subPinkka": {
-    "id": 522,
+    "id": 558,
     "name": {
-      "fi": "Saniaiset ja liekokasvit",
-      "sv": "Ormbunksväxter",
-      "en": "Pteridophytes and lycophytes"
+      "fi": "Carex-Chrysosplenium"
     },
-    "orderNo": 0,
+    "orderNo": 2,
     "pinkka": {
-      "id": 2,
+      "id": 11,
       "name": {
-        "sv": "",
-        "fi": "A Pohjolan kasveja",
-        "en": "A Nordic vascular plants"
+        "fi": "BIO-514 Pohjois-Suomen putkilokasvit",
+        "en": ""
       },
       "hideScientific": false,
       "hideVernacular": false,
@@ -827,7 +778,7 @@
     "description": {
       "fi": ""
     },
-    "imageId": "MM.119750",
+    "imageId": "MM.124461",
     "entityType": "SUB_PINKKA"
   },
   "entityType": "SPECIES_CARD"

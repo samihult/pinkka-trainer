@@ -1,0 +1,283 @@
+{
+  "id": 829,
+  "name": {
+    "fi": "Dry forests",
+    "en": "Dry forests"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 17,
+    "name": {
+      "sv": "IPS-171 Finlands mossor och lavar",
+      "fi": "IPS-171 Suomen sammalet ja jäkälät",
+      "en": "IPS-171 Boreal bryophytes and lichens"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.1615329",
+  "speciesCards": [
+    {
+      "taxonId": "MX.43477",
+      "vernacularName": {
+        "sv": "brun sköldmossa",
+        "fi": "kalliokaviosammal"
+      },
+      "scientificName": "Buxbaumia aphylla",
+      "id": 59738,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43496",
+      "vernacularName": {
+        "sv": "brännmossa",
+        "fi": "metsäkulosammal"
+      },
+      "scientificName": "Ceratodon purpureus",
+      "id": 59741,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65483",
+      "vernacularName": {
+        "sv": "smal islandslav",
+        "fi": "pikkuhirvenjäkälä"
+      },
+      "scientificName": "Cetraria ericetorum",
+      "id": 64909,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.67626",
+      "vernacularName": {
+        "fi": "isohirvenjäkälä",
+        "sv": "islandslav"
+      },
+      "scientificName": "Cetraria islandica subsp. islandica",
+      "id": 59723,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65532",
+      "vernacularName": {
+        "fi": "valkoporonjäkälä",
+        "sv": "gulvit renlav"
+      },
+      "scientificName": "Cladonia arbuscula",
+      "id": 59286,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65043",
+      "vernacularName": {
+        "sv": "blombägarlav",
+        "fi": "koreatorvijäkälä"
+      },
+      "scientificName": "Cladonia bellidiflora",
+      "id": 59291,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65055",
+      "vernacularName": {
+        "fi": "puikkotorvijäkälä",
+        "sv": "syllav"
+      },
+      "scientificName": "Cladonia cornuta",
+      "id": 60452,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.67611",
+      "vernacularName": {
+        "sv": "taggbägarlav",
+        "fi": "tähtitorvijäkälä"
+      },
+      "scientificName": "Cladonia crispata var. crispata",
+      "id": 59289,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65066",
+      "vernacularName": {
+        "fi": "pikkutorvijäkälä",
+        "sv": "naggbägarlav"
+      },
+      "scientificName": "Cladonia fimbriata",
+      "id": 59288,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65069",
+      "vernacularName": {
+        "fi": "haaratorvijäkälä",
+        "sv": "rislav"
+      },
+      "scientificName": "Cladonia furcata",
+      "id": 59293,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65099",
+      "vernacularName": {
+        "sv": "grå renlav",
+        "fi": "harmaaporonjäkälä"
+      },
+      "scientificName": "Cladonia rangiferina",
+      "id": 59287,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65104",
+      "vernacularName": {
+        "fi": "palleroporonjäkälä",
+        "sv": "fönsterlav"
+      },
+      "scientificName": "Cladonia stellaris",
+      "id": 59292,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65118",
+      "vernacularName": {},
+      "scientificName": "Cladonia uncialis",
+      "id": 59294,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43556",
+      "vernacularName": {
+        "sv": "hällkvastmossa",
+        "fi": "töppökynsisammal"
+      },
+      "scientificName": "Dicranum spurium",
+      "id": 59743,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43697",
+      "vernacularName": {
+        "sv": "blåmossa",
+        "fi": "hohkasammal"
+      },
+      "scientificName": "Leucobryum glaucum",
+      "id": 59735,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66313",
+      "vernacularName": {
+        "sv": "matt filtlav",
+        "fi": "anturanahkajäkälä"
+      },
+      "scientificName": "Peltigera malacea",
+      "id": 60331,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43922",
+      "vernacularName": {
+        "sv": "vanlig nickmossa",
+        "fi": "nuokkuvarstasammal"
+      },
+      "scientificName": "Pohlia nutans",
+      "id": 59737,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43936",
+      "vernacularName": {
+        "sv": "enbjörnmossa",
+        "fi": "kangaskarhunsammal"
+      },
+      "scientificName": "Polytrichum juniperinum",
+      "id": 59742,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43937",
+      "vernacularName": {
+        "sv": "hårbjörnmossa",
+        "fi": "karvakarhunsammal"
+      },
+      "scientificName": "Polytrichum piliferum",
+      "id": 59740,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44180",
+      "vernacularName": {
+        "sv": "stor fransmossa",
+        "fi": "isokorallisammal"
+      },
+      "scientificName": "Ptilidium ciliare",
+      "id": 59739,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66625",
+      "vernacularName": {
+        "sv": "påskrislav",
+        "fi": "kangastinajäkälä"
+      },
+      "scientificName": "Stereocaulon paschale",
+      "id": 59724,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66721",
+      "vernacularName": {
+        "sv": "knotterlav",
+        "fi": "kangaskuurajäkälä"
+      },
+      "scientificName": "Trapeliopsis granulosa",
+      "id": 59725,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.1615329",
+    "urls": {
+      "original": "https://image.laji.fi/MM.1615329/JR48679.JPG",
+      "full": "https://image.laji.fi/MM.1615329/JR48679.JPG",
+      "large": "https://image.laji.fi/MM.1615329/JR48679_large.jpg",
+      "square": "https://image.laji.fi/MM.1615329/JR48679_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.1615329/JR48679_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1614094064,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1505199354,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR48679.JPG",
+      "documentIds": [
+        "4975"
+      ],
+      "tags": [
+        "torvijäkälät",
+        "pikkutorvijäkälä",
+        "Cladonia",
+        "Cladonia fimbriata"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.65066"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

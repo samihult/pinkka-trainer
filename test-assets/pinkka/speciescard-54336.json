@@ -10,8 +10,8 @@
   "description": [
     {
       "title": {
-        "sv": "Beskrivning",
         "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
         "en": "Description"
       },
       "body": {},
@@ -307,14 +307,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR64272.JPG",
         "documentIds": [
@@ -345,14 +345,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR64269.JPG",
         "documentIds": [
@@ -383,14 +383,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR64270.JPG",
         "documentIds": [
@@ -421,14 +421,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR64271.JPG",
         "documentIds": [
@@ -459,14 +459,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR64273.JPG",
         "documentIds": [
@@ -497,14 +497,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR64274.JPG",
         "documentIds": [
@@ -535,14 +535,14 @@
       "taxonId": null,
       "meta": {
         "sourceSystem": "KE.321",
-        "uploadDateTime": 1767800109,
+        "uploadDateTime": 1767807418,
         "license": "MZ.intellectualRightsCC-BY-NC-4.0",
         "rightsOwner": "Jouko Rikkinen",
         "secret": false,
         "capturers": [
           "Jouko Rikkinen"
         ],
-        "captureDateTime": 1767800109,
+        "captureDateTime": 1767807418,
         "uploadedBy": "jrikkine@helsinki.fi",
         "originalFilename": "JR6.7.2007B0036.JPG",
         "documentIds": [

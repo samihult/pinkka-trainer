@@ -1,0 +1,823 @@
+{
+  "taxonId": "MX.44366",
+  "vernacularName": {
+    "fi": "keuhkosammal",
+    "sv": "lungmossa"
+  },
+  "scientificName": "Marchantia polymorpha",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "sv": "<p>Storväxt (t.o.m. 15 cm lång och 1–2 cm bred) bållik levermossa. Bål grön, bladlös, yta nätlikt fårad och med klyvöppningar. På bålens ovansida groddskålar. Med mörk mittlinje. Växer platt mot marken. Fruktsamlingar (honorgan) paraplyliknande på 3–8 cm höga stjälkar, djupt 9-flikad kant.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {},
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Itiöemä",
+        "sv": "Fruktkropp",
+        "en": "Fruitbody"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitbody"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Leväosakas",
+        "sv": "Algkomponent",
+        "en": "Algal partner"
+      },
+      "body": {},
+      "predicate": "MX.algalPartnerOfLichen"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {},
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "sv": "<p>Allmän i hela landet.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {
+        "sv": "<p>I övrigt, vitt utbredd, även i tropikerna.</p>"
+      },
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.44394",
+      "vernacularName": {
+        "sv": "levermossor",
+        "fi": "maksasammalet",
+        "en": "Liverworts"
+      },
+      "scientificName": "Marchantiophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.70077",
+      "vernacularName": null,
+      "scientificName": "Marchantiopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70080",
+      "vernacularName": null,
+      "scientificName": "Marchantiales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.213007",
+      "vernacularName": null,
+      "scientificName": "Marchantiaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.44118",
+      "vernacularName": {
+        "sv": "lungmossor",
+        "fi": "keuhkosammalet"
+      },
+      "scientificName": "Marchantia",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.44366",
+      "vernacularName": {
+        "fi": "keuhkosammal",
+        "sv": "lungmossa"
+      },
+      "scientificName": "Marchantia polymorpha",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 27542,
+  "images": [
+    {
+      "id": "MM.53895",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_2 Marcpoly JR 22_7_2008 043 Kasvutapa.jpg",
+        "documentIds": [
+          "16548"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53895/MX.44366_2_Marcpoly_JR_22_7_2008_043_Kasvutapa.jpg",
+        "full": "https://image.laji.fi/MM.53895/MX.44366_2_Marcpoly_JR_22_7_2008_043_Kasvutapa.jpg",
+        "large": "https://image.laji.fi/MM.53895/MX.44366_2_Marcpoly_JR_22_7_2008_043_Kasvutapa.jpg",
+        "square": "https://image.laji.fi/MM.53895/MX.44366_2_Marcpoly_JR_22_7_2008_043_Kasvutapa_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53895/MX.44366_2_Marcpoly_JR_22_7_2008_043_Kasvutapa_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53886",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_6 Marcpoly 3 JR LipasA Kasvutapa (kosteikkomuoto).JPG",
+        "documentIds": [
+          "16552"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53886/MX.44366_6_Marcpoly_3_JR_LipasA_Kasvutapa_(kosteikkomuoto).JPG",
+        "full": "https://image.laji.fi/MM.53886/MX.44366_6_Marcpoly_3_JR_LipasA_Kasvutapa_(kosteikkomuoto).JPG",
+        "large": "https://image.laji.fi/MM.53886/MX.44366_6_Marcpoly_3_JR_LipasA_Kasvutapa_(kosteikkomuoto).JPG",
+        "square": "https://image.laji.fi/MM.53886/MX.44366_6_Marcpoly_3_JR_LipasA_Kasvutapa_(kosteikkomuoto)_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53886/MX.44366_6_Marcpoly_3_JR_LipasA_Kasvutapa_(kosteikkomuoto)_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53844",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_15 Marcpoly 4 JR LipasA Itulevymaljoja.JPG",
+        "documentIds": [
+          "16561"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53844/MX.44366_15_Marcpoly_4_JR_LipasA_Itulevymaljoja.JPG",
+        "full": "https://image.laji.fi/MM.53844/MX.44366_15_Marcpoly_4_JR_LipasA_Itulevymaljoja.JPG",
+        "large": "https://image.laji.fi/MM.53844/MX.44366_15_Marcpoly_4_JR_LipasA_Itulevymaljoja.JPG",
+        "square": "https://image.laji.fi/MM.53844/MX.44366_15_Marcpoly_4_JR_LipasA_Itulevymaljoja_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53844/MX.44366_15_Marcpoly_4_JR_LipasA_Itulevymaljoja_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53882",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_12 Marcpoly JR 21_6_2007A 117 Itulevymaljoja.jpg",
+        "documentIds": [
+          "16558"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53882/MX.44366_12_Marcpoly_JR_21_6_2007A_117_Itulevymaljoja.jpg",
+        "full": "https://image.laji.fi/MM.53882/MX.44366_12_Marcpoly_JR_21_6_2007A_117_Itulevymaljoja.jpg",
+        "large": "https://image.laji.fi/MM.53882/MX.44366_12_Marcpoly_JR_21_6_2007A_117_Itulevymaljoja.jpg",
+        "square": "https://image.laji.fi/MM.53882/MX.44366_12_Marcpoly_JR_21_6_2007A_117_Itulevymaljoja_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53882/MX.44366_12_Marcpoly_JR_21_6_2007A_117_Itulevymaljoja_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53849",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_9 Marcpoly JR 22_8_2005 006 Sekovarsi (kosteikkomuoto).jpg",
+        "documentIds": [
+          "16555"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53849/MX.44366_9_Marcpoly_JR_22_8_2005_006_Sekovarsi_(kosteikkomuoto).jpg",
+        "full": "https://image.laji.fi/MM.53849/MX.44366_9_Marcpoly_JR_22_8_2005_006_Sekovarsi_(kosteikkomuoto).jpg",
+        "large": "https://image.laji.fi/MM.53849/MX.44366_9_Marcpoly_JR_22_8_2005_006_Sekovarsi_(kosteikkomuoto).jpg",
+        "square": "https://image.laji.fi/MM.53849/MX.44366_9_Marcpoly_JR_22_8_2005_006_Sekovarsi_(kosteikkomuoto)_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53849/MX.44366_9_Marcpoly_JR_22_8_2005_006_Sekovarsi_(kosteikkomuoto)_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53863",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_10 Marcpoly JR 22_8_2005 007 Sekovarsi (kosteikkomuoto).jpg",
+        "documentIds": [
+          "16556"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53863/MX.44366_10_Marcpoly_JR_22_8_2005_007_Sekovarsi_(kosteikkomuoto).jpg",
+        "full": "https://image.laji.fi/MM.53863/MX.44366_10_Marcpoly_JR_22_8_2005_007_Sekovarsi_(kosteikkomuoto).jpg",
+        "large": "https://image.laji.fi/MM.53863/MX.44366_10_Marcpoly_JR_22_8_2005_007_Sekovarsi_(kosteikkomuoto).jpg",
+        "square": "https://image.laji.fi/MM.53863/MX.44366_10_Marcpoly_JR_22_8_2005_007_Sekovarsi_(kosteikkomuoto)_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53863/MX.44366_10_Marcpoly_JR_22_8_2005_007_Sekovarsi_(kosteikkomuoto)_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53872",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_11 Marcpoly JR 21_6_2007A 116 Itulevymaljoja.jpg",
+        "documentIds": [
+          "16557"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53872/MX.44366_11_Marcpoly_JR_21_6_2007A_116_Itulevymaljoja.jpg",
+        "full": "https://image.laji.fi/MM.53872/MX.44366_11_Marcpoly_JR_21_6_2007A_116_Itulevymaljoja.jpg",
+        "large": "https://image.laji.fi/MM.53872/MX.44366_11_Marcpoly_JR_21_6_2007A_116_Itulevymaljoja.jpg",
+        "square": "https://image.laji.fi/MM.53872/MX.44366_11_Marcpoly_JR_21_6_2007A_116_Itulevymaljoja_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53872/MX.44366_11_Marcpoly_JR_21_6_2007A_116_Itulevymaljoja_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53892",
+      "caption": {
+        "fi": "Itujyväsmaljola"
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_13 Marcpoly JR 22_7_2008 046 Itulevymaljoja.jpg",
+        "documentIds": [
+          "16559"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja.jpg",
+        "full": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja.jpg",
+        "large": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja.jpg",
+        "square": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53892/MX.44366_13_Marcpoly_JR_22_7_2008_046_Itulevymaljoja_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53847",
+      "caption": {
+        "fi": "Juurtumahapsia sekovarren alapinnalla"
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_28 Marcpoly JR 22_8_2005 010 Juurtumahapset.jpg",
+        "documentIds": [
+          "16574"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53847/MX.44366_28_Marcpoly_JR_22_8_2005_010_Juurtumahapset.jpg",
+        "full": "https://image.laji.fi/MM.53847/MX.44366_28_Marcpoly_JR_22_8_2005_010_Juurtumahapset.jpg",
+        "large": "https://image.laji.fi/MM.53847/MX.44366_28_Marcpoly_JR_22_8_2005_010_Juurtumahapset.jpg",
+        "square": "https://image.laji.fi/MM.53847/MX.44366_28_Marcpoly_JR_22_8_2005_010_Juurtumahapset_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53847/MX.44366_28_Marcpoly_JR_22_8_2005_010_Juurtumahapset_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53899",
+      "caption": {
+        "fi": "Siittiöpesäkkeistö koirasgametofyytillä"
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_26 Marcpoly JR 22_7_2008 047 SiittiÃ¶pesÃ¤kkeistÃ¶nkannatin.jpg",
+        "documentIds": [
+          "16572"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53899/MX.44366_26_Marcpoly_JR_22_7_2008_047_Siitti%C3%83%C2%83%C3%82%C2%B6pes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin.jpg",
+        "full": "https://image.laji.fi/MM.53899/MX.44366_26_Marcpoly_JR_22_7_2008_047_Siitti%C3%83%C2%83%C3%82%C2%B6pes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin.jpg",
+        "large": "https://image.laji.fi/MM.53899/MX.44366_26_Marcpoly_JR_22_7_2008_047_Siitti%C3%83%C2%83%C3%82%C2%B6pes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin.jpg",
+        "square": "https://image.laji.fi/MM.53899/MX.44366_26_Marcpoly_JR_22_7_2008_047_Siitti%C3%83%C2%83%C3%82%C2%B6pes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53899/MX.44366_26_Marcpoly_JR_22_7_2008_047_Siitti%C3%83%C2%83%C3%82%C2%B6pes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53865",
+      "caption": {
+        "fi": "Muna/itiöpesäkkeistöjä naarasgametofyytillä"
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_17 Marcpoly JR 6_7_2007A 0106 MunapesÃ¤kkeistÃ¶nkannattimia.JPG",
+        "documentIds": [
+          "16563"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53865/MX.44366_17_Marcpoly_JR_6_7_2007A_0106_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "full": "https://image.laji.fi/MM.53865/MX.44366_17_Marcpoly_JR_6_7_2007A_0106_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "large": "https://image.laji.fi/MM.53865/MX.44366_17_Marcpoly_JR_6_7_2007A_0106_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "square": "https://image.laji.fi/MM.53865/MX.44366_17_Marcpoly_JR_6_7_2007A_0106_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53865/MX.44366_17_Marcpoly_JR_6_7_2007A_0106_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53885",
+      "caption": {
+        "fi": "Muna/itiöpesäkkeistöjä naarasgametofyytillä"
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_19 Marcpoly JR 6_7_2007A 0135 MunapesÃ¤kkeistÃ¶nkannattimia.JPG",
+        "documentIds": [
+          "16565"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53885/MX.44366_19_Marcpoly_JR_6_7_2007A_0135_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "full": "https://image.laji.fi/MM.53885/MX.44366_19_Marcpoly_JR_6_7_2007A_0135_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "large": "https://image.laji.fi/MM.53885/MX.44366_19_Marcpoly_JR_6_7_2007A_0135_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "square": "https://image.laji.fi/MM.53885/MX.44366_19_Marcpoly_JR_6_7_2007A_0135_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53885/MX.44366_19_Marcpoly_JR_6_7_2007A_0135_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53837",
+      "caption": {
+        "fi": "Muna/itiöpesäkkeistöjä naarasgametofyytillä"
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_20 Marcpoly JR 22_7_2008 045 MunapesÃ¤kkeistÃ¶nkannattimia.jpg",
+        "documentIds": [
+          "16566"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53837/MX.44366_20_Marcpoly_JR_22_7_2008_045_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.jpg",
+        "full": "https://image.laji.fi/MM.53837/MX.44366_20_Marcpoly_JR_22_7_2008_045_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.jpg",
+        "large": "https://image.laji.fi/MM.53837/MX.44366_20_Marcpoly_JR_22_7_2008_045_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.jpg",
+        "square": "https://image.laji.fi/MM.53837/MX.44366_20_Marcpoly_JR_22_7_2008_045_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53837/MX.44366_20_Marcpoly_JR_22_7_2008_045_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53856",
+      "caption": {
+        "fi": "Muna/itiöpesäkkeistö kannattimineen"
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_22 Marcpoly JR 22_8_2005 009 Nuori munapesÃ¤kkeistÃ¶nkannatin.jpg",
+        "documentIds": [
+          "16568"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53856/MX.44366_22_Marcpoly_JR_22_8_2005_009_Nuori_munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin.jpg",
+        "full": "https://image.laji.fi/MM.53856/MX.44366_22_Marcpoly_JR_22_8_2005_009_Nuori_munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin.jpg",
+        "large": "https://image.laji.fi/MM.53856/MX.44366_22_Marcpoly_JR_22_8_2005_009_Nuori_munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin.jpg",
+        "square": "https://image.laji.fi/MM.53856/MX.44366_22_Marcpoly_JR_22_8_2005_009_Nuori_munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53856/MX.44366_22_Marcpoly_JR_22_8_2005_009_Nuori_munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannatin_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.53879",
+      "caption": {
+        "fi": "Itiöpesäkkeistöt"
+      },
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.44366_24 Marcpoly JR 6_7_2007A 0131 MunapesÃ¤kkeistÃ¶nkannattimia.JPG",
+        "documentIds": [
+          "16570"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.44366"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.53879/MX.44366_24_Marcpoly_JR_6_7_2007A_0131_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "full": "https://image.laji.fi/MM.53879/MX.44366_24_Marcpoly_JR_6_7_2007A_0131_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "large": "https://image.laji.fi/MM.53879/MX.44366_24_Marcpoly_JR_6_7_2007A_0131_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia.JPG",
+        "square": "https://image.laji.fi/MM.53879/MX.44366_24_Marcpoly_JR_6_7_2007A_0131_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.53879/MX.44366_24_Marcpoly_JR_6_7_2007A_0131_Munapes%C3%83%C2%83%C3%82%C2%A4kkeist%C3%83%C2%83%C3%82%C2%B6nkannattimia_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 227,
+    "name": {
+      "fi": "Sammalet ja jäkälät",
+      "sv": "Mossor och lavar"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 21,
+      "name": {
+        "fi": "Maatalouslajintuntemus"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.53892",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

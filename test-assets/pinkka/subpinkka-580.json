@@ -1,0 +1,767 @@
+{
+  "id": 580,
+  "name": {
+    "fi": "Taitavuorten sanikkaisia",
+    "en": "Pteridophytes and lycophytes"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 9,
+    "name": {
+      "fi": "A Taitavuorten kasveja",
+      "en": "A Plants of Taita Hills"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.294834",
+  "speciesCards": [
+    {
+      "taxonId": "MX.5009350",
+      "vernacularName": {
+        "fi": "sirokalvosaniainen"
+      },
+      "scientificName": "Abrodictyum rigidum",
+      "id": 48419,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009087",
+      "vernacularName": {
+        "fi": "sädesaniaiset"
+      },
+      "scientificName": "Actiniopteris",
+      "id": 58067,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009354",
+      "vernacularName": {
+        "fi": "liuskasädesaniainen"
+      },
+      "scientificName": "Actiniopteris semiflabellata",
+      "id": 48420,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009357",
+      "vernacularName": {
+        "fi": "kaartoadiantumi"
+      },
+      "scientificName": "Adiantum comorense",
+      "id": 48424,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009526",
+      "vernacularName": {
+        "fi": "australianadiantumi"
+      },
+      "scientificName": "Adiantum hispidulum",
+      "id": 48423,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42876",
+      "vernacularName": {},
+      "scientificName": "Adiantum raddianum",
+      "id": 48421,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009586",
+      "vernacularName": {
+        "fi": "tansaniankaunosaniainen"
+      },
+      "scientificName": "Anemia vestita",
+      "id": 58019,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009376",
+      "vernacularName": {
+        "fi": "vuorialvio"
+      },
+      "scientificName": "Arachniodes webbiana",
+      "id": 48422,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009476",
+      "vernacularName": {
+        "fi": "afrikannivelsiipi"
+      },
+      "scientificName": "Arthropteris orientalis",
+      "id": 48426,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000631",
+      "vernacularName": {},
+      "scientificName": "Asplenium christii",
+      "id": 48429,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000696",
+      "vernacularName": {},
+      "scientificName": "Asplenium friesiorum",
+      "id": 48425,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000711",
+      "vernacularName": {},
+      "scientificName": "Asplenium holstii",
+      "id": 48430,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000713",
+      "vernacularName": {},
+      "scientificName": "Asplenium hypomelas",
+      "id": 48427,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000714",
+      "vernacularName": {},
+      "scientificName": "Asplenium inaequilaterale",
+      "id": 48428,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000724",
+      "vernacularName": {},
+      "scientificName": "Asplenium linckii",
+      "id": 48433,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000782",
+      "vernacularName": {},
+      "scientificName": "Asplenium rutifolium",
+      "id": 48432,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000785",
+      "vernacularName": {},
+      "scientificName": "Asplenium sandersonii",
+      "id": 48434,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5000809",
+      "vernacularName": {},
+      "scientificName": "Asplenium theciferum",
+      "id": 48436,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009068",
+      "vernacularName": {
+        "fi": "limaskasaniaiset"
+      },
+      "scientificName": "Azolla",
+      "id": 48431,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37792",
+      "vernacularName": {
+        "fi": "kampasaniaiset"
+      },
+      "scientificName": "Blechnum",
+      "id": 48435,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009484",
+      "vernacularName": {
+        "fi": "sapelikampasaniainen"
+      },
+      "scientificName": "Blechnum attenuatum",
+      "id": 48437,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009003",
+      "vernacularName": {
+        "fi": "mariansiivet"
+      },
+      "scientificName": "Blotiella",
+      "id": 48439,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009485",
+      "vernacularName": {
+        "fi": "varjomariansiipi"
+      },
+      "scientificName": "Blotiella glabra",
+      "id": 48440,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009393",
+      "vernacularName": {
+        "fi": "tansanianmariansiipi"
+      },
+      "scientificName": "Blotiella stipitata",
+      "id": 48438,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009805",
+      "vernacularName": {
+        "fi": "pitsikietosaniainen"
+      },
+      "scientificName": "Cheilanthes multifida",
+      "id": 48441,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009430",
+      "vernacularName": {
+        "fi": "rihmatossusaniainen"
+      },
+      "scientificName": "Crepidomanes melanotrichum",
+      "id": 58031,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009284",
+      "vernacularName": {
+        "fi": "saniaispuut"
+      },
+      "scientificName": "Cyathea",
+      "id": 58039,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009441",
+      "vernacularName": {
+        "fi": "tansaniansaniaispuu"
+      },
+      "scientificName": "Cyathea humilis",
+      "id": 58020,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009836",
+      "vernacularName": {
+        "fi": "afrikansaniaispuu"
+      },
+      "scientificName": "Cyathea manniana",
+      "id": 48442,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009837",
+      "vernacularName": {
+        "fi": "lomapyöröimarre"
+      },
+      "scientificName": "Cyclosorus interruptus",
+      "id": 48446,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009450",
+      "vernacularName": {
+        "fi": "aurinkosaniainen"
+      },
+      "scientificName": "Dicranopteris linearis",
+      "id": 48444,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009451",
+      "vernacularName": {
+        "fi": "vahasanikka"
+      },
+      "scientificName": "Didymochlaena truncatula",
+      "id": 48443,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009293",
+      "vernacularName": {
+        "fi": "kelmusaniaiset"
+      },
+      "scientificName": "Didymoglossum",
+      "id": 58046,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009452",
+      "vernacularName": {
+        "fi": "lovikelmusaniainen"
+      },
+      "scientificName": "Didymoglossum erosum",
+      "id": 48445,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009851",
+      "vernacularName": {
+        "fi": "imarresormisaniainen"
+      },
+      "scientificName": "Doryopteris concolor",
+      "id": 58032,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37749",
+      "vernacularName": {
+        "fi": "alvejuuret",
+        "sv": "lundbräknar"
+      },
+      "scientificName": "Dryopteris",
+      "id": 58066,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009496",
+      "vernacularName": {
+        "fi": "poimukielisaniainen"
+      },
+      "scientificName": "Elaphoglossum aubertii",
+      "id": 48448,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009319",
+      "vernacularName": {
+        "fi": "tansaniankielisaniainen"
+      },
+      "scientificName": "Elaphoglossum tanganjicense",
+      "id": 48449,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009501",
+      "vernacularName": {
+        "fi": "risukorte"
+      },
+      "scientificName": "Equisetum ramosissimum",
+      "id": 48451,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5008984",
+      "vernacularName": {
+        "fi": "nauhasaniaiset"
+      },
+      "scientificName": "Grammitis",
+      "id": 58069,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009520",
+      "vernacularName": {
+        "fi": "kerinauhasaniainen"
+      },
+      "scientificName": "Grammitis pygmaea",
+      "id": 48453,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009546",
+      "vernacularName": {
+        "fi": "isokorvasiipi"
+      },
+      "scientificName": "Histiopteris incisa",
+      "id": 48450,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37684",
+      "vernacularName": {
+        "fi": "ketunlieot",
+        "sv": "lopplumrar"
+      },
+      "scientificName": "Huperzia",
+      "id": 58045,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009691",
+      "vernacularName": {
+        "fi": "riippaketunlieko"
+      },
+      "scientificName": "Huperzia dacrydioides",
+      "id": 58044,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009548",
+      "vernacularName": {
+        "fi": "suomuketunlieko"
+      },
+      "scientificName": "Huperzia ophioglossoides",
+      "id": 58033,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42687",
+      "vernacularName": {
+        "fi": "sammalsaniaiskasvit",
+        "sv": "hinnbräkenväxter"
+      },
+      "scientificName": "Hymenophyllaceae",
+      "id": 58048,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42689",
+      "vernacularName": {
+        "sv": "hinnbräknar",
+        "fi": "sammalsaniaiset"
+      },
+      "scientificName": "Hymenophyllum",
+      "id": 58047,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009549",
+      "vernacularName": {
+        "fi": "viuhkasammalsaniainen"
+      },
+      "scientificName": "Hymenophyllum capillare",
+      "id": 48452,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009692",
+      "vernacularName": {
+        "fi": "kilpisammalsaniainen"
+      },
+      "scientificName": "Hymenophyllum peltatum",
+      "id": 48454,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009550",
+      "vernacularName": {
+        "fi": "pihtisammalsaniainen"
+      },
+      "scientificName": "Hymenophyllum sibthorpioides",
+      "id": 48457,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009553",
+      "vernacularName": {
+        "fi": "pitsipistesiipi"
+      },
+      "scientificName": "Hypolepis sparsisora",
+      "id": 48455,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009716",
+      "vernacularName": {
+        "fi": "vuotamiekkaimarre"
+      },
+      "scientificName": "Lepisorus schraderi",
+      "id": 48459,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009574",
+      "vernacularName": {
+        "fi": "suippuviirusaniainen"
+      },
+      "scientificName": "Lomariopsis warneckei",
+      "id": 48458,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009575",
+      "vernacularName": {
+        "fi": "etiopiankieli-imarre"
+      },
+      "scientificName": "Loxogramme abyssinica",
+      "id": 48460,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009718",
+      "vernacularName": {
+        "fi": "nuokkukonnanlieko"
+      },
+      "scientificName": "Lycopodiella cernua",
+      "id": 48463,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37694",
+      "vernacularName": {
+        "fi": "katinlieko",
+        "sv": "mattlummer"
+      },
+      "scientificName": "Lycopodium clavatum",
+      "id": 48466,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009922",
+      "vernacularName": {
+        "fi": "afrikanapilasaniainen"
+      },
+      "scientificName": "Marsilea minuta",
+      "id": 48464,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009584",
+      "vernacularName": {
+        "fi": "nukkajättisiipi"
+      },
+      "scientificName": "Megalastrum lanuginosum",
+      "id": 58065,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009596",
+      "vernacularName": {
+        "fi": "afrikanpeitsisaniainen"
+      },
+      "scientificName": "Oleandra distenta",
+      "id": 48462,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009598",
+      "vernacularName": {
+        "fi": "kuningassaniainen"
+      },
+      "scientificName": "Osmunda regalis",
+      "id": 48465,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009746",
+      "vernacularName": {
+        "fi": "hopeapellea"
+      },
+      "scientificName": "Pellaea calomelanos",
+      "id": 48467,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009606",
+      "vernacularName": {
+        "fi": "puukopellea"
+      },
+      "scientificName": "Pellaea doniana",
+      "id": 58021,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009747",
+      "vernacularName": {
+        "fi": "viherpellea"
+      },
+      "scientificName": "Pellaea viridis",
+      "id": 58024,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009619",
+      "vernacularName": {
+        "fi": "silmäsuomuimarre"
+      },
+      "scientificName": "Pleopeltis macrocarpa",
+      "id": 48468,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009762",
+      "vernacularName": {
+        "fi": "tihkutuulensiipi"
+      },
+      "scientificName": "Pneumatopteris unita",
+      "id": 58023,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009625",
+      "vernacularName": {
+        "fi": "pörröhärkylä"
+      },
+      "scientificName": "Polystichum transvaalense",
+      "id": 58043,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009630",
+      "vernacularName": {
+        "fi": "haarusanikkainen"
+      },
+      "scientificName": "Psilotum nudum",
+      "id": 48469,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4994055",
+      "vernacularName": {
+        "fi": "sananjalka",
+        "sv": "örnbräken"
+      },
+      "scientificName": "Pteridium aquilinum",
+      "id": 58030,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009770",
+      "vernacularName": {
+        "fi": "lintusanikka"
+      },
+      "scientificName": "Pteris catoptera",
+      "id": 58028,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022567",
+      "vernacularName": {
+        "fi": "sirosanikka"
+      },
+      "scientificName": "Pteris dentata",
+      "id": 58029,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009771",
+      "vernacularName": {
+        "fi": "usambaransanikka"
+      },
+      "scientificName": "Pteris usambarensis",
+      "id": 58027,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022568",
+      "vernacularName": {
+        "fi": "nauhasanikka"
+      },
+      "scientificName": "Pteris vittata",
+      "id": 58041,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009772",
+      "vernacularName": {
+        "fi": "sirppijyväsiipi"
+      },
+      "scientificName": "Ptisana fraxinea",
+      "id": 58068,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37705",
+      "vernacularName": {
+        "sv": "mosslumrar",
+        "fi": "mähkät"
+      },
+      "scientificName": "Selaginella",
+      "id": 58037,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009868",
+      "vernacularName": {
+        "fi": "liekomähkä"
+      },
+      "scientificName": "Selaginella dregei",
+      "id": 58036,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009650",
+      "vernacularName": {
+        "fi": "pikkumähkä"
+      },
+      "scientificName": "Selaginella kraussiana",
+      "id": 58035,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009651",
+      "vernacularName": {
+        "fi": "suomumähkä"
+      },
+      "scientificName": "Selaginella mittenii",
+      "id": 58038,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009667",
+      "vernacularName": {
+        "fi": "kotiloraksisaniainen"
+      },
+      "scientificName": "Tectaria gemmifera",
+      "id": 58025,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37744",
+      "vernacularName": {
+        "sv": "kärrbräknar",
+        "fi": "sysi-imarteet"
+      },
+      "scientificName": "Thelypteris",
+      "id": 58034,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009471",
+      "vernacularName": {
+        "fi": "nauhakaitasaniainen"
+      },
+      "scientificName": "Vittaria isoetifolia",
+      "id": 58026,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.294834",
+    "urls": {
+      "original": "https://image.laji.fi/MM.294834/JR38053A.JPG",
+      "full": "https://image.laji.fi/MM.294834/JR38053A.JPG",
+      "large": "https://image.laji.fi/MM.294834/JR38053A_large.jpg",
+      "square": "https://image.laji.fi/MM.294834/JR38053A_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.294834/JR38053A_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1553351382,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1479990919,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR38053A.JPG",
+      "documentIds": [
+        "3177"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.5009692"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

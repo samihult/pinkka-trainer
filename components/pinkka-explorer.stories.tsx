@@ -11,7 +11,7 @@ const meta: Meta<typeof PinkkaExplorer> = {
   },
   decorators: [
     (Story) => (
-      <div className="max-w-5xl">
+      <div className="h-96">
         <Story />
       </div>
     ),

@@ -1,0 +1,1382 @@
+{
+  "taxonId": "MX.40338",
+  "vernacularName": {
+    "sv": "brunstarr",
+    "fi": "hetesara"
+  },
+  "scientificName": "Carex acutiformis",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Sarojen kasvutapa vaihtelee yksittäisinä versoina kasvavista tiiviisti mätästäviin, monilla lajeilla on hyvin kehittynyt maavarsi, ja ne voivat muodostaa laajoja klooneja. Varsi on haaraton, lehdekäs, tav. kolmesärmäinen. Lehtitupen suulla on kalvomainen kieleke. Kukinto on tähkä tai tähkämäinen, mykerömäinen tai röyhymäinen kerrannaiskukinto, osakukinnot ovat tav. tiheitä tähkiä. Kukka on tähkäsuomun suojassa, kehätön, hedekukka on kolmeheteinen, emikukka pullomaisen esilehden, pullakon ympäröimä, kaksi- tai kolmeluottinen, pullakon kärjessä on usein kapea suuota. Hedelmä on pullakon sisällä kypsyvä, litteä, kolmesärmäinen tai liereä pähkylä.</p><p>Risteymiä tavataan eräissä sararyhmissä suhteellisen yleisesti. Useimmiten risteymät syntyvät samaan sektioon kuuluvien lajien kesken. &#xa0;Risteymät ovat tav. tuntomerkeiltään kantalajiensa väliltä, kuitenkin usein näitä kookkaampia. Risteymien pullakot ovat tav. tyhjiä, eli siemeniä ei kehity. Eräissä ryhmissä risteymät ovat fertiilejä, tällöin syntyy monimutkaisia risteymien ja takaisinristeymien ryhmiä. Sarojen määritys on helpointa aloittaa alla olevalla kaavalla.</p><p>1&#xa0;Kukinnossa vain yksi tähkä&#xa0;<strong>YKSITÄHKÄISET</strong></p><p>1&#xa0;Kukinnossa vähintään kaksi tähkää >2</p><p>2 ( 1) &#xa0;Tähkät samanlaisia tai ainakin toisiaan suuresti muistuttavia &#xa0;>3</p><p>2 &#xa0;Tähkät erilaisia, emi- ja hedekukat pääosin eri tähkissä &#xa0;>4</p><p>3 ( 2) &#xa0;Luotteja kaksi, pullakot ja pähkylät tav. litteähköjä <strong>YHTÄLÄISTÄHKÄISET, KAKSILUOTTISET</strong></p><p>3&#xa0;Luotteja kolme, pullakot ja pähkylät kolmesärmäisiä tai liereitä, tupet ja kukinnot usein voimakasvärisiä <strong>VALEYHTÄLÄISTÄHKÄISET, KOLMELUOTTISET</strong></p><p>4 ( 2) &#xa0;Luotteja kaksi, pullakot ja pähkylät litteähköjä <strong>ERILAISTÄHKÄISET, KAKSILUOTTISET</strong></p><p>4 &#xa0;Luotteja kolme, pullakot ja pähkylät kolmesärmäisiä tai liereitä <strong>ERILAISTÄHKÄISET, KOLMELUOTTISET</strong> ><em> <b>Carex acutiformis</b></em></p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>50–150 cm.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {
+        "fi": "<p>Maavarsi on vankka, suikertava, pitkä. Varret ovat tanakoita, teräväsärmäisiä, tyvitupet ovat ruskeanpunaisia, laidoilta verkkomaisesti säikeiksi hajoavia.</p>"
+      },
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Lehdet ovat varren pituisia, 7–10 mm leveitä, litteitä, varsinkin alta sinivihreitä. Alimman tähkän tukilehti on kukintoa pitempi.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {
+        "fi": "<p>Hedetähkiä on kaksi tai kolme, suomut ovat tylpähköjä – teräväkärkisiä, emitähkiä on kolme tai neljä, suomut ovat&#xa0;tav. pullakkoa lyhyempiä, otapäisiä, mustanruskeita. Emitähkät ovat pystyjä, 20–50 mm, liereitä, alin on joskus perällinen. Luotteja on tav. kolme, harvoin kaksi. </p>"
+      },
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {
+        "fi": "<p>Pullakot ovat 3.5–4.5 mm, pystyjä, kanamunamaisia, litteitä, selväsuonisia, tumman vihreänharmaita; suuota on muuta pullakkoa vaaleampi, lyhyt, matalasti lovikärkinen, liuskat ovat uloskaartuvia.</p>"
+      },
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {
+        "fi": "<p>Kesäkuu – heinäkuu.</p>"
+      },
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Lähteiköissä, puronvarsissa, rehevissä korvissa, luhtasoilla, myös ojissa.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {},
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Varsinais-Suomesta Pohjois-Savoon. Esiintymiä on tunnettu noin sata.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {
+        "fi": "<p>Alkuperäinen Länsi- ja Pohjois-Euroopassa.</p>"
+      },
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i Finland",
+        "fi": "Uhanalaisuus Suomessa",
+        "en": "Conservation status in Finland"
+      },
+      "body": {
+        "fi": "<p>Vaarantunut (VU).</p><p>Hetesara on taantunut lähteikköjen hävitysten ja purojen perkuun vuoksi.</p>"
+      },
+      "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristön hoito-ohjeita",
+        "sv": "Instruktioner för hantering av habitat",
+        "en": "Instructions for habitat management"
+      },
+      "body": {
+        "fi": "<p>Esiintymisalueiden vesitalouden säilyttäminen.</p>"
+      },
+      "predicate": "MX.management"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Toivonen, H. 1998: Cyperaceae. – Retkeilykasvio. 4 p.</p><p>Söyrinki, N. 1986: Hetesara (Carex acutiformis) Virroilla (PH) ja kasvin suomalaista löytöhistoriaa. – Lutukka 2: 3–6. </p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.53720",
+      "vernacularName": null,
+      "scientificName": "Poales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.40242",
+      "vernacularName": {
+        "fi": "sarakasvit",
+        "sv": "halvgräs"
+      },
+      "scientificName": "Cyperaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.40288",
+      "vernacularName": {
+        "fi": "sarat",
+        "sv": "starrar"
+      },
+      "scientificName": "Carex",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.40338",
+      "vernacularName": {
+        "sv": "brunstarr",
+        "fi": "hetesara"
+      },
+      "scientificName": "Carex acutiformis",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 48729,
+  "images": [
+    {
+      "id": "MM.2257889",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08339.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257889/JR08339.JPG",
+        "full": "https://image.laji.fi/MM.2257889/JR08339.JPG",
+        "large": "https://image.laji.fi/MM.2257889/JR08339_large.jpg",
+        "square": "https://image.laji.fi/MM.2257889/JR08339_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257889/JR08339_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257891",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08337.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257891/JR08337.JPG",
+        "full": "https://image.laji.fi/MM.2257891/JR08337.JPG",
+        "large": "https://image.laji.fi/MM.2257891/JR08337_large.jpg",
+        "square": "https://image.laji.fi/MM.2257891/JR08337_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257891/JR08337_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257892",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08335.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257892/JR08335.JPG",
+        "full": "https://image.laji.fi/MM.2257892/JR08335.JPG",
+        "large": "https://image.laji.fi/MM.2257892/JR08335_large.jpg",
+        "square": "https://image.laji.fi/MM.2257892/JR08335_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257892/JR08335_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257893",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08334.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257893/JR08334.JPG",
+        "full": "https://image.laji.fi/MM.2257893/JR08334.JPG",
+        "large": "https://image.laji.fi/MM.2257893/JR08334_large.jpg",
+        "square": "https://image.laji.fi/MM.2257893/JR08334_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257893/JR08334_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257890",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08338.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257890/JR08338.JPG",
+        "full": "https://image.laji.fi/MM.2257890/JR08338.JPG",
+        "large": "https://image.laji.fi/MM.2257890/JR08338_large.jpg",
+        "square": "https://image.laji.fi/MM.2257890/JR08338_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257890/JR08338_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257888",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08340.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257888/JR08340.JPG",
+        "full": "https://image.laji.fi/MM.2257888/JR08340.JPG",
+        "large": "https://image.laji.fi/MM.2257888/JR08340_large.jpg",
+        "square": "https://image.laji.fi/MM.2257888/JR08340_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257888/JR08340_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252308",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07852.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252308/JR07852.JPG",
+        "full": "https://image.laji.fi/MM.2252308/JR07852.JPG",
+        "large": "https://image.laji.fi/MM.2252308/JR07852_large.jpg",
+        "square": "https://image.laji.fi/MM.2252308/JR07852_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252308/JR07852_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252303",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07859.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252303/JR07859.JPG",
+        "full": "https://image.laji.fi/MM.2252303/JR07859.JPG",
+        "large": "https://image.laji.fi/MM.2252303/JR07859_large.jpg",
+        "square": "https://image.laji.fi/MM.2252303/JR07859_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252303/JR07859_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252302",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07860.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252302/JR07860.JPG",
+        "full": "https://image.laji.fi/MM.2252302/JR07860.JPG",
+        "large": "https://image.laji.fi/MM.2252302/JR07860_large.jpg",
+        "square": "https://image.laji.fi/MM.2252302/JR07860_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252302/JR07860_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252307",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07853.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252307/JR07853.JPG",
+        "full": "https://image.laji.fi/MM.2252307/JR07853.JPG",
+        "large": "https://image.laji.fi/MM.2252307/JR07853_large.jpg",
+        "square": "https://image.laji.fi/MM.2252307/JR07853_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252307/JR07853_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252305",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07855.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252305/JR07855.JPG",
+        "full": "https://image.laji.fi/MM.2252305/JR07855.JPG",
+        "large": "https://image.laji.fi/MM.2252305/JR07855_large.jpg",
+        "square": "https://image.laji.fi/MM.2252305/JR07855_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252305/JR07855_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252304",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07858.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252304/JR07858.JPG",
+        "full": "https://image.laji.fi/MM.2252304/JR07858.JPG",
+        "large": "https://image.laji.fi/MM.2252304/JR07858_large.jpg",
+        "square": "https://image.laji.fi/MM.2252304/JR07858_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252304/JR07858_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252306",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07854.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252306/JR07854.JPG",
+        "full": "https://image.laji.fi/MM.2252306/JR07854.JPG",
+        "large": "https://image.laji.fi/MM.2252306/JR07854_large.jpg",
+        "square": "https://image.laji.fi/MM.2252306/JR07854_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252306/JR07854_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252298",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07865.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252298/JR07865.JPG",
+        "full": "https://image.laji.fi/MM.2252298/JR07865.JPG",
+        "large": "https://image.laji.fi/MM.2252298/JR07865_large.jpg",
+        "square": "https://image.laji.fi/MM.2252298/JR07865_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252298/JR07865_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252299",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07864.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252299/JR07864.JPG",
+        "full": "https://image.laji.fi/MM.2252299/JR07864.JPG",
+        "large": "https://image.laji.fi/MM.2252299/JR07864_large.jpg",
+        "square": "https://image.laji.fi/MM.2252299/JR07864_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252299/JR07864_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252301",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07861.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252301/JR07861.JPG",
+        "full": "https://image.laji.fi/MM.2252301/JR07861.JPG",
+        "large": "https://image.laji.fi/MM.2252301/JR07861_large.jpg",
+        "square": "https://image.laji.fi/MM.2252301/JR07861_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252301/JR07861_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2252300",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR07862.JPG",
+        "documentIds": [
+          "5481"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2252300/JR07862.JPG",
+        "full": "https://image.laji.fi/MM.2252300/JR07862.JPG",
+        "large": "https://image.laji.fi/MM.2252300/JR07862_large.jpg",
+        "square": "https://image.laji.fi/MM.2252300/JR07862_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2252300/JR07862_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.322378",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Carex acutiformis 3 Joroinen Saarikkolampi 040814 KOKOLH HYVÄ.jpg",
+        "documentIds": [
+          "3385"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.322378/Carex_acutiformis_3_Joroinen_Saarikkolampi_040814_KOKOLH_H_VA.jpg",
+        "full": "https://image.laji.fi/MM.322378/Carex_acutiformis_3_Joroinen_Saarikkolampi_040814_KOKOLH_H_VA.jpg",
+        "large": "https://image.laji.fi/MM.322378/Carex_acutiformis_3_Joroinen_Saarikkolampi_040814_KOKOLH_H_VA_large.jpg",
+        "square": "https://image.laji.fi/MM.322378/Carex_acutiformis_3_Joroinen_Saarikkolampi_040814_KOKOLH_H_VA_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.322378/Carex_acutiformis_3_Joroinen_Saarikkolampi_040814_KOKOLH_H_VA_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.322377",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Carex acutiformis 4 Joroinen Saarikkolampi 040814 LHH HYVÄ.jpg",
+        "documentIds": [
+          "3385"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.322377/Carex_acutiformis_4_Joroinen_Saarikkolampi_040814_LHH_H_VA.jpg",
+        "full": "https://image.laji.fi/MM.322377/Carex_acutiformis_4_Joroinen_Saarikkolampi_040814_LHH_H_VA.jpg",
+        "large": "https://image.laji.fi/MM.322377/Carex_acutiformis_4_Joroinen_Saarikkolampi_040814_LHH_H_VA_large.jpg",
+        "square": "https://image.laji.fi/MM.322377/Carex_acutiformis_4_Joroinen_Saarikkolampi_040814_LHH_H_VA_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.322377/Carex_acutiformis_4_Joroinen_Saarikkolampi_040814_LHH_H_VA_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.322376",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Carex acutiformis 5 Joroinen Saarikkolampi 040814 FRR HYVÄ.jpg",
+        "documentIds": [
+          "3385"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.322376/Carex_acutiformis_5_Joroinen_Saarikkolampi_040814_FRR_H_VA.jpg",
+        "full": "https://image.laji.fi/MM.322376/Carex_acutiformis_5_Joroinen_Saarikkolampi_040814_FRR_H_VA.jpg",
+        "large": "https://image.laji.fi/MM.322376/Carex_acutiformis_5_Joroinen_Saarikkolampi_040814_FRR_H_VA.jpg",
+        "square": "https://image.laji.fi/MM.322376/Carex_acutiformis_5_Joroinen_Saarikkolampi_040814_FRR_H_VA_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.322376/Carex_acutiformis_5_Joroinen_Saarikkolampi_040814_FRR_H_VA_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.322380",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Carex acutiformis 1 Joroinen Saarikkolampi 040814 LATVA OK.jpg",
+        "documentIds": [
+          "3385"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.322380/Carex_acutiformis_1_Joroinen_Saarikkolampi_040814_LATVA_OK.jpg",
+        "full": "https://image.laji.fi/MM.322380/Carex_acutiformis_1_Joroinen_Saarikkolampi_040814_LATVA_OK.jpg",
+        "large": "https://image.laji.fi/MM.322380/Carex_acutiformis_1_Joroinen_Saarikkolampi_040814_LATVA_OK_large.jpg",
+        "square": "https://image.laji.fi/MM.322380/Carex_acutiformis_1_Joroinen_Saarikkolampi_040814_LATVA_OK_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.322380/Carex_acutiformis_1_Joroinen_Saarikkolampi_040814_LATVA_OK_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.322375",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Carex acutiformis 6 Joroinen Saarikkolampi 040814 FRR OK.jpg",
+        "documentIds": [
+          "3385"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.322375/Carex_acutiformis_6_Joroinen_Saarikkolampi_040814_FRR_OK.jpg",
+        "full": "https://image.laji.fi/MM.322375/Carex_acutiformis_6_Joroinen_Saarikkolampi_040814_FRR_OK.jpg",
+        "large": "https://image.laji.fi/MM.322375/Carex_acutiformis_6_Joroinen_Saarikkolampi_040814_FRR_OK.jpg",
+        "square": "https://image.laji.fi/MM.322375/Carex_acutiformis_6_Joroinen_Saarikkolampi_040814_FRR_OK_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.322375/Carex_acutiformis_6_Joroinen_Saarikkolampi_040814_FRR_OK_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.322379",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Carex acutiformis 2 Joroinen Saarikkolampi 040814 LATVA OK.jpg",
+        "documentIds": [
+          "3385"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.322379/Carex_acutiformis_2_Joroinen_Saarikkolampi_040814_LATVA_OK.jpg",
+        "full": "https://image.laji.fi/MM.322379/Carex_acutiformis_2_Joroinen_Saarikkolampi_040814_LATVA_OK.jpg",
+        "large": "https://image.laji.fi/MM.322379/Carex_acutiformis_2_Joroinen_Saarikkolampi_040814_LATVA_OK_large.jpg",
+        "square": "https://image.laji.fi/MM.322379/Carex_acutiformis_2_Joroinen_Saarikkolampi_040814_LATVA_OK_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.322379/Carex_acutiformis_2_Joroinen_Saarikkolampi_040814_LATVA_OK_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257883",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08354.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257883/JR08354.JPG",
+        "full": "https://image.laji.fi/MM.2257883/JR08354.JPG",
+        "large": "https://image.laji.fi/MM.2257883/JR08354_large.jpg",
+        "square": "https://image.laji.fi/MM.2257883/JR08354_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257883/JR08354_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257885",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08352.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257885/JR08352.JPG",
+        "full": "https://image.laji.fi/MM.2257885/JR08352.JPG",
+        "large": "https://image.laji.fi/MM.2257885/JR08352_large.jpg",
+        "square": "https://image.laji.fi/MM.2257885/JR08352_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257885/JR08352_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257884",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08353.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257884/JR08353.JPG",
+        "full": "https://image.laji.fi/MM.2257884/JR08353.JPG",
+        "large": "https://image.laji.fi/MM.2257884/JR08353_large.jpg",
+        "square": "https://image.laji.fi/MM.2257884/JR08353_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257884/JR08353_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257887",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08350.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "hetesara",
+          "Carex acutiformis"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257887/JR08350.JPG",
+        "full": "https://image.laji.fi/MM.2257887/JR08350.JPG",
+        "large": "https://image.laji.fi/MM.2257887/JR08350_large.jpg",
+        "square": "https://image.laji.fi/MM.2257887/JR08350_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257887/JR08350_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2257886",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807445,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807445,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08351.JPG",
+        "documentIds": [
+          "5530"
+        ],
+        "tags": [
+          "Carex acutiformis",
+          "hetesara"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40338"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2257886/JR08351.JPG",
+        "full": "https://image.laji.fi/MM.2257886/JR08351.JPG",
+        "large": "https://image.laji.fi/MM.2257886/JR08351_large.jpg",
+        "square": "https://image.laji.fi/MM.2257886/JR08351_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2257886/JR08351_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 585,
+    "name": {
+      "fi": "Carex-Cypripedium",
+      "sv": "Carex-Cypripedium",
+      "en": "Carex-Cypripedium"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 14,
+      "name": {
+        "fi": "IPS-178 Suomen uhanalaiset kasvit",
+        "sv": "IPS-178 Finlands hotade kärlväxtarter",
+        "en": "IPS-178 Threatened vascular plants of Finland"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "",
+      "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+    },
+    "imageId": "MM.75107",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

@@ -1,0 +1,719 @@
+{
+  "id": 586,
+  "name": {
+    "fi": "Dactylorhiza-Gypsophila",
+    "sv": "Dactylorhiza-Gypsophila",
+    "en": "Dactylorhiza-Gypsophila"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 14,
+    "name": {
+      "fi": "IPS-178 Suomen uhanalaiset kasvit",
+      "sv": "IPS-178 Finlands hotade kärlväxtarter",
+      "en": "IPS-178 Threatened vascular plants of Finland"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.132491",
+  "speciesCards": [
+    {
+      "taxonId": "MX.41330",
+      "vernacularName": {
+        "sv": "baltnycklar",
+        "fi": "baltiankämmekkä"
+      },
+      "scientificName": "Dactylorhiza baltica",
+      "id": 48792,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40074",
+      "vernacularName": {
+        "sv": "skogsnycklar",
+        "fi": "kielikämmekkä"
+      },
+      "scientificName": "Dactylorhiza fuchsii",
+      "id": 48791,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40070",
+      "vernacularName": {
+        "fi": "veripunakämmekkä",
+        "sv": "blodnycklar"
+      },
+      "scientificName": "Dactylorhiza incarnata subsp. cruenta",
+      "id": 48790,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40069",
+      "vernacularName": {
+        "fi": "suopunakämmekkä",
+        "sv": "äkta ängsnycklar"
+      },
+      "scientificName": "Dactylorhiza incarnata subsp. incarnata",
+      "id": 48793,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40064",
+      "vernacularName": {
+        "sv": "Adam och Eva",
+        "fi": "seljakämmekkä"
+      },
+      "scientificName": "Dactylorhiza sambucina",
+      "id": 48794,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40066",
+      "vernacularName": {
+        "sv": "sumpnycklar",
+        "fi": "kaitakämmekkä"
+      },
+      "scientificName": "Dactylorhiza traunsteineri",
+      "id": 48795,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40062",
+      "vernacularName": {
+        "fi": "pussikämmekkä",
+        "sv": "grönkulla"
+      },
+      "scientificName": "Dactylorhiza viridis",
+      "id": 57908,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37875",
+      "vernacularName": {
+        "sv": "riddarsporre",
+        "fi": "rikkakukonkannus"
+      },
+      "scientificName": "Delphinium consolida",
+      "id": 48797,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38147",
+      "vernacularName": {
+        "sv": "sandnejlika",
+        "fi": "hietaneilikka"
+      },
+      "scientificName": "Dianthus arenarius",
+      "id": 48801,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38150",
+      "vernacularName": {
+        "sv": "backnejlika",
+        "fi": "ketoneilikka"
+      },
+      "scientificName": "Dianthus deltoides",
+      "id": 48796,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38149",
+      "vernacularName": {
+        "fi": "pulskaneilikka",
+        "sv": "praktnejlika"
+      },
+      "scientificName": "Dianthus superbus",
+      "id": 48798,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38651",
+      "vernacularName": {
+        "fi": "uuvana",
+        "sv": "fjällgröna"
+      },
+      "scientificName": "Diapensia lapponica",
+      "id": 48799,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37702",
+      "vernacularName": {
+        "fi": "harjulieko",
+        "sv": "cypresslummer"
+      },
+      "scientificName": "Diphasiastrum tristachyum",
+      "id": 48800,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38426",
+      "vernacularName": {
+        "fi": "kultakynsimö",
+        "sv": "gulldraba"
+      },
+      "scientificName": "Draba alpina",
+      "id": 48806,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38432",
+      "vernacularName": {
+        "sv": "finndraba",
+        "fi": "idänkynsimö"
+      },
+      "scientificName": "Draba cinerea",
+      "id": 48804,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38429",
+      "vernacularName": {
+        "sv": "alpdraba",
+        "fi": "tunturikynsimö"
+      },
+      "scientificName": "Draba fladnizensis",
+      "id": 48807,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38431",
+      "vernacularName": {
+        "sv": "fjälldraba",
+        "fi": "isokynsimö"
+      },
+      "scientificName": "Draba glabella",
+      "id": 48803,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38430",
+      "vernacularName": {
+        "sv": "lappdraba",
+        "fi": "lapinkynsimö"
+      },
+      "scientificName": "Draba lactea",
+      "id": 48802,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38435",
+      "vernacularName": {
+        "sv": "sanddraba",
+        "fi": "keltakynsimö"
+      },
+      "scientificName": "Draba nemorosa",
+      "id": 48810,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38427",
+      "vernacularName": {
+        "sv": "isdraba",
+        "fi": "lumikynsimö"
+      },
+      "scientificName": "Draba nivalis",
+      "id": 48812,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38434",
+      "vernacularName": {
+        "fi": "vallikynsikkö",
+        "sv": "lunddraba"
+      },
+      "scientificName": "Drabella muralis",
+      "id": 48805,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39495",
+      "vernacularName": {
+        "sv": "rysk drakblomma",
+        "fi": "ketoampiaisyrtti"
+      },
+      "scientificName": "Dracocephalum thymiflorum",
+      "id": 48808,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38783",
+      "vernacularName": {
+        "fi": "pikkukihokki",
+        "sv": "småsileshår"
+      },
+      "scientificName": "Drosera intermedia",
+      "id": 48813,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38832",
+      "vernacularName": {
+        "fi": "tunturilapinvuokko",
+        "sv": "fjällsippa"
+      },
+      "scientificName": "Dryas octopetala",
+      "id": 48809,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37756",
+      "vernacularName": {
+        "sv": "doftbräken",
+        "fi": "tuoksualvejuuri"
+      },
+      "scientificName": "Dryopteris fragrans",
+      "id": 48811,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38305",
+      "vernacularName": {
+        "fi": "isovesirikko",
+        "sv": "kransslamkrypa"
+      },
+      "scientificName": "Elatine alsinastrum",
+      "id": 48819,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42374",
+      "vernacularName": {
+        "sv": "fjällelm",
+        "fi": "tunturivehniö"
+      },
+      "scientificName": "Elymus alaskanus",
+      "id": 48818,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40536",
+      "vernacularName": {
+        "sv": "rysselm",
+        "fi": "siperianvehniö"
+      },
+      "scientificName": "Elymus fibrosus",
+      "id": 48817,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40539",
+      "vernacularName": {},
+      "scientificName": "Elytrigia juncea subsp. boreoatlantica",
+      "id": 48815,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39106",
+      "vernacularName": {
+        "fi": "turjanhorsma",
+        "sv": "lappdunört"
+      },
+      "scientificName": "Epilobium laestadii",
+      "id": 48816,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39094",
+      "vernacularName": {
+        "fi": "harmaahorsma",
+        "sv": "grådunört"
+      },
+      "scientificName": "Epilobium lamyi",
+      "id": 48814,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39096",
+      "vernacularName": {
+        "fi": "tummahorsma",
+        "sv": "mörk dunört"
+      },
+      "scientificName": "Epilobium obscurum",
+      "id": 48824,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40033",
+      "vernacularName": {
+        "sv": "purpurknipprot",
+        "fi": "tummaneidonvaippa"
+      },
+      "scientificName": "Epipactis atrorubens",
+      "id": 48821,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40031",
+      "vernacularName": {
+        "fi": "suoneidonvaippa",
+        "sv": "kärrknipprot"
+      },
+      "scientificName": "Epipactis palustris",
+      "id": 48825,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40038",
+      "vernacularName": {
+        "sv": "skogsfru",
+        "fi": "metsänemä"
+      },
+      "scientificName": "Epipogium aphyllum",
+      "id": 48820,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38596",
+      "vernacularName": {
+        "fi": "nummikellokanerva",
+        "sv": "klockljung"
+      },
+      "scientificName": "Erica tetralix",
+      "id": 48822,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42994",
+      "vernacularName": {
+        "sv": "blekbinka",
+        "fi": "kalvaskallioinen"
+      },
+      "scientificName": "Erigeron acris subsp. decoloratus",
+      "id": 48823,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39744",
+      "vernacularName": {
+        "sv": "rosenbinka",
+        "fi": "sopulinkallioinen"
+      },
+      "scientificName": "Erigeron borealis",
+      "id": 48829,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39748",
+      "vernacularName": {
+        "fi": "tummakallioinen",
+        "sv": "svartbinka"
+      },
+      "scientificName": "Erigeron humilis",
+      "id": 48826,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39747",
+      "vernacularName": {
+        "fi": "villatunturikallioinen",
+        "sv": "vitbinka"
+      },
+      "scientificName": "Erigeron uniflorus subsp. eriocephalus",
+      "id": 48830,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40262",
+      "vernacularName": {
+        "sv": "myrull",
+        "fi": "himmeävilla"
+      },
+      "scientificName": "Eriophorum brachyantherum",
+      "id": 48831,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39645",
+      "vernacularName": {
+        "sv": "strandögontröst",
+        "fi": "perämerensilmäruoho"
+      },
+      "scientificName": "Euphrasia bottnica",
+      "id": 48827,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39644",
+      "vernacularName": {
+        "fi": "nummisilmäruoho",
+        "sv": "ljungögontröst"
+      },
+      "scientificName": "Euphrasia micrantha",
+      "id": 48828,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39637",
+      "vernacularName": {
+        "sv": "finnögontröst",
+        "fi": "ahosilmäruoho"
+      },
+      "scientificName": "Euphrasia officinalis subsp. officinalis",
+      "id": 48832,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39646",
+      "vernacularName": {
+        "fi": "otasilmäruoho",
+        "sv": "spjutögontröst"
+      },
+      "scientificName": "Euphrasia salisburgensis",
+      "id": 48833,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40447",
+      "vernacularName": {
+        "sv": "sandsvingel",
+        "fi": "hietikkonata"
+      },
+      "scientificName": "Festuca beckeri",
+      "id": 48836,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38871",
+      "vernacularName": {
+        "fi": "karvamansikka",
+        "sv": "backsmultron"
+      },
+      "scientificName": "Fragaria viridis",
+      "id": 48837,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39331",
+      "vernacularName": {
+        "fi": "saarni",
+        "sv": "ask",
+        "en": "Common ash"
+      },
+      "scientificName": "Fraxinus excelsior",
+      "id": 48834,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37972",
+      "vernacularName": {
+        "sv": "blek jordrök",
+        "fi": "pikkuemäkki"
+      },
+      "scientificName": "Fumaria vaillantii",
+      "id": 48835,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39462",
+      "vernacularName": {
+        "sv": "mjukdån",
+        "fi": "pehmytpillike"
+      },
+      "scientificName": "Galeopsis ladanum",
+      "id": 48843,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39296",
+      "vernacularName": {
+        "sv": "slöjmåra",
+        "fi": "harsomatara"
+      },
+      "scientificName": "Galium intermedium",
+      "id": 48838,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39285",
+      "vernacularName": {
+        "fi": "tuoksumatara",
+        "sv": "myskmadra"
+      },
+      "scientificName": "Galium odoratum",
+      "id": 48841,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39298",
+      "vernacularName": {
+        "fi": "nummimatara",
+        "sv": "stenmåra"
+      },
+      "scientificName": "Galium saxatile",
+      "id": 48842,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39292",
+      "vernacularName": {
+        "sv": "gulmåra",
+        "fi": "keltamatara"
+      },
+      "scientificName": "Galium verum",
+      "id": 48840,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39315",
+      "vernacularName": {
+        "sv": "fjällgentiana",
+        "fi": "tunturikatkero"
+      },
+      "scientificName": "Gentiana nivalis",
+      "id": 48839,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39321",
+      "vernacularName": {
+        "fi": "horkkakatkero",
+        "sv": "smalgentiana"
+      },
+      "scientificName": "Gentianella amarella",
+      "id": 48844,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39318",
+      "vernacularName": {
+        "fi": "ketokatkero",
+        "sv": "bredgentiana"
+      },
+      "scientificName": "Gentianella campestris",
+      "id": 48845,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39324",
+      "vernacularName": {
+        "sv": "sumpgentiana",
+        "fi": "rantakatkero"
+      },
+      "scientificName": "Gentianella uliginosa",
+      "id": 48847,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39140",
+      "vernacularName": {
+        "fi": "huhtakurjenpolvi",
+        "sv": "svedjenäva"
+      },
+      "scientificName": "Geranium bohemicum",
+      "id": 48846,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39146",
+      "vernacularName": {
+        "sv": "fliknäva",
+        "fi": "liuskakurjenpolvi"
+      },
+      "scientificName": "Geranium dissectum",
+      "id": 48848,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39148",
+      "vernacularName": {
+        "sv": "glansnäva",
+        "fi": "kiiltokurjenpolvi"
+      },
+      "scientificName": "Geranium lucidum",
+      "id": 48849,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38837",
+      "vernacularName": {
+        "sv": "rysk nejlikrot",
+        "fi": "idänkellukka"
+      },
+      "scientificName": "Geum aleppicum",
+      "id": 48850,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40057",
+      "vernacularName": {
+        "fi": "ahokirkiruoho",
+        "sv": "vanlig brudsporre"
+      },
+      "scientificName": "Gymnadenia conopsea subsp. conopsea",
+      "id": 48854,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37773",
+      "vernacularName": {
+        "fi": "idänimarre",
+        "sv": "östbräken"
+      },
+      "scientificName": "Gymnocarpium continentale",
+      "id": 48852,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37772",
+      "vernacularName": {
+        "fi": "kalkki-imarre",
+        "sv": "kalkbräken"
+      },
+      "scientificName": "Gymnocarpium robertianum",
+      "id": 48851,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38137",
+      "vernacularName": {
+        "sv": "såpört",
+        "fi": "kangasraunikki"
+      },
+      "scientificName": "Gypsophila fastigiata",
+      "id": 48853,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.132491",
+    "urls": {
+      "original": "https://image.laji.fi/MM.132491/JR31212.JPG",
+      "full": "https://image.laji.fi/MM.132491/JR31212.JPG",
+      "large": "https://image.laji.fi/MM.132491/JR31212_large.jpg",
+      "square": "https://image.laji.fi/MM.132491/JR31212_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.132491/JR31212_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1495348421,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1470923659,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR31212.JPG",
+      "documentIds": [
+        "2189"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.39315"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

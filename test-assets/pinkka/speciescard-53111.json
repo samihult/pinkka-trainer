@@ -1,0 +1,352 @@
+{
+  "taxonId": "MX.214176",
+  "vernacularName": {},
+  "scientificName": "Acartia",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p><i>Acartia</i> on keijuhankajalaisiin (Calanoida) kuuluva planktonäyriäisten suku.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {},
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Elintavat",
+        "sv": "Beteende",
+        "en": "Behaviour"
+      },
+      "body": {},
+      "predicate": "MX.behaviour"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Kuvaustekstin laatijat",
+        "sv": "Författare av artbeskrivningen",
+        "en": "Description text authors"
+      },
+      "body": {},
+      "predicate": "MX.speciesCardAuthors"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37602",
+      "vernacularName": {
+        "fi": "eläimet",
+        "sv": "djur",
+        "en": "Animals"
+      },
+      "scientificName": "Animalia",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.37605",
+      "vernacularName": {
+        "sv": "leddjur",
+        "fi": "niveljalkaiset",
+        "en": "Arthropods"
+      },
+      "scientificName": "Arthropoda",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.53343",
+      "vernacularName": {
+        "sv": "kräftdjur",
+        "fi": "äyriäiset",
+        "en": "Crustaceans"
+      },
+      "scientificName": "Crustacea",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.53375",
+      "vernacularName": null,
+      "scientificName": "Multicrustacea",
+      "rankName": {
+        "fi": "yläluokka",
+        "sv": "överklass",
+        "en": "superclass"
+      },
+      "rank": "MX.superclass"
+    },
+    {
+      "taxonId": "MX.211675",
+      "vernacularName": {
+        "fi": "hankajalkaiset",
+        "sv": "hoppkräftor"
+      },
+      "scientificName": "Copepoda",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70244",
+      "vernacularName": {
+        "fi": "keijuhankajalkaiset"
+      },
+      "scientificName": "Calanoida",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.214175",
+      "vernacularName": null,
+      "scientificName": "Acartiidae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.214176",
+      "vernacularName": null,
+      "scientificName": "Acartia",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    }
+  ],
+  "id": 53111,
+  "images": [
+    {
+      "id": "MM.115952",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807471,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Laura Helenius",
+        "secret": false,
+        "capturers": [
+          "Laura Helenius"
+        ],
+        "captureDateTime": 1767807471,
+        "uploadedBy": "lkheleni@helsinki.fi",
+        "originalFilename": "Acartia edit.jpg",
+        "documentIds": [
+          "1178"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.214176"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.115952/Acartia_edit.jpg",
+        "full": "https://image.laji.fi/MM.115952/Acartia_edit.jpg",
+        "large": "https://image.laji.fi/MM.115952/Acartia_edit.jpg",
+        "square": "https://image.laji.fi/MM.115952/Acartia_edit_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.115952/Acartia_edit_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.115951",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807471,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Laura Helenius",
+        "secret": false,
+        "capturers": [
+          "Laura Helenius"
+        ],
+        "captureDateTime": 1767807471,
+        "uploadedBy": "lkheleni@helsinki.fi",
+        "originalFilename": "Acartia furca edit.jpg",
+        "documentIds": [
+          "1178"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.214176"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.115951/Acartia_furca_edit.jpg",
+        "full": "https://image.laji.fi/MM.115951/Acartia_furca_edit.jpg",
+        "large": "https://image.laji.fi/MM.115951/Acartia_furca_edit.jpg",
+        "square": "https://image.laji.fi/MM.115951/Acartia_furca_edit_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.115951/Acartia_furca_edit_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.115953",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807471,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Laura Helenius",
+        "secret": false,
+        "capturers": [
+          "Laura Helenius"
+        ],
+        "captureDateTime": 1767807471,
+        "uploadedBy": "lkheleni@helsinki.fi",
+        "originalFilename": "Acartia (11).jpg",
+        "documentIds": [
+          "1178"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.214176"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.115953/Acartia_(11).jpg",
+        "full": "https://image.laji.fi/MM.115953/Acartia_(11).jpg",
+        "large": "https://image.laji.fi/MM.115953/Acartia_(11).jpg",
+        "square": "https://image.laji.fi/MM.115953/Acartia_(11)_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.115953/Acartia_(11)_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 663,
+    "name": {
+      "fi": "Äyriäiset"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 20,
+      "name": {
+        "fi": "BIO-103 Eliöiden monimuotoisuus: eläimet"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": false,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.71240",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

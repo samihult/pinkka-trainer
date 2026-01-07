@@ -1,0 +1,407 @@
+{
+  "id": 635,
+  "name": {
+    "fi": "Saniaiset ja liekokasvit",
+    "en": "Pteridophytes and lycophytes"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 8,
+    "name": {
+      "fi": "IPS-153 Flora of Subarctic Europe",
+      "en": "IPS-153 Flora of Subarctic Europe"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.80408",
+  "speciesCards": [
+    {
+      "taxonId": "MX.37788",
+      "vernacularName": {
+        "sv": "grönbräken",
+        "fi": "viherraunioinen"
+      },
+      "scientificName": "Asplenium viride",
+      "id": 51217,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37763",
+      "vernacularName": {
+        "fi": "soreahiirenporras",
+        "sv": "majbräken"
+      },
+      "scientificName": "Athyrium filix-femina",
+      "id": 51216,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37729",
+      "vernacularName": {
+        "fi": "pohjannoidanlukko",
+        "sv": "nordlåsbräken"
+      },
+      "scientificName": "Botrychium boreale",
+      "id": 51215,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37728",
+      "vernacularName": {
+        "sv": "månlåsbräken",
+        "fi": "ketonoidanlukko"
+      },
+      "scientificName": "Botrychium lunaria",
+      "id": 51214,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37737",
+      "vernacularName": {
+        "fi": "liesu",
+        "sv": "krusbräken"
+      },
+      "scientificName": "Cryptogramma crispa",
+      "id": 51222,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37766",
+      "vernacularName": {
+        "fi": "haurasloikko",
+        "sv": "stenbräken"
+      },
+      "scientificName": "Cystopteris fragilis",
+      "id": 51219,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37769",
+      "vernacularName": {
+        "fi": "vuoriloikko",
+        "sv": "finbräken"
+      },
+      "scientificName": "Cystopteris montana",
+      "id": 51220,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37698",
+      "vernacularName": {
+        "sv": "fjällummer",
+        "fi": "tunturilieko"
+      },
+      "scientificName": "Diphasiastrum alpinum",
+      "id": 51223,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37699",
+      "vernacularName": {
+        "fi": "keltalieko",
+        "sv": "plattlummer"
+      },
+      "scientificName": "Diphasiastrum complanatum",
+      "id": 51221,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37761",
+      "vernacularName": {
+        "sv": "ryssbräken",
+        "fi": "myyränporras"
+      },
+      "scientificName": "Diplazium sibiricum",
+      "id": 51218,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37752",
+      "vernacularName": {
+        "sv": "skogsbräken",
+        "fi": "metsäalvejuuri"
+      },
+      "scientificName": "Dryopteris carthusiana",
+      "id": 51228,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37754",
+      "vernacularName": {
+        "fi": "isoalvejuuri",
+        "sv": "nordbräken"
+      },
+      "scientificName": "Dryopteris expansa",
+      "id": 51225,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37721",
+      "vernacularName": {
+        "sv": "åkerfräken",
+        "fi": "peltokorte"
+      },
+      "scientificName": "Equisetum arvense",
+      "id": 51226,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37717",
+      "vernacularName": {
+        "sv": "sjöfräken",
+        "fi": "järvikorte"
+      },
+      "scientificName": "Equisetum fluviatile",
+      "id": 51227,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37714",
+      "vernacularName": {
+        "fi": "kangaskorte",
+        "sv": "skavfräken"
+      },
+      "scientificName": "Equisetum hyemale",
+      "id": 59546,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37718",
+      "vernacularName": {
+        "sv": "kärrfräken",
+        "fi": "suokorte"
+      },
+      "scientificName": "Equisetum palustre",
+      "id": 51229,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37720",
+      "vernacularName": {
+        "sv": "ängsfräken",
+        "fi": "lehtokorte"
+      },
+      "scientificName": "Equisetum pratense",
+      "id": 51230,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37716",
+      "vernacularName": {
+        "sv": "trådfräken",
+        "fi": "hentokorte"
+      },
+      "scientificName": "Equisetum scirpoides",
+      "id": 51232,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37719",
+      "vernacularName": {
+        "sv": "skogsfräken",
+        "fi": "metsäkorte"
+      },
+      "scientificName": "Equisetum sylvaticum",
+      "id": 51231,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37715",
+      "vernacularName": {
+        "sv": "smalfräken",
+        "fi": "kirjokorte"
+      },
+      "scientificName": "Equisetum variegatum",
+      "id": 51234,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37771",
+      "vernacularName": {
+        "fi": "metsäimarre",
+        "sv": "ekbräken"
+      },
+      "scientificName": "Gymnocarpium dryopteris",
+      "id": 51233,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37685",
+      "vernacularName": {
+        "fi": "turveketunliekoryhmä"
+      },
+      "scientificName": "Huperzia selago -ryhmä",
+      "id": 51237,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37709",
+      "vernacularName": {
+        "fi": "tummalahnanruoho",
+        "sv": "styvt braxengräs"
+      },
+      "scientificName": "Isoëtes lacustris",
+      "id": 51236,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37689",
+      "vernacularName": {
+        "sv": "strandlummer",
+        "fi": "tulvakonnanlieko"
+      },
+      "scientificName": "Lycopodiella inundata",
+      "id": 51238,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37694",
+      "vernacularName": {
+        "fi": "katinlieko",
+        "sv": "mattlummer"
+      },
+      "scientificName": "Lycopodium clavatum",
+      "id": 51239,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37781",
+      "vernacularName": {
+        "fi": "kotkansiipi",
+        "sv": "strutbräken"
+      },
+      "scientificName": "Matteuccia struthiopteris",
+      "id": 51240,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37747",
+      "vernacularName": {
+        "sv": "hultbräken",
+        "fi": "korpi-imarre"
+      },
+      "scientificName": "Phegopteris connectilis",
+      "id": 51235,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37796",
+      "vernacularName": {
+        "fi": "pohjankallioimarre",
+        "sv": "stensöta"
+      },
+      "scientificName": "Polypodium vulgare",
+      "id": 51242,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37764",
+      "vernacularName": {
+        "sv": "fjällbräken",
+        "fi": "tunturihiirenporras"
+      },
+      "scientificName": "Pseudathyrium alpestre",
+      "id": 51212,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37733",
+      "vernacularName": {
+        "sv": "höstlåsbräken",
+        "fi": "ahonoidanlukko"
+      },
+      "scientificName": "Sceptridium multifidum",
+      "id": 51241,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37706",
+      "vernacularName": {
+        "fi": "mähkä",
+        "sv": "dvärglummer"
+      },
+      "scientificName": "Selaginella selaginoides",
+      "id": 51244,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37691",
+      "vernacularName": {
+        "sv": "revlummer",
+        "fi": "riidenlieko"
+      },
+      "scientificName": "Spinulum annotinum",
+      "id": 51243,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37745",
+      "vernacularName": {
+        "sv": "kärrbräken",
+        "fi": "nevaimarre"
+      },
+      "scientificName": "Thelypteris palustris",
+      "id": 51245,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37777",
+      "vernacularName": {
+        "fi": "tunturikiviyrtti",
+        "sv": "fjällhällebräken"
+      },
+      "scientificName": "Woodsia alpina",
+      "id": 51246,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37776",
+      "vernacularName": {
+        "fi": "karvakiviyrtti",
+        "sv": "hällebräken"
+      },
+      "scientificName": "Woodsia ilvensis",
+      "id": 51247,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.80408",
+    "urls": {
+      "original": "https://image.laji.fi/MM.80408/orig_22647.jpg",
+      "full": "https://image.laji.fi/MM.80408/orig_22647.jpg",
+      "large": "https://image.laji.fi/MM.80408/orig_22647.jpg",
+      "square": "https://image.laji.fi/MM.80408/orig_22647_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.80408/orig_22647_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1436172295,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_legacy_import",
+      "originalFilename": "orig_22647.jpg",
+      "documentIds": [
+        "22647"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.37764"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

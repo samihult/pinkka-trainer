@@ -1,0 +1,802 @@
+{
+  "id": 583,
+  "name": {
+    "fi": "Vuoristometsien puita",
+    "en": "Trees of montane forests"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 9,
+    "name": {
+      "fi": "A Taitavuorten kasveja",
+      "en": "A Plants of Taita Hills"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.257363",
+  "speciesCards": [
+    {
+      "taxonId": "MX.5009360",
+      "vernacularName": {
+        "fi": "kaariafrokarpus"
+      },
+      "scientificName": "Afrocarpus falcatus",
+      "id": 48471,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009529",
+      "vernacularName": {
+        "fi": "pajukiiltokanerva"
+      },
+      "scientificName": "Agarista salicifolia",
+      "id": 48472,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009365",
+      "vernacularName": {
+        "fi": "hurmealbitsia"
+      },
+      "scientificName": "Albizia gummifera",
+      "id": 48473,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009534",
+      "vernacularName": {
+        "fi": "etiopianpunahelmiö"
+      },
+      "scientificName": "Allophylus abyssinicus",
+      "id": 48474,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009373",
+      "vernacularName": {
+        "fi": "kruunujättilehti"
+      },
+      "scientificName": "Anthocleista grandiflora",
+      "id": 48479,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009374",
+      "vernacularName": {
+        "fi": "teekki"
+      },
+      "scientificName": "Aphloia theiformis",
+      "id": 48476,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009490",
+      "vernacularName": {
+        "fi": "tupsupuu"
+      },
+      "scientificName": "Breonadia salicina",
+      "id": 49338,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009491",
+      "vernacularName": {
+        "fi": "rohtoketjumarja"
+      },
+      "scientificName": "Bridelia micrantha",
+      "id": 48664,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009779",
+      "vernacularName": {
+        "fi": "lohtupirskomarja"
+      },
+      "scientificName": "Brucea antidysenterica",
+      "id": 48477,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009781",
+      "vernacularName": {
+        "fi": "sirosyrikkä"
+      },
+      "scientificName": "Buddleja pulchella",
+      "id": 48486,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009790",
+      "vernacularName": {
+        "fi": "piikietokukka"
+      },
+      "scientificName": "Canthium oligocarpum",
+      "id": 49363,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009406",
+      "vernacularName": {
+        "fi": "suippukeltis"
+      },
+      "scientificName": "Celtis gomphophylla",
+      "id": 49366,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009802",
+      "vernacularName": {
+        "fi": "kongonkeltis"
+      },
+      "scientificName": "Celtis mildbraedii",
+      "id": 49367,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009414",
+      "vernacularName": {
+        "fi": "ruskotähtiomena"
+      },
+      "scientificName": "Chrysophyllum gorungosanum",
+      "id": 48485,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009809",
+      "vernacularName": {
+        "fi": "hummansitrio"
+      },
+      "scientificName": "Clausena anisata",
+      "id": 48484,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009815",
+      "vernacularName": {
+        "fi": "keniankahvi"
+      },
+      "scientificName": "Coffea fadenii",
+      "id": 48490,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009816",
+      "vernacularName": {
+        "fi": "tansaniankoolapuu"
+      },
+      "scientificName": "Cola greenwayi",
+      "id": 48491,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009428",
+      "vernacularName": {
+        "fi": "afrikankarhepuu"
+      },
+      "scientificName": "Cordia africana",
+      "id": 49364,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009824",
+      "vernacularName": {
+        "fi": "ugandanvalkopurje"
+      },
+      "scientificName": "Craibia brownii",
+      "id": 48492,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009429",
+      "vernacularName": {
+        "fi": "mosambikinvalkopurje"
+      },
+      "scientificName": "Craibia zimmermannii",
+      "id": 48493,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009434",
+      "vernacularName": {
+        "fi": "afrikankrotoni"
+      },
+      "scientificName": "Croton macrostachyus",
+      "id": 49040,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009830",
+      "vernacularName": {
+        "fi": "oranssikrotoni"
+      },
+      "scientificName": "Croton sylvaticus",
+      "id": 49041,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009439",
+      "vernacularName": {
+        "fi": "tähkäkussonia"
+      },
+      "scientificName": "Cussonia spicata",
+      "id": 48497,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009050",
+      "vernacularName": {
+        "fi": "kohtupalot"
+      },
+      "scientificName": "Cynometra",
+      "id": 48494,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009448",
+      "vernacularName": {
+        "fi": "tansanianpulikki"
+      },
+      "scientificName": "Dasylepis integra",
+      "id": 48498,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009456",
+      "vernacularName": {
+        "fi": "tansaniantraakkipuu"
+      },
+      "scientificName": "Dracaena afromontana",
+      "id": 48504,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009459",
+      "vernacularName": {
+        "fi": "keltarypälepuu"
+      },
+      "scientificName": "Drypetes gerrardii",
+      "id": 48556,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009493",
+      "vernacularName": {
+        "fi": "viuhkoeeretia"
+      },
+      "scientificName": "Ehretia cymosa",
+      "id": 49362,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009494",
+      "vernacularName": {
+        "fi": "kapinkapteeninmarja"
+      },
+      "scientificName": "Ekebergia capensis",
+      "id": 48507,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009323",
+      "vernacularName": {
+        "fi": "natalinsilkkilapa"
+      },
+      "scientificName": "Englerophytum natalense",
+      "id": 48506,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009339",
+      "vernacularName": {
+        "fi": "punttiviikuna"
+      },
+      "scientificName": "Ficus sur",
+      "id": 48557,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009340",
+      "vernacularName": {
+        "fi": "teloviikuna"
+      },
+      "scientificName": "Ficus thonningii",
+      "id": 48512,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009341",
+      "vernacularName": {
+        "fi": "siipisanikkapuu"
+      },
+      "scientificName": "Filicium decipiens",
+      "id": 48560,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009515",
+      "vernacularName": {
+        "fi": "tansanianmangostani"
+      },
+      "scientificName": "Garcinia volkensii",
+      "id": 48559,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009540",
+      "vernacularName": {
+        "fi": "afrikankelastio"
+      },
+      "scientificName": "Gymnosporia senegalensis",
+      "id": 49046,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009542",
+      "vernacularName": {
+        "fi": "silkkikellokainen"
+      },
+      "scientificName": "Heinsenia diervilleoides",
+      "id": 48517,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009555",
+      "vernacularName": {
+        "fi": "hehkuorjanlaakeri"
+      },
+      "scientificName": "Ilex mitis",
+      "id": 48562,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009715",
+      "vernacularName": {
+        "fi": "tansanianhedekuppi"
+      },
+      "scientificName": "Lepidotrichilia volkensii",
+      "id": 48525,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009717",
+      "vernacularName": {
+        "fi": "usambaranhelovaippa"
+      },
+      "scientificName": "Leptonychia usambarensis",
+      "id": 48526,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009720",
+      "vernacularName": {
+        "fi": "piikkinystylehti"
+      },
+      "scientificName": "Macaranga capensis",
+      "id": 49042,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009577",
+      "vernacularName": {
+        "fi": "tansaniannystylehti"
+      },
+      "scientificName": "Macaranga conglomerata",
+      "id": 49043,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009722",
+      "vernacularName": {
+        "fi": "arabiannapamarja"
+      },
+      "scientificName": "Maesa lanceolata",
+      "id": 49044,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009583",
+      "vernacularName": {
+        "fi": "suippukelasti"
+      },
+      "scientificName": "Maytenus acuminata",
+      "id": 49045,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009725",
+      "vernacularName": {
+        "fi": "taitankuonomarja"
+      },
+      "scientificName": "Memecylon teitense",
+      "id": 49048,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.210720",
+      "vernacularName": {},
+      "scientificName": "Millettia oblata ssp. teitensis",
+      "id": 49049,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009912",
+      "vernacularName": {
+        "fi": "tansaniankratomi"
+      },
+      "scientificName": "Mitragyna rubrostipulata",
+      "id": 49050,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009733",
+      "vernacularName": {
+        "fi": "tansaniankesipuu"
+      },
+      "scientificName": "Neoboutonia macrocalyx",
+      "id": 49054,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009735",
+      "vernacularName": {
+        "fi": "isoniasa"
+      },
+      "scientificName": "Newtonia buchananii",
+      "id": 49055,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009592",
+      "vernacularName": {
+        "fi": "suppuseljake"
+      },
+      "scientificName": "Nuxia congesta",
+      "id": 49056,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009736",
+      "vernacularName": {},
+      "scientificName": "Nuxia floribunda",
+      "id": 49057,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009738",
+      "vernacularName": {
+        "fi": "tasomikinpensas"
+      },
+      "scientificName": "Ochna holstii",
+      "id": 49331,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009595",
+      "vernacularName": {
+        "fi": "kenianviherlaakeri"
+      },
+      "scientificName": "Ocotea kenyensis",
+      "id": 49332,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009740",
+      "vernacularName": {
+        "fi": "usambaranviherlaakeri"
+      },
+      "scientificName": "Ocotea usambarensis",
+      "id": 49333,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009928",
+      "vernacularName": {
+        "fi": "afrikanoliivipuu"
+      },
+      "scientificName": "Olea europaea subsp. cuspidata",
+      "id": 49335,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009600",
+      "vernacularName": {
+        "fi": "piiskapillitorvi"
+      },
+      "scientificName": "Oxyanthus speciosus",
+      "id": 49339,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009604",
+      "vernacularName": {
+        "fi": "varjosuipukki"
+      },
+      "scientificName": "Pauridiantha paucinervis",
+      "id": 49340,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009754",
+      "vernacularName": {
+        "fi": "afrikantaateli"
+      },
+      "scientificName": "Phoenix reclinata",
+      "id": 49341,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009618",
+      "vernacularName": {
+        "fi": "tuoksupilvioksa"
+      },
+      "scientificName": "Pleiocarpa pycnantha",
+      "id": 49348,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009621",
+      "vernacularName": {
+        "fi": "afrikanpodokarpus"
+      },
+      "scientificName": "Podocarpus latifolius",
+      "id": 49343,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009622",
+      "vernacularName": {
+        "fi": "okrahopea-aralia"
+      },
+      "scientificName": "Polyscias fulva",
+      "id": 49344,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009763",
+      "vernacularName": {
+        "fi": "taitanhopea-aralia"
+      },
+      "scientificName": "Polyscias stuhlmannii",
+      "id": 49345,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009766",
+      "vernacularName": {
+        "fi": "kenianpoutapuu"
+      },
+      "scientificName": "Pouteria adolfi-friedericii",
+      "id": 49346,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009627",
+      "vernacularName": {
+        "fi": "afrikankirsikka"
+      },
+      "scientificName": "Prunus africana",
+      "id": 49347,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009633",
+      "vernacularName": {
+        "fi": "parvinystynuppi"
+      },
+      "scientificName": "Psydrax parviflora",
+      "id": 49361,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009637",
+      "vernacularName": {
+        "fi": "mustekutuoksa"
+      },
+      "scientificName": "Rapanea melanophloeos",
+      "id": 49354,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009641",
+      "vernacularName": {
+        "fi": "sormisutimalja"
+      },
+      "scientificName": "Ritchiea albersii",
+      "id": 49357,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009857",
+      "vernacularName": {
+        "fi": "kellonupikukka"
+      },
+      "scientificName": "Rytigynia uhligii",
+      "id": 49359,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009659",
+      "vernacularName": {
+        "fi": "suippuvuolasmarja"
+      },
+      "scientificName": "Sorindeia madagascariensis",
+      "id": 49378,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009884",
+      "vernacularName": {
+        "fi": "mortteliruotolehti"
+      },
+      "scientificName": "Strombosia scheffleri",
+      "id": 49377,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009885",
+      "vernacularName": {
+        "fi": "zimbabwenstrykniinipähkinä"
+      },
+      "scientificName": "Strychnos mitis",
+      "id": 49389,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009886",
+      "vernacularName": {
+        "fi": "herttajambolaani"
+      },
+      "scientificName": "Syzygium cordatum",
+      "id": 49386,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4979741",
+      "vernacularName": {
+        "fi": "guineanjambolaani"
+      },
+      "scientificName": "Syzygium guineense",
+      "id": 49387,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009665",
+      "vernacularName": {
+        "fi": "tuuheajambolaani"
+      },
+      "scientificName": "Syzygium micklethwaitii",
+      "id": 49388,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009887",
+      "vernacularName": {
+        "fi": "malawinpallio"
+      },
+      "scientificName": "Tabernaemontana stapfiana",
+      "id": 49390,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009674",
+      "vernacularName": {
+        "fi": "intiannokipuu"
+      },
+      "scientificName": "Trema orientalis",
+      "id": 49393,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009902",
+      "vernacularName": {
+        "fi": "jasmiiniripsupilli"
+      },
+      "scientificName": "Turraea holstii",
+      "id": 49395,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009678",
+      "vernacularName": {
+        "fi": "roimaripsupilli"
+      },
+      "scientificName": "Turraea robusta",
+      "id": 49397,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009682",
+      "vernacularName": {
+        "fi": "oivanapapallokki"
+      },
+      "scientificName": "Vangueria apiculata",
+      "id": 49401,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009908",
+      "vernacularName": {
+        "fi": "tansaniannapapallokki"
+      },
+      "scientificName": "Vangueria volkensii",
+      "id": 49402,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009683",
+      "vernacularName": {
+        "fi": "taitanpistoslehti"
+      },
+      "scientificName": "Vepris fadenii",
+      "id": 49399,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009684",
+      "vernacularName": {
+        "fi": "tansanianpistoslehti"
+      },
+      "scientificName": "Vepris simplicifolia",
+      "id": 49400,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009469",
+      "vernacularName": {
+        "fi": "keniansiveydenpuu"
+      },
+      "scientificName": "Vitex keniensis",
+      "id": 49405,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009855",
+      "vernacularName": {
+        "fi": "sitruunasahalapa"
+      },
+      "scientificName": "Xymalos monospora",
+      "id": 49404,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.257363",
+    "urls": {
+      "original": "https://image.laji.fi/MM.257363/JR03925.JPG",
+      "full": "https://image.laji.fi/MM.257363/JR03925.JPG",
+      "large": "https://image.laji.fi/MM.257363/JR03925_large.jpg",
+      "square": "https://image.laji.fi/MM.257363/JR03925_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.257363/JR03925_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1544548235,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1392971629,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR03925.JPG",
+      "documentIds": [
+        "3008"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.5009365"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}
