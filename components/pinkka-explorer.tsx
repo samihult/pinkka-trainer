@@ -112,12 +112,12 @@ export function PinkkaExplorer({
       setLoadingSubStacks(true);
       setError(null);
       try {
-        const groupDetail = await pinkkaApi.fetchGroupWithStacks(
-          selectedGroupId,
-        );
+        const groupDetail =
+          await pinkkaApi.fetchGroupWithStacks(selectedGroupId);
         const subStacks =
-          groupDetail?.subPinkkas?.slice().sort((a, b) => a.orderNo - b.orderNo) ??
-          [];
+          groupDetail?.subPinkkas
+            ?.slice()
+            .sort((a, b) => a.orderNo - b.orderNo) ?? [];
         if (!cancelled) {
           setSubStacksByGroup((prev) => ({
             ...prev,
@@ -213,21 +213,19 @@ export function PinkkaExplorer({
 
   const selectedGroup = groups.find((group) => group.id === selectedGroupId);
   const subStacks = selectedGroupId
-    ? subStacksByGroup[selectedGroupId] ?? []
+    ? (subStacksByGroup[selectedGroupId] ?? [])
     : [];
   const selectedSubStack = subStacks.find(
     (stack) => stack.id === selectedSubStackId,
   );
   const speciesCards = selectedSubStackId
-    ? speciesBySubStack[selectedSubStackId] ?? []
+    ? (speciesBySubStack[selectedSubStackId] ?? [])
     : [];
   const selectedSpecies = speciesCards.find(
     (species) => species.id === selectedSpeciesId,
   );
   const selectedSpeciesDetail =
-    selectedSpeciesId !== null
-      ? speciesDetails[selectedSpeciesId]
-      : null;
+    selectedSpeciesId !== null ? speciesDetails[selectedSpeciesId] : null;
 
   return (
     <div className="relative flex min-h-[420px] overflow-x-auto border border-border bg-background">
@@ -411,7 +409,7 @@ export function PinkkaExplorer({
             Loading details for {selectedSpecies.scientificName}...
           </div>
         ) : (
-          <div className="px-4 py-6 text-sm text-muted-foreground">
+          <div className="px-3 py-2 text-sm text-muted-foreground">
             Select a species to preview details.
           </div>
         )}
