@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { cn } from "@/lib/utils";
 
 type MiddleEllipsisTextProps = {
@@ -83,13 +89,8 @@ export function MiddleEllipsisText({
       return;
     }
 
-    const computedStyle = window.getComputedStyle(element);
-    const gap = parseFloat(computedStyle.columnGap || "0");
-    const ellipsisWidth = measureWidth("…", font);
-    const sideWidth = Math.max(
-      0,
-      (availableWidth - ellipsisWidth - gap * 2) / 2,
-    );
+    const ellipsisWidth = measureWidth("...", font);
+    const sideWidth = Math.max(0, (availableWidth - ellipsisWidth) / 2);
 
     let startLength = findMaxLength(text, sideWidth, font, true);
     let endLength = findMaxLength(text, sideWidth, font, false);
@@ -125,17 +126,21 @@ export function MiddleEllipsisText({
       ref={containerRef}
       title={title ?? text}
       className={cn(
-        "inline-flex min-w-[8em] w-full items-center justify-between gap-2 overflow-hidden",
+        "inline-flex min-w-[8em] w-full items-center justify-between gap-0 overflow-hidden",
         className,
       )}
     >
       {isTruncated ? (
         <>
-          <span className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-left">
+          <span className="min-w-0 grow-0 overflow-hidden whitespace-nowrap text-left">
             {segments.start}
           </span>
-          <span className="shrink-0 text-muted-foreground">…</span>
-          <span className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-right">
+          <span className="inline-flex grow-1 shrink-0 justify-around text-muted-foreground">
+            <span className="flex-0">.</span>
+            <span className="flex-0">.</span>
+            <span className="flex-0">.</span>
+          </span>
+          <span className="min-w-0 grow-0 overflow-hidden whitespace-nowrap text-right">
             {segments.end}
           </span>
         </>

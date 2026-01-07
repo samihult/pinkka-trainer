@@ -260,6 +260,7 @@ export function PinkkaExplorer({
                       }`}
                     >
                       <MiddleEllipsisText
+                        className="font-medium"
                         text={label || `Group ${group.id}`}
                       />
                     </button>
