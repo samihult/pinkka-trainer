@@ -60,6 +60,8 @@ export interface Species {
   id: string;
   /** Pinkka species detail payload. */
   data: PinkkaSpeciesDetail;
+  /** Optional import batch id for grouping. */
+  importId?: string;
   /** UID of the creator for access control. */
   ownerId: string;
   /** Creation timestamp. */
@@ -76,6 +78,8 @@ export interface Stack {
   data: PinkkaSubStack;
   /** Ordered species ids in the stack. */
   speciesIds: string[];
+  /** Optional import batch id for grouping. */
+  importId?: string;
   /** UID of the creator for access control. */
   ownerId: string;
   /** Creation timestamp. */
@@ -92,6 +96,8 @@ export interface Group {
   data: PinkkaGroup;
   /** Stack ids referenced by the group. */
   stackIds: string[];
+  /** Optional import batch id for grouping. */
+  importId?: string;
   /** UID of the creator for access control. */
   ownerId: string;
   /** Optional order index within the collection. */
