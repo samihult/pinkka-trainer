@@ -25,23 +25,35 @@ export const Create: Story = {};
 
 const exampleSpecies: Species = {
   id: "species-1",
-  scientificName: "Vulpes vulpes",
-  finnishName: "Kettu",
-  englishName: "Red Fox",
-  description:
-    "A small, adaptable canid found across the northern hemisphere.",
-  images: [
-    {
-      id: "img-1",
-      url: "https://placehold.co/640x480/png",
-      order: 0,
+  data: {
+    taxonId: "taxon-1",
+    scientificName: "Vulpes vulpes",
+    vernacularName: {
+      fi: "Kettu",
+      en: "Red Fox",
     },
-  ],
-  stackId: "storybook-stack",
-  createdBy: "storybook-user",
+    description: [
+      {
+        title: { fi: "Description" },
+        body: {
+          fi: "A small, adaptable canid found across the northern hemisphere.",
+        },
+        predicate: "description",
+      },
+    ],
+    images: [
+      {
+        id: "img-1",
+        urls: {
+          full: "https://placehold.co/640x480/png",
+          large: "https://placehold.co/640x480/png",
+        },
+      },
+    ],
+  },
+  ownerId: "storybook-user",
   createdAt: new Date(),
   updatedAt: new Date(),
-  order: 1,
 };
 
 export const Edit: Story = {

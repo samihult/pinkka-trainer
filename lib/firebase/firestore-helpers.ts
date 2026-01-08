@@ -19,7 +19,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { db, storage } from "./firebase-config";
-import type { Species, Stack, Group, SpeciesImage, User } from "./types";
+import type { Species, Stack, Group, SpeciesImage, User } from "../types";
 
 // User operations
 /** Fetch a user's role by uid. */
@@ -64,14 +64,14 @@ export async function createGroup(
   return groupRef.id;
 }
 
-/** Fetch groups, optionally filtered by creator. */
-export async function getGroups(userId?: string): Promise<Group[]> {
+/** Fetch groups, optionally filtered by owner. */
+export async function getGroups(ownerId?: string): Promise<Group[]> {
   let q = query(collection(db, "groups"), orderBy("order"));
 
-  if (userId) {
+  if (ownerId) {
     q = query(
       collection(db, "groups"),
-      where("createdBy", "==", userId),
+      where("ownerId", "==", ownerId),
       orderBy("order"),
     );
   }
@@ -112,27 +112,16 @@ export async function updateGroup(
   });
 }
 
-/** Delete a group and its related stacks/species. */
+/** Delete a group document. */
 export async function deleteGroup(groupId: string): Promise<void> {
-  // Get all stacks in this group
-  const stacksQuery = query(
-    collection(db, "stacks"),
-    where("groupId", "==", groupId),
-  );
-  const stacksSnapshot = await getDocs(stacksQuery);
-
-  // Delete all species in those stacks
-  for (const stackDoc of stacksSnapshot.docs) {
-    await deleteStack(stackDoc.id);
-  }
-
   await deleteDoc(doc(db, "groups", groupId));
 }
 
 // Stack operations
-/** Create a stack and link it to its group. */
+/** Create a stack and link it to the provided groups. */
 export async function createStack(
   stack: Omit<Stack, "id" | "createdAt" | "updatedAt">,
+  groupIds: string[] = [],
 ): Promise<string> {
   const stackRef = doc(collection(db, "stacks"));
   const newStack = {
@@ -142,11 +131,12 @@ export async function createStack(
   };
   await setDoc(stackRef, newStack);
 
-  // Update group's stackIds
-  const groupDoc = await getDoc(doc(db, "groups", stack.groupId));
-  if (groupDoc.exists()) {
+  // Update groups' stackIds in order
+  for (const groupId of groupIds) {
+    const groupDoc = await getDoc(doc(db, "groups", groupId));
+    if (!groupDoc.exists()) continue;
     const currentStackIds = groupDoc.data().stackIds || [];
-    await updateDoc(doc(db, "groups", stack.groupId), {
+    await updateDoc(doc(db, "groups", groupId), {
       stackIds: [...currentStackIds, stackRef.id],
       updatedAt: Timestamp.now(),
     });
@@ -155,31 +145,41 @@ export async function createStack(
   return stackRef.id;
 }
 
-/** Fetch stacks, optionally filtered by group and/or creator. */
+/** Fetch stacks, optionally filtered by group and/or owner. */
 export async function getStacks(
   groupId?: string,
-  userId?: string,
+  ownerId?: string,
 ): Promise<Stack[]> {
-  let q = query(collection(db, "stacks"), orderBy("order"));
+  if (groupId) {
+    const groupDoc = await getDoc(doc(db, "groups", groupId));
+    if (!groupDoc.exists()) return [];
+    const stackIds: string[] = groupDoc.data().stackIds || [];
+    if (stackIds.length === 0) return [];
 
-  if (groupId && userId) {
-    q = query(
-      collection(db, "stacks"),
-      where("groupId", "==", groupId),
-      where("createdBy", "==", userId),
-      orderBy("order"),
+    const stackDocs = await Promise.all(
+      stackIds.map((id) => getDoc(doc(db, "stacks", id))),
     );
-  } else if (groupId) {
+
+    return stackDocs
+      .filter((stackDoc) => stackDoc.exists())
+      .map(
+        (stackDoc) =>
+          ({
+            id: stackDoc.id,
+            ...stackDoc.data(),
+            createdAt: stackDoc.data()?.createdAt?.toDate(),
+            updatedAt: stackDoc.data()?.updatedAt?.toDate(),
+          }) as Stack,
+      )
+      .filter((stack) => (ownerId ? stack.ownerId === ownerId : true));
+  }
+
+  let q = query(collection(db, "stacks"), orderBy("data.id"));
+  if (ownerId) {
     q = query(
       collection(db, "stacks"),
-      where("groupId", "==", groupId),
-      orderBy("order"),
-    );
-  } else if (userId) {
-    q = query(
-      collection(db, "stacks"),
-      where("createdBy", "==", userId),
-      orderBy("order"),
+      where("ownerId", "==", ownerId),
+      orderBy("data.id"),
     );
   }
 
@@ -219,41 +219,52 @@ export async function updateStack(
   });
 }
 
-/** Delete a stack and its related species. */
+/** Delete a stack document and unlink it from groups. */
 export async function deleteStack(stackId: string): Promise<void> {
-  // Get all species in this stack
-  const speciesQuery = query(
-    collection(db, "species"),
-    where("stackId", "==", stackId),
+  const groupQuery = query(
+    collection(db, "groups"),
+    where("stackIds", "array-contains", stackId),
   );
-  const speciesSnapshot = await getDocs(speciesQuery);
+  const groupSnapshot = await getDocs(groupQuery);
 
-  // Delete all species
-  for (const speciesDoc of speciesSnapshot.docs) {
-    await deleteSpecies(speciesDoc.id);
-  }
-
-  // Remove from group's stackIds
-  const stackDoc = await getDoc(doc(db, "stacks", stackId));
-  if (stackDoc.exists()) {
-    const groupId = stackDoc.data().groupId;
-    const groupDoc = await getDoc(doc(db, "groups", groupId));
-    if (groupDoc.exists()) {
-      const stackIds = groupDoc.data().stackIds || [];
-      await updateDoc(doc(db, "groups", groupId), {
-        stackIds: stackIds.filter((id: string) => id !== stackId),
-        updatedAt: Timestamp.now(),
-      });
-    }
+  for (const groupDoc of groupSnapshot.docs) {
+    const stackIds = groupDoc.data().stackIds || [];
+    await updateDoc(doc(db, "groups", groupDoc.id), {
+      stackIds: stackIds.filter((id: string) => id !== stackId),
+      updatedAt: Timestamp.now(),
+    });
   }
 
   await deleteDoc(doc(db, "stacks", stackId));
 }
 
+/** Update the ordered stack ids for a group. */
+export async function updateGroupStackOrder(
+  groupId: string,
+  stackIds: string[],
+): Promise<void> {
+  await updateDoc(doc(db, "groups", groupId), {
+    stackIds,
+    updatedAt: Timestamp.now(),
+  });
+}
+
+/** Update the ordered species ids for a stack. */
+export async function updateStackSpeciesOrder(
+  stackId: string,
+  speciesIds: string[],
+): Promise<void> {
+  await updateDoc(doc(db, "stacks", stackId), {
+    speciesIds,
+    updatedAt: Timestamp.now(),
+  });
+}
+
 // Species operations
-/** Create a species and link it to its stack. */
+/** Create a species and link it to the provided stacks. */
 export async function createSpecies(
   species: Omit<Species, "id" | "createdAt" | "updatedAt">,
+  stackIds: string[] = [],
 ): Promise<string> {
   const speciesRef = doc(collection(db, "species"));
   const newSpecies = {
@@ -263,11 +274,12 @@ export async function createSpecies(
   };
   await setDoc(speciesRef, newSpecies);
 
-  // Update stack's speciesIds
-  const stackDoc = await getDoc(doc(db, "stacks", species.stackId));
-  if (stackDoc.exists()) {
+  // Update stacks' speciesIds in order
+  for (const stackId of stackIds) {
+    const stackDoc = await getDoc(doc(db, "stacks", stackId));
+    if (!stackDoc.exists()) continue;
     const currentSpeciesIds = stackDoc.data().speciesIds || [];
-    await updateDoc(doc(db, "stacks", species.stackId), {
+    await updateDoc(doc(db, "stacks", stackId), {
       speciesIds: [...currentSpeciesIds, speciesRef.id],
       updatedAt: Timestamp.now(),
     });
@@ -278,17 +290,30 @@ export async function createSpecies(
 
 /** Fetch species, optionally filtered by stack. */
 export async function getSpecies(stackId?: string): Promise<Species[]> {
-  let q = query(collection(db, "species"), orderBy("order"));
-
   if (stackId) {
-    q = query(
-      collection(db, "species"),
-      where("stackId", "==", stackId),
-      orderBy("order"),
+    const stackDoc = await getDoc(doc(db, "stacks", stackId));
+    if (!stackDoc.exists()) return [];
+    const speciesIds: string[] = stackDoc.data().speciesIds || [];
+    if (speciesIds.length === 0) return [];
+
+    const speciesDocs = await Promise.all(
+      speciesIds.map((id) => getDoc(doc(db, "species", id))),
     );
+
+    return speciesDocs
+      .filter((speciesDoc) => speciesDoc.exists())
+      .map(
+        (speciesDoc) =>
+          ({
+            id: speciesDoc.id,
+            ...speciesDoc.data(),
+            createdAt: speciesDoc.data()?.createdAt?.toDate(),
+            updatedAt: speciesDoc.data()?.updatedAt?.toDate(),
+          }) as Species,
+      );
   }
 
-  const snapshot = await getDocs(q);
+  const snapshot = await getDocs(query(collection(db, "species")));
   return snapshot.docs.map(
     (doc) =>
       ({
@@ -332,22 +357,29 @@ export async function deleteSpecies(speciesId: string): Promise<void> {
 
   if (speciesDoc.exists()) {
     // Delete all images from storage
-    const images = speciesDoc.data().images || [];
+    const images = speciesDoc.data().data?.images || [];
     for (const image of images) {
       try {
-        const imageRef = ref(storage, image.url);
-        await deleteObject(imageRef);
+        const urls = image.urls || {};
+        const urlList = Object.values(urls).filter(Boolean) as string[];
+        for (const url of urlList) {
+          const imageRef = ref(storage, url);
+          await deleteObject(imageRef);
+        }
       } catch (error) {
         console.error("Error deleting image:", error);
       }
     }
 
-    // Remove from stack's speciesIds
-    const stackId = speciesDoc.data().stackId;
-    const stackDoc = await getDoc(doc(db, "stacks", stackId));
-    if (stackDoc.exists()) {
+    // Remove from stacks' speciesIds
+    const stackQuery = query(
+      collection(db, "stacks"),
+      where("speciesIds", "array-contains", speciesId),
+    );
+    const stackSnapshot = await getDocs(stackQuery);
+    for (const stackDoc of stackSnapshot.docs) {
       const speciesIds = stackDoc.data().speciesIds || [];
-      await updateDoc(doc(db, "stacks", stackId), {
+      await updateDoc(doc(db, "stacks", stackDoc.id), {
         speciesIds: speciesIds.filter((id: string) => id !== speciesId),
         updatedAt: Timestamp.now(),
       });
@@ -362,7 +394,7 @@ export async function deleteSpecies(speciesId: string): Promise<void> {
 export async function uploadSpeciesImage(
   speciesId: string,
   file: File,
-  order: number,
+  _order: number,
 ): Promise<SpeciesImage> {
   const imageId = `${speciesId}_${Date.now()}_${Math.random().toString(36).substring(7)}`;
   const imageRef = ref(storage, `species/${speciesId}/${imageId}`);
@@ -372,8 +404,13 @@ export async function uploadSpeciesImage(
 
   return {
     id: imageId,
-    url,
-    order,
+    urls: {
+      original: url,
+      full: url,
+      large: url,
+      square: url,
+      thumbnail: url,
+    },
   };
 }
 
@@ -389,12 +426,13 @@ export async function deleteSpeciesImage(
     // Update species document to remove image
     const speciesDoc = await getDoc(doc(db, "species", speciesId));
     if (speciesDoc.exists()) {
-      const images = speciesDoc.data().images || [];
-      const updatedImages = images.filter(
-        (img: SpeciesImage) => img.url !== imageUrl,
-      );
+      const images = speciesDoc.data().data?.images || [];
+      const updatedImages = images.filter((img: SpeciesImage) => {
+        const urls = img.urls || {};
+        return !Object.values(urls).includes(imageUrl);
+      });
       await updateDoc(doc(db, "species", speciesId), {
-        images: updatedImages,
+        "data.images": updatedImages,
         updatedAt: Timestamp.now(),
       });
     }

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Upload, X, GripVertical } from "lucide-react";
 import type { SpeciesImage } from "@/lib/types";
+import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import Image from "next/image";
 
 /** Props for the image upload and reorder widget. */
@@ -38,7 +39,7 @@ export function ImageUpload({
 
   const handleRemoveImage = (index: number) => {
     const newImages = images.filter((_, i) => i !== index);
-    onImagesChange(newImages.map((img, i) => ({ ...img, order: i })));
+    onImagesChange(newImages);
   };
 
   const handleDragStart = (index: number) => {
@@ -55,7 +56,7 @@ export function ImageUpload({
     newImages.splice(index, 0, draggedImage);
 
     setDraggedIndex(index);
-    onImagesChange(newImages.map((img, i) => ({ ...img, order: i })));
+    onImagesChange(newImages);
   };
 
   const handleDragEnd = () => {
@@ -93,7 +94,7 @@ export function ImageUpload({
           >
             <div className="aspect-square relative">
               <Image
-                src={image.url || "/placeholder.svg"}
+                src={getSpeciesImageUrl(image) || "/placeholder.svg"}
                 alt={`Species image ${index + 1}`}
                 fill
                 className="object-cover rounded-t-lg"

@@ -5,23 +5,35 @@ import type { Species } from "@/lib/types";
 
 const baseSpecies: Species = {
   id: "species-1",
-  scientificName: "Vulpes vulpes",
-  finnishName: "Red fox",
-  englishName: "Red Fox",
-  description:
-    "A small, adaptable canid found across the northern hemisphere.",
-  images: [
-    {
-      id: "img-1",
-      url: "/placeholder.jpg",
-      order: 0,
+  data: {
+    taxonId: "taxon-1",
+    scientificName: "Vulpes vulpes",
+    vernacularName: {
+      fi: "Kettu",
+      en: "Red Fox",
     },
-  ],
-  stackId: "stack-1",
-  createdBy: "storybook",
+    description: [
+      {
+        title: { fi: "Description" },
+        body: {
+          fi: "A small, adaptable canid found across the northern hemisphere.",
+        },
+        predicate: "description",
+      },
+    ],
+    images: [
+      {
+        id: "img-1",
+        urls: {
+          full: "/placeholder.jpg",
+          large: "/placeholder.jpg",
+        },
+      },
+    ],
+  },
+  ownerId: "storybook",
   createdAt: new Date(),
   updatedAt: new Date(),
-  order: 1,
 };
 
 const meta: Meta<typeof Flashcard> = {
@@ -46,11 +58,14 @@ export const MultipleImages: Story = {
   args: {
     species: {
       ...baseSpecies,
-      images: [
-        { id: "img-1", url: "/placeholder.jpg", order: 0 },
-        { id: "img-2", url: "/placeholder-logo.png", order: 1 },
-        { id: "img-3", url: "/placeholder-logo.svg", order: 2 },
-      ],
+      data: {
+        ...baseSpecies.data,
+        images: [
+          { id: "img-1", urls: { full: "/placeholder.jpg" } },
+          { id: "img-2", urls: { full: "/placeholder-logo.png" } },
+          { id: "img-3", urls: { full: "/placeholder-logo.svg" } },
+        ],
+      },
     },
   },
 };

@@ -15,82 +15,91 @@ export interface User {
   createdAt: Date;
 }
 
-/** Image metadata for a species. */
+import type {
+  MultilingualText,
+  PinkkaGroup,
+  PinkkaSpeciesDetail,
+  PinkkaSubStack,
+} from "./pinkka/pinkka-api";
+
+/** Image metadata for a species detail entry. */
 export interface SpeciesImage {
-  /** Storage or document id for the image. */
+  /** Image id. */
   id: string;
-  /** Public URL for the image. */
-  url: string;
-  /** Sort order within the species. */
-  order: number;
+  /** Optional localized image caption. */
+  caption?: MultilingualText;
+  /** Optional taxonomy id for the image. */
+  taxonId?: string | null;
+  /** Image URLs at various sizes. */
+  urls?: {
+    /** Original image URL. */
+    original?: string;
+    /** Full-size image URL. */
+    full?: string;
+    /** Large image URL. */
+    large?: string;
+    /** Square-cropped image URL. */
+    square?: string;
+    /** Thumbnail image URL. */
+    thumbnail?: string;
+  };
+  /** Optional metadata about the image. */
+  meta?: {
+    /** Rights owner for the image. */
+    rightsOwner?: string;
+    /** Capturers/photographers for the image. */
+    capturers?: string[];
+    /** License identifier for the image. */
+    license?: string;
+  };
 }
 
-/** Species metadata stored in the app. */
+/** Species document stored in Firestore. */
 export interface Species {
   /** Species document id. */
   id: string;
-  /** Scientific name of the species. */
-  scientificName: string;
-  /** Finnish common name. */
-  finnishName?: string;
-  /** English common name. */
-  englishName?: string;
-  /** Optional species description. */
-  description?: string;
-  /** Images associated with the species. */
-  images: SpeciesImage[];
-  /** Parent stack id. */
-  stackId: string;
-  /** UID of the creator. */
-  createdBy: string;
+  /** Pinkka species detail payload. */
+  data: PinkkaSpeciesDetail;
+  /** UID of the creator for access control. */
+  ownerId: string;
   /** Creation timestamp. */
   createdAt: Date;
   /** Last update timestamp. */
   updatedAt: Date;
-  /** Order index within the stack. */
-  order: number;
 }
 
-/** A collection of related species. */
+/** Stack document stored in Firestore. */
 export interface Stack {
   /** Stack document id. */
   id: string;
-  /** Display name for the stack. */
-  name: string;
-  /** Optional stack description. */
-  description?: string;
-  /** Parent group id. */
-  groupId: string;
+  /** Pinkka sub-stack payload. */
+  data: PinkkaSubStack;
   /** Ordered species ids in the stack. */
   speciesIds: string[];
-  /** UID of the creator. */
-  createdBy: string;
+  /** UID of the creator for access control. */
+  ownerId: string;
   /** Creation timestamp. */
   createdAt: Date;
   /** Last update timestamp. */
   updatedAt: Date;
-  /** Order index within the group. */
-  order: number;
 }
 
-/** A group of stacks. */
+/** Group document stored in Firestore. */
 export interface Group {
   /** Group document id. */
   id: string;
-  /** Display name for the group. */
-  name: string;
-  /** Optional group description. */
-  description?: string;
-  /** Ordered stack ids in the group. */
+  /** Pinkka group payload. */
+  data: PinkkaGroup;
+  /** Stack ids referenced by the group. */
   stackIds: string[];
-  /** UID of the creator. */
-  createdBy: string;
+  /** UID of the creator for access control. */
+  ownerId: string;
+  /** Optional order index within the collection. */
+  order?: number;
   /** Creation timestamp. */
   createdAt: Date;
   /** Last update timestamp. */
   updatedAt: Date;
-  /** Order index within the collection. */
-  order: number;
 }
 
 /** Result record for a quiz attempt. */

@@ -6,8 +6,9 @@ import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { Flashcard } from "@/components/flashcard";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { getStack, getSpecies } from "@/lib/firestore-helpers";
+import { getStack, getSpecies } from "@/lib/firebase/firestore-helpers";
 import type { Stack, Species } from "@/lib/types";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { ArrowLeft, Shuffle } from "lucide-react";
 import Link from "next/link";
 
@@ -106,9 +107,13 @@ export default function FlashcardsPage() {
 
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold mb-2">{stack.name}</h1>
-              {stack.description && (
-                <p className="text-muted-foreground">{stack.description}</p>
+              <h1 className="text-3xl font-bold mb-2">
+                {getLocalizedText(stack.data.name, "fi")}
+              </h1>
+              {getLocalizedText(stack.data.description, "fi") && (
+                <p className="text-muted-foreground">
+                  {getLocalizedText(stack.data.description, "fi")}
+                </p>
               )}
             </div>
 

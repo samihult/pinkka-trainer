@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { getAllUsers, updateUserRole } from "@/lib/firestore-helpers";
+import { getAllUsers, updateUserRole } from "@/lib/firebase/firestore-helpers";
 import type { User, UserRole } from "@/lib/types";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Shield, Mail, Calendar } from "lucide-react";

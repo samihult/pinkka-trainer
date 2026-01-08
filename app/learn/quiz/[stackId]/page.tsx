@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { getStack, getSpecies } from "@/lib/firestore-helpers";
+import { getStack, getSpecies } from "@/lib/firebase/firestore-helpers";
 import type { Stack, Species } from "@/lib/types";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCw } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -218,7 +220,9 @@ export default function QuizPage() {
           </Button>
 
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold">{stack.name} Quiz</h1>
+            <h1 className="text-3xl font-bold">
+              {getLocalizedText(stack.data.name, "fi")} Quiz
+            </h1>
             <span className="text-muted-foreground">
               Question {currentQuestionIndex + 1} of {questions.length}
             </span>
@@ -236,13 +240,14 @@ export default function QuizPage() {
                     What species is shown in this image?
                   </h2>
 
-                  {currentQuestion.species.images &&
-                  currentQuestion.species.images.length > 0 ? (
+                  {currentQuestion.species.data.images &&
+                  currentQuestion.species.data.images.length > 0 ? (
                     <div className="relative h-80 rounded-lg overflow-hidden mb-4">
                       <Image
                         src={
-                          currentQuestion.species.images[0].url ||
-                          "/placeholder.svg"
+                          getSpeciesImageUrl(
+                            currentQuestion.species.data.images[0],
+                          ) || "/placeholder.svg"
                         }
                         alt="Species to identify"
                         fill
@@ -290,11 +295,17 @@ export default function QuizPage() {
                       <div className="flex items-center gap-3 w-full">
                         <div className="flex-1">
                           <p className="font-semibold">
-                            {option.scientificName}
+                            {option.data.scientificName}
                           </p>
-                          {option.finnishName && (
+                          {getLocalizedText(
+                            option.data.vernacularName,
+                            "fi",
+                          ) && (
                             <p className="text-sm opacity-80">
-                              {option.finnishName}
+                              {getLocalizedText(
+                                option.data.vernacularName,
+                                "fi",
+                              )}
                             </p>
                           )}
                         </div>

@@ -18,12 +18,15 @@ import {
   createSpecies,
   updateSpecies,
   deleteSpecies,
-  reorderItems,
-} from "@/lib/firestore-helpers";
+  updateStackSpeciesOrder,
+} from "@/lib/firebase/firestore-helpers";
 import type { Species, Stack } from "@/lib/types";
 import { ArrowLeft, Plus, Pencil, Trash2, GripVertical } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 
 export default function ManageSpeciesPage() {
   const params = useParams();
@@ -63,16 +66,17 @@ export default function ManageSpeciesPage() {
     }
   };
 
-  const handleCreate = async (data: Partial<Species>) => {
+  const handleCreate = async (data: PinkkaSpeciesDetail) => {
     if (!user) return;
 
     try {
-      await createSpecies({
-        ...(data as Omit<Species, "id" | "createdAt" | "updatedAt">),
-        stackId,
-        createdBy: user.uid,
-        order: species.length,
-      });
+      await createSpecies(
+        {
+          data,
+          ownerId: user.uid,
+        },
+        [stackId],
+      );
       toast({
         title: "Success",
         description: "Species created successfully",
@@ -84,11 +88,11 @@ export default function ManageSpeciesPage() {
     }
   };
 
-  const handleUpdate = async (data: Partial<Species>) => {
+  const handleUpdate = async (data: PinkkaSpeciesDetail) => {
     if (!editingSpecies) return;
 
     try {
-      await updateSpecies(editingSpecies.id, data);
+      await updateSpecies(editingSpecies.id, { data });
       toast({
         title: "Success",
         description: "Species updated successfully",
@@ -138,8 +142,8 @@ export default function ManageSpeciesPage() {
 
   const handleDragEnd = async () => {
     if (draggedIndex !== null) {
-      const reorderedItems = species.map((s, i) => ({ id: s.id, order: i }));
-      await reorderItems("species", reorderedItems);
+      const reorderedSpeciesIds = species.map((s) => s.id);
+      await updateStackSpeciesOrder(stackId, reorderedSpeciesIds);
       toast({
         title: "Success",
         description: "Species reordered successfully",
@@ -174,7 +178,9 @@ export default function ManageSpeciesPage() {
                 </Link>
               </Button>
               <h1 className="text-3xl font-bold">
-                {stack?.name || "Manage Species"}
+                {stack
+                  ? getLocalizedText(stack.data.name, "fi")
+                  : "Manage Species"}
               </h1>
               <p className="text-muted-foreground">
                 Add and edit species in this stack
@@ -204,66 +210,78 @@ export default function ManageSpeciesPage() {
           )}
 
           <div className="grid gap-4">
-            {species.map((item, index) => (
-              <Card
-                key={item.id}
-                draggable
-                onDragStart={() => handleDragStart(index)}
-                onDragOver={(e) => handleDragOver(e, index)}
-                onDragEnd={handleDragEnd}
-                className="cursor-move hover:shadow-md transition-shadow"
-              >
-                <CardContent className="pt-6">
-                  <div className="flex gap-4">
-                    <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-1" />
+            {species.map((item, index) => {
+              const finnishName = getLocalizedText(
+                item.data.vernacularName,
+                "fi",
+              );
+              const englishName = getLocalizedText(
+                item.data.vernacularName,
+                "en",
+              );
 
-                    {item.images && item.images.length > 0 && (
-                      <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-                        <Image
-                          src={item.images[0].url || "/placeholder.svg"}
-                          alt={item.scientificName}
-                          fill
-                          className="object-cover"
-                        />
+              return (
+                <Card
+                  key={item.id}
+                  draggable
+                  onDragStart={() => handleDragStart(index)}
+                  onDragOver={(e) => handleDragOver(e, index)}
+                  onDragEnd={handleDragEnd}
+                  className="cursor-move hover:shadow-md transition-shadow"
+                >
+                  <CardContent className="pt-6">
+                    <div className="flex gap-4">
+                      <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-1" />
+
+                      {item.data.images && item.data.images.length > 0 && (
+                        <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                          <Image
+                            src={
+                              getSpeciesImageUrl(item.data.images[0]) ||
+                              "/placeholder.svg"
+                            }
+                            alt={item.data.scientificName}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-lg mb-1">
+                          {item.data.scientificName}
+                        </h3>
+                        {finnishName && (
+                          <p className="text-muted-foreground">{finnishName}</p>
+                        )}
+                        {englishName && (
+                          <p className="text-muted-foreground text-sm">
+                            {englishName}
+                          </p>
+                        )}
                       </div>
-                    )}
 
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-lg mb-1">
-                        {item.scientificName}
-                      </h3>
-                      {item.finnishName && (
-                        <p className="text-muted-foreground">
-                          {item.finnishName}
-                        </p>
-                      )}
-                      {item.englishName && (
-                        <p className="text-muted-foreground text-sm">
-                          {item.englishName}
-                        </p>
-                      )}
+                      <div className="flex gap-2 flex-shrink-0">
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          onClick={() => setEditingSpecies(item)}
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="destructive"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
-
-                    <div className="flex gap-2 flex-shrink-0">
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        onClick={() => setEditingSpecies(item)}
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="icon"
-                        variant="destructive"
-                        onClick={() => handleDelete(item.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
 
             {species.length === 0 && !showForm && (
               <Card>

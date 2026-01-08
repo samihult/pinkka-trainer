@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { getGroups, getStacks } from "@/lib/firestore-helpers";
+import { getGroups, getStacks } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { BookOpen, Brain } from "lucide-react";
 import Link from "next/link";
 
@@ -68,10 +69,12 @@ export default function LearnPage() {
         <div className="space-y-8">
           {groups.map((group) => (
             <div key={group.id}>
-              <h2 className="text-2xl font-bold mb-4">{group.name}</h2>
-              {group.description && (
+              <h2 className="text-2xl font-bold mb-4">
+                {getLocalizedText(group.data.name, "fi")}
+              </h2>
+              {getLocalizedText(group.data.description, "fi") && (
                 <p className="text-muted-foreground mb-4">
-                  {group.description}
+                  {getLocalizedText(group.data.description, "fi")}
                 </p>
               )}
 
@@ -84,10 +87,12 @@ export default function LearnPage() {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <BookOpen className="h-5 w-5 text-primary" />
-                        {stack.name}
+                        {getLocalizedText(stack.data.name, "fi")}
                       </CardTitle>
-                      {stack.description && (
-                        <CardDescription>{stack.description}</CardDescription>
+                      {getLocalizedText(stack.data.description, "fi") && (
+                        <CardDescription>
+                          {getLocalizedText(stack.data.description, "fi")}
+                        </CardDescription>
                       )}
                     </CardHeader>
                     <CardContent className="space-y-2">

@@ -4,6 +4,11 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Species } from "@/lib/types";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import {
+  getSpeciesDescription,
+  getSpeciesImageUrl,
+} from "@/lib/pinkka/pinkka-display";
 import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
 import Image from "next/image";
 
@@ -35,7 +40,10 @@ export function Flashcard({
   const handleFlip = () => setFlipped(!flipped);
 
   const handleNextImage = () => {
-    if (species.images && currentImageIndex < species.images.length - 1) {
+    if (
+      species.data.images &&
+      currentImageIndex < species.data.images.length - 1
+    ) {
       setCurrentImageIndex(currentImageIndex + 1);
     }
   };
@@ -58,7 +66,11 @@ export function Flashcard({
     onPrevious();
   };
 
-  const currentImage = species.images?.[currentImageIndex];
+  const currentImage = species.data.images?.[currentImageIndex];
+  const imageUrl = getSpeciesImageUrl(currentImage);
+  const finnishName = getLocalizedText(species.data.vernacularName, "fi");
+  const englishName = getLocalizedText(species.data.vernacularName, "en");
+  const description = getSpeciesDescription(species.data, "fi");
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -75,19 +87,19 @@ export function Flashcard({
             className={`transition-all duration-500 ${flipped ? "opacity-0" : "opacity-100"}`}
           >
             {/* Front - Image */}
-            {currentImage ? (
+            {imageUrl ? (
               <div className="relative h-[500px]">
                 <Image
-                  src={currentImage.url || "/placeholder.svg"}
-                  alt={species.scientificName}
+                  src={imageUrl || "/placeholder.svg"}
+                  alt={species.data.scientificName}
                   fill
                   className="object-cover"
                   priority
                 />
 
-                {species.images && species.images.length > 1 && (
+                {species.data.images && species.data.images.length > 1 && (
                   <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                    {species.images.map((_, idx) => (
+                    {species.data.images.map((_, idx) => (
                       <button
                         key={idx}
                         onClick={(e) => {
@@ -120,26 +132,26 @@ export function Flashcard({
             <div className="space-y-6">
               <div>
                 <h2 className="text-3xl font-bold mb-2">
-                  {species.scientificName}
+                  {species.data.scientificName}
                 </h2>
                 <div className="space-y-1">
-                  {species.finnishName && (
+                  {finnishName && (
                     <p className="text-xl text-primary">
-                      Finnish: {species.finnishName}
+                      Finnish: {finnishName}
                     </p>
                   )}
-                  {species.englishName && (
+                  {englishName && (
                     <p className="text-xl text-accent">
-                      English: {species.englishName}
+                      English: {englishName}
                     </p>
                   )}
                 </div>
               </div>
 
-              {species.description && (
+              {description && (
                 <div className="pt-4 border-t">
                   <p className="text-muted-foreground leading-relaxed">
-                    {species.description}
+                    {description}
                   </p>
                 </div>
               )}

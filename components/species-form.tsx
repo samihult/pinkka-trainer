@@ -10,8 +10,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ImageUpload } from "./image-upload";
 import type { Species, SpeciesImage } from "@/lib/types";
-import { uploadSpeciesImage } from "@/lib/firestore-helpers";
+import { uploadSpeciesImage } from "@/lib/firebase/firestore-helpers";
 import { useToast } from "@/hooks/use-toast";
+import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 
 /** Props for creating or editing a species. */
 interface SpeciesFormProps {
@@ -20,7 +22,7 @@ interface SpeciesFormProps {
   /** Parent stack id for new species. */
   stackId: string;
   /** Submit handler for form data. */
-  onSubmit: (data: Partial<Species>) => Promise<void>;
+  onSubmit: (data: PinkkaSpeciesDetail) => Promise<void>;
   /** Cancel handler for dismissing the form. */
   onCancel: () => void;
 }
@@ -28,17 +30,27 @@ interface SpeciesFormProps {
 /** Form for creating or editing species metadata and images. */
 export function SpeciesForm({
   species,
-  stackId,
+  stackId: _stackId,
   onSubmit,
   onCancel,
 }: SpeciesFormProps) {
   const [scientificName, setScientificName] = useState(
-    species?.scientificName || "",
+    species?.data.scientificName || "",
   );
-  const [finnishName, setFinnishName] = useState(species?.finnishName || "");
-  const [englishName, setEnglishName] = useState(species?.englishName || "");
-  const [description, setDescription] = useState(species?.description || "");
-  const [images, setImages] = useState<SpeciesImage[]>(species?.images || []);
+  const [finnishName, setFinnishName] = useState(
+    getLocalizedText(species?.data.vernacularName, "fi"),
+  );
+  const [englishName, setEnglishName] = useState(
+    getLocalizedText(species?.data.vernacularName, "en"),
+  );
+  const [description, setDescription] = useState(
+    species?.data.description?.[0]
+      ? getLocalizedText(species.data.description[0].body, "fi")
+      : "",
+  );
+  const [images, setImages] = useState<SpeciesImage[]>(
+    species?.data.images || [],
+  );
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
@@ -66,8 +78,13 @@ export function SpeciesForm({
         reader.onload = (e) => {
           const tempImage: SpeciesImage = {
             id: `temp-${Date.now()}`,
-            url: e.target?.result as string,
-            order: images.length,
+            urls: {
+              original: e.target?.result as string,
+              full: e.target?.result as string,
+              large: e.target?.result as string,
+              square: e.target?.result as string,
+              thumbnail: e.target?.result as string,
+            },
           };
           setImages([...images, tempImage]);
         };
@@ -90,14 +107,31 @@ export function SpeciesForm({
     setSaving(true);
 
     try {
-      await onSubmit({
+      const vernacularName =
+        finnishName || englishName
+          ? {
+              ...(finnishName ? { fi: finnishName } : {}),
+              ...(englishName ? { en: englishName } : {}),
+            }
+          : undefined;
+      const detail: PinkkaSpeciesDetail = {
+        ...(species?.data || {}),
+        taxonId: species?.data.taxonId || `local-${Date.now()}`,
         scientificName,
-        finnishName,
-        englishName,
-        description,
+        vernacularName,
+        description: description
+          ? [
+              {
+                title: { fi: "Description" },
+                body: { fi: description },
+                predicate: "description",
+              },
+            ]
+          : undefined,
         images,
-        stackId,
-      });
+      };
+
+      await onSubmit(detail);
     } catch (error) {
       toast({
         title: "Error",

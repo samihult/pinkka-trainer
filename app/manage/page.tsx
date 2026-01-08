@@ -36,8 +36,9 @@ import {
   deleteGroup,
   deleteStack,
   reorderItems,
-} from "@/lib/firestore-helpers";
+} from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import {
   Plus,
   Pencil,
@@ -105,8 +106,8 @@ export default function ManagePage() {
   const handleGroupDialogOpen = (group?: Group) => {
     if (group) {
       setEditingGroup(group);
-      setGroupName(group.name);
-      setGroupDescription(group.description || "");
+      setGroupName(getLocalizedText(group.data.name, "fi"));
+      setGroupDescription(getLocalizedText(group.data.description, "fi"));
     } else {
       setEditingGroup(null);
       setGroupName("");
@@ -122,16 +123,33 @@ export default function ManagePage() {
     try {
       if (editingGroup) {
         await updateGroup(editingGroup.id, {
-          name: groupName,
-          description: groupDescription,
+          data: {
+            ...editingGroup.data,
+            name: { ...editingGroup.data.name, fi: groupName },
+            description: groupDescription
+              ? {
+                  ...(editingGroup.data.description || {}),
+                  fi: groupDescription,
+                }
+              : undefined,
+          },
         });
         toast({ title: "Success", description: "Group updated successfully" });
       } else {
         await createGroup({
-          name: groupName,
-          description: groupDescription,
+          data: {
+            id: Date.now(),
+            name: { fi: groupName },
+            description: groupDescription
+              ? { fi: groupDescription }
+              : undefined,
+            hideScientific: false,
+            hideVernacular: false,
+            published: true,
+            entityType: "pinkka",
+          },
           stackIds: [],
-          createdBy: user.uid,
+          ownerId: user.uid,
           order: groups.length,
         });
         toast({ title: "Success", description: "Group created successfully" });
@@ -173,8 +191,8 @@ export default function ManagePage() {
     setSelectedGroupId(groupId);
     if (stack) {
       setEditingStack(stack);
-      setStackName(stack.name);
-      setStackDescription(stack.description || "");
+      setStackName(getLocalizedText(stack.data.name, "fi"));
+      setStackDescription(getLocalizedText(stack.data.description, "fi"));
     } else {
       setEditingStack(null);
       setStackName("");
@@ -190,20 +208,36 @@ export default function ManagePage() {
     try {
       if (editingStack) {
         await updateStack(editingStack.id, {
-          name: stackName,
-          description: stackDescription,
+          data: {
+            ...editingStack.data,
+            name: { ...editingStack.data.name, fi: stackName },
+            description: stackDescription
+              ? {
+                  ...(editingStack.data.description || {}),
+                  fi: stackDescription,
+                }
+              : undefined,
+          },
         });
         toast({ title: "Success", description: "Stack updated successfully" });
       } else {
         const groupStacks = stacks[selectedGroupId] || [];
-        await createStack({
-          name: stackName,
-          description: stackDescription,
-          groupId: selectedGroupId,
-          speciesIds: [],
-          createdBy: user.uid,
-          order: groupStacks.length,
-        });
+        await createStack(
+          {
+            data: {
+              id: Date.now(),
+              name: { fi: stackName },
+              orderNo: groupStacks.length,
+              description: stackDescription
+                ? { fi: stackDescription }
+                : undefined,
+              entityType: "subpinkka",
+            },
+            speciesIds: [],
+            ownerId: user.uid,
+          },
+          [selectedGroupId],
+        );
         toast({ title: "Success", description: "Stack created successfully" });
       }
       setShowStackDialog(false);
@@ -309,11 +343,11 @@ export default function ManagePage() {
                       <div className="flex-1">
                         <CardTitle className="flex items-center gap-2">
                           <FolderOpen className="h-5 w-5" />
-                          {group.name}
+                          {getLocalizedText(group.data.name, "fi")}
                         </CardTitle>
-                        {group.description && (
+                        {getLocalizedText(group.data.description, "fi") && (
                           <CardDescription className="mt-1">
-                            {group.description}
+                            {getLocalizedText(group.data.description, "fi")}
                           </CardDescription>
                         )}
                       </div>
@@ -355,11 +389,11 @@ export default function ManagePage() {
                         <CardHeader className="pb-3">
                           <CardTitle className="text-base flex items-center gap-2">
                             <BookOpen className="h-4 w-4 text-primary" />
-                            {stack.name}
+                            {getLocalizedText(stack.data.name, "fi")}
                           </CardTitle>
-                          {stack.description && (
+                          {getLocalizedText(stack.data.description, "fi") && (
                             <CardDescription className="text-sm">
-                              {stack.description}
+                              {getLocalizedText(stack.data.description, "fi")}
                             </CardDescription>
                           )}
                         </CardHeader>

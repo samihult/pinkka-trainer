@@ -16,7 +16,7 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { auth, db } from "./firebase-config";
+import { auth, db } from "./firebase/firebase-config";
 import type { User, UserRole } from "./types";
 
 /** Context shape for authentication state and actions. */
