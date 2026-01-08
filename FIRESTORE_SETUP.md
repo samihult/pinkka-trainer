@@ -32,15 +32,6 @@ Firestore requires composite indexes for queries that filter and sort on multipl
 5. Wait 2-5 minutes for the index to build
 6. Refresh your application
 
-**Required Indexes:**
-
-- `stacks` collection: `groupId` + `order` (for /learn page)
-- `species` collection: `stackId` + `order` (for flashcards/quizzes)
-- `groups` collection: `createdBy` + `order` (for editor management)
-- `stacks` collection: `groupId` + `createdBy` + `order` (for editor stacks)
-
-See `FIRESTORE_INDEXES.txt` for detailed index specifications if you prefer to create them manually.
-
 ### Step 4: Verify Setup
 
 Once the rules are published, the app should work correctly:
@@ -70,7 +61,6 @@ The rules ensure:
 **"The query requires an index" Error:**
 
 - Click the link in the error message to create the index automatically
-- Or create indexes manually following `FIRESTORE_INDEXES.txt`
 
 **"Client is offline" Error:**
 
