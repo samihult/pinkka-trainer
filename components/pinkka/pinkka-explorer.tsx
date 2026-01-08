@@ -42,6 +42,8 @@ interface PinkkaExplorerProps {
   preferredLang?: PinkkaLanguage;
   /** Callback when a species is selected. */
   onSelectSpecies?: (species: PinkkaSpeciesCard) => void;
+  /** Callback when selection state changes. */
+  onSelectionChange?: (state: FinderSelectionState) => void;
   /** Optional API overrides for Storybook/testing. */
   api?: Partial<PinkkaApi>;
 }
@@ -57,6 +59,7 @@ const defaultApi: PinkkaApi = {
 export function PinkkaExplorer({
   preferredLang = "fi",
   onSelectSpecies,
+  onSelectionChange,
   api,
 }: PinkkaExplorerProps) {
   const pinkkaApi = useMemo(
@@ -113,6 +116,7 @@ export function PinkkaExplorer({
 
   const handleSelectionChange = useCallback(
     (state: FinderSelectionState) => {
+      onSelectionChange?.(state);
       if (state.activeColumnIndex === null) return;
       const selectedInColumn =
         state.selectedItemsByColumn[state.activeColumnIndex] ?? [];
@@ -121,7 +125,7 @@ export function PinkkaExplorer({
         onSelectSpecies?.(species);
       }
     },
-    [onSelectSpecies],
+    [onSelectSpecies, onSelectionChange],
   );
 
   return (
