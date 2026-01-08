@@ -10,6 +10,8 @@ import type { PinkkaSpeciesCard } from "@/lib/pinkka/pinkka-api";
 export interface CreateSpeciesTypeConfigOptions {
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
+  /** Optional version to refresh import status indicators. */
+  importStatusVersion?: number;
   /** Loader for child detail items. */
   loadChildren: (
     item: FinderItem<PinkkaSpeciesCard>,
@@ -19,6 +21,7 @@ export interface CreateSpeciesTypeConfigOptions {
 /** Build the finder type config for Pinkka species cards. */
 export function createSpeciesTypeConfig({
   preferredLang,
+  importStatusVersion,
   loadChildren,
 }: CreateSpeciesTypeConfigOptions): FinderTypeConfig<PinkkaSpeciesCard> {
   return {
@@ -26,7 +29,11 @@ export function createSpeciesTypeConfig({
     columnClassName: "bg-muted/10",
     emptyMessage: "No species available.",
     renderItem: (item) => (
-      <PinkkaSpeciesItem species={item.payload} preferredLang={preferredLang} />
+      <PinkkaSpeciesItem
+        species={item.payload}
+        preferredLang={preferredLang}
+        importStatusVersion={importStatusVersion}
+      />
     ),
     loadChildren,
   };

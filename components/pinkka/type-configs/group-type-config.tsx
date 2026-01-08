@@ -10,6 +10,8 @@ import type { PinkkaGroup } from "@/lib/pinkka/pinkka-api";
 export interface CreateGroupTypeConfigOptions {
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
+  /** Optional version to refresh import status indicators. */
+  importStatusVersion?: number;
   /** Loader for child stack items. */
   loadChildren: (
     item: FinderItem<PinkkaGroup>,
@@ -19,6 +21,7 @@ export interface CreateGroupTypeConfigOptions {
 /** Build the finder type config for Pinkka groups. */
 export function createGroupTypeConfig({
   preferredLang,
+  importStatusVersion,
   loadChildren,
 }: CreateGroupTypeConfigOptions): FinderTypeConfig<PinkkaGroup> {
   return {
@@ -29,7 +32,11 @@ export function createGroupTypeConfig({
     multiSelectMessage:
       "Multiple groups selected. Choose a single group to view stacks.",
     renderItem: (item) => (
-      <PinkkaGroupItem group={item.payload} preferredLang={preferredLang} />
+      <PinkkaGroupItem
+        group={item.payload}
+        preferredLang={preferredLang}
+        importStatusVersion={importStatusVersion}
+      />
     ),
     loadChildren,
   };

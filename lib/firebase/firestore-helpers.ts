@@ -38,6 +38,10 @@ export interface PinkkaImportResult {
   speciesIds: string[];
 }
 
+const pinkkaGroupImportStatusCache = new Map<number, boolean>();
+const pinkkaStackImportStatusCache = new Map<number, boolean>();
+const pinkkaSpeciesImportStatusCache = new Map<number, boolean>();
+
 /** Build a deterministic document id for a Pinkka import. */
 function buildImportDocId(importId: string, pinkkaId: number): string {
   return `${importId}_${pinkkaId}`;
@@ -303,6 +307,54 @@ export async function updateStackSpeciesOrder(
   });
 }
 
+/** Check if a Pinkka group id already exists in Firestore. */
+export async function isPinkkaGroupImported(
+  groupId: number,
+): Promise<boolean> {
+  if (pinkkaGroupImportStatusCache.has(groupId)) {
+    return pinkkaGroupImportStatusCache.get(groupId) === true;
+  }
+
+  const snapshot = await getDocs(
+    query(collection(db, "groups"), where("data.id", "==", groupId)),
+  );
+  const exists = !snapshot.empty;
+  pinkkaGroupImportStatusCache.set(groupId, exists);
+  return exists;
+}
+
+/** Check if a Pinkka stack id already exists in Firestore. */
+export async function isPinkkaStackImported(
+  stackId: number,
+): Promise<boolean> {
+  if (pinkkaStackImportStatusCache.has(stackId)) {
+    return pinkkaStackImportStatusCache.get(stackId) === true;
+  }
+
+  const snapshot = await getDocs(
+    query(collection(db, "stacks"), where("data.id", "==", stackId)),
+  );
+  const exists = !snapshot.empty;
+  pinkkaStackImportStatusCache.set(stackId, exists);
+  return exists;
+}
+
+/** Check if a Pinkka species id already exists in Firestore. */
+export async function isPinkkaSpeciesImported(
+  speciesId: number,
+): Promise<boolean> {
+  if (pinkkaSpeciesImportStatusCache.has(speciesId)) {
+    return pinkkaSpeciesImportStatusCache.get(speciesId) === true;
+  }
+
+  const snapshot = await getDocs(
+    query(collection(db, "species"), where("data.id", "==", speciesId)),
+  );
+  const exists = !snapshot.empty;
+  pinkkaSpeciesImportStatusCache.set(speciesId, exists);
+  return exists;
+}
+
 // Pinkka import operations
 /**
  * Import a Pinkka group with its stacks and species into Firestore.
@@ -349,6 +401,7 @@ export async function importPinkkaGroup(
       },
       shouldUpsert,
     );
+    pinkkaStackImportStatusCache.set(stackEntry.id, true);
 
     for (const card of stackSpeciesCards) {
       const speciesDetail = await fetchPinkkaSpecies(card.id);
@@ -364,6 +417,7 @@ export async function importPinkkaGroup(
         },
         shouldUpsert,
       );
+      pinkkaSpeciesImportStatusCache.set(card.id, true);
     }
   }
 
@@ -384,6 +438,8 @@ export async function importPinkkaGroup(
     },
     shouldUpsert,
   );
+
+  pinkkaGroupImportStatusCache.set(group.id, true);
 
   return {
     importId: resolvedImportId,

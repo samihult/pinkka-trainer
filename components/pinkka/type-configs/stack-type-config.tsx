@@ -10,6 +10,8 @@ import type { PinkkaSubStack } from "@/lib/pinkka/pinkka-api";
 export interface CreateStackTypeConfigOptions {
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
+  /** Optional version to refresh import status indicators. */
+  importStatusVersion?: number;
   /** Loader for child species items. */
   loadChildren: (
     item: FinderItem<PinkkaSubStack>,
@@ -19,6 +21,7 @@ export interface CreateStackTypeConfigOptions {
 /** Build the finder type config for Pinkka stacks. */
 export function createStackTypeConfig({
   preferredLang,
+  importStatusVersion,
   loadChildren,
 }: CreateStackTypeConfigOptions): FinderTypeConfig<PinkkaSubStack> {
   return {
@@ -30,7 +33,11 @@ export function createStackTypeConfig({
     multiSelectMessage:
       "Multiple stacks selected. Choose a single stack to view species.",
     renderItem: (item) => (
-      <PinkkaStackItem stack={item.payload} preferredLang={preferredLang} />
+      <PinkkaStackItem
+        stack={item.payload}
+        preferredLang={preferredLang}
+        importStatusVersion={importStatusVersion}
+      />
     ),
     loadChildren,
   };

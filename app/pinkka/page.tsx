@@ -18,6 +18,7 @@ export default function PinkkaContentPage() {
   const [selectionState, setSelectionState] =
     useState<FinderSelectionState | null>(null);
   const [isImporting, setIsImporting] = useState(false);
+  const [importStatusVersion, setImportStatusVersion] = useState(0);
 
   const selectedGroupIds = useMemo(() => {
     if (!selectionState) return [];
@@ -39,6 +40,7 @@ export default function PinkkaContentPage() {
         title: "Import complete",
         description: `Imported ${results.length} group(s).`,
       });
+      setImportStatusVersion((prev) => prev + 1);
     } catch (error) {
       console.error(error);
       toast({
@@ -74,7 +76,10 @@ export default function PinkkaContentPage() {
           </div>
           <div className="flex-1">
             <div className="h-[70vh]">
-              <PinkkaExplorer onSelectionChange={setSelectionState} />
+              <PinkkaExplorer
+                onSelectionChange={setSelectionState}
+                importStatusVersion={importStatusVersion}
+              />
             </div>
           </div>
         </main>

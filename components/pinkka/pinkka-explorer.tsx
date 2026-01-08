@@ -44,6 +44,8 @@ interface PinkkaExplorerProps {
   onSelectSpecies?: (species: PinkkaSpeciesCard) => void;
   /** Callback when selection state changes. */
   onSelectionChange?: (state: FinderSelectionState) => void;
+  /** Optional version to refresh import status indicators. */
+  importStatusVersion?: number;
   /** Optional API overrides for Storybook/testing. */
   api?: Partial<PinkkaApi>;
 }
@@ -60,6 +62,7 @@ export function PinkkaExplorer({
   preferredLang = "fi",
   onSelectSpecies,
   onSelectionChange,
+  importStatusVersion,
   api,
 }: PinkkaExplorerProps) {
   const pinkkaApi = useMemo(
@@ -93,14 +96,17 @@ export function PinkkaExplorer({
       }),
       group: createGroupTypeConfig({
         preferredLang,
+        importStatusVersion,
         loadChildren: loadGroupStacks,
       }),
       stack: createStackTypeConfig({
         preferredLang,
+        importStatusVersion,
         loadChildren: loadStackSpecies,
       }),
       species: createSpeciesTypeConfig({
         preferredLang,
+        importStatusVersion,
         loadChildren: loadSpeciesDetail,
       }),
       "species-detail": createSpeciesDetailTypeConfig({ preferredLang }),
