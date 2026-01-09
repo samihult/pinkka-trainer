@@ -24,6 +24,8 @@ export interface DraggableHorizontalItemProps {
   contentClassName?: string;
   /** Whether to show the drag handle icon. */
   showDragHandle?: boolean;
+  /** Visual style variant for the card container. */
+  variant?: "default" | "minimal";
 }
 
 /** Draggable container for horizontal content blocks that can be reordered. */
@@ -36,6 +38,7 @@ export function DraggableHorizontalItem({
   className,
   contentClassName,
   showDragHandle = true,
+  variant = "default",
 }: DraggableHorizontalItemProps) {
   return (
     <Card
@@ -43,12 +46,32 @@ export function DraggableHorizontalItem({
       onDragStart={() => onDragStart(index)}
       onDragOver={(event) => onDragOver(event, index)}
       onDragEnd={onDragEnd}
-      className={cn("cursor-move hover:shadow-md transition-shadow", className)}
+      className={cn(
+        "cursor-move transition-shadow",
+        variant === "default" && "hover:shadow-md",
+        variant === "minimal" && "border-0 shadow-none py-0 bg-transparent",
+        className,
+      )}
     >
-      <CardContent className={cn(contentClassName, "px-4")}>
-        <div className="flex gap-4">
+      <CardContent
+        className={cn(
+          variant === "minimal" ? "px-0" : "px-4",
+          contentClassName,
+        )}
+      >
+        <div
+          className={cn(
+            "flex",
+            variant === "minimal" ? "items-center gap-2" : "gap-4",
+          )}
+        >
           {showDragHandle && (
-            <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-1" />
+            <GripVertical
+              className={cn(
+                "text-muted-foreground flex-shrink-0",
+                variant === "minimal" ? "mt-0 h-3 w-3" : "mt-1 h-5 w-5",
+              )}
+            />
           )}
           <div className="min-w-0 flex-1">{children}</div>
         </div>

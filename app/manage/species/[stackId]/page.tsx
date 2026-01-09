@@ -245,6 +245,7 @@ export default function ManageSpeciesPage() {
                   onDragStart={handleDragStart}
                   onDragOver={handleDragOver}
                   onDragEnd={handleDragEnd}
+                  variant={cardVariant}
                 >
                   <ManageSpeciesCardHorizontalContent
                     species={item}

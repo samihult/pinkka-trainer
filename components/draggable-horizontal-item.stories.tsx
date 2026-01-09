@@ -38,6 +38,17 @@ type Story = StoryObj<typeof DraggableHorizontalItem>;
 
 export const SingleItem: Story = {};
 
+export const Minimal: Story = {
+  args: {
+    variant: "minimal",
+    children: (
+      <div className="flex items-center justify-between gap-4">
+        <div className="text-sm font-semibold">Minimal item</div>
+      </div>
+    ),
+  },
+};
+
 export const ReorderableList: Story = {
   render: () => {
     const [items, setItems] = useState([
@@ -51,7 +62,10 @@ export const ReorderableList: Story = {
       setDraggedIndex(index);
     };
 
-    const handleDragOver = (event: DragEvent<HTMLDivElement>, index: number) => {
+    const handleDragOver = (
+      event: DragEvent<HTMLDivElement>,
+      index: number,
+    ) => {
       event.preventDefault();
       if (draggedIndex === null || draggedIndex === index) return;
 
@@ -83,9 +97,7 @@ export const ReorderableList: Story = {
                 <div className="font-semibold">{item.title}</div>
                 <div className="text-sm text-muted-foreground">{item.meta}</div>
               </div>
-              <div className="text-xs text-muted-foreground">
-                {index + 1}
-              </div>
+              <div className="text-xs text-muted-foreground">{index + 1}</div>
             </div>
           </DraggableHorizontalItem>
         ))}
