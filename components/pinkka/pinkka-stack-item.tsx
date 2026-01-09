@@ -47,12 +47,14 @@ export function PinkkaStackItem({
         }
         aria-hidden="true"
       />
-      <div>
+      <div className="min-w-0 flex-1">
         <MiddleEllipsisText
           className="font-medium"
           text={label || `Stack ${stack.id}`}
         />
-        <div className="text-xs text-muted-foreground">{description}</div>
+        <div className="text-xs text-muted-foreground w-full">
+          {description}
+        </div>
       </div>
     </div>
   );
