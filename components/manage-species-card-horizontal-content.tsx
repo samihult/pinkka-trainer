@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import { cn } from "@/lib/utils";
 
 /** Props for rendering the horizontal content of a species card. */
 export interface ManageSpeciesCardHorizontalContentProps {
@@ -30,7 +31,9 @@ export function ManageSpeciesCardHorizontalContent({
   const englishName = getLocalizedText(species.data.vernacularName, "en");
   const image = species.data.images?.[0];
 
-  if (variant === "minimal") {
+  const isMinimal = variant === "minimal";
+
+  if (isMinimal) {
     return (
       <div className="flex items-center gap-3">
         <div className="flex-1 min-w-0">
@@ -45,7 +48,7 @@ export function ManageSpeciesCardHorizontalContent({
             className="h-7 w-7"
             onClick={() => onEdit(species)}
           >
-            <Pencil className="h-3 w-3" />
+            <Pencil className="h-2 w-2" />
           </Button>
           <Button
             size="icon"
@@ -53,7 +56,7 @@ export function ManageSpeciesCardHorizontalContent({
             className="h-7 w-7"
             onClick={() => onDelete(species.id)}
           >
-            <Trash2 className="h-3 w-3" />
+            <Trash2 className="h-2 w-2" />
           </Button>
         </div>
       </div>
@@ -88,7 +91,7 @@ export function ManageSpeciesCardHorizontalContent({
           <Pencil className="h-4 w-4" />
         </Button>
         <Button
-          size="icon"
+          size={isMinimal ? "icon-xs" : "icon"}
           variant="destructive"
           onClick={() => onDelete(species.id)}
         >
