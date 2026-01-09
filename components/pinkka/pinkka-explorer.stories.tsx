@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 
 import { PinkkaExplorer } from "./pinkka-explorer";
 import { pinkkaHandlers } from "@/stories/mocks/pinkka-handlers";
@@ -10,7 +10,7 @@ const meta: Meta<typeof PinkkaExplorer> = {
     preferredLang: "fi",
   },
   decorators: [
-    (Story) => (
+    (Story: StoryFn) => (
       <div className="h-96">
         <Story />
       </div>

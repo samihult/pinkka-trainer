@@ -76,16 +76,20 @@ export const Default: Story = {
           group: {
             columnTitle: "Groups",
             columnClassName: "bg-muted/20",
-            renderItem: (item) => <div>{item.payload.name}</div>,
-            loadChildren: async (item) =>
+            renderItem: (item: FinderItem<DemoPayload>) => (
+              <div>{item.payload.name}</div>
+            ),
+            loadChildren: async (item: FinderItem<DemoPayload>) =>
               stacksByGroup[item.id as number] ?? [],
             noSelectionMessage: "Select a group to view stacks.",
             multiSelectMessage: "Multiple groups selected.",
           },
           stack: {
             columnTitle: "Stacks",
-            renderItem: (item) => <div>{item.payload.name}</div>,
-            loadChildren: async (item) =>
+            renderItem: (item: FinderItem<DemoPayload>) => (
+              <div>{item.payload.name}</div>
+            ),
+            loadChildren: async (item: FinderItem<DemoPayload>) =>
               speciesByStack[item.id as number] ?? [],
             noSelectionMessage: "Select a stack to view species.",
             multiSelectMessage: "Multiple stacks selected.",
@@ -93,8 +97,10 @@ export const Default: Story = {
           species: {
             columnTitle: "Species",
             columnClassName: "bg-muted/10",
-            renderItem: (item) => <div>{item.payload.name}</div>,
-            loadChildren: async (item) => ({
+            renderItem: (item: FinderItem<DemoPayload>) => (
+              <div>{item.payload.name}</div>
+            ),
+            loadChildren: async (item: FinderItem<DemoPayload>) => ({
               id: `detail-${item.id}`,
               type: "species-detail",
               payload: item.payload,
@@ -103,8 +109,10 @@ export const Default: Story = {
           "species-detail": {
             columnTitle: "Species",
             detailsTitle: "Details",
-            renderItem: (item) => <div>{item.payload.name}</div>,
-            renderDetails: (item) => (
+            renderItem: (item: FinderItem<DemoPayload>) => (
+              <div>{item.payload.name}</div>
+            ),
+            renderDetails: (item: FinderItem<DemoPayload>) => (
               <div className="space-y-2">
                 <div className="text-sm font-semibold">{item.payload.name}</div>
                 <div className="text-xs text-muted-foreground">

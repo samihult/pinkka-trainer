@@ -4,9 +4,22 @@ import mockData from "@/test-assets/pinkka/mock-data.json";
 const BASE_URL = "https://fmnh-ws-prod3.it.helsinki.fi/pinkka/api";
 
 const groups = mockData.groups ?? [];
-const groupsById = mockData.groupsById ?? {};
-const subStacksById = mockData.subStacksById ?? {};
-const speciesById = mockData.speciesById ?? {};
+type GroupsById = Record<
+  string,
+  (typeof mockData.groupsById)[keyof typeof mockData.groupsById]
+>;
+type SubStacksById = Record<
+  string,
+  (typeof mockData.subStacksById)[keyof typeof mockData.subStacksById]
+>;
+type SpeciesById = Record<
+  string,
+  (typeof mockData.speciesById)[keyof typeof mockData.speciesById]
+>;
+
+const groupsById = (mockData.groupsById ?? {}) as GroupsById;
+const subStacksById = (mockData.subStacksById ?? {}) as SubStacksById;
+const speciesById = (mockData.speciesById ?? {}) as SpeciesById;
 
 export const pinkkaHandlers = [
   http.get(`${BASE_URL}/pinkkas/`, () => HttpResponse.json(groups)),

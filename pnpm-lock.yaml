@@ -183,6 +183,9 @@ importers:
       '@storybook/nextjs-vite':
         specifier: ^10.1.11
         version: 10.1.11(@babel/core@7.28.5)(esbuild@0.27.2)(msw@2.12.7(@types/node@22.0.0)(typescript@5.0.2))(next@16.0.10(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rollup@4.55.1)(storybook@10.1.11(@testing-library/dom@10.4.1)(prettier@3.7.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.0.2)(vite@7.3.1(@types/node@22.0.0)(jiti@2.6.1)(lightningcss@1.30.1))
+      '@storybook/react':
+        specifier: ^10.1.11
+        version: 10.1.11(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(storybook@10.1.11(@testing-library/dom@10.4.1)(prettier@3.7.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.0.2)
       '@tailwindcss/postcss':
         specifier: ^4.1.9
         version: 4.1.9
@@ -207,6 +210,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.0.0
+      '@types/sanitize-html':
+        specifier: ^2.16.0
+        version: 2.16.0
       '@vitest/browser-playwright':
         specifier: ^4.0.16
         version: 4.0.16(msw@2.12.7(@types/node@22.0.0)(typescript@5.0.2))(playwright@1.57.0)(vite@7.3.1(@types/node@22.0.0)(jiti@2.6.1)(lightningcss@1.30.1))(vitest@4.0.16)
@@ -2545,6 +2551,9 @@ packages:
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
+
+  '@types/sanitize-html@2.16.0':
+    resolution: {integrity: sha512-l6rX1MUXje5ztPT0cAFtUayXF06DqPhRyfVXareEN5gGCFaP/iwsxIyKODr9XDhfxPpN6vXUFNfo5kZMXCxBtw==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -8039,6 +8048,10 @@ snapshots:
       csstype: 3.2.3
 
   '@types/resolve@1.20.6': {}
+
+  '@types/sanitize-html@2.16.0':
+    dependencies:
+      htmlparser2: 8.0.2
 
   '@types/stack-utils@2.0.3': {}
 

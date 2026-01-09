@@ -8,20 +8,19 @@ import {
 } from "@/lib/pinkka/pinkka-api";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 
+/** Single Pinkka species image entry. */
+type PinkkaSpeciesImage = NonNullable<PinkkaSpeciesDetail["images"]>[number];
+
 /** Image details resolved for rendering a carousel. */
 type PinkkaDetailImage = {
   /** Image id. */
   id: string;
   /** Optional localized caption. */
-  caption?: PinkkaSpeciesDetail["images"] extends Array<infer T>
-    ? T["caption"]
-    : undefined;
+  caption?: PinkkaSpeciesImage["caption"];
   /** Resolved image URL to display. */
   url: string;
   /** Optional raw metadata for alternative text. */
-  meta?: PinkkaSpeciesDetail["images"] extends Array<infer T>
-    ? T["meta"]
-    : undefined;
+  meta?: PinkkaSpeciesImage["meta"];
 };
 
 /** Props for rendering a Pinkka species detail panel. */

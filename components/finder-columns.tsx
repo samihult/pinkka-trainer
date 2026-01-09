@@ -16,6 +16,29 @@ export type FinderItem<T = unknown> = {
   payload: T;
 };
 
+/** Render function for a typed finder item. */
+type FinderRenderItem<T> = {
+  // Use bivariance to allow narrower item types in configs without losing assignability.
+  bivarianceHack: (
+    item: FinderItem<T>,
+    state: { isSelected: boolean; isActive: boolean },
+  ) => React.ReactNode;
+}["bivarianceHack"];
+
+/** Loader function for child items. */
+type FinderLoadChildren<T> = {
+  // Use bivariance to allow narrower item types in configs without losing assignability.
+  bivarianceHack: (
+    item: FinderItem<T>,
+  ) => Promise<FinderItem[] | FinderItem | null>;
+}["bivarianceHack"];
+
+/** Render function for a typed finder detail panel. */
+type FinderRenderDetails<T> = {
+  // Use bivariance to allow narrower item types in configs without losing assignability.
+  bivarianceHack: (item: FinderItem<T>) => React.ReactNode;
+}["bivarianceHack"];
+
 /** Column configuration per item type, including render and optional loader. */
 export type FinderTypeConfig<T = unknown> = {
   /** Title shown at the top of the column. */
@@ -23,18 +46,13 @@ export type FinderTypeConfig<T = unknown> = {
   /** Optional column-level styling overrides. */
   columnClassName?: string;
   /** Render function for items of this type. */
-  renderItem: (
-    item: FinderItem<T>,
-    state: { isSelected: boolean; isActive: boolean },
-  ) => React.ReactNode;
+  renderItem: FinderRenderItem<T>;
   /** Optional loader for child items. */
-  loadChildren?: (
-    item: FinderItem<T>,
-  ) => Promise<FinderItem[] | FinderItem | null>;
+  loadChildren?: FinderLoadChildren<T>;
   /** Hint for expected child type. */
   childType?: string;
   /** Optional renderer for detail columns. */
-  renderDetails?: (item: FinderItem<T>) => React.ReactNode;
+  renderDetails?: FinderRenderDetails<T>;
   /** Optional title for detail columns. */
   detailsTitle?: string;
   /** Message shown when no items exist. */
@@ -80,7 +98,7 @@ type FinderColumnsProps = {
   /** Virtual root item used to populate the first column. */
   rootItem: FinderItem;
   /** Configuration for each item type. */
-  typeConfigs: Record<string, FinderTypeConfig>;
+  typeConfigs: Record<string, FinderTypeConfig<any>>;
   /** Optional wrapper class names. */
   className?: string;
   /** Called when the active item changes. */
