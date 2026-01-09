@@ -3,10 +3,7 @@
 import { useEffect, useState } from "react";
 import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
 import { isPinkkaStackImported } from "@/lib/firebase/firestore-helpers";
-import {
-  getLocalizedText,
-  type PinkkaSubStack,
-} from "@/lib/pinkka/pinkka-api";
+import { getLocalizedText, type PinkkaSubStack } from "@/lib/pinkka/pinkka-api";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 
 /** Props for rendering a Pinkka stack row. */
@@ -39,6 +36,7 @@ export function PinkkaStackItem({
       isMounted = false;
     };
   }, [stack.id, importStatusVersion]);
+
   return (
     <div className="flex items-start gap-2">
       <span

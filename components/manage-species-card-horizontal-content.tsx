@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import type { Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
-import { cn } from "@/lib/utils";
 
 /** Props for rendering the horizontal content of a species card. */
 export interface ManageSpeciesCardHorizontalContentProps {
@@ -35,28 +34,28 @@ export function ManageSpeciesCardHorizontalContent({
 
   if (isMinimal) {
     return (
-      <div className="flex items-center gap-3">
-        <div className="flex-1 min-w-0">
+      <div className="flex items-center gap-2">
+        <div className="grow-0 min-w-0">
           <h3 className="truncate text-sm font-semibold">
             {species.data.scientificName}
           </h3>
         </div>
-        <div className="flex gap-1 flex-shrink-0">
+        <div className="flex gap-1 items-center flex-shrink-0">
           <Button
-            size="icon"
-            variant="outline"
-            className="h-7 w-7"
+            size="icon-xs"
+            variant="minimal"
+            className="rounded-xs"
             onClick={() => onEdit(species)}
           >
-            <Pencil className="h-2 w-2" />
+            <Pencil className="size-3" />
           </Button>
           <Button
-            size="icon"
-            variant="destructive"
-            className="h-7 w-7"
+            size="icon-xs"
+            variant="minimal-destructive"
+            className="rounded-xs"
             onClick={() => onDelete(species.id)}
           >
-            <Trash2 className="h-2 w-2" />
+            <Trash2 className="size-3" />
           </Button>
         </div>
       </div>
@@ -91,7 +90,7 @@ export function ManageSpeciesCardHorizontalContent({
           <Pencil className="h-4 w-4" />
         </Button>
         <Button
-          size={isMinimal ? "icon-xs" : "icon"}
+          size="icon"
           variant="destructive"
           onClick={() => onDelete(species.id)}
         >

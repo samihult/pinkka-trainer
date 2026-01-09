@@ -76,7 +76,7 @@ export default function ManagePage() {
   );
 
   useEffect(() => {
-    loadData();
+    void loadData();
   }, [user]);
 
   const loadData = async () => {
@@ -157,7 +157,7 @@ export default function ManagePage() {
         toast({ title: "Success", description: "Group created successfully" });
       }
       setShowGroupDialog(false);
-      loadData();
+      void loadData();
     } catch (error) {
       logFirestoreError("Failed to save group", error);
       toast({
@@ -392,16 +392,16 @@ export default function ManagePage() {
                         key={stack.id}
                         className="hover:shadow-md transition-shadow"
                       >
-                        <CardHeader className="pb-3">
+                        <CardHeader>
                           <CardTitle className="text-base flex items-center gap-2">
                             <BookOpen className="h-4 w-4 text-primary" />
                             {getLocalizedText(stack.data.name, "fi")}
                           </CardTitle>
-                          {getLocalizedText(stack.data.description, "fi") && (
-                            <CardDescription className="text-sm">
-                              {getLocalizedText(stack.data.description, "fi")}
-                            </CardDescription>
-                          )}
+                          {/*{getLocalizedText(stack.data.description, "fi") && (*/}
+                          {/*  <CardDescription className="text-sm">*/}
+                          {/*    {getLocalizedText(stack.data.description, "fi")}*/}
+                          {/*  </CardDescription>*/}
+                          {/*)}*/}
                         </CardHeader>
                         <CardContent className="flex flex-wrap gap-2">
                           <Button size="sm" variant="outline" asChild>
