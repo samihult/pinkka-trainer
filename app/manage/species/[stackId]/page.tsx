@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SpeciesForm } from "@/components/species-form";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { ManageSpeciesCard } from "@/components/manage-species-card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth-context";
 import { logFirestoreError } from "@/lib/utils";
@@ -22,12 +23,10 @@ import {
   updateStackSpeciesOrder,
 } from "@/lib/firebase/firestore-helpers";
 import type { Species, Stack } from "@/lib/types";
-import { ArrowLeft, Plus, Pencil, Trash2, GripVertical } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 
 export default function ManageSpeciesPage() {
   const params = useParams();
@@ -215,75 +214,17 @@ export default function ManageSpeciesPage() {
 
           <div className="grid gap-4">
             {species.map((item, index) => {
-              const finnishName = getLocalizedText(
-                item.data.vernacularName,
-                "fi",
-              );
-              const englishName = getLocalizedText(
-                item.data.vernacularName,
-                "en",
-              );
-
               return (
-                <Card
+                <ManageSpeciesCard
                   key={item.id}
-                  draggable
-                  onDragStart={() => handleDragStart(index)}
-                  onDragOver={(e) => handleDragOver(e, index)}
+                  species={item}
+                  index={index}
+                  onDragStart={handleDragStart}
+                  onDragOver={handleDragOver}
                   onDragEnd={handleDragEnd}
-                  className="cursor-move hover:shadow-md transition-shadow"
-                >
-                  <CardContent className="pt-6">
-                    <div className="flex gap-4">
-                      <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-1" />
-
-                      {item.data.images && item.data.images.length > 0 && (
-                        <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-                          <Image
-                            src={
-                              getSpeciesImageUrl(item.data.images[0]) ||
-                              "/placeholder.svg"
-                            }
-                            alt={item.data.scientificName}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
-
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-lg mb-1">
-                          {item.data.scientificName}
-                        </h3>
-                        {finnishName && (
-                          <p className="text-muted-foreground">{finnishName}</p>
-                        )}
-                        {englishName && (
-                          <p className="text-muted-foreground text-sm">
-                            {englishName}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="flex gap-2 flex-shrink-0">
-                        <Button
-                          size="icon"
-                          variant="outline"
-                          onClick={() => setEditingSpecies(item)}
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="destructive"
-                          onClick={() => handleDelete(item.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  onEdit={setEditingSpecies}
+                  onDelete={handleDelete}
+                />
               );
             })}
 
