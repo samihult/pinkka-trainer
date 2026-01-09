@@ -11,6 +11,8 @@ import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 export interface ManageSpeciesCardHorizontalContentProps {
   /** Species item to display. */
   species: Species;
+  /** Visual layout variant for the content. */
+  variant?: "default" | "minimal";
   /** Called when the edit action is clicked. */
   onEdit: (species: Species) => void;
   /** Called when the delete action is clicked. */
@@ -20,12 +22,43 @@ export interface ManageSpeciesCardHorizontalContentProps {
 /** Horizontal content block for a species entry, suitable for multiple containers. */
 export function ManageSpeciesCardHorizontalContent({
   species,
+  variant = "default",
   onEdit,
   onDelete,
 }: ManageSpeciesCardHorizontalContentProps) {
   const finnishName = getLocalizedText(species.data.vernacularName, "fi");
   const englishName = getLocalizedText(species.data.vernacularName, "en");
   const image = species.data.images?.[0];
+
+  if (variant === "minimal") {
+    return (
+      <div className="flex items-center gap-3">
+        <div className="flex-1 min-w-0">
+          <h3 className="truncate text-sm font-semibold">
+            {species.data.scientificName}
+          </h3>
+        </div>
+        <div className="flex gap-1 flex-shrink-0">
+          <Button
+            size="icon"
+            variant="outline"
+            className="h-7 w-7"
+            onClick={() => onEdit(species)}
+          >
+            <Pencil className="h-3 w-3" />
+          </Button>
+          <Button
+            size="icon"
+            variant="destructive"
+            className="h-7 w-7"
+            onClick={() => onDelete(species.id)}
+          >
+            <Trash2 className="h-3 w-3" />
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex gap-4">

@@ -42,6 +42,9 @@ export default function ManageSpeciesPage() {
   const [editingSpecies, setEditingSpecies] = useState<Species | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [cardVariant, setCardVariant] = useState<"default" | "minimal">(
+    "minimal",
+  );
 
   useEffect(() => {
     void loadData();
@@ -192,10 +195,30 @@ export default function ManageSpeciesPage() {
             </div>
 
             {!showForm && !editingSpecies && (
-              <Button onClick={() => setShowForm(true)}>
-                <Plus className="mr-2 h-4 w-4" />
-                Add Species
-              </Button>
+              <div className="flex items-center gap-3">
+                <div className="flex rounded-md border border-border bg-background p-1">
+                  <Button
+                    size="sm"
+                    variant={cardVariant === "minimal" ? "secondary" : "ghost"}
+                    className="h-7 px-3"
+                    onClick={() => setCardVariant("minimal")}
+                  >
+                    Minimal
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={cardVariant === "default" ? "secondary" : "ghost"}
+                    className="h-7 px-3"
+                    onClick={() => setCardVariant("default")}
+                  >
+                    Default
+                  </Button>
+                </div>
+                <Button onClick={() => setShowForm(true)}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Species
+                </Button>
+              </div>
             )}
           </div>
 
@@ -225,6 +248,7 @@ export default function ManageSpeciesPage() {
                 >
                   <ManageSpeciesCardHorizontalContent
                     species={item}
+                    variant={cardVariant}
                     onEdit={setEditingSpecies}
                     onDelete={handleDelete}
                   />

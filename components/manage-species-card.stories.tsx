@@ -41,6 +41,7 @@ const meta: Meta<typeof ManageSpeciesCardHorizontalContent> = {
   component: ManageSpeciesCardHorizontalContent,
   args: {
     species: exampleSpecies,
+    variant: "default",
     onEdit: (species) => {
       console.log("edit", species.id);
     },
@@ -60,3 +61,9 @@ export default meta;
 type Story = StoryObj<typeof ManageSpeciesCardHorizontalContent>;
 
 export const Default: Story = {};
+
+export const Minimal: Story = {
+  args: {
+    variant: "minimal",
+  },
+};
