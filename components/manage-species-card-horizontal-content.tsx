@@ -30,7 +30,7 @@ export function ManageSpeciesCardHorizontalContent({
   return (
     <div className="flex gap-4">
       {image && (
-        <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+        <div className="relative w-24 h-24 rounded-sm overflow-hidden flex-shrink-0">
           <Image
             src={getSpeciesImageUrl(image) || "/placeholder.svg"}
             alt={species.data.scientificName}

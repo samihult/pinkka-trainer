@@ -213,7 +213,7 @@ export default function ManageSpeciesPage() {
             </div>
           )}
 
-          <div className="grid gap-4">
+          <div className="grid gap-1">
             {species.map((item, index) => {
               return (
                 <DraggableHorizontalItem
