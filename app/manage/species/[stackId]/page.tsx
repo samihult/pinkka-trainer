@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SpeciesForm } from "@/components/species-form";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { ManageSpeciesCard } from "@/components/manage-species-card";
+import { DraggableHorizontalItem } from "@/components/draggable-horizontal-item";
+import { ManageSpeciesCardHorizontalContent } from "@/components/manage-species-card-horizontal-content";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth-context";
 import { logFirestoreError } from "@/lib/utils";
@@ -215,16 +216,19 @@ export default function ManageSpeciesPage() {
           <div className="grid gap-4">
             {species.map((item, index) => {
               return (
-                <ManageSpeciesCard
+                <DraggableHorizontalItem
                   key={item.id}
-                  species={item}
                   index={index}
                   onDragStart={handleDragStart}
                   onDragOver={handleDragOver}
                   onDragEnd={handleDragEnd}
-                  onEdit={setEditingSpecies}
-                  onDelete={handleDelete}
-                />
+                >
+                  <ManageSpeciesCardHorizontalContent
+                    species={item}
+                    onEdit={setEditingSpecies}
+                    onDelete={handleDelete}
+                  />
+                </DraggableHorizontalItem>
               );
             })}
 
