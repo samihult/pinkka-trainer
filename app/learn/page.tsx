@@ -14,6 +14,7 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { getGroups, getStacks } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { logFirestoreError } from "@/lib/utils";
 import { BookOpen, Brain } from "lucide-react";
 import Link from "next/link";
 
@@ -39,7 +40,7 @@ export default function LearnPage() {
       }
       setStacksByGroup(stacksData);
     } catch (error) {
-      console.error("Failed to load data:", error);
+      logFirestoreError("Failed to load learn page data", error);
     } finally {
       setLoading(false);
     }

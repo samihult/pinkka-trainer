@@ -11,6 +11,7 @@ import { getStack, getSpecies } from "@/lib/firebase/firestore-helpers";
 import type { Stack, Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import { logFirestoreError } from "@/lib/utils";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCw } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -53,7 +54,7 @@ export default function QuizPage() {
         generateQuestions(speciesData);
       }
     } catch (error) {
-      console.error("Failed to load data:", error);
+      logFirestoreError("Failed to load quiz data", error);
     } finally {
       setLoading(false);
     }

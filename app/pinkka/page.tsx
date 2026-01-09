@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { importPinkkaGroups } from "@/lib/firebase/firestore-helpers";
 import type { FinderSelectionState } from "@/components/finder-columns";
 import type { PinkkaGroup } from "@/lib/pinkka/pinkka-api";
+import { logFirestoreError } from "@/lib/utils";
 
 /** Admin-facing page for browsing Pinkka content. */
 export default function PinkkaContentPage() {
@@ -42,7 +43,7 @@ export default function PinkkaContentPage() {
       });
       setImportStatusVersion((prev) => prev + 1);
     } catch (error) {
-      console.error(error);
+      logFirestoreError("Failed to import Pinkka groups", error);
       toast({
         title: "Import failed",
         description: "Unable to import the selected groups.",

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { getAllUsers, updateUserRole } from "@/lib/firebase/firestore-helpers";
+import { logFirestoreError } from "@/lib/utils";
 import type { User, UserRole } from "@/lib/types";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Shield, Mail, Calendar } from "lucide-react";
@@ -31,6 +32,7 @@ export default function AdminPage() {
       const allUsers = await getAllUsers();
       setUsers(allUsers);
     } catch (error) {
+      logFirestoreError("Failed to load users", error);
       toast({
         title: "Error",
         description: "Failed to load users",
@@ -52,6 +54,7 @@ export default function AdminPage() {
         description: "User role updated successfully",
       });
     } catch (error) {
+      logFirestoreError("Failed to update user role", error);
       toast({
         title: "Error",
         description: "Failed to update user role",

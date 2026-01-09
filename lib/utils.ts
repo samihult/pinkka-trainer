@@ -5,3 +5,8 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+/** Log Firestore-related errors with a consistent prefix. */
+export function logFirestoreError(context: string, error: unknown): void {
+  console.error(`[Firestore] ${context}`, error);
+}

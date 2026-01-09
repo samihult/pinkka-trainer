@@ -26,6 +26,7 @@ import {
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth-context";
+import { logFirestoreError } from "@/lib/utils";
 import {
   getGroups,
   getStacks,
@@ -92,6 +93,7 @@ export default function ManagePage() {
       }
       setStacks(stacksData);
     } catch (error) {
+      logFirestoreError("Failed to load groups/stacks", error);
       toast({
         title: "Error",
         description: "Failed to load data",
@@ -157,6 +159,7 @@ export default function ManagePage() {
       setShowGroupDialog(false);
       loadData();
     } catch (error) {
+      logFirestoreError("Failed to save group", error);
       toast({
         title: "Error",
         description: "Failed to save group",
@@ -178,6 +181,7 @@ export default function ManagePage() {
       toast({ title: "Success", description: "Group deleted successfully" });
       loadData();
     } catch (error) {
+      logFirestoreError("Failed to delete group", error);
       toast({
         title: "Error",
         description: "Failed to delete group",
@@ -243,6 +247,7 @@ export default function ManagePage() {
       setShowStackDialog(false);
       loadData();
     } catch (error) {
+      logFirestoreError("Failed to save stack", error);
       toast({
         title: "Error",
         description: "Failed to save stack",
@@ -260,6 +265,7 @@ export default function ManagePage() {
       toast({ title: "Success", description: "Stack deleted successfully" });
       loadData();
     } catch (error) {
+      logFirestoreError("Failed to delete stack", error);
       toast({
         title: "Error",
         description: "Failed to delete stack",

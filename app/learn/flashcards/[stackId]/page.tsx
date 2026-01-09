@@ -9,6 +9,7 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { getStack, getSpecies } from "@/lib/firebase/firestore-helpers";
 import type { Stack, Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { logFirestoreError } from "@/lib/utils";
 import { ArrowLeft, Shuffle } from "lucide-react";
 import Link from "next/link";
 
@@ -35,7 +36,7 @@ export default function FlashcardsPage() {
       setStack(stackData);
       setSpecies(speciesData);
     } catch (error) {
-      console.error("Failed to load data:", error);
+      logFirestoreError("Failed to load flashcards data", error);
     } finally {
       setLoading(false);
     }

@@ -12,6 +12,7 @@ import { SpeciesForm } from "@/components/species-form";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth-context";
+import { logFirestoreError } from "@/lib/utils";
 import {
   getSpecies,
   getStack,
@@ -55,7 +56,7 @@ export default function ManageSpeciesPage() {
       setStack(stackData);
       setSpecies(speciesData);
     } catch (error) {
-      console.error(error);
+      logFirestoreError("Failed to load species/stack", error);
       toast({
         title: "Error",
         description: "Failed to load data",
@@ -84,6 +85,7 @@ export default function ManageSpeciesPage() {
       setShowForm(false);
       void loadData();
     } catch (error) {
+      logFirestoreError("Failed to create species", error);
       throw error;
     }
   };
@@ -100,6 +102,7 @@ export default function ManageSpeciesPage() {
       setEditingSpecies(null);
       void loadData();
     } catch (error) {
+      logFirestoreError("Failed to update species", error);
       throw error;
     }
   };
@@ -115,6 +118,7 @@ export default function ManageSpeciesPage() {
       });
       loadData();
     } catch (error) {
+      logFirestoreError("Failed to delete species", error);
       toast({
         title: "Error",
         description: "Failed to delete species",
