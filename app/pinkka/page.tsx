@@ -7,9 +7,17 @@ import { PinkkaExplorer } from "@/components/pinkka/pinkka-explorer";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 import { useToast } from "@/hooks/use-toast";
-import { importPinkkaGroups } from "@/lib/firebase/firestore-helpers";
+import {
+  importPinkkaGroups,
+  importPinkkaSpeciesList,
+  importPinkkaStacks,
+} from "@/lib/firebase/firestore-helpers";
 import type { FinderSelectionState } from "@/components/finder-columns";
-import type { PinkkaGroup } from "@/lib/pinkka/pinkka-api";
+import type {
+  PinkkaGroup,
+  PinkkaSpeciesCard,
+  PinkkaSubStack,
+} from "@/lib/pinkka/pinkka-api";
 import { logFirestoreError } from "@/lib/utils";
 
 /** Admin-facing page for browsing Pinkka content. */
@@ -21,25 +29,84 @@ export default function PinkkaContentPage() {
   const [isImporting, setIsImporting] = useState(false);
   const [importStatusVersion, setImportStatusVersion] = useState(0);
 
-  const selectedGroupIds = useMemo(() => {
-    if (!selectionState) return [];
+  const selectedItems = useMemo(
+    () => selectionState?.selectedItemsByColumn.flat() ?? [],
+    [selectionState],
+  );
+
+  const { selectedGroupIds, selectedStackIds, selectedSpeciesIds } = useMemo(() => {
     const groupIds = new Set<number>();
-    selectionState.selectedItemsByColumn.flat().forEach((item) => {
-      if (item.type !== "group") return;
-      const group = item.payload as PinkkaGroup;
-      groupIds.add(group.id);
+    const stackIds = new Set<number>();
+    const speciesIds = new Set<number>();
+
+    selectedItems.forEach((item) => {
+      if (item.type === "group") {
+        const group = item.payload as PinkkaGroup;
+        groupIds.add(group.id);
+        return;
+      }
+      if (item.type === "stack") {
+        const stack = item.payload as PinkkaSubStack;
+        stackIds.add(stack.id);
+        return;
+      }
+      if (item.type === "species") {
+        const species = item.payload as PinkkaSpeciesCard;
+        speciesIds.add(species.id);
+      }
     });
-    return Array.from(groupIds);
-  }, [selectionState]);
+
+    return {
+      selectedGroupIds: Array.from(groupIds),
+      selectedStackIds: Array.from(stackIds),
+      selectedSpeciesIds: Array.from(speciesIds),
+    };
+  }, [selectedItems]);
+
+  const importTarget = useMemo(() => {
+    if (selectedSpeciesIds.length > 0) return "species";
+    if (selectedStackIds.length > 0) return "stack";
+    if (selectedGroupIds.length > 0) return "group";
+    return null;
+  }, [selectedGroupIds.length, selectedSpeciesIds.length, selectedStackIds.length]);
+
+  const importCount = useMemo(() => {
+    if (importTarget === "species") return selectedSpeciesIds.length;
+    if (importTarget === "stack") return selectedStackIds.length;
+    if (importTarget === "group") return selectedGroupIds.length;
+    return 0;
+  }, [importTarget, selectedGroupIds.length, selectedSpeciesIds.length, selectedStackIds.length]);
+
+  const importLabels = useMemo(() => {
+    if (importTarget === "species") {
+      return { title: "Species", singular: "species", plural: "species" };
+    }
+    if (importTarget === "stack") {
+      return { title: "Stacks", singular: "stack", plural: "stacks" };
+    }
+    if (importTarget === "group") {
+      return { title: "Groups", singular: "group", plural: "groups" };
+    }
+    return { title: "Items", singular: "item", plural: "items" };
+  }, [importTarget]);
 
   const handleImport = async () => {
-    if (!user) return;
+    if (!user || !importTarget) return;
     setIsImporting(true);
     try {
-      const results = await importPinkkaGroups(selectedGroupIds, user.uid);
+      let results = [];
+      if (importTarget === "species") {
+        results = await importPinkkaSpeciesList(selectedSpeciesIds, user.uid);
+      } else if (importTarget === "stack") {
+        results = await importPinkkaStacks(selectedStackIds, user.uid);
+      } else {
+        results = await importPinkkaGroups(selectedGroupIds, user.uid);
+      }
       toast({
         title: "Import complete",
-        description: `Imported ${results.length} group(s).`,
+        description: `Imported ${results.length} ${
+          results.length === 1 ? importLabels.singular : importLabels.plural
+        }.`,
       });
       setImportStatusVersion((prev) => prev + 1);
     } catch (error) {
@@ -68,11 +135,11 @@ export default function PinkkaContentPage() {
             </div>
             <Button
               onClick={handleImport}
-              disabled={!user || selectedGroupIds.length === 0 || isImporting}
+              disabled={!user || !importTarget || isImporting}
             >
               {isImporting
                 ? "Importing..."
-                : `Import Selected (${selectedGroupIds.length})`}
+                : `Import Selected ${importLabels.title} (${importCount})`}
             </Button>
           </div>
           <div className="flex-1">

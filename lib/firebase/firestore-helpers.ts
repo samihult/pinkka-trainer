@@ -31,7 +31,7 @@ export interface PinkkaImportResult {
   /** Import batch id for the write. */
   importId: string;
   /** Imported group document id. */
-  groupId: string;
+  groupId?: string;
   /** Imported stack document ids. */
   stackIds: string[];
   /** Imported species document ids. */
@@ -447,6 +447,154 @@ export async function importPinkkaGroup(
     stackIds,
     speciesIds,
   };
+}
+
+/**
+ * Import a Pinkka stack with its species into Firestore.
+ * When an importId is provided, the import upserts those documents.
+ */
+export async function importPinkkaStack(
+  stackId: number,
+  ownerId: string,
+  options?: { importId?: string; upsert?: boolean },
+): Promise<PinkkaImportResult | null> {
+  const resolvedImportId =
+    options?.importId ?? doc(collection(db, "imports")).id;
+  const shouldUpsert = options?.upsert ?? false;
+  const stackDetail = await fetchPinkkaSubStack(stackId);
+  if (!stackDetail) return null;
+
+  const speciesIds: string[] = [];
+  const stackSpeciesCards = stackDetail.speciesCards ?? [];
+
+  for (const card of stackSpeciesCards) {
+    const speciesDetail = await fetchPinkkaSpecies(card.id);
+    if (!speciesDetail) continue;
+    const speciesDocId = buildImportDocId(resolvedImportId, card.id);
+    await writeWithTimestamps(
+      "species",
+      speciesDocId,
+      {
+        data: speciesDetail,
+        importId: resolvedImportId,
+        ownerId,
+      },
+      shouldUpsert,
+    );
+    speciesIds.push(speciesDocId);
+    pinkkaSpeciesImportStatusCache.set(card.id, true);
+  }
+
+  const stackDocId = buildImportDocId(resolvedImportId, stackDetail.id);
+  await writeWithTimestamps(
+    "stacks",
+    stackDocId,
+    {
+      data: stackDetail,
+      speciesIds,
+      importId: resolvedImportId,
+      ownerId,
+    },
+    shouldUpsert,
+  );
+  pinkkaStackImportStatusCache.set(stackDetail.id, true);
+
+  return {
+    importId: resolvedImportId,
+    stackIds: [stackDocId],
+    speciesIds,
+  };
+}
+
+/**
+ * Import multiple Pinkka stacks with their species.
+ * When importId is provided, all documents in that batch are upserted.
+ */
+export async function importPinkkaStacks(
+  stackIds: number[],
+  ownerId: string,
+  importId?: string,
+): Promise<PinkkaImportResult[]> {
+  const resolvedImportId =
+    importId ?? doc(collection(db, "imports")).id;
+  const shouldUpsert = Boolean(importId);
+  const results: PinkkaImportResult[] = [];
+
+  for (const stackId of stackIds) {
+    const result = await importPinkkaStack(
+      stackId,
+      ownerId,
+      { importId: resolvedImportId, upsert: shouldUpsert },
+    );
+    if (result) {
+      results.push(result);
+    }
+  }
+
+  return results;
+}
+
+/**
+ * Import a single Pinkka species detail into Firestore.
+ * When an importId is provided, the import upserts the document.
+ */
+export async function importPinkkaSpecies(
+  speciesId: number,
+  ownerId: string,
+  options?: { importId?: string; upsert?: boolean },
+): Promise<PinkkaImportResult | null> {
+  const resolvedImportId =
+    options?.importId ?? doc(collection(db, "imports")).id;
+  const shouldUpsert = options?.upsert ?? false;
+  const speciesDetail = await fetchPinkkaSpecies(speciesId);
+  if (!speciesDetail) return null;
+
+  const speciesDocId = buildImportDocId(resolvedImportId, speciesId);
+  await writeWithTimestamps(
+    "species",
+    speciesDocId,
+    {
+      data: speciesDetail,
+      importId: resolvedImportId,
+      ownerId,
+    },
+    shouldUpsert,
+  );
+  pinkkaSpeciesImportStatusCache.set(speciesId, true);
+
+  return {
+    importId: resolvedImportId,
+    stackIds: [],
+    speciesIds: [speciesDocId],
+  };
+}
+
+/**
+ * Import multiple Pinkka species details.
+ * When importId is provided, all documents in that batch are upserted.
+ */
+export async function importPinkkaSpeciesList(
+  speciesIds: number[],
+  ownerId: string,
+  importId?: string,
+): Promise<PinkkaImportResult[]> {
+  const resolvedImportId =
+    importId ?? doc(collection(db, "imports")).id;
+  const shouldUpsert = Boolean(importId);
+  const results: PinkkaImportResult[] = [];
+
+  for (const speciesId of speciesIds) {
+    const result = await importPinkkaSpecies(
+      speciesId,
+      ownerId,
+      { importId: resolvedImportId, upsert: shouldUpsert },
+    );
+    if (result) {
+      results.push(result);
+    }
+  }
+
+  return results;
 }
 
 /**
