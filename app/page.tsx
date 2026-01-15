@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BookOpen, Brain, GraduationCap, Sparkles } from "lucide-react";
+import { BookOpen, Brain, ChartSpline, GraduationCap } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -17,20 +18,8 @@ export default function HomePage() {
       <main className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-4 text-balance">
-            Learn Species the Smart Way
+            Pinkka trainer
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 text-balance max-w-2xl mx-auto">
-            Master animal, plant, algae, and microbe identification through
-            interactive flashcards and engaging quizzes
-          </p>
-          <div className="flex gap-4 justify-center">
-            <Button asChild size="lg">
-              <Link href="/learn">Start Learning</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/auth/signup">Sign Up Free</Link>
-            </Button>
-          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
@@ -43,6 +32,11 @@ export default function HomePage() {
                 learning
               </CardDescription>
             </CardHeader>
+            <CardFooter>
+              <Button asChild size="lg">
+                <Link href="/learn">Start Learning</Link>
+              </Button>
+            </CardFooter>
           </Card>
 
           <Card>
@@ -54,6 +48,11 @@ export default function HomePage() {
                 pace
               </CardDescription>
             </CardHeader>
+            <CardFooter>
+              <Button asChild size="lg">
+                <Link href="/learn">Start Learning</Link>
+              </Button>
+            </CardFooter>
           </Card>
 
           <Card>
@@ -64,30 +63,27 @@ export default function HomePage() {
                 Test your knowledge and track your progress over time
               </CardDescription>
             </CardHeader>
+            <CardFooter>
+              <Button asChild size="lg">
+                <Link href="/learn">Start Learning</Link>
+              </Button>
+            </CardFooter>
           </Card>
 
           <Card>
             <CardHeader>
-              <Sparkles className="h-10 w-10 text-chart-4 mb-2" />
-              <CardTitle>Create Content</CardTitle>
+              <ChartSpline className="h-10 w-10 text-chart-4 mb-2" />
+              <CardTitle>Plan and track</CardTitle>
               <CardDescription>
-                Editors can create and manage their own species collections
+                Register to plan and track your progress
               </CardDescription>
             </CardHeader>
+            <CardFooter>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/auth/signup">Sign up</Link>
+              </Button>
+            </CardFooter>
           </Card>
-        </div>
-
-        <div className="bg-card rounded-lg p-8 text-center border">
-          <h2 className="text-3xl font-bold mb-4">
-            Ready to become a species expert?
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            Join students and educators already using Pinkka to master species
-            identification
-          </p>
-          <Button asChild size="lg">
-            <Link href="/auth/signup">Get Started</Link>
-          </Button>
         </div>
       </main>
     </div>

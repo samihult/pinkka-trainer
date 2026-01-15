@@ -12,9 +12,8 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   // <CHANGE> Updated metadata for Pinkka app
-  title: "PinkkaTrainer",
-  description:
-    "Educational platform for learning animal, plant, algae, and microbe species",
+  title: "Pinkka trainer",
+  description: "Educational platform for learning species",
   generator: "v0.app",
   icons: {
     icon: [
