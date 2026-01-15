@@ -340,7 +340,7 @@ export default function ManagePage() {
                 onDragStart={() => handleGroupDragStart(index)}
                 onDragOver={(e) => handleGroupDragOver(e, index)}
                 onDragEnd={handleGroupDragEnd}
-                className="cursor-move"
+                className="cursor-move gap-3"
               >
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -386,11 +386,11 @@ export default function ManagePage() {
                 </CardHeader>
 
                 <CardContent>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="columns-1 gap-x-5 sm:columns-2 lg:columns-3">
                     {(stacks[group.id] || []).map((stack) => (
                       <Card
                         key={stack.id}
-                        className="hover:shadow-md transition-shadow"
+                        className="mb-3 break-inside-avoid transition-shadow shadow-xs hover:shadow-sm rounded-xs"
                       >
                         <CardHeader>
                           <CardTitle className="text-base flex items-center gap-2">
