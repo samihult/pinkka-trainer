@@ -2,13 +2,7 @@
 
 import type React from "react";
 
-import {
-  FolderOpen,
-  GripVertical,
-  Pencil,
-  Plus,
-  Trash2,
-} from "lucide-react";
+import { FolderOpen, GripVertical, Pencil, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -141,6 +135,7 @@ export function ManageGroupCard({
               onDragEnd={onStackDragEnd}
               onEdit={onEditStack}
               onDelete={onDeleteStack}
+              className="mb-3"
             />
           ))}
 
