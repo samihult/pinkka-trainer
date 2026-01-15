@@ -6,13 +6,7 @@ import { useEffect, useState } from "react";
 import { ProtectedRoute } from "@/components/protected-route";
 import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,6 +18,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { ManageGroupCard } from "@/components/manage-group-card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth-context";
 import { logFirestoreError } from "@/lib/utils";
@@ -43,13 +38,8 @@ import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import {
   Plus,
-  Pencil,
-  Trash2,
   FolderOpen,
-  BookOpen,
-  GripVertical,
 } from "lucide-react";
-import Link from "next/link";
 
 export default function ManagePage() {
   const { user } = useAuth();
@@ -380,121 +370,23 @@ export default function ManagePage() {
 
           <div className="space-y-6">
             {groups.map((group, index) => (
-              <Card
+              <ManageGroupCard
                 key={group.id}
-                draggable
-                onDragStart={() => handleGroupDragStart(index)}
-                onDragOver={(e) => handleGroupDragOver(e, index)}
-                onDragEnd={handleGroupDragEnd}
-                className="cursor-move gap-3"
-              >
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex gap-3 flex-1">
-                      <GripVertical className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
-                      <div className="flex-1">
-                        <CardTitle className="flex items-center gap-2">
-                          <FolderOpen className="h-5 w-5" />
-                          {getLocalizedText(group.data.name, "fi")}
-                        </CardTitle>
-                        {getLocalizedText(group.data.description, "fi") && (
-                          <CardDescription className="mt-1">
-                            {getLocalizedText(group.data.description, "fi")}
-                          </CardDescription>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleStackDialogOpen(group.id)}
-                      >
-                        <Plus className="mr-2 h-4 w-4" />
-                        Add Stack
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleGroupDialogOpen(group)}
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleDeleteGroup(group.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-
-                <CardContent>
-                  <div className="columns-1 gap-x-5 sm:columns-2 lg:columns-3">
-                    {(stacks[group.id] || []).map((stack, index) => (
-                      <Card
-                        key={stack.id}
-                        draggable
-                        onDragStart={() => handleStackDragStart(group.id, index)}
-                        onDragOver={(e) => handleStackDragOver(e, group.id, index)}
-                        onDragEnd={handleStackDragEnd}
-                        className="mb-3 break-inside-avoid transition-shadow shadow-xs hover:shadow-sm rounded-xs"
-                      >
-                        <CardHeader>
-                          <CardTitle className="text-base flex items-center gap-2">
-                            <BookOpen className="h-4 w-4 text-primary" />
-                            {getLocalizedText(stack.data.name, "fi")}
-                          </CardTitle>
-                          {/*{getLocalizedText(stack.data.description, "fi") && (*/}
-                          {/*  <CardDescription className="text-sm">*/}
-                          {/*    {getLocalizedText(stack.data.description, "fi")}*/}
-                          {/*  </CardDescription>*/}
-                          {/*)}*/}
-                        </CardHeader>
-                        <CardContent className="flex flex-wrap gap-2">
-                          <Button size="sm" variant="outline" asChild>
-                            <Link href={`/manage/species/${stack.id}`}>
-                              Manage Species
-                            </Link>
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              handleStackDialogOpen(group.id, stack)
-                            }
-                          >
-                            <Pencil className="h-3 w-3" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => handleDeleteStack(stack.id)}
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    ))}
-
-                    {(stacks[group.id] || []).length === 0 && (
-                      <div className="col-span-full text-center py-8 text-muted-foreground">
-                        <p className="mb-2">No stacks in this group yet</p>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleStackDialogOpen(group.id)}
-                        >
-                          <Plus className="mr-2 h-4 w-4" />
-                          Add First Stack
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+                group={group}
+                stacks={stacks[group.id] || []}
+                index={index}
+                onGroupDragStart={handleGroupDragStart}
+                onGroupDragOver={handleGroupDragOver}
+                onGroupDragEnd={handleGroupDragEnd}
+                onAddStack={handleStackDialogOpen}
+                onEditGroup={handleGroupDialogOpen}
+                onDeleteGroup={handleDeleteGroup}
+                onEditStack={handleStackDialogOpen}
+                onDeleteStack={handleDeleteStack}
+                onStackDragStart={handleStackDragStart}
+                onStackDragOver={handleStackDragOver}
+                onStackDragEnd={handleStackDragEnd}
+              />
             ))}
 
             {groups.length === 0 && (
