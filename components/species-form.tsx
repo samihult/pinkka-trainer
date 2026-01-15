@@ -43,10 +43,18 @@ export function SpeciesForm({
   const [englishName, setEnglishName] = useState(
     getLocalizedText(species?.data.vernacularName, "en"),
   );
-  const [description, setDescription] = useState(
-    species?.data.description?.[0]
-      ? getLocalizedText(species.data.description[0].body, "fi")
-      : "",
+  const [swedishName, setSwedishName] = useState(
+    getLocalizedText(species?.data.vernacularName, "sv"),
+  );
+  const descriptionEntry = species?.data.description?.[0];
+  const [descriptionFi, setDescriptionFi] = useState(
+    descriptionEntry ? getLocalizedText(descriptionEntry.body, "fi") : "",
+  );
+  const [descriptionEn, setDescriptionEn] = useState(
+    descriptionEntry ? getLocalizedText(descriptionEntry.body, "en") : "",
+  );
+  const [descriptionSv, setDescriptionSv] = useState(
+    descriptionEntry ? getLocalizedText(descriptionEntry.body, "sv") : "",
   );
   const [images, setImages] = useState<SpeciesImage[]>(
     species?.data.images || [],
@@ -108,23 +116,38 @@ export function SpeciesForm({
 
     try {
       const vernacularName =
-        finnishName || englishName
+        finnishName || englishName || swedishName
           ? {
               ...(finnishName ? { fi: finnishName } : {}),
               ...(englishName ? { en: englishName } : {}),
+              ...(swedishName ? { sv: swedishName } : {}),
             }
           : undefined;
+      const descriptionBody: { fi?: string; en?: string; sv?: string } = {};
+      if (descriptionFi) descriptionBody.fi = descriptionFi;
+      if (descriptionEn) descriptionBody.en = descriptionEn;
+      if (descriptionSv) descriptionBody.sv = descriptionSv;
+      const descriptionTitle: { fi?: string; en?: string; sv?: string } = {};
+      if (descriptionBody.fi) {
+        descriptionTitle.fi = descriptionEntry?.title?.fi ?? "Description";
+      }
+      if (descriptionBody.en) {
+        descriptionTitle.en = descriptionEntry?.title?.en ?? "Description";
+      }
+      if (descriptionBody.sv) {
+        descriptionTitle.sv = descriptionEntry?.title?.sv ?? "Description";
+      }
       const detail: PinkkaSpeciesDetail = {
         ...(species?.data || {}),
         taxonId: species?.data.taxonId || `local-${Date.now()}`,
         scientificName,
         vernacularName,
-        description: description
+        description: Object.keys(descriptionBody).length
           ? [
               {
-                title: { fi: "Description" },
-                body: { fi: description },
-                predicate: "description",
+                title: descriptionTitle,
+                body: descriptionBody,
+                predicate: descriptionEntry?.predicate ?? "description",
               },
             ]
           : undefined,
@@ -161,7 +184,7 @@ export function SpeciesForm({
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-3">
             <div className="space-y-2">
               <Label htmlFor="finnishName">Finnish Name</Label>
               <Input
@@ -181,17 +204,48 @@ export function SpeciesForm({
                 placeholder="e.g., Red Fox"
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="swedishName">Swedish Name</Label>
+              <Input
+                id="swedishName"
+                value={swedishName}
+                onChange={(e) => setSwedishName(e.target.value)}
+                placeholder="e.g., Rodrav"
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Enter species description..."
-              rows={4}
-            />
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="space-y-2">
+              <Label htmlFor="descriptionFi">Description (FI)</Label>
+              <Textarea
+                id="descriptionFi"
+                value={descriptionFi}
+                onChange={(e) => setDescriptionFi(e.target.value)}
+                placeholder="Enter species description..."
+                rows={4}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="descriptionEn">Description (EN)</Label>
+              <Textarea
+                id="descriptionEn"
+                value={descriptionEn}
+                onChange={(e) => setDescriptionEn(e.target.value)}
+                placeholder="Enter species description..."
+                rows={4}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="descriptionSv">Description (SV)</Label>
+              <Textarea
+                id="descriptionSv"
+                value={descriptionSv}
+                onChange={(e) => setDescriptionSv(e.target.value)}
+                placeholder="Enter species description..."
+                rows={4}
+              />
+            </div>
           </div>
 
           <div className="space-y-2">

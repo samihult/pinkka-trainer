@@ -52,15 +52,23 @@ export default function ManagePage() {
   // Group dialog state
   const [showGroupDialog, setShowGroupDialog] = useState(false);
   const [editingGroup, setEditingGroup] = useState<Group | null>(null);
-  const [groupName, setGroupName] = useState("");
-  const [groupDescription, setGroupDescription] = useState("");
+  const [groupNameFi, setGroupNameFi] = useState("");
+  const [groupNameEn, setGroupNameEn] = useState("");
+  const [groupNameSv, setGroupNameSv] = useState("");
+  const [groupDescriptionFi, setGroupDescriptionFi] = useState("");
+  const [groupDescriptionEn, setGroupDescriptionEn] = useState("");
+  const [groupDescriptionSv, setGroupDescriptionSv] = useState("");
 
   // Stack dialog state
   const [showStackDialog, setShowStackDialog] = useState(false);
   const [editingStack, setEditingStack] = useState<Stack | null>(null);
   const [selectedGroupId, setSelectedGroupId] = useState("");
-  const [stackName, setStackName] = useState("");
-  const [stackDescription, setStackDescription] = useState("");
+  const [stackNameFi, setStackNameFi] = useState("");
+  const [stackNameEn, setStackNameEn] = useState("");
+  const [stackNameSv, setStackNameSv] = useState("");
+  const [stackDescriptionFi, setStackDescriptionFi] = useState("");
+  const [stackDescriptionEn, setStackDescriptionEn] = useState("");
+  const [stackDescriptionSv, setStackDescriptionSv] = useState("");
 
   const [draggedGroupIndex, setDraggedGroupIndex] = useState<number | null>(
     null,
@@ -110,16 +118,36 @@ export default function ManagePage() {
     }
   };
 
+  const buildLocalizedValue = (values: {
+    fi?: string;
+    en?: string;
+    sv?: string;
+  }) => {
+    const nextValue: { fi?: string; en?: string; sv?: string } = {};
+    if (values.fi) nextValue.fi = values.fi;
+    if (values.en) nextValue.en = values.en;
+    if (values.sv) nextValue.sv = values.sv;
+    return Object.keys(nextValue).length > 0 ? nextValue : undefined;
+  };
+
   // Group handlers
   const handleGroupDialogOpen = (group?: Group) => {
     if (group) {
       setEditingGroup(group);
-      setGroupName(getLocalizedText(group.data.name, "fi"));
-      setGroupDescription(getLocalizedText(group.data.description, "fi"));
+      setGroupNameFi(getLocalizedText(group.data.name, "fi"));
+      setGroupNameEn(getLocalizedText(group.data.name, "en"));
+      setGroupNameSv(getLocalizedText(group.data.name, "sv"));
+      setGroupDescriptionFi(getLocalizedText(group.data.description, "fi"));
+      setGroupDescriptionEn(getLocalizedText(group.data.description, "en"));
+      setGroupDescriptionSv(getLocalizedText(group.data.description, "sv"));
     } else {
       setEditingGroup(null);
-      setGroupName("");
-      setGroupDescription("");
+      setGroupNameFi("");
+      setGroupNameEn("");
+      setGroupNameSv("");
+      setGroupDescriptionFi("");
+      setGroupDescriptionEn("");
+      setGroupDescriptionSv("");
     }
     setShowGroupDialog(true);
   };
@@ -133,13 +161,16 @@ export default function ManagePage() {
         await updateGroup(editingGroup.id, {
           data: {
             ...editingGroup.data,
-            name: { ...editingGroup.data.name, fi: groupName },
-            description: groupDescription
-              ? {
-                  ...(editingGroup.data.description || {}),
-                  fi: groupDescription,
-                }
-              : undefined,
+            name: buildLocalizedValue({
+              fi: groupNameFi,
+              en: groupNameEn,
+              sv: groupNameSv,
+            }),
+            description: buildLocalizedValue({
+              fi: groupDescriptionFi,
+              en: groupDescriptionEn,
+              sv: groupDescriptionSv,
+            }),
           },
         });
         toast({ title: "Success", description: "Group updated successfully" });
@@ -147,10 +178,16 @@ export default function ManagePage() {
         await createGroup({
           data: {
             id: Date.now(),
-            name: { fi: groupName },
-            description: groupDescription
-              ? { fi: groupDescription }
-              : undefined,
+            name: {
+              fi: groupNameFi,
+              ...(groupNameEn ? { en: groupNameEn } : {}),
+              ...(groupNameSv ? { sv: groupNameSv } : {}),
+            },
+            description: buildLocalizedValue({
+              fi: groupDescriptionFi,
+              en: groupDescriptionEn,
+              sv: groupDescriptionSv,
+            }),
             hideScientific: false,
             hideVernacular: false,
             published: true,
@@ -231,12 +268,20 @@ export default function ManagePage() {
     setSelectedGroupId(groupId);
     if (stack) {
       setEditingStack(stack);
-      setStackName(getLocalizedText(stack.data.name, "fi"));
-      setStackDescription(getLocalizedText(stack.data.description, "fi"));
+      setStackNameFi(getLocalizedText(stack.data.name, "fi"));
+      setStackNameEn(getLocalizedText(stack.data.name, "en"));
+      setStackNameSv(getLocalizedText(stack.data.name, "sv"));
+      setStackDescriptionFi(getLocalizedText(stack.data.description, "fi"));
+      setStackDescriptionEn(getLocalizedText(stack.data.description, "en"));
+      setStackDescriptionSv(getLocalizedText(stack.data.description, "sv"));
     } else {
       setEditingStack(null);
-      setStackName("");
-      setStackDescription("");
+      setStackNameFi("");
+      setStackNameEn("");
+      setStackNameSv("");
+      setStackDescriptionFi("");
+      setStackDescriptionEn("");
+      setStackDescriptionSv("");
     }
     setShowStackDialog(true);
   };
@@ -250,13 +295,16 @@ export default function ManagePage() {
         await updateStack(editingStack.id, {
           data: {
             ...editingStack.data,
-            name: { ...editingStack.data.name, fi: stackName },
-            description: stackDescription
-              ? {
-                  ...(editingStack.data.description || {}),
-                  fi: stackDescription,
-                }
-              : undefined,
+            name: buildLocalizedValue({
+              fi: stackNameFi,
+              en: stackNameEn,
+              sv: stackNameSv,
+            }),
+            description: buildLocalizedValue({
+              fi: stackDescriptionFi,
+              en: stackDescriptionEn,
+              sv: stackDescriptionSv,
+            }),
           },
         });
         toast({ title: "Success", description: "Stack updated successfully" });
@@ -266,11 +314,17 @@ export default function ManagePage() {
           {
             data: {
               id: Date.now(),
-              name: { fi: stackName },
+              name: {
+                fi: stackNameFi,
+                ...(stackNameEn ? { en: stackNameEn } : {}),
+                ...(stackNameSv ? { sv: stackNameSv } : {}),
+              },
               orderNo: groupStacks.length,
-              description: stackDescription
-                ? { fi: stackDescription }
-                : undefined,
+              description: buildLocalizedValue({
+                fi: stackDescriptionFi,
+                en: stackDescriptionEn,
+                sv: stackDescriptionSv,
+              }),
               entityType: "subpinkka",
             },
             speciesIds: [],
@@ -490,21 +544,59 @@ export default function ManagePage() {
             </DialogHeader>
             <form onSubmit={handleGroupSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="groupName">Group Name *</Label>
+                <Label htmlFor="groupNameFi">Group Name (FI) *</Label>
                 <Input
-                  id="groupName"
-                  value={groupName}
-                  onChange={(e) => setGroupName(e.target.value)}
-                  placeholder="e.g., Mammals, Birds, Plants"
+                  id="groupNameFi"
+                  value={groupNameFi}
+                  onChange={(e) => setGroupNameFi(e.target.value)}
+                  placeholder="e.g., Nisakkaat, Linnut, Kasvit"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="groupDescription">Description</Label>
+                <Label htmlFor="groupNameEn">Group Name (EN)</Label>
+                <Input
+                  id="groupNameEn"
+                  value={groupNameEn}
+                  onChange={(e) => setGroupNameEn(e.target.value)}
+                  placeholder="e.g., Mammals, Birds, Plants"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupNameSv">Group Name (SV)</Label>
+                <Input
+                  id="groupNameSv"
+                  value={groupNameSv}
+                  onChange={(e) => setGroupNameSv(e.target.value)}
+                  placeholder="e.g., Daggdjur, Faglar, Vaxter"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupDescriptionFi">Description (FI)</Label>
                 <Textarea
-                  id="groupDescription"
-                  value={groupDescription}
-                  onChange={(e) => setGroupDescription(e.target.value)}
+                  id="groupDescriptionFi"
+                  value={groupDescriptionFi}
+                  onChange={(e) => setGroupDescriptionFi(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupDescriptionEn">Description (EN)</Label>
+                <Textarea
+                  id="groupDescriptionEn"
+                  value={groupDescriptionEn}
+                  onChange={(e) => setGroupDescriptionEn(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupDescriptionSv">Description (SV)</Label>
+                <Textarea
+                  id="groupDescriptionSv"
+                  value={groupDescriptionSv}
+                  onChange={(e) => setGroupDescriptionSv(e.target.value)}
                   placeholder="Optional description..."
                   rows={3}
                 />
@@ -538,21 +630,59 @@ export default function ManagePage() {
             </DialogHeader>
             <form onSubmit={handleStackSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="stackName">Stack Name *</Label>
+                <Label htmlFor="stackNameFi">Stack Name (FI) *</Label>
                 <Input
-                  id="stackName"
-                  value={stackName}
-                  onChange={(e) => setStackName(e.target.value)}
-                  placeholder="e.g., Nordic Mammals, Common Birds"
+                  id="stackNameFi"
+                  value={stackNameFi}
+                  onChange={(e) => setStackNameFi(e.target.value)}
+                  placeholder="e.g., Pohjoisen nisakkaat"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="stackDescription">Description</Label>
+                <Label htmlFor="stackNameEn">Stack Name (EN)</Label>
+                <Input
+                  id="stackNameEn"
+                  value={stackNameEn}
+                  onChange={(e) => setStackNameEn(e.target.value)}
+                  placeholder="e.g., Nordic Mammals, Common Birds"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackNameSv">Stack Name (SV)</Label>
+                <Input
+                  id="stackNameSv"
+                  value={stackNameSv}
+                  onChange={(e) => setStackNameSv(e.target.value)}
+                  placeholder="e.g., Nordiska daggdjur"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackDescriptionFi">Description (FI)</Label>
                 <Textarea
-                  id="stackDescription"
-                  value={stackDescription}
-                  onChange={(e) => setStackDescription(e.target.value)}
+                  id="stackDescriptionFi"
+                  value={stackDescriptionFi}
+                  onChange={(e) => setStackDescriptionFi(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackDescriptionEn">Description (EN)</Label>
+                <Textarea
+                  id="stackDescriptionEn"
+                  value={stackDescriptionEn}
+                  onChange={(e) => setStackDescriptionEn(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackDescriptionSv">Description (SV)</Label>
+                <Textarea
+                  id="stackDescriptionSv"
+                  value={stackDescriptionSv}
+                  onChange={(e) => setStackDescriptionSv(e.target.value)}
                   placeholder="Optional description..."
                   rows={3}
                 />
