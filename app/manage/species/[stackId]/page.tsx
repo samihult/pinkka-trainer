@@ -156,6 +156,34 @@ export default function ManageSpeciesPage() {
     setDraggedIndex(null);
   };
 
+  const handleSortAlphabetically = async () => {
+    if (species.length < 2) return;
+    const sortedSpecies = [...species].sort((a, b) =>
+      (a.data.scientificName ?? "").localeCompare(
+        b.data.scientificName ?? "",
+        undefined,
+        { sensitivity: "base" },
+      ),
+    );
+    setSpecies(sortedSpecies);
+
+    try {
+      const reorderedSpeciesIds = sortedSpecies.map((item) => item.id);
+      await updateStackSpeciesOrder(stackId, reorderedSpeciesIds);
+      toast({
+        title: "Success",
+        description: "Species sorted alphabetically",
+      });
+    } catch (error) {
+      logFirestoreError("Failed to sort species", error);
+      toast({
+        title: "Error",
+        description: "Failed to sort species",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (loading) {
     return (
       <ProtectedRoute requiredRole="editor">
@@ -211,6 +239,13 @@ export default function ManageSpeciesPage() {
                     Card
                   </Button>
                 </div>
+                <Button
+                  variant="secondary"
+                  onClick={handleSortAlphabetically}
+                  disabled={species.length < 2}
+                >
+                  Sort A-Z
+                </Button>
                 <Button onClick={() => setShowForm(true)}>
                   <Plus className="mr-2 h-4 w-4" />
                   Add Species
