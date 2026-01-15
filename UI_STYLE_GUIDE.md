@@ -24,18 +24,21 @@ If (1) conflicts with (2), escalate in the PR notes and implement the most minim
 ---
 
 ## Components & Interaction Patterns
+
+### Component selection
+- Always prefer shadcn/ui components, then default to radix ui patterns
+
 ### Buttons
 - Primary: one per view/section where possible.
 - Secondary: neutral outline/ghost.
 - Destructive: reserved for irreversible actions; confirm where appropriate.
-- Button height: consistent (usually 36–44px depending on platform).
 - Always show a loading state for async actions.
 
 ### Forms
 - Labels are always visible (don’t rely on placeholder-only).
 - Inline validation near the field; avoid interrupting modals unless critical.
 - Required fields clearly indicated.
-- Use helper text for constraints (e.g., “Max 50 characters”).
+- Use helper text for constraints (e.g., "Max 50 characters").
 
 ### Tables / Lists
 - Column alignment consistent; numeric right-aligned.
