@@ -113,6 +113,7 @@ export function PinkkaExplorer({
     }),
     [
       preferredLang,
+      importStatusVersion,
       loadRootGroups,
       loadGroupStacks,
       loadStackSpecies,

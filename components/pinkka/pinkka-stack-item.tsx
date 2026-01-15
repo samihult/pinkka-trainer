@@ -42,8 +42,8 @@ export function PinkkaStackItem({
       <span
         className={
           isImported
-            ? "mt-1.5 h-2 w-2 rounded-full bg-sky-500 shadow-[0_0_6px_rgba(14,165,233,0.7)]"
-            : "mt-1.5 h-2 w-2 rounded-full bg-transparent"
+            ? "shrink-0 mt-1.5 h-2 w-2 rounded-full bg-sky-500 shadow-[0_0_6px_rgba(14,165,233,0.7)]"
+            : "shrink-0 mt-1.5 h-2 w-2 rounded-full bg-transparent"
         }
         aria-hidden="true"
       />
