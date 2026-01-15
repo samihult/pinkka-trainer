@@ -37,13 +37,12 @@ export function Flashcard({
   const [flipped, setFlipped] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  const imageCount = species.data.images ? species.data.images.length - 1 : 0;
+
   const handleFlip = () => setFlipped(!flipped);
 
   const handleNextImage = () => {
-    if (
-      species.data.images &&
-      currentImageIndex < species.data.images.length - 1
-    ) {
+    if (imageCount > 0 && currentImageIndex < imageCount) {
       setCurrentImageIndex(currentImageIndex + 1);
     }
   };
@@ -97,23 +96,50 @@ export function Flashcard({
                   priority
                 />
 
-                {species.data.images && species.data.images.length > 1 && (
-                  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                    {species.data.images.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCurrentImageIndex(idx);
-                        }}
-                        className={`h-2 rounded-full transition-all ${
-                          idx === currentImageIndex
-                            ? "w-8 bg-white"
-                            : "w-2 bg-white/50"
-                        }`}
-                      />
-                    ))}
-                  </div>
+                {imageCount > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white transition hover:bg-black/60"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handlePreviousImage();
+                      }}
+                      aria-label="Previous image"
+                      disabled={currentImageIndex === 0}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white transition hover:bg-black/60"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleNextImage();
+                      }}
+                      aria-label="Next image"
+                      disabled={currentImageIndex === imageCount - 1}
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                      {species.data.images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex(idx);
+                          }}
+                          className={`h-2 rounded-full transition-all ${
+                            idx === currentImageIndex
+                              ? "w-8 bg-white"
+                              : "w-2 bg-white/50"
+                          }`}
+                          aria-label={`Show image ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
             ) : (
