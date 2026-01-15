@@ -31,7 +31,6 @@ import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 
 export default function ManageSpeciesPage() {
   const params = useParams();
-  const router = useRouter();
   const stackId = params.stackId as string;
   const { user } = useAuth();
   const { toast } = useToast();
@@ -42,9 +41,7 @@ export default function ManageSpeciesPage() {
   const [editingSpecies, setEditingSpecies] = useState<Species | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [cardVariant, setCardVariant] = useState<"default" | "minimal">(
-    "minimal",
-  );
+  const [cardVariant, setCardVariant] = useState<"card" | "minimal">("minimal");
 
   useEffect(() => {
     void loadData();
@@ -207,11 +204,11 @@ export default function ManageSpeciesPage() {
                   </Button>
                   <Button
                     size="sm"
-                    variant={cardVariant === "default" ? "secondary" : "ghost"}
+                    variant={cardVariant === "card" ? "secondary" : "ghost"}
                     className="h-7 px-3"
-                    onClick={() => setCardVariant("default")}
+                    onClick={() => setCardVariant("card")}
                   >
-                    Default
+                    Card
                   </Button>
                 </div>
                 <Button onClick={() => setShowForm(true)}>
@@ -236,7 +233,7 @@ export default function ManageSpeciesPage() {
             </div>
           )}
 
-          <div className="grid gap-1">
+          <div className="columns-1 gap-x-5 md:columns-2 xl:columns-3">
             {species.map((item, index) => {
               return (
                 <DraggableHorizontalItem
@@ -246,6 +243,7 @@ export default function ManageSpeciesPage() {
                   onDragOver={handleDragOver}
                   onDragEnd={handleDragEnd}
                   variant={cardVariant}
+                  className="mb-3 break-inside-avoid"
                 >
                   <ManageSpeciesCardHorizontalContent
                     species={item}

@@ -12,7 +12,7 @@ export interface ManageSpeciesCardHorizontalContentProps {
   /** Species item to display. */
   species: Species;
   /** Visual layout variant for the content. */
-  variant?: "default" | "minimal";
+  variant?: "card" | "minimal";
   /** Called when the edit action is clicked. */
   onEdit: (species: Species) => void;
   /** Called when the delete action is clicked. */
@@ -22,7 +22,7 @@ export interface ManageSpeciesCardHorizontalContentProps {
 /** Horizontal content block for a species entry, suitable for multiple containers. */
 export function ManageSpeciesCardHorizontalContent({
   species,
-  variant = "default",
+  variant = "card",
   onEdit,
   onDelete,
 }: ManageSpeciesCardHorizontalContentProps) {

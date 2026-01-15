@@ -25,7 +25,7 @@ export interface DraggableHorizontalItemProps {
   /** Whether to show the drag handle icon. */
   showDragHandle?: boolean;
   /** Visual style variant for the card container. */
-  variant?: "default" | "minimal";
+  variant?: "card" | "minimal";
 }
 
 /** Draggable container for horizontal content blocks that can be reordered. */
@@ -38,7 +38,7 @@ export function DraggableHorizontalItem({
   className,
   contentClassName,
   showDragHandle = true,
-  variant = "default",
+  variant = "card",
 }: DraggableHorizontalItemProps) {
   return (
     <Card
@@ -48,7 +48,7 @@ export function DraggableHorizontalItem({
       onDragEnd={onDragEnd}
       className={cn(
         "cursor-move transition-shadow",
-        variant === "default" && "hover:shadow-md",
+        variant === "card" && "hover:shadow-md",
         variant === "minimal" && "border-0 shadow-none py-0 bg-transparent",
         className,
       )}
