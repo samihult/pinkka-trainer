@@ -80,14 +80,23 @@ export default function ManagePage() {
     if (!user) return;
 
     try {
-      const groupsData = await getGroups(user.uid);
+      const [groupsData, allStacks] = await Promise.all([
+        getGroups(user.uid),
+        getStacks(undefined, user.uid),
+      ]);
       setGroups(groupsData);
 
-      // Load stacks for each group
-      const stacksData: { [key: string]: Stack[] } = {};
-      for (const group of groupsData) {
-        stacksData[group.id] = await getStacks(group.id, user.uid);
-      }
+      const stackById = new Map(allStacks.map((stack) => [stack.id, stack]));
+      const stacksData = groupsData.reduce<{ [key: string]: Stack[] }>(
+        (acc, group) => {
+          const orderedStacks = (group.stackIds ?? [])
+            .map((stackId) => stackById.get(stackId))
+            .filter((stack): stack is Stack => Boolean(stack));
+          acc[group.id] = orderedStacks;
+          return acc;
+        },
+        {},
+      );
       setStacks(stacksData);
     } catch (error) {
       logFirestoreError("Failed to load groups/stacks", error);
