@@ -36,10 +36,7 @@ import {
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import {
-  Plus,
-  FolderOpen,
-} from "lucide-react";
+import { Plus, FolderOpen } from "lucide-react";
 
 export default function ManagePage() {
   const { user } = useAuth();
@@ -625,7 +622,7 @@ export default function ManagePage() {
                 {editingStack ? "Edit Stack" : "Create New Stack"}
               </DialogTitle>
               <DialogDescription>
-                Stacks (pinkka) contain related species for learning
+                Stacks contain related species for learning
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleStackSubmit} className="space-y-4">
