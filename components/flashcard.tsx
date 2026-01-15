@@ -56,10 +56,7 @@ export function Flashcard({
         Card {currentIndex + 1} of {total}
       </div>
 
-      <Card
-        className="min-h-[500px] relative overflow-hidden cursor-pointer"
-        onClick={handleFlip}
-      >
+      <Card className="min-h-[500px] relative overflow-hidden cursor-pointer">
         <CardContent className="p-0 h-full">
           <div
             className={`transition-all duration-500 ${flipped ? "opacity-0" : "opacity-100"}`}

@@ -6,6 +6,7 @@ import { ZoomIn } from "lucide-react";
 import type { SpeciesImage } from "@/lib/types";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import { cn } from "@/lib/utils";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Carousel,
   CarouselContent,
@@ -37,6 +38,8 @@ export interface SpeciesImageCarouselProps {
   onIndexChange?: (index: number) => void;
   /** Callback when an image is clicked. */
   onImageClick?: (index: number) => void;
+  /** Whether to enable the full-viewport modal on image click. */
+  enableModal?: boolean;
 }
 
 /** Carousel for displaying species images with lazy loading and pagination. */
@@ -51,13 +54,15 @@ export function SpeciesImageCarousel({
   emptyMessage = "No image available",
   onIndexChange,
   onImageClick,
+  enableModal = true,
 }: SpeciesImageCarouselProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
   const [loadedSlides, setLoadedSlides] = useState<boolean[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const loadedSlidesRef = useRef<Set<number>>(new Set());
   const imageCount = images.length;
-  const isInteractive = Boolean(onImageClick);
+  const isInteractive = Boolean(onImageClick) || enableModal;
   const carouselKey = useMemo(
     () => resetKey ?? images.map((image) => image.id).join("-"),
     [resetKey, images],
@@ -144,6 +149,19 @@ export function SpeciesImageCarousel({
     }
   }, [imageCount, resetKey, carouselApi, lazyLoadImages]);
 
+  useEffect(() => {
+    if (!carouselApi || !isModalOpen) return;
+    carouselApi.scrollTo(currentImageIndex);
+  }, [carouselApi, currentImageIndex, isModalOpen]);
+
+  const handleImageClick = (index: number) => {
+    setCurrentImageIndex(index);
+    onImageClick?.(index);
+    if (enableModal) {
+      setIsModalOpen(true);
+    }
+  };
+
   if (imageCount === 0) {
     return (
       <div
@@ -158,8 +176,24 @@ export function SpeciesImageCarousel({
     );
   }
 
-  return (
-    <div className={cn("relative", heightClassName, className)}>
+  const renderCarousel = ({
+    containerClassName,
+    carouselHeightClassName,
+    showHover,
+    interactive,
+  }: {
+    containerClassName?: string;
+    carouselHeightClassName: string;
+    showHover: boolean;
+    interactive: boolean;
+  }) => (
+    <div
+      className={cn(
+        "absolute inset-0",
+        carouselHeightClassName,
+        containerClassName,
+      )}
+    >
       <Carousel
         key={carouselKey}
         className="h-full"
@@ -173,14 +207,14 @@ export function SpeciesImageCarousel({
             if (!url) return null;
             return (
               <CarouselItem key={image.id ?? index} className="h-full">
-                {isInteractive ? (
+                {interactive ? (
                   <button
                     type="button"
                     className={cn(
                       "group relative h-full w-full cursor-zoom-in",
-                      heightClassName,
+                      carouselHeightClassName,
                     )}
-                    onClick={() => onImageClick?.(index)}
+                    onClick={() => handleImageClick(index)}
                     aria-label="Open image"
                   >
                     <img
@@ -193,11 +227,13 @@ export function SpeciesImageCarousel({
                       )}
                       decoding="async"
                     />
-                    <span className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                      <span className="rounded-full bg-black/55 p-3 text-white shadow-sm">
-                        <ZoomIn className="h-5 w-5" />
+                    {showHover && (
+                      <span className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                        <span className="rounded-full bg-black/55 p-3 text-white shadow-sm">
+                          <ZoomIn className="h-5 w-5" />
+                        </span>
                       </span>
-                    </span>
+                    )}
                     <div
                       className={`absolute inset-0 flex items-center justify-center bg-muted/70 text-sm text-muted-foreground transition-opacity duration-300 ${
                         isLoaded ? "opacity-0" : "opacity-100"
@@ -208,7 +244,9 @@ export function SpeciesImageCarousel({
                     </div>
                   </button>
                 ) : (
-                  <div className={cn("relative h-full", heightClassName)}>
+                  <div
+                    className={cn("relative h-full", carouselHeightClassName)}
+                  >
                     <img
                       src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
                       data-src={url}
@@ -259,5 +297,30 @@ export function SpeciesImageCarousel({
         </div>
       )}
     </div>
+  );
+
+  return (
+    <>
+      {!isModalOpen &&
+        renderCarousel({
+          containerClassName: className,
+          carouselHeightClassName: heightClassName,
+          showHover: true,
+          interactive: isInteractive,
+        })}
+      {enableModal && (
+        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <DialogContent className="h-screen w-screen rounded-none border-0 bg-black/95 p-0">
+            {isModalOpen &&
+              renderCarousel({
+                containerClassName: "h-full w-full",
+                carouselHeightClassName: "h-full",
+                showHover: false,
+                interactive: false,
+              })}
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
   );
 }
