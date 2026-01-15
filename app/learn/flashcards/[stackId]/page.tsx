@@ -111,11 +111,6 @@ export default function FlashcardsPage() {
               <h1 className="text-3xl font-bold mb-2">
                 {getLocalizedText(stack.data.name, "fi")}
               </h1>
-              {getLocalizedText(stack.data.description, "fi") && (
-                <p className="text-muted-foreground">
-                  {getLocalizedText(stack.data.description, "fi")}
-                </p>
-              )}
             </div>
 
             <Button onClick={handleShuffle} variant="outline">
