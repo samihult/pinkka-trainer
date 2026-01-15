@@ -89,35 +89,63 @@ export function PinkkaExplorer({
   );
 
 
-  const typeConfigs = useMemo(
-    () => ({
-      root: createRootTypeConfig({
+  const rootTypeConfig = useMemo(
+    () =>
+      createRootTypeConfig({
         loadChildren: loadRootGroups,
       }),
-      group: createGroupTypeConfig({
+    [loadRootGroups],
+  );
+
+  const groupTypeConfig = useMemo(
+    () =>
+      createGroupTypeConfig({
         preferredLang,
         importStatusVersion,
         loadChildren: loadGroupStacks,
       }),
-      stack: createStackTypeConfig({
+    [preferredLang, importStatusVersion, loadGroupStacks],
+  );
+
+  const stackTypeConfig = useMemo(
+    () =>
+      createStackTypeConfig({
         preferredLang,
         importStatusVersion,
         loadChildren: loadStackSpecies,
       }),
-      species: createSpeciesTypeConfig({
+    [preferredLang, importStatusVersion, loadStackSpecies],
+  );
+
+  const speciesTypeConfig = useMemo(
+    () =>
+      createSpeciesTypeConfig({
         preferredLang,
         importStatusVersion,
         loadChildren: loadSpeciesDetail,
       }),
-      "species-detail": createSpeciesDetailTypeConfig({ preferredLang }),
+    [preferredLang, importStatusVersion, loadSpeciesDetail],
+  );
+
+  const speciesDetailTypeConfig = useMemo(
+    () => createSpeciesDetailTypeConfig({ preferredLang }),
+    [preferredLang],
+  );
+
+  const typeConfigs = useMemo(
+    () => ({
+      root: rootTypeConfig,
+      group: groupTypeConfig,
+      stack: stackTypeConfig,
+      species: speciesTypeConfig,
+      "species-detail": speciesDetailTypeConfig,
     }),
     [
-      preferredLang,
-      importStatusVersion,
-      loadRootGroups,
-      loadGroupStacks,
-      loadStackSpecies,
-      loadSpeciesDetail,
+      rootTypeConfig,
+      groupTypeConfig,
+      stackTypeConfig,
+      speciesTypeConfig,
+      speciesDetailTypeConfig,
     ],
   );
 
