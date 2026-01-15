@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Species } from "@/lib/types";
@@ -11,6 +11,14 @@ import {
 } from "@/lib/pinkka/pinkka-display";
 import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
 import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 /** Props for the flashcard viewer. */
 interface FlashcardProps {
@@ -36,40 +44,48 @@ export function Flashcard({
 }: FlashcardProps) {
   const [flipped, setFlipped] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const imageCount = species.data.images ? species.data.images.length - 1 : 0;
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
 
   const handleFlip = () => setFlipped(!flipped);
-
-  const handleNextImage = () => {
-    if (imageCount > 0 && currentImageIndex < imageCount) {
-      setCurrentImageIndex(currentImageIndex + 1);
-    }
-  };
-
-  const handlePreviousImage = () => {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
-  };
 
   const handleNext = () => {
     setFlipped(false);
     setCurrentImageIndex(0);
+    carouselApi?.scrollTo(0);
     onNext();
   };
 
   const handlePrevious = () => {
     setFlipped(false);
     setCurrentImageIndex(0);
+    carouselApi?.scrollTo(0);
     onPrevious();
   };
 
-  const currentImage = species.data.images?.[currentImageIndex];
-  const imageUrl = getSpeciesImageUrl(currentImage);
+  const images = species.data.images ?? [];
+  const imageCount = images.length;
   const finnishName = getLocalizedText(species.data.vernacularName, "fi");
   const englishName = getLocalizedText(species.data.vernacularName, "en");
   const description = getSpeciesDescription(species.data, "fi");
+
+  useEffect(() => {
+    if (!carouselApi) return;
+    const updateSelected = () => {
+      setCurrentImageIndex(carouselApi.selectedScrollSnap());
+    };
+    updateSelected();
+    carouselApi.on("select", updateSelected);
+    carouselApi.on("reInit", updateSelected);
+    return () => {
+      carouselApi.off("select", updateSelected);
+      carouselApi.off("reInit", updateSelected);
+    };
+  }, [carouselApi]);
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+    carouselApi?.scrollTo(0);
+  }, [species.id, carouselApi]);
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -86,60 +102,58 @@ export function Flashcard({
             className={`transition-all duration-500 ${flipped ? "opacity-0" : "opacity-100"}`}
           >
             {/* Front - Image */}
-            {imageUrl ? (
+            {imageCount > 0 ? (
               <div className="relative h-[500px]">
-                <Image
-                  src={imageUrl || "/placeholder.svg"}
-                  alt={species.data.scientificName}
-                  fill
-                  className="object-cover"
-                  priority
-                />
+                <Carousel
+                  className="h-full"
+                  setApi={setCarouselApi}
+                  opts={{ align: "start" }}
+                >
+                  <CarouselContent className="h-full">
+                    {images.map((image, index) => {
+                      const url = getSpeciesImageUrl(image);
+                      if (!url) return null;
+                      return (
+                        <CarouselItem key={index} className="h-full">
+                          <div className="relative h-[500px]">
+                            <Image
+                              src={url || "/placeholder.svg"}
+                              alt={species.data.scientificName}
+                              fill
+                              className="object-cover"
+                              priority={index === 0}
+                            />
+                          </div>
+                        </CarouselItem>
+                      );
+                    })}
+                  </CarouselContent>
+                  {imageCount > 1 && (
+                    <>
+                      <CarouselPrevious className="left-3 h-9 w-9 bg-black/40 text-white hover:bg-black/60" />
+                      <CarouselNext className="right-3 h-9 w-9 bg-black/40 text-white hover:bg-black/60" />
+                    </>
+                  )}
+                </Carousel>
 
                 {imageCount > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white transition hover:bg-black/60"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handlePreviousImage();
-                      }}
-                      aria-label="Previous image"
-                      disabled={currentImageIndex === 0}
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white transition hover:bg-black/60"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleNextImage();
-                      }}
-                      aria-label="Next image"
-                      disabled={currentImageIndex === imageCount - 1}
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                      {species.data.images.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentImageIndex(idx);
-                          }}
-                          className={`h-2 rounded-full transition-all ${
-                            idx === currentImageIndex
-                              ? "w-8 bg-white"
-                              : "w-2 bg-white/50"
-                          }`}
-                          aria-label={`Show image ${idx + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </>
+                  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                    {images.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          carouselApi?.scrollTo(idx);
+                        }}
+                        className={`h-2 rounded-full transition-all ${
+                          idx === currentImageIndex
+                            ? "w-8 bg-white"
+                            : "w-2 bg-white/50"
+                        }`}
+                        aria-label={`Show image ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
             ) : (
