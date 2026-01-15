@@ -37,6 +37,7 @@ import {
   deleteGroup,
   deleteStack,
   reorderItems,
+  updateGroupStackOrder,
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
@@ -72,6 +73,12 @@ export default function ManagePage() {
   const [stackDescription, setStackDescription] = useState("");
 
   const [draggedGroupIndex, setDraggedGroupIndex] = useState<number | null>(
+    null,
+  );
+  const [draggedStackIndex, setDraggedStackIndex] = useState<number | null>(
+    null,
+  );
+  const [draggedStackGroupId, setDraggedStackGroupId] = useState<string | null>(
     null,
   );
 
@@ -301,6 +308,45 @@ export default function ManagePage() {
     setDraggedGroupIndex(null);
   };
 
+  const handleStackDragStart = (groupId: string, index: number) => {
+    setDraggedStackGroupId(groupId);
+    setDraggedStackIndex(index);
+  };
+
+  const handleStackDragOver = (
+    e: React.DragEvent,
+    groupId: string,
+    index: number,
+  ) => {
+    e.preventDefault();
+    if (
+      draggedStackIndex === null ||
+      draggedStackGroupId !== groupId ||
+      draggedStackIndex === index
+    )
+      return;
+
+    const groupStacks = [...(stacks[groupId] || [])];
+    const draggedStack = groupStacks[draggedStackIndex];
+    groupStacks.splice(draggedStackIndex, 1);
+    groupStacks.splice(index, 0, draggedStack);
+
+    setStacks((prev) => ({ ...prev, [groupId]: groupStacks }));
+    setDraggedStackIndex(index);
+  };
+
+  const handleStackDragEnd = async () => {
+    if (draggedStackGroupId && draggedStackIndex !== null) {
+      const reorderedStackIds = (stacks[draggedStackGroupId] || []).map(
+        (stack) => stack.id,
+      );
+      await updateGroupStackOrder(draggedStackGroupId, reorderedStackIds);
+      toast({ title: "Success", description: "Stacks reordered successfully" });
+    }
+    setDraggedStackGroupId(null);
+    setDraggedStackIndex(null);
+  };
+
   if (loading) {
     return (
       <ProtectedRoute requiredRole="editor">
@@ -387,9 +433,13 @@ export default function ManagePage() {
 
                 <CardContent>
                   <div className="columns-1 gap-x-5 sm:columns-2 lg:columns-3">
-                    {(stacks[group.id] || []).map((stack) => (
+                    {(stacks[group.id] || []).map((stack, index) => (
                       <Card
                         key={stack.id}
+                        draggable
+                        onDragStart={() => handleStackDragStart(group.id, index)}
+                        onDragOver={(e) => handleStackDragOver(e, group.id, index)}
+                        onDragEnd={handleStackDragEnd}
                         className="mb-3 break-inside-avoid transition-shadow shadow-xs hover:shadow-sm rounded-xs"
                       >
                         <CardHeader>
