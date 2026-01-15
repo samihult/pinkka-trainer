@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Species } from "@/lib/types";
@@ -10,7 +10,6 @@ import {
   getSpeciesImageUrl,
 } from "@/lib/pinkka/pinkka-display";
 import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
-import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -45,6 +44,8 @@ export function Flashcard({
   const [flipped, setFlipped] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+  const [loadedSlides, setLoadedSlides] = useState<boolean[]>([]);
+  const loadedSlidesRef = useRef<Set<number>>(new Set());
 
   const handleFlip = () => setFlipped(!flipped);
 
@@ -68,6 +69,47 @@ export function Flashcard({
   const englishName = getLocalizedText(species.data.vernacularName, "en");
   const description = getSpeciesDescription(species.data, "fi");
 
+  const lazyLoadImages = useCallback(
+    (api: CarouselApi) => {
+    const slidesInView = api.slidesInView();
+    const slideNodes = api.slideNodes();
+
+    slidesInView.forEach((index) => {
+      if (loadedSlidesRef.current.has(index)) return;
+      const slide = slideNodes[index];
+      const image = slide.querySelector<HTMLImageElement>("img[data-src]");
+      if (!image) return;
+
+      const src = image.getAttribute("data-src");
+      const srcSet = image.getAttribute("data-srcset");
+
+      if (src) image.setAttribute("src", src);
+      if (srcSet) image.setAttribute("srcset", srcSet);
+      image.removeAttribute("data-src");
+      image.removeAttribute("data-srcset");
+      const markLoaded = () => {
+        image.setAttribute("data-loaded", "true");
+        setLoadedSlides((prev) => {
+          if (prev[index]) return prev;
+          const next =
+            prev.length === imageCount
+              ? [...prev]
+              : Array(imageCount).fill(false);
+          next[index] = true;
+          return next;
+        });
+      };
+
+      if (image.complete) {
+        markLoaded();
+      } else {
+        image.addEventListener("load", markLoaded, { once: true });
+      }
+
+      loadedSlidesRef.current.add(index);
+    });
+  }, [imageCount]);
+
   useEffect(() => {
     if (!carouselApi) return;
     const updateSelected = () => {
@@ -83,9 +125,28 @@ export function Flashcard({
   }, [carouselApi]);
 
   useEffect(() => {
+    if (!carouselApi) return;
+    const handleLazyLoad = (api: CarouselApi) => lazyLoadImages(api);
+    lazyLoadImages(carouselApi);
+    carouselApi.on("slidesInView", handleLazyLoad);
+    carouselApi.on("reInit", handleLazyLoad);
+    return () => {
+      carouselApi.off("slidesInView", handleLazyLoad);
+      carouselApi.off("reInit", handleLazyLoad);
+    };
+  }, [carouselApi, lazyLoadImages]);
+
+  useEffect(() => {
     setCurrentImageIndex(0);
+    loadedSlidesRef.current = new Set();
+    setLoadedSlides(Array(imageCount).fill(false));
     carouselApi?.scrollTo(0);
-  }, [species.id, carouselApi]);
+    if (carouselApi) {
+      lazyLoadImages(carouselApi);
+    }
+  }, [species.id, carouselApi, imageCount, lazyLoadImages]);
+
+  const carouselKey = useMemo(() => species.id, [species.id]);
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -105,6 +166,7 @@ export function Flashcard({
             {imageCount > 0 ? (
               <div className="relative h-[500px]">
                 <Carousel
+                  key={carouselKey}
                   className="h-full"
                   setApi={setCarouselApi}
                   opts={{ align: "start" }}
@@ -112,17 +174,26 @@ export function Flashcard({
                   <CarouselContent className="h-full">
                     {images.map((image, index) => {
                       const url = getSpeciesImageUrl(image);
+                      const isLoaded = loadedSlides[index];
                       if (!url) return null;
                       return (
                         <CarouselItem key={index} className="h-full">
                           <div className="relative h-[500px]">
-                            <Image
-                              src={url || "/placeholder.svg"}
+                            <img
+                              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                              data-src={url}
                               alt={species.data.scientificName}
-                              fill
-                              className="object-cover"
-                              priority={index === 0}
+                              className="h-full w-full object-cover opacity-0 transition-opacity duration-300 data-[loaded=true]:opacity-100"
+                              decoding="async"
                             />
+                            <div
+                              className={`absolute inset-0 flex items-center justify-center bg-muted/70 text-sm text-muted-foreground transition-opacity duration-300 ${
+                                isLoaded ? "opacity-0" : "opacity-100"
+                              }`}
+                              aria-hidden={isLoaded}
+                            >
+                              Loading image…
+                            </div>
                           </div>
                         </CarouselItem>
                       );
