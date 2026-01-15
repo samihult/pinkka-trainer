@@ -15,7 +15,7 @@ import { getGroups, getStacks } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { logFirestoreError } from "@/lib/utils";
-import { BookOpen, Brain } from "lucide-react";
+import { BookOpen, Brain, ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -23,6 +23,9 @@ export default function HomePage() {
   const [stacksByGroup, setStacksByGroup] = useState<{
     [key: string]: Stack[];
   }>({});
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
+    {},
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,6 +52,7 @@ export default function HomePage() {
         {},
       );
       setStacksByGroup(stacksData);
+      setExpandedGroups({});
     } catch (error) {
       logFirestoreError("Failed to load learn page data", error);
     } finally {
@@ -78,65 +82,95 @@ export default function HomePage() {
         </div>
 
         <div className="space-y-8">
-          {groups.map((group) => (
-            <div key={group.id}>
-              <h2 className="text-2xl font-bold mb-4">
-                {getLocalizedText(group.data.name, "fi")}
-              </h2>
-              {getLocalizedText(group.data.description, "fi") && (
-                <p className="text-muted-foreground mb-4">
-                  {getLocalizedText(group.data.description, "fi")}
-                </p>
-              )}
+          {groups.map((group) => {
+            const isExpanded = expandedGroups[group.id] ?? false;
+            return (
+              <div key={group.id}>
+                <button
+                  type="button"
+                  className="flex items-start py-1 gap-2 text-left rounded-sm hover:bg-muted/60 transition"
+                  onClick={() =>
+                    setExpandedGroups((prev) => ({
+                      ...prev,
+                      [group.id]: !isExpanded,
+                    }))
+                  }
+                  aria-expanded={isExpanded}
+                  aria-controls={`group-${group.id}-stacks`}
+                >
+                  <span className="mt-1 inline-flex h-8 w-8 items-center justify-center text-muted-foreground">
+                    <ChevronRight
+                      className={`h-4 w-4 transition-transform duration-200 ${
+                        isExpanded ? "rotate-90" : "rotate-0"
+                      }`}
+                    />
+                  </span>
+                  <span className="pt-0.5">
+                    <span className="text-2xl font-bold">
+                      {getLocalizedText(group.data.name, "fi")}
+                    </span>
+                    {getLocalizedText(group.data.description, "fi") && (
+                      <span className="text-muted-foreground mt-1 block">
+                        {getLocalizedText(group.data.description, "fi")}
+                      </span>
+                    )}
+                  </span>
+                </button>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {(stacksByGroup[group.id] || []).map((stack) => (
-                  <Card
-                    key={stack.id}
-                    className="hover:shadow-lg transition-shadow"
+                {isExpanded && (
+                  <div
+                    id={`group-${group.id}-stacks`}
+                    className="mt-4 space-y-4 pl-10"
                   >
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <BookOpen className="h-5 w-5 text-primary" />
-                        {getLocalizedText(stack.data.name, "fi")}
-                      </CardTitle>
-                      {getLocalizedText(stack.data.description, "fi") && (
-                        <CardDescription>
-                          {getLocalizedText(stack.data.description, "fi")}
-                        </CardDescription>
-                      )}
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <Button asChild className="w-full">
-                        <Link href={`/learn/flashcards/${stack.id}`}>
-                          <BookOpen className="mr-2 h-4 w-4" />
-                          Study Flashcards
-                        </Link>
-                      </Button>
-                      <Button
-                        asChild
-                        variant="outline"
-                        className="w-full bg-transparent"
+                    {(stacksByGroup[group.id] || []).map((stack) => (
+                      <div
+                        key={stack.id}
+                        className="rounded-lg border border-border bg-card px-4 py-3"
                       >
-                        <Link href={`/learn/quiz/${stack.id}`}>
-                          <Brain className="mr-2 h-4 w-4" />
-                          Take Quiz
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="h-4 w-4 text-primary" />
+                          <h3 className="text-base font-semibold">
+                            {getLocalizedText(stack.data.name, "fi")}
+                          </h3>
+                        </div>
+                        {getLocalizedText(stack.data.description, "fi") && (
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {getLocalizedText(stack.data.description, "fi")}
+                          </p>
+                        )}
+                        <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                          <Button asChild className="sm:w-auto">
+                            <Link href={`/learn/flashcards/${stack.id}`}>
+                              <BookOpen className="mr-2 h-4 w-4" />
+                              Study Flashcards
+                            </Link>
+                          </Button>
+                          <Button
+                            asChild
+                            variant="outline"
+                            className="bg-transparent sm:w-auto"
+                          >
+                            <Link href={`/learn/quiz/${stack.id}`}>
+                              <Brain className="mr-2 h-4 w-4" />
+                              Take Quiz
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
 
-              {(stacksByGroup[group.id] || []).length === 0 && (
-                <Card>
-                  <CardContent className="py-8 text-center text-muted-foreground">
-                    No stacks available in this group yet
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          ))}
+                    {(stacksByGroup[group.id] || []).length === 0 && (
+                      <Card>
+                        <CardContent className="py-6 text-center text-muted-foreground">
+                          No stacks available in this group yet
+                        </CardContent>
+                      </Card>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
 
           {groups.length === 0 && (
             <Card>
