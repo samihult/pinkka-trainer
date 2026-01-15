@@ -7,6 +7,9 @@ Project conventions for Codex agents working in this repo.
 - TypeScript + React 19; prefer `.ts`/`.tsx` for new files.
 - Import alias `@/` points to repo root (see `tsconfig.json`).
 
+## UI style
+- UI changes must comply with UI_STYLE_GUIDE.md.
+
 ## Styling
 - Tailwind CSS v4 via `@import "tailwindcss"` in `app/globals.css`.
 - Use design tokens from CSS variables (e.g. `--color-*`, `--radius-*`) and Tailwind utility classes.
