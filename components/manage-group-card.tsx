@@ -80,7 +80,7 @@ export function ManageGroupCard({
       className="cursor-move gap-3"
     >
       <CardHeader>
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between gap-5">
           <div className="flex gap-3 flex-1">
             <GripVertical className="h-5 w-5 text-muted-foreground mt-1 flex-shrink-0" />
             <div className="flex-1">
