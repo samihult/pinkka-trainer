@@ -130,7 +130,7 @@ export default function QuizPage() {
         <Navbar />
         <main className="container mx-auto px-4 py-8">
           <Button variant="ghost" asChild className="mb-4">
-            <Link href="/learn">
+            <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Learning
             </Link>
@@ -140,7 +140,7 @@ export default function QuizPage() {
               This stack needs at least 2 species to create a quiz
             </p>
             <Button asChild>
-              <Link href="/learn">Browse Other Stacks</Link>
+              <Link href="/">Browse Other Stacks</Link>
             </Button>
           </div>
         </main>
@@ -159,7 +159,7 @@ export default function QuizPage() {
         <Navbar />
         <main className="container mx-auto px-4 py-8">
           <Button variant="ghost" asChild className="mb-4">
-            <Link href="/learn">
+            <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Learning
             </Link>
@@ -197,7 +197,7 @@ export default function QuizPage() {
                   </Link>
                 </Button>
                 <Button asChild variant="ghost" className="w-full">
-                  <Link href="/learn">Back to Learning</Link>
+                  <Link href="/">Back to Learning</Link>
                 </Button>
               </div>
             </CardContent>
@@ -214,7 +214,7 @@ export default function QuizPage() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <Button variant="ghost" asChild className="mb-4">
-            <Link href="/learn">
+            <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Learning
             </Link>

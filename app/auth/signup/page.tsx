@@ -57,7 +57,7 @@ export default function SignUpPage() {
         title: "Account created!",
         description: "Welcome to Pinkka. Start learning now!",
       });
-      router.push("/learn");
+      router.push("/");
     } catch (error: any) {
       toast({
         title: "Error",

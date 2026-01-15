@@ -38,7 +38,7 @@ export default function SignInPage() {
         title: "Welcome back!",
         description: "You have successfully signed in.",
       });
-      router.push("/learn");
+      router.push("/");
     } catch (error: any) {
       toast({
         title: "Error",
@@ -58,7 +58,7 @@ export default function SignInPage() {
         title: "Welcome!",
         description: "You have successfully signed in with Google.",
       });
-      router.push("/learn");
+      router.push("/");
     } catch (error: any) {
       if (
         error.code !== "auth/popup-closed-by-user" &&

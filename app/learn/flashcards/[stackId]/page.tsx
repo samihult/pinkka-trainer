@@ -75,7 +75,7 @@ export default function FlashcardsPage() {
         <Navbar />
         <main className="container mx-auto px-4 py-8">
           <Button variant="ghost" asChild className="mb-4">
-            <Link href="/learn">
+            <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Learning
             </Link>
@@ -85,7 +85,7 @@ export default function FlashcardsPage() {
               No species available in this stack
             </p>
             <Button asChild>
-              <Link href="/learn">Browse Other Stacks</Link>
+              <Link href="/">Browse Other Stacks</Link>
             </Button>
           </div>
         </main>
@@ -100,7 +100,7 @@ export default function FlashcardsPage() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <Button variant="ghost" asChild className="mb-4">
-            <Link href="/learn">
+            <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Learning
             </Link>
