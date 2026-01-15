@@ -2,9 +2,7 @@
 
 import type React from "react";
 
-import Link from "next/link";
 import {
-  BookOpen,
   FolderOpen,
   GripVertical,
   Pencil,
@@ -19,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ManageStackCard } from "@/components/manage-stack-card";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import type { Group, Stack } from "@/lib/types";
 
@@ -132,49 +131,17 @@ export function ManageGroupCard({
       <CardContent>
         <div className="columns-1 gap-x-5 sm:columns-2 lg:columns-3">
           {stacks.map((stack, stackIndex) => (
-            <Card
+            <ManageStackCard
               key={stack.id}
-              draggable
-              onDragStart={() => onStackDragStart(group.id, stackIndex)}
-              onDragOver={(event) =>
-                onStackDragOver(event, group.id, stackIndex)
-              }
+              stack={stack}
+              groupId={group.id}
+              index={stackIndex}
+              onDragStart={onStackDragStart}
+              onDragOver={onStackDragOver}
               onDragEnd={onStackDragEnd}
-              className="mb-3 break-inside-avoid transition-shadow shadow-xs hover:shadow-sm rounded-xs cursor-move"
-            >
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-primary" />
-                  {getLocalizedText(stack.data.name, "fi")}
-                </CardTitle>
-                {/*{getLocalizedText(stack.data.description, "fi") && (*/}
-                {/*  <CardDescription className="text-sm">*/}
-                {/*    {getLocalizedText(stack.data.description, "fi")}*/}
-                {/*  </CardDescription>*/}
-                {/*)}*/}
-              </CardHeader>
-              <CardContent className="flex flex-wrap gap-2">
-                <Button size="sm" variant="outline" asChild>
-                  <Link href={`/manage/species/${stack.id}`}>
-                    Manage Species
-                  </Link>
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => onEditStack(group.id, stack)}
-                >
-                  <Pencil className="h-3 w-3" />
-                </Button>
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  onClick={() => onDeleteStack(stack.id)}
-                >
-                  <Trash2 className="h-3 w-3" />
-                </Button>
-              </CardContent>
-            </Card>
+              onEdit={onEditStack}
+              onDelete={onDeleteStack}
+            />
           ))}
 
           {stacks.length === 0 && (

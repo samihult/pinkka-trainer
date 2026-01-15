@@ -65,6 +65,52 @@ const exampleStacks: Stack[] = [
   },
 ];
 
+const manyStacks: Stack[] = [
+  ...exampleStacks,
+  {
+    id: "stack-4",
+    data: {
+      id: 204,
+      name: { fi: "Wolves" },
+      orderNo: 3,
+      description: { fi: "Wolves and close relatives." },
+      entityType: "subpinkka",
+    },
+    speciesIds: [],
+    ownerId: "storybook-user",
+    createdAt: new Date("2024-01-01T12:00:00.000Z"),
+    updatedAt: new Date("2024-01-01T12:00:00.000Z"),
+  },
+  {
+    id: "stack-5",
+    data: {
+      id: 205,
+      name: { fi: "Lynx" },
+      orderNo: 4,
+      description: { fi: "Forest cats and relatives." },
+      entityType: "subpinkka",
+    },
+    speciesIds: [],
+    ownerId: "storybook-user",
+    createdAt: new Date("2024-01-01T12:00:00.000Z"),
+    updatedAt: new Date("2024-01-01T12:00:00.000Z"),
+  },
+  {
+    id: "stack-6",
+    data: {
+      id: 206,
+      name: { fi: "Rodents" },
+      orderNo: 5,
+      description: { fi: "Small mammals and burrowers." },
+      entityType: "subpinkka",
+    },
+    speciesIds: [],
+    ownerId: "storybook-user",
+    createdAt: new Date("2024-01-01T12:00:00.000Z"),
+    updatedAt: new Date("2024-01-01T12:00:00.000Z"),
+  },
+];
+
 const meta: Meta<typeof ManageGroupCard> = {
   title: "Components/ManageGroupCard",
   component: ManageGroupCard,
@@ -124,5 +170,11 @@ export const Default: Story = {};
 export const Empty: Story = {
   args: {
     stacks: [],
+  },
+};
+
+export const ManyStacks: Story = {
+  args: {
+    stacks: manyStacks,
   },
 };
