@@ -81,8 +81,8 @@ export default function ManagePage() {
 
     try {
       const [groupsData, allStacks] = await Promise.all([
-        getGroups(user.uid),
-        getStacks(undefined, user.uid),
+        getGroups(user.uid, { includeHidden: true }),
+        getStacks(undefined, user.uid, { includeHidden: true }),
       ]);
       setGroups(groupsData);
 
@@ -196,6 +196,36 @@ export default function ManagePage() {
     }
   };
 
+  const handleToggleGroupVisibility = async (group: Group) => {
+    const nextHidden = !group.isHidden;
+    setGroups((prev) =>
+      prev.map((item) =>
+        item.id === group.id ? { ...item, isHidden: nextHidden } : item,
+      ),
+    );
+    try {
+      await updateGroup(group.id, { isHidden: nextHidden });
+      toast({
+        title: "Success",
+        description: nextHidden
+          ? "Group hidden from learners"
+          : "Group is now public",
+      });
+    } catch (error) {
+      logFirestoreError("Failed to toggle group visibility", error);
+      setGroups((prev) =>
+        prev.map((item) =>
+          item.id === group.id ? { ...item, isHidden: group.isHidden } : item,
+        ),
+      );
+      toast({
+        title: "Error",
+        description: "Failed to update group visibility",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Stack handlers
   const handleStackDialogOpen = (groupId: string, stack?: Stack) => {
     setSelectedGroupId(groupId);
@@ -275,6 +305,38 @@ export default function ManagePage() {
       toast({
         title: "Error",
         description: "Failed to delete stack",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleToggleStackVisibility = async (groupId: string, stack: Stack) => {
+    const nextHidden = !stack.isHidden;
+    setStacks((prev) => ({
+      ...prev,
+      [groupId]: (prev[groupId] || []).map((item) =>
+        item.id === stack.id ? { ...item, isHidden: nextHidden } : item,
+      ),
+    }));
+    try {
+      await updateStack(stack.id, { isHidden: nextHidden });
+      toast({
+        title: "Success",
+        description: nextHidden
+          ? "Stack hidden from learners"
+          : "Stack is now public",
+      });
+    } catch (error) {
+      logFirestoreError("Failed to toggle stack visibility", error);
+      setStacks((prev) => ({
+        ...prev,
+        [groupId]: (prev[groupId] || []).map((item) =>
+          item.id === stack.id ? { ...item, isHidden: stack.isHidden } : item,
+        ),
+      }));
+      toast({
+        title: "Error",
+        description: "Failed to update stack visibility",
         variant: "destructive",
       });
     }
@@ -390,8 +452,10 @@ export default function ManagePage() {
                 onAddStack={handleStackDialogOpen}
                 onEditGroup={handleGroupDialogOpen}
                 onDeleteGroup={handleDeleteGroup}
+                onToggleGroupVisibility={handleToggleGroupVisibility}
                 onEditStack={handleStackDialogOpen}
                 onDeleteStack={handleDeleteStack}
+                onToggleStackVisibility={handleToggleStackVisibility}
                 onStackDragStart={handleStackDragStart}
                 onStackDragOver={handleStackDragOver}
                 onStackDragEnd={handleStackDragEnd}

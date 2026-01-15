@@ -41,12 +41,15 @@ const meta: Meta<typeof ManageSpeciesCardHorizontalContent> = {
   component: ManageSpeciesCardHorizontalContent,
   args: {
     species: exampleSpecies,
-    variant: "default",
+    variant: "card",
     onEdit: (species) => {
       console.log("edit", species.id);
     },
     onDelete: (id) => {
       console.log("delete", id);
+    },
+    onToggleVisibility: (species) => {
+      console.log("toggle visibility", species.id);
     },
   },
   render: (args) => (

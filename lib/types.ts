@@ -60,6 +60,8 @@ export interface Species {
   id: string;
   /** Pinkka species detail payload. */
   data: PinkkaSpeciesDetail;
+  /** Whether the species is hidden from learners. */
+  isHidden?: boolean;
   /** Optional import batch id for grouping. */
   importId?: string;
   /** UID of the creator for access control. */
@@ -76,6 +78,8 @@ export interface Stack {
   id: string;
   /** Pinkka sub-stack payload. */
   data: PinkkaSubStack;
+  /** Whether the stack is hidden from learners. */
+  isHidden?: boolean;
   /** Ordered species ids in the stack. */
   speciesIds: string[];
   /** Optional import batch id for grouping. */
@@ -94,6 +98,8 @@ export interface Group {
   id: string;
   /** Pinkka group payload. */
   data: PinkkaGroup;
+  /** Whether the group is hidden from learners. */
+  isHidden?: boolean;
   /** Stack ids referenced by the group. */
   stackIds: string[];
   /** Optional import batch id for grouping. */

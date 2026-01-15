@@ -137,11 +137,17 @@ const meta: Meta<typeof ManageGroupCard> = {
     onDeleteGroup: (groupId) => {
       console.log("delete group", groupId);
     },
+    onToggleGroupVisibility: (group) => {
+      console.log("toggle group visibility", group.id);
+    },
     onEditStack: (groupId, stack) => {
       console.log("edit stack", groupId, stack.id);
     },
     onDeleteStack: (stackId) => {
       console.log("delete stack", stackId);
+    },
+    onToggleStackVisibility: (groupId, stack) => {
+      console.log("toggle stack visibility", groupId, stack.id);
     },
     onStackDragStart: (groupId, index) => {
       console.log("stack drag start", groupId, index);

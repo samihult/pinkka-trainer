@@ -41,6 +41,9 @@ const meta: Meta<typeof ManageStackCard> = {
     onDelete: (stackId) => {
       console.log("delete stack", stackId);
     },
+    onToggleVisibility: (groupId, stack) => {
+      console.log("toggle stack visibility", groupId, stack.id);
+    },
   },
   render: (args) => (
     <div className="max-w-sm">

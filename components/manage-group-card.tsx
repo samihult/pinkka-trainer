@@ -2,7 +2,15 @@
 
 import type React from "react";
 
-import { FolderOpen, GripVertical, Pencil, Plus, Trash2 } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  FolderOpen,
+  GripVertical,
+  Pencil,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -38,10 +46,14 @@ export interface ManageGroupCardProps {
   onEditGroup: (group: Group) => void;
   /** Called when deleting a group. */
   onDeleteGroup: (groupId: string) => void;
+  /** Called when toggling group visibility. */
+  onToggleGroupVisibility: (group: Group) => void;
   /** Called when editing a stack. */
   onEditStack: (groupId: string, stack: Stack) => void;
   /** Called when deleting a stack. */
   onDeleteStack: (stackId: string) => void;
+  /** Called when toggling stack visibility. */
+  onToggleStackVisibility: (groupId: string, stack: Stack) => void;
   /** Called when dragging a stack starts. */
   onStackDragStart: (groupId: string, index: number) => void;
   /** Called when a stack is dragged over another index. */
@@ -65,12 +77,16 @@ export function ManageGroupCard({
   onAddStack,
   onEditGroup,
   onDeleteGroup,
+  onToggleGroupVisibility,
   onEditStack,
   onDeleteStack,
+  onToggleStackVisibility,
   onStackDragStart,
   onStackDragOver,
   onStackDragEnd,
 }: ManageGroupCardProps) {
+  const isHidden = group.isHidden ?? false;
+
   return (
     <Card
       draggable
@@ -87,6 +103,11 @@ export function ManageGroupCard({
               <CardTitle className="flex items-center gap-2">
                 <FolderOpen className="h-5 w-5" />
                 {getLocalizedText(group.data.name, "fi")}
+                {isHidden && (
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
+                    Hidden
+                  </span>
+                )}
               </CardTitle>
               {getLocalizedText(group.data.description, "fi") && (
                 <CardDescription className="mt-1">
@@ -96,6 +117,23 @@ export function ManageGroupCard({
             </div>
           </div>
           <div className="flex gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => onToggleGroupVisibility(group)}
+            >
+              {isHidden ? (
+                <>
+                  <Eye className="mr-2 h-4 w-4" />
+                  Make Public
+                </>
+              ) : (
+                <>
+                  <EyeOff className="mr-2 h-4 w-4" />
+                  Hide
+                </>
+              )}
+            </Button>
             <Button
               size="sm"
               variant="outline"
@@ -135,6 +173,7 @@ export function ManageGroupCard({
               onDragEnd={onStackDragEnd}
               onEdit={onEditStack}
               onDelete={onDeleteStack}
+              onToggleVisibility={onToggleStackVisibility}
               className="mb-3"
             />
           ))}

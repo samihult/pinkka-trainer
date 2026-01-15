@@ -104,6 +104,7 @@ export async function createGroup(
   const groupRef = doc(collection(db, "groups"));
   const newGroup = {
     ...group,
+    isHidden: group.isHidden ?? false,
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   };
@@ -111,8 +112,12 @@ export async function createGroup(
   return groupRef.id;
 }
 
-/** Fetch groups, optionally filtered by owner. */
-export async function getGroups(ownerId?: string): Promise<Group[]> {
+/** Fetch groups, optionally filtered by owner and visibility. */
+export async function getGroups(
+  ownerId?: string,
+  options?: { includeHidden?: boolean },
+): Promise<Group[]> {
+  const includeHidden = options?.includeHidden ?? false;
   let q = query(collection(db, "groups"), orderBy("order"));
 
   if (ownerId) {
@@ -124,7 +129,7 @@ export async function getGroups(ownerId?: string): Promise<Group[]> {
   }
 
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(
+  const groups = snapshot.docs.map(
     (doc) =>
       ({
         id: doc.id,
@@ -133,6 +138,7 @@ export async function getGroups(ownerId?: string): Promise<Group[]> {
         updatedAt: doc.data().updatedAt?.toDate(),
       }) as Group,
   );
+  return includeHidden ? groups : groups.filter((group) => !group.isHidden);
 }
 
 /** Fetch a single group by id. */
@@ -173,6 +179,7 @@ export async function createStack(
   const stackRef = doc(collection(db, "stacks"));
   const newStack = {
     ...stack,
+    isHidden: stack.isHidden ?? false,
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   };
@@ -192,14 +199,17 @@ export async function createStack(
   return stackRef.id;
 }
 
-/** Fetch stacks, optionally filtered by group and/or owner. */
+/** Fetch stacks, optionally filtered by group, owner, and visibility. */
 export async function getStacks(
   groupId?: string,
   ownerId?: string,
+  options?: { includeHidden?: boolean },
 ): Promise<Stack[]> {
+  const includeHidden = options?.includeHidden ?? false;
   if (groupId) {
     const groupDoc = await getDoc(doc(db, "groups", groupId));
     if (!groupDoc.exists()) return [];
+    if (!includeHidden && groupDoc.data().isHidden) return [];
     const stackIds: string[] = groupDoc.data().stackIds || [];
     if (stackIds.length === 0) return [];
 
@@ -207,7 +217,7 @@ export async function getStacks(
       stackIds.map((id) => getDoc(doc(db, "stacks", id))),
     );
 
-    return stackDocs
+    const stacks = stackDocs
       .filter((stackDoc) => stackDoc.exists())
       .map(
         (stackDoc) =>
@@ -219,6 +229,7 @@ export async function getStacks(
           }) as Stack,
       )
       .filter((stack) => (ownerId ? stack.ownerId === ownerId : true));
+    return includeHidden ? stacks : stacks.filter((stack) => !stack.isHidden);
   }
 
   let q = query(collection(db, "stacks"), orderBy("data.id"));
@@ -231,7 +242,7 @@ export async function getStacks(
   }
 
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(
+  const stacks = snapshot.docs.map(
     (doc) =>
       ({
         id: doc.id,
@@ -240,19 +251,26 @@ export async function getStacks(
         updatedAt: doc.data().updatedAt?.toDate(),
       }) as Stack,
   );
+  return includeHidden ? stacks : stacks.filter((stack) => !stack.isHidden);
 }
 
-/** Fetch a single stack by id. */
-export async function getStack(stackId: string): Promise<Stack | null> {
+/** Fetch a single stack by id, respecting visibility by default. */
+export async function getStack(
+  stackId: string,
+  options?: { includeHidden?: boolean },
+): Promise<Stack | null> {
+  const includeHidden = options?.includeHidden ?? false;
   const stackDoc = await getDoc(doc(db, "stacks", stackId));
   if (!stackDoc.exists()) return null;
 
-  return {
+  const stack = {
     id: stackDoc.id,
     ...stackDoc.data(),
     createdAt: stackDoc.data().createdAt?.toDate(),
     updatedAt: stackDoc.data().updatedAt?.toDate(),
   } as Stack;
+  if (!includeHidden && stack.isHidden) return null;
+  return stack;
 }
 
 /** Update a stack with partial fields. */
@@ -395,6 +413,7 @@ export async function importPinkkaGroup(
       stackId,
       {
         data: stackData,
+        isHidden: false,
         speciesIds: stackSpeciesIds,
         importId: resolvedImportId,
         ownerId,
@@ -412,6 +431,7 @@ export async function importPinkkaGroup(
         speciesId,
         {
           data: speciesDetail,
+          isHidden: false,
           importId: resolvedImportId,
           ownerId,
         },
@@ -431,6 +451,7 @@ export async function importPinkkaGroup(
     groupDocId,
     {
       data: group,
+      isHidden: true,
       stackIds,
       importId: resolvedImportId,
       ownerId,
@@ -476,6 +497,7 @@ export async function importPinkkaStack(
       speciesDocId,
       {
         data: speciesDetail,
+        isHidden: false,
         importId: resolvedImportId,
         ownerId,
       },
@@ -491,6 +513,7 @@ export async function importPinkkaStack(
     stackDocId,
     {
       data: stackDetail,
+      isHidden: false,
       speciesIds,
       importId: resolvedImportId,
       ownerId,
@@ -634,6 +657,7 @@ export async function createSpecies(
   const speciesRef = doc(collection(db, "species"));
   const newSpecies = {
     ...species,
+    isHidden: species.isHidden ?? false,
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   };
@@ -653,11 +677,16 @@ export async function createSpecies(
   return speciesRef.id;
 }
 
-/** Fetch species, optionally filtered by stack. */
-export async function getSpecies(stackId?: string): Promise<Species[]> {
+/** Fetch species, optionally filtered by stack and visibility. */
+export async function getSpecies(
+  stackId?: string,
+  options?: { includeHidden?: boolean },
+): Promise<Species[]> {
+  const includeHidden = options?.includeHidden ?? false;
   if (stackId) {
     const stackDoc = await getDoc(doc(db, "stacks", stackId));
     if (!stackDoc.exists()) return [];
+    if (!includeHidden && stackDoc.data().isHidden) return [];
     const speciesIds: string[] = stackDoc.data().speciesIds || [];
     if (speciesIds.length === 0) return [];
 
@@ -665,7 +694,7 @@ export async function getSpecies(stackId?: string): Promise<Species[]> {
       speciesIds.map((id) => getDoc(doc(db, "species", id))),
     );
 
-    return speciesDocs
+    const species = speciesDocs
       .filter((speciesDoc) => speciesDoc.exists())
       .map(
         (speciesDoc) =>
@@ -676,10 +705,11 @@ export async function getSpecies(stackId?: string): Promise<Species[]> {
             updatedAt: speciesDoc.data()?.updatedAt?.toDate(),
           }) as Species,
       );
+    return includeHidden ? species : species.filter((item) => !item.isHidden);
   }
 
   const snapshot = await getDocs(query(collection(db, "species")));
-  return snapshot.docs.map(
+  const species = snapshot.docs.map(
     (doc) =>
       ({
         id: doc.id,
@@ -688,6 +718,7 @@ export async function getSpecies(stackId?: string): Promise<Species[]> {
         updatedAt: doc.data().updatedAt?.toDate(),
       }) as Species,
   );
+  return includeHidden ? species : species.filter((item) => !item.isHidden);
 }
 
 /** Fetch a single species by id. */

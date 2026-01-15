@@ -50,8 +50,8 @@ export default function ManageSpeciesPage() {
   const loadData = async () => {
     try {
       const [stackData, speciesData] = await Promise.all([
-        getStack(stackId),
-        getSpecies(stackId),
+        getStack(stackId, { includeHidden: true }),
+        getSpecies(stackId, { includeHidden: true }),
       ]);
       setStack(stackData);
       setSpecies(speciesData);
@@ -122,6 +122,36 @@ export default function ManageSpeciesPage() {
       toast({
         title: "Error",
         description: "Failed to delete species",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleToggleSpeciesVisibility = async (item: Species) => {
+    const nextHidden = !item.isHidden;
+    setSpecies((prev) =>
+      prev.map((entry) =>
+        entry.id === item.id ? { ...entry, isHidden: nextHidden } : entry,
+      ),
+    );
+    try {
+      await updateSpecies(item.id, { isHidden: nextHidden });
+      toast({
+        title: "Success",
+        description: nextHidden
+          ? "Species hidden from learners"
+          : "Species is now public",
+      });
+    } catch (error) {
+      logFirestoreError("Failed to toggle species visibility", error);
+      setSpecies((prev) =>
+        prev.map((entry) =>
+          entry.id === item.id ? { ...entry, isHidden: item.isHidden } : entry,
+        ),
+      );
+      toast({
+        title: "Error",
+        description: "Failed to update species visibility",
         variant: "destructive",
       });
     }
@@ -285,6 +315,7 @@ export default function ManageSpeciesPage() {
                     variant={cardVariant}
                     onEdit={setEditingSpecies}
                     onDelete={handleDelete}
+                    onToggleVisibility={handleToggleSpeciesVisibility}
                   />
                 </DraggableHorizontalItem>
               );
