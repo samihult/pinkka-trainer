@@ -38,6 +38,7 @@ export function PinkkaSpeciesItem({
       isMounted = false;
     };
   }, [species.id, importStatusVersion]);
+
   return (
     <div className="flex items-start gap-2">
       <span
@@ -48,7 +49,7 @@ export function PinkkaSpeciesItem({
         }
         aria-hidden="true"
       />
-      <div>
+      <div className="min-w-0 flex-1">
         <MiddleEllipsisText
           className="font-medium"
           text={species.scientificName}

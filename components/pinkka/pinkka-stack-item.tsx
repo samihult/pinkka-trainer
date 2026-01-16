@@ -52,9 +52,6 @@ export function PinkkaStackItem({
           className="font-medium"
           text={label || `Stack ${stack.id}`}
         />
-        <div className="text-xs text-muted-foreground w-full">
-          {description}
-        </div>
       </div>
     </div>
   );
