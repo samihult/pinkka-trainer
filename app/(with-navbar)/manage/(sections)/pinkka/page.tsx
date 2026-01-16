@@ -34,48 +34,58 @@ export default function PinkkaContentPage() {
     [selectionState],
   );
 
-  const { selectedGroupIds, selectedStackIds, selectedSpeciesIds } = useMemo(() => {
-    const groupIds = new Set<number>();
-    const stackIds = new Set<number>();
-    const speciesIds = new Set<number>();
+  const { selectedGroupIds, selectedStackIds, selectedSpeciesIds } =
+    useMemo(() => {
+      const groupIds = new Set<number>();
+      const stackIds = new Set<number>();
+      const speciesIds = new Set<number>();
 
-    selectedItems.forEach((item) => {
-      if (item.type === "group") {
-        const group = item.payload as PinkkaGroup;
-        groupIds.add(group.id);
-        return;
-      }
-      if (item.type === "stack") {
-        const stack = item.payload as PinkkaSubStack;
-        stackIds.add(stack.id);
-        return;
-      }
-      if (item.type === "species") {
-        const species = item.payload as PinkkaSpeciesCard;
-        speciesIds.add(species.id);
-      }
-    });
+      selectedItems.forEach((item) => {
+        if (item.type === "group") {
+          const group = item.payload as PinkkaGroup;
+          groupIds.add(group.id);
+          return;
+        }
+        if (item.type === "stack") {
+          const stack = item.payload as PinkkaSubStack;
+          stackIds.add(stack.id);
+          return;
+        }
+        if (item.type === "species") {
+          const species = item.payload as PinkkaSpeciesCard;
+          speciesIds.add(species.id);
+        }
+      });
 
-    return {
-      selectedGroupIds: Array.from(groupIds),
-      selectedStackIds: Array.from(stackIds),
-      selectedSpeciesIds: Array.from(speciesIds),
-    };
-  }, [selectedItems]);
+      return {
+        selectedGroupIds: Array.from(groupIds),
+        selectedStackIds: Array.from(stackIds),
+        selectedSpeciesIds: Array.from(speciesIds),
+      };
+    }, [selectedItems]);
 
   const importTarget = useMemo(() => {
     if (selectedSpeciesIds.length > 0) return "species";
     if (selectedStackIds.length > 0) return "stack";
     if (selectedGroupIds.length > 0) return "group";
     return null;
-  }, [selectedGroupIds.length, selectedSpeciesIds.length, selectedStackIds.length]);
+  }, [
+    selectedGroupIds.length,
+    selectedSpeciesIds.length,
+    selectedStackIds.length,
+  ]);
 
   const importCount = useMemo(() => {
     if (importTarget === "species") return selectedSpeciesIds.length;
     if (importTarget === "stack") return selectedStackIds.length;
     if (importTarget === "group") return selectedGroupIds.length;
     return 0;
-  }, [importTarget, selectedGroupIds.length, selectedSpeciesIds.length, selectedStackIds.length]);
+  }, [
+    importTarget,
+    selectedGroupIds.length,
+    selectedSpeciesIds.length,
+    selectedStackIds.length,
+  ]);
 
   const importLabels = useMemo(() => {
     if (importTarget === "species") {
@@ -124,7 +134,6 @@ export default function PinkkaContentPage() {
   return (
     <ProtectedRoute requiredRole="admin">
       <div className="min-h-screen bg-background">
-        <Navbar />
         <main className="container mx-auto flex flex-1 flex-col px-4 py-6">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>

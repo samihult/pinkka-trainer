@@ -77,8 +77,6 @@ export default function AdminPage() {
   return (
     <ProtectedRoute requiredRole="admin">
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <Navbar />
-
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">Admin Panel</h1>
@@ -93,7 +91,7 @@ export default function AdminPage() {
             <div className="grid gap-4">
               {users.map((user) => (
                 <Card key={user.uid}>
-                  <CardContent className="pt-6">
+                  <CardContent>
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">

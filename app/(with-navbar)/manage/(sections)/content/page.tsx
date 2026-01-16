@@ -463,7 +463,6 @@ export default function ManagePage() {
     return (
       <ProtectedRoute requiredRole="editor">
         <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-          <Navbar />
           <LoadingSpinner className="py-12" />
         </div>
       </ProtectedRoute>
@@ -473,8 +472,6 @@ export default function ManagePage() {
   return (
     <ProtectedRoute requiredRole="editor">
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <Navbar />
-
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8 flex items-center justify-between">
             <div>

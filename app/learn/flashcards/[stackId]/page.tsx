@@ -63,7 +63,6 @@ export default function FlashcardsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <Navbar />
         <LoadingSpinner className="py-12" />
       </div>
     );
@@ -72,7 +71,6 @@ export default function FlashcardsPage() {
   if (!stack || species.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <Navbar />
         <main className="container mx-auto px-4 py-8">
           <Button variant="ghost" asChild className="mb-4">
             <Link href="/">
@@ -95,8 +93,6 @@ export default function FlashcardsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-      <Navbar />
-
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <Button variant="ghost" asChild className="mb-4">

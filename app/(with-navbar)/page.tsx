@@ -63,7 +63,6 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <Navbar />
         <LoadingSpinner className="py-12" />
       </div>
     );
@@ -71,8 +70,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-      <Navbar />
-
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Learn Species</h1>
