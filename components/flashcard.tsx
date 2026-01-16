@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import {
-  getSpeciesDescription,
-  getSpeciesImageUrl,
-} from "@/lib/pinkka/pinkka-display";
-import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
+import { getSpeciesDescription } from "@/lib/pinkka/pinkka-display";
+import { ChevronLeft, ChevronRight, Keyboard, RotateCw } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 
 /** Props for the flashcard viewer. */
@@ -52,6 +55,55 @@ export function Flashcard({
   const finnishName = getLocalizedText(species.data.vernacularName, "fi");
   const englishName = getLocalizedText(species.data.vernacularName, "en");
   const description = getSpeciesDescription(species.data, "fi");
+  const shortcutContent = useMemo(
+    () => [
+      { label: "Flip card", keys: ["Space"] },
+      { label: "Previous image", keys: ["Left Arrow"] },
+      { label: "Next image", keys: ["Right Arrow"] },
+      { label: "Previous card", keys: ["Cmd/Ctrl", "Left Arrow"] },
+      { label: "Next card", keys: ["Cmd/Ctrl", "Right Arrow"] },
+    ],
+    [],
+  );
+
+  useEffect(() => {
+    const isEditableTarget = (target: EventTarget | null) => {
+      if (!(target instanceof HTMLElement)) return false;
+      const tag = target.tagName;
+      return (
+        target.isContentEditable ||
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT"
+      );
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (isEditableTarget(event.target)) return;
+
+      if (event.key === " " || event.code === "Space") {
+        event.preventDefault();
+        handleFlip();
+        return;
+      }
+
+      if (!(event.metaKey || event.ctrlKey)) return;
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        handlePrevious();
+        return;
+      }
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        handleNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleFlip, handleNext, handlePrevious]);
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -113,7 +165,7 @@ export function Flashcard({
         </CardContent>
       </Card>
 
-      <div className="mt-6 flex items-center justify-between">
+      <div className="mt-6 flex items-center justify-between gap-3">
         <Button
           onClick={handlePrevious}
           disabled={currentIndex === 0}
@@ -123,10 +175,50 @@ export function Flashcard({
           Previous
         </Button>
 
-        <Button onClick={handleFlip} variant="outline">
-          <RotateCw className="mr-2 h-4 w-4" />
-          Flip Card
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button onClick={handleFlip} variant="outline">
+            <RotateCw className="mr-2 h-4 w-4" />
+            Flip Card
+          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Keyboard shortcuts"
+                >
+                  <Keyboard className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="w-56">
+                <div className="space-y-2 text-xs">
+                  <div className="text-muted-foreground">Shortcuts</div>
+                  <div className="space-y-1">
+                    {shortcutContent.map((shortcut) => (
+                      <div
+                        key={shortcut.label}
+                        className="flex items-center justify-between gap-2"
+                      >
+                        <span>{shortcut.label}</span>
+                        <span className="flex items-center gap-1">
+                          {shortcut.keys.map((key) => (
+                            <kbd
+                              key={key}
+                              className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.7rem] text-muted-foreground"
+                            >
+                              {key}
+                            </kbd>
+                          ))}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
 
         <Button onClick={handleNext} disabled={currentIndex === total - 1}>
           Next

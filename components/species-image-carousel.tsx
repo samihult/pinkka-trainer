@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Lightbox, {
   LightboxExternalProps,
   type Slide,
+  type ControllerRef,
 } from "yet-another-react-lightbox";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import Inline from "yet-another-react-lightbox/plugins/inline";
@@ -61,6 +62,12 @@ export function SpeciesImageCarousel({
 }: SpeciesImageCarouselProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const inlineControllerRef = useRef<ControllerRef | null>(null);
+  const modalControllerRef = useRef<ControllerRef | null>(null);
+  const lightboxKey = useMemo(
+    () => resetKey ?? images.map((image) => image.id).join("-"),
+    [resetKey, images],
+  );
   const slides = useMemo<Slide[]>(() => {
     return images
       .map((image) => {
@@ -103,8 +110,11 @@ export function SpeciesImageCarousel({
   }, [currentImageIndex, slides.length]);
 
   const handleView = ({ index }: { index: number }) => {
-    setCurrentImageIndex(index);
-    onIndexChange?.(index);
+    setCurrentImageIndex((prev) => {
+      if (prev === index) return prev;
+      onIndexChange?.(index);
+      return index;
+    });
   };
 
   const handleClick = () => {
@@ -113,6 +123,41 @@ export function SpeciesImageCarousel({
       setIsLightboxOpen(true);
     }
   };
+
+  useEffect(() => {
+    const isEditableTarget = (target: EventTarget | null) => {
+      if (!(target instanceof HTMLElement)) return false;
+      const tag = target.tagName;
+      return (
+        target.isContentEditable ||
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT"
+      );
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      if (isEditableTarget(event.target)) return;
+
+      const controller = isLightboxOpen
+        ? modalControllerRef.current
+        : inlineControllerRef.current;
+      if (!controller) return;
+
+      event.preventDefault();
+      if (event.key === "ArrowLeft") {
+        controller.prev();
+      } else {
+        controller.next();
+      }
+      controller.focus();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isLightboxOpen]);
 
   if (slides.length === 0) {
     return (
@@ -132,10 +177,11 @@ export function SpeciesImageCarousel({
     <>
       <div className={cn("w-full", heightClassName, className)}>
         <Lightbox
+          key={lightboxKey}
           slides={slides}
-          index={currentImageIndex}
           on={{ view: handleView, click: handleClick }}
           inline={{ className: "h-full w-full" }}
+          controller={{ focus: true, ref: inlineControllerRef }}
           carousel={{
             imageFit: "contain",
             padding: 0,
@@ -143,7 +189,7 @@ export function SpeciesImageCarousel({
           toolbar={{ buttons: [] }}
           captions={{ hidden: true, showToggle: false }}
           thumbnails={{ showToggle: false, hidden: true }}
-          plugins={[Inline, Captions, Thumbnails, Zoom]}
+          plugins={[Inline, Captions, Thumbnails]}
           {...embeddedLightboxProps}
         />
       </div>
@@ -154,6 +200,7 @@ export function SpeciesImageCarousel({
           slides={slides}
           index={currentImageIndex}
           on={{ view: handleView }}
+          controller={{ focus: true, ref: modalControllerRef }}
           toolbar={{ buttons: ["zoom", "close"] }}
           captions={{ showToggle: false }}
           thumbnails={{ showToggle: false, hidden: !showPagination }}
