@@ -1,21 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ZoomIn } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import Lightbox, { type Slide } from "yet-another-react-lightbox";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Inline from "yet-another-react-lightbox/plugins/inline";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 import type { SpeciesImage } from "@/lib/types";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import { cn } from "@/lib/utils";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Card } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
 
 /** Props for the species image carousel. */
 export interface SpeciesImageCarouselProps {
@@ -43,7 +39,7 @@ export interface SpeciesImageCarouselProps {
   enableModal?: boolean;
 }
 
-/** Carousel for displaying species images with lazy loading and pagination. */
+/** Carousel for displaying species images with lightbox controls. */
 export function SpeciesImageCarousel({
   images,
   alt,
@@ -58,115 +54,62 @@ export function SpeciesImageCarousel({
   enableModal = true,
 }: SpeciesImageCarouselProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
-  const [loadedSlides, setLoadedSlides] = useState<boolean[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const loadedSlidesRef = useRef<Set<number>>(new Set());
-  const imageCount = images.length;
-  const isInteractive = Boolean(onImageClick) || enableModal;
-  const carouselKey = useMemo(
-    () => resetKey ?? images.map((image) => image.id).join("-"),
-    [resetKey, images],
-  );
-  const selectedImage = images[currentImageIndex];
-  const selectedImageUrl = selectedImage
-    ? (getSpeciesImageUrl(selectedImage) ?? "")
-    : "";
-  const modalImageUrl =
-    selectedImageUrl ||
-    images.map((image) => getSpeciesImageUrl(image) ?? "").find(Boolean) ||
-    "";
-
-  const lazyLoadImages = useCallback(
-    (api: CarouselApi) => {
-      const slidesInView = api.slidesInView();
-      const slideNodes = api.slideNodes();
-
-      slidesInView.forEach((index) => {
-        if (loadedSlidesRef.current.has(index)) return;
-        const slide = slideNodes[index];
-        const image = slide.querySelector<HTMLImageElement>("img[data-src]");
-        if (!image) return;
-
-        const src = image.getAttribute("data-src");
-        const srcSet = image.getAttribute("data-srcset");
-
-        if (src) image.setAttribute("src", src);
-        if (srcSet) image.setAttribute("srcset", srcSet);
-        image.removeAttribute("data-src");
-        image.removeAttribute("data-srcset");
-        const markLoaded = () => {
-          image.setAttribute("data-loaded", "true");
-          setLoadedSlides((prev) => {
-            if (prev[index]) return prev;
-            const next =
-              prev.length === imageCount
-                ? [...prev]
-                : Array(imageCount).fill(false);
-            next[index] = true;
-            return next;
-          });
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const imageFit = imageClassName.includes("object-cover") ? "cover" : "contain";
+  const slides = useMemo<Slide[]>(() => {
+    return images
+      .map((image) => {
+        const src = getSpeciesImageUrl(image);
+        if (!src) return null;
+        const caption =
+          getLocalizedText(image.caption, "en") ||
+          getLocalizedText(image.caption, "fi") ||
+          "";
+        const rightsOwner = image.meta?.rightsOwner
+          ? `(c) ${image.meta.rightsOwner}`
+          : "";
+        const thumbnail =
+          image.urls?.thumbnail ||
+          image.urls?.square ||
+          image.urls?.large ||
+          image.urls?.full ||
+          image.urls?.original ||
+          src;
+        return {
+          src,
+          alt,
+          title: caption || alt,
+          description: rightsOwner || undefined,
+          thumbnail,
         };
-
-        if (image.complete) {
-          markLoaded();
-        } else {
-          image.addEventListener("load", markLoaded, { once: true });
-        }
-
-        loadedSlidesRef.current.add(index);
-      });
-    },
-    [imageCount],
-  );
-
-  useEffect(() => {
-    if (!carouselApi) return;
-    const updateSelected = () => {
-      const nextIndex = carouselApi.selectedScrollSnap();
-      setCurrentImageIndex(nextIndex);
-      onIndexChange?.(nextIndex);
-    };
-    updateSelected();
-    carouselApi.on("select", updateSelected);
-    carouselApi.on("reInit", updateSelected);
-    return () => {
-      carouselApi.off("select", updateSelected);
-      carouselApi.off("reInit", updateSelected);
-    };
-  }, [carouselApi, onIndexChange]);
-
-  useEffect(() => {
-    if (!carouselApi) return;
-    const handleLazyLoad = (api: CarouselApi) => lazyLoadImages(api);
-    lazyLoadImages(carouselApi);
-    carouselApi.on("slidesInView", handleLazyLoad);
-    carouselApi.on("reInit", handleLazyLoad);
-    return () => {
-      carouselApi.off("slidesInView", handleLazyLoad);
-      carouselApi.off("reInit", handleLazyLoad);
-    };
-  }, [carouselApi, lazyLoadImages]);
+      })
+      .filter((slide): slide is Slide => Boolean(slide));
+  }, [alt, images]);
 
   useEffect(() => {
     setCurrentImageIndex(0);
-    loadedSlidesRef.current = new Set();
-    setLoadedSlides(Array(imageCount).fill(false));
-    carouselApi?.scrollTo(0);
-    if (carouselApi) {
-      lazyLoadImages(carouselApi);
-    }
-  }, [imageCount, resetKey, carouselApi, lazyLoadImages]);
+    setIsLightboxOpen(false);
+  }, [images.length, resetKey]);
 
-  const handleImageClick = (index: number) => {
+  useEffect(() => {
+    if (currentImageIndex >= slides.length && slides.length > 0) {
+      setCurrentImageIndex(0);
+    }
+  }, [currentImageIndex, slides.length]);
+
+  const handleView = ({ index }: { index: number }) => {
     setCurrentImageIndex(index);
-    onImageClick?.(index);
+    onIndexChange?.(index);
+  };
+
+  const handleClick = () => {
+    onImageClick?.(currentImageIndex);
     if (enableModal) {
-      setIsModalOpen(true);
+      setIsLightboxOpen(true);
     }
   };
 
-  if (imageCount === 0) {
+  if (slides.length === 0) {
     return (
       <div
         className={cn(
@@ -180,159 +123,31 @@ export function SpeciesImageCarousel({
     );
   }
 
-  const renderCarousel = ({
-    containerClassName,
-    carouselHeightClassName,
-    showHover,
-    interactive,
-  }: {
-    containerClassName?: string;
-    carouselHeightClassName: string;
-    showHover: boolean;
-    interactive: boolean;
-  }) => (
-    <div
-      className={cn(
-        "absolute inset-0",
-        carouselHeightClassName,
-        containerClassName,
-      )}
-    >
-      <Carousel
-        key={carouselKey}
-        className="h-full"
-        setApi={setCarouselApi}
-        opts={{ align: "start" }}
-      >
-        <CarouselContent className="h-full">
-          {images.map((image, index) => {
-            const url = getSpeciesImageUrl(image);
-            const isLoaded = loadedSlides[index];
-            if (!url) return null;
-            return (
-              <CarouselItem key={image.id ?? index} className="h-full">
-                {interactive ? (
-                  <button
-                    type="button"
-                    className={cn(
-                      "group relative h-full w-full cursor-zoom-in",
-                      carouselHeightClassName,
-                    )}
-                    onClick={() => handleImageClick(index)}
-                    aria-label="Open image"
-                  >
-                    <img
-                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                      data-src={url}
-                      alt={alt}
-                      className={cn(
-                        "h-full w-full opacity-0 transition-opacity duration-300 data-[loaded=true]:opacity-100",
-                        imageClassName,
-                      )}
-                      decoding="async"
-                    />
-                    {showHover && (
-                      <span className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                        <span className="rounded-full bg-black/55 p-3 text-white shadow-sm">
-                          <ZoomIn className="h-5 w-5" />
-                        </span>
-                      </span>
-                    )}
-                    <div
-                      className={`absolute inset-0 flex items-center justify-center bg-muted/70 text-sm text-muted-foreground transition-opacity duration-300 ${
-                        isLoaded ? "opacity-0" : "opacity-100"
-                      }`}
-                      aria-hidden={isLoaded}
-                    >
-                      Loading image…
-                    </div>
-                  </button>
-                ) : (
-                  <div
-                    className={cn("relative h-full", carouselHeightClassName)}
-                  >
-                    <img
-                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                      data-src={url}
-                      alt={alt}
-                      className={cn(
-                        "h-full w-full opacity-0 transition-opacity duration-300 data-[loaded=true]:opacity-100",
-                        imageClassName,
-                      )}
-                      decoding="async"
-                    />
-                    <div
-                      className={`absolute inset-0 flex items-center justify-center bg-muted/70 text-sm text-muted-foreground transition-opacity duration-300 ${
-                        isLoaded ? "opacity-0" : "opacity-100"
-                      }`}
-                      aria-hidden={isLoaded}
-                    >
-                      Loading image…
-                    </div>
-                  </div>
-                )}
-              </CarouselItem>
-            );
-          })}
-        </CarouselContent>
-        {imageCount > 1 && (
-          <>
-            <CarouselPrevious className="left-3 h-9 w-9 bg-black/40 text-white hover:bg-black/60" />
-            <CarouselNext className="right-3 h-9 w-9 bg-black/40 text-white hover:bg-black/60" />
-          </>
-        )}
-      </Carousel>
-
-      {imageCount > 1 && showPagination && (
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-          {images.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={(event) => {
-                event.stopPropagation();
-                carouselApi?.scrollTo(idx);
-              }}
-              className={`h-2 rounded-full transition-all ${
-                idx === currentImageIndex ? "w-8 bg-white" : "w-2 bg-white/50"
-              }`}
-              aria-label={`Show image ${idx + 1}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-
   return (
     <>
-      {!isModalOpen &&
-        renderCarousel({
-          containerClassName: className,
-          carouselHeightClassName: heightClassName,
-          showHover: true,
-          interactive: isInteractive,
-        })}
+      <div className={cn("w-full", heightClassName, className)}>
+        <Lightbox
+          slides={slides}
+          index={currentImageIndex}
+          on={{ view: handleView, click: handleClick }}
+          inline={{ className: "h-full w-full" }}
+          carousel={{ imageFit, imageProps: { className: imageClassName } }}
+          captions={{ showToggle: true }}
+          thumbnails={{ showToggle: true, hidden: !showPagination }}
+          plugins={[Inline, Fullscreen, Captions, Thumbnails, Zoom]}
+        />
+      </div>
       {enableModal && (
-        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <DialogContent animate={false} className="h-screen w-screen">
-            <div className="flex h-full w-full items-center justify-center">
-              <Card className="w-full max-w-5xl gap-0 overflow-hidden rounded-lg border-border bg-card p-0 shadow-lg">
-                {modalImageUrl ? (
-                  <img
-                    src={modalImageUrl}
-                    alt={alt}
-                    className="max-h-[calc(100vh-8rem)] w-full object-contain"
-                    decoding="async"
-                  />
-                ) : (
-                  <div className="flex min-h-[200px] items-center justify-center text-sm text-muted-foreground">
-                    Image unavailable
-                  </div>
-                )}
-              </Card>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <Lightbox
+          open={isLightboxOpen}
+          close={() => setIsLightboxOpen(false)}
+          slides={slides}
+          index={currentImageIndex}
+          on={{ view: handleView }}
+          captions={{ showToggle: true }}
+          thumbnails={{ showToggle: true, hidden: !showPagination }}
+          plugins={[Fullscreen, Captions, Thumbnails, Zoom]}
+        />
       )}
     </>
   );
