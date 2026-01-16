@@ -35,7 +35,7 @@ import {
   updateGroupStackOrder,
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getLocalizedText, MultilingualText } from "@/lib/pinkka/pinkka-api";
 import { Plus, FolderOpen } from "lucide-react";
 
 export default function ManagePage() {
@@ -119,12 +119,12 @@ export default function ManagePage() {
     fi?: string;
     en?: string;
     sv?: string;
-  }) => {
+  }): MultilingualText => {
     const nextValue: { fi?: string; en?: string; sv?: string } = {};
     if (values.fi) nextValue.fi = values.fi;
     if (values.en) nextValue.en = values.en;
     if (values.sv) nextValue.sv = values.sv;
-    return Object.keys(nextValue).length > 0 ? nextValue : undefined;
+    return Object.keys(nextValue).length > 0 ? nextValue : {};
   };
 
   // Group handlers

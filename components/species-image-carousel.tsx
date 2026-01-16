@@ -7,6 +7,7 @@ import type { SpeciesImage } from "@/lib/types";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Card } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -67,6 +68,14 @@ export function SpeciesImageCarousel({
     () => resetKey ?? images.map((image) => image.id).join("-"),
     [resetKey, images],
   );
+  const selectedImage = images[currentImageIndex];
+  const selectedImageUrl = selectedImage
+    ? (getSpeciesImageUrl(selectedImage) ?? "")
+    : "";
+  const modalImageUrl =
+    selectedImageUrl ||
+    images.map((image) => getSpeciesImageUrl(image) ?? "").find(Boolean) ||
+    "";
 
   const lazyLoadImages = useCallback(
     (api: CarouselApi) => {
@@ -148,11 +157,6 @@ export function SpeciesImageCarousel({
       lazyLoadImages(carouselApi);
     }
   }, [imageCount, resetKey, carouselApi, lazyLoadImages]);
-
-  useEffect(() => {
-    if (!carouselApi || !isModalOpen) return;
-    carouselApi.scrollTo(currentImageIndex);
-  }, [carouselApi, currentImageIndex, isModalOpen]);
 
   const handleImageClick = (index: number) => {
     setCurrentImageIndex(index);
@@ -310,14 +314,23 @@ export function SpeciesImageCarousel({
         })}
       {enableModal && (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <DialogContent className="h-screen w-screen rounded-none border-0 bg-black/95 p-0">
-            {isModalOpen &&
-              renderCarousel({
-                containerClassName: "h-full w-full",
-                carouselHeightClassName: "h-full",
-                showHover: false,
-                interactive: false,
-              })}
+          <DialogContent animate={false} className="h-screen w-screen">
+            <div className="flex h-full w-full items-center justify-center">
+              <Card className="w-full max-w-5xl gap-0 overflow-hidden rounded-lg border-border bg-card p-0 shadow-lg">
+                {modalImageUrl ? (
+                  <img
+                    src={modalImageUrl}
+                    alt={alt}
+                    className="max-h-[calc(100vh-8rem)] w-full object-contain"
+                    decoding="async"
+                  />
+                ) : (
+                  <div className="flex min-h-[200px] items-center justify-center text-sm text-muted-foreground">
+                    Image unavailable
+                  </div>
+                )}
+              </Card>
+            </div>
           </DialogContent>
         </Dialog>
       )}
