@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Lightbox, { type Slide } from "yet-another-react-lightbox";
+import Lightbox, {
+  LightboxExternalProps,
+  type Slide,
+} from "yet-another-react-lightbox";
 import Captions from "yet-another-react-lightbox/plugins/captions";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Inline from "yet-another-react-lightbox/plugins/inline";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Counter from "yet-another-react-lightbox/plugins/counter";
 
 import type { SpeciesImage } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
@@ -25,8 +28,6 @@ export interface SpeciesImageCarouselProps {
   className?: string;
   /** Optional height class for the carousel region. */
   heightClassName?: string;
-  /** Optional image class name override. */
-  imageClassName?: string;
   /** Whether to show pagination dots. */
   showPagination?: boolean;
   /** Message shown when no images are available. */
@@ -37,6 +38,10 @@ export interface SpeciesImageCarouselProps {
   onImageClick?: (index: number) => void;
   /** Whether to enable the full-viewport modal on image click. */
   enableModal?: boolean;
+  /** Lightbox props for the embedded version */
+  embeddedLightboxProps?: LightboxExternalProps;
+  /** Lightbox props for the full-screen version */
+  fullScreenLightboxProps?: LightboxExternalProps;
 }
 
 /** Carousel for displaying species images with lightbox controls. */
@@ -46,16 +51,16 @@ export function SpeciesImageCarousel({
   resetKey,
   className,
   heightClassName = "h-[500px]",
-  imageClassName = "object-cover",
   showPagination = true,
   emptyMessage = "No image available",
   onIndexChange,
   onImageClick,
   enableModal = true,
+  embeddedLightboxProps,
+  fullScreenLightboxProps,
 }: SpeciesImageCarouselProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const imageFit = imageClassName.includes("object-cover") ? "cover" : "contain";
   const slides = useMemo<Slide[]>(() => {
     return images
       .map((image) => {
@@ -131,10 +136,15 @@ export function SpeciesImageCarousel({
           index={currentImageIndex}
           on={{ view: handleView, click: handleClick }}
           inline={{ className: "h-full w-full" }}
-          carousel={{ imageFit, imageProps: { className: imageClassName } }}
-          captions={{ showToggle: true }}
-          thumbnails={{ showToggle: true, hidden: !showPagination }}
-          plugins={[Inline, Fullscreen, Captions, Thumbnails, Zoom]}
+          carousel={{
+            imageFit: "contain",
+            padding: 0,
+          }}
+          toolbar={{ buttons: [] }}
+          captions={{ hidden: true, showToggle: false }}
+          thumbnails={{ showToggle: false, hidden: true }}
+          plugins={[Inline, Captions, Thumbnails, Zoom]}
+          {...embeddedLightboxProps}
         />
       </div>
       {enableModal && (
@@ -144,9 +154,23 @@ export function SpeciesImageCarousel({
           slides={slides}
           index={currentImageIndex}
           on={{ view: handleView }}
-          captions={{ showToggle: true }}
-          thumbnails={{ showToggle: true, hidden: !showPagination }}
-          plugins={[Fullscreen, Captions, Thumbnails, Zoom]}
+          toolbar={{ buttons: ["zoom", "close"] }}
+          captions={{ showToggle: false }}
+          thumbnails={{ showToggle: false, hidden: !showPagination }}
+          counter={{
+            container: {
+              style: {
+                position: "absolute",
+                top: "unset",
+                bottom: 0,
+                color: "var(--background)",
+                backgroundColor: "black",
+              },
+              className: "absolute px-3 py-1 rounded-sm",
+            },
+          }}
+          plugins={[Captions, Thumbnails, Zoom, Counter]}
+          {...fullScreenLightboxProps}
         />
       )}
     </>

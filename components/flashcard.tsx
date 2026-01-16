@@ -5,7 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesDescription } from "@/lib/pinkka/pinkka-display";
+import {
+  getSpeciesDescription,
+  getSpeciesImageUrl,
+} from "@/lib/pinkka/pinkka-display";
 import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 
@@ -56,7 +59,7 @@ export function Flashcard({
         Card {currentIndex + 1} of {total}
       </div>
 
-      <Card className="min-h-[500px] relative overflow-hidden cursor-pointer">
+      <Card className="min-h-[500px] relative overflow-hidden cursor-pointer p-0">
         <CardContent className="p-0 h-full">
           <div
             className={`transition-all duration-500 ${flipped ? "opacity-0" : "opacity-100"}`}
@@ -67,6 +70,9 @@ export function Flashcard({
               alt={species.data.scientificName}
               resetKey={species.id}
               heightClassName="h-[500px]"
+              fullScreenLightboxProps={{
+                captions: { hidden: true, showToggle: false },
+              }}
             />
           </div>
 
