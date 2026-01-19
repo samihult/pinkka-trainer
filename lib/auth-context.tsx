@@ -18,6 +18,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { auth, db } from "./firebase/firebase-config";
 import type { User, UserRole } from "./types";
+import { normalizeQuizPreferences } from "./quiz/quiz-preferences";
 
 /** Context shape for authentication state and actions. */
 interface AuthContextType {
@@ -48,12 +49,19 @@ async function createOrGetUserDocument(
 
     if (userDoc.exists()) {
       const userData = userDoc.data();
+      const storedQuizPreferences = userData.preferences?.quiz
+        ? normalizeQuizPreferences(userData.preferences.quiz)
+        : undefined;
+      const storedPreferences = storedQuizPreferences
+        ? { quiz: storedQuizPreferences }
+        : undefined;
       return {
         uid: firebaseUser.uid,
         email: firebaseUser.email!,
         role: userData.role as UserRole,
         displayName: userData.displayName,
         createdAt: userData.createdAt?.toDate(),
+        preferences: storedPreferences,
       };
     } else {
       const newUser: User = {

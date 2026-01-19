@@ -19,7 +19,15 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { db, storage } from "./firebase-config";
-import type { Species, Stack, Group, SpeciesImage, User } from "../types";
+import type {
+  QuizPreferences,
+  Species,
+  Stack,
+  Group,
+  SpeciesImage,
+  User,
+} from "../types";
+import { normalizeQuizPreferences } from "../quiz/quiz-preferences";
 import {
   fetchPinkkaGroupWithStacks,
   fetchPinkkaSpecies,
@@ -94,6 +102,26 @@ export async function getAllUsers(): Promise<User[]> {
         createdAt: doc.data().createdAt?.toDate(),
       }) as User,
   );
+}
+
+/** Fetch quiz preferences for a user by uid. */
+export async function getUserQuizPreferences(
+  userId: string,
+): Promise<QuizPreferences | null> {
+  const userDoc = await getDoc(doc(db, "users", userId));
+  if (!userDoc.exists()) return null;
+  const quizPreferences = userDoc.data().preferences?.quiz;
+  return quizPreferences ? normalizeQuizPreferences(quizPreferences) : null;
+}
+
+/** Update quiz preferences for a user by uid. */
+export async function updateUserQuizPreferences(
+  userId: string,
+  preferences: QuizPreferences,
+): Promise<void> {
+  await updateDoc(doc(db, "users", userId), {
+    "preferences.quiz": preferences,
+  });
 }
 
 // Group operations

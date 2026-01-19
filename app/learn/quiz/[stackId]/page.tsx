@@ -1,31 +1,53 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { getStack, getSpecies } from "@/lib/firebase/firestore-helpers";
-import type { Stack, Species } from "@/lib/types";
+import { useAuth } from "@/lib/auth-context";
+import {
+  getStack,
+  getSpecies,
+  getUserQuizPreferences,
+  updateUserQuizPreferences,
+} from "@/lib/firebase/firestore-helpers";
+import type {
+  QuizAnswerMode,
+  QuizMode,
+  QuizPreferences,
+  Stack,
+  Species,
+} from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import {
+  DEFAULT_QUIZ_PREFERENCES,
+  normalizeQuizPreferences,
+} from "@/lib/quiz/quiz-preferences";
 import { logFirestoreError } from "@/lib/utils";
 import { ArrowLeft, CheckCircle2, XCircle, RotateCw } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
+/** Quiz prompt data for a single question. */
 interface QuizQuestion {
+  /** Species being asked about. */
   species: Species;
+  /** Multiple-choice options for the prompt. */
   options: Species[];
+  /** Correct answer for grading. */
   correctAnswer: Species;
 }
 
+/** Quiz experience for a single stack. */
 export default function QuizPage() {
   const params = useParams();
-  const router = useRouter();
   const stackId = params.stackId as string;
+  const { user } = useAuth();
 
   const [stack, setStack] = useState<Stack | null>(null);
   const [species, setSpecies] = useState<Species[]>([]);
@@ -36,12 +58,22 @@ export default function QuizPage() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [quizComplete, setQuizComplete] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [quizPreferences, setQuizPreferences] =
+    useState<QuizPreferences | null>(null);
+  const [preferencesLoaded, setPreferencesLoaded] = useState(false);
+  const [showSettings, setShowSettings] = useState(true);
+  const [textAnswer, setTextAnswer] = useState("");
+  const [textAnswerCorrect, setTextAnswerCorrect] = useState<boolean | null>(
+    null,
+  );
 
   useEffect(() => {
     loadData();
-  }, [stackId]);
+  }, [stackId, user?.uid]);
 
   const loadData = async () => {
+    setLoading(true);
+    setPreferencesLoaded(false);
     try {
       const [stackData, speciesData] = await Promise.all([
         getStack(stackId),
@@ -49,10 +81,23 @@ export default function QuizPage() {
       ]);
       setStack(stackData);
       setSpecies(speciesData);
+      setQuestions([]);
+      setCurrentQuestionIndex(0);
+      setSelectedAnswer(null);
+      setAnswered(false);
+      setCorrectAnswers(0);
+      setQuizComplete(false);
+      setShowSettings(true);
+      setTextAnswer("");
+      setTextAnswerCorrect(null);
 
-      if (speciesData.length >= 2) {
-        generateQuestions(speciesData);
-      }
+      const storedPreferences = user
+        ? await getUserQuizPreferences(user.uid)
+        : null;
+      setQuizPreferences(
+        normalizeQuizPreferences(storedPreferences, DEFAULT_QUIZ_PREFERENCES),
+      );
+      setPreferencesLoaded(true);
     } catch (error) {
       logFirestoreError("Failed to load quiz data", error);
     } finally {
@@ -60,11 +105,15 @@ export default function QuizPage() {
     }
   };
 
-  const generateQuestions = (allSpecies: Species[]) => {
+  const generateQuestions = (allSpecies: Species[], questionCount: number) => {
     const shuffled = [...allSpecies].sort(() => Math.random() - 0.5);
     const quizQuestions: QuizQuestion[] = [];
+    const selectedSpecies = shuffled.slice(
+      0,
+      Math.min(questionCount, allSpecies.length),
+    );
 
-    shuffled.forEach((correctSpecies) => {
+    selectedSpecies.forEach((correctSpecies) => {
       // Get 3 random wrong answers
       const wrongOptions = allSpecies
         .filter((s) => s.id !== correctSpecies.id)
@@ -92,7 +141,51 @@ export default function QuizPage() {
     setAnswered(true);
 
     if (answer.id === currentQuestion.correctAnswer.id) {
-      setCorrectAnswers(correctAnswers + 1);
+      setCorrectAnswers((previous) => previous + 1);
+    }
+  };
+
+  const normalizeAnswerText = (value: string) =>
+    value.trim().toLowerCase().replace(/\s+/g, " ");
+
+  const getAcceptedAnswers = (
+    targetSpecies: Species,
+    answerMode: QuizAnswerMode,
+  ) => {
+    const scientificName = targetSpecies.data.scientificName;
+    const vernacularName = getLocalizedText(
+      targetSpecies.data.vernacularName,
+      "fi",
+    );
+
+    if (answerMode === "scientific") {
+      return [scientificName];
+    }
+
+    if (answerMode === "vernacular") {
+      return vernacularName ? [vernacularName] : [scientificName];
+    }
+
+    return vernacularName ? [scientificName, vernacularName] : [scientificName];
+  };
+
+  const handleTextAnswerSubmit = () => {
+    if (answered || !currentQuestion || !quizPreferences) return;
+
+    const normalizedAnswer = normalizeAnswerText(textAnswer);
+    if (!normalizedAnswer) return;
+
+    const acceptedAnswers = getAcceptedAnswers(
+      currentQuestion.species,
+      quizPreferences.answerMode,
+    ).map(normalizeAnswerText);
+    const isCorrect = acceptedAnswers.includes(normalizedAnswer);
+
+    setAnswered(true);
+    setTextAnswerCorrect(isCorrect);
+
+    if (isCorrect) {
+      setCorrectAnswers((previous) => previous + 1);
     }
   };
 
@@ -101,18 +194,53 @@ export default function QuizPage() {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
       setAnswered(false);
+      setTextAnswer("");
+      setTextAnswerCorrect(null);
     } else {
       setQuizComplete(true);
     }
   };
 
   const handleRestart = () => {
-    generateQuestions(species);
+    startQuiz();
+  };
+
+  const handlePreferencesChange = async (
+    updates: Partial<QuizPreferences>,
+  ) => {
+    if (!quizPreferences) return;
+
+    const nextPreferences = normalizeQuizPreferences({
+      ...quizPreferences,
+      ...updates,
+    });
+    setQuizPreferences(nextPreferences);
+
+    if (!preferencesLoaded || !user) return;
+
+    try {
+      await updateUserQuizPreferences(user.uid, nextPreferences);
+    } catch (error) {
+      logFirestoreError("Failed to save quiz preferences", error);
+    }
+  };
+
+  const startQuiz = () => {
+    if (!quizPreferences) return;
+    const clampedCount = Math.min(
+      Math.max(quizPreferences.questionCount, 2),
+      species.length,
+    );
+
+    generateQuestions(species, clampedCount);
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
     setAnswered(false);
     setCorrectAnswers(0);
     setQuizComplete(false);
+    setTextAnswer("");
+    setTextAnswerCorrect(null);
+    setShowSettings(false);
   };
 
   if (loading) {
@@ -146,8 +274,196 @@ export default function QuizPage() {
     );
   }
 
+  if (!quizPreferences) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+        <LoadingSpinner className="py-12" />
+      </div>
+    );
+  }
+
+  if (showSettings) {
+    const maxQuestions = species.length;
+    const questionOptions = [10, 25, 50];
+    const displayQuestionCount = Math.min(
+      Math.max(quizPreferences.questionCount, 2),
+      maxQuestions,
+    );
+    const canStartQuiz = displayQuestionCount >= 2;
+
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+        <main className="container mx-auto px-4 py-8">
+          <Button variant="ghost" asChild className="mb-4">
+            <Link href="/">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Learning
+            </Link>
+          </Button>
+
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader>
+              <CardTitle className="text-2xl">Quiz Settings</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Customize how this quiz will run.
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-2">
+                <Label>Number of questions</Label>
+                <div className="flex flex-wrap gap-2">
+                  {questionOptions.map((option) => {
+                    const isDisabled = option > maxQuestions;
+                    const isSelected =
+                      displayQuestionCount === option &&
+                      maxQuestions !== option;
+                    return (
+                      <Button
+                        key={option}
+                        type="button"
+                        variant={isSelected ? "default" : "outline"}
+                        disabled={isDisabled}
+                        onClick={() =>
+                          handlePreferencesChange({ questionCount: option })
+                        }
+                      >
+                        {option} ({option})
+                      </Button>
+                    );
+                  })}
+                  <Button
+                    type="button"
+                    variant={
+                      displayQuestionCount === maxQuestions
+                        ? "default"
+                        : "outline"
+                    }
+                    onClick={() =>
+                      handlePreferencesChange({ questionCount: maxQuestions })
+                    }
+                  >
+                    All ({maxQuestions})
+                  </Button>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Randomly selected from {species.length} species.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Quiz mode</Label>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    variant={
+                      quizPreferences.mode === "multiple-choice"
+                        ? "default"
+                        : "outline"
+                    }
+                    onClick={() =>
+                      handlePreferencesChange({ mode: "multiple-choice" })
+                    }
+                  >
+                    Pick from four options
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={
+                      quizPreferences.mode === "write-name"
+                        ? "default"
+                        : "outline"
+                    }
+                    onClick={() =>
+                      handlePreferencesChange({ mode: "write-name" })
+                    }
+                  >
+                    Write the species name
+                  </Button>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Pick a multiple-choice answer or type the name yourself.
+                </p>
+              </div>
+
+              {quizPreferences.mode === "write-name" && (
+                <div className="space-y-2">
+                  <Label>Accepted answer</Label>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      variant={
+                        quizPreferences.answerMode === "scientific"
+                          ? "default"
+                          : "outline"
+                      }
+                      onClick={() =>
+                        handlePreferencesChange({ answerMode: "scientific" })
+                      }
+                    >
+                      Scientific name only
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={
+                        quizPreferences.answerMode === "vernacular"
+                          ? "default"
+                          : "outline"
+                      }
+                      onClick={() =>
+                        handlePreferencesChange({ answerMode: "vernacular" })
+                      }
+                    >
+                      Vernacular name only
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={
+                        quizPreferences.answerMode === "either"
+                          ? "default"
+                          : "outline"
+                      }
+                      onClick={() =>
+                        handlePreferencesChange({ answerMode: "either" })
+                      }
+                    >
+                      Scientific or vernacular
+                    </Button>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Answers are case-insensitive and ignore extra spaces.
+                  </p>
+                </div>
+              )}
+
+              <Button
+                onClick={startQuiz}
+                className="w-full"
+                size="lg"
+                disabled={!canStartQuiz}
+              >
+                Start Quiz
+              </Button>
+            </CardContent>
+          </Card>
+        </main>
+      </div>
+    );
+  }
+
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+        <LoadingSpinner className="py-12" />
+      </div>
+    );
+  }
+
   const currentQuestion = questions[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  const currentVernacularName = getLocalizedText(
+    currentQuestion.species.data.vernacularName,
+    "fi",
+  );
 
   if (quizComplete) {
     const percentage = Math.round((correctAnswers / questions.length) * 100);
@@ -262,59 +578,110 @@ export default function QuizPage() {
               </Card>
 
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
-                {currentQuestion.options.map((option) => {
-                  const isSelected = selectedAnswer?.id === option.id;
-                  const isCorrect =
-                    option.id === currentQuestion.correctAnswer.id;
-                  const showResult = answered;
+                {quizPreferences.mode === "multiple-choice" ? (
+                  currentQuestion.options.map((option) => {
+                    const isSelected = selectedAnswer?.id === option.id;
+                    const isCorrect =
+                      option.id === currentQuestion.correctAnswer.id;
+                    const showResult = answered;
 
-                  let buttonVariant: "outline" | "default" | "destructive" =
-                    "outline";
-                  if (showResult) {
-                    if (isCorrect) {
-                      buttonVariant = "default";
-                    } else if (isSelected && !isCorrect) {
-                      buttonVariant = "destructive";
+                    let buttonVariant: "outline" | "default" | "destructive" =
+                      "outline";
+                    if (showResult) {
+                      if (isCorrect) {
+                        buttonVariant = "default";
+                      } else if (isSelected && !isCorrect) {
+                        buttonVariant = "destructive";
+                      }
                     }
-                  }
 
-                  return (
-                    <Button
-                      key={option.id}
-                      onClick={() => handleAnswerSelect(option)}
-                      variant={buttonVariant}
-                      disabled={answered}
-                      className={`h-auto py-4 px-6 text-left justify-start ${
-                        showResult && isCorrect ? "bg-primary" : ""
-                      }`}
-                    >
-                      <div className="flex items-center gap-3 w-full">
-                        <div className="flex-1">
-                          <p className="font-semibold">
-                            {option.data.scientificName}
-                          </p>
-                          {getLocalizedText(
-                            option.data.vernacularName,
-                            "fi",
-                          ) && (
-                            <p className="text-sm opacity-80">
-                              {getLocalizedText(
-                                option.data.vernacularName,
-                                "fi",
-                              )}
+                    return (
+                      <Button
+                        key={option.id}
+                        onClick={() => handleAnswerSelect(option)}
+                        variant={buttonVariant}
+                        disabled={answered}
+                        className={`h-auto py-4 px-6 text-left justify-start ${
+                          showResult && isCorrect ? "bg-primary" : ""
+                        }`}
+                      >
+                        <div className="flex items-center gap-3 w-full">
+                          <div className="flex-1">
+                            <p className="font-semibold">
+                              {option.data.scientificName}
                             </p>
+                            {getLocalizedText(
+                              option.data.vernacularName,
+                              "fi",
+                            ) && (
+                              <p className="text-sm opacity-80">
+                                {getLocalizedText(
+                                  option.data.vernacularName,
+                                  "fi",
+                                )}
+                              </p>
+                            )}
+                          </div>
+                          {showResult && isCorrect && (
+                            <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+                          )}
+                          {showResult && isSelected && !isCorrect && (
+                            <XCircle className="h-5 w-5 flex-shrink-0" />
                           )}
                         </div>
-                        {showResult && isCorrect && (
-                          <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
-                        )}
-                        {showResult && isSelected && !isCorrect && (
-                          <XCircle className="h-5 w-5 flex-shrink-0" />
-                        )}
-                      </div>
+                      </Button>
+                    );
+                  })
+                ) : (
+                  <div className="sm:col-span-2 space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="text-answer">Species name</Label>
+                      <Input
+                        id="text-answer"
+                        value={textAnswer}
+                        onChange={(event) => setTextAnswer(event.target.value)}
+                        placeholder="Type the species name"
+                        disabled={answered}
+                      />
+                      <p className="text-sm text-muted-foreground">
+                        {quizPreferences.answerMode === "scientific" &&
+                          "Scientific name required."}
+                        {quizPreferences.answerMode === "vernacular" &&
+                          (currentVernacularName
+                            ? "Vernacular name required."
+                            : "Vernacular name missing; scientific name accepted.")}
+                        {quizPreferences.answerMode === "either" &&
+                          "Scientific or vernacular name accepted."}
+                      </p>
+                    </div>
+                    <Button
+                      onClick={handleTextAnswerSubmit}
+                      size="lg"
+                      disabled={answered || !textAnswer.trim()}
+                    >
+                      Submit Answer
                     </Button>
-                  );
-                })}
+                    {answered && textAnswerCorrect !== null && (
+                      <div
+                        className={`rounded-lg border p-4 ${
+                          textAnswerCorrect
+                            ? "border-primary/40 bg-primary/5"
+                            : "border-destructive/40 bg-destructive/5"
+                        }`}
+                      >
+                        <p className="font-semibold">
+                          {textAnswerCorrect ? "Correct!" : "Not quite."}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Correct answer: {currentQuestion.species.data.scientificName}
+                          {currentVernacularName
+                            ? ` (${currentVernacularName})`
+                            : ""}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               {answered && (

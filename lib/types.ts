@@ -1,6 +1,28 @@
 /** Supported application roles. */
 export type UserRole = "viewer" | "editor" | "admin";
 
+/** Quiz presentation mode. */
+export type QuizMode = "multiple-choice" | "write-name";
+
+/** Accepted answer rules when typing a species name. */
+export type QuizAnswerMode = "scientific" | "vernacular" | "either";
+
+/** Quiz configuration stored in user preferences. */
+export interface QuizPreferences {
+  /** Number of questions to include in each quiz session. */
+  questionCount: number;
+  /** Quiz interaction mode. */
+  mode: QuizMode;
+  /** Required answer type for write-in quizzes. */
+  answerMode: QuizAnswerMode;
+}
+
+/** User-specific preferences stored with the profile. */
+export interface UserPreferences {
+  /** Quiz settings used when starting a new quiz. */
+  quiz: QuizPreferences;
+}
+
 /** Authenticated user profile. */
 export interface User {
   /** Firebase auth uid. */
@@ -13,6 +35,8 @@ export interface User {
   displayName?: string;
   /** Account creation timestamp. */
   createdAt: Date;
+  /** Optional user preferences. */
+  preferences?: UserPreferences;
 }
 
 import type {
