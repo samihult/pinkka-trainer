@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import sanitizeHtml from "sanitize-html";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,6 +39,7 @@ export function Flashcard({
   total,
 }: FlashcardProps) {
   const [flipped, setFlipped] = useState(false);
+  const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
 
   const handleFlip = () => setFlipped(!flipped);
 
@@ -55,13 +57,20 @@ export function Flashcard({
   const finnishName = getLocalizedText(species.data.vernacularName, "fi");
   const englishName = getLocalizedText(species.data.vernacularName, "en");
   const description = getSpeciesDescription(species.data, "fi");
+  const sanitizedDescription = useMemo(
+    () => (description ? sanitizeHtml(description) : ""),
+    [description],
+  );
+
   const shortcutContent = useMemo(
     () => [
       { label: "Flip card", keys: ["Space"] },
-      { label: "Previous image", keys: ["Left Arrow"] },
-      { label: "Next image", keys: ["Right Arrow"] },
-      { label: "Previous card", keys: ["Cmd/Ctrl", "Left Arrow"] },
-      { label: "Next card", keys: ["Cmd/Ctrl", "Right Arrow"] },
+      { label: "Open larger", keys: ["↑"] },
+      { label: "Show smaller", keys: ["↓"] },
+      { label: "Previous image", keys: ["←"] },
+      { label: "Next image", keys: ["→"] },
+      { label: "Previous card", keys: ["⌘/Ctrl", "←"] },
+      { label: "Next card", keys: ["⌘/Ctrl", "→"] },
     ],
     [],
   );
@@ -87,17 +96,17 @@ export function Flashcard({
         return;
       }
 
-      if (!(event.metaKey || event.ctrlKey)) return;
+      if (event.metaKey || event.ctrlKey) {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          handlePrevious();
+          return;
+        }
 
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        handlePrevious();
-        return;
-      }
-
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-        handleNext();
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          handleNext();
+        }
       }
     };
 
@@ -155,9 +164,10 @@ export function Flashcard({
 
               {description && (
                 <div className="pt-4 border-t">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {description}
-                  </p>
+                  <div
+                    className="text-muted-foreground leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+                  />
                 </div>
               )}
             </div>
@@ -181,12 +191,16 @@ export function Flashcard({
             Flip Card
           </Button>
           <TooltipProvider>
-            <Tooltip>
+            <Tooltip
+              open={keyboardTooltipOpen}
+              onOpenChange={setKeyboardTooltipOpen}
+            >
               <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
                   aria-label="Keyboard shortcuts"
+                  onClick={() => setKeyboardTooltipOpen(true)}
                 >
                   <Keyboard className="h-4 w-4" />
                 </Button>

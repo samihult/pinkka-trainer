@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Flashcard } from "@/components/flashcard";
 import { LoadingSpinner } from "@/components/loading-spinner";
@@ -15,7 +14,6 @@ import Link from "next/link";
 
 export default function FlashcardsPage() {
   const params = useParams();
-  const router = useRouter();
   const stackId = params.stackId as string;
 
   const [stack, setStack] = useState<Stack | null>(null);
@@ -24,7 +22,7 @@ export default function FlashcardsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadData();
+    void loadData();
   }, [stackId]);
 
   const loadData = async () => {

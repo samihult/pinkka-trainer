@@ -1,21 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Navbar } from "@/components/navbar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { getGroups, getStacks } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { logFirestoreError } from "@/lib/utils";
-import { BookOpen, Brain, ChevronDown, ChevronRight } from "lucide-react";
+import {
+  BookOpen,
+  Brain,
+  ChevronRight,
+  RectangleHorizontal,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -138,8 +136,8 @@ export default function HomePage() {
                         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                           <Button asChild className="sm:w-auto">
                             <Link href={`/learn/flashcards/${stack.id}`}>
-                              <BookOpen className="mr-2 h-4 w-4" />
-                              Study Flashcards
+                              <RectangleHorizontal className="mr-1 h-4 w-4" />
+                              Flashcards
                             </Link>
                           </Button>
                           <Button
@@ -148,7 +146,7 @@ export default function HomePage() {
                             className="bg-transparent sm:w-auto"
                           >
                             <Link href={`/learn/quiz/${stack.id}`}>
-                              <Brain className="mr-2 h-4 w-4" />
+                              <Brain className="mr-1 h-4 w-4" />
                               Take Quiz
                             </Link>
                           </Button>

@@ -16,6 +16,7 @@ import type { SpeciesImage } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import { cn } from "@/lib/utils";
+import { doc } from "firebase/firestore";
 
 /** Props for the species image carousel. */
 export interface SpeciesImageCarouselProps {
@@ -138,7 +139,13 @@ export function SpeciesImageCarousel({
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
-      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      if (
+        event.key !== "ArrowLeft" &&
+        event.key !== "ArrowRight" &&
+        event.key !== "ArrowUp" &&
+        event.key !== "ArrowDown"
+      )
+        return;
       if (isEditableTarget(event.target)) return;
 
       const controller = isLightboxOpen
@@ -146,17 +153,30 @@ export function SpeciesImageCarousel({
         : inlineControllerRef.current;
       if (!controller) return;
 
-      event.preventDefault();
-      if (event.key === "ArrowLeft") {
-        controller.prev();
-      } else {
-        controller.next();
+      // Change the picture even if the lightbox doesn't have to focus
+      if (event.target === document.body) {
+        event.preventDefault();
+        if (event.key === "ArrowLeft") {
+          controller.prev();
+        } else if (event.key === "ArrowRight") {
+          controller.next();
+        }
+        controller.focus();
       }
-      controller.focus();
+
+      if (event.key === "ArrowUp") {
+        if (enableModal) {
+          setIsLightboxOpen(true);
+        }
+        controller.focus();
+      } else if (event.key === "ArrowDown") {
+        setIsLightboxOpen(false);
+      }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown, { capture: true });
+    return () =>
+      window.removeEventListener("keydown", handleKeyDown, { capture: true });
   }, [isLightboxOpen]);
 
   if (slides.length === 0) {
@@ -200,7 +220,7 @@ export function SpeciesImageCarousel({
           slides={slides}
           index={currentImageIndex}
           on={{ view: handleView }}
-          controller={{ focus: true, ref: modalControllerRef }}
+          controller={{ ref: modalControllerRef }}
           toolbar={{ buttons: ["zoom", "close"] }}
           captions={{ showToggle: false }}
           thumbnails={{ showToggle: false, hidden: !showPagination }}
