@@ -74,6 +74,7 @@ Agents must:
 - Reuse existing components/styles before creating new ones.
 - Avoid creating components with very many variants or very large amount of props.
 - Keep changes minimal and localized to the requested feature.
+- Create separate subcomponents when adding dialogs, modals, or repeated elements such as cards, forms or list items. 
 
 If the agent must add a new component:
 - Put it in the existing component structure,
