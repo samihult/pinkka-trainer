@@ -71,6 +71,7 @@ export default function QuizPage() {
     void loadData();
   }, [stackId, user?.uid]);
 
+
   const loadData = async () => {
     setLoading(true);
     setPreferencesLoaded(false);
@@ -169,23 +170,27 @@ export default function QuizPage() {
     return vernacularName ? [scientificName, vernacularName] : [scientificName];
   };
 
-  const handleTextAnswerSubmit = () => {
+  const handleTextAnswerSubmit = (options?: { autoAdvance?: boolean }) => {
     if (answered || !currentQuestion || !quizPreferences) return;
 
     const normalizedAnswer = normalizeAnswerText(textAnswer);
-    if (!normalizedAnswer) return;
-
     const acceptedAnswers = getAcceptedAnswers(
       currentQuestion.species,
       quizPreferences.answerMode,
     ).map(normalizeAnswerText);
-    const isCorrect = acceptedAnswers.includes(normalizedAnswer);
+    const isCorrect = normalizedAnswer
+      ? acceptedAnswers.includes(normalizedAnswer)
+      : false;
 
     setAnswered(true);
     setTextAnswerCorrect(isCorrect);
 
     if (isCorrect) {
       setCorrectAnswers((previous) => previous + 1);
+    }
+
+    if (options?.autoAdvance) {
+      handleNext();
     }
   };
 
@@ -240,6 +245,84 @@ export default function QuizPage() {
     setTextAnswerCorrect(null);
     setShowSettings(false);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented) return;
+
+      if (showSettings) {
+        if (event.key === "Enter" && quizPreferences) {
+          const maxQuestions = species.length;
+          const displayQuestionCount = Math.min(
+            Math.max(quizPreferences.questionCount, 2),
+            maxQuestions,
+          );
+          if (displayQuestionCount >= 2) {
+            event.preventDefault();
+            startQuiz();
+          }
+        }
+        return;
+      }
+
+      if (quizComplete) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          handleRestart();
+        }
+        return;
+      }
+
+      if (!quizPreferences || !questions.length) return;
+
+      const isTextMode = quizPreferences.mode === "write-name";
+      if (isTextMode) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          if (answered) {
+            handleNext();
+          } else {
+            handleTextAnswerSubmit({ autoAdvance: true });
+          }
+        }
+        return;
+      }
+
+      if (event.key === "Enter") {
+        if (answered) {
+          event.preventDefault();
+          handleNext();
+        }
+        return;
+      }
+
+      if (!answered && ["1", "2", "3", "4"].includes(event.key)) {
+        const optionIndex = Number(event.key) - 1;
+        const currentQuestion = questions[currentQuestionIndex];
+        const option = currentQuestion?.options[optionIndex];
+        if (option) {
+          event.preventDefault();
+          handleAnswerSelect(option);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [
+    answered,
+    currentQuestionIndex,
+    handleAnswerSelect,
+    handleNext,
+    handleRestart,
+    handleTextAnswerSubmit,
+    quizComplete,
+    quizPreferences,
+    questions,
+    showSettings,
+    species.length,
+    startQuiz,
+  ]);
 
   if (loading) {
     return (
@@ -468,7 +551,7 @@ export default function QuizPage() {
                     <Button
                       onClick={handleTextAnswerSubmit}
                       size="lg"
-                      disabled={answered || !textAnswer.trim()}
+                      disabled={answered}
                     >
                       Submit Answer
                     </Button>
