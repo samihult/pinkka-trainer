@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { QuizCompletedCard } from "@/components/quiz/quiz-completed-card";
+import { QuizSettingsCard } from "@/components/quiz/quiz-settings-card";
+import { QuizSpeciesCard } from "@/components/quiz/quiz-species-card";
 import { useAuth } from "@/lib/auth-context";
 import {
   getStack,
@@ -23,22 +25,13 @@ import type {
   Species,
 } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import {
   DEFAULT_QUIZ_PREFERENCES,
   normalizeQuizPreferences,
 } from "@/lib/quiz/quiz-preferences";
 import { logFirestoreError } from "@/lib/utils";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  ListChecks,
-  PenLine,
-  RotateCw,
-  XCircle,
-} from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
 /** Quiz prompt data for a single question. */
 interface QuizQuestion {
@@ -313,168 +306,15 @@ export default function QuizPage() {
             </Link>
           </Button>
 
-          <Card className="max-w-2xl mx-auto">
-            <CardHeader>
-              <CardTitle className="text-2xl">Quiz Settings</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Customize how this quiz will run.
-              </p>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label>Number of questions</Label>
-                <div className="flex flex-wrap gap-2">
-                  {questionOptions.map((option) => {
-                    const isSelected =
-                      quizPreferences.questionCount === option &&
-                      maxQuestions !== option;
-                    return (
-                      <Button
-                        key={option}
-                        type="button"
-                        variant={isSelected ? "default" : "outline"}
-                        onClick={() =>
-                          handlePreferencesChange({ questionCount: option })
-                        }
-                      >
-                        {option}
-                      </Button>
-                    );
-                  })}
-                  <Button
-                    type="button"
-                    variant={
-                      quizPreferences.questionCount === 0
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() =>
-                      handlePreferencesChange({ questionCount: 0 })
-                    }
-                  >
-                    All
-                  </Button>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Randomly selected from {species.length} species.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Quiz mode</Label>
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    type="button"
-                    variant={
-                      quizPreferences.mode === "multiple-choice"
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() =>
-                      handlePreferencesChange({ mode: "multiple-choice" })
-                    }
-                    className="w-40 h-30 flex-col items-center justify-between gap-0 whitespace-normal p-3 text-center"
-                  >
-                    <ListChecks
-                      size={200}
-                      strokeWidth={8}
-                      absoluteStrokeWidth
-                      className="size-12"
-                      aria-hidden="true"
-                    />
-                    <span className="text-sm font-semibold">
-                      Pick from four options
-                    </span>
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={
-                      quizPreferences.mode === "write-name"
-                        ? "default"
-                        : "outline"
-                    }
-                    onClick={() =>
-                      handlePreferencesChange({ mode: "write-name" })
-                    }
-                    className="w-40 h-30 flex-col items-center justify-between gap-0 whitespace-normal p-3 text-center"
-                  >
-                    <PenLine
-                      size={200}
-                      strokeWidth={8}
-                      absoluteStrokeWidth
-                      className="size-12"
-                      aria-hidden="true"
-                    />
-                    <span className="text-sm font-semibold">
-                      Write the species name
-                    </span>
-                  </Button>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Pick a multiple-choice answer or type the name yourself.
-                </p>
-              </div>
-
-              {quizPreferences.mode === "write-name" && (
-                <div className="space-y-2">
-                  <Label>Accepted answer</Label>
-                  <div className="flex flex-wrap gap-2">
-                    <Button
-                      type="button"
-                      variant={
-                        quizPreferences.answerMode === "scientific"
-                          ? "default"
-                          : "outline"
-                      }
-                      onClick={() =>
-                        handlePreferencesChange({ answerMode: "scientific" })
-                      }
-                    >
-                      Scientific name only
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={
-                        quizPreferences.answerMode === "vernacular"
-                          ? "default"
-                          : "outline"
-                      }
-                      onClick={() =>
-                        handlePreferencesChange({ answerMode: "vernacular" })
-                      }
-                    >
-                      Vernacular name only
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={
-                        quizPreferences.answerMode === "either"
-                          ? "default"
-                          : "outline"
-                      }
-                      onClick={() =>
-                        handlePreferencesChange({ answerMode: "either" })
-                      }
-                    >
-                      Scientific or vernacular
-                    </Button>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Answers are case-insensitive and ignore extra spaces.
-                  </p>
-                </div>
-              )}
-
-              <Button
-                onClick={startQuiz}
-                className="w-full"
-                size="lg"
-                disabled={!canStartQuiz}
-              >
-                Start Quiz
-              </Button>
-            </CardContent>
-          </Card>
+          <QuizSettingsCard
+            questionOptions={questionOptions}
+            maxQuestions={maxQuestions}
+            speciesCount={species.length}
+            quizPreferences={quizPreferences}
+            canStartQuiz={canStartQuiz}
+            onPreferencesChange={handlePreferencesChange}
+            onStartQuiz={startQuiz}
+          />
         </main>
       </div>
     );
@@ -508,43 +348,13 @@ export default function QuizPage() {
             </Link>
           </Button>
 
-          <Card className="max-w-2xl mx-auto">
-            <CardHeader>
-              <CardTitle className="text-center text-3xl">
-                Quiz Complete!
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="text-center">
-                <div className="text-6xl font-bold text-primary mb-2">
-                  {percentage}%
-                </div>
-                <p className="text-xl text-muted-foreground">
-                  You got {correctAnswers} out of {questions.length} correct
-                </p>
-              </div>
-
-              <div className="pt-6 border-t space-y-2">
-                <Button onClick={handleRestart} className="w-full" size="lg">
-                  <RotateCw className="mr-2 h-4 w-4" />
-                  Take Quiz Again
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="w-full bg-transparent"
-                  size="lg"
-                >
-                  <Link href={`/learn/flashcards/${stackId}`}>
-                    Study Flashcards
-                  </Link>
-                </Button>
-                <Button asChild variant="ghost" className="w-full">
-                  <Link href="/">Back to Learning</Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <QuizCompletedCard
+            percentage={percentage}
+            correctAnswers={correctAnswers}
+            totalQuestions={questions.length}
+            stackId={stackId}
+            onRestart={handleRestart}
+          />
         </main>
       </div>
     );
@@ -576,36 +386,7 @@ export default function QuizPage() {
         <div className="max-w-3xl mx-auto">
           {currentQuestion && (
             <>
-              <Card className="mb-6">
-                <CardContent className="pt-6">
-                  <h2 className="text-xl font-semibold mb-4 text-center">
-                    What species is shown in this image?
-                  </h2>
-
-                  {currentQuestion.species.data.images &&
-                  currentQuestion.species.data.images.length > 0 ? (
-                    <div className="relative h-80 rounded-lg overflow-hidden mb-4">
-                      <Image
-                        src={
-                          getSpeciesImageUrl(
-                            currentQuestion.species.data.images[0],
-                          ) || "/placeholder.svg"
-                        }
-                        alt="Species to identify"
-                        fill
-                        className="object-cover"
-                        priority
-                      />
-                    </div>
-                  ) : (
-                    <div className="h-80 bg-muted rounded-lg flex items-center justify-center mb-4">
-                      <p className="text-muted-foreground">
-                        No image available
-                      </p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+              <QuizSpeciesCard species={currentQuestion.species} />
 
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
                 {quizPreferences.mode === "multiple-choice" ? (
