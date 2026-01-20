@@ -68,7 +68,7 @@ export default function QuizPage() {
   );
 
   useEffect(() => {
-    loadData();
+    void loadData();
   }, [stackId, user?.uid]);
 
   const loadData = async () => {
@@ -205,9 +205,7 @@ export default function QuizPage() {
     startQuiz();
   };
 
-  const handlePreferencesChange = async (
-    updates: Partial<QuizPreferences>,
-  ) => {
+  const handlePreferencesChange = async (updates: Partial<QuizPreferences>) => {
     if (!quizPreferences) return;
 
     const nextPreferences = normalizeQuizPreferences({
@@ -284,11 +282,18 @@ export default function QuizPage() {
 
   if (showSettings) {
     const maxQuestions = species.length;
-    const questionOptions = [10, 25, 50];
+    const questionOptions = [10, 25, 50, 0];
+
+    // Default to 10 cards
+    if (!questionOptions.includes(quizPreferences.questionCount)) {
+      quizPreferences.questionCount = 10;
+    }
+
     const displayQuestionCount = Math.min(
       Math.max(quizPreferences.questionCount, 2),
       maxQuestions,
     );
+
     const canStartQuiz = displayQuestionCount >= 2;
 
     return (
@@ -313,36 +318,34 @@ export default function QuizPage() {
                 <Label>Number of questions</Label>
                 <div className="flex flex-wrap gap-2">
                   {questionOptions.map((option) => {
-                    const isDisabled = option > maxQuestions;
                     const isSelected =
-                      displayQuestionCount === option &&
+                      quizPreferences.questionCount === option &&
                       maxQuestions !== option;
                     return (
                       <Button
                         key={option}
                         type="button"
                         variant={isSelected ? "default" : "outline"}
-                        disabled={isDisabled}
                         onClick={() =>
                           handlePreferencesChange({ questionCount: option })
                         }
                       >
-                        {option} ({option})
+                        {option}
                       </Button>
                     );
                   })}
                   <Button
                     type="button"
                     variant={
-                      displayQuestionCount === maxQuestions
+                      quizPreferences.questionCount === 0
                         ? "default"
                         : "outline"
                     }
                     onClick={() =>
-                      handlePreferencesChange({ questionCount: maxQuestions })
+                      handlePreferencesChange({ questionCount: 0 })
                     }
                   >
-                    All ({maxQuestions})
+                    All
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -673,7 +676,8 @@ export default function QuizPage() {
                           {textAnswerCorrect ? "Correct!" : "Not quite."}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          Correct answer: {currentQuestion.species.data.scientificName}
+                          Correct answer:{" "}
+                          {currentQuestion.species.data.scientificName}
                           {currentVernacularName
                             ? ` (${currentVernacularName})`
                             : ""}
