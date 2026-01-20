@@ -29,7 +29,14 @@ import {
   normalizeQuizPreferences,
 } from "@/lib/quiz/quiz-preferences";
 import { logFirestoreError } from "@/lib/utils";
-import { ArrowLeft, CheckCircle2, XCircle, RotateCw } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  ListChecks,
+  PenLine,
+  RotateCw,
+  XCircle,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -355,7 +362,7 @@ export default function QuizPage() {
 
               <div className="space-y-2">
                 <Label>Quiz mode</Label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3">
                   <Button
                     type="button"
                     variant={
@@ -366,8 +373,18 @@ export default function QuizPage() {
                     onClick={() =>
                       handlePreferencesChange({ mode: "multiple-choice" })
                     }
+                    className="w-40 h-30 flex-col items-center justify-between gap-0 whitespace-normal p-3 text-center"
                   >
-                    Pick from four options
+                    <ListChecks
+                      size={200}
+                      strokeWidth={8}
+                      absoluteStrokeWidth
+                      className="size-12"
+                      aria-hidden="true"
+                    />
+                    <span className="text-sm font-semibold">
+                      Pick from four options
+                    </span>
                   </Button>
                   <Button
                     type="button"
@@ -379,8 +396,18 @@ export default function QuizPage() {
                     onClick={() =>
                       handlePreferencesChange({ mode: "write-name" })
                     }
+                    className="w-40 h-30 flex-col items-center justify-between gap-0 whitespace-normal p-3 text-center"
                   >
-                    Write the species name
+                    <PenLine
+                      size={200}
+                      strokeWidth={8}
+                      absoluteStrokeWidth
+                      className="size-12"
+                      aria-hidden="true"
+                    />
+                    <span className="text-sm font-semibold">
+                      Write the species name
+                    </span>
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
