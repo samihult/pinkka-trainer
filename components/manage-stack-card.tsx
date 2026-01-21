@@ -76,7 +76,10 @@ export function ManageStackCard({
       </CardHeader>
       <CardContent className="flex flex-wrap gap-1">
         <Button size="icon-xs" variant="minimal">
-          <Link href={`/manage/species/${stack.id}`} className="cursor-default">
+          <Link
+            href={`/manage/content/${stack.id}/species/`}
+            className="cursor-default"
+          >
             <Dna className="h-3 w-3" />
           </Link>
         </Button>
@@ -94,7 +97,11 @@ export function ManageStackCard({
           aria-label={isHidden ? "Make stack public" : "Hide stack"}
           title={isHidden ? "Make public" : "Hide"}
         >
-          {isHidden ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
+          {isHidden ? (
+            <Eye className="h-3 w-3" />
+          ) : (
+            <EyeOff className="h-3 w-3" />
+          )}
         </Button>
         <Button
           size="icon-xs"
