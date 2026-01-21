@@ -29,8 +29,16 @@ const exampleSpecies: Species = {
           large: "https://placehold.co/640x480/png",
         },
       },
+      {
+        id: "img-2",
+        urls: {
+          full: "https://placehold.co/640x480/png",
+          large: "https://placehold.co/640x480/png",
+        },
+      },
     ],
   },
+  quizImageIds: ["img-1"],
   ownerId: "storybook-user",
   createdAt: new Date("2024-01-01T12:00:00.000Z"),
   updatedAt: new Date("2024-01-01T12:00:00.000Z"),
@@ -41,7 +49,7 @@ const meta: Meta<typeof ManageSpeciesCardHorizontalContent> = {
   component: ManageSpeciesCardHorizontalContent,
   args: {
     species: exampleSpecies,
-    variant: "card",
+    variant: "detailed",
     onEdit: (species) => {
       console.log("edit", species.id);
     },
@@ -50,6 +58,9 @@ const meta: Meta<typeof ManageSpeciesCardHorizontalContent> = {
     },
     onToggleVisibility: (species) => {
       console.log("toggle visibility", species.id);
+    },
+    onToggleQuizImage: (species, imageId) => {
+      console.log("toggle quiz image", species.id, imageId);
     },
   },
   render: (args) => (

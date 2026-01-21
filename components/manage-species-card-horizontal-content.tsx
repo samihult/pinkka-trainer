@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Eye, EyeOff, Pencil, Trash2 } from "lucide-react";
+import { Eye, EyeOff, Pencil, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
@@ -20,6 +20,8 @@ export interface ManageSpeciesCardHorizontalContentProps {
   onDelete: (id: string) => void;
   /** Called when toggling species visibility. */
   onToggleVisibility: (species: Species) => void;
+  /** Called when toggling quiz image availability. */
+  onToggleQuizImage?: (species: Species, imageId: string) => void;
 }
 
 /** Horizontal content block for a species entry, suitable for multiple containers. */
@@ -29,11 +31,13 @@ export function ManageSpeciesCardHorizontalContent({
   onEdit,
   onDelete,
   onToggleVisibility,
+  onToggleQuizImage,
 }: ManageSpeciesCardHorizontalContentProps) {
   const finnishName = getLocalizedText(species.data.vernacularName, "fi");
   const englishName = getLocalizedText(species.data.vernacularName, "en");
   const images = species.data.images ?? [];
   const isHidden = species.isHidden ?? false;
+  const quizImageIds = species.quizImageIds ?? [];
 
   const isMinimal = variant === "minimal";
 
@@ -133,19 +137,36 @@ export function ManageSpeciesCardHorizontalContent({
 
       {images.length > 0 ? (
         <div className="flex gap-2 overflow-x-auto pb-3">
-          {images.map((image, index) => (
-            <div
-              key={image.id}
-              className="relative h-20 w-30 shrink-0 overflow-hidden rounded-sm border border-border bg-muted"
-            >
-              <Image
-                src={getSpeciesImageUrl(image) || "/placeholder.svg"}
-                alt={`${species.data.scientificName} image ${index + 1}`}
-                fill
-                className="object-contain"
-              />
-            </div>
-          ))}
+          {images.map((image, index) => {
+            const isEnabled =
+              quizImageIds.length === 0 || quizImageIds.includes(image.id);
+
+            return (
+              <button
+                key={image.id}
+                type="button"
+                className="group relative h-20 w-28 shrink-0 overflow-hidden rounded-sm border border-border bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                onClick={() => onToggleQuizImage?.(species, image.id)}
+                aria-pressed={isEnabled}
+                aria-label={`Toggle quiz image ${index + 1}`}
+              >
+                <Image
+                  src={getSpeciesImageUrl(image) || "/placeholder.svg"}
+                  alt={`${species.data.scientificName} image ${index + 1}`}
+                  fill
+                  className={cn(
+                    "object-contain transition-opacity",
+                    !isEnabled && "opacity-40",
+                  )}
+                />
+                {!isEnabled && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-background/20">
+                    <X className="h-6 w-6 text-foreground" />
+                  </div>
+                )}
+              </button>
+            );
+          })}
         </div>
       ) : (
         <p className="text-xs text-muted-foreground">No images uploaded yet.</p>

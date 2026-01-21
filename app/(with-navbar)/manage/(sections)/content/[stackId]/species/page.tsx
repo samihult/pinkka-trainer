@@ -28,6 +28,18 @@ import Link from "next/link";
 import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 
+type SpeciesViewVariant = "detailed" | "minimal";
+
+type LocalPreferences = {
+  /** Local-only preferences for the species management page. */
+  manageSpecies?: {
+    /** Preferred layout for the species list. */
+    viewVariant?: SpeciesViewVariant;
+  };
+};
+
+const LOCAL_PREFERENCES_KEY = "localPreferences";
+
 export default function ManageSpeciesPage() {
   const params = useParams();
   const stackId = params.stackId as string;
@@ -40,13 +52,48 @@ export default function ManageSpeciesPage() {
   const [editingSpecies, setEditingSpecies] = useState<Species | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [cardVariant, setCardVariant] = useState<"detailed" | "minimal">(
-    "minimal",
-  );
+  const [cardVariant, setCardVariant] = useState<SpeciesViewVariant>("minimal");
+  const [localPreferencesLoaded, setLocalPreferencesLoaded] = useState(false);
+
+  const loadLocalPreferences = (): LocalPreferences => {
+    if (typeof window === "undefined") return {};
+    try {
+      const stored = window.localStorage.getItem(LOCAL_PREFERENCES_KEY);
+      return stored ? (JSON.parse(stored) as LocalPreferences) : {};
+    } catch (error) {
+      console.warn("Failed to parse local preferences", error);
+      return {};
+    }
+  };
 
   useEffect(() => {
     void loadData();
   }, [stackId]);
+
+  useEffect(() => {
+    const storedPreferences = loadLocalPreferences();
+    const storedVariant = storedPreferences.manageSpecies?.viewVariant;
+    if (storedVariant === "minimal" || storedVariant === "detailed") {
+      setCardVariant(storedVariant);
+    }
+    setLocalPreferencesLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!localPreferencesLoaded || typeof window === "undefined") return;
+    const storedPreferences = loadLocalPreferences();
+    const nextPreferences: LocalPreferences = {
+      ...storedPreferences,
+      manageSpecies: {
+        ...storedPreferences.manageSpecies,
+        viewVariant: cardVariant,
+      },
+    };
+    window.localStorage.setItem(
+      LOCAL_PREFERENCES_KEY,
+      JSON.stringify(nextPreferences),
+    );
+  }, [cardVariant, localPreferencesLoaded]);
 
   const loadData = async () => {
     try {
@@ -115,6 +162,58 @@ export default function ManageSpeciesPage() {
     } catch (error) {
       logFirestoreError("Failed to update species", error);
       throw error;
+    }
+  };
+
+  const handleToggleQuizImage = async (target: Species, imageId: string) => {
+    const imageIds = target.data.images?.map((image) => image.id) ?? [];
+    if (imageIds.length === 0) return;
+
+    const currentEnabled =
+      target.quizImageIds && target.quizImageIds.length > 0
+        ? target.quizImageIds
+        : imageIds;
+    const isEnabled = currentEnabled.includes(imageId);
+
+    if (isEnabled && currentEnabled.length === 1) {
+      toast({
+        title: "Select quiz images",
+        description: "At least one image must remain enabled for quizzes.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const nextEnabled = isEnabled
+      ? currentEnabled.filter((id) => id !== imageId)
+      : [...currentEnabled, imageId];
+    const orderedEnabled = imageIds.filter((id) => nextEnabled.includes(id));
+    const previousEnabled = target.quizImageIds;
+
+    setSpecies((prev) =>
+      prev.map((item) =>
+        item.id === target.id
+          ? { ...item, quizImageIds: orderedEnabled }
+          : item,
+      ),
+    );
+
+    try {
+      await updateSpecies(target.id, { quizImageIds: orderedEnabled });
+    } catch (error) {
+      logFirestoreError("Failed to update quiz images", error);
+      setSpecies((prev) =>
+        prev.map((item) =>
+          item.id === target.id
+            ? { ...item, quizImageIds: previousEnabled }
+            : item,
+        ),
+      );
+      toast({
+        title: "Error",
+        description: "Failed to update quiz images",
+        variant: "destructive",
+      });
     }
   };
 
@@ -328,6 +427,7 @@ export default function ManageSpeciesPage() {
                     onEdit={setEditingSpecies}
                     onDelete={handleDelete}
                     onToggleVisibility={handleToggleSpeciesVisibility}
+                    onToggleQuizImage={handleToggleQuizImage}
                   />
                 </DraggableHorizontalItem>
               );
