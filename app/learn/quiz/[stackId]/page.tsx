@@ -24,6 +24,7 @@ import type {
   Species,
 } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import {
   DEFAULT_QUIZ_PREFERENCES,
   normalizeQuizPreferences,
@@ -41,10 +42,12 @@ interface QuizQuestion {
   options: Species[];
   /** Correct answer for grading. */
   correctAnswer: Species;
+  /** Image URL chosen for the quiz prompt. */
+  imageUrl: string | null;
 }
 
 const CLOSE_SCORE_THRESHOLD = 0.85;
-const CORRECT_SCORE_THRESHOLD = 1.0;
+const CORRECT_SCORE_THRESHOLD = 0.9;
 
 /** Quiz experience for a single stack. */
 export default function QuizPage() {
@@ -115,6 +118,24 @@ export default function QuizPage() {
     }
   };
 
+  const pickQuizImageUrl = (targetSpecies: Species) => {
+    const images = targetSpecies.data.images ?? [];
+    if (images.length === 0) return null;
+
+    const enabledIds = targetSpecies.quizImageIds;
+    const enabledSet =
+      enabledIds && enabledIds.length > 0 ? new Set(enabledIds) : null;
+    const enabledImages = enabledSet
+      ? images.filter((image) => enabledSet.has(image.id))
+      : images;
+
+    const candidates = enabledImages.length > 0 ? enabledImages : images;
+    const selected =
+      candidates[Math.floor(Math.random() * candidates.length)];
+    const imageUrl = getSpeciesImageUrl(selected);
+    return imageUrl || null;
+  };
+
   const generateQuestions = (allSpecies: Species[], questionCount: number) => {
     const shuffled = [...allSpecies].sort(() => Math.random() - 0.5);
     const quizQuestions: QuizQuestion[] = [];
@@ -138,6 +159,7 @@ export default function QuizPage() {
         species: correctSpecies,
         options,
         correctAnswer: correctSpecies,
+        imageUrl: pickQuizImageUrl(correctSpecies),
       });
     });
 
@@ -497,7 +519,7 @@ export default function QuizPage() {
         <div className="max-w-3xl mx-auto">
           {currentQuestion && (
             <>
-              <QuizSpeciesCard species={currentQuestion.species} />
+              <QuizSpeciesCard imageUrl={currentQuestion.imageUrl} />
 
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
                 {quizPreferences.mode === "multiple-choice" ? (

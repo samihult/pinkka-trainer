@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +14,8 @@ import { uploadSpeciesImage } from "@/lib/firebase/firestore-helpers";
 import { useToast } from "@/hooks/use-toast";
 import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import Image from "next/image";
 
 /** Props for creating or editing a species. */
 interface SpeciesFormProps {
@@ -22,7 +24,12 @@ interface SpeciesFormProps {
   /** Parent stack id for new species. */
   stackId: string;
   /** Submit handler for form data. */
-  onSubmit: (data: PinkkaSpeciesDetail) => Promise<void>;
+  onSubmit: (payload: {
+    /** Updated species detail payload. */
+    data: PinkkaSpeciesDetail;
+    /** Image ids enabled for quiz prompts. */
+    quizImageIds: string[];
+  }) => Promise<void>;
   /** Cancel handler for dismissing the form. */
   onCancel: () => void;
 }
@@ -59,9 +66,35 @@ export function SpeciesForm({
   const [images, setImages] = useState<SpeciesImage[]>(
     species?.data.images || [],
   );
+  const [quizImageIds, setQuizImageIds] = useState<string[]>(() => {
+    const imageIds = (species?.data.images || []).map((image) => image.id);
+    const existingIds = species?.quizImageIds?.filter((id) =>
+      imageIds.includes(id),
+    );
+    return existingIds && existingIds.length > 0 ? existingIds : imageIds;
+  });
+  const previousImageIdsRef = useRef<string[]>(
+    (species?.data.images || []).map((image) => image.id),
+  );
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
+  const quizSelectionError = images.length > 0 && quizImageIds.length === 0;
+
+  useEffect(() => {
+    const imageIds = images.map((image) => image.id);
+    const previousImageIds = previousImageIdsRef.current;
+
+    setQuizImageIds((prev) => {
+      const preserved = prev.filter((id) => imageIds.includes(id));
+      const newIds = imageIds.filter(
+        (id) => !previousImageIds.includes(id),
+      );
+      return [...preserved, ...newIds];
+    });
+
+    previousImageIdsRef.current = imageIds;
+  }, [images]);
 
   /** Upload a file or stage it for new species before saving. */
   const handleFileUpload = async (file: File) => {
@@ -115,6 +148,15 @@ export function SpeciesForm({
     setSaving(true);
 
     try {
+      if (quizSelectionError) {
+        toast({
+          title: "Select quiz images",
+          description: "Choose at least one image to use in quizzes.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const vernacularName =
         finnishName || englishName || swedishName
           ? {
@@ -154,7 +196,13 @@ export function SpeciesForm({
         images,
       };
 
-      await onSubmit(detail);
+      await onSubmit({
+        data: detail,
+        quizImageIds:
+          quizImageIds.length > 0
+            ? quizImageIds
+            : images.map((image) => image.id),
+      });
     } catch (error) {
       toast({
         title: "Error",
@@ -164,6 +212,19 @@ export function SpeciesForm({
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleQuizImageToggle = (imageId: string) => {
+    setQuizImageIds((prev) => {
+      const isEnabled = prev.includes(imageId);
+      if (isEnabled) {
+        return prev.filter((id) => id !== imageId);
+      }
+      const next = [...prev, imageId];
+      return images
+        .map((image) => image.id)
+        .filter((id) => next.includes(id));
+    });
   };
 
   return (
@@ -255,6 +316,70 @@ export function SpeciesForm({
               onImagesChange={setImages}
               onFileUpload={handleFileUpload}
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Quiz Images</Label>
+            <p className="text-sm text-muted-foreground">
+              Select which images can appear in quizzes. Flashcards always show
+              all images.
+            </p>
+            {images.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                Add images to enable quiz selection.
+              </p>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {images.map((image, index) => {
+                  const imageId = image.id;
+                  const inputId = `quiz-image-${imageId}`;
+                  const isChecked = quizImageIds.includes(imageId);
+                  const imageUrl =
+                    getSpeciesImageUrl(image) || "/placeholder.svg";
+
+                  return (
+                    <label
+                      key={imageId}
+                      htmlFor={inputId}
+                      className="cursor-pointer"
+                    >
+                      <input
+                        id={inputId}
+                        type="checkbox"
+                        className="peer sr-only"
+                        checked={isChecked}
+                        onChange={() => handleQuizImageToggle(imageId)}
+                      />
+                      <Card className="overflow-hidden border border-border transition peer-checked:ring-2 peer-checked:ring-primary">
+                        <div className="relative aspect-square">
+                          <Image
+                            src={imageUrl}
+                            alt={`Species image ${index + 1}`}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex items-center justify-between p-2 text-xs text-muted-foreground">
+                          <span>Image {index + 1}</span>
+                          <span
+                            className={
+                              isChecked ? "text-foreground" : undefined
+                            }
+                          >
+                            {isChecked ? "Quiz" : "Excluded"}
+                          </span>
+                        </div>
+                      </Card>
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+            {quizSelectionError && (
+              <p className="text-sm text-destructive">
+                Select at least one image for quizzes.
+              </p>
+            )}
           </div>
 
           <div className="flex gap-2">

@@ -2,15 +2,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { SpeciesForm } from "./species-form";
 import type { Species } from "@/lib/types";
-import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
 
 const meta: Meta<typeof SpeciesForm> = {
   title: "Components/SpeciesForm",
   component: SpeciesForm,
   args: {
     stackId: "storybook-stack",
-    onSubmit: async (data: PinkkaSpeciesDetail) => {
-      console.log("SpeciesForm submit", data);
+    onSubmit: async (payload) => {
+      console.log("SpeciesForm submit", payload);
     },
     onCancel: () => {
       console.log("SpeciesForm cancel");

@@ -84,6 +84,8 @@ export interface Species {
   id: string;
   /** Pinkka species detail payload. */
   data: PinkkaSpeciesDetail;
+  /** Image ids enabled for quizzes; defaults to all images when unset. */
+  quizImageIds?: string[];
   /** Whether the species is hidden from learners. */
   isHidden?: boolean;
   /** Optional import batch id for grouping. */

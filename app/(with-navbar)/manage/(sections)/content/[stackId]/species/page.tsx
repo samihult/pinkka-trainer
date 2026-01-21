@@ -67,13 +67,17 @@ export default function ManageSpeciesPage() {
     }
   };
 
-  const handleCreate = async (data: PinkkaSpeciesDetail) => {
+  const handleCreate = async (payload: {
+    data: PinkkaSpeciesDetail;
+    quizImageIds: string[];
+  }) => {
     if (!user) return;
 
     try {
       await createSpecies(
         {
-          data,
+          data: payload.data,
+          quizImageIds: payload.quizImageIds,
           ownerId: user.uid,
         },
         [stackId],
@@ -90,11 +94,17 @@ export default function ManageSpeciesPage() {
     }
   };
 
-  const handleUpdate = async (data: PinkkaSpeciesDetail) => {
+  const handleUpdate = async (payload: {
+    data: PinkkaSpeciesDetail;
+    quizImageIds: string[];
+  }) => {
     if (!editingSpecies) return;
 
     try {
-      await updateSpecies(editingSpecies.id, { data });
+      await updateSpecies(editingSpecies.id, {
+        data: payload.data,
+        quizImageIds: payload.quizImageIds,
+      });
       toast({
         title: "Success",
         description: "Species updated successfully",

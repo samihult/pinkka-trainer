@@ -1,23 +1,16 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
-import type { Species } from "@/lib/types";
 import Image from "next/image";
 
 /** Props for the QuizSpeciesCard component. */
 export interface QuizSpeciesCardProps {
-  /** Species shown in the quiz prompt. */
-  species: Species;
+  /** Image URL chosen for the quiz prompt. */
+  imageUrl: string | null;
 }
 
 /** Renders the quiz prompt image card for the current species. */
-export function QuizSpeciesCard({ species }: QuizSpeciesCardProps) {
-  const image =
-    species.data.images && species.data.images.length > 0
-      ? getSpeciesImageUrl(species.data.images[0]) || "/placeholder.svg"
-      : null;
-
+export function QuizSpeciesCard({ imageUrl }: QuizSpeciesCardProps) {
   return (
     <Card className="mb-6">
       <CardContent className="pt-6">
@@ -25,10 +18,10 @@ export function QuizSpeciesCard({ species }: QuizSpeciesCardProps) {
           What species is shown in this image?
         </h2>
 
-        {image ? (
+        {imageUrl ? (
           <div className="relative h-80 rounded-lg overflow-hidden mb-4">
             <Image
-              src={image}
+              src={imageUrl}
               alt="Species to identify"
               fill
               className="object-cover"
