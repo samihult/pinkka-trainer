@@ -5,7 +5,6 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ProtectedRoute } from "@/components/protected-route";
-import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SpeciesForm } from "@/components/species-form";

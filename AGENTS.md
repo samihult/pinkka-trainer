@@ -7,6 +7,16 @@ Project conventions for Codex agents working in this repo.
 - TypeScript + React 19; prefer `.ts`/`.tsx` for new files.
 - Import alias `@/` points to repo root (see `tsconfig.json`).
 
+### External libraries
+
+- Prefer non-sticky licenses, such as MIT.
+- Sticky licenses are subject to manual approval.
+- Commercial licenses are not allowed.
+- Only use open-source libraries.
+- If available, pick active, popular libraries.
+- Avoid libraries that have lots of forks.
+- Never use abandoned libraries.
+
 ## UI style
 - UI changes must comply with UI_STYLE_GUIDE.md.
 
