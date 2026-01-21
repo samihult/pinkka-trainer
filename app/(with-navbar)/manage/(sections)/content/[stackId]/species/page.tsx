@@ -40,7 +40,9 @@ export default function ManageSpeciesPage() {
   const [editingSpecies, setEditingSpecies] = useState<Species | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [cardVariant, setCardVariant] = useState<"card" | "minimal">("minimal");
+  const [cardVariant, setCardVariant] = useState<"detailed" | "minimal">(
+    "minimal",
+  );
 
   useEffect(() => {
     void loadData();
@@ -239,12 +241,6 @@ export default function ManageSpeciesPage() {
         <main className="container mx-auto px-4 py-8">
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <Button variant="ghost" asChild className="mb-2">
-                <Link href="/manage">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Management
-                </Link>
-              </Button>
               <h1 className="text-3xl font-bold">
                 {stack
                   ? getLocalizedText(stack.data.name, "fi")
@@ -257,7 +253,7 @@ export default function ManageSpeciesPage() {
 
             {!showForm && !editingSpecies && (
               <div className="flex items-center gap-3">
-                <div className="flex rounded-md border border-border bg-background p-1">
+                <div className="flex rounded-md border border-border bg-background p-1 gap-1">
                   <Button
                     size="sm"
                     variant={cardVariant === "minimal" ? "secondary" : "ghost"}
@@ -268,11 +264,11 @@ export default function ManageSpeciesPage() {
                   </Button>
                   <Button
                     size="sm"
-                    variant={cardVariant === "card" ? "secondary" : "ghost"}
+                    variant={cardVariant === "detailed" ? "secondary" : "ghost"}
                     className="h-7 px-3"
-                    onClick={() => setCardVariant("card")}
+                    onClick={() => setCardVariant("detailed")}
                   >
-                    Card
+                    Detailed
                   </Button>
                 </div>
                 <Button
@@ -304,7 +300,13 @@ export default function ManageSpeciesPage() {
             </div>
           )}
 
-          <div className="columns-1 gap-x-5 md:columns-2 xl:columns-3">
+          <div
+            className={
+              cardVariant === "detailed"
+                ? "mx-auto space-y-3"
+                : "columns-1 gap-x-5 md:columns-2 xl:columns-3"
+            }
+          >
             {species.map((item, index) => {
               return (
                 <DraggableHorizontalItem
@@ -314,7 +316,11 @@ export default function ManageSpeciesPage() {
                   onDragOver={handleDragOver}
                   onDragEnd={handleDragEnd}
                   variant={cardVariant}
-                  className="mb-3 break-inside-avoid"
+                  className={
+                    cardVariant === "detailed"
+                      ? "w-full pb-5"
+                      : "mb-3 break-inside-avoid"
+                  }
                 >
                   <ManageSpeciesCardHorizontalContent
                     species={item}

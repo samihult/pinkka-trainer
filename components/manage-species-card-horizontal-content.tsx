@@ -13,7 +13,7 @@ export interface ManageSpeciesCardHorizontalContentProps {
   /** Species item to display. */
   species: Species;
   /** Visual layout variant for the content. */
-  variant?: "card" | "minimal";
+  variant?: "detailed" | "minimal";
   /** Called when the edit action is clicked. */
   onEdit: (species: Species) => void;
   /** Called when the delete action is clicked. */
@@ -25,14 +25,14 @@ export interface ManageSpeciesCardHorizontalContentProps {
 /** Horizontal content block for a species entry, suitable for multiple containers. */
 export function ManageSpeciesCardHorizontalContent({
   species,
-  variant = "card",
+  variant = "detailed",
   onEdit,
   onDelete,
   onToggleVisibility,
 }: ManageSpeciesCardHorizontalContentProps) {
   const finnishName = getLocalizedText(species.data.vernacularName, "fi");
   const englishName = getLocalizedText(species.data.vernacularName, "en");
-  const image = species.data.images?.[0];
+  const images = species.data.images ?? [];
   const isHidden = species.isHidden ?? false;
 
   const isMinimal = variant === "minimal";
@@ -87,56 +87,69 @@ export function ManageSpeciesCardHorizontalContent({
   }
 
   return (
-    <div className="flex gap-4">
-      {image && (
-        <div className="relative w-24 h-24 rounded-sm overflow-hidden flex-shrink-0">
-          <Image
-            src={getSpeciesImageUrl(image) || "/placeholder.svg"}
-            alt={species.data.scientificName}
-            fill
-            className="object-cover"
-          />
-        </div>
-      )}
-
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-lg mb-1">
-          {species.data.scientificName}
-        </h3>
-        {isHidden && (
-          <p className="text-xs font-medium text-muted-foreground">Hidden</p>
-        )}
-        {finnishName && <p className="text-muted-foreground">{finnishName}</p>}
-        {englishName && (
-          <p className="text-muted-foreground text-sm">{englishName}</p>
-        )}
-      </div>
-
-      <div className="flex gap-2 flex-shrink-0">
-        <Button size="icon" variant="outline" onClick={() => onEdit(species)}>
-          <Pencil className="h-4 w-4" />
-        </Button>
-        <Button
-          size="icon"
-          variant="outline"
-          onClick={() => onToggleVisibility(species)}
-          aria-label={isHidden ? "Make species public" : "Hide species"}
-          title={isHidden ? "Make public" : "Hide"}
-        >
-          {isHidden ? (
-            <Eye className="h-4 w-4" />
-          ) : (
-            <EyeOff className="h-4 w-4" />
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-lg mb-1">
+            {species.data.scientificName}
+          </h3>
+          {isHidden && (
+            <p className="text-xs font-medium text-muted-foreground">Hidden</p>
           )}
-        </Button>
-        <Button
-          size="icon"
-          variant="destructive"
-          onClick={() => onDelete(species.id)}
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+          {finnishName && (
+            <p className="text-muted-foreground">{finnishName}</p>
+          )}
+          {englishName && (
+            <p className="text-muted-foreground text-sm">{englishName}</p>
+          )}
+        </div>
+
+        <div className="flex gap-2 flex-shrink-0">
+          <Button size="icon" variant="outline" onClick={() => onEdit(species)}>
+            <Pencil className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => onToggleVisibility(species)}
+            aria-label={isHidden ? "Make species public" : "Hide species"}
+            title={isHidden ? "Make public" : "Hide"}
+          >
+            {isHidden ? (
+              <Eye className="h-4 w-4" />
+            ) : (
+              <EyeOff className="h-4 w-4" />
+            )}
+          </Button>
+          <Button
+            size="icon"
+            variant="destructive"
+            onClick={() => onDelete(species.id)}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
+
+      {images.length > 0 ? (
+        <div className="flex gap-2 overflow-x-auto pb-3">
+          {images.map((image, index) => (
+            <div
+              key={image.id}
+              className="relative h-20 w-30 shrink-0 overflow-hidden rounded-sm border border-border bg-muted"
+            >
+              <Image
+                src={getSpeciesImageUrl(image) || "/placeholder.svg"}
+                alt={`${species.data.scientificName} image ${index + 1}`}
+                fill
+                className="object-contain"
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-xs text-muted-foreground">No images uploaded yet.</p>
+      )}
     </div>
   );
 }
