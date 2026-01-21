@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,6 @@ import {
 } from "@/lib/firebase/firestore-helpers";
 import type {
   QuizAnswerMode,
-  QuizMode,
   QuizPreferences,
   Stack,
   Species,
@@ -70,7 +69,6 @@ export default function QuizPage() {
   useEffect(() => {
     void loadData();
   }, [stackId, user?.uid]);
-
 
   const loadData = async () => {
     setLoading(true);
@@ -170,7 +168,7 @@ export default function QuizPage() {
     return vernacularName ? [scientificName, vernacularName] : [scientificName];
   };
 
-  const handleTextAnswerSubmit = (options?: { autoAdvance?: boolean }) => {
+  const handleTextAnswerSubmit = () => {
     if (answered || !currentQuestion || !quizPreferences) return;
 
     const normalizedAnswer = normalizeAnswerText(textAnswer);
@@ -187,10 +185,6 @@ export default function QuizPage() {
 
     if (isCorrect) {
       setCorrectAnswers((previous) => previous + 1);
-    }
-
-    if (options?.autoAdvance) {
-      handleNext();
     }
   };
 
@@ -279,13 +273,18 @@ export default function QuizPage() {
       if (isTextMode) {
         if (event.key === "Enter") {
           event.preventDefault();
-          if (answered) {
-            handleNext();
-          } else {
-            handleTextAnswerSubmit({ autoAdvance: true });
+          handleTextAnswerSubmit();
+        }
+      } else {
+        if (!answered && ["1", "2", "3", "4"].includes(event.key)) {
+          const optionIndex = Number(event.key) - 1;
+          const currentQuestion = questions[currentQuestionIndex];
+          const option = currentQuestion?.options[optionIndex];
+          if (option) {
+            event.preventDefault();
+            handleAnswerSelect(option);
           }
         }
-        return;
       }
 
       if (event.key === "Enter") {
@@ -294,16 +293,6 @@ export default function QuizPage() {
           handleNext();
         }
         return;
-      }
-
-      if (!answered && ["1", "2", "3", "4"].includes(event.key)) {
-        const optionIndex = Number(event.key) - 1;
-        const currentQuestion = questions[currentQuestionIndex];
-        const option = currentQuestion?.options[optionIndex];
-        if (option) {
-          event.preventDefault();
-          handleAnswerSelect(option);
-        }
       }
     };
 
@@ -473,7 +462,7 @@ export default function QuizPage() {
 
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
                 {quizPreferences.mode === "multiple-choice" ? (
-                  currentQuestion.options.map((option) => {
+                  currentQuestion.options.map((option, optionsIndex) => {
                     const isSelected = selectedAnswer?.id === option.id;
                     const isCorrect =
                       option.id === currentQuestion.correctAnswer.id;
@@ -500,6 +489,7 @@ export default function QuizPage() {
                         }`}
                       >
                         <div className="flex items-center gap-3 w-full">
+                          <p className="mr-2">{optionsIndex + 1}</p>
                           <div className="flex-1">
                             <p className="font-semibold">
                               {option.data.scientificName}
@@ -549,7 +539,7 @@ export default function QuizPage() {
                       </p>
                     </div>
                     <Button
-                      onClick={handleTextAnswerSubmit}
+                      onClick={() => handleTextAnswerSubmit()}
                       size="lg"
                       disabled={answered}
                     >
