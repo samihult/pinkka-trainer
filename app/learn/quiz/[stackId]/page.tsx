@@ -65,6 +65,7 @@ export default function QuizPage() {
   const [textAnswerCorrect, setTextAnswerCorrect] = useState<boolean | null>(
     null,
   );
+  const textAnswerRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     void loadData();
@@ -313,6 +314,21 @@ export default function QuizPage() {
     startQuiz,
   ]);
 
+  useEffect(() => {
+    if (showSettings || quizComplete) return;
+    if (quizPreferences?.mode !== "write-name") return;
+    if (answered || questions.length === 0) return;
+
+    textAnswerRef.current?.focus();
+  }, [
+    answered,
+    questions.length,
+    currentQuestionIndex,
+    quizComplete,
+    quizPreferences?.mode,
+    showSettings,
+  ]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
@@ -522,6 +538,7 @@ export default function QuizPage() {
                       <Label htmlFor="text-answer">Species name</Label>
                       <Input
                         id="text-answer"
+                        ref={textAnswerRef}
                         value={textAnswer}
                         onChange={(event) => setTextAnswer(event.target.value)}
                         placeholder="Type the species name"
