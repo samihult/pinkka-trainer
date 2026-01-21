@@ -28,6 +28,7 @@ import {
   DEFAULT_QUIZ_PREFERENCES,
   normalizeQuizPreferences,
 } from "@/lib/quiz/quiz-preferences";
+import { scoreAnswer } from "@/lib/quiz/scoring";
 import { logFirestoreError } from "@/lib/utils";
 import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
@@ -41,6 +42,9 @@ interface QuizQuestion {
   /** Correct answer for grading. */
   correctAnswer: Species;
 }
+
+const CLOSE_SCORE_THRESHOLD = 0.85;
+const CORRECT_SCORE_THRESHOLD = 1.0;
 
 /** Quiz experience for a single stack. */
 export default function QuizPage() {
@@ -65,6 +69,10 @@ export default function QuizPage() {
   const [textAnswerCorrect, setTextAnswerCorrect] = useState<boolean | null>(
     null,
   );
+  const [textAnswerFeedback, setTextAnswerFeedback] = useState<string | null>(
+    null,
+  );
+  const [textAnswerRetryUsed, setTextAnswerRetryUsed] = useState(false);
   const textAnswerRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -90,6 +98,8 @@ export default function QuizPage() {
       setShowSettings(true);
       setTextAnswer("");
       setTextAnswerCorrect(null);
+      setTextAnswerFeedback(null);
+      setTextAnswerRetryUsed(false);
 
       const storedPreferences = user
         ? await getUserQuizPreferences(user.uid)
@@ -145,9 +155,6 @@ export default function QuizPage() {
     }
   };
 
-  const normalizeAnswerText = (value: string) =>
-    value.trim().toLowerCase().replace(/\s+/g, " ");
-
   const getAcceptedAnswers = (
     targetSpecies: Species,
     answerMode: QuizAnswerMode,
@@ -172,21 +179,33 @@ export default function QuizPage() {
   const handleTextAnswerSubmit = () => {
     if (answered || !currentQuestion || !quizPreferences) return;
 
-    const normalizedAnswer = normalizeAnswerText(textAnswer);
     const acceptedAnswers = getAcceptedAnswers(
       currentQuestion.species,
       quizPreferences.answerMode,
-    ).map(normalizeAnswerText);
-    const isCorrect = normalizedAnswer
-      ? acceptedAnswers.includes(normalizedAnswer)
-      : false;
-
-    setAnswered(true);
-    setTextAnswerCorrect(isCorrect);
+    );
+    const score = scoreAnswer(textAnswer, acceptedAnswers);
+    const isCorrect = score >= CORRECT_SCORE_THRESHOLD;
 
     if (isCorrect) {
+      setAnswered(true);
+      setTextAnswerCorrect(true);
+      setTextAnswerFeedback(null);
       setCorrectAnswers((previous) => previous + 1);
+      return;
     }
+
+    if (score >= CLOSE_SCORE_THRESHOLD && !textAnswerRetryUsed) {
+      setTextAnswerRetryUsed(true);
+      setTextAnswerFeedback("Close! Check the spelling and try again.");
+      setTextAnswerCorrect(null);
+      textAnswerRef.current?.focus();
+      textAnswerRef.current?.select();
+      return;
+    }
+
+    setAnswered(true);
+    setTextAnswerCorrect(false);
+    setTextAnswerFeedback(null);
   };
 
   const handleNext = () => {
@@ -196,6 +215,8 @@ export default function QuizPage() {
       setAnswered(false);
       setTextAnswer("");
       setTextAnswerCorrect(null);
+      setTextAnswerFeedback(null);
+      setTextAnswerRetryUsed(false);
     } else {
       setQuizComplete(true);
     }
@@ -238,6 +259,8 @@ export default function QuizPage() {
     setQuizComplete(false);
     setTextAnswer("");
     setTextAnswerCorrect(null);
+    setTextAnswerFeedback(null);
+    setTextAnswerRetryUsed(false);
     setShowSettings(false);
   };
 
@@ -554,6 +577,11 @@ export default function QuizPage() {
                         {quizPreferences.answerMode === "either" &&
                           "Scientific or vernacular name accepted."}
                       </p>
+                      {textAnswerFeedback && !answered && (
+                        <p className="text-sm text-primary">
+                          {textAnswerFeedback}
+                        </p>
+                      )}
                     </div>
                     <Button
                       onClick={() => handleTextAnswerSubmit()}
@@ -570,9 +598,9 @@ export default function QuizPage() {
                             : "border-destructive/40 bg-destructive/5"
                         }`}
                       >
-                        <p className="font-semibold">
-                          {textAnswerCorrect ? "Correct!" : "Not quite."}
-                        </p>
+                        {textAnswerCorrect ? (
+                          <p className="font-semibold">Correct!</p>
+                        ) : null}
                         <p className="text-sm text-muted-foreground">
                           Correct answer:{" "}
                           {currentQuestion.species.data.scientificName}
