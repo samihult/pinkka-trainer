@@ -7,25 +7,21 @@ import { useParams, useRouter } from "next/navigation";
 import { ProtectedRoute } from "@/components/protected-route";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { SpeciesForm } from "@/components/species-form";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { DraggableHorizontalItem } from "@/components/draggable-horizontal-item";
 import { ManageSpeciesCardHorizontalContent } from "@/components/manage-species-card-horizontal-content";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/lib/auth-context";
 import { logFirestoreError } from "@/lib/utils";
 import {
   getSpecies,
   getStack,
-  createSpecies,
-  updateSpecies,
   deleteSpecies,
+  updateSpecies,
   updateStackSpeciesOrder,
 } from "@/lib/firebase/firestore-helpers";
 import type { Species, Stack } from "@/lib/types";
-import { ArrowLeft, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
-import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 
 type SpeciesViewVariant = "detailed" | "minimal";
@@ -43,14 +39,12 @@ const LOCAL_PREFERENCES_KEY = "localPreferences";
 export default function ManageSpeciesPage() {
   const params = useParams();
   const stackId = params.stackId as string;
-  const { user } = useAuth();
   const { toast } = useToast();
+  const router = useRouter();
 
   const [stack, setStack] = useState<Stack | null>(null);
   const [species, setSpecies] = useState<Species[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingSpecies, setEditingSpecies] = useState<Species | null>(null);
-  const [showForm, setShowForm] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [cardVariant, setCardVariant] = useState<SpeciesViewVariant>("minimal");
   const [localPreferencesLoaded, setLocalPreferencesLoaded] = useState(false);
@@ -115,54 +109,8 @@ export default function ManageSpeciesPage() {
     }
   };
 
-  const handleCreate = async (payload: {
-    data: PinkkaSpeciesDetail;
-    quizImageIds: string[];
-  }) => {
-    if (!user) return;
-
-    try {
-      await createSpecies(
-        {
-          data: payload.data,
-          quizImageIds: payload.quizImageIds,
-          ownerId: user.uid,
-        },
-        [stackId],
-      );
-      toast({
-        title: "Success",
-        description: "Species created successfully",
-      });
-      setShowForm(false);
-      void loadData();
-    } catch (error) {
-      logFirestoreError("Failed to create species", error);
-      throw error;
-    }
-  };
-
-  const handleUpdate = async (payload: {
-    data: PinkkaSpeciesDetail;
-    quizImageIds: string[];
-  }) => {
-    if (!editingSpecies) return;
-
-    try {
-      await updateSpecies(editingSpecies.id, {
-        data: payload.data,
-        quizImageIds: payload.quizImageIds,
-      });
-      toast({
-        title: "Success",
-        description: "Species updated successfully",
-      });
-      setEditingSpecies(null);
-      void loadData();
-    } catch (error) {
-      logFirestoreError("Failed to update species", error);
-      throw error;
-    }
+  const handleEdit = (item: Species) => {
+    router.push(`/manage/content/${stackId}/species/${item.id}`);
   };
 
   const handleToggleQuizImage = async (target: Species, imageId: string) => {
@@ -350,54 +298,40 @@ export default function ManageSpeciesPage() {
               </p>
             </div>
 
-            {!showForm && !editingSpecies && (
-              <div className="flex items-center gap-3">
-                <div className="flex rounded-md border border-border bg-background p-1 gap-1">
-                  <Button
-                    size="sm"
-                    variant={cardVariant === "minimal" ? "secondary" : "ghost"}
-                    className="h-7 px-3"
-                    onClick={() => setCardVariant("minimal")}
-                  >
-                    Minimal
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={cardVariant === "detailed" ? "secondary" : "ghost"}
-                    className="h-7 px-3"
-                    onClick={() => setCardVariant("detailed")}
-                  >
-                    Detailed
-                  </Button>
-                </div>
+            <div className="flex items-center gap-3">
+              <div className="flex rounded-md border border-border bg-background p-1 gap-1">
                 <Button
-                  variant="secondary"
-                  onClick={handleSortAlphabetically}
-                  disabled={species.length < 2}
+                  size="sm"
+                  variant={cardVariant === "minimal" ? "secondary" : "ghost"}
+                  className="h-7 px-3"
+                  onClick={() => setCardVariant("minimal")}
                 >
-                  Sort A-Z
+                  Minimal
                 </Button>
-                <Button onClick={() => setShowForm(true)}>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add Species
+                <Button
+                  size="sm"
+                  variant={cardVariant === "detailed" ? "secondary" : "ghost"}
+                  className="h-7 px-3"
+                  onClick={() => setCardVariant("detailed")}
+                >
+                  Detailed
                 </Button>
               </div>
-            )}
-          </div>
-
-          {(showForm || editingSpecies) && (
-            <div className="mb-6">
-              <SpeciesForm
-                species={editingSpecies || undefined}
-                stackId={stackId}
-                onSubmit={editingSpecies ? handleUpdate : handleCreate}
-                onCancel={() => {
-                  setShowForm(false);
-                  setEditingSpecies(null);
-                }}
-              />
+              <Button
+                variant="secondary"
+                onClick={handleSortAlphabetically}
+                disabled={species.length < 2}
+              >
+                Sort A-Z
+              </Button>
+              <Button asChild>
+                <Link href={`/manage/content/${stackId}/species/new`}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Species
+                </Link>
+              </Button>
             </div>
-          )}
+          </div>
 
           <div
             className={
@@ -417,14 +351,14 @@ export default function ManageSpeciesPage() {
                   variant={cardVariant}
                   className={
                     cardVariant === "detailed"
-                      ? "w-full pb-5"
+                      ? "w-full"
                       : "mb-3 break-inside-avoid"
                   }
                 >
                   <ManageSpeciesCardHorizontalContent
                     species={item}
                     variant={cardVariant}
-                    onEdit={setEditingSpecies}
+                    onEdit={handleEdit}
                     onDelete={handleDelete}
                     onToggleVisibility={handleToggleSpeciesVisibility}
                     onToggleQuizImage={handleToggleQuizImage}
@@ -433,13 +367,15 @@ export default function ManageSpeciesPage() {
               );
             })}
 
-            {species.length === 0 && !showForm && (
+            {species.length === 0 && (
               <Card>
                 <CardContent className="py-12 text-center text-muted-foreground">
                   <p className="mb-4">No species in this stack yet</p>
-                  <Button onClick={() => setShowForm(true)}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add First Species
+                  <Button asChild>
+                    <Link href={`/manage/content/${stackId}/species/new`}>
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add First Species
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
