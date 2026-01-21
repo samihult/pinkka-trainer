@@ -47,7 +47,7 @@ interface QuizQuestion {
 }
 
 const CLOSE_SCORE_THRESHOLD = 0.85;
-const CORRECT_SCORE_THRESHOLD = 0.9;
+const CORRECT_SCORE_THRESHOLD = 1.0;
 
 /** Quiz experience for a single stack. */
 export default function QuizPage() {
