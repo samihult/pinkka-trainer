@@ -24,7 +24,7 @@ export function QuizSpeciesCard({ imageUrl }: QuizSpeciesCardProps) {
               src={imageUrl}
               alt="Species to identify"
               fill
-              className="object-cover"
+              className="object-contain"
               priority
             />
           </div>
