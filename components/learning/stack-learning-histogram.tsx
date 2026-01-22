@@ -77,6 +77,24 @@ export function StackLearningHistogram({
 
   return (
     <div className="space-y-2">
+      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-muted" />
+          New
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-sky-500" />
+          Learning
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-amber-500" />
+          Strengthening
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-emerald-600" />
+          Mastered
+        </span>
+      </div>
       {renderBar("Scientific", scientific)}
       {renderBar("Vernacular", vernacular)}
     </div>
