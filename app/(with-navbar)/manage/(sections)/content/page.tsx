@@ -475,14 +475,14 @@ export default function ManagePage() {
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8 flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold mb-2">Manage Content</h1>
-              <p className="text-muted-foreground">
-                Create and organize your species collections
-              </p>
+              <h1 className="text-3xl font-bold mb-2">
+                Manage Groups and Stacks
+              </h1>
+              <p className="text-muted-foreground">Drag to order</p>
             </div>
 
             <Button onClick={() => handleGroupDialogOpen()}>
-              <Plus className="mr-2 h-4 w-4" />
+              <Plus className="mr-1 h-4 w-4" />
               New Group
             </Button>
           </div>

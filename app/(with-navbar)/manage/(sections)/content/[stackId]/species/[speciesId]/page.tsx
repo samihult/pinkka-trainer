@@ -117,7 +117,7 @@ export default function ManageSpeciesDetailPage() {
             <Button variant="ghost" asChild className="mb-4">
               <Link href={`/manage/content/${stackId}/species`}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Species
+                Back to the Stack
               </Link>
             </Button>
             <div className="rounded-lg border border-border bg-background p-6">
@@ -138,20 +138,9 @@ export default function ManageSpeciesDetailPage() {
           <Button variant="ghost" asChild className="mb-4">
             <Link href={`/manage/content/${stackId}/species`}>
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Species
+              Back to Stack
             </Link>
           </Button>
-
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold">
-              {stack
-                ? getLocalizedText(stack.data.name, "fi")
-                : "Manage Species"}
-            </h1>
-            <p className="text-muted-foreground">
-              {isNew ? "Add a species" : "Update species details"}
-            </p>
-          </div>
 
           <SpeciesForm
             species={species || undefined}

@@ -34,6 +34,7 @@ If (1) conflicts with (2), escalate in the PR notes and implement the most minim
 - Secondary: neutral outline/ghost.
 - Destructive: reserved for irreversible actions; confirm where appropriate.
 - Always show a loading state for async actions.
+- An icon inside a regular horizontal button has tailwind classes "mr-1 h-4 w-4"
 
 ### Forms
 

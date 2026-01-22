@@ -67,6 +67,33 @@ export function ManageStackCard({
         <CardTitle className="text-base flex items-center gap-2">
           <BookOpen className="h-4 w-4 text-primary" />
           {getLocalizedText(stack.data.name, "fi")}
+          <Button
+            size="icon-xs"
+            variant="minimal"
+            onClick={() => onEdit(groupId, stack)}
+          >
+            <Pencil className="h-3 w-3" />
+          </Button>
+          <Button
+            size="icon-xs"
+            variant="minimal"
+            onClick={() => onToggleVisibility(groupId, stack)}
+            aria-label={isHidden ? "Make stack public" : "Hide stack"}
+            title={isHidden ? "Make public" : "Hide"}
+          >
+            {isHidden ? (
+              <Eye className="h-3 w-3" />
+            ) : (
+              <EyeOff className="h-3 w-3" />
+            )}
+          </Button>
+          <Button
+            size="icon-xs"
+            variant="minimal-destructive"
+            onClick={() => onDelete(stack.id)}
+          >
+            <Trash2 className="h-3 w-3" />
+          </Button>
           {isHidden && (
             <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
               Hidden
@@ -75,40 +102,14 @@ export function ManageStackCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-wrap gap-1">
-        <Button size="icon-xs" variant="minimal">
+        <Button size="xs" variant="ghost" asChild>
           <Link
             href={`/manage/content/${stack.id}/species/`}
             className="cursor-default"
           >
             <Dna className="h-3 w-3" />
+            Species
           </Link>
-        </Button>
-        <Button
-          size="icon-xs"
-          variant="minimal"
-          onClick={() => onEdit(groupId, stack)}
-        >
-          <Pencil className="h-3 w-3" />
-        </Button>
-        <Button
-          size="icon-xs"
-          variant="minimal"
-          onClick={() => onToggleVisibility(groupId, stack)}
-          aria-label={isHidden ? "Make stack public" : "Hide stack"}
-          title={isHidden ? "Make public" : "Hide"}
-        >
-          {isHidden ? (
-            <Eye className="h-3 w-3" />
-          ) : (
-            <EyeOff className="h-3 w-3" />
-          )}
-        </Button>
-        <Button
-          size="icon-xs"
-          variant="minimal-destructive"
-          onClick={() => onDelete(stack.id)}
-        >
-          <Trash2 className="h-3 w-3" />
         </Button>
       </CardContent>
     </Card>

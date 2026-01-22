@@ -20,7 +20,7 @@ import {
   updateStackSpeciesOrder,
 } from "@/lib/firebase/firestore-helpers";
 import type { Species, Stack } from "@/lib/types";
-import { Plus } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import Link from "next/link";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 
@@ -286,6 +286,13 @@ export default function ManageSpeciesPage() {
     <ProtectedRoute requiredRole="editor">
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
         <main className="container mx-auto px-4 py-8">
+          <Button variant="ghost" asChild className="mb-4">
+            <Link href={`/manage/content`}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Content
+            </Link>
+          </Button>
+
           <div className="mb-6 flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold">

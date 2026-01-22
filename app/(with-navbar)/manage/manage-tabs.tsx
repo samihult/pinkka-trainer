@@ -9,7 +9,7 @@ export default function ManageTabs() {
   const segment = useSelectedLayoutSegments()[1];
 
   const tabs = [
-    { href: "/manage/content", segment: "content", label: "Content" },
+    { href: "/manage/content", segment: "content", label: "Groups and Stacks" },
     { href: "/manage/pinkka", segment: "pinkka", label: "Pinkka" },
   ];
 

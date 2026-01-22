@@ -87,9 +87,7 @@ export function SpeciesForm({
 
     setQuizImageIds((prev) => {
       const preserved = prev.filter((id) => imageIds.includes(id));
-      const newIds = imageIds.filter(
-        (id) => !previousImageIds.includes(id),
-      );
+      const newIds = imageIds.filter((id) => !previousImageIds.includes(id));
       return [...preserved, ...newIds];
     });
 
@@ -221,9 +219,7 @@ export function SpeciesForm({
         return prev.filter((id) => id !== imageId);
       }
       const next = [...prev, imageId];
-      return images
-        .map((image) => image.id)
-        .filter((id) => next.includes(id));
+      return images.map((image) => image.id).filter((id) => next.includes(id));
     });
   };
 

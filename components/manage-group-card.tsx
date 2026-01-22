@@ -103,6 +103,13 @@ export function ManageGroupCard({
               <CardTitle className="flex items-center gap-2">
                 <FolderOpen className="h-5 w-5" />
                 {getLocalizedText(group.data.name, "fi")}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => onEditGroup(group)}
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
                 {isHidden && (
                   <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
                     Hidden
@@ -120,34 +127,27 @@ export function ManageGroupCard({
             <Button
               size="sm"
               variant="outline"
-              onClick={() => onToggleGroupVisibility(group)}
-            >
-              {isHidden ? (
-                <>
-                  <Eye className="mr-2 h-4 w-4" />
-                  Make Public
-                </>
-              ) : (
-                <>
-                  <EyeOff className="mr-2 h-4 w-4" />
-                  Hide
-                </>
-              )}
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
               onClick={() => onAddStack(group.id)}
             >
-              <Plus className="mr-2 h-4 w-4" />
+              <Plus className="mr-1 h-4 w-4" />
               Add Stack
             </Button>
             <Button
               size="sm"
               variant="outline"
-              onClick={() => onEditGroup(group)}
+              onClick={() => onToggleGroupVisibility(group)}
             >
-              <Pencil className="h-4 w-4" />
+              {isHidden ? (
+                <>
+                  <Eye className="mr-1 h-4 w-4" />
+                  Make Public
+                </>
+              ) : (
+                <>
+                  <EyeOff className="mr-1 h-4 w-4" />
+                  Hide
+                </>
+              )}
             </Button>
             <Button
               size="sm"
