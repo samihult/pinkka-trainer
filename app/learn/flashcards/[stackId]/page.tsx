@@ -77,7 +77,7 @@ export default function FlashcardsPage() {
           <Button variant="ghost" asChild className="mb-4">
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Learning
+              Back to All Stacks
             </Link>
           </Button>
           <div className="text-center py-12">
@@ -100,7 +100,7 @@ export default function FlashcardsPage() {
           <Button variant="ghost" asChild className="mb-4">
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Learning
+              Back to All Stacks
             </Link>
           </Button>
 

@@ -53,12 +53,10 @@ export function QuizCompletedCard({
             className="w-full bg-transparent"
             size="lg"
           >
-            <Link href={`/learn/flashcards/${stackId}`}>
-              Study Flashcards
-            </Link>
+            <Link href={`/learn/flashcards/${stackId}`}>Study Flashcards</Link>
           </Button>
           <Button asChild variant="ghost" className="w-full">
-            <Link href="/">Back to Learning</Link>
+            <Link href="/">Back to All Stacks</Link>
           </Button>
         </div>
       </CardContent>
