@@ -125,53 +125,47 @@ export function QuizSettingsCard({
           </p>
         </div>
 
-        {quizPreferences.mode === "write-name" && (
-          <div className="space-y-2">
-            <Label>Accepted answer</Label>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                type="button"
-                variant={
-                  quizPreferences.answerMode === "scientific"
-                    ? "default"
-                    : "outline"
-                }
-                onClick={() =>
-                  onPreferencesChange({ answerMode: "scientific" })
-                }
-              >
-                Scientific name only
-              </Button>
-              <Button
-                type="button"
-                variant={
-                  quizPreferences.answerMode === "vernacular"
-                    ? "default"
-                    : "outline"
-                }
-                onClick={() =>
-                  onPreferencesChange({ answerMode: "vernacular" })
-                }
-              >
-                Vernacular name only
-              </Button>
-              <Button
-                type="button"
-                variant={
-                  quizPreferences.answerMode === "either"
-                    ? "default"
-                    : "outline"
-                }
-                onClick={() => onPreferencesChange({ answerMode: "either" })}
-              >
-                Scientific or vernacular
-              </Button>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Answers are case-insensitive and ignore extra spaces.
-            </p>
+        <div className="space-y-2">
+          <Label>Accepted answer</Label>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant={
+                quizPreferences.answerMode === "scientific"
+                  ? "default"
+                  : "outline"
+              }
+              onClick={() => onPreferencesChange({ answerMode: "scientific" })}
+            >
+              Scientific name only
+            </Button>
+            <Button
+              type="button"
+              variant={
+                quizPreferences.answerMode === "vernacular"
+                  ? "default"
+                  : "outline"
+              }
+              onClick={() => onPreferencesChange({ answerMode: "vernacular" })}
+            >
+              Vernacular name only
+            </Button>
+            <Button
+              type="button"
+              variant={
+                quizPreferences.answerMode === "either"
+                  ? "default"
+                  : "outline"
+              }
+              onClick={() => onPreferencesChange({ answerMode: "either" })}
+            >
+              Scientific or vernacular
+            </Button>
           </div>
-        )}
+          <p className="text-sm text-muted-foreground">
+            Applies to both quiz modes; answers ignore case and extra spaces.
+          </p>
+        </div>
 
         <Button
           onClick={onStartQuiz}

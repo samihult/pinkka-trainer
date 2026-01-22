@@ -181,6 +181,33 @@ export default function QuizPage() {
     }
   };
 
+  const getDisplayNames = (
+    targetSpecies: Species,
+    answerMode: QuizAnswerMode,
+  ) => {
+    const scientificName = targetSpecies.data.scientificName;
+    const vernacularName = getLocalizedText(
+      targetSpecies.data.vernacularName,
+      preferredLanguage,
+    );
+
+    if (answerMode === "scientific") {
+      return { primary: scientificName, secondary: null };
+    }
+
+    if (answerMode === "vernacular") {
+      return {
+        primary: vernacularName ?? scientificName,
+        secondary: null,
+      };
+    }
+
+    return {
+      primary: scientificName,
+      secondary: vernacularName ?? null,
+    };
+  };
+
   const getAcceptedAnswers = (
     targetSpecies: Species,
     answerMode: QuizAnswerMode,
@@ -471,6 +498,10 @@ export default function QuizPage() {
     currentQuestion.species.data.vernacularName,
     preferredLanguage,
   );
+  const currentDisplayNames = getDisplayNames(
+    currentQuestion.species,
+    quizPreferences.answerMode,
+  );
 
   if (quizComplete) {
     const percentage = Math.round((correctAnswers / questions.length) * 100);
@@ -528,6 +559,10 @@ export default function QuizPage() {
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
                 {quizPreferences.mode === "multiple-choice" ? (
                   currentQuestion.options.map((option, optionsIndex) => {
+                    const displayNames = getDisplayNames(
+                      option,
+                      quizPreferences.answerMode,
+                    );
                     const isSelected = selectedAnswer?.id === option.id;
                     const isCorrect =
                       option.id === currentQuestion.correctAnswer.id;
@@ -557,17 +592,11 @@ export default function QuizPage() {
                           <p className="mr-2">{optionsIndex + 1}</p>
                           <div className="flex-1">
                             <p className="font-semibold">
-                              {option.data.scientificName}
+                              {displayNames.primary}
                             </p>
-                            {getLocalizedText(
-                              option.data.vernacularName,
-                              preferredLanguage,
-                            ) && (
+                            {displayNames.secondary && (
                               <p className="text-sm opacity-80">
-                                {getLocalizedText(
-                                  option.data.vernacularName,
-                                  preferredLanguage,
-                                )}
+                                {displayNames.secondary}
                               </p>
                             )}
                           </div>
@@ -628,10 +657,9 @@ export default function QuizPage() {
                           <p className="font-semibold">Correct!</p>
                         ) : null}
                         <p className="text-sm text-muted-foreground">
-                          Correct answer:{" "}
-                          {currentQuestion.species.data.scientificName}
-                          {currentVernacularName
-                            ? ` (${currentVernacularName})`
+                          Correct answer: {currentDisplayNames.primary}
+                          {currentDisplayNames.secondary
+                            ? ` (${currentDisplayNames.secondary})`
                             : ""}
                         </p>
                       </div>

@@ -13,7 +13,7 @@ export interface QuizPreferences {
   questionCount: number;
   /** Quiz interaction mode. */
   mode: QuizMode;
-  /** Required answer type for write-in quizzes. */
+  /** Required answer type for quizzes. */
   answerMode: QuizAnswerMode;
 }
 
