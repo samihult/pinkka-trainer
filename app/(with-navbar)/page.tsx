@@ -87,7 +87,7 @@ export default function HomePage() {
               <div key={group.id}>
                 <button
                   type="button"
-                  className="flex items-start py-1 gap-2 text-left rounded-sm hover:bg-muted/60 transition"
+                  className="flex items-start pt-1 pr-5 pb-2 gap-2 text-left rounded-sm hover:bg-muted/60 transition"
                   onClick={() =>
                     setExpandedGroups((prev) => ({
                       ...prev,
@@ -104,11 +104,14 @@ export default function HomePage() {
                       }`}
                     />
                   </span>
-                  <span className="pt-0.5">
+                  <span className="pt-1">
                     <span className="text-2xl font-bold">
                       {getLocalizedText(group.data.name, preferredLanguage)}
                     </span>
-                    {getLocalizedText(group.data.description, preferredLanguage) && (
+                    {getLocalizedText(
+                      group.data.description,
+                      preferredLanguage,
+                    ) && (
                       <span className="text-muted-foreground mt-1 block">
                         {getLocalizedText(
                           group.data.description,
