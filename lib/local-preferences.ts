@@ -1,3 +1,5 @@
+import type { QuizPreferences } from "@/lib/types";
+
 /** Local storage key used for persisted UI preferences. */
 export const LOCAL_PREFERENCES_KEY = "localPreferences";
 
@@ -22,6 +24,8 @@ export type LocalPreferences = {
     /** Preferred language for UI labels. */
     language?: LanguagePreference;
   };
+  /** Preferences for quiz sessions. */
+  quiz?: QuizPreferences;
 };
 
 /** Convert a language preference to its lowercase locale code. */
@@ -83,5 +87,18 @@ export function setStoredLanguage(next: LanguagePreference) {
       ...current.ui,
       language: next,
     },
+  }));
+}
+
+/** Loads stored quiz preferences from local preferences. */
+export function getStoredQuizPreferences(): QuizPreferences | null {
+  return loadLocalPreferences().quiz ?? null;
+}
+
+/** Persists quiz preferences in local preferences. */
+export function setStoredQuizPreferences(next: QuizPreferences) {
+  updateLocalPreferences((current) => ({
+    ...current,
+    quiz: next,
   }));
 }

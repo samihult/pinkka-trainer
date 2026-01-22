@@ -32,7 +32,11 @@ import {
 import { scoreAnswer } from "@/lib/quiz/scoring";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
-import { toLanguageCode } from "@/lib/local-preferences";
+import {
+  getStoredQuizPreferences,
+  setStoredQuizPreferences,
+  toLanguageCode,
+} from "@/lib/local-preferences";
 import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
@@ -111,9 +115,13 @@ export default function QuizPage() {
       const storedPreferences = user
         ? await getUserQuizPreferences(user.uid)
         : null;
-      setQuizPreferences(
-        normalizeQuizPreferences(storedPreferences, DEFAULT_QUIZ_PREFERENCES),
+      const localQuizPreferences = getStoredQuizPreferences();
+      const normalizedPreferences = normalizeQuizPreferences(
+        storedPreferences ?? localQuizPreferences,
+        DEFAULT_QUIZ_PREFERENCES,
       );
+      setQuizPreferences(normalizedPreferences);
+      setStoredQuizPreferences(normalizedPreferences);
       setPreferencesLoaded(true);
     } catch (error) {
       logFirestoreError("Failed to load quiz data", error);
@@ -286,6 +294,7 @@ export default function QuizPage() {
       ...updates,
     });
     setQuizPreferences(nextPreferences);
+    setStoredQuizPreferences(nextPreferences);
 
     if (!preferencesLoaded || !user) return;
 
