@@ -208,7 +208,7 @@ export default function HomePage() {
                           </p>
                         )}
                         {user && (
-                          <div className="mt-3">
+                          <div className="mt-3 mb-4">
                             {stackHistograms.get(stack.id) ? (
                               <StackLearningHistogramBars
                                 scientific={

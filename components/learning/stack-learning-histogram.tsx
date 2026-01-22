@@ -2,10 +2,7 @@
 
 import type { LearningStatusHistogram } from "@/lib/types";
 
-const CATEGORY_COLORS: Record<
-  keyof LearningStatusHistogram,
-  string
-> = {
+const CATEGORY_COLORS: Record<keyof LearningStatusHistogram, string> = {
   total: "",
   new: "bg-muted",
   learning: "bg-sky-500",
@@ -33,10 +30,7 @@ export function StackLearningHistogram({
   scientific,
   vernacular,
 }: StackLearningHistogramProps) {
-  const renderBar = (
-    label: string,
-    histogram: LearningStatusHistogram,
-  ) => (
+  const renderBar = (label: string, histogram: LearningStatusHistogram) => (
     <div className="flex items-center gap-3">
       <span className="w-20 text-xs font-medium text-muted-foreground">
         {label}
@@ -76,7 +70,7 @@ export function StackLearningHistogram({
   );
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-muted" />
@@ -95,8 +89,10 @@ export function StackLearningHistogram({
           Mastered
         </span>
       </div>
-      {renderBar("Scientific", scientific)}
-      {renderBar("Vernacular", vernacular)}
+      <div>
+        {renderBar("Scientific", scientific)}
+        {renderBar("Vernacular", vernacular)}
+      </div>
     </div>
   );
 }

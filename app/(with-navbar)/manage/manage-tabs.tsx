@@ -11,7 +11,6 @@ export default function ManageTabs() {
   const contentMatch = path.match(
     new RegExp("^/manage/content(/([^/]+)/species(/([^/]+))?)?"),
   );
-  console.log("*** pathMatch", contentMatch);
   const stackId = contentMatch?.[2];
   const speciesId = contentMatch?.[4];
 

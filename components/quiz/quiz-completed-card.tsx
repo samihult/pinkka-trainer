@@ -59,7 +59,7 @@ export function QuizCompletedCard({
           </div>
         )}
 
-        <div className="pt-6 border-t space-y-2">
+        <div className="pt-3 space-y-2">
           <Button onClick={onRestart} className="w-full" size="lg">
             <RotateCw className="mr-2 h-4 w-4" />
             Take Quiz Again
