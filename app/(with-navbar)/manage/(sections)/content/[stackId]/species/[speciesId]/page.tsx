@@ -135,13 +135,6 @@ export default function ManageSpeciesDetailPage() {
     <ProtectedRoute requiredRole="editor">
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
         <main className="container mx-auto px-4 py-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href={`/manage/content/${stackId}/species`}>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Stack
-            </Link>
-          </Button>
-
           <SpeciesForm
             species={species || undefined}
             stackId={stackId}
