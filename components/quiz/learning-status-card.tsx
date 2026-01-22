@@ -33,32 +33,19 @@ export function LearningStatusCard({
 
   return (
     <Card className="mb-6">
-      <CardHeader>
-        <CardTitle className="text-lg">Learning status</CardTitle>
-        <p className="text-sm text-muted-foreground">
-          Estimated retention for the next {horizonDays} days.
-        </p>
+      <CardHeader className="space-y-1">
+        <div className="flex items-center justify-between gap-4">
+          <CardTitle className="text-base font-semibold">
+            Likelihood to remember after a week{" "}
+            <span className="text-xs font-normal text-muted-foreground">
+              ({label})
+            </span>
+          </CardTitle>
+          <span className="text-sm font-semibold">{combinedPercent}%</span>
+        </div>
       </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="font-semibold">{label}</span>
-          <span className="text-sm text-muted-foreground">
-            {combinedPercent}% retained
-          </span>
-        </div>
+      <CardContent>
         <Progress value={combinedPercent} className="h-2" />
-        <div className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
-          <div>
-            Accuracy:{" "}
-            {accuracyPercent === null
-              ? "Not started"
-              : `${accuracyPercent}%`}
-          </div>
-          <div>
-            Speed:{" "}
-            {speedPercent === null ? "Not started" : `${speedPercent}%`}
-          </div>
-        </div>
       </CardContent>
     </Card>
   );
