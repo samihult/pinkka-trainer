@@ -41,7 +41,7 @@ export function QuizSettingsCard({
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
-          <Label>Number of questions</Label>
+          <Label>Number of species</Label>
           <div className="flex flex-wrap gap-2">
             {questionOptions.map((option) => {
               const isSelected = quizPreferences.questionCount === option;
@@ -57,9 +57,18 @@ export function QuizSettingsCard({
               );
             })}
           </div>
-          <p className="text-sm text-muted-foreground">
-            Randomly selected from {speciesCount} species.
-          </p>
+          {quizPreferences.questionCount > 0 &&
+            quizPreferences.questionCount < speciesCount && (
+              <p className="text-sm text-muted-foreground">
+                Randomly selected from {speciesCount} species.
+              </p>
+            )}
+          {(quizPreferences.questionCount >= speciesCount ||
+            quizPreferences.questionCount === 0) && (
+            <p className="text-sm text-muted-foreground">
+              All {speciesCount} species.
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -157,7 +166,7 @@ export function QuizSettingsCard({
           size="lg"
           disabled={!canStartQuiz}
         >
-          Start Quiz ⏎
+          Start ⏎
         </Button>
       </CardContent>
     </Card>
