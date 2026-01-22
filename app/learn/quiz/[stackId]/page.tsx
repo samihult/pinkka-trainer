@@ -1092,6 +1092,10 @@ export default function QuizPage() {
                         onChange={(event) => setTextAnswer(event.target.value)}
                         placeholder="Type the species name"
                         disabled={answered}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck={false}
                       />
                       <p className="text-sm text-muted-foreground">
                         {quizPreferences.answerMode === "scientific" &&
