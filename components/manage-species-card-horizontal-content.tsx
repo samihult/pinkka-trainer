@@ -136,7 +136,7 @@ export function ManageSpeciesCardHorizontalContent({
       </div>
 
       {images.length > 0 ? (
-        <div className="flex gap-2 overflow-x-auto pb-3">
+        <div className="flex gap-2 overflow-x-auto pb-3 overscroll-x-contain touch-pan-x">
           {images.map((image, index) => {
             const isEnabled =
               quizImageIds.length === 0 || quizImageIds.includes(image.id);
