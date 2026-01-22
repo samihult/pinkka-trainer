@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import {
   AVAILABLE_LANGUAGES,
-  getStoredLanguage,
-  setStoredLanguage,
   type LanguagePreference,
 } from "@/lib/local-preferences";
+import { useLanguagePreference } from "@/lib/language-context";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -62,15 +60,10 @@ function LanguageSelector({
 /** Primary site navigation with auth-aware actions. */
 export function Navbar() {
   const { user, signOut } = useAuth();
-  const [language, setLanguage] = useState<LanguagePreference>("EN");
-
-  useEffect(() => {
-    setLanguage(getStoredLanguage());
-  }, []);
+  const { language, setLanguage } = useLanguagePreference();
 
   const handleLanguageChange = (next: LanguagePreference) => {
     setLanguage(next);
-    setStoredLanguage(next);
   };
 
   return (

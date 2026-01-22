@@ -31,6 +31,8 @@ import {
 } from "@/lib/quiz/quiz-preferences";
 import { scoreAnswer } from "@/lib/quiz/scoring";
 import { logFirestoreError } from "@/lib/utils";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
@@ -51,6 +53,8 @@ const CORRECT_SCORE_THRESHOLD = 1.0;
 
 /** Quiz experience for a single stack. */
 export default function QuizPage() {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const params = useParams();
   const stackId = params.stackId as string;
   const { user } = useAuth();
@@ -184,7 +188,7 @@ export default function QuizPage() {
     const scientificName = targetSpecies.data.scientificName;
     const vernacularName = getLocalizedText(
       targetSpecies.data.vernacularName,
-      "fi",
+      preferredLanguage,
     );
 
     if (answerMode === "scientific") {
@@ -465,7 +469,7 @@ export default function QuizPage() {
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
   const currentVernacularName = getLocalizedText(
     currentQuestion.species.data.vernacularName,
-    "fi",
+    preferredLanguage,
   );
 
   if (quizComplete) {
@@ -506,7 +510,7 @@ export default function QuizPage() {
 
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-3xl font-bold">
-              {getLocalizedText(stack.data.name, "fi")} Quiz
+              {getLocalizedText(stack.data.name, preferredLanguage)} Quiz
             </h1>
             <span className="text-muted-foreground">
               Question {currentQuestionIndex + 1} of {questions.length}
@@ -557,12 +561,12 @@ export default function QuizPage() {
                             </p>
                             {getLocalizedText(
                               option.data.vernacularName,
-                              "fi",
+                              preferredLanguage,
                             ) && (
                               <p className="text-sm opacity-80">
                                 {getLocalizedText(
                                   option.data.vernacularName,
-                                  "fi",
+                                  preferredLanguage,
                                 )}
                               </p>
                             )}

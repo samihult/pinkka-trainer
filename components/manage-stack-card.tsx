@@ -12,10 +12,12 @@ import {
   Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import type { Stack } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 
 /** Props for rendering a stack card within a group. */
 export interface ManageStackCardProps {
@@ -57,6 +59,8 @@ export function ManageStackCard({
   onToggleVisibility,
   className,
 }: React.ComponentProps<Card> & ManageStackCardProps) {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const isHidden = stack.isHidden ?? false;
 
   return (
@@ -72,7 +76,7 @@ export function ManageStackCard({
     >
       <CardContent className="flex flex-wrap gap-2 pr-16 items-center">
         <BookOpen className="h-4 w-4 text-primary mr-1" />
-        {getLocalizedText(stack.data.name, "fi")}
+        {getLocalizedText(stack.data.name, preferredLanguage)}
         <Button
           size="icon-xs"
           variant="minimal"

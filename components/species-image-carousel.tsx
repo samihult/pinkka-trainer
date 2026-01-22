@@ -16,7 +16,8 @@ import type { SpeciesImage } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import { cn } from "@/lib/utils";
-import { doc } from "firebase/firestore";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 
 /** Props for the species image carousel. */
 export interface SpeciesImageCarouselProps {
@@ -61,6 +62,8 @@ export function SpeciesImageCarousel({
   embeddedLightboxProps,
   fullScreenLightboxProps,
 }: SpeciesImageCarouselProps) {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const inlineControllerRef = useRef<ControllerRef | null>(null);
@@ -74,10 +77,7 @@ export function SpeciesImageCarousel({
       .map((image) => {
         const src = getSpeciesImageUrl(image);
         if (!src) return null;
-        const caption =
-          getLocalizedText(image.caption, "en") ||
-          getLocalizedText(image.caption, "fi") ||
-          "";
+        const caption = getLocalizedText(image.caption, preferredLanguage);
         const rightsOwner = image.meta?.rightsOwner
           ? `(c) ${image.meta.rightsOwner}`
           : "";
@@ -97,7 +97,7 @@ export function SpeciesImageCarousel({
         };
       })
       .filter((slide): slide is Slide => Boolean(slide));
-  }, [alt, images]);
+  }, [alt, images, preferredLanguage]);
 
   useEffect(() => {
     setCurrentImageIndex(0);

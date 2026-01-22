@@ -15,6 +15,8 @@ import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { getSpeciesDescription } from "@/lib/pinkka/pinkka-display";
 import { ChevronLeft, ChevronRight, Keyboard, RotateCw } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 
 /** Props for the flashcard viewer. */
 interface FlashcardProps {
@@ -38,6 +40,8 @@ export function Flashcard({
   currentIndex,
   total,
 }: FlashcardProps) {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const [flipped, setFlipped] = useState(false);
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
 
@@ -54,9 +58,11 @@ export function Flashcard({
   };
 
   const images = species.data.images ?? [];
-  const finnishName = getLocalizedText(species.data.vernacularName, "fi");
-  const englishName = getLocalizedText(species.data.vernacularName, "en");
-  const description = getSpeciesDescription(species.data, "fi");
+  const vernacularName = getLocalizedText(
+    species.data.vernacularName,
+    preferredLanguage,
+  );
+  const description = getSpeciesDescription(species.data, preferredLanguage);
   const sanitizedDescription = useMemo(
     () => (description ? sanitizeHtml(description) : ""),
     [description],
@@ -149,15 +155,8 @@ export function Flashcard({
                   {species.data.scientificName}
                 </h2>
                 <div className="space-y-1">
-                  {finnishName && (
-                    <p className="text-xl text-primary">
-                      Finnish: {finnishName}
-                    </p>
-                  )}
-                  {englishName && (
-                    <p className="text-xl text-accent">
-                      English: {englishName}
-                    </p>
+                  {vernacularName && (
+                    <p className="text-xl text-primary">{vernacularName}</p>
                   )}
                 </div>
               </div>

@@ -22,6 +22,8 @@ import {
 import { ManageStackCard } from "@/components/manage-stack-card";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import type { Group, Stack } from "@/lib/types";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 
 /** Props for the manage content stack group card. */
 export interface ManageGroupCardProps {
@@ -85,6 +87,8 @@ export function ManageGroupCard({
   onStackDragOver,
   onStackDragEnd,
 }: ManageGroupCardProps) {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const isHidden = group.isHidden ?? false;
 
   return (
@@ -102,7 +106,7 @@ export function ManageGroupCard({
             <div className="flex-1">
               <CardTitle className="flex items-center gap-2">
                 <FolderOpen className="h-5 w-5" />
-                {getLocalizedText(group.data.name, "fi")}
+                {getLocalizedText(group.data.name, preferredLanguage)}
                 <Button
                   size="sm"
                   variant="ghost"
@@ -116,9 +120,9 @@ export function ManageGroupCard({
                   </span>
                 )}
               </CardTitle>
-              {getLocalizedText(group.data.description, "fi") && (
+              {getLocalizedText(group.data.description, preferredLanguage) && (
                 <CardDescription className="mt-1">
-                  {getLocalizedText(group.data.description, "fi")}
+                  {getLocalizedText(group.data.description, preferredLanguage)}
                 </CardDescription>
               )}
             </div>

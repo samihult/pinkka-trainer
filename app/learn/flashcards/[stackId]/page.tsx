@@ -9,10 +9,14 @@ import { getStack, getSpecies } from "@/lib/firebase/firestore-helpers";
 import type { Stack, Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { logFirestoreError } from "@/lib/utils";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 import { ArrowLeft, Shuffle } from "lucide-react";
 import Link from "next/link";
 
 export default function FlashcardsPage() {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const params = useParams();
   const stackId = params.stackId as string;
 
@@ -103,7 +107,7 @@ export default function FlashcardsPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">
-                {getLocalizedText(stack.data.name, "fi")}
+                {getLocalizedText(stack.data.name, preferredLanguage)}
               </h1>
             </div>
 

@@ -1,4 +1,5 @@
-const LOCAL_PREFERENCES_KEY = "localPreferences";
+/** Local storage key used for persisted UI preferences. */
+export const LOCAL_PREFERENCES_KEY = "localPreferences";
 
 /** Supported language choices for the UI. */
 export const AVAILABLE_LANGUAGES = ["FI", "SV", "EN"] as const;
@@ -22,6 +23,13 @@ export type LocalPreferences = {
     language?: LanguagePreference;
   };
 };
+
+/** Convert a language preference to its lowercase locale code. */
+export function toLanguageCode(
+  language: LanguagePreference,
+): "fi" | "sv" | "en" {
+  return language.toLowerCase() as "fi" | "sv" | "en";
+}
 
 /** Safely loads local preferences from localStorage. */
 export function loadLocalPreferences(): LocalPreferences {

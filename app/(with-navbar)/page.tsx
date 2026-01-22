@@ -8,6 +8,8 @@ import { getGroups, getStacks } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { logFirestoreError } from "@/lib/utils";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 import {
   BookOpen,
   Brain,
@@ -17,6 +19,8 @@ import {
 import Link from "next/link";
 
 export default function HomePage() {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const [groups, setGroups] = useState<Group[]>([]);
   const [stacksByGroup, setStacksByGroup] = useState<{
     [key: string]: Stack[];
@@ -102,11 +106,14 @@ export default function HomePage() {
                   </span>
                   <span className="pt-0.5">
                     <span className="text-2xl font-bold">
-                      {getLocalizedText(group.data.name, "fi")}
+                      {getLocalizedText(group.data.name, preferredLanguage)}
                     </span>
-                    {getLocalizedText(group.data.description, "fi") && (
+                    {getLocalizedText(group.data.description, preferredLanguage) && (
                       <span className="text-muted-foreground mt-1 block">
-                        {getLocalizedText(group.data.description, "fi")}
+                        {getLocalizedText(
+                          group.data.description,
+                          preferredLanguage,
+                        )}
                       </span>
                     )}
                   </span>
@@ -125,12 +132,21 @@ export default function HomePage() {
                         <div className="flex items-center gap-2">
                           <BookOpen className="h-4 w-4 text-primary" />
                           <h3 className="text-base font-semibold">
-                            {getLocalizedText(stack.data.name, "fi")}
+                            {getLocalizedText(
+                              stack.data.name,
+                              preferredLanguage,
+                            )}
                           </h3>
                         </div>
-                        {getLocalizedText(stack.data.description, "fi") && (
+                        {getLocalizedText(
+                          stack.data.description,
+                          preferredLanguage,
+                        ) && (
                           <p className="text-sm text-muted-foreground mt-1">
-                            {getLocalizedText(stack.data.description, "fi")}
+                            {getLocalizedText(
+                              stack.data.description,
+                              preferredLanguage,
+                            )}
                           </p>
                         )}
                         <div className="mt-3 flex flex-col gap-2 sm:flex-row">

@@ -7,6 +7,8 @@ import { PinkkaExplorer } from "@/components/pinkka/pinkka-explorer";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 import {
   importPinkkaGroups,
   importPinkkaSpeciesList,
@@ -22,6 +24,8 @@ import { logFirestoreError } from "@/lib/utils";
 
 /** Admin-facing page for browsing Pinkka content. */
 export default function PinkkaContentPage() {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const { user } = useAuth();
   const { toast } = useToast();
   const [selectionState, setSelectionState] =
@@ -156,6 +160,7 @@ export default function PinkkaContentPage() {
               <PinkkaExplorer
                 onSelectionChange={setSelectionState}
                 importStatusVersion={importStatusVersion}
+                preferredLang={preferredLanguage}
               />
             </div>
           </div>

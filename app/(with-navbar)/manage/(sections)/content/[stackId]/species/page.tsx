@@ -25,11 +25,15 @@ import Link from "next/link";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import {
   loadLocalPreferences,
+  toLanguageCode,
   updateLocalPreferences,
   type ManageSpeciesViewVariant,
 } from "@/lib/local-preferences";
+import { useLanguagePreference } from "@/lib/language-context";
 
 export default function ManageSpeciesPage() {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const params = useParams();
   const stackId = params.stackId as string;
   const { toast } = useToast();
@@ -274,7 +278,7 @@ export default function ManageSpeciesPage() {
             <div>
               <h1 className="text-3xl font-bold">
                 {stack
-                  ? getLocalizedText(stack.data.name, "fi")
+                  ? getLocalizedText(stack.data.name, preferredLanguage)
                   : "Manage Species"}
               </h1>
               <p className="text-muted-foreground">
