@@ -134,8 +134,7 @@ export default function QuizPage() {
       : images;
 
     const candidates = enabledImages.length > 0 ? enabledImages : images;
-    const selected =
-      candidates[Math.floor(Math.random() * candidates.length)];
+    const selected = candidates[Math.floor(Math.random() * candidates.length)];
     const imageUrl = getSpeciesImageUrl(selected);
     return imageUrl || null;
   };
@@ -472,7 +471,6 @@ export default function QuizPage() {
 
           <QuizSettingsCard
             questionOptions={questionOptions}
-            maxQuestions={maxQuestions}
             speciesCount={species.length}
             quizPreferences={quizPreferences}
             canStartQuiz={canStartQuiz}

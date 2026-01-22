@@ -10,8 +10,6 @@ import { ListChecks, PenLine } from "lucide-react";
 export interface QuizSettingsCardProps {
   /** Available question count options. */
   questionOptions: number[];
-  /** Maximum number of questions in the stack. */
-  maxQuestions: number;
   /** Total number of species in the stack. */
   speciesCount: number;
   /** Current quiz preferences. */
@@ -27,7 +25,6 @@ export interface QuizSettingsCardProps {
 /** Renders the quiz settings card for selecting quiz options. */
 export function QuizSettingsCard({
   questionOptions,
-  maxQuestions,
   speciesCount,
   quizPreferences,
   canStartQuiz,
@@ -47,9 +44,7 @@ export function QuizSettingsCard({
           <Label>Number of questions</Label>
           <div className="flex flex-wrap gap-2">
             {questionOptions.map((option) => {
-              const isSelected =
-                quizPreferences.questionCount === option &&
-                maxQuestions !== option;
+              const isSelected = quizPreferences.questionCount === option;
               return (
                 <Button
                   key={option}
@@ -57,19 +52,10 @@ export function QuizSettingsCard({
                   variant={isSelected ? "default" : "outline"}
                   onClick={() => onPreferencesChange({ questionCount: option })}
                 >
-                  {option}
+                  {option === 0 ? "All" : option}
                 </Button>
               );
             })}
-            <Button
-              type="button"
-              variant={
-                quizPreferences.questionCount === 0 ? "default" : "outline"
-              }
-              onClick={() => onPreferencesChange({ questionCount: 0 })}
-            >
-              All
-            </Button>
           </div>
           <p className="text-sm text-muted-foreground">
             Randomly selected from {speciesCount} species.
@@ -153,9 +139,7 @@ export function QuizSettingsCard({
             <Button
               type="button"
               variant={
-                quizPreferences.answerMode === "either"
-                  ? "default"
-                  : "outline"
+                quizPreferences.answerMode === "either" ? "default" : "outline"
               }
               onClick={() => onPreferencesChange({ answerMode: "either" })}
             >
