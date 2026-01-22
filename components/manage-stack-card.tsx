@@ -71,45 +71,45 @@ export function ManageStackCard({
       onDragEnd={onDragEnd}
       className={cn(
         className,
-        "break-inside-avoid transition-shadow shadow-xs hover:shadow-sm rounded-xs cursor-move gap-0 relative overflow-hidden",
+        "break-inside-avoid transition-shadow shadow-xs hover:shadow-sm rounded-xs cursor-move gap-0 py-5 relative overflow-hidden",
       )}
     >
-      <CardContent className="flex flex-wrap gap-2 pr-16 items-center">
-        <BookOpen className="h-4 w-4 text-primary mr-1" />
+      <CardContent className="flex flex-col gap-2 pr-16 items-start">
         {getLocalizedText(stack.data.name, preferredLanguage)}
-        <Button
-          size="icon-xs"
-          variant="minimal"
-          onClick={() => onEdit(groupId, stack)}
-          className="ml-2"
-        >
-          <Pencil className="h-3 w-3" />
-        </Button>
-        <Button
-          size="icon-xs"
-          variant="minimal"
-          onClick={() => onToggleVisibility(groupId, stack)}
-          aria-label={isHidden ? "Make stack public" : "Hide stack"}
-          title={isHidden ? "Make public" : "Hide"}
-        >
-          {isHidden ? (
-            <Eye className="h-3 w-3" />
-          ) : (
-            <EyeOff className="h-3 w-3" />
+        <div className="flex flex-wrap items-center gap-2 mr-3">
+          <Button
+            size="icon-xs"
+            variant="minimal"
+            onClick={() => onEdit(groupId, stack)}
+          >
+            <Pencil className="h-3 w-3" />
+          </Button>
+          <Button
+            size="icon-xs"
+            variant="minimal"
+            onClick={() => onToggleVisibility(groupId, stack)}
+            aria-label={isHidden ? "Make stack public" : "Hide stack"}
+            title={isHidden ? "Make public" : "Hide"}
+          >
+            {isHidden ? (
+              <Eye className="h-3 w-3" />
+            ) : (
+              <EyeOff className="h-3 w-3" />
+            )}
+          </Button>
+          <Button
+            size="icon-xs"
+            variant="minimal-destructive"
+            onClick={() => onDelete(stack.id)}
+          >
+            <Trash2 className="h-3 w-3" />
+          </Button>
+          {isHidden && (
+            <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
+              Hidden
+            </span>
           )}
-        </Button>
-        <Button
-          size="icon-xs"
-          variant="minimal-destructive"
-          onClick={() => onDelete(stack.id)}
-        >
-          <Trash2 className="h-3 w-3" />
-        </Button>
-        {isHidden && (
-          <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
-            Hidden
-          </span>
-        )}
+        </div>
       </CardContent>
       <Button
         size="icon-lg"
