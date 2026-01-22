@@ -8,6 +8,7 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { getStack, getSpecies } from "@/lib/firebase/firestore-helpers";
 import type { Stack, Species } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getSpeciesImagesWithUrls } from "@/lib/pinkka/pinkka-display";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
@@ -35,8 +36,11 @@ export default function FlashcardsPage() {
         getStack(stackId),
         getSpecies(stackId),
       ]);
+      const speciesWithImages = speciesData.filter(
+        (item) => getSpeciesImagesWithUrls(item.data).length > 0,
+      );
       setStack(stackData);
-      setSpecies(speciesData);
+      setSpecies(speciesWithImages);
     } catch (error) {
       logFirestoreError("Failed to load flashcards data", error);
     } finally {
@@ -82,7 +86,7 @@ export default function FlashcardsPage() {
           </Button>
           <div className="text-center py-12">
             <p className="text-muted-foreground mb-4">
-              No species available in this stack
+              No species with images available in this stack
             </p>
             <Button asChild>
               <Link href="/">Browse Other Stacks</Link>

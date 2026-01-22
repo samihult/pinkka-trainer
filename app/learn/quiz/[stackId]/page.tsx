@@ -24,7 +24,10 @@ import type {
   Species,
 } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import {
+  getSpeciesImageUrl,
+  getSpeciesImagesWithUrls,
+} from "@/lib/pinkka/pinkka-display";
 import {
   DEFAULT_QUIZ_PREFERENCES,
   normalizeQuizPreferences,
@@ -103,8 +106,12 @@ export default function QuizPage() {
         getStack(stackId),
         getSpecies(stackId),
       ]);
+      const speciesWithImages = speciesData.filter(
+        (item) =>
+          getSpeciesImagesWithUrls(item.data, item.quizImageIds).length > 0,
+      );
       setStack(stackData);
-      setSpecies(speciesData);
+      setSpecies(speciesWithImages);
       setQuestions([]);
       setCurrentQuestionIndex(0);
       setSelectedAnswer(null);
@@ -136,20 +143,14 @@ export default function QuizPage() {
   };
 
   const pickQuizImageUrl = (targetSpecies: Species) => {
-    const images = targetSpecies.data.images ?? [];
-    if (images.length === 0) return null;
-
     const enabledIds = targetSpecies.quizImageIds;
-    const enabledSet =
-      enabledIds && enabledIds.length > 0 ? new Set(enabledIds) : null;
-    const enabledImages = enabledSet
-      ? images.filter((image) => enabledSet.has(image.id))
-      : images;
-
-    const candidates = enabledImages.length > 0 ? enabledImages : images;
+    const candidates = getSpeciesImagesWithUrls(
+      targetSpecies.data,
+      enabledIds,
+    );
+    if (!candidates || candidates.length === 0) return null;
     const selected = candidates[Math.floor(Math.random() * candidates.length)];
-    const imageUrl = getSpeciesImageUrl(selected);
-    return imageUrl || null;
+    return getSpeciesImageUrl(selected) || null;
   };
 
   const generateQuestions = (allSpecies: Species[], questionCount: number) => {
@@ -438,7 +439,7 @@ export default function QuizPage() {
           </Button>
           <div className="text-center py-12">
             <p className="text-muted-foreground mb-4">
-              This stack needs at least 2 species to create a quiz
+              This stack needs at least 2 species with images to create a quiz
             </p>
             <Button asChild>
               <Link href="/">Browse Other Stacks</Link>

@@ -34,6 +34,23 @@ export function getSpeciesImageUrl(
   );
 }
 
+/** Collect species images that resolve to a usable image URL. */
+export function getSpeciesImagesWithUrls(
+  detail: PinkkaSpeciesDetail,
+  allowedImageIds?: string[],
+): NonNullable<PinkkaSpeciesDetail["images"]>[number][] {
+  const images = detail.images ?? [];
+  if (images.length === 0) return [];
+  const allowedSet =
+    allowedImageIds && allowedImageIds.length > 0
+      ? new Set(allowedImageIds)
+      : null;
+  return images.filter((image) => {
+    if (allowedSet && !allowedSet.has(image.id)) return false;
+    return Boolean(getSpeciesImageUrl(image));
+  });
+}
+
 /** Pick the primary image URL for a species detail. */
 export function getSpeciesPrimaryImageUrl(
   detail: PinkkaSpeciesDetail,
