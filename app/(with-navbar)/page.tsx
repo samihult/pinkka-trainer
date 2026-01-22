@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/loading-spinner";
@@ -17,22 +17,34 @@ import {
   RectangleHorizontal,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+/** Home page for selecting groups and stacks to learn. */
 export default function HomePage() {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [groups, setGroups] = useState<Group[]>([]);
   const [stacksByGroup, setStacksByGroup] = useState<{
     [key: string]: Stack[];
   }>({});
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
-    {},
-  );
+  const [expandedGroupId, setExpandedGroupId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const expandedGroupFromQuery = useMemo(() => {
+    const value = searchParams.get("g");
+    return value && value.length > 0 ? value : null;
+  }, [searchParams]);
 
   useEffect(() => {
     void loadData();
   }, []);
+
+  useEffect(() => {
+    setExpandedGroupId(expandedGroupFromQuery);
+  }, [expandedGroupFromQuery]);
 
   const loadData = async () => {
     try {
@@ -54,7 +66,6 @@ export default function HomePage() {
         {},
       );
       setStacksByGroup(stacksData);
-      setExpandedGroups({});
     } catch (error) {
       logFirestoreError("Failed to load learn page data", error);
     } finally {
@@ -82,18 +93,29 @@ export default function HomePage() {
 
         <div className="space-y-8">
           {groups.map((group) => {
-            const isExpanded = expandedGroups[group.id] ?? false;
+            const isExpanded = expandedGroupId === group.id;
             return (
               <div key={group.id}>
                 <button
                   type="button"
                   className="flex items-start pt-1 pr-5 pb-2 gap-2 text-left rounded-sm hover:bg-muted/60 transition"
-                  onClick={() =>
-                    setExpandedGroups((prev) => ({
-                      ...prev,
-                      [group.id]: !isExpanded,
-                    }))
-                  }
+                  onClick={() => {
+                    const nextExpandedId = isExpanded ? null : group.id;
+                    const params = new URLSearchParams(searchParams.toString());
+
+                    if (nextExpandedId) {
+                      params.set("g", nextExpandedId);
+                    } else {
+                      params.delete("g");
+                    }
+
+                    setExpandedGroupId(nextExpandedId);
+                    const nextQuery = params.toString();
+                    router.replace(
+                      nextQuery ? `${pathname}?${nextQuery}` : pathname,
+                      { scroll: false },
+                    );
+                  }}
                   aria-expanded={isExpanded}
                   aria-controls={`group-${group.id}-stacks`}
                 >
