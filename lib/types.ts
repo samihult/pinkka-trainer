@@ -9,7 +9,7 @@ export type QuizAnswerMode = "scientific" | "vernacular" | "either";
 
 /** Quiz configuration stored in user preferences. */
 export interface QuizPreferences {
-  /** Number of questions to include in each quiz session. */
+  /** Number of questions to include in each quiz session (0 means all). */
   questionCount: number;
   /** Quiz interaction mode. */
   mode: QuizMode;

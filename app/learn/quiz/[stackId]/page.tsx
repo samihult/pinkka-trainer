@@ -86,6 +86,11 @@ export default function QuizPage() {
   const [textAnswerRetryUsed, setTextAnswerRetryUsed] = useState(false);
   const textAnswerRef = useRef<HTMLInputElement>(null);
 
+  const getQuestionCount = (requested: number, maxQuestions: number) => {
+    if (requested === 0) return maxQuestions;
+    return Math.min(Math.max(requested, 2), maxQuestions);
+  };
+
   useEffect(() => {
     void loadData();
   }, [stackId, user?.uid]);
@@ -307,8 +312,8 @@ export default function QuizPage() {
 
   const startQuiz = () => {
     if (!quizPreferences) return;
-    const clampedCount = Math.min(
-      Math.max(quizPreferences.questionCount, 2),
+    const clampedCount = getQuestionCount(
+      quizPreferences.questionCount,
       species.length,
     );
 
@@ -332,8 +337,8 @@ export default function QuizPage() {
       if (showSettings) {
         if (event.key === "Enter" && quizPreferences) {
           const maxQuestions = species.length;
-          const displayQuestionCount = Math.min(
-            Math.max(quizPreferences.questionCount, 2),
+          const displayQuestionCount = getQuestionCount(
+            quizPreferences.questionCount,
             maxQuestions,
           );
           if (displayQuestionCount >= 2) {
@@ -461,8 +466,8 @@ export default function QuizPage() {
       quizPreferences.questionCount = 10;
     }
 
-    const displayQuestionCount = Math.min(
-      Math.max(quizPreferences.questionCount, 2),
+    const displayQuestionCount = getQuestionCount(
+      quizPreferences.questionCount,
       maxQuestions,
     );
 
