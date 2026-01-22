@@ -3,7 +3,14 @@
 import type React from "react";
 
 import Link from "next/link";
-import { BookOpen, Dna, Eye, EyeOff, Pencil, Trash2 } from "lucide-react";
+import {
+  BookOpen,
+  ChevronRight,
+  Eye,
+  EyeOff,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
@@ -60,58 +67,59 @@ export function ManageStackCard({
       onDragEnd={onDragEnd}
       className={cn(
         className,
-        "break-inside-avoid transition-shadow shadow-xs hover:shadow-sm rounded-xs cursor-move gap-0",
+        "break-inside-avoid transition-shadow shadow-xs hover:shadow-sm rounded-xs cursor-move gap-0 relative overflow-hidden",
       )}
     >
-      <CardHeader>
-        <CardTitle className="text-base flex items-center gap-2">
-          <BookOpen className="h-4 w-4 text-primary" />
-          {getLocalizedText(stack.data.name, "fi")}
-          <Button
-            size="icon-xs"
-            variant="minimal"
-            onClick={() => onEdit(groupId, stack)}
-          >
-            <Pencil className="h-3 w-3" />
-          </Button>
-          <Button
-            size="icon-xs"
-            variant="minimal"
-            onClick={() => onToggleVisibility(groupId, stack)}
-            aria-label={isHidden ? "Make stack public" : "Hide stack"}
-            title={isHidden ? "Make public" : "Hide"}
-          >
-            {isHidden ? (
-              <Eye className="h-3 w-3" />
-            ) : (
-              <EyeOff className="h-3 w-3" />
-            )}
-          </Button>
-          <Button
-            size="icon-xs"
-            variant="minimal-destructive"
-            onClick={() => onDelete(stack.id)}
-          >
-            <Trash2 className="h-3 w-3" />
-          </Button>
-          {isHidden && (
-            <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
-              Hidden
-            </span>
-          )}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-wrap gap-1">
-        <Button size="xs" variant="ghost" asChild>
-          <Link
-            href={`/manage/content/${stack.id}/species/`}
-            className="cursor-default"
-          >
-            <Dna className="h-3 w-3" />
-            Species
-          </Link>
+      <CardContent className="flex flex-wrap gap-2 pr-16 items-center">
+        <BookOpen className="h-4 w-4 text-primary mr-1" />
+        {getLocalizedText(stack.data.name, "fi")}
+        <Button
+          size="icon-xs"
+          variant="minimal"
+          onClick={() => onEdit(groupId, stack)}
+          className="ml-2"
+        >
+          <Pencil className="h-3 w-3" />
         </Button>
+        <Button
+          size="icon-xs"
+          variant="minimal"
+          onClick={() => onToggleVisibility(groupId, stack)}
+          aria-label={isHidden ? "Make stack public" : "Hide stack"}
+          title={isHidden ? "Make public" : "Hide"}
+        >
+          {isHidden ? (
+            <Eye className="h-3 w-3" />
+          ) : (
+            <EyeOff className="h-3 w-3" />
+          )}
+        </Button>
+        <Button
+          size="icon-xs"
+          variant="minimal-destructive"
+          onClick={() => onDelete(stack.id)}
+        >
+          <Trash2 className="h-3 w-3" />
+        </Button>
+        {isHidden && (
+          <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
+            Hidden
+          </span>
+        )}
       </CardContent>
+      <Button
+        size="icon-lg"
+        variant="ghost"
+        asChild
+        className="absolute right-0 top-0 h-full w-14 rounded-none rounded-r-xs border-l bg-muted/40 text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+      >
+        <Link
+          href={`/manage/content/${stack.id}/species/`}
+          aria-label="Open species"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </Link>
+      </Button>
     </Card>
   );
 }
