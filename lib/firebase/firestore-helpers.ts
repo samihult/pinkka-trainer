@@ -22,6 +22,8 @@ import { db, storage } from "./firebase-config";
 import type {
   LearningNameType,
   LearningProgress,
+  LearningProgressState,
+  StackLearningHistogram,
   QuizPreferences,
   Species,
   Stack,
@@ -51,6 +53,14 @@ export interface PinkkaImportResult {
 const pinkkaGroupImportStatusCache = new Map<number, boolean>();
 const pinkkaStackImportStatusCache = new Map<number, boolean>();
 const pinkkaSpeciesImportStatusCache = new Map<number, boolean>();
+
+function chunkArray<T>(items: T[], size: number): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += size) {
+    chunks.push(items.slice(i, i + size));
+  }
+  return chunks;
+}
 
 /** Build a deterministic document id for learning progress. */
 function buildLearningProgressDocId(
@@ -160,6 +170,42 @@ export async function getLearningProgress(
   } as LearningProgress;
 }
 
+/** Fetch learning progress records for a set of species ids. */
+export async function getLearningProgressForSpeciesIds(
+  userId: string,
+  speciesIds: string[],
+): Promise<Map<string, LearningProgressState>> {
+  const progressMap = new Map<string, LearningProgressState>();
+  if (speciesIds.length === 0) return progressMap;
+
+  const chunks = chunkArray(speciesIds, 10);
+  for (const chunk of chunks) {
+    const snapshot = await getDocs(
+      query(
+        collection(db, "learningProgress"),
+        where("userId", "==", userId),
+        where("speciesId", "in", chunk),
+      ),
+    );
+
+    snapshot.docs.forEach((docSnapshot) => {
+      const data = docSnapshot.data();
+      const speciesId = data.speciesId as string;
+      const nameType = data.nameType as LearningNameType;
+      const key = `${speciesId}_${nameType}`;
+      progressMap.set(key, {
+        accuracyStabilityDays: data.accuracyStabilityDays ?? 0.5,
+        speedStabilityDays: data.speedStabilityDays ?? 0.5,
+        lastReviewedAt: data.lastReviewedAt?.toDate() ?? new Date(0),
+        reviewCount: data.reviewCount ?? 0,
+        averageResponseMs: data.averageResponseMs ?? 0,
+      });
+    });
+  }
+
+  return progressMap;
+}
+
 /** Batch upsert learning progress records for a user. */
 export async function upsertLearningProgressBatch(
   records: Omit<LearningProgress, "id">[],
@@ -185,6 +231,66 @@ export async function upsertLearningProgressBatch(
   }
 
   await batch.commit();
+}
+
+/** Fetch stack learning histograms for a user. */
+export async function getStackLearningHistograms(
+  userId: string,
+  stackIds: string[],
+): Promise<Map<string, StackLearningHistogram>> {
+  const histogramMap = new Map<string, StackLearningHistogram>();
+  if (stackIds.length === 0) return histogramMap;
+
+  const chunks = chunkArray(stackIds, 10);
+  for (const chunk of chunks) {
+    const snapshot = await getDocs(
+      query(
+        collection(db, "stackLearningHistograms"),
+        where("userId", "==", userId),
+        where("stackId", "in", chunk),
+      ),
+    );
+
+    snapshot.docs.forEach((docSnapshot) => {
+      const data = docSnapshot.data();
+      const stackId = data.stackId as string;
+      histogramMap.set(stackId, {
+        id: docSnapshot.id,
+        userId: data.userId,
+        stackId,
+        scientific: data.scientific,
+        vernacular: data.vernacular,
+        updatedAt: data.updatedAt?.toDate() ?? new Date(0),
+      } as StackLearningHistogram);
+    });
+  }
+
+  return histogramMap;
+}
+
+/** Upsert a stack learning histogram record. */
+export async function upsertStackLearningHistogram(
+  record: Omit<StackLearningHistogram, "id">,
+): Promise<StackLearningHistogram> {
+  const docId = `${record.userId}_${record.stackId}`;
+  const now = Timestamp.now();
+  await setDoc(
+    doc(db, "stackLearningHistograms", docId),
+    {
+      userId: record.userId,
+      stackId: record.stackId,
+      scientific: record.scientific,
+      vernacular: record.vernacular,
+      updatedAt: now,
+    },
+    { merge: true },
+  );
+
+  return {
+    ...record,
+    id: docId,
+    updatedAt: now.toDate(),
+  };
 }
 
 // Group operations

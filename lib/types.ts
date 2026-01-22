@@ -10,12 +10,41 @@ export type QuizAnswerMode = "scientific" | "vernacular" | "either";
 /** Name variants tracked for learning progress. */
 export type LearningNameType = "scientific" | "vernacular";
 
+/** Learning status buckets for histogram summaries. */
+export type LearningStatusCategory =
+  | "new"
+  | "learning"
+  | "strengthening"
+  | "mastered";
+
 /** Thresholds for mapping a retention score to a verbal learning label. */
 export interface LearningStatusThresholds {
   /** Upper bound for the "Learning" label. */
   learningMax: number;
   /** Upper bound for the "Strengthening" label. */
   strengtheningMax: number;
+}
+
+/** Count + percentage for a learning-status bucket. */
+export interface LearningStatusBucket {
+  /** Number of species in the bucket. */
+  count: number;
+  /** Percentage (0-100) of species in the bucket. */
+  percent: number;
+}
+
+/** Histogram summary for learning-status buckets. */
+export interface LearningStatusHistogram {
+  /** Total species counted for the histogram. */
+  total: number;
+  /** Bucket for species with no learning data. */
+  new: LearningStatusBucket;
+  /** Bucket for species in the learning stage. */
+  learning: LearningStatusBucket;
+  /** Bucket for species in the strengthening stage. */
+  strengthening: LearningStatusBucket;
+  /** Bucket for species in the mastered stage. */
+  mastered: LearningStatusBucket;
 }
 
 /** Stored learning stability state for a specific name variant. */
@@ -42,6 +71,22 @@ export interface LearningProgress extends LearningProgressState {
   speciesId: string;
   /** Name variant that is being tracked. */
   nameType: LearningNameType;
+}
+
+/** Histogram summary stored per user and stack. */
+export interface StackLearningHistogram {
+  /** Firestore document id. */
+  id: string;
+  /** UID of the learner. */
+  userId: string;
+  /** Stack document id. */
+  stackId: string;
+  /** Scientific-name histogram. */
+  scientific: LearningStatusHistogram;
+  /** Vernacular-name histogram. */
+  vernacular: LearningStatusHistogram;
+  /** Last update timestamp. */
+  updatedAt: Date;
 }
 
 /** Quiz configuration stored in user preferences. */

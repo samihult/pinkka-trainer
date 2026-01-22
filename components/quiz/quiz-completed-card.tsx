@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StackLearningHistogram } from "@/components/learning/stack-learning-histogram";
+import type { StackLearningHistogram as StackLearningHistogramData } from "@/lib/types";
 import { RotateCw } from "lucide-react";
 import Link from "next/link";
 
@@ -15,6 +17,8 @@ export interface QuizCompletedCardProps {
   totalQuestions: number;
   /** Stack identifier used for navigation links. */
   stackId: string;
+  /** Optional learning histogram for the stack. */
+  learningHistogram?: StackLearningHistogramData | null;
   /** Handler for restarting the quiz. */
   onRestart: () => void;
 }
@@ -25,6 +29,7 @@ export function QuizCompletedCard({
   correctAnswers,
   totalQuestions,
   stackId,
+  learningHistogram,
   onRestart,
 }: QuizCompletedCardProps) {
   return (
@@ -41,6 +46,18 @@ export function QuizCompletedCard({
             You got {correctAnswers} out of {totalQuestions} correct
           </p>
         </div>
+
+        {learningHistogram && (
+          <div className="space-y-2">
+            <p className="text-sm font-semibold text-muted-foreground">
+              Stack learning status
+            </p>
+            <StackLearningHistogram
+              scientific={learningHistogram.scientific}
+              vernacular={learningHistogram.vernacular}
+            />
+          </div>
+        )}
 
         <div className="pt-6 border-t space-y-2">
           <Button onClick={onRestart} className="w-full" size="lg">

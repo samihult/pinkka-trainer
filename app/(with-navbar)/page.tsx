@@ -4,12 +4,17 @@ import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { getGroups, getStacks } from "@/lib/firebase/firestore-helpers";
-import type { Group, Stack } from "@/lib/types";
+import {
+  getGroups,
+  getStackLearningHistograms,
+  getStacks,
+} from "@/lib/firebase/firestore-helpers";
+import type { Group, Stack, StackLearningHistogram } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
+import { useAuth } from "@/lib/auth-context";
 import {
   BookOpen,
   Brain,
@@ -18,6 +23,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { StackLearningHistogram as StackLearningHistogramBars } from "@/components/learning/stack-learning-histogram";
 
 /** Home page for selecting groups and stacks to learn. */
 export default function HomePage() {
@@ -26,10 +32,15 @@ export default function HomePage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { user } = useAuth();
   const [groups, setGroups] = useState<Group[]>([]);
+  const [allStacks, setAllStacks] = useState<Stack[]>([]);
   const [stacksByGroup, setStacksByGroup] = useState<{
     [key: string]: Stack[];
   }>({});
+  const [stackHistograms, setStackHistograms] = useState<
+    Map<string, StackLearningHistogram>
+  >(new Map());
   const [expandedGroupId, setExpandedGroupId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -53,6 +64,7 @@ export default function HomePage() {
         getStacks(),
       ]);
       setGroups(groupsData);
+      setAllStacks(allStacks);
 
       const stackById = new Map(allStacks.map((stack) => [stack.id, stack]));
       const stacksData = groupsData.reduce<{ [key: string]: Stack[] }>(
@@ -72,6 +84,27 @@ export default function HomePage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!user || allStacks.length === 0) {
+      setStackHistograms(new Map());
+      return;
+    }
+
+    const loadHistograms = async () => {
+      try {
+        const histogramMap = await getStackLearningHistograms(
+          user.uid,
+          allStacks.map((stack) => stack.id),
+        );
+        setStackHistograms(histogramMap);
+      } catch (error) {
+        logFirestoreError("Failed to load learning histograms", error);
+      }
+    };
+
+    void loadHistograms();
+  }, [allStacks, user]);
 
   if (loading) {
     return (
@@ -173,6 +206,24 @@ export default function HomePage() {
                               preferredLanguage,
                             )}
                           </p>
+                        )}
+                        {user && (
+                          <div className="mt-3">
+                            {stackHistograms.get(stack.id) ? (
+                              <StackLearningHistogramBars
+                                scientific={
+                                  stackHistograms.get(stack.id)!.scientific
+                                }
+                                vernacular={
+                                  stackHistograms.get(stack.id)!.vernacular
+                                }
+                              />
+                            ) : (
+                              <p className="text-xs text-muted-foreground">
+                                No learning data yet
+                              </p>
+                            )}
+                          </div>
                         )}
                         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                           <Button asChild className="sm:w-auto">

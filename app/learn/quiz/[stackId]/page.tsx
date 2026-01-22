@@ -14,10 +14,12 @@ import { QuizSpeciesCard } from "@/components/quiz/quiz-species-card";
 import { useAuth } from "@/lib/auth-context";
 import {
   getLearningProgress,
+  getLearningProgressForSpeciesIds,
   getStack,
   getSpecies,
   getUserQuizPreferences,
   upsertLearningProgressBatch,
+  upsertStackLearningHistogram,
   updateUserQuizPreferences,
 } from "@/lib/firebase/firestore-helpers";
 import type {
@@ -29,6 +31,7 @@ import type {
   QuizMode,
   Stack,
   Species,
+  StackLearningHistogram,
 } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import {
@@ -58,6 +61,7 @@ import {
   getLearningStatusLabel,
   LEARNING_STATUS_THRESHOLDS,
 } from "@/lib/learning/learning-thresholds";
+import { buildStackLearningHistogram } from "@/lib/learning/learning-histogram";
 import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
@@ -121,6 +125,8 @@ export default function QuizPage() {
     accuracyScore: number | null;
     speedScore: number | null;
   } | null>(null);
+  const [stackHistogram, setStackHistogram] =
+    useState<StackLearningHistogram | null>(null);
   const [textAnswer, setTextAnswer] = useState("");
   const [textAnswerCorrect, setTextAnswerCorrect] = useState<boolean | null>(
     null,
@@ -177,6 +183,7 @@ export default function QuizPage() {
       setTextAnswerRetryUsed(false);
       setCurrentLearningProgress(null);
       setLearningMetric(null);
+      setStackHistogram(null);
       progressCacheRef.current = new Map();
       pendingProgressRef.current = new Map();
 
@@ -425,6 +432,39 @@ export default function QuizPage() {
     }
   };
 
+  const updateStackHistogram = async () => {
+    if (!user) return;
+    if (species.length === 0) return;
+
+    await flushPendingProgressUpdates();
+    const speciesIds = species.map((item) => item.id);
+    const progressMap = await getLearningProgressForSpeciesIds(
+      user.uid,
+      speciesIds,
+    );
+    const now = new Date();
+    const scientific = buildStackLearningHistogram(
+      speciesIds,
+      progressMap,
+      "scientific",
+      now,
+    );
+    const vernacular = buildStackLearningHistogram(
+      speciesIds,
+      progressMap,
+      "vernacular",
+      now,
+    );
+    const stored = await upsertStackLearningHistogram({
+      userId: user.uid,
+      stackId,
+      scientific,
+      vernacular,
+      updatedAt: now,
+    });
+    setStackHistogram(stored);
+  };
+
   const recordLearningProgress = async (
     targetSpecies: Species,
     scoresByType: Partial<
@@ -662,7 +702,7 @@ export default function QuizPage() {
       setLearningMetric(null);
     } else {
       setQuizComplete(true);
-      void flushPendingProgressUpdates();
+      void updateStackHistogram();
     }
   };
 
@@ -951,6 +991,7 @@ export default function QuizPage() {
             correctAnswers={correctAnswers}
             totalQuestions={questions.length}
             stackId={stackId}
+            learningHistogram={stackHistogram}
             onRestart={handleRestart}
           />
         </main>
