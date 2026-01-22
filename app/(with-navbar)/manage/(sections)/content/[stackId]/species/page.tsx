@@ -23,18 +23,11 @@ import type { Species, Stack } from "@/lib/types";
 import { ArrowLeft, Plus } from "lucide-react";
 import Link from "next/link";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-
-type SpeciesViewVariant = "detailed" | "minimal";
-
-type LocalPreferences = {
-  /** Local-only preferences for the species management page. */
-  manageSpecies?: {
-    /** Preferred layout for the species list. */
-    viewVariant?: SpeciesViewVariant;
-  };
-};
-
-const LOCAL_PREFERENCES_KEY = "localPreferences";
+import {
+  loadLocalPreferences,
+  updateLocalPreferences,
+  type ManageSpeciesViewVariant,
+} from "@/lib/local-preferences";
 
 export default function ManageSpeciesPage() {
   const params = useParams();
@@ -46,27 +39,16 @@ export default function ManageSpeciesPage() {
   const [species, setSpecies] = useState<Species[]>([]);
   const [loading, setLoading] = useState(true);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [cardVariant, setCardVariant] = useState<SpeciesViewVariant>("minimal");
+  const [cardVariant, setCardVariant] =
+    useState<ManageSpeciesViewVariant>("minimal");
   const [localPreferencesLoaded, setLocalPreferencesLoaded] = useState(false);
-
-  const loadLocalPreferences = (): LocalPreferences => {
-    if (typeof window === "undefined") return {};
-    try {
-      const stored = window.localStorage.getItem(LOCAL_PREFERENCES_KEY);
-      return stored ? (JSON.parse(stored) as LocalPreferences) : {};
-    } catch (error) {
-      console.warn("Failed to parse local preferences", error);
-      return {};
-    }
-  };
 
   useEffect(() => {
     void loadData();
   }, [stackId]);
 
   useEffect(() => {
-    const storedPreferences = loadLocalPreferences();
-    const storedVariant = storedPreferences.manageSpecies?.viewVariant;
+    const storedVariant = loadLocalPreferences().manageSpecies?.viewVariant;
     if (storedVariant === "minimal" || storedVariant === "detailed") {
       setCardVariant(storedVariant);
     }
@@ -75,18 +57,13 @@ export default function ManageSpeciesPage() {
 
   useEffect(() => {
     if (!localPreferencesLoaded || typeof window === "undefined") return;
-    const storedPreferences = loadLocalPreferences();
-    const nextPreferences: LocalPreferences = {
+    updateLocalPreferences((storedPreferences) => ({
       ...storedPreferences,
       manageSpecies: {
         ...storedPreferences.manageSpecies,
         viewVariant: cardVariant,
       },
-    };
-    window.localStorage.setItem(
-      LOCAL_PREFERENCES_KEY,
-      JSON.stringify(nextPreferences),
-    );
+    }));
   }, [cardVariant, localPreferencesLoaded]);
 
   const loadData = async () => {

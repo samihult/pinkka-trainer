@@ -1,6 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
+import {
+  AVAILABLE_LANGUAGES,
+  getStoredLanguage,
+  setStoredLanguage,
+  type LanguagePreference,
+} from "@/lib/local-preferences";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,10 +19,59 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { BookOpen, User, LogOut, Settings, Library } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+/** Language toggle group that persists selection in localStorage. */
+function LanguageSelector({
+  value,
+  onChange,
+}: {
+  /** Currently selected language. */
+  value: LanguagePreference;
+  /** Callback fired when the language selection changes. */
+  onChange: (next: LanguagePreference) => void;
+}) {
+  return (
+    <div
+      className="flex items-center gap-1 rounded-md border border-border bg-background/60 p-1"
+      role="group"
+      aria-label="Language selection"
+    >
+      {AVAILABLE_LANGUAGES.map((language) => (
+        <Button
+          key={language}
+          type="button"
+          variant="ghost"
+          size="xs"
+          aria-pressed={language === value}
+          className={cn(
+            "px-2 py-1 text-[11px] font-semibold tracking-wide",
+            language === value
+              ? "bg-accent text-foreground"
+              : "text-muted-foreground hover:text-foreground",
+          )}
+          onClick={() => onChange(language)}
+        >
+          {language}
+        </Button>
+      ))}
+    </div>
+  );
+}
 
 /** Primary site navigation with auth-aware actions. */
 export function Navbar() {
   const { user, signOut } = useAuth();
+  const [language, setLanguage] = useState<LanguagePreference>("EN");
+
+  useEffect(() => {
+    setLanguage(getStoredLanguage());
+  }, []);
+
+  const handleLanguageChange = (next: LanguagePreference) => {
+    setLanguage(next);
+    setStoredLanguage(next);
+  };
 
   return (
     <nav className="border-b bg-card">
@@ -30,6 +86,7 @@ export function Navbar() {
           </Link>
 
           <div className="flex items-center gap-4">
+            <LanguageSelector value={language} onChange={handleLanguageChange} />
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
