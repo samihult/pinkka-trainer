@@ -20,6 +20,8 @@ import {
 } from "firebase/storage";
 import { db, storage } from "./firebase-config";
 import type {
+  LearningNameType,
+  LearningProgress,
   QuizPreferences,
   Species,
   Stack,
@@ -49,6 +51,15 @@ export interface PinkkaImportResult {
 const pinkkaGroupImportStatusCache = new Map<number, boolean>();
 const pinkkaStackImportStatusCache = new Map<number, boolean>();
 const pinkkaSpeciesImportStatusCache = new Map<number, boolean>();
+
+/** Build a deterministic document id for learning progress. */
+function buildLearningProgressDocId(
+  userId: string,
+  speciesId: string,
+  nameType: LearningNameType,
+): string {
+  return `${userId}_${speciesId}_${nameType}`;
+}
 
 /** Build a deterministic document id for a Pinkka import. */
 function buildImportDocId(importId: string, pinkkaId: number): string {
@@ -122,6 +133,58 @@ export async function updateUserQuizPreferences(
   await updateDoc(doc(db, "users", userId), {
     "preferences.quiz": preferences,
   });
+}
+
+// Learning progress operations
+/** Fetch learning progress for a specific species/name variant. */
+export async function getLearningProgress(
+  userId: string,
+  speciesId: string,
+  nameType: LearningNameType,
+): Promise<LearningProgress | null> {
+  const docId = buildLearningProgressDocId(userId, speciesId, nameType);
+  const progressDoc = await getDoc(doc(db, "learningProgress", docId));
+  if (!progressDoc.exists()) return null;
+
+  const data = progressDoc.data();
+  return {
+    id: progressDoc.id,
+    userId: data.userId,
+    speciesId: data.speciesId,
+    nameType: data.nameType as LearningNameType,
+    accuracyStabilityDays: data.accuracyStabilityDays ?? 0.5,
+    speedStabilityDays: data.speedStabilityDays ?? 0.5,
+    lastReviewedAt: data.lastReviewedAt?.toDate() ?? new Date(0),
+    reviewCount: data.reviewCount ?? 0,
+    averageResponseMs: data.averageResponseMs ?? 0,
+  } as LearningProgress;
+}
+
+/** Batch upsert learning progress records for a user. */
+export async function upsertLearningProgressBatch(
+  records: Omit<LearningProgress, "id">[],
+): Promise<void> {
+  if (!records.length) return;
+  const batch = writeBatch(db);
+
+  for (const record of records) {
+    const docId = buildLearningProgressDocId(
+      record.userId,
+      record.speciesId,
+      record.nameType,
+    );
+    batch.set(
+      doc(db, "learningProgress", docId),
+      {
+        ...record,
+        lastReviewedAt: Timestamp.fromDate(record.lastReviewedAt),
+        updatedAt: Timestamp.now(),
+      },
+      { merge: true },
+    );
+  }
+
+  await batch.commit();
 }
 
 // Group operations

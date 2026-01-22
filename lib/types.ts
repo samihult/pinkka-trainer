@@ -7,6 +7,43 @@ export type QuizMode = "multiple-choice" | "write-name";
 /** Accepted answer rules when typing a species name. */
 export type QuizAnswerMode = "scientific" | "vernacular" | "either";
 
+/** Name variants tracked for learning progress. */
+export type LearningNameType = "scientific" | "vernacular";
+
+/** Thresholds for mapping a retention score to a verbal learning label. */
+export interface LearningStatusThresholds {
+  /** Upper bound for the "Learning" label. */
+  learningMax: number;
+  /** Upper bound for the "Strengthening" label. */
+  strengtheningMax: number;
+}
+
+/** Stored learning stability state for a specific name variant. */
+export interface LearningProgressState {
+  /** Stability half-life in days for the accuracy curve. */
+  accuracyStabilityDays: number;
+  /** Stability half-life in days for the speed curve. */
+  speedStabilityDays: number;
+  /** Timestamp of the last review. */
+  lastReviewedAt: Date;
+  /** Total number of reviews recorded. */
+  reviewCount: number;
+  /** Exponentially smoothed response time in milliseconds. */
+  averageResponseMs: number;
+}
+
+/** Learning progress document stored in Firestore. */
+export interface LearningProgress extends LearningProgressState {
+  /** Firestore document id. */
+  id: string;
+  /** UID of the learner. */
+  userId: string;
+  /** Species document id. */
+  speciesId: string;
+  /** Name variant that is being tracked. */
+  nameType: LearningNameType;
+}
+
 /** Quiz configuration stored in user preferences. */
 export interface QuizPreferences {
   /** Number of questions to include in each quiz session (0 means all). */

@@ -8,18 +8,25 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { QuizCompletedCard } from "@/components/quiz/quiz-completed-card";
+import { LearningStatusCard } from "@/components/quiz/learning-status-card";
 import { QuizSettingsCard } from "@/components/quiz/quiz-settings-card";
 import { QuizSpeciesCard } from "@/components/quiz/quiz-species-card";
 import { useAuth } from "@/lib/auth-context";
 import {
+  getLearningProgress,
   getStack,
   getSpecies,
   getUserQuizPreferences,
+  upsertLearningProgressBatch,
   updateUserQuizPreferences,
 } from "@/lib/firebase/firestore-helpers";
 import type {
+  LearningNameType,
+  LearningProgress,
+  LearningProgressState,
   QuizAnswerMode,
   QuizPreferences,
+  QuizMode,
   Stack,
   Species,
 } from "@/lib/types";
@@ -40,6 +47,17 @@ import {
   setStoredQuizPreferences,
   toLanguageCode,
 } from "@/lib/local-preferences";
+import {
+  combineRetention,
+  DEFAULT_RETENTION_HORIZON_DAYS,
+  estimateRetention,
+  getSpeedScore,
+  updateLearningProgressState,
+} from "@/lib/learning/learning-curve";
+import {
+  getLearningStatusLabel,
+  LEARNING_STATUS_THRESHOLDS,
+} from "@/lib/learning/learning-thresholds";
 import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
@@ -55,8 +73,22 @@ interface QuizQuestion {
   imageUrl: string | null;
 }
 
+/** Learning update payload for a name variant. */
+type LearningScoreUpdate = {
+  /** Accuracy score in the 0-1 range. */
+  accuracyScore: number;
+  /** Response time in milliseconds. */
+  responseMs: number;
+  /** Expected response time baseline in milliseconds. */
+  expectedMs: number;
+};
+
 const CLOSE_SCORE_THRESHOLD = 0.85;
 const CORRECT_SCORE_THRESHOLD = 1.0;
+const DEFAULT_EXPECTED_RESPONSE_MS: Record<QuizMode, number> = {
+  "multiple-choice": 4000,
+  "write-name": 9000,
+};
 
 /** Quiz experience for a single stack. */
 export default function QuizPage() {
@@ -79,6 +111,16 @@ export default function QuizPage() {
     useState<QuizPreferences | null>(null);
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
   const [showSettings, setShowSettings] = useState(true);
+  const [currentLearningProgress, setCurrentLearningProgress] = useState<{
+    scientific: LearningProgressState | null;
+    vernacular: LearningProgressState | null;
+  } | null>(null);
+  const [learningMetric, setLearningMetric] = useState<{
+    label: string;
+    combinedScore: number;
+    accuracyScore: number | null;
+    speedScore: number | null;
+  } | null>(null);
   const [textAnswer, setTextAnswer] = useState("");
   const [textAnswerCorrect, setTextAnswerCorrect] = useState<boolean | null>(
     null,
@@ -88,11 +130,21 @@ export default function QuizPage() {
   );
   const [textAnswerRetryUsed, setTextAnswerRetryUsed] = useState(false);
   const textAnswerRef = useRef<HTMLInputElement>(null);
+  const questionStartRef = useRef<number>(0);
+  const progressCacheRef = useRef(
+    new Map<string, LearningProgressState>(),
+  );
+  const pendingProgressRef = useRef(
+    new Map<string, Omit<LearningProgress, "id">>(),
+  );
 
   const getQuestionCount = (requested: number, maxQuestions: number) => {
     if (requested === 0) return maxQuestions;
     return Math.min(Math.max(requested, 2), maxQuestions);
   };
+
+  const buildProgressKey = (speciesId: string, nameType: LearningNameType) =>
+    `${speciesId}_${nameType}`;
 
   useEffect(() => {
     void loadData();
@@ -123,6 +175,10 @@ export default function QuizPage() {
       setTextAnswerCorrect(null);
       setTextAnswerFeedback(null);
       setTextAnswerRetryUsed(false);
+      setCurrentLearningProgress(null);
+      setLearningMetric(null);
+      progressCacheRef.current = new Map();
+      pendingProgressRef.current = new Map();
 
       const storedPreferences = user
         ? await getUserQuizPreferences(user.uid)
@@ -140,6 +196,14 @@ export default function QuizPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const getExpectedResponseMs = (mode: QuizMode) =>
+    DEFAULT_EXPECTED_RESPONSE_MS[mode];
+
+  const getResponseMs = () => {
+    if (!questionStartRef.current) return 0;
+    return Math.max(0, Date.now() - questionStartRef.current);
   };
 
   const pickQuizImageUrl = (targetSpecies: Species) => {
@@ -185,13 +249,26 @@ export default function QuizPage() {
 
   const handleAnswerSelect = (answer: Species) => {
     if (answered) return;
+    if (!currentQuestion || !quizPreferences) return;
 
     setSelectedAnswer(answer);
     setAnswered(true);
 
-    if (answer.id === currentQuestion.correctAnswer.id) {
+    const isCorrect = answer.id === currentQuestion.correctAnswer.id;
+    if (isCorrect) {
       setCorrectAnswers((previous) => previous + 1);
     }
+
+    void recordLearningProgress(
+      currentQuestion.species,
+      getLearningScoresForChoice(
+        currentQuestion.species,
+        quizPreferences.answerMode,
+        isCorrect,
+        getResponseMs(),
+        getExpectedResponseMs("multiple-choice"),
+      ),
+    );
   };
 
   const getDisplayNames = (
@@ -242,6 +319,294 @@ export default function QuizPage() {
     return vernacularName ? [scientificName, vernacularName] : [scientificName];
   };
 
+  const getVernacularName = (targetSpecies: Species) =>
+    getLocalizedText(targetSpecies.data.vernacularName, preferredLanguage);
+
+  const setLearningMetricFromProgress = (
+    scientificProgress: LearningProgressState | null,
+    vernacularProgress: LearningProgressState | null,
+    now: Date = new Date(),
+  ) => {
+    const scientificAccuracy = scientificProgress
+      ? estimateRetention(
+          scientificProgress,
+          now,
+          DEFAULT_RETENTION_HORIZON_DAYS,
+          "accuracy",
+        )
+      : null;
+    const scientificSpeed = scientificProgress
+      ? estimateRetention(
+          scientificProgress,
+          now,
+          DEFAULT_RETENTION_HORIZON_DAYS,
+          "speed",
+        )
+      : null;
+    const vernacularAccuracy = vernacularProgress
+      ? estimateRetention(
+          vernacularProgress,
+          now,
+          DEFAULT_RETENTION_HORIZON_DAYS,
+          "accuracy",
+        )
+      : null;
+    const vernacularSpeed = vernacularProgress
+      ? estimateRetention(
+          vernacularProgress,
+          now,
+          DEFAULT_RETENTION_HORIZON_DAYS,
+          "speed",
+        )
+      : null;
+
+    const accuracyScore = combineRetention(
+      scientificAccuracy,
+      vernacularAccuracy,
+    );
+    const speedScore = combineRetention(scientificSpeed, vernacularSpeed);
+    const combinedScore = combineRetention(accuracyScore, speedScore);
+
+    setLearningMetric({
+      label: getLearningStatusLabel(
+        combinedScore,
+        LEARNING_STATUS_THRESHOLDS,
+      ),
+      combinedScore,
+      accuracyScore,
+      speedScore,
+    });
+  };
+
+  const loadLearningProgressForSpecies = async (speciesId: string) => {
+    if (!user) return;
+
+    const [scientific, vernacular] = await Promise.all([
+      getLearningProgress(user.uid, speciesId, "scientific"),
+      getLearningProgress(user.uid, speciesId, "vernacular"),
+    ]);
+
+    const nextProgress = {
+      scientific: scientific ?? null,
+      vernacular: vernacular ?? null,
+    };
+
+    if (scientific) {
+      progressCacheRef.current.set(
+        buildProgressKey(speciesId, "scientific"),
+        scientific,
+      );
+    }
+    if (vernacular) {
+      progressCacheRef.current.set(
+        buildProgressKey(speciesId, "vernacular"),
+        vernacular,
+      );
+    }
+
+    setCurrentLearningProgress(nextProgress);
+    setLearningMetricFromProgress(
+      nextProgress.scientific,
+      nextProgress.vernacular,
+    );
+  };
+
+  const flushPendingProgressUpdates = async () => {
+    if (!user) return;
+
+    const records = Array.from(pendingProgressRef.current.values());
+    if (records.length === 0) return;
+
+    try {
+      await upsertLearningProgressBatch(records);
+      pendingProgressRef.current.clear();
+    } catch (error) {
+      logFirestoreError("Failed to update learning progress", error);
+    }
+  };
+
+  const recordLearningProgress = async (
+    targetSpecies: Species,
+    scoresByType: Partial<
+      Record<LearningNameType, LearningScoreUpdate>
+    >,
+  ) => {
+    if (!user) return;
+    if (!scoresByType || Object.keys(scoresByType).length === 0) return;
+
+    const now = new Date();
+    const nextProgress = {
+      scientific:
+        currentLearningProgress?.scientific ??
+        progressCacheRef.current.get(
+          buildProgressKey(targetSpecies.id, "scientific"),
+        ) ??
+        null,
+      vernacular:
+        currentLearningProgress?.vernacular ??
+        progressCacheRef.current.get(
+          buildProgressKey(targetSpecies.id, "vernacular"),
+        ) ??
+        null,
+    };
+
+    for (const [nameType, score] of Object.entries(scoresByType) as [
+      LearningNameType,
+      LearningScoreUpdate,
+    ][]) {
+      const key = buildProgressKey(targetSpecies.id, nameType);
+      let previous = progressCacheRef.current.get(key) ?? null;
+
+      if (!previous) {
+        const stored = await getLearningProgress(
+          user.uid,
+          targetSpecies.id,
+          nameType,
+        );
+        if (stored) {
+          previous = stored;
+          progressCacheRef.current.set(key, stored);
+        }
+      }
+
+      // Use the prior response average when available; fall back to defaults.
+      const expectedBaseline =
+        previous?.averageResponseMs && previous.averageResponseMs > 0
+          ? previous.averageResponseMs
+          : score.expectedMs;
+      const speedScore = getSpeedScore(
+        score.responseMs,
+        expectedBaseline,
+        score.accuracyScore,
+      );
+      const updated = updateLearningProgressState(
+        previous,
+        score.accuracyScore,
+        speedScore,
+        score.responseMs,
+        now,
+      );
+      progressCacheRef.current.set(key, updated);
+
+      pendingProgressRef.current.set(key, {
+        userId: user.uid,
+        speciesId: targetSpecies.id,
+        nameType,
+        ...updated,
+      });
+
+      if (nameType === "scientific") {
+        nextProgress.scientific = updated;
+      } else {
+        nextProgress.vernacular = updated;
+      }
+    }
+
+    setCurrentLearningProgress(nextProgress);
+    setLearningMetricFromProgress(
+      nextProgress.scientific,
+      nextProgress.vernacular,
+      now,
+    );
+  };
+
+  const getLearningScoresForTextAnswer = (
+    targetSpecies: Species,
+    answerMode: QuizAnswerMode,
+    answerText: string,
+    responseMs: number,
+    expectedMs: number,
+  ): Partial<Record<LearningNameType, LearningScoreUpdate>> => {
+    const scientificName = targetSpecies.data.scientificName;
+    const vernacularName = getVernacularName(targetSpecies);
+    const scientificScore = scoreAnswer(answerText, [scientificName]);
+    const vernacularScore = vernacularName
+      ? scoreAnswer(answerText, [vernacularName])
+      : null;
+
+    if (answerMode === "scientific") {
+      return {
+        scientific: {
+          accuracyScore: scientificScore,
+          responseMs,
+          expectedMs,
+        },
+      };
+    }
+
+    if (answerMode === "vernacular") {
+      if (vernacularScore === null) {
+        return {
+          scientific: {
+            accuracyScore: scientificScore,
+            responseMs,
+            expectedMs,
+          },
+        };
+      }
+      return {
+        vernacular: {
+          accuracyScore: vernacularScore,
+          responseMs,
+          expectedMs,
+        },
+      };
+    }
+
+    if (vernacularScore === null) {
+      return {
+        scientific: {
+          accuracyScore: scientificScore,
+          responseMs,
+          expectedMs,
+        },
+      };
+    }
+
+    return {
+      scientific: {
+        accuracyScore: scientificScore,
+        responseMs,
+        expectedMs,
+      },
+      vernacular: {
+        accuracyScore: vernacularScore,
+        responseMs,
+        expectedMs,
+      },
+    };
+  };
+
+  const getLearningScoresForChoice = (
+    targetSpecies: Species,
+    answerMode: QuizAnswerMode,
+    isCorrect: boolean,
+    responseMs: number,
+    expectedMs: number,
+  ): Partial<Record<LearningNameType, LearningScoreUpdate>> => {
+    const accuracyScore = isCorrect ? 1 : 0;
+    const vernacularName = getVernacularName(targetSpecies);
+    const update: LearningScoreUpdate = {
+      accuracyScore,
+      responseMs,
+      expectedMs,
+    };
+
+    if (answerMode === "scientific") {
+      return { scientific: update };
+    }
+
+    if (answerMode === "vernacular") {
+      return vernacularName
+        ? { vernacular: update }
+        : { scientific: update };
+    }
+
+    return vernacularName
+      ? { scientific: update, vernacular: update }
+      : { scientific: update };
+  };
+
   const handleTextAnswerSubmit = () => {
     if (answered || !currentQuestion || !quizPreferences) return;
 
@@ -251,12 +616,22 @@ export default function QuizPage() {
     );
     const score = scoreAnswer(textAnswer, acceptedAnswers);
     const isCorrect = score >= CORRECT_SCORE_THRESHOLD;
+    const responseMs = getResponseMs();
+    const expectedMs = getExpectedResponseMs("write-name");
+    const learningScores = getLearningScoresForTextAnswer(
+      currentQuestion.species,
+      quizPreferences.answerMode,
+      textAnswer,
+      responseMs,
+      expectedMs,
+    );
 
     if (isCorrect) {
       setAnswered(true);
       setTextAnswerCorrect(true);
       setTextAnswerFeedback(null);
       setCorrectAnswers((previous) => previous + 1);
+      void recordLearningProgress(currentQuestion.species, learningScores);
       return;
     }
 
@@ -272,6 +647,7 @@ export default function QuizPage() {
     setAnswered(true);
     setTextAnswerCorrect(false);
     setTextAnswerFeedback(null);
+    void recordLearningProgress(currentQuestion.species, learningScores);
   };
 
   const handleNext = () => {
@@ -283,13 +659,15 @@ export default function QuizPage() {
       setTextAnswerCorrect(null);
       setTextAnswerFeedback(null);
       setTextAnswerRetryUsed(false);
+      setLearningMetric(null);
     } else {
       setQuizComplete(true);
+      void flushPendingProgressUpdates();
     }
   };
 
   const handleRestart = () => {
-    startQuiz();
+    void startQuiz();
   };
 
   const handlePreferencesChange = async (updates: Partial<QuizPreferences>) => {
@@ -311,8 +689,9 @@ export default function QuizPage() {
     }
   };
 
-  const startQuiz = () => {
+  const startQuiz = async () => {
     if (!quizPreferences) return;
+    await flushPendingProgressUpdates();
     const clampedCount = getQuestionCount(
       quizPreferences.questionCount,
       species.length,
@@ -328,8 +707,46 @@ export default function QuizPage() {
     setTextAnswerCorrect(null);
     setTextAnswerFeedback(null);
     setTextAnswerRetryUsed(false);
+    setLearningMetric(null);
     setShowSettings(false);
+    questionStartRef.current = Date.now();
   };
+
+  useEffect(() => {
+    if (!user) {
+      setCurrentLearningProgress(null);
+      setLearningMetric(null);
+      return;
+    }
+
+    const activeQuestion = questions[currentQuestionIndex];
+    if (!activeQuestion) return;
+
+    setCurrentLearningProgress(null);
+    setLearningMetric(null);
+    void loadLearningProgressForSpecies(activeQuestion.species.id);
+  }, [currentQuestionIndex, questions, user?.uid]);
+
+  useEffect(() => {
+    if (showSettings || quizComplete) return;
+    const activeQuestion = questions[currentQuestionIndex];
+    if (!activeQuestion) return;
+    questionStartRef.current = Date.now();
+  }, [currentQuestionIndex, questions, quizComplete, showSettings]);
+
+  useEffect(() => {
+    if (!currentLearningProgress) return;
+    setLearningMetricFromProgress(
+      currentLearningProgress.scientific,
+      currentLearningProgress.vernacular,
+    );
+  }, [currentLearningProgress]);
+
+  useEffect(() => {
+    return () => {
+      void flushPendingProgressUpdates();
+    };
+  }, [user?.uid]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -344,7 +761,7 @@ export default function QuizPage() {
           );
           if (displayQuestionCount >= 2) {
             event.preventDefault();
-            startQuiz();
+            void startQuiz();
           }
         }
         return;
@@ -680,6 +1097,16 @@ export default function QuizPage() {
                   </div>
                 )}
               </div>
+
+              {answered && user && learningMetric && (
+                <LearningStatusCard
+                  label={learningMetric.label}
+                  combinedScore={learningMetric.combinedScore}
+                  horizonDays={DEFAULT_RETENTION_HORIZON_DAYS}
+                  accuracyScore={learningMetric.accuracyScore}
+                  speedScore={learningMetric.speedScore}
+                />
+              )}
 
               {answered && (
                 <div className="text-center">
