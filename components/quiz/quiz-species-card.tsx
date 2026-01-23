@@ -12,14 +12,14 @@ export interface QuizSpeciesCardProps {
 /** Renders the quiz prompt image card for the current species. */
 export function QuizSpeciesCard({ imageUrl }: QuizSpeciesCardProps) {
   return (
-    <Card className="mb-6">
-      <CardContent className="pt-6">
-        <h2 className="text-xl font-semibold mb-4 text-center">
+    <Card className="h-full">
+      <CardContent className="flex h-full flex-col gap-4 p-6">
+        <h2 className="text-2xl font-semibold text-center">
           What species is shown in this image?
         </h2>
 
         {imageUrl ? (
-          <div className="relative h-80 rounded-lg overflow-hidden mb-4">
+          <div className="relative flex-1 rounded-lg overflow-hidden">
             <Image
               src={imageUrl}
               alt="Species to identify"
@@ -29,7 +29,7 @@ export function QuizSpeciesCard({ imageUrl }: QuizSpeciesCardProps) {
             />
           </div>
         ) : (
-          <div className="h-80 bg-muted rounded-lg flex items-center justify-center mb-4">
+          <div className="flex-1 bg-muted rounded-lg flex items-center justify-center">
             <p className="text-muted-foreground">No image available</p>
           </div>
         )}

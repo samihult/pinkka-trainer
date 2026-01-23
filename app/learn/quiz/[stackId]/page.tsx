@@ -5,14 +5,15 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { LearningSessionShell } from "@/components/learning-session-shell";
 import { QuizCompletedCard } from "@/components/quiz/quiz-completed-card";
 import { LearningStatusCard } from "@/components/quiz/learning-status-card";
 import { QuizSettingsCard } from "@/components/quiz/quiz-settings-card";
 import { QuizSpeciesCard } from "@/components/quiz/quiz-species-card";
 import { useAuth } from "@/lib/auth-context";
 import {
+  getGroups,
   getLearningProgress,
   getLearningProgressForSpeciesIds,
   getStack,
@@ -31,6 +32,7 @@ import type {
   QuizMode,
   Stack,
   Species,
+  Group,
   StackLearningHistogram,
 } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
@@ -62,7 +64,7 @@ import {
   LEARNING_STATUS_THRESHOLDS,
 } from "@/lib/learning/learning-thresholds";
 import { buildStackLearningHistogram } from "@/lib/learning/learning-histogram";
-import { ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
 /** Quiz prompt data for a single question. */
@@ -103,6 +105,7 @@ export default function QuizPage() {
   const { user } = useAuth();
 
   const [stack, setStack] = useState<Stack | null>(null);
+  const [group, setGroup] = useState<Group | null>(null);
   const [species, setSpecies] = useState<Species[]>([]);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -160,15 +163,19 @@ export default function QuizPage() {
     setLoading(true);
     setPreferencesLoaded(false);
     try {
-      const [stackData, speciesData] = await Promise.all([
+      const [stackData, speciesData, groupsData] = await Promise.all([
         getStack(stackId),
         getSpecies(stackId),
+        getGroups(),
       ]);
       const speciesWithImages = speciesData.filter(
         (item) =>
           getSpeciesImagesWithUrls(item.data, item.quizImageIds).length > 0,
       );
+      const resolvedGroup =
+        groupsData.find((item) => item.stackIds?.includes(stackId)) ?? null;
       setStack(stackData);
+      setGroup(resolvedGroup);
       setSpecies(speciesWithImages);
       setQuestions([]);
       setCurrentQuestionIndex(0);
@@ -876,42 +883,60 @@ export default function QuizPage() {
     showSettings,
   ]);
 
+  const stackName = stack
+    ? getLocalizedText(stack.data.name, preferredLanguage)
+    : "Quiz";
+  const groupName = group
+    ? getLocalizedText(group.data.name, preferredLanguage)
+    : getLocalizedText(stack?.data.pinkka?.name, preferredLanguage);
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <LoadingSpinner className="py-12" />
-      </div>
+      <LearningSessionShell
+        groupName={groupName || "Loading"}
+        stackName={stackName}
+        progressValue={0}
+        exitHref="/"
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      </LearningSessionShell>
     );
   }
 
   if (!stack || species.length < 2) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <main className="container mx-auto px-4 py-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to All Stacks
-            </Link>
+      <LearningSessionShell
+        groupName={groupName}
+        stackName={stackName}
+        progressValue={0}
+        exitHref="/"
+      >
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
+          <p className="text-muted-foreground">
+            This stack needs at least 2 species with images to create a quiz.
+          </p>
+          <Button asChild>
+            <Link href="/">Browse Other Stacks</Link>
           </Button>
-          <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">
-              This stack needs at least 2 species with images to create a quiz
-            </p>
-            <Button asChild>
-              <Link href="/">Browse Other Stacks</Link>
-            </Button>
-          </div>
-        </main>
-      </div>
+        </div>
+      </LearningSessionShell>
     );
   }
 
   if (!quizPreferences) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <LoadingSpinner className="py-12" />
-      </div>
+      <LearningSessionShell
+        groupName={groupName}
+        stackName={stackName}
+        progressValue={0}
+        exitHref="/"
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      </LearningSessionShell>
     );
   }
 
@@ -932,33 +957,41 @@ export default function QuizPage() {
     const canStartQuiz = displayQuestionCount >= 2;
 
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <main className="container mx-auto px-4 py-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to All Stacks
-            </Link>
-          </Button>
-
-          <QuizSettingsCard
-            questionOptions={questionOptions}
-            speciesCount={species.length}
-            quizPreferences={quizPreferences}
-            canStartQuiz={canStartQuiz}
-            onPreferencesChange={handlePreferencesChange}
-            onStartQuiz={startQuiz}
-          />
-        </main>
-      </div>
+      <LearningSessionShell
+        groupName={groupName}
+        stackName={stackName}
+        progressValue={0}
+        progressLabel="Quiz settings"
+        exitHref="/"
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-full max-w-3xl">
+            <QuizSettingsCard
+              questionOptions={questionOptions}
+              speciesCount={species.length}
+              quizPreferences={quizPreferences}
+              canStartQuiz={canStartQuiz}
+              onPreferencesChange={handlePreferencesChange}
+              onStartQuiz={startQuiz}
+            />
+          </div>
+        </div>
+      </LearningSessionShell>
     );
   }
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <LoadingSpinner className="py-12" />
-      </div>
+      <LearningSessionShell
+        groupName={groupName}
+        stackName={stackName}
+        progressValue={0}
+        exitHref="/"
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      </LearningSessionShell>
     );
   }
 
@@ -977,112 +1010,105 @@ export default function QuizPage() {
     const percentage = Math.round((correctAnswers / questions.length) * 100);
 
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <main className="container mx-auto px-4 py-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to All Stacks
-            </Link>
-          </Button>
-
-          <QuizCompletedCard
-            percentage={percentage}
-            correctAnswers={correctAnswers}
-            totalQuestions={questions.length}
-            stackId={stackId}
-            learningHistogram={stackHistogram}
-            onRestart={handleRestart}
-          />
-        </main>
-      </div>
+      <LearningSessionShell
+        groupName={groupName}
+        stackName={stackName}
+        progressValue={100}
+        progressLabel="Completed"
+        exitHref="/"
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-full max-w-3xl">
+            <QuizCompletedCard
+              percentage={percentage}
+              correctAnswers={correctAnswers}
+              totalQuestions={questions.length}
+              stackId={stackId}
+              learningHistogram={stackHistogram}
+              onRestart={handleRestart}
+            />
+          </div>
+        </div>
+      </LearningSessionShell>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to All Stacks
-            </Link>
-          </Button>
-
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold">
-              {getLocalizedText(stack.data.name, preferredLanguage)} Quiz
-            </h1>
-            <span className="text-muted-foreground">
-              Question {currentQuestionIndex + 1} of {questions.length}
-            </span>
-          </div>
-
-          <Progress value={progress} className="h-2" />
-        </div>
-
-        <div className="max-w-3xl mx-auto">
+    <LearningSessionShell
+      groupName={groupName}
+      stackName={stackName}
+      progressValue={progress}
+      progressLabel={`Question ${currentQuestionIndex + 1} of ${questions.length}`}
+      exitHref="/"
+    >
+      <div className="relative h-full w-full">
+        <div className="absolute inset-x-0 top-0 bottom-16">
           {currentQuestion && (
-            <>
-              <QuizSpeciesCard imageUrl={currentQuestion.imageUrl} />
+            <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:grid-rows-1">
+              <div className="min-h-0">
+                <QuizSpeciesCard imageUrl={currentQuestion.imageUrl} />
+              </div>
 
-              <div className="grid sm:grid-cols-2 gap-4 mb-6">
+              <div className="flex h-full min-h-0 flex-col gap-4">
                 {quizPreferences.mode === "multiple-choice" ? (
-                  currentQuestion.options.map((option, optionsIndex) => {
-                    const displayNames = getDisplayNames(
-                      option,
-                      quizPreferences.answerMode,
-                    );
-                    const isSelected = selectedAnswer?.id === option.id;
-                    const isCorrect =
-                      option.id === currentQuestion.correctAnswer.id;
-                    const showResult = answered;
+                  <div className="grid h-full min-h-0 auto-rows-fr gap-4 sm:grid-cols-2">
+                    {currentQuestion.options.map((option, optionsIndex) => {
+                      const displayNames = getDisplayNames(
+                        option,
+                        quizPreferences.answerMode,
+                      );
+                      const isSelected = selectedAnswer?.id === option.id;
+                      const isCorrect =
+                        option.id === currentQuestion.correctAnswer.id;
+                      const showResult = answered;
 
-                    let buttonVariant: "outline" | "default" | "destructive" =
-                      "outline";
-                    if (showResult) {
-                      if (isCorrect) {
-                        buttonVariant = "default";
-                      } else if (isSelected && !isCorrect) {
-                        buttonVariant = "destructive";
+                      let buttonVariant: "outline" | "default" | "destructive" =
+                        "outline";
+                      if (showResult) {
+                        if (isCorrect) {
+                          buttonVariant = "default";
+                        } else if (isSelected && !isCorrect) {
+                          buttonVariant = "destructive";
+                        }
                       }
-                    }
 
-                    return (
-                      <Button
-                        key={option.id}
-                        onClick={() => handleAnswerSelect(option)}
-                        variant={buttonVariant}
-                        disabled={answered}
-                        className={`h-auto py-4 px-6 text-left justify-start ${
-                          showResult && isCorrect ? "bg-primary" : ""
-                        }`}
-                      >
-                        <div className="flex items-center gap-3 w-full">
-                          <p className="mr-2">{optionsIndex + 1}</p>
-                          <div className="flex-1">
-                            <p className="font-semibold">
-                              {displayNames.primary}
+                      return (
+                        <Button
+                          key={option.id}
+                          onClick={() => handleAnswerSelect(option)}
+                          variant={buttonVariant}
+                          disabled={answered}
+                          className={`h-full text-left justify-start ${
+                            showResult && isCorrect ? "bg-primary" : ""
+                          }`}
+                        >
+                          <div className="flex items-center gap-3 w-full">
+                            <p className="mr-2 text-lg font-semibold">
+                              {optionsIndex + 1}
                             </p>
-                            {displayNames.secondary && (
-                              <p className="text-sm opacity-80">
-                                {displayNames.secondary}
+                            <div className="flex-1">
+                              <p className="text-lg font-semibold">
+                                {displayNames.primary}
                               </p>
+                              {displayNames.secondary && (
+                                <p className="text-sm opacity-80">
+                                  {displayNames.secondary}
+                                </p>
+                              )}
+                            </div>
+                            {showResult && isCorrect && (
+                              <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+                            )}
+                            {showResult && isSelected && !isCorrect && (
+                              <XCircle className="h-5 w-5 flex-shrink-0" />
                             )}
                           </div>
-                          {showResult && isCorrect && (
-                            <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
-                          )}
-                          {showResult && isSelected && !isCorrect && (
-                            <XCircle className="h-5 w-5 flex-shrink-0" />
-                          )}
-                        </div>
-                      </Button>
-                    );
-                  })
+                        </Button>
+                      );
+                    })}
+                  </div>
                 ) : (
-                  <div className="sm:col-span-2 space-y-4">
+                  <div className="flex h-full min-h-0 flex-col gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="text-answer">Species name</Label>
                       <Input
@@ -1117,6 +1143,7 @@ export default function QuizPage() {
                       onClick={() => handleTextAnswerSubmit()}
                       size="lg"
                       disabled={answered}
+                      className="mt-auto"
                     >
                       Submit Answer
                     </Button>
@@ -1141,31 +1168,31 @@ export default function QuizPage() {
                     )}
                   </div>
                 )}
+
+                {answered && user && learningMetric && (
+                  <LearningStatusCard
+                    label={learningMetric.label}
+                    combinedScore={learningMetric.combinedScore}
+                    horizonDays={DEFAULT_RETENTION_HORIZON_DAYS}
+                    accuracyScore={learningMetric.accuracyScore}
+                    speedScore={learningMetric.speedScore}
+                  />
+                )}
               </div>
-
-              {answered && user && learningMetric && (
-                <LearningStatusCard
-                  label={learningMetric.label}
-                  combinedScore={learningMetric.combinedScore}
-                  horizonDays={DEFAULT_RETENTION_HORIZON_DAYS}
-                  accuracyScore={learningMetric.accuracyScore}
-                  speedScore={learningMetric.speedScore}
-                />
-              )}
-
-              {answered && (
-                <div className="text-center">
-                  <Button onClick={handleNext} size="lg">
-                    {currentQuestionIndex < questions.length - 1
-                      ? "Next Question"
-                      : "Finish Quiz"}
-                  </Button>
-                </div>
-              )}
-            </>
+            </div>
           )}
         </div>
-      </main>
-    </div>
+
+        {answered && (
+          <div className="absolute inset-x-0 bottom-0 flex justify-center">
+            <Button onClick={handleNext} size="lg">
+              {currentQuestionIndex < questions.length - 1
+                ? "Next Question"
+                : "Finish Quiz"}
+            </Button>
+          </div>
+        )}
+      </div>
+    </LearningSessionShell>
   );
 }

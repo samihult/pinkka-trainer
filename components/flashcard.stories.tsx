@@ -39,6 +39,13 @@ const baseSpecies: Species = {
 const meta: Meta<typeof Flashcard> = {
   title: "Components/Flashcard",
   component: Flashcard,
+  decorators: [
+    (Story) => (
+      <div className="h-[680px] w-full bg-background p-6">
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     species: baseSpecies,
     currentIndex: 0,

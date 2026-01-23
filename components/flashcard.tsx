@@ -121,22 +121,20 @@ export function Flashcard({
   }, [handleFlip, handleNext, handlePrevious]);
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="mb-4 text-center text-sm text-muted-foreground">
-        Card {currentIndex + 1} of {total}
-      </div>
-
-      <Card className="min-h-[500px] relative overflow-hidden cursor-pointer p-0">
-        <CardContent className="p-0 h-full">
+    <div className="relative h-full w-full">
+      <Card className="absolute inset-x-4 top-0 bottom-24 overflow-hidden p-0 sm:inset-x-8">
+        <CardContent className="h-full p-0">
           <div
-            className={`transition-all duration-500 ${flipped ? "opacity-0" : "opacity-100"}`}
+            className={`h-full transition-all duration-500 ${
+              flipped ? "opacity-0" : "opacity-100"
+            }`}
           >
             {/* Front - Image */}
             <SpeciesImageCarousel
               images={images}
               alt={species.data.scientificName}
               resetKey={species.id}
-              heightClassName="h-[500px]"
+              heightClassName="h-full"
               fullScreenLightboxProps={{
                 captions: { hidden: true, showToggle: false },
               }}
@@ -144,7 +142,7 @@ export function Flashcard({
           </div>
 
           <div
-            className={`absolute inset-0 bg-card p-8 flex flex-col justify-center transition-all duration-500 ${
+            className={`absolute inset-0 flex h-full flex-col justify-center bg-card p-8 transition-all duration-500 ${
               flipped ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           >
@@ -174,19 +172,20 @@ export function Flashcard({
         </CardContent>
       </Card>
 
-      <div className="mt-6 flex items-center justify-between gap-3">
+      <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 sm:inset-x-8">
         <Button
           onClick={handlePrevious}
           disabled={currentIndex === 0}
           variant="outline"
+          size="lg"
         >
-          <ChevronLeft className="mr-2 h-4 w-4" />
+          <ChevronLeft className="mr-1 h-4 w-4" />
           Previous
         </Button>
 
         <div className="flex items-center gap-2">
-          <Button onClick={handleFlip} variant="outline">
-            <RotateCw className="mr-2 h-4 w-4" />
+          <Button onClick={handleFlip} variant="outline" size="lg">
+            <RotateCw className="mr-1 h-4 w-4" />
             Flip Card
           </Button>
           <TooltipProvider>
@@ -233,9 +232,13 @@ export function Flashcard({
           </TooltipProvider>
         </div>
 
-        <Button onClick={handleNext} disabled={currentIndex === total - 1}>
+        <Button
+          onClick={handleNext}
+          disabled={currentIndex === total - 1}
+          size="lg"
+        >
           Next
-          <ChevronRight className="ml-2 h-4 w-4" />
+          <ChevronRight className="ml-1 h-4 w-4" />
         </Button>
       </div>
     </div>
