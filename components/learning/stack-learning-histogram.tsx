@@ -41,16 +41,10 @@ export function StackLearningHistogram({
         aria-label={buildBarTitle(label, histogram)}
         title={buildBarTitle(label, histogram)}
       >
-        {histogram.new.percent > 0 && (
+        {histogram.mastered.percent > 0 && (
           <span
-            className={CATEGORY_COLORS.new}
-            style={{ width: `${histogram.new.percent}%` }}
-          />
-        )}
-        {histogram.learning.percent > 0 && (
-          <span
-            className={CATEGORY_COLORS.learning}
-            style={{ width: `${histogram.learning.percent}%` }}
+            className={CATEGORY_COLORS.mastered}
+            style={{ width: `${histogram.mastered.percent}%` }}
           />
         )}
         {histogram.strengthening.percent > 0 && (
@@ -59,10 +53,16 @@ export function StackLearningHistogram({
             style={{ width: `${histogram.strengthening.percent}%` }}
           />
         )}
-        {histogram.mastered.percent > 0 && (
+        {histogram.learning.percent > 0 && (
           <span
-            className={CATEGORY_COLORS.mastered}
-            style={{ width: `${histogram.mastered.percent}%` }}
+            className={CATEGORY_COLORS.learning}
+            style={{ width: `${histogram.learning.percent}%` }}
+          />
+        )}
+        {histogram.new.percent > 0 && (
+          <span
+            className={CATEGORY_COLORS.new}
+            style={{ width: `${histogram.new.percent}%` }}
           />
         )}
       </div>
@@ -73,20 +73,20 @@ export function StackLearningHistogram({
     <div className="space-y-1">
       <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full bg-muted" />
-          New
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full bg-sky-500" />
-          Learning
+          <span className="h-2 w-2 rounded-full bg-emerald-600" />
+          Mastered
         </span>
         <span className="inline-flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-amber-500" />
           Strengthening
         </span>
         <span className="inline-flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full bg-emerald-600" />
-          Mastered
+          <span className="h-2 w-2 rounded-full bg-sky-500" />
+          Learning
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-muted" />
+          New
         </span>
       </div>
       <div>
