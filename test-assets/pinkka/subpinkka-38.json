@@ -1,0 +1,137 @@
+{
+  "id": 38,
+  "name": {
+    "fi": "Agaricales – tummaitiöisiä helttasieniä",
+    "sv": "Agaricales – mörka sporer"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 6,
+    "name": {
+      "fi": "BIO-519 Sienituntemus",
+      "sv": "Svampartkännedom",
+      "en": "Identification of fungi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.116756",
+  "speciesCards": [
+    {
+      "taxonId": "MX.69643",
+      "vernacularName": {
+        "fi": "herkkusienet"
+      },
+      "scientificName": "Agaricus",
+      "id": 51115,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72826",
+      "vernacularName": {
+        "sv": "stubbläcksvamp",
+        "fi": "parvimustesieni"
+      },
+      "scientificName": "Coprinellus disseminatus",
+      "id": 25793,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73093",
+      "vernacularName": {
+        "fi": "kiillemustesieniryhmä"
+      },
+      "scientificName": "Coprinellus micaceus coll.",
+      "id": 25792,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72824",
+      "vernacularName": {
+        "fi": "harmaamustesieni",
+        "sv": "grå bläcksvamp"
+      },
+      "scientificName": "Coprinopsis atramentaria",
+      "id": 1883,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72383",
+      "vernacularName": {
+        "sv": "dunbläcksvamp",
+        "fi": "jänönmustesieni"
+      },
+      "scientificName": "Coprinopsis lagopus",
+      "id": 25791,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.73330",
+      "vernacularName": {
+        "fi": "suomumustesieni",
+        "sv": "fjällig bläcksvamp"
+      },
+      "scientificName": "Coprinus comatus",
+      "id": 51116,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.71766",
+      "vernacularName": {
+        "sv": "rökslöjskivling",
+        "fi": "kuusilahokka"
+      },
+      "scientificName": "Hypholoma capnoides",
+      "id": 7325,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.72439",
+      "vernacularName": {
+        "sv": "svavelgul slöjskivling",
+        "fi": "kitkerälahokka"
+      },
+      "scientificName": "Hypholoma fasciculare",
+      "id": 3784,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.116756",
+    "urls": {
+      "original": "https://image.laji.fi/MM.116756/JR32230.JPG",
+      "full": "https://image.laji.fi/MM.116756/JR32230.JPG",
+      "large": "https://image.laji.fi/MM.116756/JR32230_large.jpg",
+      "square": "https://image.laji.fi/MM.116756/JR32230_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.116756/JR32230_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1473690496,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1474013027,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR32230.JPG",
+      "documentIds": [
+        "1252"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.69643"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

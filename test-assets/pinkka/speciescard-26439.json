@@ -1,0 +1,1392 @@
+{
+  "taxonId": "MX.37819",
+  "vernacularName": {
+    "fi": "metsämänty",
+    "sv": "tall",
+    "en": "Scots pine"
+  },
+  "scientificName": "Pinus sylvestris",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Yksikotinen, tuulipölytteinen. Kukinnot tiheitä, käpymäisiä. Kukat ovat yksineuvoiset, kehättömät ja pienet, suomumaisten lehtien eli peitinsuomujen hangassa. Käpyjä on 1–3 kimpussa, ne kypsyvät 2. tai 3. vuonna pölytyksestä. Käpy on kartiomainen, lyhytperäinen, riippuva, 3–7 cm pitkä ja kokonaisena irtoava. Käpysuomut ovat paksut. Siemenissä lenninsiipi.</p>",
+        "sv": "<p>Enbyggare, vindpollinerad. Blomningar täta (kottlika). Kottarna mognar under det andra eller tredje året efter pollinering, konlik, hängande, 3–7 cm lång, lossnar som hel. Kottfjäll tjocka. Frön med flygvinge.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Ainavihanta, tavallisesti suora- ja jykevärunkoinen puu, latvus leveä.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>Korkeus 15–30 m.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Pareittain lyhythaaroissa, neulasmaiset, yleensä 35–50 mm pitkät, harmaanvihreät, jäykät ja teräväkärkiset. Säilyvät 2–5 vuotta.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {},
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Pölytys",
+        "sv": "Pollination",
+        "en": "Pollination"
+      },
+      "body": {},
+      "predicate": "MX.reproductionPollination"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "sv": "<p>I torra moskogar, berg, åsar, mossar, även i friska och lundartade skogar. Trivs även i mager jord, men kräver ljus för att växa bra.</p>",
+        "fi": "<p>Kuivissa kangasmetsissä, kallioilla, harjuilla, rämesoilla; myös tuoreissa ja lehtomaisissa metsissä. Viihtyy vähäravinteisessakin maassa, mutta vaatii valoa kasvaakseen hyvin.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "sv": "<p>Förekommer i så gott som hela landet, fattas i de mest norra delarna av Lapplands fjällområden.</p>",
+        "fi": "<p>Lähes koko maassa, puuttuu pohjoisimman Lapin tunturialueilta.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Myös viljelymetsä- ja koristepuu.</p>",
+        "sv": "<p>Odlad trädart, även som prydnadsträd.</p>"
+      },
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Juuri",
+        "sv": "Rot",
+        "en": "Root"
+      },
+      "body": {},
+      "predicate": "MX.descriptionRoot"
+    },
+    {
+      "title": {
+        "fi": "Käpy",
+        "sv": "Kotte",
+        "en": "Cone"
+      },
+      "body": {},
+      "predicate": "MX.descriptionCone"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {},
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976224",
+      "vernacularName": {
+        "fi": "paljassiemeniset"
+      },
+      "scientificName": "Pinopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.200321",
+      "vernacularName": null,
+      "scientificName": "Pinales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.37803",
+      "vernacularName": {
+        "fi": "mäntykasvit",
+        "sv": "tallväxter"
+      },
+      "scientificName": "Pinaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.37818",
+      "vernacularName": {
+        "sv": "tallar",
+        "fi": "männyt"
+      },
+      "scientificName": "Pinus",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.37819",
+      "vernacularName": {
+        "fi": "metsämänty",
+        "sv": "tall",
+        "en": "Scots pine"
+      },
+      "scientificName": "Pinus sylvestris",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 26439,
+  "images": [
+    {
+      "id": "MM.50603",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B6 JR05169.JPG",
+        "documentIds": [
+          "39958"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50603/MX.37819_Pinusylv_B6_JR05169.JPG",
+        "full": "https://image.laji.fi/MM.50603/MX.37819_Pinusylv_B6_JR05169.JPG",
+        "large": "https://image.laji.fi/MM.50603/MX.37819_Pinusylv_B6_JR05169_large.jpg",
+        "square": "https://image.laji.fi/MM.50603/MX.37819_Pinusylv_B6_JR05169_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50603/MX.37819_Pinusylv_B6_JR05169_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50647",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv JR 19_6_2005 068_JPG orig_2248.jpg",
+        "documentIds": [
+          "39976"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50647/MX.37819_Pinusylv_JR_19_6_2005_068_JPG_orig_2248.jpg",
+        "full": "https://image.laji.fi/MM.50647/MX.37819_Pinusylv_JR_19_6_2005_068_JPG_orig_2248.jpg",
+        "large": "https://image.laji.fi/MM.50647/MX.37819_Pinusylv_JR_19_6_2005_068_JPG_orig_2248_large.jpg",
+        "square": "https://image.laji.fi/MM.50647/MX.37819_Pinusylv_JR_19_6_2005_068_JPG_orig_2248_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50647/MX.37819_Pinusylv_JR_19_6_2005_068_JPG_orig_2248_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50646",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv D1 JR 27_6_2008 138.JPG",
+        "documentIds": [
+          "39969"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50646/MX.37819_Pinusylv_D1_JR_27_6_2008_138.JPG",
+        "full": "https://image.laji.fi/MM.50646/MX.37819_Pinusylv_D1_JR_27_6_2008_138.JPG",
+        "large": "https://image.laji.fi/MM.50646/MX.37819_Pinusylv_D1_JR_27_6_2008_138_large.jpg",
+        "square": "https://image.laji.fi/MM.50646/MX.37819_Pinusylv_D1_JR_27_6_2008_138_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50646/MX.37819_Pinusylv_D1_JR_27_6_2008_138_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50623",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B9 JR 5_7_2008 017.jpg",
+        "documentIds": [
+          "39960"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50623/MX.37819_Pinusylv_B9_JR_5_7_2008_017.jpg",
+        "full": "https://image.laji.fi/MM.50623/MX.37819_Pinusylv_B9_JR_5_7_2008_017.jpg",
+        "large": "https://image.laji.fi/MM.50623/MX.37819_Pinusylv_B9_JR_5_7_2008_017_large.jpg",
+        "square": "https://image.laji.fi/MM.50623/MX.37819_Pinusylv_B9_JR_5_7_2008_017_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50623/MX.37819_Pinusylv_B9_JR_5_7_2008_017_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50644",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv C2 JR27934.JPG",
+        "documentIds": [
+          "39962"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50644/MX.37819_Pinusylv_C2_JR27934.JPG",
+        "full": "https://image.laji.fi/MM.50644/MX.37819_Pinusylv_C2_JR27934.JPG",
+        "large": "https://image.laji.fi/MM.50644/MX.37819_Pinusylv_C2_JR27934_large.jpg",
+        "square": "https://image.laji.fi/MM.50644/MX.37819_Pinusylv_C2_JR27934_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50644/MX.37819_Pinusylv_C2_JR27934_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50624",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv C7 JR03237.JPG",
+        "documentIds": [
+          "39967"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50624/MX.37819_Pinusylv_C7_JR03237.JPG",
+        "full": "https://image.laji.fi/MM.50624/MX.37819_Pinusylv_C7_JR03237.JPG",
+        "large": "https://image.laji.fi/MM.50624/MX.37819_Pinusylv_C7_JR03237_large.jpg",
+        "square": "https://image.laji.fi/MM.50624/MX.37819_Pinusylv_C7_JR03237_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50624/MX.37819_Pinusylv_C7_JR03237_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50627",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv JR 19_6_2005 063_JPG orig_2246.jpg",
+        "documentIds": [
+          "39974"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50627/MX.37819_Pinusylv_JR_19_6_2005_063_JPG_orig_2246.jpg",
+        "full": "https://image.laji.fi/MM.50627/MX.37819_Pinusylv_JR_19_6_2005_063_JPG_orig_2246.jpg",
+        "large": "https://image.laji.fi/MM.50627/MX.37819_Pinusylv_JR_19_6_2005_063_JPG_orig_2246_large.jpg",
+        "square": "https://image.laji.fi/MM.50627/MX.37819_Pinusylv_JR_19_6_2005_063_JPG_orig_2246_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50627/MX.37819_Pinusylv_JR_19_6_2005_063_JPG_orig_2246_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50606",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv E1 JR 2008 129.JPG",
+        "documentIds": [
+          "39972"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50606/MX.37819_Pinusylv_E1_JR_2008_129.JPG",
+        "full": "https://image.laji.fi/MM.50606/MX.37819_Pinusylv_E1_JR_2008_129.JPG",
+        "large": "https://image.laji.fi/MM.50606/MX.37819_Pinusylv_E1_JR_2008_129_large.jpg",
+        "square": "https://image.laji.fi/MM.50606/MX.37819_Pinusylv_E1_JR_2008_129_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50606/MX.37819_Pinusylv_E1_JR_2008_129_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50605",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv C5 JR06026.JPG",
+        "documentIds": [
+          "39965"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50605/MX.37819_Pinusylv_C5_JR06026.JPG",
+        "full": "https://image.laji.fi/MM.50605/MX.37819_Pinusylv_C5_JR06026.JPG",
+        "large": "https://image.laji.fi/MM.50605/MX.37819_Pinusylv_C5_JR06026_large.jpg",
+        "square": "https://image.laji.fi/MM.50605/MX.37819_Pinusylv_C5_JR06026_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50605/MX.37819_Pinusylv_C5_JR06026_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50604",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_PinusylvsylvH ML 23_1_08 058_jpg orig_9552.jpg",
+        "documentIds": [
+          "39979"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50604/MX.37819_PinusylvsylvH_ML_23_1_08_058_jpg_orig_9552.jpg",
+        "full": "https://image.laji.fi/MM.50604/MX.37819_PinusylvsylvH_ML_23_1_08_058_jpg_orig_9552.jpg",
+        "large": "https://image.laji.fi/MM.50604/MX.37819_PinusylvsylvH_ML_23_1_08_058_jpg_orig_9552.jpg",
+        "square": "https://image.laji.fi/MM.50604/MX.37819_PinusylvsylvH_ML_23_1_08_058_jpg_orig_9552_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50604/MX.37819_PinusylvsylvH_ML_23_1_08_058_jpg_orig_9552_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50593",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B5 JR05160.JPG",
+        "documentIds": [
+          "39957"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50593/MX.37819_Pinusylv_B5_JR05160.JPG",
+        "full": "https://image.laji.fi/MM.50593/MX.37819_Pinusylv_B5_JR05160.JPG",
+        "large": "https://image.laji.fi/MM.50593/MX.37819_Pinusylv_B5_JR05160_large.jpg",
+        "square": "https://image.laji.fi/MM.50593/MX.37819_Pinusylv_B5_JR05160_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50593/MX.37819_Pinusylv_B5_JR05160_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50596",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv D3 JR05623.JPG",
+        "documentIds": [
+          "39971"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50596/MX.37819_Pinusylv_D3_JR05623.JPG",
+        "full": "https://image.laji.fi/MM.50596/MX.37819_Pinusylv_D3_JR05623.JPG",
+        "large": "https://image.laji.fi/MM.50596/MX.37819_Pinusylv_D3_JR05623_large.jpg",
+        "square": "https://image.laji.fi/MM.50596/MX.37819_Pinusylv_D3_JR05623_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50596/MX.37819_Pinusylv_D3_JR05623_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50595",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_PinusylvsylvH ML 23_1_08 057_jpg orig_9551.jpg",
+        "documentIds": [
+          "39978"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50595/MX.37819_PinusylvsylvH_ML_23_1_08_057_jpg_orig_9551.jpg",
+        "full": "https://image.laji.fi/MM.50595/MX.37819_PinusylvsylvH_ML_23_1_08_057_jpg_orig_9551.jpg",
+        "large": "https://image.laji.fi/MM.50595/MX.37819_PinusylvsylvH_ML_23_1_08_057_jpg_orig_9551.jpg",
+        "square": "https://image.laji.fi/MM.50595/MX.37819_PinusylvsylvH_ML_23_1_08_057_jpg_orig_9551_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50595/MX.37819_PinusylvsylvH_ML_23_1_08_057_jpg_orig_9551_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50594",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv C4 JR28008.JPG",
+        "documentIds": [
+          "39964"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50594/MX.37819_Pinusylv_C4_JR28008.JPG",
+        "full": "https://image.laji.fi/MM.50594/MX.37819_Pinusylv_C4_JR28008.JPG",
+        "large": "https://image.laji.fi/MM.50594/MX.37819_Pinusylv_C4_JR28008_large.jpg",
+        "square": "https://image.laji.fi/MM.50594/MX.37819_Pinusylv_C4_JR28008_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50594/MX.37819_Pinusylv_C4_JR28008_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50564",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B3 JR04219.JPG",
+        "documentIds": [
+          "39954"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50564/MX.37819_Pinusylv_B3_JR04219.JPG",
+        "full": "https://image.laji.fi/MM.50564/MX.37819_Pinusylv_B3_JR04219.JPG",
+        "large": "https://image.laji.fi/MM.50564/MX.37819_Pinusylv_B3_JR04219_large.jpg",
+        "square": "https://image.laji.fi/MM.50564/MX.37819_Pinusylv_B3_JR04219_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50564/MX.37819_Pinusylv_B3_JR04219_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50545",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B1 JR 25_7_2008B 090.jpg",
+        "documentIds": [
+          "39952"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50545/MX.37819_Pinusylv_B1_JR_25_7_2008B_090.jpg",
+        "full": "https://image.laji.fi/MM.50545/MX.37819_Pinusylv_B1_JR_25_7_2008B_090.jpg",
+        "large": "https://image.laji.fi/MM.50545/MX.37819_Pinusylv_B1_JR_25_7_2008B_090_large.jpg",
+        "square": "https://image.laji.fi/MM.50545/MX.37819_Pinusylv_B1_JR_25_7_2008B_090_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50545/MX.37819_Pinusylv_B1_JR_25_7_2008B_090_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50612",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_PinusylvsylvH ML 23_1_08 059_jpg orig_9553.jpg",
+        "documentIds": [
+          "39980"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50612/MX.37819_PinusylvsylvH_ML_23_1_08_059_jpg_orig_9553.jpg",
+        "full": "https://image.laji.fi/MM.50612/MX.37819_PinusylvsylvH_ML_23_1_08_059_jpg_orig_9553.jpg",
+        "large": "https://image.laji.fi/MM.50612/MX.37819_PinusylvsylvH_ML_23_1_08_059_jpg_orig_9553.jpg",
+        "square": "https://image.laji.fi/MM.50612/MX.37819_PinusylvsylvH_ML_23_1_08_059_jpg_orig_9553_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50612/MX.37819_PinusylvsylvH_ML_23_1_08_059_jpg_orig_9553_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50525",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_A Pinusylv JR02698.JPG",
+        "documentIds": [
+          "39950"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50525/MX.37819_A_Pinusylv_JR02698.JPG",
+        "full": "https://image.laji.fi/MM.50525/MX.37819_A_Pinusylv_JR02698.JPG",
+        "large": "https://image.laji.fi/MM.50525/MX.37819_A_Pinusylv_JR02698_large.jpg",
+        "square": "https://image.laji.fi/MM.50525/MX.37819_A_Pinusylv_JR02698_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50525/MX.37819_A_Pinusylv_JR02698_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50637",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv JR 19_6_2005 065_JPG orig_2247.jpg",
+        "documentIds": [
+          "39975"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50637/MX.37819_Pinusylv_JR_19_6_2005_065_JPG_orig_2247.jpg",
+        "full": "https://image.laji.fi/MM.50637/MX.37819_Pinusylv_JR_19_6_2005_065_JPG_orig_2247.jpg",
+        "large": "https://image.laji.fi/MM.50637/MX.37819_Pinusylv_JR_19_6_2005_065_JPG_orig_2247_large.jpg",
+        "square": "https://image.laji.fi/MM.50637/MX.37819_Pinusylv_JR_19_6_2005_065_JPG_orig_2247_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50637/MX.37819_Pinusylv_JR_19_6_2005_065_JPG_orig_2247_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50634",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv C8 JR04217.JPG",
+        "documentIds": [
+          "39968"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50634/MX.37819_Pinusylv_C8_JR04217.JPG",
+        "full": "https://image.laji.fi/MM.50634/MX.37819_Pinusylv_C8_JR04217.JPG",
+        "large": "https://image.laji.fi/MM.50634/MX.37819_Pinusylv_C8_JR04217_large.jpg",
+        "square": "https://image.laji.fi/MM.50634/MX.37819_Pinusylv_C8_JR04217_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50634/MX.37819_Pinusylv_C8_JR04217_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50635",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv C1 JR04222.JPG",
+        "documentIds": [
+          "39961"
+        ],
+        "tags": [
+          "primary"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        },
+        "primaryForTaxon": [
+          "MX.37819"
+        ]
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50635/MX.37819_Pinusylv_C1_JR04222.JPG",
+        "full": "https://image.laji.fi/MM.50635/MX.37819_Pinusylv_C1_JR04222.JPG",
+        "large": "https://image.laji.fi/MM.50635/MX.37819_Pinusylv_C1_JR04222_large.jpg",
+        "square": "https://image.laji.fi/MM.50635/MX.37819_Pinusylv_C1_JR04222_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50635/MX.37819_Pinusylv_C1_JR04222_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50614",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B8 15_5_2008B 095.JPG",
+        "documentIds": [
+          "39959"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50614/MX.37819_Pinusylv_B8_15_5_2008B_095.JPG",
+        "full": "https://image.laji.fi/MM.50614/MX.37819_Pinusylv_B8_15_5_2008B_095.JPG",
+        "large": "https://image.laji.fi/MM.50614/MX.37819_Pinusylv_B8_15_5_2008B_095_large.jpg",
+        "square": "https://image.laji.fi/MM.50614/MX.37819_Pinusylv_B8_15_5_2008B_095_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50614/MX.37819_Pinusylv_B8_15_5_2008B_095_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50615",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv C6 JR04202.JPG",
+        "documentIds": [
+          "39966"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202.JPG",
+        "full": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202.JPG",
+        "large": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202_large.jpg",
+        "square": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50617",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv E2 JR 2008 052.JPG",
+        "documentIds": [
+          "39973"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50617/MX.37819_Pinusylv_E2_JR_2008_052.JPG",
+        "full": "https://image.laji.fi/MM.50617/MX.37819_Pinusylv_E2_JR_2008_052.JPG",
+        "large": "https://image.laji.fi/MM.50617/MX.37819_Pinusylv_E2_JR_2008_052_large.jpg",
+        "square": "https://image.laji.fi/MM.50617/MX.37819_Pinusylv_E2_JR_2008_052_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50617/MX.37819_Pinusylv_E2_JR_2008_052_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50583",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B5 JR05149.JPG",
+        "documentIds": [
+          "39956"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50583/MX.37819_Pinusylv_B5_JR05149.JPG",
+        "full": "https://image.laji.fi/MM.50583/MX.37819_Pinusylv_B5_JR05149.JPG",
+        "large": "https://image.laji.fi/MM.50583/MX.37819_Pinusylv_B5_JR05149_large.jpg",
+        "square": "https://image.laji.fi/MM.50583/MX.37819_Pinusylv_B5_JR05149_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50583/MX.37819_Pinusylv_B5_JR05149_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50584",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv C3 JR44451.JPG",
+        "documentIds": [
+          "39963"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50584/MX.37819_Pinusylv_C3_JR44451.JPG",
+        "full": "https://image.laji.fi/MM.50584/MX.37819_Pinusylv_C3_JR44451.JPG",
+        "large": "https://image.laji.fi/MM.50584/MX.37819_Pinusylv_C3_JR44451_large.jpg",
+        "square": "https://image.laji.fi/MM.50584/MX.37819_Pinusylv_C3_JR44451_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50584/MX.37819_Pinusylv_C3_JR44451_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50585",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv D2 JR05227.JPG",
+        "documentIds": [
+          "39970"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50585/MX.37819_Pinusylv_D2_JR05227.JPG",
+        "full": "https://image.laji.fi/MM.50585/MX.37819_Pinusylv_D2_JR05227.JPG",
+        "large": "https://image.laji.fi/MM.50585/MX.37819_Pinusylv_D2_JR05227_large.jpg",
+        "square": "https://image.laji.fi/MM.50585/MX.37819_Pinusylv_D2_JR05227_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50585/MX.37819_Pinusylv_D2_JR05227_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50586",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_PinusylvsylvH ML 21_1_08 023_jpg orig_9550.jpg",
+        "documentIds": [
+          "39977"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50586/MX.37819_PinusylvsylvH_ML_21_1_08_023_jpg_orig_9550.jpg",
+        "full": "https://image.laji.fi/MM.50586/MX.37819_PinusylvsylvH_ML_21_1_08_023_jpg_orig_9550.jpg",
+        "large": "https://image.laji.fi/MM.50586/MX.37819_PinusylvsylvH_ML_21_1_08_023_jpg_orig_9550.jpg",
+        "square": "https://image.laji.fi/MM.50586/MX.37819_PinusylvsylvH_ML_21_1_08_023_jpg_orig_9550_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50586/MX.37819_PinusylvsylvH_ML_21_1_08_023_jpg_orig_9550_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50574",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B4 JR05412.JPG",
+        "documentIds": [
+          "39955"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50574/MX.37819_Pinusylv_B4_JR05412.JPG",
+        "full": "https://image.laji.fi/MM.50574/MX.37819_Pinusylv_B4_JR05412.JPG",
+        "large": "https://image.laji.fi/MM.50574/MX.37819_Pinusylv_B4_JR05412_large.jpg",
+        "square": "https://image.laji.fi/MM.50574/MX.37819_Pinusylv_B4_JR05412_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50574/MX.37819_Pinusylv_B4_JR05412_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50554",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv B2 JR04218.JPG",
+        "documentIds": [
+          "39953"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50554/MX.37819_Pinusylv_B2_JR04218.JPG",
+        "full": "https://image.laji.fi/MM.50554/MX.37819_Pinusylv_B2_JR04218.JPG",
+        "large": "https://image.laji.fi/MM.50554/MX.37819_Pinusylv_B2_JR04218_large.jpg",
+        "square": "https://image.laji.fi/MM.50554/MX.37819_Pinusylv_B2_JR04218_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50554/MX.37819_Pinusylv_B2_JR04218_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50535",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807449,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37819_Pinusylv A1 JR04213.JPG",
+        "documentIds": [
+          "39951"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37819"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50535/MX.37819_Pinusylv_A1_JR04213.JPG",
+        "full": "https://image.laji.fi/MM.50535/MX.37819_Pinusylv_A1_JR04213.JPG",
+        "large": "https://image.laji.fi/MM.50535/MX.37819_Pinusylv_A1_JR04213_large.jpg",
+        "square": "https://image.laji.fi/MM.50535/MX.37819_Pinusylv_A1_JR04213_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50535/MX.37819_Pinusylv_A1_JR04213_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 120,
+    "name": {
+      "fi": "Paljassiemeniset",
+      "sv": "Nakenfröiga växter"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 15,
+      "name": {
+        "fi": "Luonnonvaraiset lääkekasvit",
+        "sv": "Farmakognosi"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.50615",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

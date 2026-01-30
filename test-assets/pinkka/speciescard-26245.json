@@ -1,0 +1,836 @@
+{
+  "taxonId": "MX.39812",
+  "vernacularName": {
+    "sv": "röllika",
+    "fi": "siankärsämö"
+  },
+  "scientificName": "Achillea millefolium",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "sv": "<p>Flerårig örtartad växt med jordrevor, 20–70 cm hög. Stjälk bastant, oförgrenad eller upptill förgrenad. Svagt kryddoftande. Blad strödda, nertill skaftade, högre upp oskaftade. Bladskiva lansettlik, 2–3 gånger parflikig, parflikarna vanligtvis mer än 15, ändfliken med udd, åtminstone bladskivans undersida alltid hårig.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Monivuotinen ruoho.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>20–70 cm korkea.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {
+        "fi": "<p>Varsi on vankka, haaraton tai yläosasta haarainen, pehmeäkarvainen ja heikosti ryydintuoksuinen. Maarönsyllinen.</p>"
+      },
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Lehdet ovat kierteisesti. Alemmat lehdet ovat ruodillisia, ylemmät ruodittomia. Lehtilapa on pitkulainen, 2–3 kertaan pariliuskainen, liuskapareja on tavallisesti yli 15. Liuskat ovat kapeita, keskenään jokseenkin samanlaisia ja kärkiliuska on otakärkinen. Ainakin lavan alapinta on karvainen.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Juuri",
+        "sv": "Rot",
+        "en": "Root"
+      },
+      "body": {},
+      "predicate": "MX.descriptionRoot"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {
+        "sv": "<p>Korgar täta, kvastlika, 3–6 mm breda. 3–5 strålblommor, tunglika pistiller, strålblad vita, ljusröda eller ibland violetta. Holkfjäll i rader, med brun kant.</p>",
+        "fi": "<p>Mykeröstö on tiheä ja huiskilomainen. Mykeröt ovat 3–6 mm leveitä. Kehtosuomut ovat riveissä ja vihertävä- tai ruskealaitaisia. Laitakukkia on 3–5. Ne ovat emikukkia, joiden teriö on kielimäinen ja tavallisesti valkoinen, joskus vaaleanpunainen tai sinipunainen. Kehräkukat ovat 2-neuvoisia ja niiden teriö on torvimainen.</p>"
+      },
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {
+        "fi": "<p>Pähkylä on särmätön, pappus puuttuu.</p>"
+      },
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Käpy",
+        "sv": "Kotte",
+        "en": "Cone"
+      },
+      "body": {},
+      "predicate": "MX.descriptionCone"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {
+        "sv": "<p>Blommar i juli-september.</p>",
+        "fi": "<p>Kukkii keskikesästä alkusyksyyn (VII–IX).</p>"
+      },
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Pölytys",
+        "sv": "Pollination",
+        "en": "Pollination"
+      },
+      "body": {},
+      "predicate": "MX.reproductionPollination"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "sv": "<p>På torr-frisk mark, ängar, vägrenar, gårdar, åkrar.</p>",
+        "fi": "<p>Niityillä, pelloilla, laitumilla, pientareilla, tienvarsilla, pihoilla, joutomailla ja muilla kuivahkoilla paikoilla.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "sv": "<p>Allmän i hela landet.</p>",
+        "fi": "<p>Yleinen koko maassa.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Muinaistulokas tai mahdollisesti osin alkuperäinen. Siankärsämöstä erotetaan alalajit etelänsiankärsämö (ssp. millefolium) ja pohjansiankärsämö (ssp. sudetica). Siankärsämöuutetta on käytetty haavojen ja tulehdusten hoitoon.</p>",
+        "sv": "<p>Forntida nykomling. Extrakt från rölleka har använts till att putsa sår och till att sköta inflammationer.</p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.53721",
+      "vernacularName": null,
+      "scientificName": "Asterales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.39723",
+      "vernacularName": {
+        "sv": "korgblommiga",
+        "fi": "asterikasvit"
+      },
+      "scientificName": "Asteraceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.39808",
+      "vernacularName": {
+        "fi": "kärsämöt",
+        "sv": "röllikor"
+      },
+      "scientificName": "Achillea",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.39812",
+      "vernacularName": {
+        "sv": "röllika",
+        "fi": "siankärsämö"
+      },
+      "scientificName": "Achillea millefolium",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 26245,
+  "images": [
+    {
+      "id": "MM.52489",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 11_7_2005 100.JPG",
+        "documentIds": [
+          "3681"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52489/MX.39812_Achimill_JR_11_7_2005_100.JPG",
+        "full": "https://image.laji.fi/MM.52489/MX.39812_Achimill_JR_11_7_2005_100.JPG",
+        "large": "https://image.laji.fi/MM.52489/MX.39812_Achimill_JR_11_7_2005_100_large.jpg",
+        "square": "https://image.laji.fi/MM.52489/MX.39812_Achimill_JR_11_7_2005_100_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52489/MX.39812_Achimill_JR_11_7_2005_100_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52473",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 11_7_2005 106.JPG",
+        "documentIds": [
+          "3686"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52473/MX.39812_Achimill_JR_11_7_2005_106.JPG",
+        "full": "https://image.laji.fi/MM.52473/MX.39812_Achimill_JR_11_7_2005_106.JPG",
+        "large": "https://image.laji.fi/MM.52473/MX.39812_Achimill_JR_11_7_2005_106_large.jpg",
+        "square": "https://image.laji.fi/MM.52473/MX.39812_Achimill_JR_11_7_2005_106_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52473/MX.39812_Achimill_JR_11_7_2005_106_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52499",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 11_7_2005 102.JPG",
+        "documentIds": [
+          "3682"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52499/MX.39812_Achimill_JR_11_7_2005_102.JPG",
+        "full": "https://image.laji.fi/MM.52499/MX.39812_Achimill_JR_11_7_2005_102.JPG",
+        "large": "https://image.laji.fi/MM.52499/MX.39812_Achimill_JR_11_7_2005_102_large.jpg",
+        "square": "https://image.laji.fi/MM.52499/MX.39812_Achimill_JR_11_7_2005_102_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52499/MX.39812_Achimill_JR_11_7_2005_102_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52509",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 11_7_2005 103.JPG",
+        "documentIds": [
+          "3683"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52509/MX.39812_Achimill_JR_11_7_2005_103.JPG",
+        "full": "https://image.laji.fi/MM.52509/MX.39812_Achimill_JR_11_7_2005_103.JPG",
+        "large": "https://image.laji.fi/MM.52509/MX.39812_Achimill_JR_11_7_2005_103_large.jpg",
+        "square": "https://image.laji.fi/MM.52509/MX.39812_Achimill_JR_11_7_2005_103_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52509/MX.39812_Achimill_JR_11_7_2005_103_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52463",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 11_7_2005 105.JPG",
+        "documentIds": [
+          "3685"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52463/MX.39812_Achimill_JR_11_7_2005_105.JPG",
+        "full": "https://image.laji.fi/MM.52463/MX.39812_Achimill_JR_11_7_2005_105.JPG",
+        "large": "https://image.laji.fi/MM.52463/MX.39812_Achimill_JR_11_7_2005_105_large.jpg",
+        "square": "https://image.laji.fi/MM.52463/MX.39812_Achimill_JR_11_7_2005_105_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52463/MX.39812_Achimill_JR_11_7_2005_105_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52455",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 11_7_2005 104.JPG",
+        "documentIds": [
+          "3684"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52455/MX.39812_Achimill_JR_11_7_2005_104.JPG",
+        "full": "https://image.laji.fi/MM.52455/MX.39812_Achimill_JR_11_7_2005_104.JPG",
+        "large": "https://image.laji.fi/MM.52455/MX.39812_Achimill_JR_11_7_2005_104_large.jpg",
+        "square": "https://image.laji.fi/MM.52455/MX.39812_Achimill_JR_11_7_2005_104_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52455/MX.39812_Achimill_JR_11_7_2005_104_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52484",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 16_7_2006 041.JPG",
+        "documentIds": [
+          "3687"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52484/MX.39812_Achimill_JR_16_7_2006_041.JPG",
+        "full": "https://image.laji.fi/MM.52484/MX.39812_Achimill_JR_16_7_2006_041.JPG",
+        "large": "https://image.laji.fi/MM.52484/MX.39812_Achimill_JR_16_7_2006_041_large.jpg",
+        "square": "https://image.laji.fi/MM.52484/MX.39812_Achimill_JR_16_7_2006_041_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52484/MX.39812_Achimill_JR_16_7_2006_041_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52513",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 24_6_2006 155.JPG",
+        "documentIds": [
+          "3690"
+        ],
+        "tags": [
+          "primary"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        },
+        "primaryForTaxon": [
+          "MX.39812"
+        ]
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52513/MX.39812_Achimill_JR_24_6_2006_155.JPG",
+        "full": "https://image.laji.fi/MM.52513/MX.39812_Achimill_JR_24_6_2006_155.JPG",
+        "large": "https://image.laji.fi/MM.52513/MX.39812_Achimill_JR_24_6_2006_155_large.jpg",
+        "square": "https://image.laji.fi/MM.52513/MX.39812_Achimill_JR_24_6_2006_155_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52513/MX.39812_Achimill_JR_24_6_2006_155_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52503",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 24_6_2006 030.JPG",
+        "documentIds": [
+          "3689"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52503/MX.39812_Achimill_JR_24_6_2006_030.JPG",
+        "full": "https://image.laji.fi/MM.52503/MX.39812_Achimill_JR_24_6_2006_030.JPG",
+        "large": "https://image.laji.fi/MM.52503/MX.39812_Achimill_JR_24_6_2006_030_large.jpg",
+        "square": "https://image.laji.fi/MM.52503/MX.39812_Achimill_JR_24_6_2006_030_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52503/MX.39812_Achimill_JR_24_6_2006_030_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52493",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_Achimill JR 22_6_2006 081.JPG",
+        "documentIds": [
+          "3688"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52493/MX.39812_Achimill_JR_22_6_2006_081.JPG",
+        "full": "https://image.laji.fi/MM.52493/MX.39812_Achimill_JR_22_6_2006_081.JPG",
+        "large": "https://image.laji.fi/MM.52493/MX.39812_Achimill_JR_22_6_2006_081_large.jpg",
+        "square": "https://image.laji.fi/MM.52493/MX.39812_Achimill_JR_22_6_2006_081_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52493/MX.39812_Achimill_JR_22_6_2006_081_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52469",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39812_A Achillea millefolium JR07902.JPG",
+        "documentIds": [
+          "29412"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52469/MX.39812_A_Achillea_millefolium_JR07902.JPG",
+        "full": "https://image.laji.fi/MM.52469/MX.39812_A_Achillea_millefolium_JR07902.JPG",
+        "large": "https://image.laji.fi/MM.52469/MX.39812_A_Achillea_millefolium_JR07902.JPG",
+        "square": "https://image.laji.fi/MM.52469/MX.39812_A_Achillea_millefolium_JR07902_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52469/MX.39812_A_Achillea_millefolium_JR07902_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.75872",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_28030.jpg",
+        "documentIds": [
+          "28030"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.75872/orig_28030.jpg",
+        "full": "https://image.laji.fi/MM.75872/orig_28030.jpg",
+        "large": "https://image.laji.fi/MM.75872/orig_28030.jpg",
+        "square": "https://image.laji.fi/MM.75872/orig_28030_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.75872/orig_28030_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.81952",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "orig_3680.jpg",
+        "documentIds": [
+          "3680"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.81952/orig_3680.jpg",
+        "full": "https://image.laji.fi/MM.81952/orig_3680.jpg",
+        "large": "https://image.laji.fi/MM.81952/orig_3680_large.jpg",
+        "square": "https://image.laji.fi/MM.81952/orig_3680_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.81952/orig_3680_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.83802",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "orig_3678.jpg",
+        "documentIds": [
+          "3678"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39812"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.83802/orig_3678.jpg",
+        "full": "https://image.laji.fi/MM.83802/orig_3678.jpg",
+        "large": "https://image.laji.fi/MM.83802/orig_3678_large.jpg",
+        "square": "https://image.laji.fi/MM.83802/orig_3678_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.83802/orig_3678_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 218,
+    "name": {
+      "fi": "Koppisiemeniset"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 15,
+      "name": {
+        "fi": "Luonnonvaraiset lääkekasvit",
+        "sv": "Farmakognosi"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.52130",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

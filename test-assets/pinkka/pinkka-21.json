@@ -1,0 +1,147 @@
+{
+  "id": 21,
+  "name": {
+    "fi": "Maatalouslajintuntemus"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "MAAT-202 Maatalouslajintuntemus (300 lajia)\nMaatalous-metsätieteellinen tiedekunta\nHelsingin yliopisto"
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi",
+    "jkolehma@helsinki.fi",
+    "akiirikk@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 913,
+      "name": {
+        "fi": "Kaikki lajit"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 227,
+      "name": {
+        "fi": "Sammalet ja jäkälät",
+        "sv": "Mossor och lavar"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 145,
+      "name": {
+        "fi": "Sanikkaiset",
+        "sv": "Ormbunksväxter"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 144,
+      "name": {
+        "fi": "Paljassiemeniset",
+        "sv": "Nakenfröiga växter"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 603,
+      "name": {
+        "fi": "Aitokaksisirkkaiset: Berberidaceae, Ranunculaceae, Papaveraceae, Ulmaceae, Buxaceae, Cannabaceae, Urticaceae ja Betulaceae",
+        "sv": "Tvåhjärtbladiga: Berberidaceae - Betulaceae"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 479,
+      "name": {
+        "fi": "Aitokaksisirkkaiset: Caryophyllaceae, Amaranthaceae, Polygonaceae, Violaceae, Cucurbitaceae, Begoniaceae",
+        "sv": "Tvåhjärtbladiga: Caryophyllaceae - Begoniaceae"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 480,
+      "name": {
+        "fi": "Aitokaksisirkkaiset: Brassicaceae, Salicaceae, Ericaceae, Primulaceae, Malvaceae, Saxifragaceae, Crassulaceae, Grossulariaceae, Paeoniaceae ja Hydrangeaceae",
+        "sv": "Tvåhjärtbladiga: Brassicaceae - Hydrangeaceae"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 481,
+      "name": {
+        "fi": "Aitokaksisirkkaiset: Rosaceae",
+        "sv": "Tvåhjärtbladiga: Rosaceae"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 482,
+      "name": {
+        "fi": "Aitokaksisirkkaiset: Fabaceae, Lythraceae, Onagraceae, Sapindaceae, Linaceae, Geraniaceae, Balsaminaceae, Tropaeolaceae ja Cornaceae",
+        "sv": "Tvåhjärtbladiga: Fabaceae - Cornaceae"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 483,
+      "name": {
+        "fi": "Aitokaksisirkkaiset: Apiaceae, Rhamnaceae, Vitaceae, Elaeagnaceae, Rubiaceae, Oleaceae ja Caprifoliaceae",
+        "sv": "Tvåhjärtbladiga: Apiaceae - Caprifoliaceae"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 912,
+      "name": {
+        "fi": "Aitokaksisirkkaiset: Adoxaceae, Polemoniaceae, Convolvulaceae, Boraginaceae, Lamiaceae, Solanaceae, Plantaginaceae ja Campanulaceae",
+        "sv": "Tvåhjärtbladiga: Adoxaceae - Campanulaceae"
+      },
+      "orderNo": 10,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 484,
+      "name": {
+        "fi": "Aitokaksisirkkaiset: Asteraceae",
+        "sv": "Tvåhjärtbladiga: Asteraceae"
+      },
+      "orderNo": 11,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 497,
+      "name": {
+        "fi": "1-sirkkaiset: Melanthiaceae - Iridaceae",
+        "sv": "Enhjärtbladiga: Melanthiaceae - Iridaceae"
+      },
+      "orderNo": 12,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 478,
+      "name": {
+        "fi": "1-sirkkaiset: Heinämäiset",
+        "sv": "Enhjärtbladiga: Gräsordningen"
+      },
+      "orderNo": 13,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

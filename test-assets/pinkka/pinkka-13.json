@@ -1,0 +1,318 @@
+{
+  "id": 13,
+  "name": {
+    "fi": "BIO-503 Suomen kasvisto ja kasvillisuus"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tämä pinkka esittelee Suomen BIO-503-kurssin oheislukemistona käytetyn Suomen luontotyyppien uhanalaisuus -teoksen (Raunio ym. toim. 2018) luontotyyppikuvauksissa mainittuja kasvilajeja. Kokonaisuus esittelee vain kuvauksissa mainitut lajit, eikä siis pyri antamaan kattavaa kuvaa luontotyypeille luonteenomaisista kasvilajeista.",
+    "en": ""
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi",
+    "saralind@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 765,
+      "name": {
+        "fi": "Metsät: lehdot"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 766,
+      "name": {
+        "fi": "Metsät: lehtomaiset kankaat"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 77,
+      "name": {
+        "fi": "Metsät: tuoreet kankaat"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 78,
+      "name": {
+        "fi": "Metsät: kuivahkot kankaat"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 79,
+      "name": {
+        "fi": "Metsät: kuivat kankaat"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 80,
+      "name": {
+        "fi": "Metsät: karukkokankaat"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 81,
+      "name": {
+        "fi": "Metsät: harjumetsät"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 82,
+      "name": {
+        "fi": "Metsät: kalliometsät"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 767,
+      "name": {
+        "fi": "Suot: korvet"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 768,
+      "name": {
+        "fi": "Suot: rämeet"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 769,
+      "name": {
+        "fi": "Suot: nevat"
+      },
+      "orderNo": 10,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 771,
+      "name": {
+        "fi": "Suot: letot"
+      },
+      "orderNo": 11,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 772,
+      "name": {
+        "fi": "Suot: luhdat"
+      },
+      "orderNo": 12,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 88,
+      "name": {
+        "fi": "Tunturit: tunturikoivikot"
+      },
+      "orderNo": 13,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 89,
+      "name": {
+        "fi": "Tunturit: tunturikangaspensaikot"
+      },
+      "orderNo": 14,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 90,
+      "name": {
+        "fi": "Tunturit: tunturikankaat"
+      },
+      "orderNo": 15,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 91,
+      "name": {
+        "fi": "Tunturit: tunturiniityt"
+      },
+      "orderNo": 16,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 92,
+      "name": {
+        "fi": "Tunturit: lumenviipymät"
+      },
+      "orderNo": 17,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 93,
+      "name": {
+        "fi": "Tunturit: kuviomaat"
+      },
+      "orderNo": 18,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 94,
+      "name": {
+        "fi": "Tunturit: rakat ja soraikot"
+      },
+      "orderNo": 19,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 95,
+      "name": {
+        "fi": "Tunturit: pahdat"
+      },
+      "orderNo": 20,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 96,
+      "name": {
+        "fi": "Sisävedet: lähteiköt"
+      },
+      "orderNo": 21,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 97,
+      "name": {
+        "fi": "Sisävedet: humusjärvet"
+      },
+      "orderNo": 22,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 98,
+      "name": {
+        "fi": "Sisävedet: runsasravinteiset järvet"
+      },
+      "orderNo": 23,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 99,
+      "name": {
+        "fi": "Sisävedet: tunturijärvet"
+      },
+      "orderNo": 24,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 100,
+      "name": {
+        "fi": "Sisävedet: rantaniityt"
+      },
+      "orderNo": 25,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 101,
+      "name": {
+        "fi": "Itämeri: kivikkorannat"
+      },
+      "orderNo": 26,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 102,
+      "name": {
+        "fi": "Itämeri: hiekkarannat"
+      },
+      "orderNo": 27,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 103,
+      "name": {
+        "fi": "Itämeri: ruovikkorannat"
+      },
+      "orderNo": 28,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 104,
+      "name": {
+        "fi": "Itämeri: rantaniityt"
+      },
+      "orderNo": 29,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 105,
+      "name": {
+        "fi": "Itämeri: rantapensaikot"
+      },
+      "orderNo": 30,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 106,
+      "name": {
+        "fi": "Itämeri: karut rannikkometsät"
+      },
+      "orderNo": 31,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 107,
+      "name": {
+        "fi": "Itämeri: rehevät rannikkometsät"
+      },
+      "orderNo": 32,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 108,
+      "name": {
+        "fi": "Itämeri: rannikon lehdot"
+      },
+      "orderNo": 33,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 115,
+      "name": {
+        "fi": "Kulttuuriympäristöt: kedot"
+      },
+      "orderNo": 34,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 112,
+      "name": {
+        "fi": "Kulttuuriympäristöt: niityt"
+      },
+      "orderNo": 35,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 116,
+      "name": {
+        "fi": "Kulttuuriympäristöt: hakamaat"
+      },
+      "orderNo": 36,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

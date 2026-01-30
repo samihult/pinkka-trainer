@@ -1,0 +1,828 @@
+{
+  "id": 804,
+  "name": {
+    "fi": "Vihannes- ja salaattikasveja",
+    "en": "Vegetables"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 16,
+    "name": {
+      "fi": "BIO-516 Hyötykasvit",
+      "en": "BIO-516 Plants of economic importance"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.1259272",
+  "speciesCards": [
+    {
+      "taxonId": "MX.5009349",
+      "vernacularName": {
+        "fi": "okra"
+      },
+      "scientificName": "Abelmoschus esculentus",
+      "id": 61302,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40675",
+      "vernacularName": {
+        "sv": "purjolök",
+        "fi": "purjo"
+      },
+      "scientificName": "Allium ampeloprasum var. porrum",
+      "id": 61303,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40866",
+      "vernacularName": {
+        "fi": "sipuli",
+        "sv": "lök"
+      },
+      "scientificName": "Allium cepa",
+      "id": 61304,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40867",
+      "vernacularName": {
+        "sv": "piplök",
+        "fi": "pillisipuli"
+      },
+      "scientificName": "Allium fistulosum",
+      "id": 62708,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209510",
+      "vernacularName": {
+        "fi": "kiinansipuli",
+        "sv": "kinesisk gräslök"
+      },
+      "scientificName": "Allium tuberosum",
+      "id": 61300,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5023711",
+      "vernacularName": {
+        "sv": "potatisböna",
+        "fi": "amerikanmukulapapu"
+      },
+      "scientificName": "Apios americana",
+      "id": 61316,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39219",
+      "vernacularName": {
+        "sv": "selleri",
+        "fi": "selleri"
+      },
+      "scientificName": "Apium graveolens",
+      "id": 61306,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021375",
+      "vernacularName": {
+        "sv": "rotkardborre",
+        "fi": "vihannestakiainen"
+      },
+      "scientificName": "Arctium lappa var. edule",
+      "id": 61317,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39979",
+      "vernacularName": {
+        "sv": "sparris",
+        "fi": "parsa"
+      },
+      "scientificName": "Asparagus officinalis",
+      "id": 61638,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38187",
+      "vernacularName": {
+        "sv": "trädgårdsmålla",
+        "fi": "tarhamaltsa"
+      },
+      "scientificName": "Atriplex hortensis",
+      "id": 62667,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4973143",
+      "vernacularName": {
+        "sv": "vårgyllen",
+        "fi": "krassikanankaali"
+      },
+      "scientificName": "Barbarea verna",
+      "id": 61312,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009479",
+      "vernacularName": {
+        "fi": "malabarinpinaattio"
+      },
+      "scientificName": "Basella alba",
+      "id": 61719,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5025064",
+      "vernacularName": {
+        "fi": "lehtimangoldit",
+        "sv": "mangold"
+      },
+      "scientificName": "Beta vulgaris subsp. vulgaris Cicla-Ryhmä",
+      "id": 61399,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4978769",
+      "vernacularName": {
+        "fi": "punajuurikkaat",
+        "sv": "rödbeta"
+      },
+      "scientificName": "Beta vulgaris subsp. vulgaris Conditiva-Ryhmä",
+      "id": 61398,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38182",
+      "vernacularName": {
+        "sv": "bärmålla",
+        "fi": "marjasavikka"
+      },
+      "scientificName": "Blitum virgatum",
+      "id": 61318,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972935",
+      "vernacularName": {
+        "fi": "lanttu",
+        "sv": "kålrot"
+      },
+      "scientificName": "Brassica napus subsp. rapifera",
+      "id": 61136,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38489",
+      "vernacularName": {
+        "fi": "vihanneskaali",
+        "sv": "kål"
+      },
+      "scientificName": "Brassica oleracea",
+      "id": 61290,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4984155",
+      "vernacularName": {
+        "sv": "kålrabbi",
+        "fi": "kyssäkaali"
+      },
+      "scientificName": "Brassica oleracea var. gongylodes",
+      "id": 61137,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38493",
+      "vernacularName": {
+        "fi": "satokaali"
+      },
+      "scientificName": "Brassica rapa",
+      "id": 61291,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38494",
+      "vernacularName": {
+        "fi": "nauris",
+        "sv": "rova"
+      },
+      "scientificName": "Brassica rapa subsp. rapa",
+      "id": 61286,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39864",
+      "vernacularName": {
+        "sv": "ringblomma",
+        "fi": "tarhakehäkukka"
+      },
+      "scientificName": "Calendula officinalis",
+      "id": 61642,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009789",
+      "vernacularName": {
+        "fi": "intiankanna"
+      },
+      "scientificName": "Canna indica",
+      "id": 61376,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39180",
+      "vernacularName": {
+        "fi": "mukulakirveli",
+        "sv": "rotkörvel"
+      },
+      "scientificName": "Chaerophyllum bulbosum",
+      "id": 62031,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41183",
+      "vernacularName": {
+        "fi": "endiivi",
+        "sv": "sydcikoria"
+      },
+      "scientificName": "Cichorium endivia",
+      "id": 61840,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41035",
+      "vernacularName": {
+        "sv": "vinterportlak",
+        "fi": "salaattikleitonia"
+      },
+      "scientificName": "Claytonia perfoliata",
+      "id": 61403,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41821",
+      "vernacularName": {},
+      "scientificName": "Cleome",
+      "id": 62203,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4985871",
+      "vernacularName": {
+        "fi": "vihannestaaro"
+      },
+      "scientificName": "Colocasia esculenta",
+      "id": 60512,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38348",
+      "vernacularName": {
+        "sv": "gurka",
+        "fi": "kurkku"
+      },
+      "scientificName": "Cucumis sativus",
+      "id": 62344,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021101",
+      "vernacularName": {
+        "fi": "jättikurpitsa",
+        "sv": "jättepumpa"
+      },
+      "scientificName": "Cucurbita maxima",
+      "id": 62254,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5023810",
+      "vernacularName": {
+        "fi": "myskikurpitsa",
+        "sv": "myskpumpa"
+      },
+      "scientificName": "Cucurbita moschata",
+      "id": 62255,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38350",
+      "vernacularName": {
+        "fi": "kurpitsa",
+        "sv": "pumpa"
+      },
+      "scientificName": "Cucurbita pepo",
+      "id": 62256,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38342",
+      "vernacularName": {
+        "sv": "gurkväxter",
+        "fi": "kurkkukasvit"
+      },
+      "scientificName": "Cucurbitaceae",
+      "id": 62204,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5023824",
+      "vernacularName": {
+        "sv": "kronärtskocka",
+        "fi": "latva-artisokat"
+      },
+      "scientificName": "Cynara cardunculus Scolymus-Ryhmä",
+      "id": 61407,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972088",
+      "vernacularName": {
+        "sv": "dahlior",
+        "fi": "daaliat"
+      },
+      "scientificName": "Dahlia",
+      "id": 62285,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39264",
+      "vernacularName": {
+        "fi": "porkkana",
+        "sv": "morot"
+      },
+      "scientificName": "Daucus carota",
+      "id": 61655,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009055",
+      "vernacularName": {
+        "fi": "jamssit"
+      },
+      "scientificName": "Dioscorea",
+      "id": 62230,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021700",
+      "vernacularName": {
+        "sv": "potatisjams",
+        "fi": "mukulajamssi"
+      },
+      "scientificName": "Dioscorea bulbifera",
+      "id": 62231,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021703",
+      "vernacularName": {
+        "sv": "jams",
+        "fi": "kiinanjamssi"
+      },
+      "scientificName": "Dioscorea polystachya",
+      "id": 62206,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972407",
+      "vernacularName": {
+        "sv": "äkta senapskål",
+        "fi": "vihannessinappikaali"
+      },
+      "scientificName": "Eruca vesicaria subsp. sativa",
+      "id": 62342,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39211",
+      "vernacularName": {
+        "fi": "fenkoli",
+        "sv": "fänkål"
+      },
+      "scientificName": "Foeniculum vulgare",
+      "id": 61663,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41180",
+      "vernacularName": {
+        "fi": "kruunusuvikakkara",
+        "sv": "kranskrage"
+      },
+      "scientificName": "Glebionis coronaria",
+      "id": 62258,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41113",
+      "vernacularName": {
+        "fi": "köynnöspinaatti",
+        "sv": "rankspenat"
+      },
+      "scientificName": "Hablitzia tamnoides",
+      "id": 61713,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39790",
+      "vernacularName": {
+        "sv": "jordärtskocka",
+        "fi": "maa-artisokka"
+      },
+      "scientificName": "Helianthus tuberosus",
+      "id": 61397,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5024037",
+      "vernacularName": {
+        "sv": "ödleblad",
+        "fi": "viherkameleonttilehti"
+      },
+      "scientificName": "Houttuynia cordata",
+      "id": 62009,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009698",
+      "vernacularName": {
+        "fi": "bataatti"
+      },
+      "scientificName": "Ipomoea batatas",
+      "id": 61395,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40788",
+      "vernacularName": {
+        "sv": "trädgårdssallat",
+        "fi": "salaatti"
+      },
+      "scientificName": "Lactuca sativa",
+      "id": 61288,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38464",
+      "vernacularName": {
+        "fi": "vihanneskrassi",
+        "sv": "smörgåskrasse"
+      },
+      "scientificName": "Lepidium sativum",
+      "id": 61621,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022143",
+      "vernacularName": {
+        "fi": "punaparsaherne",
+        "sv": "sparrisärt"
+      },
+      "scientificName": "Lotus tetragonolobus",
+      "id": 62027,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009580",
+      "vernacularName": {
+        "fi": "maniokki"
+      },
+      "scientificName": "Manihot esculenta",
+      "id": 61305,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5024201",
+      "vernacularName": {
+        "fi": "nuolijuuri",
+        "sv": "arrowrot"
+      },
+      "scientificName": "Maranta arundinacea",
+      "id": 62295,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5024273",
+      "vernacularName": {
+        "sv": "indisk lotus",
+        "fi": "intianlootus"
+      },
+      "scientificName": "Nelumbo nucifera",
+      "id": 61714,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39129",
+      "vernacularName": {
+        "fi": "käenkaalit",
+        "sv": "oxalisar"
+      },
+      "scientificName": "Oxalis",
+      "id": 62217,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39244",
+      "vernacularName": {
+        "sv": "palsternacka",
+        "fi": "palsternakka"
+      },
+      "scientificName": "Pastinaca sativa",
+      "id": 61683,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5024356",
+      "vernacularName": {
+        "fi": "veripeippi",
+        "sv": "bladmynta"
+      },
+      "scientificName": "Perilla frutescens",
+      "id": 61948,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5024357",
+      "vernacularName": {
+        "sv": "shiso",
+        "fi": "kähäräveripeippi"
+      },
+      "scientificName": "Perilla frutescens var. crispa",
+      "id": 61949,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38221",
+      "vernacularName": {
+        "sv": "pilörter",
+        "fi": "kosteikkotattaret"
+      },
+      "scientificName": "Persicaria",
+      "id": 62016,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021061",
+      "vernacularName": {
+        "fi": "juuripersiljat",
+        "sv": "rotpersilja"
+      },
+      "scientificName": "Petroselinum crispum Tuberosum-Ryhmä",
+      "id": 62024,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209384",
+      "vernacularName": {
+        "sv": "rosenböna",
+        "fi": "ruusupapu"
+      },
+      "scientificName": "Phaseolus coccineus",
+      "id": 62259,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5023537",
+      "vernacularName": {
+        "fi": "jättibambut",
+        "sv": "kinabambusläktet"
+      },
+      "scientificName": "Phyllostachys",
+      "id": 62313,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38027",
+      "vernacularName": {
+        "sv": "trädgårdsportlak",
+        "fi": "vihannesportulakka"
+      },
+      "scientificName": "Portulaca sativa",
+      "id": 62279,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5024432",
+      "vernacularName": {
+        "sv": "buskportlak",
+        "fi": "heleäpensasportulakka"
+      },
+      "scientificName": "Portulacaria afra",
+      "id": 62205,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41467",
+      "vernacularName": {
+        "sv": "svartrot",
+        "fi": "mustajuuri"
+      },
+      "scientificName": "Pseudopodospermum hispanicum",
+      "id": 62003,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972578",
+      "vernacularName": {
+        "fi": "tummaretikka",
+        "sv": "rättika"
+      },
+      "scientificName": "Raphanus sativus var. niger",
+      "id": 62025,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972579",
+      "vernacularName": {
+        "sv": "rädisa",
+        "fi": "retiisi"
+      },
+      "scientificName": "Raphanus sativus var. sativus",
+      "id": 62026,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38249",
+      "vernacularName": {
+        "fi": "tarharaparperi",
+        "sv": "rabarber"
+      },
+      "scientificName": "Rheum rhabarbarum",
+      "id": 61289,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41438",
+      "vernacularName": {
+        "sv": "spenatskräppa",
+        "fi": "pinaattihierakka"
+      },
+      "scientificName": "Rumex patientia",
+      "id": 61696,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5024701",
+      "vernacularName": {
+        "sv": "trädgårdssyra",
+        "fi": "tarhasuolaheinä"
+      },
+      "scientificName": "Rumex rugosus",
+      "id": 61694,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41440",
+      "vernacularName": {
+        "fi": "verihierakka",
+        "sv": "skogsskräppa"
+      },
+      "scientificName": "Rumex sanguineus",
+      "id": 61693,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42593",
+      "vernacularName": {
+        "sv": "sköldsyra",
+        "fi": "kilpisuolaheinä"
+      },
+      "scientificName": "Rumex scutatus",
+      "id": 61695,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41508",
+      "vernacularName": {
+        "sv": "sockerrot",
+        "fi": "sokerijuuri"
+      },
+      "scientificName": "Sium sisarum",
+      "id": 62263,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4973851",
+      "vernacularName": {
+        "sv": "aubergin",
+        "fi": "munakoiso"
+      },
+      "scientificName": "Solanum melongena",
+      "id": 63015,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39559",
+      "vernacularName": {
+        "fi": "peruna",
+        "sv": "potatis"
+      },
+      "scientificName": "Solanum tuberosum",
+      "id": 61443,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42418",
+      "vernacularName": {
+        "fi": "myskikoiso"
+      },
+      "scientificName": "Solanum villosum",
+      "id": 63016,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38185",
+      "vernacularName": {
+        "fi": "pinaatti",
+        "sv": "spenat"
+      },
+      "scientificName": "Spinacia oleracea",
+      "id": 61428,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38022",
+      "vernacularName": {
+        "fi": "lamopinaatti",
+        "sv": "nyzeeländsk spenat"
+      },
+      "scientificName": "Tetragonia tetragonoides",
+      "id": 61706,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41554",
+      "vernacularName": {
+        "sv": "äkta haverrot",
+        "fi": "kaurajuuri"
+      },
+      "scientificName": "Tragopogon porrifolius",
+      "id": 62264,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41601",
+      "vernacularName": {
+        "sv": "indiankrasse",
+        "fi": "isoköynnöskrassi"
+      },
+      "scientificName": "Tropaeolum majus",
+      "id": 61705,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5015967",
+      "vernacularName": {
+        "sv": "tanniasläktet",
+        "fi": "kaakaotaarot",
+        "en": "elephant's ear"
+      },
+      "scientificName": "Xanthosoma",
+      "id": 61396,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.1259272",
+    "urls": {
+      "original": "https://image.laji.fi/MM.1259272/JR7.8.2008B150.JPG",
+      "full": "https://image.laji.fi/MM.1259272/JR7.8.2008B150.JPG",
+      "large": "https://image.laji.fi/MM.1259272/JR7.8.2008B150_large.jpg",
+      "square": "https://image.laji.fi/MM.1259272/JR7.8.2008B150_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.1259272/JR7.8.2008B150_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1584430818,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1220777606,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR7.8.2008B150.JPG",
+      "documentIds": [
+        "4213"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.40788"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

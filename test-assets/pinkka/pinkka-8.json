@@ -1,0 +1,121 @@
+{
+  "id": 8,
+  "name": {
+    "fi": "IPS-153 Flora of Subarctic Europe",
+    "en": "IPS-153 Flora of Subarctic Europe"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "PBIO-153 is a web course you can study independently at any time and then take the final exam at given times (periods I–IV, summer). After successfully completing the course you can identify most native vascular plant species in northern Finland and neighboring regions.",
+    "en": "PBIO-153 is a web course you can study independently at any time and then take the final exam at given times (periods I– IV, summer). After successfully completing the course you can identify most native vascular plant species in northern Finland and neighboring regions."
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 635,
+      "name": {
+        "fi": "Saniaiset ja liekokasvit",
+        "en": "Pteridophytes and lycophytes"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 274,
+      "name": {
+        "fi": "Actaea-Carduus",
+        "sv": "Abies-Bistorta",
+        "en": "Abies-Bistorta"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 291,
+      "name": {
+        "fi": "Carex-Cirsium",
+        "sv": "Calamagrostis-Cypripedium",
+        "en": "Calamagrostis-Cypripedium"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 295,
+      "name": {
+        "fi": "Comarum-Frangula",
+        "sv": "Dactylis-Frangula",
+        "en": "Dactylis-Frangula"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 298,
+      "name": {
+        "fi": "Galeopsis-Koeleria",
+        "sv": "Galeopsis-Koenigia",
+        "en": "Galeopsis-Koenigia"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 388,
+      "name": {
+        "fi": "Lamium-Myriophyllum",
+        "sv": "Lamium-Myriophyllum",
+        "en": "Lamium-Myriophyllum"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 389,
+      "name": {
+        "fi": "Nardus-Pyrola",
+        "sv": "Nardus-Pyrola",
+        "en": "Nardus-Pyrola"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 390,
+      "name": {
+        "fi": "Ranunculus-Salix",
+        "sv": "Ranunculus-Salix",
+        "en": "Ranunculus-Salix"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 391,
+      "name": {
+        "fi": "Saxifraga-Subularia",
+        "sv": "Saxifraga-Subularia",
+        "en": "Saxifraga-Subularia"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 392,
+      "name": {
+        "fi": "Tanacetum-Viscaria",
+        "sv": "Tanacetum-Viscaria",
+        "en": "Tanacetum-Viscaria"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

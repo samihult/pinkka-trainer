@@ -1,0 +1,2029 @@
+{
+  "id": 913,
+  "name": {
+    "fi": "Kaikki lajit"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 21,
+    "name": {
+      "fi": "Maatalouslajintuntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": null,
+  "speciesCards": [
+    {
+      "taxonId": "MX.38939",
+      "vernacularName": {
+        "sv": "hägg",
+        "fi": "lehtotuomi"
+      },
+      "scientificName": "Prunus padus",
+      "id": 64750,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38790",
+      "vernacularName": {
+        "fi": "idänvirpiangervo",
+        "sv": "kvastspirea"
+      },
+      "scientificName": "Spiraea chamaedryfolia",
+      "id": 64756,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38795",
+      "vernacularName": {
+        "fi": "mesiangervo",
+        "sv": "älggräs"
+      },
+      "scientificName": "Filipendula ulmaria",
+      "id": 64746,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38590",
+      "vernacularName": {
+        "sv": "asp",
+        "fi": "metsähaapa",
+        "en": "Common aspen"
+      },
+      "scientificName": "Populus tremula",
+      "id": 64747,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38834",
+      "vernacularName": {
+        "fi": "ojakellukka",
+        "sv": "humleblomster"
+      },
+      "scientificName": "Geum rivale",
+      "id": 64748,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41212",
+      "vernacularName": {
+        "sv": "bärapel",
+        "fi": "marjaomenapuu"
+      },
+      "scientificName": "Malus baccata",
+      "id": 64749,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41429",
+      "vernacularName": {
+        "fi": "nukkeruusu",
+        "sv": "dockros"
+      },
+      "scientificName": "Rosa nitida",
+      "id": 64751,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38797",
+      "vernacularName": {
+        "sv": "hjortron",
+        "fi": "muurain"
+      },
+      "scientificName": "Rubus chamaemorus",
+      "id": 64752,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41382",
+      "vernacularName": {
+        "fi": "rusopajuangervo",
+        "sv": "klasespirea"
+      },
+      "scientificName": "Spiraea ×billardii",
+      "id": 64755,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42805",
+      "vernacularName": {
+        "sv": "björkspirea",
+        "fi": "koivuangervo"
+      },
+      "scientificName": "Spiraea betulifolia",
+      "id": 64754,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38804",
+      "vernacularName": {
+        "fi": "vadelma",
+        "sv": "skogshallon"
+      },
+      "scientificName": "Rubus idaeus",
+      "id": 64753,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37805",
+      "vernacularName": {
+        "sv": "pichtagran",
+        "fi": "siperianpihta"
+      },
+      "scientificName": "Abies sibirica",
+      "id": 64203,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39122",
+      "vernacularName": {
+        "sv": "skogslönn",
+        "fi": "metsävaahtera",
+        "en": "Norway maple"
+      },
+      "scientificName": "Acer platanoides",
+      "id": 64514,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42335",
+      "vernacularName": {
+        "fi": "mongolianpikkuvaahtera",
+        "sv": "ginnalalönn"
+      },
+      "scientificName": "Acer tataricum subsp. ginnala",
+      "id": 64515,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39812",
+      "vernacularName": {
+        "sv": "röllika",
+        "fi": "siankärsämö"
+      },
+      "scientificName": "Achillea millefolium",
+      "id": 64431,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39809",
+      "vernacularName": {
+        "sv": "nysört",
+        "fi": "ojakärsämö"
+      },
+      "scientificName": "Achillea ptarmica",
+      "id": 64444,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37868",
+      "vernacularName": {
+        "sv": "trädgårdsstormhatt",
+        "fi": "tarhaukonhattu"
+      },
+      "scientificName": "Aconitum ×cammarum",
+      "id": 64215,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39201",
+      "vernacularName": {
+        "fi": "vuohenputki",
+        "sv": "kirskål"
+      },
+      "scientificName": "Aegopodium podagraria",
+      "id": 64416,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209737",
+      "vernacularName": {
+        "fi": "sinitähtönen"
+      },
+      "scientificName": "Ageratum houstonianum",
+      "id": 64456,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38874",
+      "vernacularName": {
+        "sv": "daggkåpor",
+        "fi": "poimulehdet"
+      },
+      "scientificName": "Alchemilla",
+      "id": 64318,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38008",
+      "vernacularName": {
+        "fi": "tervaleppä",
+        "sv": "klibbal",
+        "en": "Common alder"
+      },
+      "scientificName": "Alnus glutinosa",
+      "id": 64230,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38010",
+      "vernacularName": {
+        "sv": "gråal",
+        "fi": "harmaaleppä",
+        "en": "Grey alder"
+      },
+      "scientificName": "Alnus incana",
+      "id": 64212,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38920",
+      "vernacularName": {
+        "sv": "häggmispel",
+        "fi": "isotuomipihlaja"
+      },
+      "scientificName": "Amelanchier spicata",
+      "id": 64319,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37879",
+      "vernacularName": {
+        "fi": "valkovuokko",
+        "sv": "vitsippa"
+      },
+      "scientificName": "Anemone nemorosa",
+      "id": 64213,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39213",
+      "vernacularName": {
+        "sv": "dill",
+        "fi": "tilli"
+      },
+      "scientificName": "Anethum graveolens",
+      "id": 64381,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39235",
+      "vernacularName": {
+        "sv": "strätta",
+        "fi": "karhunputki"
+      },
+      "scientificName": "Angelica sylvestris",
+      "id": 64393,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39185",
+      "vernacularName": {
+        "fi": "koiranputki",
+        "sv": "hundkäx"
+      },
+      "scientificName": "Anthriscus sylvestris",
+      "id": 64396,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39219",
+      "vernacularName": {
+        "sv": "selleri",
+        "fi": "selleri"
+      },
+      "scientificName": "Apium graveolens",
+      "id": 64378,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37939",
+      "vernacularName": {
+        "fi": "lehtoakileija",
+        "sv": "akleja"
+      },
+      "scientificName": "Aquilegia vulgaris",
+      "id": 64219,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39871",
+      "vernacularName": {
+        "fi": "seittitakiainen",
+        "sv": "ullkardborre"
+      },
+      "scientificName": "Arctium tomentosum",
+      "id": 64433,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38844",
+      "vernacularName": {
+        "fi": "ketohanhikki",
+        "sv": "gåsört"
+      },
+      "scientificName": "Argentina anserina",
+      "id": 64333,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38398",
+      "vernacularName": {
+        "sv": "pepparrot",
+        "fi": "piparjuuri"
+      },
+      "scientificName": "Armoracia rusticana",
+      "id": 64301,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42946",
+      "vernacularName": {
+        "fi": "koristearonia",
+        "sv": "slånaronia"
+      },
+      "scientificName": "Aronia ×prunifolia",
+      "id": 64516,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39835",
+      "vernacularName": {
+        "fi": "pujo",
+        "sv": "gråbo"
+      },
+      "scientificName": "Artemisia vulgaris",
+      "id": 64446,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38792",
+      "vernacularName": {
+        "fi": "isotöyhtöangervo",
+        "sv": "plymspirea"
+      },
+      "scientificName": "Aruncus dioicus",
+      "id": 64329,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209798",
+      "vernacularName": {},
+      "scientificName": "Astilbe Arendsii-ryhmä",
+      "id": 64517,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38191",
+      "vernacularName": {
+        "fi": "kylämaltsa",
+        "sv": "vägmålla"
+      },
+      "scientificName": "Atriplex patula",
+      "id": 64253,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38387",
+      "vernacularName": {
+        "sv": "sommargyllen",
+        "fi": "peltokanankaali"
+      },
+      "scientificName": "Barbarea vulgaris",
+      "id": 64518,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209619",
+      "vernacularName": {},
+      "scientificName": "Begonia Semperflorens-ryhmä",
+      "id": 64249,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37854",
+      "vernacularName": {
+        "fi": "japaninhappomarja",
+        "sv": "häckberberis"
+      },
+      "scientificName": "Berberis thunbergii",
+      "id": 64532,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38159",
+      "vernacularName": {
+        "fi": "ruokajuurikas",
+        "sv": "beta"
+      },
+      "scientificName": "Beta vulgaris",
+      "id": 64267,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37993",
+      "vernacularName": {
+        "fi": "rauduskoivu",
+        "sv": "vårtbjörk"
+      },
+      "scientificName": "Betula pendula",
+      "id": 64222,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37999",
+      "vernacularName": {
+        "sv": "glasbjörk",
+        "fi": "hieskoivu"
+      },
+      "scientificName": "Betula pubescens",
+      "id": 64543,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39779",
+      "vernacularName": {
+        "sv": "brunskära",
+        "fi": "tummarusokki"
+      },
+      "scientificName": "Bidens tripartita",
+      "id": 64454,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38490",
+      "vernacularName": {
+        "fi": "juureskaali"
+      },
+      "scientificName": "Brassica napus",
+      "id": 64521,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38489",
+      "vernacularName": {
+        "fi": "vihanneskaali",
+        "sv": "kål"
+      },
+      "scientificName": "Brassica oleracea",
+      "id": 64520,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38493",
+      "vernacularName": {
+        "fi": "satokaali"
+      },
+      "scientificName": "Brassica rapa",
+      "id": 64519,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39864",
+      "vernacularName": {
+        "sv": "ringblomma",
+        "fi": "tarhakehäkukka"
+      },
+      "scientificName": "Calendula officinalis",
+      "id": 64434,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37863",
+      "vernacularName": {
+        "fi": "rentukka",
+        "sv": "kabbleka"
+      },
+      "scientificName": "Caltha palustris",
+      "id": 64234,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39703",
+      "vernacularName": {
+        "fi": "harakankello",
+        "sv": "ängsklocka"
+      },
+      "scientificName": "Campanula patula",
+      "id": 64425,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38452",
+      "vernacularName": {
+        "sv": "lomme",
+        "fi": "lutukka"
+      },
+      "scientificName": "Capsella bursa-pastoris",
+      "id": 64522,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40895",
+      "vernacularName": {
+        "sv": "spanskpeppar",
+        "fi": "paprika"
+      },
+      "scientificName": "Capsicum annuum",
+      "id": 64400,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39229",
+      "vernacularName": {
+        "fi": "kumina",
+        "sv": "kummin"
+      },
+      "scientificName": "Carum carvi",
+      "id": 64377,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39909",
+      "vernacularName": {
+        "fi": "ruiskaunokki",
+        "sv": "blåklint"
+      },
+      "scientificName": "Centaurea cyanus",
+      "id": 64443,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38073",
+      "vernacularName": {
+        "sv": "hönsarv",
+        "fi": "nurmihärkki"
+      },
+      "scientificName": "Cerastium fontanum",
+      "id": 64261,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43496",
+      "vernacularName": {
+        "sv": "brännmossa",
+        "fi": "metsäkulosammal"
+      },
+      "scientificName": "Ceratodon purpureus",
+      "id": 64189,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65484",
+      "vernacularName": {},
+      "scientificName": "Cetraria islandica",
+      "id": 64191,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38163",
+      "vernacularName": {
+        "fi": "jauhosavikka",
+        "sv": "svinmålla"
+      },
+      "scientificName": "Chenopodium album",
+      "id": 64258,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39223",
+      "vernacularName": {
+        "sv": "sprängört",
+        "fi": "myrkkykeiso"
+      },
+      "scientificName": "Cicuta virosa",
+      "id": 64417,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39890",
+      "vernacularName": {
+        "fi": "pelto-ohdake",
+        "sv": "åkertistel"
+      },
+      "scientificName": "Cirsium arvense",
+      "id": 64455,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39889",
+      "vernacularName": {
+        "sv": "kärrtistel",
+        "fi": "suo-ohdake"
+      },
+      "scientificName": "Cirsium palustre",
+      "id": 64432,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39885",
+      "vernacularName": {
+        "fi": "piikkiohdake",
+        "sv": "vägtistel"
+      },
+      "scientificName": "Cirsium vulgare",
+      "id": 64445,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65104",
+      "vernacularName": {
+        "fi": "palleroporonjäkälä",
+        "sv": "fönsterlav"
+      },
+      "scientificName": "Cladonia stellaris",
+      "id": 64190,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41185",
+      "vernacularName": {
+        "fi": "tarhakeltakärhöt",
+        "sv": "tangutica-klematis"
+      },
+      "scientificName": "Clematis Tangutica-Ryhmä",
+      "id": 64529,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39193",
+      "vernacularName": {
+        "fi": "maustekorianteri",
+        "sv": "koriander"
+      },
+      "scientificName": "Coriandrum sativum",
+      "id": 64392,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38016",
+      "vernacularName": {
+        "fi": "pähkinäpensas",
+        "sv": "hassel",
+        "en": "Common hazel"
+      },
+      "scientificName": "Corylus avellana",
+      "id": 64544,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38924",
+      "vernacularName": {
+        "sv": "häckoxbär",
+        "fi": "kiiltotuhkapensas"
+      },
+      "scientificName": "Cotoneaster lucidus",
+      "id": 64332,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38926",
+      "vernacularName": {
+        "fi": "aitaorapihlaja",
+        "sv": "häckhagtorn"
+      },
+      "scientificName": "Crataegus flabellata var. grayana",
+      "id": 64325,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38348",
+      "vernacularName": {
+        "sv": "gurka",
+        "fi": "kurkku"
+      },
+      "scientificName": "Cucumis sativus",
+      "id": 64252,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209266",
+      "vernacularName": {},
+      "scientificName": "Cucurbita maxima",
+      "id": 64255,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38350",
+      "vernacularName": {
+        "fi": "kurpitsa",
+        "sv": "pumpa"
+      },
+      "scientificName": "Cucurbita pepo",
+      "id": 64270,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40771",
+      "vernacularName": {
+        "fi": "tarhadaalia",
+        "sv": "dahlia"
+      },
+      "scientificName": "Dahlia pinnata",
+      "id": 64457,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38842",
+      "vernacularName": {
+        "fi": "keltapensashanhikki",
+        "sv": "tok"
+      },
+      "scientificName": "Dasiphora fruticosa",
+      "id": 64323,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39266",
+      "vernacularName": {
+        "fi": "ruokaporkkana",
+        "sv": "äkta morot"
+      },
+      "scientificName": "Daucus carota subsp. sativus",
+      "id": 64420,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38150",
+      "vernacularName": {
+        "sv": "backnejlika",
+        "fi": "ketoneilikka"
+      },
+      "scientificName": "Dianthus deltoides",
+      "id": 64265,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40951",
+      "vernacularName": {
+        "sv": "fänrikshjärta",
+        "fi": "kesäpikkusydän"
+      },
+      "scientificName": "Dicentra formosa",
+      "id": 64534,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43554",
+      "vernacularName": {
+        "sv": "kvastmossa",
+        "fi": "kivikynsisammal"
+      },
+      "scientificName": "Dicranum scoparium",
+      "id": 64195,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209564",
+      "vernacularName": {},
+      "scientificName": "Diervilla lonicera",
+      "id": 64379,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37750",
+      "vernacularName": {
+        "sv": "träjon",
+        "fi": "kivikkoalvejuuri"
+      },
+      "scientificName": "Dryopteris filix-mas",
+      "id": 64202,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38646",
+      "vernacularName": {
+        "fi": "variksenmarja",
+        "sv": "kråkbär"
+      },
+      "scientificName": "Empetrum nigrum",
+      "id": 64727,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37721",
+      "vernacularName": {
+        "sv": "åkerfräken",
+        "fi": "peltokorte"
+      },
+      "scientificName": "Equisetum arvense",
+      "id": 64197,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37718",
+      "vernacularName": {
+        "sv": "kärrfräken",
+        "fi": "suokorte"
+      },
+      "scientificName": "Equisetum palustre",
+      "id": 64199,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38377",
+      "vernacularName": {
+        "sv": "åkerkårel",
+        "fi": "peltoukonnauris"
+      },
+      "scientificName": "Erysimum cheiranthoides",
+      "id": 64528,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38244",
+      "vernacularName": {
+        "sv": "bovete",
+        "fi": "tattari"
+      },
+      "scientificName": "Fagopyrum esculentum",
+      "id": 64266,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38238",
+      "vernacularName": {
+        "sv": "åkerbinda",
+        "fi": "kiertotatar"
+      },
+      "scientificName": "Fallopia convolvulus",
+      "id": 64272,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38869",
+      "vernacularName": {
+        "fi": "ahomansikka",
+        "sv": "smultron"
+      },
+      "scientificName": "Fragaria vesca",
+      "id": 64328,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37971",
+      "vernacularName": {
+        "sv": "jordrök",
+        "fi": "peltoemäkki"
+      },
+      "scientificName": "Fumaria officinalis",
+      "id": 64539,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39757",
+      "vernacularName": {
+        "fi": "savijäkkärä",
+        "sv": "sumpnoppa"
+      },
+      "scientificName": "Gnaphalium uliginosum",
+      "id": 64437,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213739",
+      "vernacularName": {
+        "fi": "syyshohdekukka"
+      },
+      "scientificName": "Helenium Autumnale-Ryhmä",
+      "id": 64447,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39788",
+      "vernacularName": {
+        "sv": "solros",
+        "fi": "isoauringonkukka"
+      },
+      "scientificName": "Helianthus annuus",
+      "id": 64460,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39790",
+      "vernacularName": {
+        "sv": "jordärtskocka",
+        "fi": "maa-artisokka"
+      },
+      "scientificName": "Helianthus tuberosus",
+      "id": 64435,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37890",
+      "vernacularName": {
+        "fi": "sinivuokko",
+        "sv": "blåsippa"
+      },
+      "scientificName": "Hepatica nobilis",
+      "id": 64530,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37979",
+      "vernacularName": {
+        "fi": "humala",
+        "sv": "humle"
+      },
+      "scientificName": "Humulus lupulus",
+      "id": 64542,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5081349",
+      "vernacularName": {
+        "sv": "syrenhortensia",
+        "fi": "syyshortensia"
+      },
+      "scientificName": "Hydrangea paniculata 'Grandiflora'",
+      "id": 64744,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39158",
+      "vernacularName": {
+        "sv": "jättebalsamin",
+        "fi": "jättipalsami",
+        "en": "Himalayan balsam"
+      },
+      "scientificName": "Impatiens glandulifera",
+      "id": 64373,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37826",
+      "vernacularName": {
+        "sv": "en",
+        "fi": "kataja"
+      },
+      "scientificName": "Juniperus communis",
+      "id": 64207,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40788",
+      "vernacularName": {
+        "sv": "trädgårdssallat",
+        "fi": "salaatti"
+      },
+      "scientificName": "Lactuca sativa",
+      "id": 64450,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40795",
+      "vernacularName": {
+        "sv": "löjtnantshjärta",
+        "fi": "särkynytsydän"
+      },
+      "scientificName": "Lamprocapnos spectabilis",
+      "id": 64538,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39949",
+      "vernacularName": {
+        "fi": "linnunkaali",
+        "sv": "harkål"
+      },
+      "scientificName": "Lapsana communis",
+      "id": 64458,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37816",
+      "vernacularName": {
+        "fi": "siperianlehtikuusi",
+        "sv": "sibirisk lärk"
+      },
+      "scientificName": "Larix sibirica",
+      "id": 64204,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39010",
+      "vernacularName": {
+        "fi": "herne",
+        "sv": "ärt"
+      },
+      "scientificName": "Lathyrus oleraceus",
+      "id": 64368,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39833",
+      "vernacularName": {
+        "sv": "prästkrage",
+        "fi": "ahopäivänkakkara"
+      },
+      "scientificName": "Leucanthemum vulgare",
+      "id": 64436,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40814",
+      "vernacularName": {
+        "fi": "kallionauhus",
+        "sv": "klippstånds"
+      },
+      "scientificName": "Ligularia dentata",
+      "id": 64448,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39589",
+      "vernacularName": {
+        "fi": "keltakannusruoho",
+        "sv": "gulsporre"
+      },
+      "scientificName": "Linaria vulgaris",
+      "id": 64429,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39127",
+      "vernacularName": {
+        "fi": "peltopellava",
+        "sv": "lin"
+      },
+      "scientificName": "Linum usitatissimum",
+      "id": 64366,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40828",
+      "vernacularName": {
+        "fi": "sinilobelia",
+        "sv": "kaplobelia"
+      },
+      "scientificName": "Lobelia erinus",
+      "id": 64424,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39345",
+      "vernacularName": {
+        "fi": "sinikuusama",
+        "sv": "blåtry"
+      },
+      "scientificName": "Lonicera caerulea",
+      "id": 64399,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38950",
+      "vernacularName": {
+        "sv": "blomsterlupin",
+        "fi": "komealupiini",
+        "en": "Garden lupin"
+      },
+      "scientificName": "Lupinus polyphyllus",
+      "id": 64370,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37694",
+      "vernacularName": {
+        "fi": "katinlieko",
+        "sv": "mattlummer"
+      },
+      "scientificName": "Lycopodium clavatum",
+      "id": 64198,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38670",
+      "vernacularName": {
+        "sv": "strandlysing",
+        "fi": "ranta-alpi"
+      },
+      "scientificName": "Lysimachia vulgaris",
+      "id": 64733,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209356",
+      "vernacularName": {},
+      "scientificName": "Malus Purpurea-ryhmä",
+      "id": 64330,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38907",
+      "vernacularName": {
+        "fi": "tarhaomenapuu",
+        "sv": "apel"
+      },
+      "scientificName": "Malus domestica",
+      "id": 64341,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44366",
+      "vernacularName": {
+        "fi": "keuhkosammal",
+        "sv": "lungmossa"
+      },
+      "scientificName": "Marchantia polymorpha",
+      "id": 64196,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39827",
+      "vernacularName": {
+        "fi": "pihasaunio",
+        "sv": "gatkamomill"
+      },
+      "scientificName": "Matricaria discoidea",
+      "id": 64459,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37781",
+      "vernacularName": {
+        "fi": "kotkansiipi",
+        "sv": "strutbräken"
+      },
+      "scientificName": "Matteuccia struthiopteris",
+      "id": 64200,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.210109",
+      "vernacularName": {
+        "fi": "varjoyrtti"
+      },
+      "scientificName": "Pachysandra terminalis",
+      "id": 64537,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41933",
+      "vernacularName": {
+        "sv": "pioner",
+        "fi": "pionit"
+      },
+      "scientificName": "Paeonia",
+      "id": 64743,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38224",
+      "vernacularName": {
+        "sv": "bitterpilört",
+        "fi": "katkeratatar"
+      },
+      "scientificName": "Persicaria hydropiper",
+      "id": 64264,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38225",
+      "vernacularName": {
+        "fi": "ukontatar",
+        "sv": "pilört"
+      },
+      "scientificName": "Persicaria lapathifolia",
+      "id": 64254,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38968",
+      "vernacularName": {
+        "sv": "böna",
+        "fi": "tarhapapu"
+      },
+      "scientificName": "Phaseolus vulgaris",
+      "id": 64369,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41472",
+      "vernacularName": {
+        "fi": "kamtsatkanmaksaruoho",
+        "sv": "kamtjatkafetblad"
+      },
+      "scientificName": "Phedimus kamtschaticus",
+      "id": 64736,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38748",
+      "vernacularName": {
+        "sv": "kaukasiskt fetblad",
+        "fi": "kaukasianmaksaruoho"
+      },
+      "scientificName": "Phedimus spurius",
+      "id": 64737,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41290",
+      "vernacularName": {
+        "fi": "pihajasmike",
+        "sv": "doftschersmin"
+      },
+      "scientificName": "Philadelphus coronarius",
+      "id": 64745,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41303",
+      "vernacularName": {
+        "fi": "lännenheisiangervo",
+        "sv": "smällspirea"
+      },
+      "scientificName": "Physocarpus opulifolius",
+      "id": 64342,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37812",
+      "vernacularName": {
+        "fi": "metsäkuusi",
+        "sv": "gran",
+        "en": "Norway spruce"
+      },
+      "scientificName": "Picea abies",
+      "id": 64210,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37822",
+      "vernacularName": {
+        "fi": "sembramänty",
+        "sv": "cembratall"
+      },
+      "scientificName": "Pinus cembra",
+      "id": 64205,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37820",
+      "vernacularName": {
+        "sv": "bergtall",
+        "fi": "vuorimänty"
+      },
+      "scientificName": "Pinus mugo",
+      "id": 64208,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37819",
+      "vernacularName": {
+        "fi": "metsämänty",
+        "sv": "tall",
+        "en": "Scots pine"
+      },
+      "scientificName": "Pinus sylvestris",
+      "id": 64211,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39673",
+      "vernacularName": {
+        "sv": "groblad",
+        "fi": "piharatamo"
+      },
+      "scientificName": "Plantago major",
+      "id": 64430,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43901",
+      "vernacularName": {
+        "sv": "väggmossa",
+        "fi": "seinäsammal"
+      },
+      "scientificName": "Pleurozium schreberi",
+      "id": 64193,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38217",
+      "vernacularName": {
+        "sv": "stor trampört",
+        "fi": "isopihatatar"
+      },
+      "scientificName": "Polygonum aviculare",
+      "id": 64259,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38592",
+      "vernacularName": {
+        "fi": "palsamipoppeli",
+        "sv": "balsampoppel"
+      },
+      "scientificName": "Populus balsamifera",
+      "id": 64721,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38856",
+      "vernacularName": {
+        "sv": "norsk fingerört",
+        "fi": "peltohanhikki"
+      },
+      "scientificName": "Potentilla norvegica",
+      "id": 64337,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38938",
+      "vernacularName": {
+        "sv": "surkörsbär",
+        "fi": "hapankirsikka"
+      },
+      "scientificName": "Prunus cerasus",
+      "id": 64343,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38935",
+      "vernacularName": {
+        "fi": "luumupuu"
+      },
+      "scientificName": "Prunus domestica",
+      "id": 64324,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41574",
+      "vernacularName": {
+        "sv": "amerikanskt häggkörsbär",
+        "fi": "pilvikirsikka"
+      },
+      "scientificName": "Prunus pensylvanica",
+      "id": 64327,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37742",
+      "vernacularName": {
+        "sv": "tajgaörnbräken",
+        "fi": "taigasananjalka"
+      },
+      "scientificName": "Pteridium aquilinum subsp. pinetorum",
+      "id": 64201,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37990",
+      "vernacularName": {
+        "sv": "skogsek",
+        "fi": "metsätammi",
+        "en": "Pedunculate oak"
+      },
+      "scientificName": "Quercus robur",
+      "id": 64541,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37897",
+      "vernacularName": {
+        "sv": "smörblomma",
+        "fi": "niittyleinikki"
+      },
+      "scientificName": "Ranunculus acris",
+      "id": 64531,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37896",
+      "vernacularName": {
+        "sv": "revsmörblomma",
+        "fi": "rönsyleinikki"
+      },
+      "scientificName": "Ranunculus repens",
+      "id": 64533,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38516",
+      "vernacularName": {
+        "sv": "åkerrättika",
+        "fi": "peltoretikka"
+      },
+      "scientificName": "Raphanus raphanistrum",
+      "id": 64527,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38517",
+      "vernacularName": {
+        "sv": "trädgårdsrättika",
+        "fi": "ruokaretikka"
+      },
+      "scientificName": "Raphanus sativus",
+      "id": 64526,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38249",
+      "vernacularName": {
+        "fi": "tarharaparperi",
+        "sv": "rabarber"
+      },
+      "scientificName": "Rheum rhabarbarum",
+      "id": 64271,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5001217",
+      "vernacularName": {
+        "sv": "parkrododendron",
+        "fi": "puistoalppiruusut"
+      },
+      "scientificName": "Rhododendron Catawbiense-Ryhmä",
+      "id": 64728,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43981",
+      "vernacularName": {
+        "sv": "gräshakmossa",
+        "fi": "niittyliekosammal"
+      },
+      "scientificName": "Rhytidiadelphus squarrosus",
+      "id": 64194,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38774",
+      "vernacularName": {
+        "sv": "måbär",
+        "fi": "taikinamarja"
+      },
+      "scientificName": "Ribes alpinum",
+      "id": 64739,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38768",
+      "vernacularName": {
+        "fi": "mustaherukka",
+        "sv": "svarta vinbär"
+      },
+      "scientificName": "Ribes nigrum",
+      "id": 64740,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38760",
+      "vernacularName": {
+        "fi": "punaherukkaryhmä",
+        "sv": "röd vinbär"
+      },
+      "scientificName": "Ribes rubrum -ryhmä",
+      "id": 64741,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38769",
+      "vernacularName": {
+        "sv": "krusbär",
+        "fi": "karviainen"
+      },
+      "scientificName": "Ribes uva-crispa",
+      "id": 64742,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38395",
+      "vernacularName": {
+        "fi": "rantanenätti",
+        "sv": "sumpfräne"
+      },
+      "scientificName": "Rorippa palustris",
+      "id": 64525,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38394",
+      "vernacularName": {
+        "sv": "strandfräne",
+        "fi": "rikkanenätti"
+      },
+      "scientificName": "Rorippa sylvestris",
+      "id": 64523,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38815",
+      "vernacularName": {
+        "sv": "vresros",
+        "fi": "kurtturuusu",
+        "en": "Japanese rose"
+      },
+      "scientificName": "Rosa rugosa",
+      "id": 64334,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41431",
+      "vernacularName": {
+        "sv": "pimpinellros",
+        "fi": "pimpinellaruusu"
+      },
+      "scientificName": "Rosa spinosissima",
+      "id": 64345,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38799",
+      "vernacularName": {
+        "fi": "mesimarja",
+        "sv": "åkerbär"
+      },
+      "scientificName": "Rubus arcticus",
+      "id": 64347,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39786",
+      "vernacularName": {
+        "sv": "höstrudbeckia",
+        "fi": "syyspäivänhattu"
+      },
+      "scientificName": "Rudbeckia laciniata",
+      "id": 64438,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38285",
+      "vernacularName": {
+        "fi": "ahosuolaheinä",
+        "sv": "bergsyra"
+      },
+      "scientificName": "Rumex acetosella",
+      "id": 64260,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38266",
+      "vernacularName": {
+        "fi": "poimuhierakka",
+        "sv": "krusskräppa"
+      },
+      "scientificName": "Rumex crispus",
+      "id": 64263,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38263",
+      "vernacularName": {
+        "fi": "hevonhierakka",
+        "sv": "gårdsskräppa"
+      },
+      "scientificName": "Rumex longifolius",
+      "id": 64251,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38088",
+      "vernacularName": {
+        "sv": "krypnarv",
+        "fi": "rentohaarikko"
+      },
+      "scientificName": "Sagina procumbens",
+      "id": 64269,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213733",
+      "vernacularName": {
+        "fi": "hopeasalava"
+      },
+      "scientificName": "Salix alba var. sericea 'Sibirica'",
+      "id": 64722,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38563",
+      "vernacularName": {
+        "fi": "raita",
+        "sv": "sälg",
+        "en": "Goat willow"
+      },
+      "scientificName": "Salix caprea",
+      "id": 64723,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38556",
+      "vernacularName": {
+        "fi": "tuhkapaju",
+        "sv": "gråvide"
+      },
+      "scientificName": "Salix cinerea",
+      "id": 64724,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213746",
+      "vernacularName": {
+        "fi": "terijoensalava"
+      },
+      "scientificName": "Salix fragilis 'Bullata'",
+      "id": 64725,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38550",
+      "vernacularName": {
+        "sv": "grönvide",
+        "fi": "kiiltopaju"
+      },
+      "scientificName": "Salix phylicifolia",
+      "id": 64726,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41443",
+      "vernacularName": {
+        "fi": "ryytisalvia",
+        "sv": "kryddsalvia"
+      },
+      "scientificName": "Salvia officinalis",
+      "id": 64401,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38918",
+      "vernacularName": {
+        "sv": "oxel",
+        "fi": "ruotsinpihlaja"
+      },
+      "scientificName": "Scandosorbus intermedia",
+      "id": 64338,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39917",
+      "vernacularName": {
+        "sv": "höstfibbla",
+        "fi": "syysmaitiainen"
+      },
+      "scientificName": "Scorzoneroides autumnalis",
+      "id": 64449,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38750",
+      "vernacularName": {
+        "sv": "gul fetknopp",
+        "fi": "keltamaksaruoho"
+      },
+      "scientificName": "Sedum acre",
+      "id": 64738,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209490",
+      "vernacularName": {
+        "fi": "hopeavillakko"
+      },
+      "scientificName": "Senecio cineraria",
+      "id": 64461,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39861",
+      "vernacularName": {
+        "fi": "tahmavillakko",
+        "sv": "klibbkorsört"
+      },
+      "scientificName": "Senecio viscosus",
+      "id": 64441,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39862",
+      "vernacularName": {
+        "sv": "korsört",
+        "fi": "peltovillakko"
+      },
+      "scientificName": "Senecio vulgaris",
+      "id": 64451,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39559",
+      "vernacularName": {
+        "fi": "peruna",
+        "sv": "potatis"
+      },
+      "scientificName": "Solanum tuberosum",
+      "id": 64383,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39936",
+      "vernacularName": {
+        "fi": "peltovalvatti",
+        "sv": "åkermolke"
+      },
+      "scientificName": "Sonchus arvensis",
+      "id": 64442,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39930",
+      "vernacularName": {
+        "fi": "otavalvatti",
+        "sv": "svinmolke"
+      },
+      "scientificName": "Sonchus asper",
+      "id": 64453,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38786",
+      "vernacularName": {
+        "fi": "viitapihlaja-angervo",
+        "sv": "rönnspirea"
+      },
+      "scientificName": "Sorbaria sorbifolia",
+      "id": 64346,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38910",
+      "vernacularName": {
+        "fi": "pihlaja",
+        "sv": "rönn"
+      },
+      "scientificName": "Sorbus aucuparia",
+      "id": 64339,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38097",
+      "vernacularName": {
+        "fi": "peltohatikka",
+        "sv": "åkerspärgel"
+      },
+      "scientificName": "Spergula arvensis",
+      "id": 64268,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43386",
+      "vernacularName": {
+        "fi": "rahkasammalet",
+        "sv": "vitmossor"
+      },
+      "scientificName": "Sphagnum",
+      "id": 64192,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38185",
+      "vernacularName": {
+        "fi": "pinaatti",
+        "sv": "spenat"
+      },
+      "scientificName": "Spinacia oleracea",
+      "id": 64250,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38048",
+      "vernacularName": {
+        "sv": "våtarv",
+        "fi": "pihatähtimö"
+      },
+      "scientificName": "Stellaria media",
+      "id": 64262,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39341",
+      "vernacularName": {
+        "fi": "valkolumimarja",
+        "sv": "snöbär"
+      },
+      "scientificName": "Symphoricarpos albus var. laevigatus",
+      "id": 64414,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39333",
+      "vernacularName": {
+        "sv": "syren",
+        "fi": "pihasyreeni"
+      },
+      "scientificName": "Syringa vulgaris",
+      "id": 64380,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41532",
+      "vernacularName": {
+        "sv": "norrlandssyren",
+        "fi": "puistosyreeni"
+      },
+      "scientificName": "Syringa ×henryi",
+      "id": 64410,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39830",
+      "vernacularName": {
+        "fi": "pietaryrtti",
+        "sv": "renfana"
+      },
+      "scientificName": "Tanacetum vulgare",
+      "id": 64440,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42419",
+      "vernacularName": {
+        "fi": "voikukat",
+        "sv": "maskrosor"
+      },
+      "scientificName": "Taraxacum",
+      "id": 64452,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209191",
+      "vernacularName": {
+        "fi": "kartiomarjakuusi",
+        "sv": "hybrididegran"
+      },
+      "scientificName": "Taxus ×media",
+      "id": 64209,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38454",
+      "vernacularName": {
+        "sv": "penningört",
+        "fi": "peltotaskuruoho"
+      },
+      "scientificName": "Thlaspi arvense",
+      "id": 64524,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41541",
+      "vernacularName": {
+        "sv": "vanlig tuja",
+        "fi": "kanadantuija"
+      },
+      "scientificName": "Thuja occidentalis",
+      "id": 64206,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38686",
+      "vernacularName": {
+        "fi": "metsälehmus",
+        "sv": "skogslind",
+        "en": "Small-leaved lime"
+      },
+      "scientificName": "Tilia cordata",
+      "id": 64734,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209312",
+      "vernacularName": {},
+      "scientificName": "Tilia x vulgaris",
+      "id": 64735,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39038",
+      "vernacularName": {
+        "sv": "vitklöver",
+        "fi": "valkoapila"
+      },
+      "scientificName": "Trifolium repens",
+      "id": 64367,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37857",
+      "vernacularName": {
+        "sv": "smörbollar",
+        "fi": "kullero"
+      },
+      "scientificName": "Trollius europaeus",
+      "id": 64536,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37975",
+      "vernacularName": {
+        "fi": "vuorijalava",
+        "sv": "skogsalm",
+        "en": "Scots elm"
+      },
+      "scientificName": "Ulmus glabra",
+      "id": 64535,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37984",
+      "vernacularName": {
+        "fi": "isonokkonen",
+        "sv": "brännässla"
+      },
+      "scientificName": "Urtica dioica",
+      "id": 64540,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38622",
+      "vernacularName": {
+        "fi": "mustikka",
+        "sv": "blåbär"
+      },
+      "scientificName": "Vaccinium myrtillus",
+      "id": 64729,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38618",
+      "vernacularName": {
+        "fi": "isokarpalo",
+        "sv": "tranbär"
+      },
+      "scientificName": "Vaccinium oxycoccos",
+      "id": 64732,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38621",
+      "vernacularName": {
+        "sv": "odon",
+        "fi": "juolukka"
+      },
+      "scientificName": "Vaccinium uliginosum",
+      "id": 64730,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38620",
+      "vernacularName": {
+        "sv": "lingon",
+        "fi": "puolukka"
+      },
+      "scientificName": "Vaccinium vitis-idaea",
+      "id": 64731,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39600",
+      "vernacularName": {
+        "fi": "orvontädyke",
+        "sv": "majveronika"
+      },
+      "scientificName": "Veronica serpyllifolia",
+      "id": 64426,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38989",
+      "vernacularName": {
+        "fi": "härkäpapu",
+        "sv": "bondböna"
+      },
+      "scientificName": "Vicia faba",
+      "id": 64371,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38338",
+      "vernacularName": {
+        "sv": "åkerviol",
+        "fi": "pelto-orvokki"
+      },
+      "scientificName": "Viola arvensis",
+      "id": 64256,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38336",
+      "vernacularName": {
+        "fi": "keto-orvokki",
+        "sv": "styvmorsviol"
+      },
+      "scientificName": "Viola tricolor",
+      "id": 64257,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": null,
+  "entityType": "SUB_PINKKA"
+}

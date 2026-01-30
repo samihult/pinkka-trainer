@@ -1,0 +1,128 @@
+{
+  "id": 5,
+  "name": {
+    "fi": "BIO-103 Eliöiden monimuotoisuus"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tämä pinkka esittelee Eliöiden monimuotoisuus -opintojakson (BIO-103) vaatimuksiin kuuluvia kasveja, eläimiä ja sieniä.\n\nOpintojakson tavoitteena on, että opiskelija\n\n1) osaa tunnistaa Suomen luonnonvaraisen eläimistön, kasviston ja sienistön peruslajiston (tai tietyt taksonomiset ryhmät) ja niiden elintapojen sekä levinneisyyden peruspiirteet\n2) hallitsee eri eläin-, kasvi- ja sieniryhmien lajinmäärityksen menetelmät pääpiirteissään sekä määrityskaavojen käytön\n3) tuntee lajinmäärityksen tärkeimmät verkko- ja muut lähteet"
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi",
+    "oovaskai@helsinki.fi",
+    "vainola@helsinki.fi",
+    "hastrom@helsinki.fi",
+    "saralind@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 544,
+      "name": {
+        "fi": "Sammalet"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 545,
+      "name": {
+        "fi": "Sanikkaiset"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 542,
+      "name": {
+        "fi": "Siemenkasvit: Acer-Carex"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 540,
+      "name": {
+        "fi": "Siemenkasvit: Carum-Gnaphalium"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 546,
+      "name": {
+        "fi": "Siemenkasvit: Hepatica-Phragmites"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 543,
+      "name": {
+        "fi": "Siemenkasvit: Picea-Senecio"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 541,
+      "name": {
+        "fi": "Siemenkasvit: Silene-Viscaria"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 538,
+      "name": {
+        "fi": "Levät ja jäkäläsienet"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 537,
+      "name": {
+        "fi": "Muut sienet"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 547,
+      "name": {
+        "fi": "Hyönteiset ja alkuhyönteiset"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 548,
+      "name": {
+        "fi": "Muut selkärangattomat"
+      },
+      "orderNo": 10,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 549,
+      "name": {
+        "fi": "Äyriäiset"
+      },
+      "orderNo": 11,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 550,
+      "name": {
+        "fi": "Kalat"
+      },
+      "orderNo": 12,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

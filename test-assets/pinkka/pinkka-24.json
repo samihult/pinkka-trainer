@@ -1,0 +1,142 @@
+{
+  "id": 24,
+  "name": {
+    "fi": "Verso- ja leviäintunnistus",
+    "en": "Seedling and Propagule Identification"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "AGRI 243 Verso- ja leviäintunnitus (2 op), \nMaatalous-metsätieteellinen tiedekunta, Helsingin yliopisto",
+    "en": "AGRI 243 Seedling and Propagule Identification (2 cr), \nFaculty of Agriculture and Forestry, University of Helsinki"
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi",
+    "jkolehma@helsinki.fi",
+    "ferdzann@helsinki.fi",
+    "akiirikk@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 154,
+      "name": {
+        "fi": "Kaikki versot",
+        "en": "All seedlings"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 656,
+      "name": {
+        "fi": "Versot: viljelykasvit",
+        "en": "Seedlings: cultivated plants"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 626,
+      "name": {
+        "fi": "Versot: Monivuotiset rikkakasvit",
+        "en": "Seedlings: Perennial weeds"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 625,
+      "name": {
+        "fi": "Versot: 1- ja 2-vuotiset rikkakasvit",
+        "en": "Seedlings: Annual and biannual weeds"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 892,
+      "name": {
+        "fi": "Versot: Poaceae",
+        "en": "Seedlings: Poaceae"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 153,
+      "name": {
+        "fi": "Kaikki leviäimet",
+        "en": "All propagules"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 890,
+      "name": {
+        "fi": "Leviäimet: Apiaceae",
+        "en": "Propagules: Apiaceae"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 657,
+      "name": {
+        "fi": "Leviäimet: Asteraceae",
+        "en": "Propagules: Asteraceae"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 658,
+      "name": {
+        "fi": "Leviäimet: Brassicaceae",
+        "en": "Propagules: Brassicaceae"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 659,
+      "name": {
+        "fi": "Leviäimet: Fabaceae",
+        "en": "Propagules: Fabaceae"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 891,
+      "name": {
+        "fi": "Leviäimet: Lamiaceae",
+        "en": "Propagules: Lamiaceae"
+      },
+      "orderNo": 10,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 660,
+      "name": {
+        "fi": "Leviäimet: Poaceae",
+        "en": "Propagules: Poaceae"
+      },
+      "orderNo": 11,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 661,
+      "name": {
+        "fi": "Leviäimet: Polygonaceae",
+        "en": "Propagules: Polygonaceae"
+      },
+      "orderNo": 12,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

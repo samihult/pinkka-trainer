@@ -1,0 +1,789 @@
+{
+  "id": 808,
+  "name": {
+    "fi": "Marja- ja hedelmäkasveja",
+    "en": "Berries and fruits"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 16,
+    "name": {
+      "fi": "BIO-516 Hyötykasvit",
+      "en": "BIO-516 Plants of economic importance"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.3037320",
+  "speciesCards": [
+    {
+      "taxonId": "MX.5021227",
+      "vernacularName": {
+        "sv": "krusbärsaktinidia",
+        "fi": "japaninlaikkuköynnös"
+      },
+      "scientificName": "Actinidia arguta",
+      "id": 61985,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40848",
+      "vernacularName": {
+        "fi": "kiivi",
+        "sv": "kiwi"
+      },
+      "scientificName": "Actinidia deliciosa",
+      "id": 61982,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40849",
+      "vernacularName": {
+        "fi": "kiinanlaikkuköynnös",
+        "sv": "kameleontbuske"
+      },
+      "scientificName": "Actinidia kolomikta",
+      "id": 61983,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40681",
+      "vernacularName": {
+        "fi": "marjatuomipihlaja",
+        "sv": "sen häggmispel"
+      },
+      "scientificName": "Amelanchier alnifolia",
+      "id": 62273,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209760",
+      "vernacularName": {},
+      "scientificName": "Ananas comosus",
+      "id": 61293,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021343",
+      "vernacularName": {
+        "fi": "suomuannoona",
+        "sv": "kirimoja"
+      },
+      "scientificName": "Annona cherimola",
+      "id": 61298,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4985861",
+      "vernacularName": {
+        "fi": "oka-annoona"
+      },
+      "scientificName": "Annona muricata",
+      "id": 61325,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021344",
+      "vernacularName": {
+        "fi": "sokeriannoona",
+        "sv": "sockerannona"
+      },
+      "scientificName": "Annona squamosa",
+      "id": 61319,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009477",
+      "vernacularName": {
+        "fi": "malaijienleipäpuu"
+      },
+      "scientificName": "Artocarpus altilis",
+      "id": 61417,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009379",
+      "vernacularName": {
+        "fi": "intianleipäpuu"
+      },
+      "scientificName": "Artocarpus heterophyllus",
+      "id": 61416,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5025052",
+      "vernacularName": {},
+      "scientificName": "Averrhoa carambola",
+      "id": 62215,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009793",
+      "vernacularName": {
+        "fi": "tarhapapaija"
+      },
+      "scientificName": "Carica papaya",
+      "id": 65278,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41007",
+      "vernacularName": {
+        "fi": "japaninruusukvitteni",
+        "sv": "liten rosenkvitten"
+      },
+      "scientificName": "Chaenomeles japonica",
+      "id": 61650,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38346",
+      "vernacularName": {
+        "sv": "vattenmelon",
+        "fi": "vesimeloni"
+      },
+      "scientificName": "Citrullus lanatus",
+      "id": 62277,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41819",
+      "vernacularName": {
+        "sv": "citrusar",
+        "fi": "sitruspuut"
+      },
+      "scientificName": "Citrus",
+      "id": 61853,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009808",
+      "vernacularName": {
+        "fi": "limetti"
+      },
+      "scientificName": "Citrus aurantiifolia",
+      "id": 61849,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42801",
+      "vernacularName": {
+        "sv": "citron",
+        "fi": "sitruuna"
+      },
+      "scientificName": "Citrus limon",
+      "id": 61848,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021551",
+      "vernacularName": {
+        "fi": "pomelo",
+        "sv": "pompelmus"
+      },
+      "scientificName": "Citrus maxima",
+      "id": 62246,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41031",
+      "vernacularName": {
+        "sv": "apelsin",
+        "fi": "appelsiini"
+      },
+      "scientificName": "Citrus sinensis",
+      "id": 61850,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021602",
+      "vernacularName": {
+        "fi": "liljakanukka",
+        "sv": "koreansk blomsterkornell"
+      },
+      "scientificName": "Cornus kousa",
+      "id": 62207,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021603",
+      "vernacularName": {
+        "fi": "punamarjakanukka",
+        "sv": "körsbärskornell"
+      },
+      "scientificName": "Cornus mas",
+      "id": 62245,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40926",
+      "vernacularName": {
+        "sv": "melon",
+        "fi": "meloni"
+      },
+      "scientificName": "Cucumis melo",
+      "id": 62290,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009056",
+      "vernacularName": {
+        "fi": "eebenpuut"
+      },
+      "scientificName": "Diospyros",
+      "id": 62208,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009455",
+      "vernacularName": {
+        "fi": "keltakeiomena"
+      },
+      "scientificName": "Dovyalis caffra",
+      "id": 62000,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009327",
+      "vernacularName": {
+        "fi": "nispero"
+      },
+      "scientificName": "Eriobotrya japonica",
+      "id": 61295,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41086",
+      "vernacularName": {
+        "fi": "aitoviikuna",
+        "sv": "fikon"
+      },
+      "scientificName": "Ficus carica",
+      "id": 62214,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38873",
+      "vernacularName": {
+        "fi": "puutarhamansikka",
+        "sv": "jordgubbe"
+      },
+      "scientificName": "Fragaria ananassa",
+      "id": 60533,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38872",
+      "vernacularName": {
+        "sv": "parksmultron",
+        "fi": "ukkomansikka"
+      },
+      "scientificName": "Fragaria moschata",
+      "id": 61660,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41091",
+      "vernacularName": {
+        "fi": "virginianmansikka",
+        "sv": "scharlakanssmultron"
+      },
+      "scientificName": "Fragaria virginiana",
+      "id": 61661,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5008980",
+      "vernacularName": {
+        "fi": "mangostanit"
+      },
+      "scientificName": "Garcinia",
+      "id": 62276,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38907",
+      "vernacularName": {
+        "fi": "tarhaomenapuu",
+        "sv": "apel"
+      },
+      "scientificName": "Malus domestica",
+      "id": 61296,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009579",
+      "vernacularName": {
+        "fi": "mangopuu"
+      },
+      "scientificName": "Mangifera indica",
+      "id": 61320,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5024216",
+      "vernacularName": {
+        "fi": "mispeli",
+        "sv": "mispel"
+      },
+      "scientificName": "Mespilus germanica",
+      "id": 61988,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5104742",
+      "vernacularName": {
+        "fi": "jättipeikonlehti",
+        "sv": "monstera"
+      },
+      "scientificName": "Monstera deliciosa",
+      "id": 62197,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009731",
+      "vernacularName": {
+        "fi": "valkomulperi"
+      },
+      "scientificName": "Morus alba",
+      "id": 60532,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009226",
+      "vernacularName": {
+        "fi": "aitobanaanit"
+      },
+      "scientificName": "Musa",
+      "id": 61294,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009597",
+      "vernacularName": {
+        "fi": "viikunaopuntia"
+      },
+      "scientificName": "Opuntia ficus-indica",
+      "id": 62202,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009603",
+      "vernacularName": {
+        "fi": "punapassio"
+      },
+      "scientificName": "Passiflora edulis",
+      "id": 61371,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41282",
+      "vernacularName": {
+        "sv": "avokado",
+        "fi": "avokado"
+      },
+      "scientificName": "Persea americana",
+      "id": 61292,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41298",
+      "vernacularName": {
+        "sv": "dadelpalm",
+        "fi": "välimerentaateli"
+      },
+      "scientificName": "Phoenix dactylifera",
+      "id": 62312,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41299",
+      "vernacularName": {
+        "fi": "kolkkalyhtykoiso",
+        "sv": "kantig lyktört"
+      },
+      "scientificName": "Physalis angulata",
+      "id": 61429,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41300",
+      "vernacularName": {
+        "sv": "gyllenbär",
+        "fi": "mansikkakoiso"
+      },
+      "scientificName": "Physalis grisea",
+      "id": 61412,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39546",
+      "vernacularName": {
+        "sv": "kapkrusbär",
+        "fi": "karviaiskoiso"
+      },
+      "scientificName": "Physalis peruviana",
+      "id": 61430,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41301",
+      "vernacularName": {
+        "fi": "tomatillo",
+        "sv": "tomatillo"
+      },
+      "scientificName": "Physalis philadelphica",
+      "id": 61431,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41573",
+      "vernacularName": {
+        "fi": "imeläkirsikka",
+        "sv": "sötkörsbär"
+      },
+      "scientificName": "Prunus avium",
+      "id": 62274,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38938",
+      "vernacularName": {
+        "sv": "surkörsbär",
+        "fi": "hapankirsikka"
+      },
+      "scientificName": "Prunus cerasus",
+      "id": 61996,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38936",
+      "vernacularName": {
+        "sv": "plommon",
+        "fi": "jaloluumupuu"
+      },
+      "scientificName": "Prunus domestica subsp. domestica",
+      "id": 61994,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38937",
+      "vernacularName": {
+        "fi": "kriikunapuu",
+        "sv": "krikon"
+      },
+      "scientificName": "Prunus domestica subsp. insititia",
+      "id": 61995,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41575",
+      "vernacularName": {
+        "sv": "persika",
+        "fi": "persikka"
+      },
+      "scientificName": "Prunus persica",
+      "id": 61992,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009629",
+      "vernacularName": {
+        "fi": "hedelmäguava"
+      },
+      "scientificName": "Psidium guajava",
+      "id": 62001,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42577",
+      "vernacularName": {
+        "fi": "granaattiomena"
+      },
+      "scientificName": "Punica granatum",
+      "id": 62004,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022585",
+      "vernacularName": {
+        "sv": "dvärggranatäpple",
+        "fi": "kääpiögranaattiomena"
+      },
+      "scientificName": "Punica granatum 'Nana'",
+      "id": 62005,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5013664",
+      "vernacularName": {
+        "fi": "päärynäpuu"
+      },
+      "scientificName": "Pyrus communis",
+      "id": 61993,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972567",
+      "vernacularName": {
+        "fi": "villipäärynäpuu",
+        "sv": "vildpäron"
+      },
+      "scientificName": "Pyrus communis subsp. pyraster",
+      "id": 66121,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38761",
+      "vernacularName": {
+        "fi": "lännenpunaherukka",
+        "sv": "trädgårdsvinbär"
+      },
+      "scientificName": "Ribes rubrum",
+      "id": 63014,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38769",
+      "vernacularName": {
+        "sv": "krusbär",
+        "fi": "karviainen"
+      },
+      "scientificName": "Ribes uva-crispa",
+      "id": 62243,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5020937",
+      "vernacularName": {
+        "sv": "allåkerbär",
+        "fi": "jalomaarain"
+      },
+      "scientificName": "Rubus arcticus nothosubsp. stellarcticus",
+      "id": 61989,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41433",
+      "vernacularName": {
+        "sv": "flikbjörnbär",
+        "fi": "liuskavatukka"
+      },
+      "scientificName": "Rubus laciniatus",
+      "id": 61991,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38803",
+      "vernacularName": {
+        "sv": "rosenhallon",
+        "fi": "tuoksuvatukka"
+      },
+      "scientificName": "Rubus odoratus",
+      "id": 62030,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38809",
+      "vernacularName": {
+        "sv": "sötbjörnbär",
+        "fi": "poimuvatukka"
+      },
+      "scientificName": "Rubus plicatus",
+      "id": 62272,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.4972607",
+      "vernacularName": {
+        "sv": "äkta björnbär",
+        "fi": "aitokarhunvatukat"
+      },
+      "scientificName": "Rubus sect. Rubus",
+      "id": 62280,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41447",
+      "vernacularName": {
+        "sv": "fläder",
+        "fi": "mustaselja"
+      },
+      "scientificName": "Sambucus nigra",
+      "id": 61697,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.289481",
+      "vernacularName": {
+        "fi": "saippuamarjakasvit",
+        "sv": "kinesträdsväxter"
+      },
+      "scientificName": "Sapindaceae",
+      "id": 62216,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5023231",
+      "vernacularName": {
+        "sv": "nattkaktussläktet",
+        "fi": "metsäkaktukset"
+      },
+      "scientificName": "Selenicereus",
+      "id": 62311,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5076816",
+      "vernacularName": {
+        "fi": "vahametsäkaktus"
+      },
+      "scientificName": "Selenicereus costaricensis",
+      "id": 66093,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009655",
+      "vernacularName": {
+        "fi": "puutomaatti"
+      },
+      "scientificName": "Solanum betaceum",
+      "id": 61324,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39562",
+      "vernacularName": {
+        "sv": "tomat",
+        "fi": "tomaatti"
+      },
+      "scientificName": "Solanum lycopersicum",
+      "id": 61432,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022718",
+      "vernacularName": {
+        "sv": "körsbärstomat",
+        "fi": "kirsikkatomaatti"
+      },
+      "scientificName": "Solanum lycopersicum var. cerasiforme",
+      "id": 61433,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022719",
+      "vernacularName": {
+        "fi": "päärynätomaatti",
+        "sv": "pärontomat"
+      },
+      "scientificName": "Solanum lycopersicum var. pyriforme",
+      "id": 61434,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5094798",
+      "vernacularName": {
+        "sv": "naranjilla",
+        "fi": "naranjilla"
+      },
+      "scientificName": "Solanum quitoense",
+      "id": 61415,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41513",
+      "vernacularName": {
+        "fi": "liuskakoiso",
+        "sv": "blek taggborre"
+      },
+      "scientificName": "Solanum sisymbriifolium",
+      "id": 61435,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022799",
+      "vernacularName": {
+        "fi": "rusojambolaani",
+        "sv": "rosenäpple"
+      },
+      "scientificName": "Syzygium jambos",
+      "id": 62226,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5068748",
+      "vernacularName": {
+        "sv": "amerikanskt blåbär",
+        "fi": "pensasmustikka"
+      },
+      "scientificName": "Vaccinium corymbosum",
+      "id": 62029,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022930",
+      "vernacularName": {
+        "fi": "amerikankarpalo",
+        "sv": "amerikanskt tranbär"
+      },
+      "scientificName": "Vaccinium macrocarpon",
+      "id": 62270,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41656",
+      "vernacularName": {
+        "sv": "vin",
+        "fi": "aitoviiniköynnös"
+      },
+      "scientificName": "Vitis vinifera",
+      "id": 61861,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.3037320",
+    "urls": {
+      "original": "https://image.laji.fi/MM.3037320/JR32230.JPG",
+      "full": "https://image.laji.fi/MM.3037320/JR32230.JPG",
+      "large": "https://image.laji.fi/MM.3037320/JR32230_large.jpg",
+      "square": "https://image.laji.fi/MM.3037320/JR32230_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.3037320/JR32230_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1709574144,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1316946865,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR32230.JPG",
+      "documentIds": [
+        "6969"
+      ],
+      "tags": [
+        "Citrus",
+        "Citrus sinensis",
+        "appelsiini"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.41031"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

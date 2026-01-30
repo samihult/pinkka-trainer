@@ -7,14 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Upload, X, GripVertical } from "lucide-react";
 import type { SpeciesImage } from "@/lib/types";
+import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
 import Image from "next/image";
 
+/** Props for the image upload and reorder widget. */
 interface ImageUploadProps {
+  /** Current list of images. */
   images: SpeciesImage[];
+  /** Callback when the image list changes. */
   onImagesChange: (images: SpeciesImage[]) => void;
+  /** Handler for uploading a selected file. */
   onFileUpload: (file: File) => void;
 }
 
+/** Upload control with sortable image previews. */
 export function ImageUpload({
   images,
   onImagesChange,
@@ -33,7 +39,7 @@ export function ImageUpload({
 
   const handleRemoveImage = (index: number) => {
     const newImages = images.filter((_, i) => i !== index);
-    onImagesChange(newImages.map((img, i) => ({ ...img, order: i })));
+    onImagesChange(newImages);
   };
 
   const handleDragStart = (index: number) => {
@@ -50,7 +56,7 @@ export function ImageUpload({
     newImages.splice(index, 0, draggedImage);
 
     setDraggedIndex(index);
-    onImagesChange(newImages.map((img, i) => ({ ...img, order: i })));
+    onImagesChange(newImages);
   };
 
   const handleDragEnd = () => {
@@ -84,16 +90,16 @@ export function ImageUpload({
             onDragStart={() => handleDragStart(index)}
             onDragOver={(e) => handleDragOver(e, index)}
             onDragEnd={handleDragEnd}
-            className="relative group cursor-move hover:shadow-md transition-shadow"
+            className="relative group cursor-move hover:shadow-md transition-shadow py-0"
           >
             <div className="aspect-square relative">
               <Image
-                src={image.url || "/placeholder.svg"}
+                src={getSpeciesImageUrl(image) || "/placeholder.svg"}
                 alt={`Species image ${index + 1}`}
                 fill
-                className="object-cover rounded-t-lg"
+                className="object-contain"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors rounded-t-lg flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors rounded-t-sm flex items-center justify-center">
                 <GripVertical className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </div>

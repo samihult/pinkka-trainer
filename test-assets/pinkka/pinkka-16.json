@@ -1,0 +1,94 @@
+{
+  "id": 16,
+  "name": {
+    "fi": "BIO-516 Hyötykasvit",
+    "en": "BIO-516 Plants of economic importance"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tämä pinkka esittelee maapallon eri ilmastovyöhykkeille ominaisia hyötykasveja, mukaan lukien Suomessa luonnonvaraisina kasvavia villivihanneksia ja marjakasveja. Vain koristekasveina viljeltyjä tai pääasiassa puutavarana ja selluna hyödynnettyjä lajeja ei ole mukana, ja valikoima painottuu sellaisiin kasveihin, joista on eläviä esimerkkejä Kaisaniemen tai Kumpulan kasvitieteellisissä puutarhoissa.",
+    "en": "This independently studied web course enhances species identification skills for recognizing plants of economic importance from different parts of the world. The emphasis is on species and genera with examples maintained in the living collections of Kaisaniemi and Kumpula Botanical Gardens."
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 800,
+      "name": {
+        "fi": "Palkokasveja ja viljoja",
+        "en": "Legumes and cereals"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 804,
+      "name": {
+        "fi": "Vihannes- ja salaattikasveja",
+        "en": "Vegetables"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 808,
+      "name": {
+        "fi": "Marja- ja hedelmäkasveja",
+        "en": "Berries and fruits"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 801,
+      "name": {
+        "fi": "Maustekasveja",
+        "en": "Herbs and spices"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 799,
+      "name": {
+        "fi": "Rohdos- ja lääkekasveja",
+        "en": "Medicinal plants"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 798,
+      "name": {
+        "fi": "Muita raaka-ainekasveja",
+        "en": "Other commodity plants"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 865,
+      "name": {
+        "fi": "Rehukasveja",
+        "en": "Forage plants"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 803,
+      "name": {
+        "fi": "Kotimaan villivihanneksia ja marjoja",
+        "en": "Wild vegetables, berries and herbs"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

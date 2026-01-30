@@ -1,0 +1,122 @@
+{
+  "id": 7,
+  "name": {
+    "sv": "",
+    "fi": "IPS-177 Fennoscandian flora",
+    "en": "IPS-177 Fennoscandian flora"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "IPS-177 is a web course you can study independently at any time and then take the final exam at given times (periods I– IV, summer). After successfully completing the course you have learnt to identify the dominant native vascular plant species in southern Finland and neighboring regions.",
+    "en": "IPS-177 is a web course you can study independently at any time and then take the final exam at given times (periods I– IV, summer). After successfully completing the course you have learnt to identify the dominant native vascular plant species in southern Finland and neighboring regions."
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 636,
+      "name": {
+        "fi": "Pteridophytes and lycophytes",
+        "en": "Pteridophytes and lycophytes"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 280,
+      "name": {
+        "fi": "Acer-Butomus",
+        "sv": "",
+        "en": "Acer-Butomus"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 397,
+      "name": {
+        "fi": "Cakile-Carum",
+        "sv": "Cakile-Carum",
+        "en": "Cakile-Carum"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 398,
+      "name": {
+        "fi": "Centaurea-Empetrum",
+        "sv": "Centaurea-Empetrum",
+        "en": "Centaurea-Empetrum"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 399,
+      "name": {
+        "fi": "Epilobium-Hieracium",
+        "sv": "Epilobium-Hieracium",
+        "en": "Epilobium-Hieracium"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 400,
+      "name": {
+        "fi": "Hippophaë-Lythrum",
+        "sv": "Hierochloë-Lythrum",
+        "en": "Hierochloë-Lythrum"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 401,
+      "name": {
+        "fi": "Maianthemum-Platanthera",
+        "sv": "Maianthemum-Platanthera",
+        "en": "Maianthemum-Platanthera"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 402,
+      "name": {
+        "fi": "Poa-Rumex",
+        "sv": "Poa-Rumex",
+        "en": "Poa-Rumex"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 403,
+      "name": {
+        "fi": "Sagina-Symphytum",
+        "sv": "Sagina-Symphytum",
+        "en": "Sagina-Symphytum"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 404,
+      "name": {
+        "fi": "Tanacetum-Viscaria",
+        "sv": "Tanacetum-Viscaria",
+        "en": "Tanacetum-Viscaria"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

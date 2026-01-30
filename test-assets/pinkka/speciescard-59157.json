@@ -1,0 +1,807 @@
+{
+  "taxonId": "MX.43768",
+  "vernacularName": {
+    "sv": "gruskammossa",
+    "fi": "ketohavusammal"
+  },
+  "scientificName": "Abietinella abietina",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "en": "<p>Pleurocarpous moss.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Pesäkekylkinen lehtisammal.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>4–8 cm.</p>",
+        "en": "<p>4–8 cm.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Leväosakas",
+        "sv": "Algkomponent",
+        "en": "Algal partner"
+      },
+      "body": {},
+      "predicate": "MX.algalPartnerOfLichen"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {
+        "fi": "<p>Varret alustanmyötäiset tai vinosti pystyt, kasvavat löyhinä peitteinä, säännöllisen sulkahaaraiset, parafyllien peitossa.</p>",
+        "en": "<p>Shoots once-pinnate, with short, unequal, tapered, branches.</p>"
+      },
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Lehdet leveät, himmeän kellanruskeat, teräväkärkiset, keskisuoni hyvin vahva.</p>",
+        "en": "<p>Stem leaves oval, longitudinally ridged, erect when dry, erect-spreading when moist, with a broad base and tapering to a long tip. Branch leaves much smaller than stem leaves, concave, and broadly oval to spear-shaped, blunt or sharp tip, erect when dry, erect-spreading when moist.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Itiöemä",
+        "sv": "Fruktkropp",
+        "en": "Fruitbody"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitbody"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {
+        "fi": "<p>Itiöpesäkkeet harvinaisia.</p>",
+        "en": "<p>Capsules rare.</p>"
+      },
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {
+        "fi": "<p>Maassa, etenkin kalkkipitoisilla alustoilla.</p>",
+        "en": "<p>On rich base-rich soil.</p>"
+      },
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Kuivilla kedoilla, lehtokallioilla, hiekkamaalla, kiviaidoilla, muureilla, lehtipuiden tyvellä.</p>",
+        "en": "<p>Road banks, dry meadows and dry herb-rich forests, rock ledges.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Yleinen Etelä- ja Keski-Suomessa, harvinaistuu pohjoista kohti.</p>",
+        "en": "<p>Common in southern and central Finland, becoming rare towards the north.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i Finland",
+        "fi": "Uhanalaisuus Suomessa",
+        "en": "Conservation status in Finland"
+      },
+      "body": {},
+      "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.44109",
+      "vernacularName": {
+        "fi": "lehtisammalet",
+        "sv": "bladmossor",
+        "en": "Mosses"
+      },
+      "scientificName": "Bryophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.70676",
+      "vernacularName": null,
+      "scientificName": "Bryopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.325144",
+      "vernacularName": null,
+      "scientificName": "Bryidae",
+      "rankName": {
+        "fi": "alaluokka",
+        "sv": "underklass",
+        "en": "subclass"
+      },
+      "rank": "MX.subclass"
+    },
+    {
+      "taxonId": "MX.70688",
+      "vernacularName": null,
+      "scientificName": "Hypnales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.212953",
+      "vernacularName": null,
+      "scientificName": "Thuidiaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.43415",
+      "vernacularName": {
+        "fi": "havusammalet",
+        "sv": "gruskammossor"
+      },
+      "scientificName": "Abietinella",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.43768",
+      "vernacularName": {
+        "sv": "gruskammossa",
+        "fi": "ketohavusammal"
+      },
+      "scientificName": "Abietinella abietina",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 59157,
+  "images": [
+    {
+      "id": "MM.1606936",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807465,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR46918.JPG",
+        "documentIds": [
+          "4693"
+        ],
+        "tags": [
+          "Abietinella abietina",
+          "Abietinella",
+          "ketohavusammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606936/JR46918.JPG",
+        "full": "https://image.laji.fi/MM.1606936/JR46918.JPG",
+        "large": "https://image.laji.fi/MM.1606936/JR46918_large.jpg",
+        "square": "https://image.laji.fi/MM.1606936/JR46918_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606936/JR46918_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606937",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807465,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR46917.JPG",
+        "documentIds": [
+          "4693"
+        ],
+        "tags": [
+          "ketohavusammal",
+          "Abietinella",
+          "Abietinella abietina"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606937/JR46917.JPG",
+        "full": "https://image.laji.fi/MM.1606937/JR46917.JPG",
+        "large": "https://image.laji.fi/MM.1606937/JR46917_large.jpg",
+        "square": "https://image.laji.fi/MM.1606937/JR46917_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606937/JR46917_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606938",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807465,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36695.JPG",
+        "documentIds": [
+          "4693"
+        ],
+        "tags": [
+          "Abietinella abietina",
+          "Abietinella",
+          "ketohavusammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606938/JR36695.JPG",
+        "full": "https://image.laji.fi/MM.1606938/JR36695.JPG",
+        "large": "https://image.laji.fi/MM.1606938/JR36695_large.jpg",
+        "square": "https://image.laji.fi/MM.1606938/JR36695_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606938/JR36695_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606940",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807465,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36693.JPG",
+        "documentIds": [
+          "4693"
+        ],
+        "tags": [
+          "Abietinella",
+          "ketohavusammal",
+          "Abietinella abietina"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606940/JR36693.JPG",
+        "full": "https://image.laji.fi/MM.1606940/JR36693.JPG",
+        "large": "https://image.laji.fi/MM.1606940/JR36693_large.jpg",
+        "square": "https://image.laji.fi/MM.1606940/JR36693_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606940/JR36693_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606941",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807465,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR20322.JPG",
+        "documentIds": [
+          "4693"
+        ],
+        "tags": [
+          "Abietinella abietina",
+          "Abietinella",
+          "ketohavusammal"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606941/JR20322.JPG",
+        "full": "https://image.laji.fi/MM.1606941/JR20322.JPG",
+        "large": "https://image.laji.fi/MM.1606941/JR20322_large.jpg",
+        "square": "https://image.laji.fi/MM.1606941/JR20322_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606941/JR20322_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77899",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_32116.jpg",
+        "documentIds": [
+          "32116"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77899/orig_32116.jpg",
+        "full": "https://image.laji.fi/MM.77899/orig_32116.jpg",
+        "large": "https://image.laji.fi/MM.77899/orig_32116.jpg",
+        "square": "https://image.laji.fi/MM.77899/orig_32116_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77899/orig_32116_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1606939",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807465,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR36694.JPG",
+        "documentIds": [
+          "4693"
+        ],
+        "tags": [
+          "ketohavusammal",
+          "Abietinella abietina",
+          "Abietinella"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1606939/JR36694.JPG",
+        "full": "https://image.laji.fi/MM.1606939/JR36694.JPG",
+        "large": "https://image.laji.fi/MM.1606939/JR36694_large.jpg",
+        "square": "https://image.laji.fi/MM.1606939/JR36694_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1606939/JR36694_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77900",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_32117.jpg",
+        "documentIds": [
+          "32117"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77900/orig_32117.jpg",
+        "full": "https://image.laji.fi/MM.77900/orig_32117.jpg",
+        "large": "https://image.laji.fi/MM.77900/orig_32117.jpg",
+        "square": "https://image.laji.fi/MM.77900/orig_32117_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77900/orig_32117_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77901",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_32114.jpg",
+        "documentIds": [
+          "32114"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77901/orig_32114.jpg",
+        "full": "https://image.laji.fi/MM.77901/orig_32114.jpg",
+        "large": "https://image.laji.fi/MM.77901/orig_32114.jpg",
+        "square": "https://image.laji.fi/MM.77901/orig_32114_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77901/orig_32114_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77902",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_32115.jpg",
+        "documentIds": [
+          "32115"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77902/orig_32115.jpg",
+        "full": "https://image.laji.fi/MM.77902/orig_32115.jpg",
+        "large": "https://image.laji.fi/MM.77902/orig_32115.jpg",
+        "square": "https://image.laji.fi/MM.77902/orig_32115_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77902/orig_32115_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77903",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_32112.jpg",
+        "documentIds": [
+          "32112"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77903/orig_32112.jpg",
+        "full": "https://image.laji.fi/MM.77903/orig_32112.jpg",
+        "large": "https://image.laji.fi/MM.77903/orig_32112.jpg",
+        "square": "https://image.laji.fi/MM.77903/orig_32112_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77903/orig_32112_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.77904",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807465,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_legacy_import",
+        "originalFilename": "orig_32113.jpg",
+        "documentIds": [
+          "32113"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43768"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.77904/orig_32113.jpg",
+        "full": "https://image.laji.fi/MM.77904/orig_32113.jpg",
+        "large": "https://image.laji.fi/MM.77904/orig_32113.jpg",
+        "square": "https://image.laji.fi/MM.77904/orig_32113_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.77904/orig_32113_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 821,
+    "name": {
+      "fi": "Bare ground",
+      "en": "Bare ground"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 17,
+      "name": {
+        "sv": "IPS-171 Finlands mossor och lavar",
+        "fi": "IPS-171 Suomen sammalet ja jäkälät",
+        "en": "IPS-171 Boreal bryophytes and lichens"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "",
+      "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+    },
+    "imageId": "MM.1607838",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

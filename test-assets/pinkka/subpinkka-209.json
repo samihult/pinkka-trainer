@@ -1,0 +1,350 @@
+{
+  "id": 209,
+  "name": {
+    "fi": "Eläinplankton"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 4,
+    "name": {
+      "fi": "Vesieliöiden lajintunnistus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "Suomen vesissä esiintyviä eläinplanktonryhmiä."
+  },
+  "imageId": "MM.115583",
+  "speciesCards": [
+    {
+      "taxonId": "MX.297943",
+      "vernacularName": {},
+      "scientificName": "Euchlanis",
+      "id": 25816,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70246",
+      "vernacularName": {
+        "fi": "pohjahankajalkaiset"
+      },
+      "scientificName": "Harpacticoida",
+      "id": 25706,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297899",
+      "vernacularName": {},
+      "scientificName": "Ascomorpha",
+      "id": 25762,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297869",
+      "vernacularName": {},
+      "scientificName": "Asplanchna",
+      "id": 25763,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297934",
+      "vernacularName": {},
+      "scientificName": "Brachionus",
+      "id": 25764,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297926",
+      "vernacularName": {},
+      "scientificName": "Conochilus",
+      "id": 25765,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297887",
+      "vernacularName": {},
+      "scientificName": "Synchaeta",
+      "id": 25766,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297908",
+      "vernacularName": {},
+      "scientificName": "Polyarthra",
+      "id": 25767,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297877",
+      "vernacularName": {},
+      "scientificName": "Keratella quadrata",
+      "id": 25768,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297874",
+      "vernacularName": {},
+      "scientificName": "Keratella cochlearis",
+      "id": 25769,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297876",
+      "vernacularName": {},
+      "scientificName": "Keratella cruciformis",
+      "id": 25770,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53030",
+      "vernacularName": {
+        "sv": "slät havstulpan",
+        "fi": "merirokko",
+        "en": "Bay barnacle"
+      },
+      "scientificName": "Amphibalanus improvisus",
+      "id": 25809,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297911",
+      "vernacularName": {},
+      "scientificName": "Filinia",
+      "id": 25810,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297878",
+      "vernacularName": {},
+      "scientificName": "Kellicottia",
+      "id": 25811,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297949",
+      "vernacularName": {},
+      "scientificName": "Lecane",
+      "id": 25812,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.297955",
+      "vernacularName": {},
+      "scientificName": "Lepadella",
+      "id": 25813,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.312857",
+      "vernacularName": {},
+      "scientificName": "Ploesoma",
+      "id": 25814,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.312581",
+      "vernacularName": {},
+      "scientificName": "Trichotria",
+      "id": 25815,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70245",
+      "vernacularName": {
+        "fi": "kyklooppihankajalkaiset"
+      },
+      "scientificName": "Cyclopoida",
+      "id": 25705,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214140",
+      "vernacularName": {},
+      "scientificName": "Heterocope",
+      "id": 25704,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214162",
+      "vernacularName": {},
+      "scientificName": "Eudiaptomus",
+      "id": 25703,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213999",
+      "vernacularName": {},
+      "scientificName": "Podon",
+      "id": 25678,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213861",
+      "vernacularName": {},
+      "scientificName": "Diaphanosoma brachyurum",
+      "id": 25679,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213870",
+      "vernacularName": {
+        "fi": "piippovesikirput"
+      },
+      "scientificName": "Daphnia",
+      "id": 25680,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213895",
+      "vernacularName": {
+        "fi": "kärsävesikirput"
+      },
+      "scientificName": "Bosmina",
+      "id": 25681,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213885",
+      "vernacularName": {},
+      "scientificName": "Ceriodaphnia",
+      "id": 25695,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213909",
+      "vernacularName": {},
+      "scientificName": "Chydoridae",
+      "id": 25696,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214004",
+      "vernacularName": {
+        "fi": "okavesikirppu"
+      },
+      "scientificName": "Bythotrephes longimanus",
+      "id": 25697,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214157",
+      "vernacularName": {},
+      "scientificName": "Limnocalanus macrurus",
+      "id": 25699,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214176",
+      "vernacularName": {},
+      "scientificName": "Acartia",
+      "id": 25700,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214144",
+      "vernacularName": {},
+      "scientificName": "Eurytemora",
+      "id": 25701,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214154",
+      "vernacularName": {},
+      "scientificName": "Temora longicornis",
+      "id": 25702,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213853",
+      "vernacularName": {
+        "fi": "hyytelövesikirppu"
+      },
+      "scientificName": "Holopedium gibberum",
+      "id": 25677,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213855",
+      "vernacularName": {},
+      "scientificName": "Sida crystallina",
+      "id": 25676,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52880",
+      "vernacularName": {
+        "sv": "rovvattenloppa",
+        "fi": "koukkuvesikirppu"
+      },
+      "scientificName": "Cercopagis pengoi",
+      "id": 25671,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213994",
+      "vernacularName": {},
+      "scientificName": "Polyphemus pediculus",
+      "id": 25670,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.213996",
+      "vernacularName": {},
+      "scientificName": "Evadne",
+      "id": 25672,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.230796",
+      "vernacularName": {},
+      "scientificName": "Pleopis polyphemoides",
+      "id": 25674,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.214008",
+      "vernacularName": {
+        "fi": "lasivesikirppu"
+      },
+      "scientificName": "Leptodora kindtii",
+      "id": 25675,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.115583",
+    "urls": {
+      "original": "https://image.laji.fi/MM.115583/Evadne_original.jpg",
+      "full": "https://image.laji.fi/MM.115583/Evadne_original.jpg",
+      "large": "https://image.laji.fi/MM.115583/Evadne_original_large.jpg",
+      "square": "https://image.laji.fi/MM.115583/Evadne_original_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.115583/Evadne_original_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1472149779,
+      "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+      "rightsOwner": "Laura Helenius",
+      "secret": false,
+      "capturers": [
+        "Laura Helenius"
+      ],
+      "captureDateTime": 1404393640,
+      "uploadedBy": "lkheleni@helsinki.fi",
+      "originalFilename": "Evadne original.jpg",
+      "documentIds": [
+        "1139"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.213996"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

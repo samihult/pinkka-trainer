@@ -1,0 +1,785 @@
+{
+  "taxonId": "MX.40393",
+  "vernacularName": {
+    "fi": "vuomasara",
+    "sv": "fjällklubbstarr"
+  },
+  "scientificName": "Carex adelostoma",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "Monivuotinen, löyhästi mätästävä tai yksittäisversoinen ruoho."
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "20–40 cm."
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {
+        "fi": "Juurakko pitkä; varret pystyjä ja jäykkiä; tyvitupet tumman punertavia, usein ripsilaitaisia.&#xa0;"
+      },
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Juuri",
+        "sv": "Rot",
+        "en": "Root"
+      },
+      "body": {},
+      "predicate": "MX.descriptionRoot"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "Lehdet vartta lyhyempiä, 2–4 mm leveitä, jäykkiä, sinivihreitä."
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {
+        "fi": "Kukinto 3–10 cm, pysty ja harsu, 3–6-tähkäinen; tähkät 10–25 mm; alimman tähkän tukilehti tavallisesti ei kukinnon pituinen. Latvatähkä ei paljon muita isompi, toisinaan kokonaan hedekukkainen. Hedekukka kolmiheteinen, emikukka kolmiluottinen, pullakon ympäröimä. Tähkäsuomut tavallisesti pullakkoa lyhyempiä, suippoja, harvoin lyhyelti otakärkisiä. Pullakot 2–3 mm, tylppiä, lähes odattomia.&#xa0;"
+      },
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {
+        "fi": "Kukkii keskikesällä (VI–VII)."
+      },
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Pölytys",
+        "sv": "Pollination",
+        "en": "Pollination"
+      },
+      "body": {
+        "fi": "Tuulipölytteinen."
+      },
+      "predicate": "MX.reproductionPollination"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {
+        "fi": "Hedelmä on pullakon sisällä kypsyvä pähkylä."
+      },
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "Ohutturpeisilla, minerotrofisilla soilla, purojen varsilla, hiekkaisilla rannoilla, koskikallioilla, etenkin tunturikoivikoissa ja paljakan alaosissa."
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Vakinainen alkuperäinen.</p>",
+        "en": "<p>Spontaneous old resident.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i Finland",
+        "fi": "Uhanalaisuus Suomessa",
+        "en": "Conservation status in Finland"
+      },
+      "body": {},
+      "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Käpy",
+        "sv": "Kotte",
+        "en": "Cone"
+      },
+      "body": {},
+      "predicate": "MX.descriptionCone"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.53720",
+      "vernacularName": null,
+      "scientificName": "Poales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.40242",
+      "vernacularName": {
+        "fi": "sarakasvit",
+        "sv": "halvgräs"
+      },
+      "scientificName": "Cyperaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.40288",
+      "vernacularName": {
+        "fi": "sarat",
+        "sv": "starrar"
+      },
+      "scientificName": "Carex",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.5001858",
+      "vernacularName": {
+        "fi": "karttusararyhmä"
+      },
+      "scientificName": "Carex buxbaumii -ryhmä",
+      "rankName": {
+        "sv": "aggregat",
+        "fi": "lajiryhmä",
+        "en": "aggregate"
+      },
+      "rank": "MX.aggregate"
+    },
+    {
+      "taxonId": "MX.40393",
+      "vernacularName": {
+        "fi": "vuomasara",
+        "sv": "fjällklubbstarr"
+      },
+      "scientificName": "Carex adelostoma",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 59463,
+  "images": [
+    {
+      "id": "MM.355882",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00197.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355882/JR00197.JPG",
+        "full": "https://image.laji.fi/MM.355882/JR00197.JPG",
+        "large": "https://image.laji.fi/MM.355882/JR00197_large.jpg",
+        "square": "https://image.laji.fi/MM.355882/JR00197_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355882/JR00197_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355881",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00198.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355881/JR00198.JPG",
+        "full": "https://image.laji.fi/MM.355881/JR00198.JPG",
+        "large": "https://image.laji.fi/MM.355881/JR00198_large.jpg",
+        "square": "https://image.laji.fi/MM.355881/JR00198_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355881/JR00198_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355878",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00664.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355878/JR00664.JPG",
+        "full": "https://image.laji.fi/MM.355878/JR00664.JPG",
+        "large": "https://image.laji.fi/MM.355878/JR00664_large.jpg",
+        "square": "https://image.laji.fi/MM.355878/JR00664_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355878/JR00664_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355873",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR05961.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355873/JR05961.JPG",
+        "full": "https://image.laji.fi/MM.355873/JR05961.JPG",
+        "large": "https://image.laji.fi/MM.355873/JR05961.JPG",
+        "square": "https://image.laji.fi/MM.355873/JR05961_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355873/JR05961_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355872",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR05969.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355872/JR05969.JPG",
+        "full": "https://image.laji.fi/MM.355872/JR05969.JPG",
+        "large": "https://image.laji.fi/MM.355872/JR05969.JPG",
+        "square": "https://image.laji.fi/MM.355872/JR05969_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355872/JR05969_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355875",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR05659.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355875/JR05659.JPG",
+        "full": "https://image.laji.fi/MM.355875/JR05659.JPG",
+        "large": "https://image.laji.fi/MM.355875/JR05659.JPG",
+        "square": "https://image.laji.fi/MM.355875/JR05659_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355875/JR05659_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355874",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR05660.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355874/JR05660.JPG",
+        "full": "https://image.laji.fi/MM.355874/JR05660.JPG",
+        "large": "https://image.laji.fi/MM.355874/JR05660.JPG",
+        "square": "https://image.laji.fi/MM.355874/JR05660_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355874/JR05660_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355871",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR11033.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355871/JR11033.JPG",
+        "full": "https://image.laji.fi/MM.355871/JR11033.JPG",
+        "large": "https://image.laji.fi/MM.355871/JR11033_large.jpg",
+        "square": "https://image.laji.fi/MM.355871/JR11033_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355871/JR11033_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355880",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00199.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355880/JR00199.JPG",
+        "full": "https://image.laji.fi/MM.355880/JR00199.JPG",
+        "large": "https://image.laji.fi/MM.355880/JR00199_large.jpg",
+        "square": "https://image.laji.fi/MM.355880/JR00199_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355880/JR00199_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355877",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00880.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355877/JR00880.JPG",
+        "full": "https://image.laji.fi/MM.355877/JR00880.JPG",
+        "large": "https://image.laji.fi/MM.355877/JR00880_large.jpg",
+        "square": "https://image.laji.fi/MM.355877/JR00880_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355877/JR00880_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355876",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00882.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355876/JR00882.JPG",
+        "full": "https://image.laji.fi/MM.355876/JR00882.JPG",
+        "large": "https://image.laji.fi/MM.355876/JR00882_large.jpg",
+        "square": "https://image.laji.fi/MM.355876/JR00882_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355876/JR00882_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.355879",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807438,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807438,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00200.JPG",
+        "documentIds": [
+          "3694"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.40393"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.355879/JR00200.JPG",
+        "full": "https://image.laji.fi/MM.355879/JR00200.JPG",
+        "large": "https://image.laji.fi/MM.355879/JR00200_large.jpg",
+        "square": "https://image.laji.fi/MM.355879/JR00200_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.355879/JR00200_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 558,
+    "name": {
+      "fi": "Carex-Chrysosplenium"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 11,
+      "name": {
+        "fi": "BIO-514 Pohjois-Suomen putkilokasvit",
+        "en": ""
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.124461",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

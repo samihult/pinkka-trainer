@@ -1,0 +1,702 @@
+"use client";
+
+import type React from "react";
+
+import { useEffect, useState } from "react";
+import { ProtectedRoute } from "@/components/protected-route";
+import { Navbar } from "@/components/navbar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import { ManageGroupCard } from "@/components/manage-group-card";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/lib/auth-context";
+import { logFirestoreError } from "@/lib/utils";
+import {
+  getGroups,
+  getStacks,
+  createGroup,
+  createStack,
+  updateGroup,
+  updateStack,
+  deleteGroup,
+  deleteStack,
+  reorderItems,
+  updateGroupStackOrder,
+} from "@/lib/firebase/firestore-helpers";
+import type { Group, Stack } from "@/lib/types";
+import { getLocalizedText, MultilingualText } from "@/lib/pinkka/pinkka-api";
+import { Plus, FolderOpen } from "lucide-react";
+
+export default function ManagePage() {
+  const { user } = useAuth();
+  const { toast } = useToast();
+
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [stacks, setStacks] = useState<{ [key: string]: Stack[] }>({});
+  const [loading, setLoading] = useState(true);
+
+  // Group dialog state
+  const [showGroupDialog, setShowGroupDialog] = useState(false);
+  const [editingGroup, setEditingGroup] = useState<Group | null>(null);
+  const [groupNameFi, setGroupNameFi] = useState("");
+  const [groupNameEn, setGroupNameEn] = useState("");
+  const [groupNameSv, setGroupNameSv] = useState("");
+  const [groupDescriptionFi, setGroupDescriptionFi] = useState("");
+  const [groupDescriptionEn, setGroupDescriptionEn] = useState("");
+  const [groupDescriptionSv, setGroupDescriptionSv] = useState("");
+
+  // Stack dialog state
+  const [showStackDialog, setShowStackDialog] = useState(false);
+  const [editingStack, setEditingStack] = useState<Stack | null>(null);
+  const [selectedGroupId, setSelectedGroupId] = useState("");
+  const [stackNameFi, setStackNameFi] = useState("");
+  const [stackNameEn, setStackNameEn] = useState("");
+  const [stackNameSv, setStackNameSv] = useState("");
+  const [stackDescriptionFi, setStackDescriptionFi] = useState("");
+  const [stackDescriptionEn, setStackDescriptionEn] = useState("");
+  const [stackDescriptionSv, setStackDescriptionSv] = useState("");
+
+  const [draggedGroupIndex, setDraggedGroupIndex] = useState<number | null>(
+    null,
+  );
+  const [draggedStackIndex, setDraggedStackIndex] = useState<number | null>(
+    null,
+  );
+  const [draggedStackGroupId, setDraggedStackGroupId] = useState<string | null>(
+    null,
+  );
+
+  useEffect(() => {
+    void loadData();
+  }, [user]);
+
+  const loadData = async () => {
+    if (!user) return;
+
+    try {
+      const [groupsData, allStacks] = await Promise.all([
+        getGroups(user.uid, { includeHidden: true }),
+        getStacks(undefined, user.uid, { includeHidden: true }),
+      ]);
+      setGroups(groupsData);
+
+      const stackById = new Map(allStacks.map((stack) => [stack.id, stack]));
+      const stacksData = groupsData.reduce<{ [key: string]: Stack[] }>(
+        (acc, group) => {
+          const orderedStacks = (group.stackIds ?? [])
+            .map((stackId) => stackById.get(stackId))
+            .filter((stack): stack is Stack => Boolean(stack));
+          acc[group.id] = orderedStacks;
+          return acc;
+        },
+        {},
+      );
+      setStacks(stacksData);
+    } catch (error) {
+      logFirestoreError("Failed to load groups/stacks", error);
+      toast({
+        title: "Error",
+        description: "Failed to load data",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const buildLocalizedValue = (values: {
+    fi?: string;
+    en?: string;
+    sv?: string;
+  }): MultilingualText => {
+    const nextValue: { fi?: string; en?: string; sv?: string } = {};
+    if (values.fi) nextValue.fi = values.fi;
+    if (values.en) nextValue.en = values.en;
+    if (values.sv) nextValue.sv = values.sv;
+    return Object.keys(nextValue).length > 0 ? nextValue : {};
+  };
+
+  // Group handlers
+  const handleGroupDialogOpen = (group?: Group) => {
+    if (group) {
+      setEditingGroup(group);
+      setGroupNameFi(getLocalizedText(group.data.name, "fi"));
+      setGroupNameEn(getLocalizedText(group.data.name, "en"));
+      setGroupNameSv(getLocalizedText(group.data.name, "sv"));
+      setGroupDescriptionFi(getLocalizedText(group.data.description, "fi"));
+      setGroupDescriptionEn(getLocalizedText(group.data.description, "en"));
+      setGroupDescriptionSv(getLocalizedText(group.data.description, "sv"));
+    } else {
+      setEditingGroup(null);
+      setGroupNameFi("");
+      setGroupNameEn("");
+      setGroupNameSv("");
+      setGroupDescriptionFi("");
+      setGroupDescriptionEn("");
+      setGroupDescriptionSv("");
+    }
+    setShowGroupDialog(true);
+  };
+
+  const handleGroupSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    try {
+      if (editingGroup) {
+        await updateGroup(editingGroup.id, {
+          data: {
+            ...editingGroup.data,
+            name: buildLocalizedValue({
+              fi: groupNameFi,
+              en: groupNameEn,
+              sv: groupNameSv,
+            }),
+            description: buildLocalizedValue({
+              fi: groupDescriptionFi,
+              en: groupDescriptionEn,
+              sv: groupDescriptionSv,
+            }),
+          },
+        });
+        toast({ title: "Success", description: "Group updated successfully" });
+      } else {
+        await createGroup({
+          data: {
+            id: Date.now(),
+            name: {
+              fi: groupNameFi,
+              ...(groupNameEn ? { en: groupNameEn } : {}),
+              ...(groupNameSv ? { sv: groupNameSv } : {}),
+            },
+            description: buildLocalizedValue({
+              fi: groupDescriptionFi,
+              en: groupDescriptionEn,
+              sv: groupDescriptionSv,
+            }),
+            hideScientific: false,
+            hideVernacular: false,
+            published: true,
+            entityType: "pinkka",
+          },
+          stackIds: [],
+          ownerId: user.uid,
+          order: groups.length,
+        });
+        toast({ title: "Success", description: "Group created successfully" });
+      }
+      setShowGroupDialog(false);
+      void loadData();
+    } catch (error) {
+      logFirestoreError("Failed to save group", error);
+      toast({
+        title: "Error",
+        description: "Failed to save group",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteGroup = async (groupId: string) => {
+    if (
+      !confirm(
+        "This will delete the group and all its stacks and species. Continue?",
+      )
+    )
+      return;
+
+    try {
+      await deleteGroup(groupId);
+      toast({ title: "Success", description: "Group deleted successfully" });
+      loadData();
+    } catch (error) {
+      logFirestoreError("Failed to delete group", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete group",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleToggleGroupVisibility = async (group: Group) => {
+    const nextHidden = !group.isHidden;
+    setGroups((prev) =>
+      prev.map((item) =>
+        item.id === group.id ? { ...item, isHidden: nextHidden } : item,
+      ),
+    );
+    try {
+      await updateGroup(group.id, { isHidden: nextHidden });
+      toast({
+        title: "Success",
+        description: nextHidden
+          ? "Group hidden from learners"
+          : "Group is now public",
+      });
+    } catch (error) {
+      logFirestoreError("Failed to toggle group visibility", error);
+      setGroups((prev) =>
+        prev.map((item) =>
+          item.id === group.id ? { ...item, isHidden: group.isHidden } : item,
+        ),
+      );
+      toast({
+        title: "Error",
+        description: "Failed to update group visibility",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Stack handlers
+  const handleStackDialogOpen = (groupId: string, stack?: Stack) => {
+    setSelectedGroupId(groupId);
+    if (stack) {
+      setEditingStack(stack);
+      setStackNameFi(getLocalizedText(stack.data.name, "fi"));
+      setStackNameEn(getLocalizedText(stack.data.name, "en"));
+      setStackNameSv(getLocalizedText(stack.data.name, "sv"));
+      setStackDescriptionFi(getLocalizedText(stack.data.description, "fi"));
+      setStackDescriptionEn(getLocalizedText(stack.data.description, "en"));
+      setStackDescriptionSv(getLocalizedText(stack.data.description, "sv"));
+    } else {
+      setEditingStack(null);
+      setStackNameFi("");
+      setStackNameEn("");
+      setStackNameSv("");
+      setStackDescriptionFi("");
+      setStackDescriptionEn("");
+      setStackDescriptionSv("");
+    }
+    setShowStackDialog(true);
+  };
+
+  const handleStackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    try {
+      if (editingStack) {
+        await updateStack(editingStack.id, {
+          data: {
+            ...editingStack.data,
+            name: buildLocalizedValue({
+              fi: stackNameFi,
+              en: stackNameEn,
+              sv: stackNameSv,
+            }),
+            description: buildLocalizedValue({
+              fi: stackDescriptionFi,
+              en: stackDescriptionEn,
+              sv: stackDescriptionSv,
+            }),
+          },
+        });
+        toast({ title: "Success", description: "Stack updated successfully" });
+      } else {
+        const groupStacks = stacks[selectedGroupId] || [];
+        await createStack(
+          {
+            data: {
+              id: Date.now(),
+              name: {
+                fi: stackNameFi,
+                ...(stackNameEn ? { en: stackNameEn } : {}),
+                ...(stackNameSv ? { sv: stackNameSv } : {}),
+              },
+              orderNo: groupStacks.length,
+              description: buildLocalizedValue({
+                fi: stackDescriptionFi,
+                en: stackDescriptionEn,
+                sv: stackDescriptionSv,
+              }),
+              entityType: "subpinkka",
+            },
+            speciesIds: [],
+            ownerId: user.uid,
+          },
+          [selectedGroupId],
+        );
+        toast({ title: "Success", description: "Stack created successfully" });
+      }
+      setShowStackDialog(false);
+      loadData();
+    } catch (error) {
+      logFirestoreError("Failed to save stack", error);
+      toast({
+        title: "Error",
+        description: "Failed to save stack",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteStack = async (stackId: string) => {
+    if (!confirm("This will delete the stack and all its species. Continue?"))
+      return;
+
+    try {
+      await deleteStack(stackId);
+      toast({ title: "Success", description: "Stack deleted successfully" });
+      loadData();
+    } catch (error) {
+      logFirestoreError("Failed to delete stack", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete stack",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleToggleStackVisibility = async (groupId: string, stack: Stack) => {
+    const nextHidden = !stack.isHidden;
+    setStacks((prev) => ({
+      ...prev,
+      [groupId]: (prev[groupId] || []).map((item) =>
+        item.id === stack.id ? { ...item, isHidden: nextHidden } : item,
+      ),
+    }));
+    try {
+      await updateStack(stack.id, { isHidden: nextHidden });
+      toast({
+        title: "Success",
+        description: nextHidden
+          ? "Stack hidden from learners"
+          : "Stack is now public",
+      });
+    } catch (error) {
+      logFirestoreError("Failed to toggle stack visibility", error);
+      setStacks((prev) => ({
+        ...prev,
+        [groupId]: (prev[groupId] || []).map((item) =>
+          item.id === stack.id ? { ...item, isHidden: stack.isHidden } : item,
+        ),
+      }));
+      toast({
+        title: "Error",
+        description: "Failed to update stack visibility",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Drag handlers for groups
+  const handleGroupDragStart = (index: number) => {
+    setDraggedGroupIndex(index);
+  };
+
+  const handleGroupDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedGroupIndex === null || draggedGroupIndex === index) return;
+
+    const newGroups = [...groups];
+    const draggedGroup = newGroups[draggedGroupIndex];
+    newGroups.splice(draggedGroupIndex, 1);
+    newGroups.splice(index, 0, draggedGroup);
+
+    setDraggedGroupIndex(index);
+    setGroups(newGroups);
+  };
+
+  const handleGroupDragEnd = async () => {
+    if (draggedGroupIndex !== null) {
+      const reorderedItems = groups.map((g, i) => ({ id: g.id, order: i }));
+      await reorderItems("groups", reorderedItems);
+      toast({ title: "Success", description: "Groups reordered successfully" });
+    }
+    setDraggedGroupIndex(null);
+  };
+
+  const handleStackDragStart = (groupId: string, index: number) => {
+    setDraggedStackGroupId(groupId);
+    setDraggedStackIndex(index);
+  };
+
+  const handleStackDragOver = (
+    e: React.DragEvent,
+    groupId: string,
+    index: number,
+  ) => {
+    e.preventDefault();
+    if (
+      draggedStackIndex === null ||
+      draggedStackGroupId !== groupId ||
+      draggedStackIndex === index
+    )
+      return;
+
+    const groupStacks = [...(stacks[groupId] || [])];
+    const draggedStack = groupStacks[draggedStackIndex];
+    groupStacks.splice(draggedStackIndex, 1);
+    groupStacks.splice(index, 0, draggedStack);
+
+    setStacks((prev) => ({ ...prev, [groupId]: groupStacks }));
+    setDraggedStackIndex(index);
+  };
+
+  const handleStackDragEnd = async () => {
+    if (draggedStackGroupId && draggedStackIndex !== null) {
+      const reorderedStackIds = (stacks[draggedStackGroupId] || []).map(
+        (stack) => stack.id,
+      );
+      await updateGroupStackOrder(draggedStackGroupId, reorderedStackIds);
+      toast({ title: "Success", description: "Stacks reordered successfully" });
+    }
+    setDraggedStackGroupId(null);
+    setDraggedStackIndex(null);
+  };
+
+  if (loading) {
+    return (
+      <ProtectedRoute requiredRole="editor">
+        <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+          <LoadingSpinner className="py-12" />
+        </div>
+      </ProtectedRoute>
+    );
+  }
+
+  return (
+    <ProtectedRoute requiredRole="editor">
+      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+        <main className="container mx-auto px-4 py-8">
+          <div className="mb-8 flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">
+                Manage Groups and Stacks
+              </h1>
+              <p className="text-muted-foreground">Drag to order</p>
+            </div>
+
+            <Button onClick={() => handleGroupDialogOpen()}>
+              <Plus className="mr-1 h-4 w-4" />
+              New Group
+            </Button>
+          </div>
+
+          <div className="space-y-6">
+            {groups.map((group, index) => (
+              <ManageGroupCard
+                key={group.id}
+                group={group}
+                stacks={stacks[group.id] || []}
+                index={index}
+                onGroupDragStart={handleGroupDragStart}
+                onGroupDragOver={handleGroupDragOver}
+                onGroupDragEnd={handleGroupDragEnd}
+                onAddStack={handleStackDialogOpen}
+                onEditGroup={handleGroupDialogOpen}
+                onDeleteGroup={handleDeleteGroup}
+                onToggleGroupVisibility={handleToggleGroupVisibility}
+                onEditStack={handleStackDialogOpen}
+                onDeleteStack={handleDeleteStack}
+                onToggleStackVisibility={handleToggleStackVisibility}
+                onStackDragStart={handleStackDragStart}
+                onStackDragOver={handleStackDragOver}
+                onStackDragEnd={handleStackDragEnd}
+              />
+            ))}
+
+            {groups.length === 0 && (
+              <Card>
+                <CardContent className="py-12 text-center text-muted-foreground">
+                  <FolderOpen className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <p className="mb-4">No groups created yet</p>
+                  <Button onClick={() => handleGroupDialogOpen()}>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Create Your First Group
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </main>
+
+        {/* Group Dialog */}
+        <Dialog open={showGroupDialog} onOpenChange={setShowGroupDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                {editingGroup ? "Edit Group" : "Create New Group"}
+              </DialogTitle>
+              <DialogDescription>
+                Groups help organize your stacks into categories
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleGroupSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="groupNameFi">Group Name (FI) *</Label>
+                <Input
+                  id="groupNameFi"
+                  value={groupNameFi}
+                  onChange={(e) => setGroupNameFi(e.target.value)}
+                  placeholder="e.g., Nisakkaat, Linnut, Kasvit"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupNameEn">Group Name (EN)</Label>
+                <Input
+                  id="groupNameEn"
+                  value={groupNameEn}
+                  onChange={(e) => setGroupNameEn(e.target.value)}
+                  placeholder="e.g., Mammals, Birds, Plants"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupNameSv">Group Name (SV)</Label>
+                <Input
+                  id="groupNameSv"
+                  value={groupNameSv}
+                  onChange={(e) => setGroupNameSv(e.target.value)}
+                  placeholder="e.g., Daggdjur, Faglar, Vaxter"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupDescriptionFi">Description (FI)</Label>
+                <Textarea
+                  id="groupDescriptionFi"
+                  value={groupDescriptionFi}
+                  onChange={(e) => setGroupDescriptionFi(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupDescriptionEn">Description (EN)</Label>
+                <Textarea
+                  id="groupDescriptionEn"
+                  value={groupDescriptionEn}
+                  onChange={(e) => setGroupDescriptionEn(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="groupDescriptionSv">Description (SV)</Label>
+                <Textarea
+                  id="groupDescriptionSv"
+                  value={groupDescriptionSv}
+                  onChange={(e) => setGroupDescriptionSv(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button type="submit">
+                  {editingGroup ? "Update Group" : "Create Group"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowGroupDialog(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
+
+        {/* Stack Dialog */}
+        <Dialog open={showStackDialog} onOpenChange={setShowStackDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                {editingStack ? "Edit Stack" : "Create New Stack"}
+              </DialogTitle>
+              <DialogDescription>
+                Stacks contain related species for learning
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleStackSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="stackNameFi">Stack Name (FI) *</Label>
+                <Input
+                  id="stackNameFi"
+                  value={stackNameFi}
+                  onChange={(e) => setStackNameFi(e.target.value)}
+                  placeholder="e.g., Pohjoisen nisakkaat"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackNameEn">Stack Name (EN)</Label>
+                <Input
+                  id="stackNameEn"
+                  value={stackNameEn}
+                  onChange={(e) => setStackNameEn(e.target.value)}
+                  placeholder="e.g., Nordic Mammals, Common Birds"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackNameSv">Stack Name (SV)</Label>
+                <Input
+                  id="stackNameSv"
+                  value={stackNameSv}
+                  onChange={(e) => setStackNameSv(e.target.value)}
+                  placeholder="e.g., Nordiska daggdjur"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackDescriptionFi">Description (FI)</Label>
+                <Textarea
+                  id="stackDescriptionFi"
+                  value={stackDescriptionFi}
+                  onChange={(e) => setStackDescriptionFi(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackDescriptionEn">Description (EN)</Label>
+                <Textarea
+                  id="stackDescriptionEn"
+                  value={stackDescriptionEn}
+                  onChange={(e) => setStackDescriptionEn(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stackDescriptionSv">Description (SV)</Label>
+                <Textarea
+                  id="stackDescriptionSv"
+                  value={stackDescriptionSv}
+                  onChange={(e) => setStackDescriptionSv(e.target.value)}
+                  placeholder="Optional description..."
+                  rows={3}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button type="submit">
+                  {editingStack ? "Update Stack" : "Create Stack"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowStackDialog(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </ProtectedRoute>
+  );
+}

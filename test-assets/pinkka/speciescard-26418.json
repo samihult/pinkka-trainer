@@ -1,0 +1,905 @@
+{
+  "taxonId": "MX.37750",
+  "vernacularName": {
+    "sv": "träjon",
+    "fi": "kivikkoalvejuuri"
+  },
+  "scientificName": "Dryopteris filix-mas",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "sv": "<p>Ormbunke som växer från en kort och tjock jordstam. Blad 25–80 cm långa, skaft under hälften kortare än bladskivan; på skaftet ljusbruna hinnlika fjäll. Bladskivans ovansida aningen glänsande, smalt spolformad, parbladiga, flikar långsmala, med trubbig spets, tandade.</p>",
+        "fi": "<p>Lehti 25–80 cm pitkiä, ruoti alle puolet lavan pituudesta; ruodissa ja lavan keskirangassa vaaleanruskeita suomuja. Lapa yläpinnalta hieman kiiltävä, kapeanpuikea, parilehdykkäinen, lehdykät kapeanpuikeita, parijakoisia tai pariosaisia, liuskat pitkulaisia, tylppäkärkisiä, hampaisia.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Lyhyestä, paksusta maavarresta kasvavia, alle metrin korkuisia lehtiryhmiä.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {},
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {
+        "fi": "<p>Itiöpesäkeryhmät lehtien alapinnalla, pyöreitä. Katesuomu pyöreähkö, munuaismainen.</p>",
+        "sv": "<p>Sporangiegrupper på bladens undersida, runda. Svepefjäll rundaktigt, njurformat.</p>"
+      },
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {},
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Pölytys",
+        "sv": "Pollination",
+        "en": "Pollination"
+      },
+      "body": {},
+      "predicate": "MX.reproductionPollination"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "sv": "<p>På berg och på bergens baser, i torraktiga steniga lundar, steniga sluttningar, gryt. Föredrar rätt ljusa växtplatser.</p>",
+        "fi": "<p>Kallioilla ja niiden tyvillä, kuivahkoissa, kuivahkoissa kivikkoisissa lehdoissa, kivikkoisilla rinteillä, louhikoissa. Suosii melko valoisia kasvupaikkoja.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Koko maassa, yleinen Etelä-Suomessa ja Keski-Suomen itäosissa, Keski- ja Pohjois-Pohjanmaalla ja Lapissa melko harvinainen.</p>",
+        "sv": "<p>Förekommer i hela landet, allmän i södra Finland och östra delarna av mellersta Finland, rätt sällsynt i mellersta och norra Österbotten samt Lappland.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "sv": "<p>Giftig. Har använts till att avlägsna människors inre parasiter, bl.a. binnikemask.</p>",
+        "fi": "<p>Myrkyllinen. Käytetty ihmisen sisäloisten, esim. lapamatojen, poistamiseen. Kuivat lehdot, tuoreet lehdot, kalliot.</p>"
+      },
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Juuri",
+        "sv": "Rot",
+        "en": "Root"
+      },
+      "body": {},
+      "predicate": "MX.descriptionRoot"
+    },
+    {
+      "title": {
+        "fi": "Käpy",
+        "sv": "Kotte",
+        "en": "Cone"
+      },
+      "body": {},
+      "predicate": "MX.descriptionCone"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Itiöemä",
+        "sv": "Fruktkropp",
+        "en": "Fruitbody"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitbody"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {},
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986644",
+      "vernacularName": null,
+      "scientificName": "Polypodiophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4977160",
+      "vernacularName": null,
+      "scientificName": "Polypodiopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70086",
+      "vernacularName": null,
+      "scientificName": "Polypodiales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.37748",
+      "vernacularName": {
+        "fi": "alvejuurikasvit",
+        "sv": "träjonväxter"
+      },
+      "scientificName": "Dryopteridaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.37749",
+      "vernacularName": {
+        "fi": "alvejuuret",
+        "sv": "lundbräknar"
+      },
+      "scientificName": "Dryopteris",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.37750",
+      "vernacularName": {
+        "sv": "träjon",
+        "fi": "kivikkoalvejuuri"
+      },
+      "scientificName": "Dryopteris filix-mas",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 26418,
+  "images": [
+    {
+      "id": "MM.50412",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_Dryofmas JR 25_5_2007 140.jpg",
+        "documentIds": [
+          "9485"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140.jpg",
+        "full": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140.jpg",
+        "large": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140.jpg",
+        "square": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50420",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_A Dryofmas JR06527.JPG",
+        "documentIds": [
+          "39383"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50420/MX.37750_A_Dryofmas_JR06527.JPG",
+        "full": "https://image.laji.fi/MM.50420/MX.37750_A_Dryofmas_JR06527.JPG",
+        "large": "https://image.laji.fi/MM.50420/MX.37750_A_Dryofmas_JR06527_large.jpg",
+        "square": "https://image.laji.fi/MM.50420/MX.37750_A_Dryofmas_JR06527_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50420/MX.37750_A_Dryofmas_JR06527_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50409",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_A Dryofmas JR 25_5_2007 139.jpg",
+        "documentIds": [
+          "9484"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50409/MX.37750_A_Dryofmas_JR_25_5_2007_139.jpg",
+        "full": "https://image.laji.fi/MM.50409/MX.37750_A_Dryofmas_JR_25_5_2007_139.jpg",
+        "large": "https://image.laji.fi/MM.50409/MX.37750_A_Dryofmas_JR_25_5_2007_139.jpg",
+        "square": "https://image.laji.fi/MM.50409/MX.37750_A_Dryofmas_JR_25_5_2007_139_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50409/MX.37750_A_Dryofmas_JR_25_5_2007_139_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50395",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_Dryofmas JR43194.JPG",
+        "documentIds": [
+          "39387"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50395/MX.37750_Dryofmas_JR43194.JPG",
+        "full": "https://image.laji.fi/MM.50395/MX.37750_Dryofmas_JR43194.JPG",
+        "large": "https://image.laji.fi/MM.50395/MX.37750_Dryofmas_JR43194_large.jpg",
+        "square": "https://image.laji.fi/MM.50395/MX.37750_Dryofmas_JR43194_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50395/MX.37750_Dryofmas_JR43194_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50445",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_Dryofmas JR43289.JPG",
+        "documentIds": [
+          "39392"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50445/MX.37750_Dryofmas_JR43289.JPG",
+        "full": "https://image.laji.fi/MM.50445/MX.37750_Dryofmas_JR43289.JPG",
+        "large": "https://image.laji.fi/MM.50445/MX.37750_Dryofmas_JR43289_large.jpg",
+        "square": "https://image.laji.fi/MM.50445/MX.37750_Dryofmas_JR43289_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50445/MX.37750_Dryofmas_JR43289_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50421",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_Dryofmas JR 25_5_2007 141.jpg",
+        "documentIds": [
+          "9486"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50421/MX.37750_Dryofmas_JR_25_5_2007_141.jpg",
+        "full": "https://image.laji.fi/MM.50421/MX.37750_Dryofmas_JR_25_5_2007_141.jpg",
+        "large": "https://image.laji.fi/MM.50421/MX.37750_Dryofmas_JR_25_5_2007_141.jpg",
+        "square": "https://image.laji.fi/MM.50421/MX.37750_Dryofmas_JR_25_5_2007_141_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50421/MX.37750_Dryofmas_JR_25_5_2007_141_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50451",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_Dryofmas JR19766.JPG",
+        "documentIds": [
+          "39386"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50451/MX.37750_Dryofmas_JR19766.JPG",
+        "full": "https://image.laji.fi/MM.50451/MX.37750_Dryofmas_JR19766.JPG",
+        "large": "https://image.laji.fi/MM.50451/MX.37750_Dryofmas_JR19766_large.jpg",
+        "square": "https://image.laji.fi/MM.50451/MX.37750_Dryofmas_JR19766_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50451/MX.37750_Dryofmas_JR19766_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50431",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_Dryofmas JR06529.JPG",
+        "documentIds": [
+          "39384"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50431/MX.37750_Dryofmas_JR06529.JPG",
+        "full": "https://image.laji.fi/MM.50431/MX.37750_Dryofmas_JR06529.JPG",
+        "large": "https://image.laji.fi/MM.50431/MX.37750_Dryofmas_JR06529_large.jpg",
+        "square": "https://image.laji.fi/MM.50431/MX.37750_Dryofmas_JR06529_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50431/MX.37750_Dryofmas_JR06529_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50441",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_Dryofmas JR06530.JPG",
+        "documentIds": [
+          "39385"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50441/MX.37750_Dryofmas_JR06530.JPG",
+        "full": "https://image.laji.fi/MM.50441/MX.37750_Dryofmas_JR06530.JPG",
+        "large": "https://image.laji.fi/MM.50441/MX.37750_Dryofmas_JR06530_large.jpg",
+        "square": "https://image.laji.fi/MM.50441/MX.37750_Dryofmas_JR06530_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50441/MX.37750_Dryofmas_JR06530_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50404",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_Dryofmas JR43196.JPG",
+        "documentIds": [
+          "39388"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50404/MX.37750_Dryofmas_JR43196.JPG",
+        "full": "https://image.laji.fi/MM.50404/MX.37750_Dryofmas_JR43196.JPG",
+        "large": "https://image.laji.fi/MM.50404/MX.37750_Dryofmas_JR43196_large.jpg",
+        "square": "https://image.laji.fi/MM.50404/MX.37750_Dryofmas_JR43196_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50404/MX.37750_Dryofmas_JR43196_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50438",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_DryofiliH ML 21_1_08 015.jpg",
+        "documentIds": [
+          "9416"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50438/MX.37750_DryofiliH_ML_21_1_08_015.jpg",
+        "full": "https://image.laji.fi/MM.50438/MX.37750_DryofiliH_ML_21_1_08_015.jpg",
+        "large": "https://image.laji.fi/MM.50438/MX.37750_DryofiliH_ML_21_1_08_015.jpg",
+        "square": "https://image.laji.fi/MM.50438/MX.37750_DryofiliH_ML_21_1_08_015_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50438/MX.37750_DryofiliH_ML_21_1_08_015_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50429",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_DryofiliH 23_1_08 028.jpg",
+        "documentIds": [
+          "9419"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50429/MX.37750_DryofiliH_23_1_08_028.jpg",
+        "full": "https://image.laji.fi/MM.50429/MX.37750_DryofiliH_23_1_08_028.jpg",
+        "large": "https://image.laji.fi/MM.50429/MX.37750_DryofiliH_23_1_08_028.jpg",
+        "square": "https://image.laji.fi/MM.50429/MX.37750_DryofiliH_23_1_08_028_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50429/MX.37750_DryofiliH_23_1_08_028_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50393",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_DryofiliH ML 23_1_08 029.jpg",
+        "documentIds": [
+          "9417"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50393/MX.37750_DryofiliH_ML_23_1_08_029.jpg",
+        "full": "https://image.laji.fi/MM.50393/MX.37750_DryofiliH_ML_23_1_08_029.jpg",
+        "large": "https://image.laji.fi/MM.50393/MX.37750_DryofiliH_ML_23_1_08_029.jpg",
+        "square": "https://image.laji.fi/MM.50393/MX.37750_DryofiliH_ML_23_1_08_029_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50393/MX.37750_DryofiliH_ML_23_1_08_029_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50403",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_DryofiliH ML 23_1_08 029b.jpg",
+        "documentIds": [
+          "9418"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50403/MX.37750_DryofiliH_ML_23_1_08_029b.jpg",
+        "full": "https://image.laji.fi/MM.50403/MX.37750_DryofiliH_ML_23_1_08_029b.jpg",
+        "large": "https://image.laji.fi/MM.50403/MX.37750_DryofiliH_ML_23_1_08_029b.jpg",
+        "square": "https://image.laji.fi/MM.50403/MX.37750_DryofiliH_ML_23_1_08_029b_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50403/MX.37750_DryofiliH_ML_23_1_08_029b_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.50447",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807448,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.37750_DryofiliH ML 23_1_08 027.jpg",
+        "documentIds": [
+          "9420"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37750"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.50447/MX.37750_DryofiliH_ML_23_1_08_027.jpg",
+        "full": "https://image.laji.fi/MM.50447/MX.37750_DryofiliH_ML_23_1_08_027.jpg",
+        "large": "https://image.laji.fi/MM.50447/MX.37750_DryofiliH_ML_23_1_08_027.jpg",
+        "square": "https://image.laji.fi/MM.50447/MX.37750_DryofiliH_ML_23_1_08_027_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.50447/MX.37750_DryofiliH_ML_23_1_08_027_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 119,
+    "name": {
+      "fi": "Sanikkaiset",
+      "sv": "Ormbunksväxter"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 15,
+      "name": {
+        "fi": "Luonnonvaraiset lääkekasvit",
+        "sv": "Farmakognosi"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.50412",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

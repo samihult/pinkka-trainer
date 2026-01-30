@@ -1,0 +1,402 @@
+{
+  "taxonId": "MX.38159",
+  "vernacularName": {
+    "fi": "ruokajuurikas",
+    "sv": "beta"
+  },
+  "scientificName": "Beta vulgaris",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>2-vuotinen ruoho. Lehdet ruusukkeena, möyheitä, kaljuja. Lapa 10–20 cm, puikea, herttatyvinen, poimuinen. Ylemmät lehdet ruodittomia. Kookas pääjuurimukula (juurikas).</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Kantalaji kotoisin merenrannoilta.</p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70046",
+      "vernacularName": null,
+      "scientificName": "Caryophyllales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.5081107",
+      "vernacularName": {
+        "fi": "revonhäntäkasvit",
+        "sv": "amarantväxter"
+      },
+      "scientificName": "Amaranthaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.5081108",
+      "vernacularName": null,
+      "scientificName": "Betoideae",
+      "rankName": {
+        "fi": "alaheimo",
+        "sv": "underfamilj",
+        "en": "subfamily"
+      },
+      "rank": "MX.subfamily"
+    },
+    {
+      "taxonId": "MX.38158",
+      "vernacularName": {
+        "sv": "betor",
+        "fi": "juurikkaat"
+      },
+      "scientificName": "Beta",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.38159",
+      "vernacularName": {
+        "fi": "ruokajuurikas",
+        "sv": "beta"
+      },
+      "scientificName": "Beta vulgaris",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 63420,
+  "images": [
+    {
+      "id": "MM.3352956",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Tuomo Härkönen",
+        "secret": false,
+        "capturers": [
+          "Tuomo Härkönen"
+        ],
+        "uploadedBy": "jkolehma@helsinki.fi",
+        "originalFilename": "Beta vulgaris v altissima m1-35.jpg",
+        "documentIds": [
+          "7608"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38159"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3352956/Beta_vulgaris_v_altissima_m1-35.jpg",
+        "full": "https://image.laji.fi/MM.3352956/Beta_vulgaris_v_altissima_m1-35.jpg",
+        "large": "https://image.laji.fi/MM.3352956/Beta_vulgaris_v_altissima_m1-35.jpg",
+        "square": "https://image.laji.fi/MM.3352956/Beta_vulgaris_v_altissima_m1-35_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3352956/Beta_vulgaris_v_altissima_m1-35_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3352955",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Tuomo Härkönen",
+        "secret": false,
+        "capturers": [
+          "Tuomo Härkönen"
+        ],
+        "uploadedBy": "jkolehma@helsinki.fi",
+        "originalFilename": "Beta vulgaris v altissima p1-15.jpg",
+        "documentIds": [
+          "7608"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38159"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3352955/Beta_vulgaris_v_altissima_p1-15.jpg",
+        "full": "https://image.laji.fi/MM.3352955/Beta_vulgaris_v_altissima_p1-15.jpg",
+        "large": "https://image.laji.fi/MM.3352955/Beta_vulgaris_v_altissima_p1-15.jpg",
+        "square": "https://image.laji.fi/MM.3352955/Beta_vulgaris_v_altissima_p1-15_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3352955/Beta_vulgaris_v_altissima_p1-15_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.120004",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Johanna Kolehmainen",
+        "secret": false,
+        "capturers": [
+          "Johanna Kolehmainen"
+        ],
+        "captureDateTime": 1767807488,
+        "uploadedBy": "jkolehma@helsinki.fi",
+        "originalFilename": "Beta vulg var cicla_3_JK.JPG",
+        "documentIds": [
+          "1543"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38159"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.120004/Beta_vulg_var_cicla_3_JK.JPG",
+        "full": "https://image.laji.fi/MM.120004/Beta_vulg_var_cicla_3_JK.JPG",
+        "large": "https://image.laji.fi/MM.120004/Beta_vulg_var_cicla_3_JK_large.jpg",
+        "square": "https://image.laji.fi/MM.120004/Beta_vulg_var_cicla_3_JK_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.120004/Beta_vulg_var_cicla_3_JK_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.120002",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807488,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Johanna Kolehmainen",
+        "secret": false,
+        "capturers": [
+          "Johanna Kolehmainen"
+        ],
+        "captureDateTime": 1767807488,
+        "uploadedBy": "jkolehma@helsinki.fi",
+        "originalFilename": "Beta vulg var cicla_JK.JPG",
+        "documentIds": [
+          "1543"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38159"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.120002/Beta_vulg_var_cicla_JK.JPG",
+        "full": "https://image.laji.fi/MM.120002/Beta_vulg_var_cicla_JK.JPG",
+        "large": "https://image.laji.fi/MM.120002/Beta_vulg_var_cicla_JK_large.jpg",
+        "square": "https://image.laji.fi/MM.120002/Beta_vulg_var_cicla_JK_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.120002/Beta_vulg_var_cicla_JK_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 656,
+    "name": {
+      "fi": "Versot: viljelykasvit",
+      "en": "Seedlings: cultivated plants"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 24,
+      "name": {
+        "fi": "Verso- ja leviäintunnistus",
+        "en": "Seedling and Propagule Identification"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.113173",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

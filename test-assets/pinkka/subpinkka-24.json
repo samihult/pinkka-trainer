@@ -1,0 +1,839 @@
+{
+  "id": 24,
+  "name": {
+    "fi": "Kalat"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 4,
+    "name": {
+      "fi": "Vesieliöiden lajintunnistus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "Suomen vakituiset kalalajit."
+  },
+  "imageId": "MM.86260",
+  "speciesCards": [
+    {
+      "taxonId": "MX.53315",
+      "vernacularName": {
+        "fi": "härkäsimppu",
+        "sv": "hornsimpa",
+        "en": "Fourhorn sculpin"
+      },
+      "scientificName": "Myoxocephalus quadricornis",
+      "id": 1659,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53210",
+      "vernacularName": {
+        "sv": "rötsimpa",
+        "fi": "isosimppu",
+        "en": "Shorthorn sculpin"
+      },
+      "scientificName": "Myoxocephalus scorpius",
+      "id": 1660,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53208",
+      "vernacularName": {
+        "fi": "piikkisimppu",
+        "sv": "oxsimpa",
+        "en": "Longspined bullhead"
+      },
+      "scientificName": "Taurulus bubalis",
+      "id": 1658,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53207",
+      "vernacularName": {
+        "sv": "bergsimpa",
+        "fi": "kirjoeväsimppu",
+        "en": "Alpine bullhead"
+      },
+      "scientificName": "Cottus poecilopus",
+      "id": 1657,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53206",
+      "vernacularName": {
+        "fi": "kivisimppu",
+        "en": "European bullhead"
+      },
+      "scientificName": "Cottus gobio sensu lato",
+      "id": 1656,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53203",
+      "vernacularName": {
+        "sv": "tångspigg",
+        "fi": "vaskikala",
+        "en": "Fifteenspined stickleback"
+      },
+      "scientificName": "Spinachia spinachia",
+      "id": 1655,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53201",
+      "vernacularName": {
+        "sv": "bäckspigg",
+        "fi": "viisipiikki",
+        "en": "Brook stickleback"
+      },
+      "scientificName": "Culaea inconstans",
+      "id": 1654,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53200",
+      "vernacularName": {
+        "sv": "småspigg",
+        "fi": "kymmenpiikki",
+        "en": "Ninespine stickleback"
+      },
+      "scientificName": "Pungitius pungitius",
+      "id": 1653,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53198",
+      "vernacularName": {
+        "sv": "storspigg",
+        "fi": "kolmipiikki",
+        "en": "Threespine stickleback"
+      },
+      "scientificName": "Gasterosteus aculeatus",
+      "id": 1652,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53263",
+      "vernacularName": {
+        "fi": "särmäneula",
+        "sv": "tångsnälla",
+        "en": "Broadnosed pipefish"
+      },
+      "scientificName": "Syngnathus typhle",
+      "id": 1651,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53312",
+      "vernacularName": {
+        "sv": "mindre havsnål",
+        "fi": "siloneula",
+        "en": "Straightnose pipefish"
+      },
+      "scientificName": "Nerophis ophidion",
+      "id": 1650,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53192",
+      "vernacularName": {
+        "sv": "näbbgädda",
+        "fi": "nokkakala",
+        "en": "Garfish"
+      },
+      "scientificName": "Belone belone",
+      "id": 1649,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53186",
+      "vernacularName": {
+        "fi": "made",
+        "sv": "lake",
+        "en": "Burbot"
+      },
+      "scientificName": "Lota lota",
+      "id": 1648,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53184",
+      "vernacularName": {
+        "fi": "turska",
+        "sv": "torsk",
+        "en": "Cod"
+      },
+      "scientificName": "Gadus morhua",
+      "id": 1647,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53181",
+      "vernacularName": {
+        "sv": "dvärgmal",
+        "fi": "piikkimonni",
+        "en": "Brown bullhead"
+      },
+      "scientificName": "Ameiurus nebulosus",
+      "id": 1646,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53262",
+      "vernacularName": {
+        "fi": "rantanuoliainen",
+        "sv": "nissöga",
+        "en": "Spined loach"
+      },
+      "scientificName": "Cobitis taenia",
+      "id": 1645,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53308",
+      "vernacularName": {
+        "fi": "kivennuoliainen",
+        "sv": "grönling",
+        "en": "Stone loach"
+      },
+      "scientificName": "Barbatula barbatula",
+      "id": 1644,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53249",
+      "vernacularName": {
+        "sv": "flundra",
+        "fi": "kampela",
+        "en": "Flounder"
+      },
+      "scientificName": "Platichthys flesus sensu lato",
+      "id": 1676,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53246",
+      "vernacularName": {
+        "fi": "piikkikampela",
+        "sv": "piggvar",
+        "en": "Turbot"
+      },
+      "scientificName": "Scophthalmus maximus",
+      "id": 1675,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53190",
+      "vernacularName": {
+        "fi": "kivinilkka",
+        "sv": "tånglake",
+        "en": "Eelpout"
+      },
+      "scientificName": "Zoarces viviparus",
+      "id": 1674,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53000",
+      "vernacularName": {
+        "sv": "svartmunnad smörbult",
+        "fi": "mustatäplätokko",
+        "en": "Round goby"
+      },
+      "scientificName": "Neogobius melanostomus",
+      "id": 1673,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53240",
+      "vernacularName": {
+        "fi": "seitsenruototokko",
+        "sv": "sjustrålig smörbult",
+        "en": "Two-spotted goby"
+      },
+      "scientificName": "Pomatoschistus flavescens",
+      "id": 1672,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53238",
+      "vernacularName": {
+        "fi": "hietatokko",
+        "sv": "sandstubb",
+        "en": "Sand goby"
+      },
+      "scientificName": "Pomatoschistus minutus",
+      "id": 1671,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53320",
+      "vernacularName": {
+        "fi": "liejutokko",
+        "sv": "lerstubb",
+        "en": "Common goby"
+      },
+      "scientificName": "Pomatoschistus microps",
+      "id": 1670,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53286",
+      "vernacularName": {
+        "sv": "svart smörbult",
+        "fi": "mustatokko",
+        "en": "Black goby"
+      },
+      "scientificName": "Gobius niger",
+      "id": 1669,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53236",
+      "vernacularName": {
+        "sv": "kusttobis",
+        "fi": "pikkutuulenkala",
+        "en": "Small sandeel"
+      },
+      "scientificName": "Ammodytes tobianus",
+      "id": 1668,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53234",
+      "vernacularName": {
+        "fi": "isotuulenkala",
+        "sv": "tobiskung",
+        "en": "Great sandeel"
+      },
+      "scientificName": "Hyperoplus lanceolatus",
+      "id": 1667,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53265",
+      "vernacularName": {
+        "sv": "tejstefisk",
+        "fi": "teisti",
+        "en": "Rock gunnel"
+      },
+      "scientificName": "Pholis gunnellus",
+      "id": 1666,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53319",
+      "vernacularName": {
+        "fi": "elaska",
+        "sv": "spetslångebarn",
+        "en": "Snake blenny"
+      },
+      "scientificName": "Lumpenus lampretaeformis",
+      "id": 1665,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53317",
+      "vernacularName": {
+        "fi": "kiiski",
+        "sv": "gers",
+        "en": "Ruffe"
+      },
+      "scientificName": "Gymnocephalus cernua",
+      "id": 1664,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53220",
+      "vernacularName": {
+        "sv": "gös",
+        "fi": "kuha",
+        "en": "Pike-perch"
+      },
+      "scientificName": "Sander lucioperca",
+      "id": 1663,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53219",
+      "vernacularName": {
+        "sv": "abborre",
+        "fi": "ahven",
+        "en": "Perch"
+      },
+      "scientificName": "Perca fluviatilis",
+      "id": 1603,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53216",
+      "vernacularName": {
+        "fi": "imukala",
+        "sv": "större ringbuk",
+        "en": "Common seasnail"
+      },
+      "scientificName": "Liparis liparis",
+      "id": 1662,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53264",
+      "vernacularName": {
+        "sv": "sjurygg",
+        "fi": "rasvakala",
+        "en": "Lumpsucker"
+      },
+      "scientificName": "Cyclopterus lumpus",
+      "id": 1661,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52996",
+      "vernacularName": {
+        "sv": "silverruda",
+        "fi": "hopearuutana",
+        "en": "Prussian carp"
+      },
+      "scientificName": "Carassius gibelio",
+      "id": 1641,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53168",
+      "vernacularName": {
+        "fi": "ruutana",
+        "sv": "ruda",
+        "en": "Crucian carp"
+      },
+      "scientificName": "Carassius carassius",
+      "id": 1640,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52994",
+      "vernacularName": {
+        "fi": "puronieriä",
+        "sv": "bäckröding",
+        "en": "Brook trout"
+      },
+      "scientificName": "Salvelinus fontinalis",
+      "id": 1621,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52995",
+      "vernacularName": {
+        "sv": "kanadaröding",
+        "fi": "harmaanieriä",
+        "en": "Lake trout"
+      },
+      "scientificName": "Salvelinus namaycush",
+      "id": 1620,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53137",
+      "vernacularName": {
+        "fi": "nieriä",
+        "sv": "röding",
+        "en": "Arctic char"
+      },
+      "scientificName": "Salvelinus alpinus",
+      "id": 1619,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53001",
+      "vernacularName": {
+        "fi": "peledsiika",
+        "sv": "peledsik",
+        "en": "Peled"
+      },
+      "scientificName": "Coregonus peled",
+      "id": 1618,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53132",
+      "vernacularName": {
+        "fi": "siika",
+        "sv": "sik",
+        "en": "Common whitefish"
+      },
+      "scientificName": "Coregonus lavaretus",
+      "id": 1617,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53300",
+      "vernacularName": {
+        "fi": "muikku",
+        "sv": "siklöja",
+        "en": "Vendace"
+      },
+      "scientificName": "Coregonus albula",
+      "id": 1616,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52998",
+      "vernacularName": {
+        "fi": "kirjolohi",
+        "sv": "regnbåge",
+        "en": "Rainbow trout"
+      },
+      "scientificName": "Oncorhynchus mykiss",
+      "id": 1613,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53123",
+      "vernacularName": {
+        "fi": "taimen",
+        "sv": "öring",
+        "en": "Brown trout"
+      },
+      "scientificName": "Salmo trutta",
+      "id": 1612,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53121",
+      "vernacularName": {
+        "sv": "lax",
+        "fi": "lohi",
+        "en": "Atlantic salmon"
+      },
+      "scientificName": "Salmo salar",
+      "id": 1611,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53118",
+      "vernacularName": {
+        "sv": "gädda",
+        "fi": "hauki",
+        "en": "Pike"
+      },
+      "scientificName": "Esox lucius",
+      "id": 1610,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53112",
+      "vernacularName": {
+        "sv": "ål",
+        "fi": "ankerias",
+        "en": "European eel"
+      },
+      "scientificName": "Anguilla anguilla",
+      "id": 1609,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53105",
+      "vernacularName": {
+        "sv": "skarpsill",
+        "fi": "kilohaili",
+        "en": "Sprat"
+      },
+      "scientificName": "Sprattus sprattus",
+      "id": 1607,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53102",
+      "vernacularName": {
+        "sv": "strömming",
+        "fi": "silakka",
+        "en": "Baltic herring"
+      },
+      "scientificName": "Clupea harengus membras",
+      "id": 1606,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53256",
+      "vernacularName": {
+        "fi": "pikkunahkiainen",
+        "sv": "bäcknejonöga",
+        "en": "Brook lamprey"
+      },
+      "scientificName": "Lampetra planeri",
+      "id": 1605,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53084",
+      "vernacularName": {
+        "sv": "flodnejonöga",
+        "fi": "nahkiainen",
+        "en": "River lamprey"
+      },
+      "scientificName": "Lampetra fluviatilis",
+      "id": 1604,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53141",
+      "vernacularName": {
+        "sv": "harr",
+        "fi": "harjus",
+        "en": "Grayling"
+      },
+      "scientificName": "Thymallus thymallus",
+      "id": 1622,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53142",
+      "vernacularName": {
+        "sv": "nors",
+        "fi": "kuore",
+        "en": "Smelt"
+      },
+      "scientificName": "Osmerus eperlanus",
+      "id": 1623,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.52997",
+      "vernacularName": {
+        "sv": "karp",
+        "fi": "karppi",
+        "en": "Common carp"
+      },
+      "scientificName": "Cyprinus carpio",
+      "id": 1642,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53166",
+      "vernacularName": {
+        "sv": "skärkniv",
+        "fi": "miekkasärki",
+        "en": "Sichel"
+      },
+      "scientificName": "Pelecus cultratus",
+      "id": 1639,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53165",
+      "vernacularName": {
+        "sv": "vimma",
+        "fi": "vimpa",
+        "en": "Vimba bream"
+      },
+      "scientificName": "Vimba vimba",
+      "id": 1638,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53261",
+      "vernacularName": {
+        "sv": "faren",
+        "fi": "sulkava",
+        "en": "Zope"
+      },
+      "scientificName": "Ballerus ballerus",
+      "id": 1637,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53162",
+      "vernacularName": {
+        "fi": "lahna",
+        "sv": "braxen",
+        "en": "Common bream"
+      },
+      "scientificName": "Abramis brama",
+      "id": 1636,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53276",
+      "vernacularName": {
+        "fi": "pasuri",
+        "sv": "björkna",
+        "en": "Silver bream"
+      },
+      "scientificName": "Blicca bjoerkna",
+      "id": 1635,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53305",
+      "vernacularName": {
+        "fi": "allikkosalakka",
+        "sv": "groplöja",
+        "en": "Belica"
+      },
+      "scientificName": "Leucaspius delineatus",
+      "id": 1634,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53159",
+      "vernacularName": {
+        "fi": "salakka",
+        "sv": "löja",
+        "en": "Bleak"
+      },
+      "scientificName": "Alburnus alburnus",
+      "id": 1633,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.206676",
+      "vernacularName": {
+        "fi": "valkoevätörö",
+        "sv": "vitfenad sandkrypare",
+        "en": "White-finned gudgeon"
+      },
+      "scientificName": "Romanogobio albipinnatus",
+      "id": 9740,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53157",
+      "vernacularName": {
+        "fi": "törö",
+        "sv": "sandkrypare",
+        "en": "Gudgeon"
+      },
+      "scientificName": "Gobio gobio",
+      "id": 1632,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53155",
+      "vernacularName": {
+        "sv": "sutare",
+        "fi": "suutari",
+        "en": "Tench"
+      },
+      "scientificName": "Tinca tinca",
+      "id": 1631,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53304",
+      "vernacularName": {
+        "fi": "toutain",
+        "sv": "asp",
+        "en": "Asp"
+      },
+      "scientificName": "Leuciscus aspius",
+      "id": 1630,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53151",
+      "vernacularName": {
+        "sv": "sarv",
+        "fi": "sorva",
+        "en": "Common rudd"
+      },
+      "scientificName": "Scardinius erythrophthalmus",
+      "id": 1629,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53149",
+      "vernacularName": {
+        "sv": "elritsa",
+        "fi": "mutu",
+        "en": "Eurasian minnow"
+      },
+      "scientificName": "Phoxinus phoxinus",
+      "id": 1628,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53273",
+      "vernacularName": {
+        "fi": "säyne",
+        "sv": "id",
+        "en": "Ide"
+      },
+      "scientificName": "Leuciscus idus",
+      "id": 1627,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53260",
+      "vernacularName": {
+        "sv": "färna",
+        "fi": "turpa",
+        "en": "Chub"
+      },
+      "scientificName": "Squalius cephalus",
+      "id": 1626,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53146",
+      "vernacularName": {
+        "sv": "stäm",
+        "fi": "seipi",
+        "en": "Dace"
+      },
+      "scientificName": "Leuciscus leuciscus",
+      "id": 1625,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53145",
+      "vernacularName": {
+        "sv": "mört",
+        "fi": "särki",
+        "en": "Roach"
+      },
+      "scientificName": "Rutilus rutilus",
+      "id": 1624,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.86260",
+    "urls": {
+      "original": "https://image.laji.fi/MM.86260/perca_fluviatilis.jpg",
+      "full": "https://image.laji.fi/MM.86260/perca_fluviatilis.jpg",
+      "large": "https://image.laji.fi/MM.86260/perca_fluviatilis_large.jpg",
+      "square": "https://image.laji.fi/MM.86260/perca_fluviatilis_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.86260/perca_fluviatilis_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1437386404,
+      "license": "MZ.intellectualRightsARR",
+      "rightsOwner": "Markku Varjo",
+      "secret": false,
+      "capturers": [
+        "Markku Varjo"
+      ],
+      "uploadedBy": "nhellen@helsinki.fi",
+      "originalFilename": "perca_fluviatilis.jpg",
+      "documentIds": [
+        "88"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.53219"
+        ]
+      },
+      "primaryForTaxon": [
+        "MX.53219"
+      ],
+      "fullResolutionMediaAvailable": false
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

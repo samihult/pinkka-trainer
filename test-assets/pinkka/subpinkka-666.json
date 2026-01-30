@@ -1,0 +1,664 @@
+{
+  "id": 666,
+  "name": {
+    "fi": "Abietinella-Calypogeia",
+    "en": "Abietinella-Calypogeia"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 3,
+    "name": {
+      "fi": "A Pohjolan sammalia ja jäkäliä",
+      "en": "A Nordic bryophytes and lichens"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.1607213",
+  "speciesCards": [
+    {
+      "taxonId": "MX.43768",
+      "vernacularName": {
+        "sv": "gruskammossa",
+        "fi": "ketohavusammal"
+      },
+      "scientificName": "Abietinella abietina",
+      "id": 53291,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43719",
+      "vernacularName": {
+        "sv": "platt fjädermossa",
+        "fi": "siloriippusammal"
+      },
+      "scientificName": "Alleniella complanata",
+      "id": 53699,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43777",
+      "vernacularName": {
+        "sv": "späd krypmossa",
+        "fi": "lehtoritvasammal"
+      },
+      "scientificName": "Amblystegium serpens",
+      "id": 53299,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43781",
+      "vernacularName": {
+        "fi": "tummauurnasammal",
+        "sv": "lapptrattmossa"
+      },
+      "scientificName": "Amphidium lapponicum",
+      "id": 54107,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43782",
+      "vernacularName": {
+        "sv": "kuddtrattmossa",
+        "fi": "paakku-uurnasammal"
+      },
+      "scientificName": "Amphidium mougeotii",
+      "id": 54108,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43789",
+      "vernacularName": {
+        "fi": "kalliokarstasammal",
+        "sv": "sotmossa"
+      },
+      "scientificName": "Andreaea rupestris",
+      "id": 53296,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44241",
+      "vernacularName": {
+        "sv": "fetbålmossa",
+        "fi": "lettonauhasammal"
+      },
+      "scientificName": "Aneura pinguis",
+      "id": 53276,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43790",
+      "vernacularName": {
+        "fi": "muhkusammal",
+        "sv": "kompaktmossa"
+      },
+      "scientificName": "Anoectangium aestivum",
+      "id": 53501,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43793",
+      "vernacularName": {
+        "sv": "liten baronmossa",
+        "fi": "pikkuruostesammal"
+      },
+      "scientificName": "Anomodon longifolius",
+      "id": 53504,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43795",
+      "vernacularName": {
+        "fi": "isoruostesammal",
+        "sv": "grov baronmossa"
+      },
+      "scientificName": "Anomodon viticulosus",
+      "id": 53503,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44242",
+      "vernacularName": {
+        "sv": "stor snömossa",
+        "fi": "pohjankuurasammal"
+      },
+      "scientificName": "Anthelia julacea",
+      "id": 54109,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44243",
+      "vernacularName": {
+        "fi": "paljakkakuurasammal",
+        "sv": "liten snömossa"
+      },
+      "scientificName": "Anthelia juratzkana",
+      "id": 53284,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44397",
+      "vernacularName": {
+        "fi": "sarvisammal",
+        "sv": "svart nålfruktsmossa"
+      },
+      "scientificName": "Anthoceros agrestis",
+      "id": 53494,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43796",
+      "vernacularName": {
+        "sv": "fällmossa",
+        "fi": "norkkusammal"
+      },
+      "scientificName": "Antitrichia curtipendula",
+      "id": 53505,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43798",
+      "vernacularName": {
+        "fi": "sopulinsammal",
+        "sv": "asmossa"
+      },
+      "scientificName": "Aplodon wormskioldii",
+      "id": 53506,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44388",
+      "vernacularName": {
+        "sv": "kragpellia",
+        "fi": "liuskalapasammal"
+      },
+      "scientificName": "Apopellia endiviifolia",
+      "id": 53747,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43802",
+      "vernacularName": {
+        "fi": "pikkumyyränsammal",
+        "sv": "liten sågmossa"
+      },
+      "scientificName": "Atrichum tenellum",
+      "id": 53507,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43803",
+      "vernacularName": {
+        "sv": "vågig sågmossa",
+        "fi": "isomyyränsammal"
+      },
+      "scientificName": "Atrichum undulatum",
+      "id": 53292,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43804",
+      "vernacularName": {
+        "fi": "nuppihuopasammal",
+        "sv": "liten räffelmossa"
+      },
+      "scientificName": "Aulacomnium androgynum",
+      "id": 53508,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43805",
+      "vernacularName": {
+        "fi": "suonihuopasammal",
+        "sv": "räffelmossa"
+      },
+      "scientificName": "Aulacomnium palustre",
+      "id": 53295,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43806",
+      "vernacularName": {
+        "fi": "tunturihuopasammal",
+        "sv": "fjällräffelmossa"
+      },
+      "scientificName": "Aulacomnium turgidum",
+      "id": 53509,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44250",
+      "vernacularName": {
+        "fi": "metsäpykäsammal",
+        "sv": "lundlummermossa"
+      },
+      "scientificName": "Barbilophozia barbata",
+      "id": 53283,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44253",
+      "vernacularName": {
+        "sv": "stenlummermossa",
+        "fi": "kivipykäsammal"
+      },
+      "scientificName": "Barbilophozia hatcheri",
+      "id": 54110,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44255",
+      "vernacularName": {
+        "fi": "vaarapykäsammal",
+        "sv": "skogslummermossa"
+      },
+      "scientificName": "Barbilophozia lycopodioides",
+      "id": 53277,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5077446",
+      "vernacularName": {
+        "sv": "mörk flikmossa",
+        "fi": "pohjanlovisammal"
+      },
+      "scientificName": "Barbilophozia sudetica",
+      "id": 60385,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43808",
+      "vernacularName": {
+        "sv": "stor neonmossa",
+        "fi": "ojatumpurasammal"
+      },
+      "scientificName": "Barbula unguiculata",
+      "id": 63521,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43809",
+      "vernacularName": {
+        "fi": "pahtaomenasammal",
+        "sv": "stor äppelmossa"
+      },
+      "scientificName": "Bartramia halleriana",
+      "id": 63513,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43810",
+      "vernacularName": {
+        "fi": "kiilto-omenasammal",
+        "sv": "styv äppelmossa"
+      },
+      "scientificName": "Bartramia ithyphylla",
+      "id": 53512,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43811",
+      "vernacularName": {
+        "fi": "kallio-omenasammal",
+        "sv": "äppelmossa"
+      },
+      "scientificName": "Bartramia pomiformis",
+      "id": 53511,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44258",
+      "vernacularName": {
+        "fi": "pikkusahasammal",
+        "sv": "liten revmossa"
+      },
+      "scientificName": "Bazzania tricrenata",
+      "id": 53280,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44259",
+      "vernacularName": {
+        "fi": "isosahasammal",
+        "sv": "stor revmossa"
+      },
+      "scientificName": "Bazzania trilobata",
+      "id": 53286,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44260",
+      "vernacularName": {
+        "fi": "röyhelösammal",
+        "sv": "lerbålmossa"
+      },
+      "scientificName": "Blasia pusilla",
+      "id": 53273,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44261",
+      "vernacularName": {
+        "sv": "hårfliksmossa",
+        "fi": "seittisammal"
+      },
+      "scientificName": "Blepharostoma trichophyllum",
+      "id": 53282,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43812",
+      "vernacularName": {
+        "sv": "sipperblindia",
+        "fi": "tihkusäiläsammal"
+      },
+      "scientificName": "Blindia acuta",
+      "id": 54312,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200476",
+      "vernacularName": {
+        "sv": "dvärggräsmossa",
+        "fi": "naalinsuikerosammal"
+      },
+      "scientificName": "Brachytheciastrum collinum",
+      "id": 63526,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200464",
+      "vernacularName": {
+        "fi": "pahtasuikerosammal",
+        "sv": "skiffergräsmossa"
+      },
+      "scientificName": "Brachytheciastrum trachypodium",
+      "id": 63532,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200443",
+      "vernacularName": {
+        "fi": "sirosuikerosammal",
+        "sv": "sammetsgräsmossa"
+      },
+      "scientificName": "Brachytheciastrum velutinum",
+      "id": 63542,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43813",
+      "vernacularName": {
+        "sv": "blek gräsmossa",
+        "fi": "ahosuikerosammal"
+      },
+      "scientificName": "Brachythecium albicans",
+      "id": 53293,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43820",
+      "vernacularName": {
+        "fi": "nurmisuikerosammal",
+        "sv": "slank lergräsmossa"
+      },
+      "scientificName": "Brachythecium mildeanum",
+      "id": 53542,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43825",
+      "vernacularName": {
+        "fi": "purosuikerosammal",
+        "sv": "källgräsmossa"
+      },
+      "scientificName": "Brachythecium rivulare",
+      "id": 53543,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43826",
+      "vernacularName": {
+        "sv": "stor gräsmossa",
+        "fi": "lehtosuikerosammal"
+      },
+      "scientificName": "Brachythecium rutabulum",
+      "id": 53545,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43827",
+      "vernacularName": {
+        "fi": "kiiltosuikerosammal",
+        "sv": "skogsgräsmossa"
+      },
+      "scientificName": "Brachythecium salebrosum",
+      "id": 55126,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43830",
+      "vernacularName": {
+        "fi": "kultasuikerosammal",
+        "sv": "fet gräsmossa"
+      },
+      "scientificName": "Brachythecium turgidum",
+      "id": 63527,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43834",
+      "vernacularName": {
+        "fi": "punatyvisammal",
+        "sv": "röd fotmossa"
+      },
+      "scientificName": "Bryoerythrophyllum recurvirostrum",
+      "id": 53290,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43839",
+      "vernacularName": {
+        "fi": "hopeahiirensammal",
+        "sv": "silvermossa"
+      },
+      "scientificName": "Bryum argenteum",
+      "id": 53297,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43680",
+      "vernacularName": {
+        "fi": "pahtapalmikkosammal",
+        "sv": "maskfläta"
+      },
+      "scientificName": "Buckia vaucheri",
+      "id": 53614,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43477",
+      "vernacularName": {
+        "sv": "brun sköldmossa",
+        "fi": "kalliokaviosammal"
+      },
+      "scientificName": "Buxbaumia aphylla",
+      "id": 53515,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43478",
+      "vernacularName": {
+        "fi": "lahokaviosammal",
+        "sv": "grön sköldmossa"
+      },
+      "scientificName": "Buxbaumia viridis",
+      "id": 53514,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43479",
+      "vernacularName": {
+        "fi": "purokatvesammal",
+        "sv": "haldanenmossa"
+      },
+      "scientificName": "Callicladium haldanianum",
+      "id": 63535,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43676",
+      "vernacularName": {
+        "fi": "etelänkatvesammal",
+        "sv": "praktfläta"
+      },
+      "scientificName": "Callicladium imponens",
+      "id": 63536,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43480",
+      "vernacularName": {
+        "fi": "luhtakuirisammal",
+        "sv": "kärrskedmossa"
+      },
+      "scientificName": "Calliergon cordifolium",
+      "id": 53294,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43481",
+      "vernacularName": {
+        "sv": "stor skedmossa",
+        "fi": "hetekuirisammal"
+      },
+      "scientificName": "Calliergon giganteum",
+      "id": 53531,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43482",
+      "vernacularName": {
+        "fi": "järvikuirisammal",
+        "sv": "jätteskedmossa"
+      },
+      "scientificName": "Calliergon megalophyllum",
+      "id": 53532,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43483",
+      "vernacularName": {
+        "sv": "guldskedmossa",
+        "fi": "lettokuirisammal"
+      },
+      "scientificName": "Calliergon richardsonii",
+      "id": 60566,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43484",
+      "vernacularName": {
+        "sv": "spjutmossa",
+        "fi": "otaluhtasammal"
+      },
+      "scientificName": "Calliergonella cuspidata",
+      "id": 53534,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43485",
+      "vernacularName": {
+        "sv": "krokspjutmossa",
+        "fi": "sirppiluhtasammal"
+      },
+      "scientificName": "Calliergonella lindbergii",
+      "id": 53535,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44263",
+      "vernacularName": {
+        "sv": "skogssäckmossa",
+        "fi": "korpipaanusammal"
+      },
+      "scientificName": "Calypogeia integristipula",
+      "id": 53285,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44265",
+      "vernacularName": {
+        "sv": "torvsäckmossa",
+        "fi": "kalvaspaanusammal"
+      },
+      "scientificName": "Calypogeia neesiana",
+      "id": 54401,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44266",
+      "vernacularName": {
+        "sv": "myrsäckmossa",
+        "fi": "rahkapaanusammal"
+      },
+      "scientificName": "Calypogeia sphagnicola",
+      "id": 53275,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44267",
+      "vernacularName": {
+        "fi": "kantopaanusammal",
+        "sv": "vedsäckmossa"
+      },
+      "scientificName": "Calypogeia suecica",
+      "id": 53281,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.1607213",
+    "urls": {
+      "original": "https://image.laji.fi/MM.1607213/JR22248.JPG",
+      "full": "https://image.laji.fi/MM.1607213/JR22248.JPG",
+      "large": "https://image.laji.fi/MM.1607213/JR22248_large.jpg",
+      "square": "https://image.laji.fi/MM.1607213/JR22248_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.1607213/JR22248_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1609941428,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1437479134,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR22248.JPG",
+      "documentIds": [
+        "4708"
+      ],
+      "tags": [
+        "Bartramia pomiformis",
+        "kallio-omenasammal",
+        "omenasammalet",
+        "Bartramia"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.43811"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

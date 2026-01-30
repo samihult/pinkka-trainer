@@ -1,0 +1,1012 @@
+{
+  "taxonId": "MX.37787",
+  "vernacularName": {
+    "fi": "serpentiiniraunioinen",
+    "sv": "brunbräken"
+  },
+  "scientificName": "Asplenium adulterinum",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Pieni saniainen.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>(5–) 10–20 cm.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {
+        "fi": "<p>Maavarsi lyhyt, tummasuomuinen.</p>"
+      },
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Juuri",
+        "sv": "Rot",
+        "en": "Root"
+      },
+      "body": {},
+      "predicate": "MX.descriptionRoot"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Lehdet ovat tiheinä kimppuina. Lapa on kertaalleen parilehdykkäinen, lehdykät eivät ole tasasoukkia. Keskirangan tyvi on tumma, mutta kärkikolmannes vihreä.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {
+        "fi": "<p>Itiöpesäkeryhmät lehtilavan alapinnalla lehtisuonten sivussa, kapeanpuikeita tai tasasoukkia, katesuomuisia. </p>"
+      },
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {
+        "fi": "<p>Ultraemäksiset kivilajit.</p>"
+      },
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Ultraemäksisillä kallioilla, tavallisesti varjojyrkänteiden koloissa.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Suomessa on 12 tunnettua kasvupaikkaa (Salo, Kaavi, Juuka). </p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i Finland",
+        "fi": "Uhanalaisuus Suomessa",
+        "en": "Conservation status in Finland"
+      },
+      "body": {
+        "fi": "<p>Vaarantunut (VU). Erityisesti suojeltu. Rauhoitettu.</p>"
+      },
+      "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986644",
+      "vernacularName": null,
+      "scientificName": "Polypodiophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4977160",
+      "vernacularName": null,
+      "scientificName": "Polypodiopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70086",
+      "vernacularName": null,
+      "scientificName": "Polypodiales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.37782",
+      "vernacularName": {
+        "sv": "svartbräkenväxter",
+        "fi": "raunioiskasvit"
+      },
+      "scientificName": "Aspleniaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.37783",
+      "vernacularName": {
+        "fi": "raunioiset",
+        "sv": "svartbräknar"
+      },
+      "scientificName": "Asplenium",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.37787",
+      "vernacularName": {
+        "fi": "serpentiiniraunioinen",
+        "sv": "brunbräken"
+      },
+      "scientificName": "Asplenium adulterinum",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 55482,
+  "images": [
+    {
+      "id": "MM.1667273",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00203.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "raunioinen",
+          "Asplenium adulterinum",
+          "saniainen",
+          "Asplenium",
+          "fern",
+          "serpentiiniraunioinen"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667273/JR00203.JPG",
+        "full": "https://image.laji.fi/MM.1667273/JR00203.JPG",
+        "large": "https://image.laji.fi/MM.1667273/JR00203_large.jpg",
+        "square": "https://image.laji.fi/MM.1667273/JR00203_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667273/JR00203_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667271",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00205.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "serpentiiniraunioinen",
+          "raunioinen",
+          "fern",
+          "saniainen",
+          "Asplenium adulterinum",
+          "Asplenium"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667271/JR00205.JPG",
+        "full": "https://image.laji.fi/MM.1667271/JR00205.JPG",
+        "large": "https://image.laji.fi/MM.1667271/JR00205_large.jpg",
+        "square": "https://image.laji.fi/MM.1667271/JR00205_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667271/JR00205_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667272",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00204.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "raunioinen",
+          "serpentiiniraunioinen",
+          "Asplenium adulterinum",
+          "Asplenium",
+          "fern",
+          "saniainen"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667272/JR00204.JPG",
+        "full": "https://image.laji.fi/MM.1667272/JR00204.JPG",
+        "large": "https://image.laji.fi/MM.1667272/JR00204_large.jpg",
+        "square": "https://image.laji.fi/MM.1667272/JR00204_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667272/JR00204_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667269",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00207.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "Asplenium adulterinum",
+          "Asplenium",
+          "serpentiiniraunioinen",
+          "raunioinen",
+          "saniainen",
+          "fern"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667269/JR00207.JPG",
+        "full": "https://image.laji.fi/MM.1667269/JR00207.JPG",
+        "large": "https://image.laji.fi/MM.1667269/JR00207_large.jpg",
+        "square": "https://image.laji.fi/MM.1667269/JR00207_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667269/JR00207_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667274",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00202.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "serpentiiniraunioinen",
+          "Asplenium adulterinum",
+          "fern",
+          "Asplenium",
+          "raunioinen",
+          "saniainen"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667274/JR00202.JPG",
+        "full": "https://image.laji.fi/MM.1667274/JR00202.JPG",
+        "large": "https://image.laji.fi/MM.1667274/JR00202_large.jpg",
+        "square": "https://image.laji.fi/MM.1667274/JR00202_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667274/JR00202_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667259",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00219.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "Asplenium",
+          "Asplenium adulterinum",
+          "serpentiiniraunioinen",
+          "raunioinen",
+          "fern",
+          "saniainen"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667259/JR00219.JPG",
+        "full": "https://image.laji.fi/MM.1667259/JR00219.JPG",
+        "large": "https://image.laji.fi/MM.1667259/JR00219_large.jpg",
+        "square": "https://image.laji.fi/MM.1667259/JR00219_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667259/JR00219_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667268",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00208.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "fern",
+          "serpentiiniraunioinen",
+          "saniainen",
+          "Asplenium adulterinum",
+          "Asplenium",
+          "raunioinen"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667268/JR00208.JPG",
+        "full": "https://image.laji.fi/MM.1667268/JR00208.JPG",
+        "large": "https://image.laji.fi/MM.1667268/JR00208_large.jpg",
+        "square": "https://image.laji.fi/MM.1667268/JR00208_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667268/JR00208_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667270",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00206.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "Asplenium adulterinum",
+          "raunioinen",
+          "saniainen",
+          "serpentiiniraunioinen",
+          "fern",
+          "Asplenium"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667270/JR00206.JPG",
+        "full": "https://image.laji.fi/MM.1667270/JR00206.JPG",
+        "large": "https://image.laji.fi/MM.1667270/JR00206_large.jpg",
+        "square": "https://image.laji.fi/MM.1667270/JR00206_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667270/JR00206_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667264",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00212.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "Asplenium",
+          "raunioinen",
+          "serpentiiniraunioinen",
+          "saniainen",
+          "fern",
+          "Asplenium adulterinum"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667264/JR00212.JPG",
+        "full": "https://image.laji.fi/MM.1667264/JR00212.JPG",
+        "large": "https://image.laji.fi/MM.1667264/JR00212_large.jpg",
+        "square": "https://image.laji.fi/MM.1667264/JR00212_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667264/JR00212_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667265",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00211.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "raunioinen",
+          "fern",
+          "Asplenium adulterinum",
+          "serpentiiniraunioinen",
+          "Asplenium",
+          "saniainen"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667265/JR00211.JPG",
+        "full": "https://image.laji.fi/MM.1667265/JR00211.JPG",
+        "large": "https://image.laji.fi/MM.1667265/JR00211_large.jpg",
+        "square": "https://image.laji.fi/MM.1667265/JR00211_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667265/JR00211_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667261",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00215.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "saniainen",
+          "fern",
+          "Asplenium",
+          "serpentiiniraunioinen",
+          "raunioinen",
+          "Asplenium adulterinum"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667261/JR00215.JPG",
+        "full": "https://image.laji.fi/MM.1667261/JR00215.JPG",
+        "large": "https://image.laji.fi/MM.1667261/JR00215_large.jpg",
+        "square": "https://image.laji.fi/MM.1667261/JR00215_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667261/JR00215_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667267",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00209.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "fern",
+          "Asplenium adulterinum",
+          "serpentiiniraunioinen",
+          "Asplenium",
+          "saniainen",
+          "raunioinen"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667267/JR00209.JPG",
+        "full": "https://image.laji.fi/MM.1667267/JR00209.JPG",
+        "large": "https://image.laji.fi/MM.1667267/JR00209_large.jpg",
+        "square": "https://image.laji.fi/MM.1667267/JR00209_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667267/JR00209_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667263",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00213.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "saniainen",
+          "fern",
+          "serpentiiniraunioinen",
+          "Asplenium",
+          "raunioinen",
+          "Asplenium adulterinum"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667263/JR00213.JPG",
+        "full": "https://image.laji.fi/MM.1667263/JR00213.JPG",
+        "large": "https://image.laji.fi/MM.1667263/JR00213_large.jpg",
+        "square": "https://image.laji.fi/MM.1667263/JR00213_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667263/JR00213_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667266",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00210.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "raunioinen",
+          "serpentiiniraunioinen",
+          "saniainen",
+          "fern",
+          "Asplenium adulterinum",
+          "Asplenium"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667266/JR00210.JPG",
+        "full": "https://image.laji.fi/MM.1667266/JR00210.JPG",
+        "large": "https://image.laji.fi/MM.1667266/JR00210_large.jpg",
+        "square": "https://image.laji.fi/MM.1667266/JR00210_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667266/JR00210_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667262",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00214.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "saniainen",
+          "Asplenium adulterinum",
+          "serpentiiniraunioinen",
+          "fern",
+          "Asplenium",
+          "raunioinen"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667262/JR00214.JPG",
+        "full": "https://image.laji.fi/MM.1667262/JR00214.JPG",
+        "large": "https://image.laji.fi/MM.1667262/JR00214_large.jpg",
+        "square": "https://image.laji.fi/MM.1667262/JR00214_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667262/JR00214_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1667260",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807415,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807415,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR00218.JPG",
+        "documentIds": [
+          "5174"
+        ],
+        "tags": [
+          "saniainen",
+          "raunioinen",
+          "Asplenium adulterinum",
+          "serpentiiniraunioinen",
+          "fern",
+          "Asplenium"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.37787"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1667260/JR00218.JPG",
+        "full": "https://image.laji.fi/MM.1667260/JR00218.JPG",
+        "large": "https://image.laji.fi/MM.1667260/JR00218_large.jpg",
+        "square": "https://image.laji.fi/MM.1667260/JR00218_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1667260/JR00218_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 522,
+    "name": {
+      "fi": "Saniaiset ja liekokasvit",
+      "sv": "Ormbunksväxter",
+      "en": "Pteridophytes and lycophytes"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 2,
+      "name": {
+        "sv": "",
+        "fi": "A Pohjolan kasveja",
+        "en": "A Nordic vascular plants"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.119750",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

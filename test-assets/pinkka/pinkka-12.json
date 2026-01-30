@@ -1,0 +1,100 @@
+{
+  "id": 12,
+  "name": {
+    "fi": "BIO-515 Etelä-Suomen putkilokasvit"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tämä kokonaisuus täydentää peruslajintuntemuksen (BIO-103) lajivalikoimaa Etelä-Suomessa (Oulu-Kuusamo -linjan eteläpuolella) esiintyvien putkilokasvien osalta. Peruskurssin ja tämän kokonaisuuden suoritettuasi tunnet suuren osan Etelä-Suomessa luonnonvaraisena esiintyvistä putkilokasveista!"
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 559,
+      "name": {
+        "fi": "Saniaiset ja liekokasvit"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 567,
+      "name": {
+        "fi": "Acinos-Butomus"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 560,
+      "name": {
+        "fi": "Cakile-Carex"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 564,
+      "name": {
+        "fi": "Centaurea-Elymus"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 562,
+      "name": {
+        "fi": "Epilobium-Hieracium"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 565,
+      "name": {
+        "fi": "Hippophaë-Lythrum"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 563,
+      "name": {
+        "fi": "Matricaria-Platanthera"
+      },
+      "orderNo": 6,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 566,
+      "name": {
+        "fi": "Poa-Rumex"
+      },
+      "orderNo": 7,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 561,
+      "name": {
+        "fi": "Sagina-Symphytum"
+      },
+      "orderNo": 8,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 568,
+      "name": {
+        "fi": "Taxus-Zostera"
+      },
+      "orderNo": 9,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

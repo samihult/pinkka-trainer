@@ -1,0 +1,421 @@
+{
+  "id": 800,
+  "name": {
+    "fi": "Palkokasveja ja viljoja",
+    "en": "Legumes and cereals"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 16,
+    "name": {
+      "fi": "BIO-516 Hyötykasvit",
+      "en": "BIO-516 Plants of economic importance"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.53197",
+  "speciesCards": [
+    {
+      "taxonId": "MX.5074329",
+      "vernacularName": {
+        "fi": "viljarevonhäntä"
+      },
+      "scientificName": "Amaranthus hybridus",
+      "id": 62665,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40714",
+      "vernacularName": {
+        "sv": "jordnöt",
+        "fi": "maapähkinä"
+      },
+      "scientificName": "Arachis hypogaea",
+      "id": 61392,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021425",
+      "vernacularName": {
+        "fi": "abessiniankaura"
+      },
+      "scientificName": "Avena abyssinica",
+      "id": 62006,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40552",
+      "vernacularName": {
+        "sv": "havre",
+        "fi": "kaura"
+      },
+      "scientificName": "Avena sativa",
+      "id": 60502,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009784",
+      "vernacularName": {
+        "fi": "kirjokyyhkynherne"
+      },
+      "scientificName": "Cajanus cajan",
+      "id": 61386,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009407",
+      "vernacularName": {
+        "fi": "helmisulkahirssi",
+        "sv": "pärlhirs",
+        "en": "Pearl millet"
+      },
+      "scientificName": "Cenchrus americanus",
+      "id": 62007,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.290835",
+      "vernacularName": {
+        "sv": "mjölmålla",
+        "fi": "kvinoa"
+      },
+      "scientificName": "Chenopodium quinoa",
+      "id": 62666,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41029",
+      "vernacularName": {
+        "fi": "kikkahviherne",
+        "sv": "kikärt"
+      },
+      "scientificName": "Cicer arietinum",
+      "id": 61385,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41039",
+      "vernacularName": {
+        "fi": "jobinkyynelheinä",
+        "sv": "Jobs tårar"
+      },
+      "scientificName": "Coix lacryma-jobi",
+      "id": 62289,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009497",
+      "vernacularName": {
+        "fi": "afrikansormihirssi"
+      },
+      "scientificName": "Eleusine coracana",
+      "id": 61619,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5021760",
+      "vernacularName": {
+        "sv": "teff",
+        "fi": "tefheinä"
+      },
+      "scientificName": "Eragrostis tef",
+      "id": 61620,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38244",
+      "vernacularName": {
+        "sv": "bovete",
+        "fi": "tattari"
+      },
+      "scientificName": "Fagopyrum esculentum",
+      "id": 61662,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38970",
+      "vernacularName": {
+        "fi": "soijapapu",
+        "sv": "sojaböna"
+      },
+      "scientificName": "Glycine max",
+      "id": 61402,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40546",
+      "vernacularName": {
+        "fi": "ohra",
+        "sv": "korn"
+      },
+      "scientificName": "Hordeum vulgare",
+      "id": 60500,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5103343",
+      "vernacularName": {
+        "sv": "hjälmböna",
+        "fi": "hyasinttipapu",
+        "en": "lablab-bean"
+      },
+      "scientificName": "Lablab purpureus",
+      "id": 62305,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39010",
+      "vernacularName": {
+        "fi": "herne",
+        "sv": "ärt"
+      },
+      "scientificName": "Lathyrus oleraceus",
+      "id": 61388,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5001915",
+      "vernacularName": {
+        "fi": "riisi"
+      },
+      "scientificName": "Oryza sativa",
+      "id": 61709,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40653",
+      "vernacularName": {
+        "sv": "hirs",
+        "fi": "hirssi"
+      },
+      "scientificName": "Panicum miliaceum",
+      "id": 61710,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5103341",
+      "vernacularName": {
+        "sv": "limaböna",
+        "fi": "limanpapu",
+        "en": "butter bean"
+      },
+      "scientificName": "Phaseolus lunatus",
+      "id": 62306,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38968",
+      "vernacularName": {
+        "sv": "böna",
+        "fi": "tarhapapu"
+      },
+      "scientificName": "Phaseolus vulgaris",
+      "id": 61387,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022635",
+      "vernacularName": {
+        "sv": "mexikansk chiasalvia",
+        "fi": "chiasalvia"
+      },
+      "scientificName": "Salvia hispanica",
+      "id": 61959,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40544",
+      "vernacularName": {
+        "fi": "ruis",
+        "sv": "råg"
+      },
+      "scientificName": "Secale cereale",
+      "id": 60503,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43094",
+      "vernacularName": {},
+      "scientificName": "Secale cereale × Triticum aestivum",
+      "id": 61712,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022677",
+      "vernacularName": {
+        "fi": "vuoriruis",
+        "sv": "vildråg"
+      },
+      "scientificName": "Secale strictum",
+      "id": 62008,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41318",
+      "vernacularName": {
+        "sv": "durra",
+        "fi": "kirjodurra"
+      },
+      "scientificName": "Sorghum bicolor",
+      "id": 60505,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40542",
+      "vernacularName": {
+        "fi": "vehnä",
+        "sv": "vete"
+      },
+      "scientificName": "Triticum aestivum",
+      "id": 60501,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022891",
+      "vernacularName": {
+        "fi": "spelttivehnä",
+        "sv": "speltvete"
+      },
+      "scientificName": "Triticum aestivum subsp. spelta",
+      "id": 62234,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022892",
+      "vernacularName": {
+        "fi": "yksijyvävehnä",
+        "sv": "enkornsvete"
+      },
+      "scientificName": "Triticum monococcum",
+      "id": 62235,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42834",
+      "vernacularName": {
+        "sv": "emmervete",
+        "fi": "kartiovehnä"
+      },
+      "scientificName": "Triticum turgidum",
+      "id": 62236,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022893",
+      "vernacularName": {
+        "fi": "emmervehnä"
+      },
+      "scientificName": "Triticum turgidum subsp. dicoccon",
+      "id": 62237,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42650",
+      "vernacularName": {
+        "fi": "durumvehnä",
+        "sv": "hårdvete"
+      },
+      "scientificName": "Triticum turgidum subsp. durum",
+      "id": 62238,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5022894",
+      "vernacularName": {
+        "sv": "polskt vete",
+        "fi": "puolanvehnä"
+      },
+      "scientificName": "Triticum turgidum subsp. polonicum",
+      "id": 62239,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38989",
+      "vernacularName": {
+        "fi": "härkäpapu",
+        "sv": "bondböna"
+      },
+      "scientificName": "Vicia faba",
+      "id": 61389,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38991",
+      "vernacularName": {
+        "fi": "linssi",
+        "sv": "lins"
+      },
+      "scientificName": "Vicia lens",
+      "id": 61390,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42964",
+      "vernacularName": {
+        "fi": "pitkäpavut",
+        "sv": "vignabönor"
+      },
+      "scientificName": "Vigna",
+      "id": 62040,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5009466",
+      "vernacularName": {
+        "fi": "lehmänpapu"
+      },
+      "scientificName": "Vigna unguiculata",
+      "id": 62039,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40666",
+      "vernacularName": {
+        "sv": "majs",
+        "fi": "maissi"
+      },
+      "scientificName": "Zea mays",
+      "id": 60504,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.53197",
+    "urls": {
+      "original": "https://image.laji.fi/MM.53197/MX.40542_Triticum_aestivum_JR11624.JPG",
+      "full": "https://image.laji.fi/MM.53197/MX.40542_Triticum_aestivum_JR11624.JPG",
+      "large": "https://image.laji.fi/MM.53197/MX.40542_Triticum_aestivum_JR11624.JPG",
+      "square": "https://image.laji.fi/MM.53197/MX.40542_Triticum_aestivum_JR11624_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.53197/MX.40542_Triticum_aestivum_JR11624_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1412791745,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_meta_fix",
+      "originalFilename": "MX.40542_Triticum aestivum JR11624.JPG",
+      "documentIds": [
+        "30503"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.40542"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

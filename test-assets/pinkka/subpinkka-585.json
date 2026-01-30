@@ -1,0 +1,677 @@
+{
+  "id": 585,
+  "name": {
+    "fi": "Carex-Cypripedium",
+    "sv": "Carex-Cypripedium",
+    "en": "Carex-Cypripedium"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 14,
+    "name": {
+      "fi": "IPS-178 Suomen uhanalaiset kasvit",
+      "sv": "IPS-178 Finlands hotade kärlväxtarter",
+      "en": "IPS-178 Threatened vascular plants of Finland"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.75107",
+  "speciesCards": [
+    {
+      "taxonId": "MX.40338",
+      "vernacularName": {
+        "sv": "brunstarr",
+        "fi": "hetesara"
+      },
+      "scientificName": "Carex acutiformis",
+      "id": 48729,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40291",
+      "vernacularName": {
+        "fi": "röyhysara",
+        "sv": "tagelstarr"
+      },
+      "scientificName": "Carex appropinquata",
+      "id": 48730,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40297",
+      "vernacularName": {
+        "fi": "hietikkosara",
+        "sv": "sandstarr"
+      },
+      "scientificName": "Carex arenaria",
+      "id": 48731,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40336",
+      "vernacularName": {
+        "sv": "finnstarr",
+        "fi": "vienansara"
+      },
+      "scientificName": "Carex atherodes",
+      "id": 48732,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40389",
+      "vernacularName": {
+        "sv": "svartstarr",
+        "fi": "mustasara"
+      },
+      "scientificName": "Carex atrata",
+      "id": 48728,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40383",
+      "vernacularName": {
+        "fi": "sysisara",
+        "sv": "svedstarr"
+      },
+      "scientificName": "Carex atrofusca",
+      "id": 48727,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40302",
+      "vernacularName": {
+        "sv": "svepestarr",
+        "fi": "mykerösara"
+      },
+      "scientificName": "Carex bohemica",
+      "id": 48736,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40366",
+      "vernacularName": {
+        "fi": "ristasara",
+        "sv": "grönstarr"
+      },
+      "scientificName": "Carex demissa",
+      "id": 48737,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40333",
+      "vernacularName": {
+        "fi": "hentosara",
+        "sv": "spädstarr"
+      },
+      "scientificName": "Carex disperma",
+      "id": 48733,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40356",
+      "vernacularName": {
+        "sv": "segstarr",
+        "fi": "itämerensara"
+      },
+      "scientificName": "Carex extensa",
+      "id": 48734,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.42382",
+      "vernacularName": {
+        "fi": "napanokisara"
+      },
+      "scientificName": "Carex fuliginosa subsp. misandra",
+      "id": 48735,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40376",
+      "vernacularName": {
+        "sv": "isstarr",
+        "fi": "varvassara"
+      },
+      "scientificName": "Carex glacialis",
+      "id": 48738,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40311",
+      "vernacularName": {
+        "fi": "somersara",
+        "sv": "klapperstarr"
+      },
+      "scientificName": "Carex glareosa",
+      "id": 48739,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40394",
+      "vernacularName": {
+        "fi": "patukkasara",
+        "sv": "hartmansstarr"
+      },
+      "scientificName": "Carex hartmaniorum",
+      "id": 48741,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40315",
+      "vernacularName": {
+        "sv": "myrstarr",
+        "fi": "lettosara"
+      },
+      "scientificName": "Carex heleonastes",
+      "id": 48744,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40357",
+      "vernacularName": {
+        "fi": "hostinsara",
+        "sv": "ängsstarr"
+      },
+      "scientificName": "Carex hostiana",
+      "id": 48742,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40388",
+      "vernacularName": {
+        "fi": "velttosara",
+        "sv": "slakstarr"
+      },
+      "scientificName": "Carex laxa",
+      "id": 48743,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40365",
+      "vernacularName": {
+        "fi": "kuusamonnokkasara",
+        "sv": "jämtstarr"
+      },
+      "scientificName": "Carex lepidocarpa subsp. jemtlandica",
+      "id": 48740,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40364",
+      "vernacularName": {
+        "fi": "etelännokkasara",
+        "sv": "näbbstarr"
+      },
+      "scientificName": "Carex lepidocarpa subsp. lepidocarpa",
+      "id": 48746,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40764",
+      "vernacularName": {
+        "fi": "käyräsara",
+        "sv": "bågstarr"
+      },
+      "scientificName": "Carex maritima",
+      "id": 48748,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40425",
+      "vernacularName": {
+        "sv": "borststarr",
+        "fi": "sukassara"
+      },
+      "scientificName": "Carex microglochin",
+      "id": 48745,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40380",
+      "vernacularName": {
+        "sv": "lundstarr",
+        "fi": "vuorisara"
+      },
+      "scientificName": "Carex montana",
+      "id": 48747,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40286",
+      "vernacularName": {
+        "sv": "enaxig sävstarr",
+        "fi": "tunturisarake"
+      },
+      "scientificName": "Carex myosuroides",
+      "id": 48750,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40374",
+      "vernacularName": {
+        "sv": "fågelstarr",
+        "fi": "räpyläsara"
+      },
+      "scientificName": "Carex ornithopoda",
+      "id": 48749,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40294",
+      "vernacularName": {
+        "fi": "revonsara",
+        "sv": "blankstarr"
+      },
+      "scientificName": "Carex otrubae",
+      "id": 48751,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40399",
+      "vernacularName": {
+        "fi": "vihnesara",
+        "sv": "strandstarr"
+      },
+      "scientificName": "Carex paleacea",
+      "id": 48753,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40290",
+      "vernacularName": {
+        "fi": "lähdesara",
+        "sv": "vippstarr"
+      },
+      "scientificName": "Carex paniculata",
+      "id": 48755,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40375",
+      "vernacularName": {
+        "fi": "jalkasara"
+      },
+      "scientificName": "Carex pediformis",
+      "id": 48756,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40430",
+      "vernacularName": {
+        "sv": "loppstarr",
+        "fi": "kirppusara"
+      },
+      "scientificName": "Carex pulicaris",
+      "id": 48754,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40301",
+      "vernacularName": {
+        "sv": "skärmstarr",
+        "fi": "hajasara"
+      },
+      "scientificName": "Carex remota",
+      "id": 48752,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40344",
+      "vernacularName": {
+        "sv": "älvstarr",
+        "fi": "kaislasara"
+      },
+      "scientificName": "Carex rhynchophysa",
+      "id": 48761,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40339",
+      "vernacularName": {
+        "sv": "jättestarr",
+        "fi": "vankkasara"
+      },
+      "scientificName": "Carex riparia",
+      "id": 48757,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40427",
+      "vernacularName": {
+        "sv": "klippstarr",
+        "fi": "kalliosara"
+      },
+      "scientificName": "Carex rupestris",
+      "id": 48758,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40287",
+      "vernacularName": {
+        "fi": "kuusamonsarake",
+        "sv": "fleraxig sävstarr"
+      },
+      "scientificName": "Carex simpliciuscula",
+      "id": 48762,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40371",
+      "vernacularName": {
+        "fi": "lettohernesara",
+        "sv": "ävjestarr"
+      },
+      "scientificName": "Carex viridula var. bergrothii",
+      "id": 48759,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40293",
+      "vernacularName": {
+        "sv": "rävstarr",
+        "fi": "ketunsara"
+      },
+      "scientificName": "Carex vulpina",
+      "id": 48760,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39867",
+      "vernacularName": {
+        "sv": "långbladig spåtistel",
+        "fi": "idänkurho"
+      },
+      "scientificName": "Carlina biebersteinii",
+      "id": 48767,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39866",
+      "vernacularName": {
+        "sv": "spåtistel",
+        "fi": "ketokurho"
+      },
+      "scientificName": "Carlina vulgaris",
+      "id": 48768,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38600",
+      "vernacularName": {
+        "fi": "liekovarpio",
+        "sv": "kantljung"
+      },
+      "scientificName": "Cassiope tetragona",
+      "id": 48765,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40495",
+      "vernacularName": {
+        "sv": "källgräs",
+        "fi": "vesihilpi"
+      },
+      "scientificName": "Catabrosa aquatica",
+      "id": 48764,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39313",
+      "vernacularName": {
+        "fi": "pikkusappi",
+        "sv": "dvärgarun"
+      },
+      "scientificName": "Centaurium pulchellum",
+      "id": 48766,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40035",
+      "vernacularName": {
+        "sv": "vit skogslilja",
+        "fi": "miekkavalkku"
+      },
+      "scientificName": "Cephalanthera longifolia",
+      "id": 48763,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40036",
+      "vernacularName": {
+        "fi": "punavalkku",
+        "sv": "röd skogslilja"
+      },
+      "scientificName": "Cephalanthera rubra",
+      "id": 48769,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38067",
+      "vernacularName": {
+        "fi": "tunturihärkki",
+        "sv": "fjällarv"
+      },
+      "scientificName": "Cerastium alpinum",
+      "id": 48773,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38077",
+      "vernacularName": {
+        "sv": "smal hönsarv",
+        "fi": "kainuunnurmihärkki"
+      },
+      "scientificName": "Cerastium fontanum subsp. vulgare var. kajanense",
+      "id": 48771,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38080",
+      "vernacularName": {
+        "sv": "klibbarv",
+        "fi": "tahmahärkki"
+      },
+      "scientificName": "Cerastium glutinosum",
+      "id": 48772,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.41003",
+      "vernacularName": {
+        "fi": "kellohärkki"
+      },
+      "scientificName": "Cerastium nigrescens",
+      "id": 48774,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40054",
+      "vernacularName": {
+        "fi": "tunturiorho",
+        "sv": "dvärgyxne"
+      },
+      "scientificName": "Chamorchis alpina",
+      "id": 48770,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38638",
+      "vernacularName": {
+        "sv": "ryl",
+        "fi": "sarjatalvikki"
+      },
+      "scientificName": "Chimaphila umbellata",
+      "id": 48775,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40497",
+      "vernacularName": {
+        "fi": "hajuheinä",
+        "sv": "sötgräs"
+      },
+      "scientificName": "Cinna latifolia",
+      "id": 48777,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39886",
+      "vernacularName": {
+        "sv": "kåltistel",
+        "fi": "keltaohdake"
+      },
+      "scientificName": "Cirsium oleraceum",
+      "id": 48776,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40279",
+      "vernacularName": {
+        "sv": "ag",
+        "fi": "taarna"
+      },
+      "scientificName": "Cladium mariscus",
+      "id": 48779,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37893",
+      "vernacularName": {
+        "sv": "sibirisk klematis",
+        "fi": "siperiankärhö"
+      },
+      "scientificName": "Clematis sibirica",
+      "id": 48780,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39317",
+      "vernacularName": {
+        "sv": "lappgentiana",
+        "fi": "hentokatkero"
+      },
+      "scientificName": "Comastoma tenellum",
+      "id": 48783,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38737",
+      "vernacularName": {
+        "sv": "fyrling",
+        "fi": "paunikko"
+      },
+      "scientificName": "Crassula aquatica",
+      "id": 48781,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38931",
+      "vernacularName": {
+        "fi": "tylppöorapihlaja",
+        "sv": "trubbhagtorn"
+      },
+      "scientificName": "Crataegus monogyna",
+      "id": 48785,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38928",
+      "vernacularName": {
+        "fi": "suippuorapihlaja",
+        "sv": "flikhagtorn"
+      },
+      "scientificName": "Crataegus rhipidophylla",
+      "id": 48782,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39953",
+      "vernacularName": {
+        "fi": "vanakeltto",
+        "sv": "klasefibbla"
+      },
+      "scientificName": "Crepis praemorsa",
+      "id": 48784,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39956",
+      "vernacularName": {
+        "sv": "brantfibbla",
+        "fi": "pahtaketokeltto"
+      },
+      "scientificName": "Crepis tectorum subsp. nigritula",
+      "id": 48786,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39386",
+      "vernacularName": {
+        "sv": "linsnärja",
+        "fi": "pellavanvieras"
+      },
+      "scientificName": "Cuscuta epilinum",
+      "id": 48789,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39447",
+      "vernacularName": {
+        "fi": "rohtokoirankieli",
+        "sv": "hundtunga"
+      },
+      "scientificName": "Cynoglossum officinale",
+      "id": 48787,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40028",
+      "vernacularName": {
+        "fi": "tikankontti",
+        "sv": "guckusko"
+      },
+      "scientificName": "Cypripedium calceolus",
+      "id": 48788,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.75107",
+    "urls": {
+      "original": "https://image.laji.fi/MM.75107/orig_38665.jpg",
+      "full": "https://image.laji.fi/MM.75107/orig_38665.jpg",
+      "large": "https://image.laji.fi/MM.75107/orig_38665_large.jpg",
+      "square": "https://image.laji.fi/MM.75107/orig_38665_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.75107/orig_38665_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1435933530,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_legacy_import",
+      "originalFilename": "orig_38665.jpg",
+      "documentIds": [
+        "38665"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.40028"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

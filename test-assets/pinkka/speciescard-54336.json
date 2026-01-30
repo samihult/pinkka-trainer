@@ -1,0 +1,596 @@
+{
+  "taxonId": "MX.43486",
+  "vernacularName": {
+    "fi": "suippuväkäsammal",
+    "sv": "jordspärrmossa"
+  },
+  "scientificName": "Campyliadelphus chrysophyllus",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {},
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {},
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {},
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Leväosakas",
+        "sv": "Algkomponent",
+        "en": "Algal partner"
+      },
+      "body": {},
+      "predicate": "MX.algalPartnerOfLichen"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i Finland",
+        "fi": "Uhanalaisuus Suomessa",
+        "en": "Conservation status in Finland"
+      },
+      "body": {},
+      "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.44109",
+      "vernacularName": {
+        "fi": "lehtisammalet",
+        "sv": "bladmossor",
+        "en": "Mosses"
+      },
+      "scientificName": "Bryophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.70676",
+      "vernacularName": null,
+      "scientificName": "Bryopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.325144",
+      "vernacularName": null,
+      "scientificName": "Bryidae",
+      "rankName": {
+        "fi": "alaluokka",
+        "sv": "underklass",
+        "en": "subclass"
+      },
+      "rank": "MX.subclass"
+    },
+    {
+      "taxonId": "MX.70688",
+      "vernacularName": null,
+      "scientificName": "Hypnales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.212936",
+      "vernacularName": null,
+      "scientificName": "Amblystegiaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.43281",
+      "vernacularName": null,
+      "scientificName": "Campyliadelphus",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.43486",
+      "vernacularName": {
+        "fi": "suippuväkäsammal",
+        "sv": "jordspärrmossa"
+      },
+      "scientificName": "Campyliadelphus chrysophyllus",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 54336,
+  "images": [
+    {
+      "id": "MM.1610275",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR64272.JPG",
+        "documentIds": [
+          "4807"
+        ],
+        "tags": [
+          "Campyliadelphus",
+          "suippuväkäsammal",
+          "Campyliadelphus chrysophyllus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43486"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610275/JR64272.JPG",
+        "full": "https://image.laji.fi/MM.1610275/JR64272.JPG",
+        "large": "https://image.laji.fi/MM.1610275/JR64272_large.jpg",
+        "square": "https://image.laji.fi/MM.1610275/JR64272_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610275/JR64272_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610278",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR64269.JPG",
+        "documentIds": [
+          "4807"
+        ],
+        "tags": [
+          "Campyliadelphus",
+          "suippuväkäsammal",
+          "Campyliadelphus chrysophyllus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43486"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610278/JR64269.JPG",
+        "full": "https://image.laji.fi/MM.1610278/JR64269.JPG",
+        "large": "https://image.laji.fi/MM.1610278/JR64269_large.jpg",
+        "square": "https://image.laji.fi/MM.1610278/JR64269_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610278/JR64269_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610277",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR64270.JPG",
+        "documentIds": [
+          "4807"
+        ],
+        "tags": [
+          "suippuväkäsammal",
+          "Campyliadelphus chrysophyllus",
+          "Campyliadelphus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43486"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610277/JR64270.JPG",
+        "full": "https://image.laji.fi/MM.1610277/JR64270.JPG",
+        "large": "https://image.laji.fi/MM.1610277/JR64270_large.jpg",
+        "square": "https://image.laji.fi/MM.1610277/JR64270_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610277/JR64270_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610276",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR64271.JPG",
+        "documentIds": [
+          "4807"
+        ],
+        "tags": [
+          "suippuväkäsammal",
+          "Campyliadelphus chrysophyllus",
+          "Campyliadelphus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43486"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610276/JR64271.JPG",
+        "full": "https://image.laji.fi/MM.1610276/JR64271.JPG",
+        "large": "https://image.laji.fi/MM.1610276/JR64271_large.jpg",
+        "square": "https://image.laji.fi/MM.1610276/JR64271_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610276/JR64271_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610274",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR64273.JPG",
+        "documentIds": [
+          "4807"
+        ],
+        "tags": [
+          "suippuväkäsammal",
+          "Campyliadelphus chrysophyllus",
+          "Campyliadelphus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43486"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610274/JR64273.JPG",
+        "full": "https://image.laji.fi/MM.1610274/JR64273.JPG",
+        "large": "https://image.laji.fi/MM.1610274/JR64273_large.jpg",
+        "square": "https://image.laji.fi/MM.1610274/JR64273_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610274/JR64273_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610273",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR64274.JPG",
+        "documentIds": [
+          "4807"
+        ],
+        "tags": [
+          "Campyliadelphus",
+          "suippuväkäsammal",
+          "Campyliadelphus chrysophyllus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43486"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610273/JR64274.JPG",
+        "full": "https://image.laji.fi/MM.1610273/JR64274.JPG",
+        "large": "https://image.laji.fi/MM.1610273/JR64274_large.jpg",
+        "square": "https://image.laji.fi/MM.1610273/JR64274_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610273/JR64274_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1610279",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR6.7.2007B0036.JPG",
+        "documentIds": [
+          "4807"
+        ],
+        "tags": [
+          "suippuväkäsammal",
+          "Campyliadelphus",
+          "Campyliadelphus chrysophyllus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43486"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1610279/JR6.7.2007B0036.JPG",
+        "full": "https://image.laji.fi/MM.1610279/JR6.7.2007B0036.JPG",
+        "large": "https://image.laji.fi/MM.1610279/JR6.7.2007B0036_large.jpg",
+        "square": "https://image.laji.fi/MM.1610279/JR6.7.2007B0036_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1610279/JR6.7.2007B0036_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 675,
+    "name": {
+      "fi": "Campyliadelphus-Drepanocladus",
+      "en": "Campyliadelphus-Drepanocladus"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 3,
+      "name": {
+        "fi": "A Pohjolan sammalia ja jäkäliä",
+        "en": "A Nordic bryophytes and lichens"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.53562",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

@@ -1,0 +1,582 @@
+{
+  "taxonId": "MX.5021227",
+  "vernacularName": {
+    "sv": "krusbärsaktinidia",
+    "fi": "japaninlaikkuköynnös"
+  },
+  "scientificName": "Actinidia arguta",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {},
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Kesävihanta puuvartinen köynnös.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Käyttö",
+        "sv": "Användning",
+        "en": "Use"
+      },
+      "body": {
+        "fi": "<p>Hedelmät syötäviä, käytetään etupäässä tuoreena. Kasvatetaan yleensä puutahoissa koristekasvina.</p>"
+      },
+      "predicate": "MX.economicUseText"
+    },
+    {
+      "title": {
+        "fi": "Viljely",
+        "sv": "Odling",
+        "en": "Cultivation"
+      },
+      "body": {
+        "fi": "<p>Paikallista kotitarvekäyttöä lauhkeilla seuduilla, menestyy myös eteläisimmässä Suomessa. Kaksikotinen, joten marjomiseen tarvitaan sekä emi- että hedekasvi.</p>"
+      },
+      "predicate": "MX.cultivationText"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {
+        "fi": "<p>Kasvaa luonnonvaraisena Japanissa ja Itä-Aasian mereisillä rannikkoseuduilla, viljellään koristekasvina myös muilla lauhkea ilmaston alueilla.</p>"
+      },
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i världen",
+        "fi": "Uhanalaisuus maailmalla",
+        "en": "Conservation status globally"
+      },
+      "body": {},
+      "predicate": "MX.conservationStatusDescriptionWorld"
+    },
+    {
+      "title": {
+        "fi": "Haitat",
+        "sv": "Olägenheter",
+        "en": "Harmfulness"
+      },
+      "body": {},
+      "predicate": "MX.invasiveEffectText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Kaksikotinen, joten marjomiseen tarvitaan sekä emi- että hedekasvi.</p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70053",
+      "vernacularName": null,
+      "scientificName": "Ericales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.41722",
+      "vernacularName": {
+        "sv": "aktinidiaväxter",
+        "fi": "laikkuköynnöskasvit"
+      },
+      "scientificName": "Actinidiaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.41763",
+      "vernacularName": {
+        "fi": "laikkuköynnökset",
+        "sv": "aktinidior"
+      },
+      "scientificName": "Actinidia",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.5021227",
+      "vernacularName": {
+        "sv": "krusbärsaktinidia",
+        "fi": "japaninlaikkuköynnös"
+      },
+      "scientificName": "Actinidia arguta",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 61985,
+  "images": [
+    {
+      "id": "MM.3694507",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807463,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807463,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR35764.JPG",
+        "documentIds": [
+          "8556"
+        ],
+        "tags": [
+          "Actinidia",
+          "Actinidia arguta",
+          "japaninlaikkuköynnös"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5021227"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3694507/JR35764.JPG",
+        "full": "https://image.laji.fi/MM.3694507/JR35764.JPG",
+        "large": "https://image.laji.fi/MM.3694507/JR35764_large.jpg",
+        "square": "https://image.laji.fi/MM.3694507/JR35764_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3694507/JR35764_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3694510",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807463,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807463,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR35761.JPG",
+        "documentIds": [
+          "8556"
+        ],
+        "tags": [
+          "japaninlaikkuköynnös",
+          "Actinidia arguta",
+          "Actinidia"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5021227"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3694510/JR35761.JPG",
+        "full": "https://image.laji.fi/MM.3694510/JR35761.JPG",
+        "large": "https://image.laji.fi/MM.3694510/JR35761_large.jpg",
+        "square": "https://image.laji.fi/MM.3694510/JR35761_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3694510/JR35761_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3694509",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807463,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807463,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR35762.JPG",
+        "documentIds": [
+          "8556"
+        ],
+        "tags": [
+          "Actinidia",
+          "Actinidia arguta",
+          "japaninlaikkuköynnös"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5021227"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3694509/JR35762.JPG",
+        "full": "https://image.laji.fi/MM.3694509/JR35762.JPG",
+        "large": "https://image.laji.fi/MM.3694509/JR35762_large.jpg",
+        "square": "https://image.laji.fi/MM.3694509/JR35762_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3694509/JR35762_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3694508",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807463,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807463,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR35763.JPG",
+        "documentIds": [
+          "8556"
+        ],
+        "tags": [
+          "Actinidia arguta",
+          "Actinidia",
+          "japaninlaikkuköynnös"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5021227"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3694508/JR35763.JPG",
+        "full": "https://image.laji.fi/MM.3694508/JR35763.JPG",
+        "large": "https://image.laji.fi/MM.3694508/JR35763_large.jpg",
+        "square": "https://image.laji.fi/MM.3694508/JR35763_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3694508/JR35763_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3039132",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807463,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807463,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR1992008B032.JPG",
+        "documentIds": [
+          "7045"
+        ],
+        "tags": [
+          "Actinidia arguta",
+          "laikkuköynnös",
+          "japaninlaikkuköynnös",
+          "Actinidia"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5021227"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3039132/JR1992008B032.JPG",
+        "full": "https://image.laji.fi/MM.3039132/JR1992008B032.JPG",
+        "large": "https://image.laji.fi/MM.3039132/JR1992008B032_large.jpg",
+        "square": "https://image.laji.fi/MM.3039132/JR1992008B032_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3039132/JR1992008B032_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3039130",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807463,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807463,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR1992008B034.JPG",
+        "documentIds": [
+          "7045"
+        ],
+        "tags": [
+          "laikkuköynnös",
+          "Actinidia arguta",
+          "japaninlaikkuköynnös",
+          "Actinidia"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5021227"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3039130/JR1992008B034.JPG",
+        "full": "https://image.laji.fi/MM.3039130/JR1992008B034.JPG",
+        "large": "https://image.laji.fi/MM.3039130/JR1992008B034_large.jpg",
+        "square": "https://image.laji.fi/MM.3039130/JR1992008B034_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3039130/JR1992008B034_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3039131",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807463,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807463,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR1992008B033.JPG",
+        "documentIds": [
+          "7045"
+        ],
+        "tags": [
+          "Actinidia",
+          "laikkuköynnös",
+          "japaninlaikkuköynnös",
+          "Actinidia arguta"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5021227"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3039131/JR1992008B033.JPG",
+        "full": "https://image.laji.fi/MM.3039131/JR1992008B033.JPG",
+        "large": "https://image.laji.fi/MM.3039131/JR1992008B033_large.jpg",
+        "square": "https://image.laji.fi/MM.3039131/JR1992008B033_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3039131/JR1992008B033_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 808,
+    "name": {
+      "fi": "Marja- ja hedelmäkasveja",
+      "en": "Berries and fruits"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 16,
+      "name": {
+        "fi": "BIO-516 Hyötykasvit",
+        "en": "BIO-516 Plants of economic importance"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "",
+      "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+    },
+    "imageId": "MM.3037320",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

@@ -1,0 +1,94 @@
+{
+  "taxonId": "MX.210003",
+  "vernacularName": {},
+  "scientificName": "Hookeria lucens",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {},
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.207440",
+      "vernacularName": null,
+      "scientificName": "Hookeria",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.210003",
+      "vernacularName": null,
+      "scientificName": "Hookeria lucens",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 9745,
+  "images": [],
+  "subPinkka": {
+    "id": 131,
+    "name": {
+      "fi": "Sammalet"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 19,
+      "name": {
+        "fi": "Kaskadian kasveja"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": false,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": null,
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

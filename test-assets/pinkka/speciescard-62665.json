@@ -1,0 +1,616 @@
+{
+  "taxonId": "MX.5074329",
+  "vernacularName": {
+    "fi": "viljarevonhäntä"
+  },
+  "scientificName": "Amaranthus hybridus",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Yksivuotinen ruoho.&#xa0;</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Käyttö",
+        "sv": "Användning",
+        "en": "Use"
+      },
+      "body": {
+        "fi": "<p>Siemensato hyödynnetään kypsennettynä ihmisravinnoksi, nuoret lehdet lehtivihanneksina. Myös koristekasvi.</p>"
+      },
+      "predicate": "MX.economicUseText"
+    },
+    {
+      "title": {
+        "fi": "Viljely",
+        "sv": "Odling",
+        "en": "Cultivation"
+      },
+      "body": {
+        "fi": "<p>Tropiikissa ja lauhkean ilmaston alueilla, etenkin Keski- ja Etelä-Amerikassa.</p>"
+      },
+      "predicate": "MX.cultivationText"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {
+        "fi": "<p>Otettu viljelyyn Pohjois- ja Etelä-Amerikassa, missä kantamuotoja kasvaa yhä luonnonvaraisina. Levisi jo esikolumbiaanisena aikana myös vanhaan maailmaan. Nykyisin kotiutuneena tulokkaana eri puolilla maailmaa. Pitkään jatkunut risteytyminen vaikeuttaa hyötykasveina viljeltyjen revonhäntien alkuperän ja monimuotoisuuden selvittämistä.</p>"
+      },
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Satunnainen tulokas.&#xa0;</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Haitat",
+        "sv": "Olägenheter",
+        "en": "Harmfulness"
+      },
+      "body": {
+        "fi": "<p>Yleinen rikkakasvi lauhkean ilmaston alueella ja tropiikissa.&#xa0;</p>"
+      },
+      "predicate": "MX.invasiveEffectText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Siementen vuoksi viljeltyihin viljarevonhäntiin kuuluu kolme pääryhmää, joita käsitellään yleensä alalajeina tai lajeina: <b>hoikkarevonhäntä</b> <i>Amaranthus hybridus</i> subsp. <i>hybridus</i>, <b>purppurarevonhäntä </b><i>Amaranthus hybridus </i>subsp. <i>cruentus</i> ja <b>meksikonrevonhäntä </b>Amaranthus <i>hybridus</i> subsp. <i>hypochondriacus</i>. </p><p>Kumpulan hyötykasvikokoelma (<i>Hortus ethnobotanicus</i>).</p>"
+      },
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70046",
+      "vernacularName": null,
+      "scientificName": "Caryophyllales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.5081107",
+      "vernacularName": {
+        "fi": "revonhäntäkasvit",
+        "sv": "amarantväxter"
+      },
+      "scientificName": "Amaranthaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.38151",
+      "vernacularName": null,
+      "scientificName": "Amaranthoideae",
+      "rankName": {
+        "fi": "alaheimo",
+        "sv": "underfamilj",
+        "en": "subfamily"
+      },
+      "rank": "MX.subfamily"
+    },
+    {
+      "taxonId": "MX.38152",
+      "vernacularName": {
+        "sv": "amaranter",
+        "fi": "revonhännät"
+      },
+      "scientificName": "Amaranthus",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.5074329",
+      "vernacularName": {
+        "fi": "viljarevonhäntä"
+      },
+      "scientificName": "Amaranthus hybridus",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 62665,
+  "images": [
+    {
+      "id": "MM.1824320",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR03442.JPG",
+        "documentIds": [
+          "5248"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1824320/JR03442.JPG",
+        "full": "https://image.laji.fi/MM.1824320/JR03442.JPG",
+        "large": "https://image.laji.fi/MM.1824320/JR03442_large.jpg",
+        "square": "https://image.laji.fi/MM.1824320/JR03442_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1824320/JR03442_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1824319",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR03443.JPG",
+        "documentIds": [
+          "5248"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1824319/JR03443.JPG",
+        "full": "https://image.laji.fi/MM.1824319/JR03443.JPG",
+        "large": "https://image.laji.fi/MM.1824319/JR03443_large.jpg",
+        "square": "https://image.laji.fi/MM.1824319/JR03443_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1824319/JR03443_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1824321",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR03441.JPG",
+        "documentIds": [
+          "5248"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1824321/JR03441.JPG",
+        "full": "https://image.laji.fi/MM.1824321/JR03441.JPG",
+        "large": "https://image.laji.fi/MM.1824321/JR03441_large.jpg",
+        "square": "https://image.laji.fi/MM.1824321/JR03441_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1824321/JR03441_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1824317",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR54454.JPG",
+        "documentIds": [
+          "5248"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1824317/JR54454.JPG",
+        "full": "https://image.laji.fi/MM.1824317/JR54454.JPG",
+        "large": "https://image.laji.fi/MM.1824317/JR54454_large.jpg",
+        "square": "https://image.laji.fi/MM.1824317/JR54454_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1824317/JR54454_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1824318",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR54453.JPG",
+        "documentIds": [
+          "5248"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1824318/JR54453.JPG",
+        "full": "https://image.laji.fi/MM.1824318/JR54453.JPG",
+        "large": "https://image.laji.fi/MM.1824318/JR54453_large.jpg",
+        "square": "https://image.laji.fi/MM.1824318/JR54453_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1824318/JR54453_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3052201",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR17674.JPG",
+        "documentIds": [
+          "7391"
+        ],
+        "tags": [
+          "Amaranthus",
+          "viljarevonhäntä",
+          "Amaranthus hybridus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3052201/JR17674.JPG",
+        "full": "https://image.laji.fi/MM.3052201/JR17674.JPG",
+        "large": "https://image.laji.fi/MM.3052201/JR17674_large.jpg",
+        "square": "https://image.laji.fi/MM.3052201/JR17674_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3052201/JR17674_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3052202",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR17673.JPG",
+        "documentIds": [
+          "7391"
+        ],
+        "tags": [
+          "Amaranthus hybridus",
+          "Amaranthus",
+          "viljarevonhäntä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3052202/JR17673.JPG",
+        "full": "https://image.laji.fi/MM.3052202/JR17673.JPG",
+        "large": "https://image.laji.fi/MM.3052202/JR17673_large.jpg",
+        "square": "https://image.laji.fi/MM.3052202/JR17673_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3052202/JR17673_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3052200",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR17677.JPG",
+        "documentIds": [
+          "7391"
+        ],
+        "tags": [
+          "viljarevonhäntä",
+          "Amaranthus hybridus",
+          "Amaranthus"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3052200/JR17677.JPG",
+        "full": "https://image.laji.fi/MM.3052200/JR17677.JPG",
+        "large": "https://image.laji.fi/MM.3052200/JR17677_large.jpg",
+        "square": "https://image.laji.fi/MM.3052200/JR17677_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3052200/JR17677_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3052197",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807462,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807462,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR54475.JPG",
+        "documentIds": [
+          "7391"
+        ],
+        "tags": [
+          "Amaranthus hybridus",
+          "Amaranthus",
+          "viljarevonhäntä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5074329"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3052197/JR54475.JPG",
+        "full": "https://image.laji.fi/MM.3052197/JR54475.JPG",
+        "large": "https://image.laji.fi/MM.3052197/JR54475_large.jpg",
+        "square": "https://image.laji.fi/MM.3052197/JR54475_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3052197/JR54475_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 800,
+    "name": {
+      "fi": "Palkokasveja ja viljoja",
+      "en": "Legumes and cereals"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 16,
+      "name": {
+        "fi": "BIO-516 Hyötykasvit",
+        "en": "BIO-516 Plants of economic importance"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "",
+      "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+    },
+    "imageId": "MM.53197",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

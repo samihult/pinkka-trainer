@@ -1,0 +1,707 @@
+{
+  "id": 675,
+  "name": {
+    "fi": "Campyliadelphus-Drepanocladus",
+    "en": "Campyliadelphus-Drepanocladus"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 3,
+    "name": {
+      "fi": "A Pohjolan sammalia ja jäkäliä",
+      "en": "A Nordic bryophytes and lichens"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.53562",
+  "speciesCards": [
+    {
+      "taxonId": "MX.43486",
+      "vernacularName": {
+        "fi": "suippuväkäsammal",
+        "sv": "jordspärrmossa"
+      },
+      "scientificName": "Campyliadelphus chrysophyllus",
+      "id": 54336,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43487",
+      "vernacularName": {
+        "sv": "kärrspärrmossa",
+        "fi": "rantaväkäsammal"
+      },
+      "scientificName": "Campyliadelphus elodes",
+      "id": 54337,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43671",
+      "vernacularName": {
+        "sv": "guldfläta",
+        "fi": "ruskopalmikkosammal"
+      },
+      "scientificName": "Campylium bambergeri",
+      "id": 54809,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43489",
+      "vernacularName": {
+        "sv": "sumpspärrmossa",
+        "fi": "lehtoväkäsammal"
+      },
+      "scientificName": "Campylium protensum",
+      "id": 54335,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43490",
+      "vernacularName": {
+        "sv": "guldspärrmossa",
+        "fi": "lettoväkäsammal"
+      },
+      "scientificName": "Campylium stellatum",
+      "id": 54338,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43493",
+      "vernacularName": {
+        "sv": "skogsspärrmossa",
+        "fi": "kantoharasammal"
+      },
+      "scientificName": "Campylophyllopsis sommerfeltii",
+      "id": 54332,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43492",
+      "vernacularName": {
+        "fi": "pohjanharasammal",
+        "sv": "hakspärrmossa"
+      },
+      "scientificName": "Campylophyllum halleri",
+      "id": 54333,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44270",
+      "vernacularName": {
+        "fi": "saksipihtisammal",
+        "sv": "jordtrådmossa"
+      },
+      "scientificName": "Cephalozia bicuspidata",
+      "id": 54328,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44277",
+      "vernacularName": {
+        "sv": "vedtrådmossa",
+        "fi": "hitupihtisammal"
+      },
+      "scientificName": "Cephalozia macounii",
+      "id": 60428,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44279",
+      "vernacularName": {
+        "fi": "metsärahtusammal",
+        "sv": "mikromossa"
+      },
+      "scientificName": "Cephaloziella divaricata",
+      "id": 54334,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44285",
+      "vernacularName": {
+        "sv": "röd mikromossa",
+        "fi": "rusorahtusammal"
+      },
+      "scientificName": "Cephaloziella rubella",
+      "id": 54330,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44286",
+      "vernacularName": {
+        "sv": "torvmikromossa",
+        "fi": "rahkarahtusammal"
+      },
+      "scientificName": "Cephaloziella spinigera",
+      "id": 54326,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43496",
+      "vernacularName": {
+        "sv": "brännmossa",
+        "fi": "metsäkulosammal"
+      },
+      "scientificName": "Ceratodon purpureus",
+      "id": 54329,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44288",
+      "vernacularName": {
+        "fi": "hetealvesammal",
+        "sv": "bäckblekmossa"
+      },
+      "scientificName": "Chiloscyphus polyanthos",
+      "id": 54331,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43497",
+      "vernacularName": {
+        "sv": "myruddmossa",
+        "fi": "lettokilpisammal"
+      },
+      "scientificName": "Cinclidium stygium",
+      "id": 54324,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43498",
+      "vernacularName": {
+        "fi": "luhtakilpisammal",
+        "sv": "trubbuddmossa"
+      },
+      "scientificName": "Cinclidium subrotundum",
+      "id": 60420,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43500",
+      "vernacularName": {
+        "fi": "lehtohaivensammal",
+        "sv": "hårgräsmossa"
+      },
+      "scientificName": "Cirriphyllum piliferum",
+      "id": 54327,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44247",
+      "vernacularName": {
+        "sv": "navelmossa",
+        "fi": "peikonsammal"
+      },
+      "scientificName": "Clevea hyalina",
+      "id": 54316,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43502",
+      "vernacularName": {
+        "sv": "palmmossa",
+        "fi": "palmusammal"
+      },
+      "scientificName": "Climacium dendroides",
+      "id": 54325,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44291",
+      "vernacularName": {
+        "fi": "siloruutusammal",
+        "sv": "slät rutlungmossa"
+      },
+      "scientificName": "Conocephalum conicum",
+      "id": 54318,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200511",
+      "vernacularName": {
+        "fi": "vakoruutusammal",
+        "sv": "vågig rutlungmossa"
+      },
+      "scientificName": "Conocephalum salebrosum",
+      "id": 54402,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43507",
+      "vernacularName": {
+        "fi": "särmäsammal",
+        "sv": "hjälmmossa"
+      },
+      "scientificName": "Conostomum tetragonum",
+      "id": 54315,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43509",
+      "vernacularName": {
+        "fi": "sirohuurresammal",
+        "sv": "källtuffmossa"
+      },
+      "scientificName": "Cratoneuron filicinum",
+      "id": 54322,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44235",
+      "vernacularName": {
+        "sv": "vedtrappmossa",
+        "fi": "kantoraippasammal"
+      },
+      "scientificName": "Crossocalyx hellerianus",
+      "id": 54319,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43510",
+      "vernacularName": {
+        "sv": "kalkkammossa",
+        "fi": "höyhensammal"
+      },
+      "scientificName": "Ctenidium molluscum",
+      "id": 54314,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43514",
+      "vernacularName": {
+        "sv": "strumamossa",
+        "fi": "kyhmytorasammal"
+      },
+      "scientificName": "Cynodontium strumiferum",
+      "id": 54321,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43516",
+      "vernacularName": {
+        "fi": "kalliotorasammal",
+        "sv": "liten klipptuss"
+      },
+      "scientificName": "Cynodontium tenellum",
+      "id": 54320,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43517",
+      "vernacularName": {
+        "fi": "kurulehväsammal",
+        "sv": "platt trollmossa"
+      },
+      "scientificName": "Cyrtomnium hymenophylloides",
+      "id": 54317,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43518",
+      "vernacularName": {
+        "fi": "tunturilehväsammal",
+        "sv": "trind trollmossa"
+      },
+      "scientificName": "Cyrtomnium hymenophyllum",
+      "id": 54323,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43520",
+      "vernacularName": {
+        "fi": "koskikoukkusammal",
+        "sv": "klomossa"
+      },
+      "scientificName": "Dichelyma falcatum",
+      "id": 54206,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43521",
+      "vernacularName": {
+        "fi": "pikkuvesikonsammal",
+        "sv": "skvalpmossa"
+      },
+      "scientificName": "Dichodontium pellucidum",
+      "id": 54225,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43522",
+      "vernacularName": {
+        "sv": "myrsmaragdmossa",
+        "fi": "ojanukkasammal"
+      },
+      "scientificName": "Dicranella cerviculata",
+      "id": 54223,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43525",
+      "vernacularName": {
+        "sv": "smaragdmossa",
+        "fi": "törmänukkasammal"
+      },
+      "scientificName": "Dicranella heteromalla",
+      "id": 54207,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43531",
+      "vernacularName": {
+        "sv": "klojordmossa",
+        "fi": "äimänukkasammal"
+      },
+      "scientificName": "Dicranella subulata",
+      "id": 54226,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43538",
+      "vernacularName": {
+        "fi": "äimäkynsisammal",
+        "sv": "gräskvastmossa"
+      },
+      "scientificName": "Dicranum angustum",
+      "id": 55223,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43540",
+      "vernacularName": {
+        "fi": "lettokynsisammal",
+        "sv": "kärrkvastmossa"
+      },
+      "scientificName": "Dicranum bonjeanii",
+      "id": 54224,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43541",
+      "vernacularName": {
+        "fi": "kalkkikynsisammal",
+        "sv": "kalkkvastmossa"
+      },
+      "scientificName": "Dicranum brevifolium",
+      "id": 54205,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43542",
+      "vernacularName": {
+        "sv": "tajgakvastmossa",
+        "fi": "pohjankynsisammal"
+      },
+      "scientificName": "Dicranum drummondii",
+      "id": 54227,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43544",
+      "vernacularName": {
+        "sv": "flagellkvastmossa",
+        "fi": "kerkkäkynsisammal"
+      },
+      "scientificName": "Dicranum flagellare",
+      "id": 54208,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43545",
+      "vernacularName": {
+        "fi": "karhunkynsisammal",
+        "sv": "skogskvastmossa"
+      },
+      "scientificName": "Dicranum flexicaule",
+      "id": 54228,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43546",
+      "vernacularName": {
+        "fi": "haprakynsisammal",
+        "sv": "skör kvastmossa"
+      },
+      "scientificName": "Dicranum fragilifolium",
+      "id": 55224,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43547",
+      "vernacularName": {
+        "sv": "bergkvastmossa",
+        "fi": "turkkikynsisammal"
+      },
+      "scientificName": "Dicranum fuscescens",
+      "id": 54216,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43550",
+      "vernacularName": {
+        "sv": "skottkvastmossa",
+        "fi": "lännenkynsisammal"
+      },
+      "scientificName": "Dicranum leioneuron",
+      "id": 55225,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43551",
+      "vernacularName": {
+        "fi": "isokynsisammal",
+        "sv": "stor kvastmossa"
+      },
+      "scientificName": "Dicranum majus",
+      "id": 54209,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43552",
+      "vernacularName": {
+        "sv": "stubbkvastmossa",
+        "fi": "pörrökynsisammal"
+      },
+      "scientificName": "Dicranum montanum",
+      "id": 54230,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43553",
+      "vernacularName": {
+        "fi": "kangaskynsisammal",
+        "sv": "vågig kvastmossa"
+      },
+      "scientificName": "Dicranum polysetum",
+      "id": 54217,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43554",
+      "vernacularName": {
+        "sv": "kvastmossa",
+        "fi": "kivikynsisammal"
+      },
+      "scientificName": "Dicranum scoparium",
+      "id": 54204,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43555",
+      "vernacularName": {
+        "fi": "paljakkakynsisammal",
+        "sv": "rörkvastmossa"
+      },
+      "scientificName": "Dicranum spadiceum",
+      "id": 55226,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43556",
+      "vernacularName": {
+        "sv": "hällkvastmossa",
+        "fi": "töppökynsisammal"
+      },
+      "scientificName": "Dicranum spurium",
+      "id": 54229,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200512",
+      "vernacularName": {
+        "sv": "myrkvastmossa",
+        "fi": "rämekynsisammal"
+      },
+      "scientificName": "Dicranum undulatum",
+      "id": 54221,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200483",
+      "vernacularName": {
+        "fi": "isovesikonsammal",
+        "sv": "källjordmossa"
+      },
+      "scientificName": "Diobelonella palustris",
+      "id": 54211,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44293",
+      "vernacularName": {
+        "sv": "nervveckmossa",
+        "fi": "suonikielisammal"
+      },
+      "scientificName": "Diplophyllum albicans",
+      "id": 63488,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44294",
+      "vernacularName": {
+        "sv": "jordveckmossa",
+        "fi": "hietakielisammal"
+      },
+      "scientificName": "Diplophyllum obtusifolium",
+      "id": 60427,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44295",
+      "vernacularName": {
+        "sv": "bergveckmossa",
+        "fi": "kalliokielisammal"
+      },
+      "scientificName": "Diplophyllum taxifolium",
+      "id": 54231,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43567",
+      "vernacularName": {
+        "sv": "planmossa",
+        "fi": "kalkkikahtaissammal"
+      },
+      "scientificName": "Distichium capillaceum",
+      "id": 54218,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43569",
+      "vernacularName": {
+        "sv": "tät planmossa",
+        "fi": "kaarikahtaissammal"
+      },
+      "scientificName": "Distichium inclinatum",
+      "id": 63520,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43573",
+      "vernacularName": {
+        "sv": "klogrusmossa",
+        "fi": "piennarkarvasammal"
+      },
+      "scientificName": "Ditrichum heteromallum",
+      "id": 54213,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43574",
+      "vernacularName": {
+        "sv": "liten grusmossa",
+        "fi": "pikkukarvasammal"
+      },
+      "scientificName": "Ditrichum pusillum",
+      "id": 54233,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43576",
+      "vernacularName": {
+        "sv": "lerkrokmossa",
+        "fi": "luhtasirppisammal"
+      },
+      "scientificName": "Drepanocladus aduncus",
+      "id": 54219,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200495",
+      "vernacularName": {
+        "fi": "pohjanjalosammal",
+        "sv": "snögulmossa"
+      },
+      "scientificName": "Drepanocladus angustifolius",
+      "id": 54210,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43577",
+      "vernacularName": {
+        "sv": "hårkrokmossa",
+        "fi": "hiussirppisammal"
+      },
+      "scientificName": "Drepanocladus capillifolius",
+      "id": 54232,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43578",
+      "vernacularName": {
+        "fi": "väkäsirppisammal",
+        "sv": "spärrkrokmossa"
+      },
+      "scientificName": "Drepanocladus polygamus",
+      "id": 54220,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43579",
+      "vernacularName": {
+        "fi": "kalkkisirppisammal",
+        "sv": "kalkkrokmossa"
+      },
+      "scientificName": "Drepanocladus sendtneri",
+      "id": 54215,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43581",
+      "vernacularName": {
+        "sv": "fiskekrokmossa",
+        "fi": "upossirppisammal"
+      },
+      "scientificName": "Drepanocladus sordidus",
+      "id": 54234,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.200515",
+      "vernacularName": {
+        "sv": "maskgulmossa",
+        "fi": "matosammal"
+      },
+      "scientificName": "Drepanocladus trifarius",
+      "id": 54214,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.53562",
+    "urls": {
+      "original": "https://image.laji.fi/MM.53562/MX.43554_A_Dicranum_scoparium_JR_15_8_2009_089.JPG",
+      "full": "https://image.laji.fi/MM.53562/MX.43554_A_Dicranum_scoparium_JR_15_8_2009_089.JPG",
+      "large": "https://image.laji.fi/MM.53562/MX.43554_A_Dicranum_scoparium_JR_15_8_2009_089.JPG",
+      "square": "https://image.laji.fi/MM.53562/MX.43554_A_Dicranum_scoparium_JR_15_8_2009_089_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.53562/MX.43554_A_Dicranum_scoparium_JR_15_8_2009_089_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1412791909,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_meta_fix",
+      "originalFilename": "MX.43554_A Dicranum scoparium JR 15_8_2009 089.JPG",
+      "documentIds": [
+        "32997"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.43554"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

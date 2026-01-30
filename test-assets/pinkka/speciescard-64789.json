@@ -1,0 +1,1008 @@
+{
+  "taxonId": "MX.5009523",
+  "vernacularName": {
+    "fi": "nuorakissanhäntä"
+  },
+  "scientificName": "Acalypha volkensii",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {},
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {},
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {},
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Käpy",
+        "sv": "Kotte",
+        "en": "Cone"
+      },
+      "body": {},
+      "predicate": "MX.descriptionCone"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Käyttö",
+        "sv": "Användning",
+        "en": "Use"
+      },
+      "body": {},
+      "predicate": "MX.economicUseText"
+    },
+    {
+      "title": {
+        "fi": "Viljely",
+        "sv": "Odling",
+        "en": "Cultivation"
+      },
+      "body": {},
+      "predicate": "MX.cultivationText"
+    },
+    {
+      "title": {
+        "fi": "Myrkyllisyys",
+        "sv": "Giftighet",
+        "en": "Toxicity"
+      },
+      "body": {},
+      "predicate": "MX.descriptionToxicity"
+    },
+    {
+      "title": {
+        "fi": "Haitat",
+        "sv": "Olägenheter",
+        "en": "Harmfulness"
+      },
+      "body": {},
+      "predicate": "MX.invasiveEffectText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i världen",
+        "fi": "Uhanalaisuus maailmalla",
+        "en": "Conservation status globally"
+      },
+      "body": {},
+      "predicate": "MX.conservationStatusDescriptionWorld"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {},
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70062",
+      "vernacularName": null,
+      "scientificName": "Malpighiales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.38702",
+      "vernacularName": {
+        "sv": "törelväxter",
+        "fi": "tyräkkikasvit"
+      },
+      "scientificName": "Euphorbiaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.41760",
+      "vernacularName": {
+        "sv": "akalyfor",
+        "fi": "kissanhännät"
+      },
+      "scientificName": "Acalypha",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.5009523",
+      "vernacularName": {
+        "fi": "nuorakissanhäntä"
+      },
+      "scientificName": "Acalypha volkensii",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 64789,
+  "images": [
+    {
+      "id": "MM.3585934",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR72183.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "Acalypha",
+          "nuorakissanhäntä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585934/JR72183.JPG",
+        "full": "https://image.laji.fi/MM.3585934/JR72183.JPG",
+        "large": "https://image.laji.fi/MM.3585934/JR72183_large.jpg",
+        "square": "https://image.laji.fi/MM.3585934/JR72183_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585934/JR72183_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585935",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR72029.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "Acalypha",
+          "nuorakissanhäntä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585935/JR72029.JPG",
+        "full": "https://image.laji.fi/MM.3585935/JR72029.JPG",
+        "large": "https://image.laji.fi/MM.3585935/JR72029_large.jpg",
+        "square": "https://image.laji.fi/MM.3585935/JR72029_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585935/JR72029_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585936",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR72026.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha",
+          "nuorakissanhäntä",
+          "Acalypha volkensii"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585936/JR72026.JPG",
+        "full": "https://image.laji.fi/MM.3585936/JR72026.JPG",
+        "large": "https://image.laji.fi/MM.3585936/JR72026_large.jpg",
+        "square": "https://image.laji.fi/MM.3585936/JR72026_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585936/JR72026_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585947",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08544.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "Acalypha",
+          "nuorakissanhäntä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585947/JR08544.JPG",
+        "full": "https://image.laji.fi/MM.3585947/JR08544.JPG",
+        "large": "https://image.laji.fi/MM.3585947/JR08544_large.jpg",
+        "square": "https://image.laji.fi/MM.3585947/JR08544_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585947/JR08544_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585933",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JRX8461.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "Acalypha",
+          "nuorakissanhäntä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585933/JRX8461.JPG",
+        "full": "https://image.laji.fi/MM.3585933/JRX8461.JPG",
+        "large": "https://image.laji.fi/MM.3585933/JRX8461_large.jpg",
+        "square": "https://image.laji.fi/MM.3585933/JRX8461_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585933/JRX8461_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585932",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JRX8462.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "nuorakissanhäntä",
+          "Acalypha volkensii",
+          "Acalypha"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585932/JRX8462.JPG",
+        "full": "https://image.laji.fi/MM.3585932/JRX8462.JPG",
+        "large": "https://image.laji.fi/MM.3585932/JRX8462_large.jpg",
+        "square": "https://image.laji.fi/MM.3585932/JRX8462_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585932/JRX8462_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585942",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR15192.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "nuorakissanhäntä",
+          "Acalypha",
+          "Acalypha volkensii"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585942/JR15192.JPG",
+        "full": "https://image.laji.fi/MM.3585942/JR15192.JPG",
+        "large": "https://image.laji.fi/MM.3585942/JR15192_large.jpg",
+        "square": "https://image.laji.fi/MM.3585942/JR15192_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585942/JR15192_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585944",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR15190.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "Acalypha",
+          "nuorakissanhäntä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585944/JR15190.JPG",
+        "full": "https://image.laji.fi/MM.3585944/JR15190.JPG",
+        "large": "https://image.laji.fi/MM.3585944/JR15190_large.jpg",
+        "square": "https://image.laji.fi/MM.3585944/JR15190_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585944/JR15190_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585946",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR08545.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "nuorakissanhäntä",
+          "Acalypha volkensii",
+          "Acalypha"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585946/JR08545.JPG",
+        "full": "https://image.laji.fi/MM.3585946/JR08545.JPG",
+        "large": "https://image.laji.fi/MM.3585946/JR08545_large.jpg",
+        "square": "https://image.laji.fi/MM.3585946/JR08545_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585946/JR08545_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585943",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR15191.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "nuorakissanhäntä",
+          "Acalypha"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585943/JR15191.JPG",
+        "full": "https://image.laji.fi/MM.3585943/JR15191.JPG",
+        "large": "https://image.laji.fi/MM.3585943/JR15191_large.jpg",
+        "square": "https://image.laji.fi/MM.3585943/JR15191_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585943/JR15191_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585941",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR15193.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "nuorakissanhäntä",
+          "Acalypha"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585941/JR15193.JPG",
+        "full": "https://image.laji.fi/MM.3585941/JR15193.JPG",
+        "large": "https://image.laji.fi/MM.3585941/JR15193_large.jpg",
+        "square": "https://image.laji.fi/MM.3585941/JR15193_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585941/JR15193_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585945",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR15189.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "Acalypha",
+          "nuorakissanhäntä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585945/JR15189.JPG",
+        "full": "https://image.laji.fi/MM.3585945/JR15189.JPG",
+        "large": "https://image.laji.fi/MM.3585945/JR15189_large.jpg",
+        "square": "https://image.laji.fi/MM.3585945/JR15189_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585945/JR15189_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585937",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR71319.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "nuorakissanhäntä",
+          "Acalypha"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585937/JR71319.JPG",
+        "full": "https://image.laji.fi/MM.3585937/JR71319.JPG",
+        "large": "https://image.laji.fi/MM.3585937/JR71319_large.jpg",
+        "square": "https://image.laji.fi/MM.3585937/JR71319_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585937/JR71319_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585939",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR71317.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "nuorakissanhäntä",
+          "Acalypha"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585939/JR71317.JPG",
+        "full": "https://image.laji.fi/MM.3585939/JR71317.JPG",
+        "large": "https://image.laji.fi/MM.3585939/JR71317_large.jpg",
+        "square": "https://image.laji.fi/MM.3585939/JR71317_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585939/JR71317_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585938",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR71318.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "nuorakissanhäntä",
+          "Acalypha"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585938/JR71318.JPG",
+        "full": "https://image.laji.fi/MM.3585938/JR71318.JPG",
+        "large": "https://image.laji.fi/MM.3585938/JR71318_large.jpg",
+        "square": "https://image.laji.fi/MM.3585938/JR71318_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585938/JR71318_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.3585940",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807433,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807433,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR51127.JPG",
+        "documentIds": [
+          "8368"
+        ],
+        "tags": [
+          "Acalypha volkensii",
+          "nuorakissanhäntä",
+          "Acalypha"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.5009523"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.3585940/JR51127.JPG",
+        "full": "https://image.laji.fi/MM.3585940/JR51127.JPG",
+        "large": "https://image.laji.fi/MM.3585940/JR51127_large.jpg",
+        "square": "https://image.laji.fi/MM.3585940/JR51127_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.3585940/JR51127_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 919,
+    "name": {
+      "fi": "Vuoristometsien pensaita",
+      "en": "Shrubs of montane forests"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 9,
+      "name": {
+        "fi": "A Taitavuorten kasveja",
+        "en": "A Plants of Taita Hills"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "",
+      "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+    },
+    "imageId": "MM.266556",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

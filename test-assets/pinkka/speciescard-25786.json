@@ -1,0 +1,365 @@
+{
+  "taxonId": "MX.72692",
+  "vernacularName": {
+    "sv": "ekriska",
+    "fi": "tammenrousku"
+  },
+  "scientificName": "Lactarius quietus",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {},
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Itiöemä",
+        "sv": "Fruktkropp",
+        "en": "Fruitbody"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitbody"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {},
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.53062",
+      "vernacularName": {
+        "sv": "svampar",
+        "fi": "sienet"
+      },
+      "scientificName": "Fungi",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.53066",
+      "vernacularName": {
+        "sv": "basidiesvampar",
+        "fi": "kantasienet"
+      },
+      "scientificName": "Basidiomycota",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.313466",
+      "vernacularName": null,
+      "scientificName": "Agaricomycotina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.53373",
+      "vernacularName": null,
+      "scientificName": "Agaricomycetes",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70628",
+      "vernacularName": null,
+      "scientificName": "Russulales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.233353",
+      "vernacularName": null,
+      "scientificName": "Russulaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.69723",
+      "vernacularName": {
+        "fi": "rouskut"
+      },
+      "scientificName": "Lactarius",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.72692",
+      "vernacularName": {
+        "sv": "ekriska",
+        "fi": "tammenrousku"
+      },
+      "scientificName": "Lactarius quietus",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 25786,
+  "images": [
+    {
+      "id": "MM.116939",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807425,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32699.JPG",
+        "documentIds": [
+          "1275"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.72692"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.116939/JR32699.JPG",
+        "full": "https://image.laji.fi/MM.116939/JR32699.JPG",
+        "large": "https://image.laji.fi/MM.116939/JR32699_large.jpg",
+        "square": "https://image.laji.fi/MM.116939/JR32699_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.116939/JR32699_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.116940",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807425,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32698.JPG",
+        "documentIds": [
+          "1275"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.72692"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.116940/JR32698.JPG",
+        "full": "https://image.laji.fi/MM.116940/JR32698.JPG",
+        "large": "https://image.laji.fi/MM.116940/JR32698_large.jpg",
+        "square": "https://image.laji.fi/MM.116940/JR32698_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.116940/JR32698_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.116941",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807425,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32697.JPG",
+        "documentIds": [
+          "1275"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.72692"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.116941/JR32697.JPG",
+        "full": "https://image.laji.fi/MM.116941/JR32697.JPG",
+        "large": "https://image.laji.fi/MM.116941/JR32697_large.jpg",
+        "square": "https://image.laji.fi/MM.116941/JR32697_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.116941/JR32697_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.116942",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807425,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807425,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR32695.JPG",
+        "documentIds": [
+          "1275"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.72692"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.116942/JR32695.JPG",
+        "full": "https://image.laji.fi/MM.116942/JR32695.JPG",
+        "large": "https://image.laji.fi/MM.116942/JR32695_large.jpg",
+        "square": "https://image.laji.fi/MM.116942/JR32695_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.116942/JR32695_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 30,
+    "name": {
+      "fi": "Russulales",
+      "sv": "Russulales"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 6,
+      "name": {
+        "fi": "BIO-519 Sienituntemus",
+        "sv": "Svampartkännedom",
+        "en": "Identification of fungi"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.116468",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

@@ -1,0 +1,426 @@
+{
+  "id": 612,
+  "name": {
+    "fi": "Cakile-Circaea"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 10,
+    "name": {
+      "fi": "BIO-513 Syventävä putkilokasvituntemus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.124475",
+  "speciesCards": [
+    {
+      "taxonId": "MX.38509",
+      "vernacularName": {
+        "fi": "merisinappi",
+        "sv": "marviol"
+      },
+      "scientificName": "Cakile maritima",
+      "id": 49838,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40608",
+      "vernacularName": {
+        "fi": "viitakastikka",
+        "sv": "grenrör"
+      },
+      "scientificName": "Calamagrostis canescens",
+      "id": 49842,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40612",
+      "vernacularName": {
+        "fi": "luhtakastikka",
+        "sv": "madrör"
+      },
+      "scientificName": "Calamagrostis neglecta",
+      "id": 59063,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40834",
+      "vernacularName": {
+        "fi": "korpikastikka",
+        "sv": "brunrör"
+      },
+      "scientificName": "Calamagrostis phragmitoides",
+      "id": 49843,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39537",
+      "vernacularName": {
+        "fi": "pikkuvesitähti",
+        "sv": "smålånke"
+      },
+      "scientificName": "Callitriche palustris",
+      "id": 49846,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39705",
+      "vernacularName": {
+        "fi": "peurankello",
+        "sv": "toppklocka"
+      },
+      "scientificName": "Campanula glomerata",
+      "id": 59075,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39704",
+      "vernacularName": {
+        "fi": "kurjenkello",
+        "sv": "stor blåklocka"
+      },
+      "scientificName": "Campanula persicifolia",
+      "id": 49850,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39709",
+      "vernacularName": {
+        "sv": "knölklocka",
+        "fi": "vuohenkello"
+      },
+      "scientificName": "Campanula rapunculoides",
+      "id": 59074,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38955",
+      "vernacularName": {
+        "sv": "häckkaragan",
+        "fi": "siperianhernepensas"
+      },
+      "scientificName": "Caragana arborescens",
+      "id": 59064,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38411",
+      "vernacularName": {
+        "fi": "mäkilitukka",
+        "sv": "bergbräsma"
+      },
+      "scientificName": "Cardamine hirsuta",
+      "id": 49852,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38403",
+      "vernacularName": {
+        "sv": "ängsbräsma",
+        "fi": "luhtalitukka"
+      },
+      "scientificName": "Cardamine pratensis",
+      "id": 49851,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39883",
+      "vernacularName": {
+        "sv": "krustistel",
+        "fi": "kyläkarhiainen"
+      },
+      "scientificName": "Carduus crispus",
+      "id": 49856,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40403",
+      "vernacularName": {
+        "fi": "vesisara",
+        "sv": "norrlandsstarr"
+      },
+      "scientificName": "Carex aquatilis",
+      "id": 59065,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40327",
+      "vernacularName": {
+        "sv": "nickstarr",
+        "fi": "polkusara"
+      },
+      "scientificName": "Carex brunnescens",
+      "id": 49858,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40300",
+      "vernacularName": {
+        "fi": "juurtosara",
+        "sv": "strängstarr"
+      },
+      "scientificName": "Carex chordorrhiza",
+      "id": 49862,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40292",
+      "vernacularName": {
+        "fi": "liereäsara",
+        "sv": "trindstarr"
+      },
+      "scientificName": "Carex diandra",
+      "id": 49865,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40306",
+      "vernacularName": {
+        "sv": "nålstarr",
+        "fi": "äimäsara"
+      },
+      "scientificName": "Carex dioica",
+      "id": 59067,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40305",
+      "vernacularName": {
+        "fi": "tähtisara",
+        "sv": "stjärnstarr"
+      },
+      "scientificName": "Carex echinata",
+      "id": 49864,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40379",
+      "vernacularName": {
+        "fi": "kanervisara",
+        "sv": "backstarr"
+      },
+      "scientificName": "Carex ericetorum",
+      "id": 59066,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40360",
+      "vernacularName": {
+        "sv": "knagglestarr",
+        "fi": "keltasara"
+      },
+      "scientificName": "Carex flava",
+      "id": 49867,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40354",
+      "vernacularName": {
+        "sv": "vitstarr",
+        "fi": "vaaleasara"
+      },
+      "scientificName": "Carex livida",
+      "id": 49872,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40331",
+      "vernacularName": {
+        "fi": "korpisara",
+        "sv": "repestarr"
+      },
+      "scientificName": "Carex loliacea",
+      "id": 49869,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40426",
+      "vernacularName": {
+        "fi": "rahkasara",
+        "sv": "taggstarr"
+      },
+      "scientificName": "Carex pauciflora",
+      "id": 49877,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40353",
+      "vernacularName": {
+        "fi": "tuppisara",
+        "sv": "slidstarr"
+      },
+      "scientificName": "Carex vaginata",
+      "id": 49876,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40368",
+      "vernacularName": {
+        "sv": "ärtstarr",
+        "fi": "hernesara"
+      },
+      "scientificName": "Carex viridula",
+      "id": 59069,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39909",
+      "vernacularName": {
+        "fi": "ruiskaunokki",
+        "sv": "blåklint"
+      },
+      "scientificName": "Centaurea cyanus",
+      "id": 59076,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39904",
+      "vernacularName": {
+        "fi": "ahdekaunokki",
+        "sv": "rödklint"
+      },
+      "scientificName": "Centaurea jacea",
+      "id": 49889,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39907",
+      "vernacularName": {
+        "fi": "nurmikaunokki",
+        "sv": "ängsklint"
+      },
+      "scientificName": "Centaurea phrygia",
+      "id": 49883,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39312",
+      "vernacularName": {
+        "fi": "isosappi",
+        "sv": "smalarun"
+      },
+      "scientificName": "Centaurium littorale",
+      "id": 49882,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38067",
+      "vernacularName": {
+        "fi": "tunturihärkki",
+        "sv": "fjällarv"
+      },
+      "scientificName": "Cerastium alpinum",
+      "id": 49893,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38066",
+      "vernacularName": {
+        "sv": "fältarv",
+        "fi": "ketohärkki"
+      },
+      "scientificName": "Cerastium arvense",
+      "id": 49887,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37850",
+      "vernacularName": {
+        "fi": "tankeakarvalehti",
+        "sv": "hornsärv"
+      },
+      "scientificName": "Ceratophyllum demersum",
+      "id": 60811,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39587",
+      "vernacularName": {
+        "sv": "småsporre",
+        "fi": "kissankita"
+      },
+      "scientificName": "Chaenorhinum minus",
+      "id": 59072,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38616",
+      "vernacularName": {
+        "sv": "finnmyrten",
+        "fi": "vaivero"
+      },
+      "scientificName": "Chamaedaphne calyculata",
+      "id": 49886,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38170",
+      "vernacularName": {
+        "fi": "pohjansavikka",
+        "sv": "svenskmålla"
+      },
+      "scientificName": "Chenopodium suecicum",
+      "id": 60810,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38733",
+      "vernacularName": {
+        "fi": "kevätlinnunsilmä",
+        "sv": "gullpudra"
+      },
+      "scientificName": "Chrysosplenium alternifolium",
+      "id": 59598,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39082",
+      "vernacularName": {
+        "fi": "pikkuvelholehti",
+        "sv": "dvärghäxört"
+      },
+      "scientificName": "Circaea alpina",
+      "id": 59073,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.124475",
+    "urls": {
+      "original": "https://image.laji.fi/MM.124475/JR27671.JPG",
+      "full": "https://image.laji.fi/MM.124475/JR27671.JPG",
+      "large": "https://image.laji.fi/MM.124475/JR27671.JPG",
+      "square": "https://image.laji.fi/MM.124475/JR27671_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.124475/JR27671_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1486663666,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1308655724,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR27671.JPG",
+      "documentIds": [
+        "1895"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.38616"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

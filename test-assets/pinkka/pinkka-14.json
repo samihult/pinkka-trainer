@@ -1,0 +1,85 @@
+{
+  "id": 14,
+  "name": {
+    "fi": "IPS-178 Suomen uhanalaiset kasvit",
+    "sv": "IPS-178 Finlands hotade kärlväxtarter",
+    "en": "IPS-178 Threatened vascular plants of Finland"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": true,
+  "description": {
+    "fi": "Tämä pinkka esittelee PBIO-178 -omatoimikurssin vaatimuksiin kuuluvat lajit (Henry Väre & Jouko Rikkinen 2019, lajilista, suoritusohjeet ja verkkotestit Moodlessa). Kokonaisuus täydentää muiden lajintuntemuskurssien lajivalikoimaa uhanalaisen lajiston osalta. Tämän kokonaisuuden opiskeltuasi tunnet Suomessa uhanalaisiksi luokitellut putkilokasvit (335 taksonia) ja omaat perustiedot niiden ekologiasta, levinneisyydestä ja suojelustatuksesta!",
+    "en": "After completing this course you can identify the vascular plants currently classified as threatened in Finland (335 taxa), and are familiar with the overall distribution, habitat ecology and conservation status of each species."
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi",
+    "huvare@helsinki.fi",
+    "hsihvone@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 588,
+      "name": {
+        "fi": "Aconitum-Cardamine",
+        "sv": "Aconitum-Cardamine",
+        "en": "Aconitum-Cardamine"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 585,
+      "name": {
+        "fi": "Carex-Cypripedium",
+        "sv": "Carex-Cypripedium",
+        "en": "Carex-Cypripedium"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 586,
+      "name": {
+        "fi": "Dactylorhiza-Gypsophila",
+        "sv": "Dactylorhiza-Gypsophila",
+        "en": "Dactylorhiza-Gypsophila"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 589,
+      "name": {
+        "fi": "Hackelia-Oxytropis",
+        "sv": "Hackelia-Oxytropis",
+        "en": "Hackelia-Oxytropis"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 590,
+      "name": {
+        "fi": "Papaver-Salsola",
+        "sv": "Papaver-Salsola",
+        "en": "Papaver-Salsola"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 587,
+      "name": {
+        "fi": "Samolus-Zostera",
+        "sv": "Samolus-Zostera",
+        "en": "Samolus-Zostera"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

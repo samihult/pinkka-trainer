@@ -1,0 +1,1310 @@
+{
+  "taxonId": "MX.39122",
+  "vernacularName": {
+    "sv": "skogslönn",
+    "fi": "metsävaahtera",
+    "en": "Norway maple"
+  },
+  "scientificName": "Acer platanoides",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "sv": "<p>Lövfällande träd, 10–20 m hög. Stam och grenar grova, grenarna kala. Unga grenar och bladskaft med mjölksaft. Blad motsatta, bladskiva 8–15 cm, undertill ljusgröna, handflikiga, 3–5 flikar, flikarna grovt tandade.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Kausivihanta puu.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>10–20 m korkea.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {
+        "fi": "<p>Vahvarunkoinen ja -haarainen, oksat kaljut. Nuoret oksat maitiaisnesteellisiä.</p>"
+      },
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Juuri",
+        "sv": "Rot",
+        "en": "Root"
+      },
+      "body": {},
+      "predicate": "MX.descriptionRoot"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Lehdet vastakkain, lapa 8–15 cm, alta vaaleanvihreä, kourasuoninen, 3–5-liuskainen, liuskat isohampaisia.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {
+        "sv": "<p>Blommar vid bladsprickning. Blomställning upprätt, kvastlik. Blommor små, foder- och kronblad 5-taliga, kronblad gula. 8 ståndare, 2 pistiller.</p>",
+        "fi": "<p>Kukkii lehtien puhjetessa. Kukinto pysty, huiskilomainen. Kukat pieniä, verhiö ja teriö 5-lehtisiä, teriö keltainen. Heteitä 8, emejä 2.</p>"
+      },
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {
+        "fi": "<p>Hedelmä 2-siipinen, 2-lohkoinen lohkohedelmä. Siipien välinen kulma tylppä.</p>",
+        "sv": "<p>Frukt en 2-vingad klyvfrukt. Fruktens vingar bildar en trubbig vinkel.</p>"
+      },
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Käpy",
+        "sv": "Kotte",
+        "en": "Cone"
+      },
+      "body": {},
+      "predicate": "MX.descriptionCone"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {
+        "fi": "<p>Kukkii alkukesällä (V–VI).</p>",
+        "sv": "<p>Blommar i början av sommaren.</p>"
+      },
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Pölytys",
+        "sv": "Pollination",
+        "en": "Pollination"
+      },
+      "body": {},
+      "predicate": "MX.reproductionPollination"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Lehdoissa, yleinen piha- ja puistopuu.</p>",
+        "sv": "<p>I lundar, allmän som gårds- och parkträd.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Vakinainen alkuperäinen. Yleinen Etelä-Suomessa.</p>",
+        "sv": "<p>Allmän i södra Finland.</p>",
+        "en": "<p>Spontaneous old resident.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i Finland",
+        "fi": "Uhanalaisuus Suomessa",
+        "en": "Conservation status in Finland"
+      },
+      "body": {},
+      "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Kuivat lehdot, tuoreet lehdot, kosteat lehdot, jalopuumetsät.</p>"
+      },
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {},
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "sv": "Ingress",
+        "fi": "Ingressi",
+        "en": "Ingress"
+      },
+      "body": {},
+      "predicate": "MX.ingressText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Itiöemä",
+        "sv": "Fruktkropp",
+        "en": "Fruitbody"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitbody"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Leväosakas",
+        "sv": "Algkomponent",
+        "en": "Algal partner"
+      },
+      "body": {},
+      "predicate": "MX.algalPartnerOfLichen"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {},
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Elintavat",
+        "sv": "Beteende",
+        "en": "Behaviour"
+      },
+      "body": {},
+      "predicate": "MX.behaviour"
+    },
+    {
+      "title": {
+        "fi": "Mikroskooppiset tuntomerkit",
+        "sv": "Mikroskopiska kännetecken",
+        "en": "Microscopic identification"
+      },
+      "body": {},
+      "predicate": "MX.descriptionMicroscopicIdentification"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristön hoito-ohjeita",
+        "sv": "Instruktioner för hantering av habitat",
+        "en": "Instructions for habitat management"
+      },
+      "body": {},
+      "predicate": "MX.management"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70072",
+      "vernacularName": null,
+      "scientificName": "Sapindales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.289481",
+      "vernacularName": {
+        "fi": "saippuamarjakasvit",
+        "sv": "kinesträdsväxter"
+      },
+      "scientificName": "Sapindaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.39121",
+      "vernacularName": {
+        "fi": "vaahterat",
+        "sv": "lönnar"
+      },
+      "scientificName": "Acer",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.39122",
+      "vernacularName": {
+        "sv": "skogslönn",
+        "fi": "metsävaahtera",
+        "en": "Norway maple"
+      },
+      "scientificName": "Acer platanoides",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 60583,
+  "images": [
+    {
+      "id": "MM.1823535",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807428,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR85372a.jpg",
+        "documentIds": [
+          "5235"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1823535/JR85372a.jpg",
+        "full": "https://image.laji.fi/MM.1823535/JR85372a.jpg",
+        "large": "https://image.laji.fi/MM.1823535/JR85372a_large.jpg",
+        "square": "https://image.laji.fi/MM.1823535/JR85372a_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1823535/JR85372a_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1823536",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807428,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR85372.JPG",
+        "documentIds": [
+          "5235"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1823536/JR85372.JPG",
+        "full": "https://image.laji.fi/MM.1823536/JR85372.JPG",
+        "large": "https://image.laji.fi/MM.1823536/JR85372_large.jpg",
+        "square": "https://image.laji.fi/MM.1823536/JR85372_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1823536/JR85372_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51916",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat A2 JR43181.JPG",
+        "documentIds": [
+          "40572"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51916/MX.39122_Acerplat_A2_JR43181.JPG",
+        "full": "https://image.laji.fi/MM.51916/MX.39122_Acerplat_A2_JR43181.JPG",
+        "large": "https://image.laji.fi/MM.51916/MX.39122_Acerplat_A2_JR43181_large.jpg",
+        "square": "https://image.laji.fi/MM.51916/MX.39122_Acerplat_A2_JR43181_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51916/MX.39122_Acerplat_A2_JR43181_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51924",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_A Acerplat JR43354.JPG",
+        "documentIds": [
+          "40570"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51924/MX.39122_A_Acerplat_JR43354.JPG",
+        "full": "https://image.laji.fi/MM.51924/MX.39122_A_Acerplat_JR43354.JPG",
+        "large": "https://image.laji.fi/MM.51924/MX.39122_A_Acerplat_JR43354_large.jpg",
+        "square": "https://image.laji.fi/MM.51924/MX.39122_A_Acerplat_JR43354_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51924/MX.39122_A_Acerplat_JR43354_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51934",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acer platanoides JR03603_JPG  orig_29443.jpg",
+        "documentIds": [
+          "40590"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51934/MX.39122_Acer_platanoides_JR03603_JPG__orig_29443.jpg",
+        "full": "https://image.laji.fi/MM.51934/MX.39122_Acer_platanoides_JR03603_JPG__orig_29443.jpg",
+        "large": "https://image.laji.fi/MM.51934/MX.39122_Acer_platanoides_JR03603_JPG__orig_29443.jpg",
+        "square": "https://image.laji.fi/MM.51934/MX.39122_Acer_platanoides_JR03603_JPG__orig_29443_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51934/MX.39122_Acer_platanoides_JR03603_JPG__orig_29443_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51973",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat A1 JR43189.JPG",
+        "documentIds": [
+          "40571"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51973/MX.39122_Acerplat_A1_JR43189.JPG",
+        "full": "https://image.laji.fi/MM.51973/MX.39122_Acerplat_A1_JR43189.JPG",
+        "large": "https://image.laji.fi/MM.51973/MX.39122_Acerplat_A1_JR43189_large.jpg",
+        "square": "https://image.laji.fi/MM.51973/MX.39122_Acerplat_A1_JR43189_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51973/MX.39122_Acerplat_A1_JR43189_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51936",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat A4 JR14771.JPG",
+        "documentIds": [
+          "40574"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51936/MX.39122_Acerplat_A4_JR14771.JPG",
+        "full": "https://image.laji.fi/MM.51936/MX.39122_Acerplat_A4_JR14771.JPG",
+        "large": "https://image.laji.fi/MM.51936/MX.39122_Acerplat_A4_JR14771_large.jpg",
+        "square": "https://image.laji.fi/MM.51936/MX.39122_Acerplat_A4_JR14771_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51936/MX.39122_Acerplat_A4_JR14771_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1823537",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807428,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR84625.JPG",
+        "documentIds": [
+          "5235"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1823537/JR84625.JPG",
+        "full": "https://image.laji.fi/MM.1823537/JR84625.JPG",
+        "large": "https://image.laji.fi/MM.1823537/JR84625_large.jpg",
+        "square": "https://image.laji.fi/MM.1823537/JR84625_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1823537/JR84625_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1823538",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807428,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR84624.JPG",
+        "documentIds": [
+          "5235"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1823538/JR84624.JPG",
+        "full": "https://image.laji.fi/MM.1823538/JR84624.JPG",
+        "large": "https://image.laji.fi/MM.1823538/JR84624_large.jpg",
+        "square": "https://image.laji.fi/MM.1823538/JR84624_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1823538/JR84624_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51974",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat JR 10_5_2006 0101_JPG orig_4109.jpg",
+        "documentIds": [
+          "40586"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51974/MX.39122_Acerplat_JR_10_5_2006_0101_JPG_orig_4109.jpg",
+        "full": "https://image.laji.fi/MM.51974/MX.39122_Acerplat_JR_10_5_2006_0101_JPG_orig_4109.jpg",
+        "large": "https://image.laji.fi/MM.51974/MX.39122_Acerplat_JR_10_5_2006_0101_JPG_orig_4109_large.jpg",
+        "square": "https://image.laji.fi/MM.51974/MX.39122_Acerplat_JR_10_5_2006_0101_JPG_orig_4109_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51974/MX.39122_Acerplat_JR_10_5_2006_0101_JPG_orig_4109_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51993",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat JR 12_5_2006 0048_JPG orig_4111.jpg",
+        "documentIds": [
+          "40588"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51993/MX.39122_Acerplat_JR_12_5_2006_0048_JPG_orig_4111.jpg",
+        "full": "https://image.laji.fi/MM.51993/MX.39122_Acerplat_JR_12_5_2006_0048_JPG_orig_4111.jpg",
+        "large": "https://image.laji.fi/MM.51993/MX.39122_Acerplat_JR_12_5_2006_0048_JPG_orig_4111_large.jpg",
+        "square": "https://image.laji.fi/MM.51993/MX.39122_Acerplat_JR_12_5_2006_0048_JPG_orig_4111_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51993/MX.39122_Acerplat_JR_12_5_2006_0048_JPG_orig_4111_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51952",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat C2 JR03582.JPG",
+        "documentIds": [
+          "40582"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51952/MX.39122_Acerplat_C2_JR03582.JPG",
+        "full": "https://image.laji.fi/MM.51952/MX.39122_Acerplat_C2_JR03582.JPG",
+        "large": "https://image.laji.fi/MM.51952/MX.39122_Acerplat_C2_JR03582_large.jpg",
+        "square": "https://image.laji.fi/MM.51952/MX.39122_Acerplat_C2_JR03582_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51952/MX.39122_Acerplat_C2_JR03582_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51962",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat C3 JR00006.JPG",
+        "documentIds": [
+          "40583"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51962/MX.39122_Acerplat_C3_JR00006.JPG",
+        "full": "https://image.laji.fi/MM.51962/MX.39122_Acerplat_C3_JR00006.JPG",
+        "large": "https://image.laji.fi/MM.51962/MX.39122_Acerplat_C3_JR00006_large.jpg",
+        "square": "https://image.laji.fi/MM.51962/MX.39122_Acerplat_C3_JR00006_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51962/MX.39122_Acerplat_C3_JR00006_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51931",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat B5 JR02704.JPG",
+        "documentIds": [
+          "40580"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51931/MX.39122_Acerplat_B5_JR02704.JPG",
+        "full": "https://image.laji.fi/MM.51931/MX.39122_Acerplat_B5_JR02704.JPG",
+        "large": "https://image.laji.fi/MM.51931/MX.39122_Acerplat_B5_JR02704_large.jpg",
+        "square": "https://image.laji.fi/MM.51931/MX.39122_Acerplat_B5_JR02704_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51931/MX.39122_Acerplat_B5_JR02704_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51921",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat B4 JR02713.JPG",
+        "documentIds": [
+          "40579"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51921/MX.39122_Acerplat_B4_JR02713.JPG",
+        "full": "https://image.laji.fi/MM.51921/MX.39122_Acerplat_B4_JR02713.JPG",
+        "large": "https://image.laji.fi/MM.51921/MX.39122_Acerplat_B4_JR02713_large.jpg",
+        "square": "https://image.laji.fi/MM.51921/MX.39122_Acerplat_B4_JR02713_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51921/MX.39122_Acerplat_B4_JR02713_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51978",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat B3 JR02799.JPG",
+        "documentIds": [
+          "40578"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51978/MX.39122_Acerplat_B3_JR02799.JPG",
+        "full": "https://image.laji.fi/MM.51978/MX.39122_Acerplat_B3_JR02799.JPG",
+        "large": "https://image.laji.fi/MM.51978/MX.39122_Acerplat_B3_JR02799_large.jpg",
+        "square": "https://image.laji.fi/MM.51978/MX.39122_Acerplat_B3_JR02799_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51978/MX.39122_Acerplat_B3_JR02799_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51957",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat B1 JR00161.JPG",
+        "documentIds": [
+          "40576"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51957/MX.39122_Acerplat_B1_JR00161.JPG",
+        "full": "https://image.laji.fi/MM.51957/MX.39122_Acerplat_B1_JR00161.JPG",
+        "large": "https://image.laji.fi/MM.51957/MX.39122_Acerplat_B1_JR00161_large.jpg",
+        "square": "https://image.laji.fi/MM.51957/MX.39122_Acerplat_B1_JR00161_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51957/MX.39122_Acerplat_B1_JR00161_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51925",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat A3 JR14770.JPG",
+        "documentIds": [
+          "40573"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51925/MX.39122_Acerplat_A3_JR14770.JPG",
+        "full": "https://image.laji.fi/MM.51925/MX.39122_Acerplat_A3_JR14770.JPG",
+        "large": "https://image.laji.fi/MM.51925/MX.39122_Acerplat_A3_JR14770_large.jpg",
+        "square": "https://image.laji.fi/MM.51925/MX.39122_Acerplat_A3_JR14770_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51925/MX.39122_Acerplat_A3_JR14770_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51947",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat A5 JR14773.JPG",
+        "documentIds": [
+          "40575"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51947/MX.39122_Acerplat_A5_JR14773.JPG",
+        "full": "https://image.laji.fi/MM.51947/MX.39122_Acerplat_A5_JR14773.JPG",
+        "large": "https://image.laji.fi/MM.51947/MX.39122_Acerplat_A5_JR14773_large.jpg",
+        "square": "https://image.laji.fi/MM.51947/MX.39122_Acerplat_A5_JR14773_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51947/MX.39122_Acerplat_A5_JR14773_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52002",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat JR 12_5_2006 0049_JPG orig_4112.jpg",
+        "documentIds": [
+          "40589"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52002/MX.39122_Acerplat_JR_12_5_2006_0049_JPG_orig_4112.jpg",
+        "full": "https://image.laji.fi/MM.52002/MX.39122_Acerplat_JR_12_5_2006_0049_JPG_orig_4112.jpg",
+        "large": "https://image.laji.fi/MM.52002/MX.39122_Acerplat_JR_12_5_2006_0049_JPG_orig_4112_large.jpg",
+        "square": "https://image.laji.fi/MM.52002/MX.39122_Acerplat_JR_12_5_2006_0049_JPG_orig_4112_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52002/MX.39122_Acerplat_JR_12_5_2006_0049_JPG_orig_4112_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51983",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat JR 10_5_2006 0102_JPG orig_4110.jpg",
+        "documentIds": [
+          "40587"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51983/MX.39122_Acerplat_JR_10_5_2006_0102_JPG_orig_4110.jpg",
+        "full": "https://image.laji.fi/MM.51983/MX.39122_Acerplat_JR_10_5_2006_0102_JPG_orig_4110.jpg",
+        "large": "https://image.laji.fi/MM.51983/MX.39122_Acerplat_JR_10_5_2006_0102_JPG_orig_4110_large.jpg",
+        "square": "https://image.laji.fi/MM.51983/MX.39122_Acerplat_JR_10_5_2006_0102_JPG_orig_4110_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51983/MX.39122_Acerplat_JR_10_5_2006_0102_JPG_orig_4110_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51980",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat JR 10_5_2006 0100_JPG orig_4108.jpg",
+        "documentIds": [
+          "40585"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51980/MX.39122_Acerplat_JR_10_5_2006_0100_JPG_orig_4108.jpg",
+        "full": "https://image.laji.fi/MM.51980/MX.39122_Acerplat_JR_10_5_2006_0100_JPG_orig_4108.jpg",
+        "large": "https://image.laji.fi/MM.51980/MX.39122_Acerplat_JR_10_5_2006_0100_JPG_orig_4108_large.jpg",
+        "square": "https://image.laji.fi/MM.51980/MX.39122_Acerplat_JR_10_5_2006_0100_JPG_orig_4108_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51980/MX.39122_Acerplat_JR_10_5_2006_0100_JPG_orig_4108_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.52013",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat JR 8_5_2006 0040_JPG orig_4107.jpg",
+        "documentIds": [
+          "40584"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.52013/MX.39122_Acerplat_JR_8_5_2006_0040_JPG_orig_4107.jpg",
+        "full": "https://image.laji.fi/MM.52013/MX.39122_Acerplat_JR_8_5_2006_0040_JPG_orig_4107.jpg",
+        "large": "https://image.laji.fi/MM.52013/MX.39122_Acerplat_JR_8_5_2006_0040_JPG_orig_4107_large.jpg",
+        "square": "https://image.laji.fi/MM.52013/MX.39122_Acerplat_JR_8_5_2006_0040_JPG_orig_4107_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.52013/MX.39122_Acerplat_JR_8_5_2006_0040_JPG_orig_4107_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51941",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat C1 JR43067.JPG",
+        "documentIds": [
+          "40581"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51941/MX.39122_Acerplat_C1_JR43067.JPG",
+        "full": "https://image.laji.fi/MM.51941/MX.39122_Acerplat_C1_JR43067.JPG",
+        "large": "https://image.laji.fi/MM.51941/MX.39122_Acerplat_C1_JR43067_large.jpg",
+        "square": "https://image.laji.fi/MM.51941/MX.39122_Acerplat_C1_JR43067_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51941/MX.39122_Acerplat_C1_JR43067_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51968",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807428,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.39122_Acerplat B2 JR02591.JPG",
+        "documentIds": [
+          "40577"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.39122"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51968/MX.39122_Acerplat_B2_JR02591.JPG",
+        "full": "https://image.laji.fi/MM.51968/MX.39122_Acerplat_B2_JR02591.JPG",
+        "large": "https://image.laji.fi/MM.51968/MX.39122_Acerplat_B2_JR02591_large.jpg",
+        "square": "https://image.laji.fi/MM.51968/MX.39122_Acerplat_B2_JR02591_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51968/MX.39122_Acerplat_B2_JR02591_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 280,
+    "name": {
+      "fi": "Acer-Butomus",
+      "sv": "",
+      "en": "Acer-Butomus"
+    },
+    "orderNo": 1,
+    "pinkka": {
+      "id": 7,
+      "name": {
+        "sv": "",
+        "fi": "IPS-177 Fennoscandian flora",
+        "en": "IPS-177 Fennoscandian flora"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "",
+      "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+    },
+    "imageId": "MM.123737",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

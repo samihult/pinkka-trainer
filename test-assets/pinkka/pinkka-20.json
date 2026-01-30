@@ -1,0 +1,52 @@
+{
+  "id": 20,
+  "name": {
+    "fi": "BIO-103 Eliöiden monimuotoisuus: eläimet"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": false,
+  "description": {
+    "fi": "Tämä pinkka näkyy niinä aikoina, jolloin opiskelijat voivat tenttiä kokonaisuuden kasvi- ja sieniosuutta. Tavallinen, myös kasvit, levät ja sienet sisältävä pinkka tulee näkyviin kun tentti on päättynyt."
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 662,
+      "name": {
+        "fi": "Hyönteiset ja alkuhyönteiset"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 663,
+      "name": {
+        "fi": "Äyriäiset"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 664,
+      "name": {
+        "fi": "Muut selkärangattomat"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 665,
+      "name": {
+        "fi": "Kalat"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

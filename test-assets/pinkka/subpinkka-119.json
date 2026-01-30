@@ -1,0 +1,97 @@
+{
+  "id": 119,
+  "name": {
+    "fi": "Sanikkaiset",
+    "sv": "Ormbunksväxter"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 15,
+    "name": {
+      "fi": "Luonnonvaraiset lääkekasvit",
+      "sv": "Farmakognosi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.50412",
+  "speciesCards": [
+    {
+      "taxonId": "MX.37750",
+      "vernacularName": {
+        "sv": "träjon",
+        "fi": "kivikkoalvejuuri"
+      },
+      "scientificName": "Dryopteris filix-mas",
+      "id": 26418,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37721",
+      "vernacularName": {
+        "sv": "åkerfräken",
+        "fi": "peltokorte"
+      },
+      "scientificName": "Equisetum arvense",
+      "id": 26416,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37694",
+      "vernacularName": {
+        "fi": "katinlieko",
+        "sv": "mattlummer"
+      },
+      "scientificName": "Lycopodium clavatum",
+      "id": 26424,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37796",
+      "vernacularName": {
+        "fi": "pohjankallioimarre",
+        "sv": "stensöta"
+      },
+      "scientificName": "Polypodium vulgare",
+      "id": 26428,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.50412",
+    "urls": {
+      "original": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140.jpg",
+      "full": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140.jpg",
+      "large": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140.jpg",
+      "square": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.50412/MX.37750_Dryofmas_JR_25_5_2007_140_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1412790431,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_meta_fix",
+      "originalFilename": "MX.37750_Dryofmas JR 25_5_2007 140.jpg",
+      "documentIds": [
+        "9485"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.37750"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

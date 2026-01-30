@@ -1,0 +1,405 @@
+{
+  "taxonId": "MX.53315",
+  "vernacularName": {
+    "fi": "härkäsimppu",
+    "sv": "hornsimpa",
+    "en": "Fourhorn sculpin"
+  },
+  "scientificName": "Myoxocephalus quadricornis",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Tumma h&#228;rk&#228;simppu on kylmien vesien laji, jonka mereisill&#228; muodoilla on p&#228;&#228;ss&#228;&#228;n lajille ominaiset nelj&#228; n&#228;kyv&#228;&#228; kyhmy&#228;. Sis&#228;vesimuodoilta kyhmyt puuttuvat.<br/>Paino tavallisesti 100&#8211;300 g, enint&#228;&#228;n noin 1 kg.&#160; P&#228;&#228; on suuri ja litte&#228;. Pystysuunnassa litistynyt ruumis kapenee nuijamaisesti taaksep&#228;in ja kapea pyrst&#246;nvarsi on l&#228;hes koko per&#228;ev&#228;n mittainen. Merialueen h&#228;rk&#228;simpuilla on p&#228;&#228;ss&#228; nelj&#228; huomattavaa luukyhmy&#228;. Uimarakko puuttuu. Yleisv&#228;ritys on ruskean-, mustan tai harmaankirjava ja vatsapuoli on vaalea. Ihossa voi olla laikku- tai raitakuviointia. Suuressa ja leve&#228;ss&#228; suussa on pienet hampaat. Ev&#228;t ovat kookkaat ja kirkkaan v&#228;riset. Rintaev&#228;t ovat py&#246;re&#228;t ja suuret. Selk&#228;ev&#228;t ovat korkeat ja toisistaan erill&#228;&#228;n.<br/></p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {
+        "fi": "<p>Samann&#228;k&#246;isi&#228; lajeja: j&#228;rviss&#228; kivi- ja kirjoev&#228;simppu, merialueella kivisimppu, isosimppu ja piikkisimppu.<br/>Sis&#228;vesiss&#228; h&#228;rk&#228;simpun erottaa kivi- ja kirjoev&#228;simpusta kiduskannen kalvon poimu, joka on h&#228;rk&#228;simpulla avonainen. Lis&#228;ksi h&#228;rk&#228;simpun pyrst&#246;nvarsi on pitk&#228; ja kapea. Merialueilla h&#228;rk&#228;simpun erottaa toisista simpuista sen luukyhmyjen avulla. Lis&#228;ksi h&#228;rk&#228;simpulla ei ole silmien v&#228;liss&#228; kuoppaa kuten isosimpulla.<br/></p>"
+      },
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Koko rannikko ja er&#228;&#228;t Etel&#228;-Suomen suuret j&#228;rvet. Reliktilaji.<br/></p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {
+        "fi": "<p>Rannikoiden murtovedet Kanadassa, Gr&#246;nlannissa, Ven&#228;j&#228;ll&#228; ja Alaskassa.<br/></p>"
+      },
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>H&#228;rk&#228;simppu on kylmien vesien pohjakala, joka oleskelee kes&#228;t syv&#228;ll&#228; kylm&#228;ss&#228; alusvedess&#228;. Syksyisin vesien viilentyess&#228; ne siirtyv&#228;t matalammille alueille rantaan tai karikoiden tuntumaan.<br/></p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Elintavat",
+        "sv": "Beteende",
+        "en": "Behaviour"
+      },
+      "body": {
+        "fi": "<p>H&#228;rk&#228;simppu on hidasliikkeinen ja paikallinen kala, joka pysyttelee suurimmaksi osin pohjalla makaamassa. Syksyll&#228; valoisan ajan lyhentyess&#228; sen ravinnonhaku ja aktiivisuus siirtyy p&#228;iv&#228;saikaan. Vaikka h&#228;rk&#228;simppu on pohjakala, voi se toisinaan nousta my&#246;s v&#228;liveteen ravinnon per&#228;ss&#228;. H&#228;rk&#228;simpun ravinto koostuu p&#228;&#228;asiassa &#228;yri&#228;isist&#228; (esim. kilkit, katkat ja massiaiset) ja pikkukaloista (kivinilkka, tokko, silakka, kilohaili ja kuore).<br/></p>"
+      },
+      "predicate": "MX.behaviour"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {
+        "fi": "<p>H&#228;rk&#228;simpun kutu ajoittuu keskelle talvea joulu- ja helmikuun alun v&#228;liselle ajalle. Kutualueena ovat 10&#8211;20 metrin syvyydell&#228; olevat hiekka- ja liejupohjat, joille koiras kaivaa kuopan m&#228;ti&#228; varten. Hedelm&#246;itt&#228;misen j&#228;lkeen koiras j&#228;&#228; vahtimaan munia, jotka kehittyv&#228;t noin 100 p&#228;iv&#228;ss&#228;. Kuoriuduttuaan poikaset viett&#228;v&#228;t aikaa vapaassa vedess&#228; keskikes&#228;&#228;n saakka, siirtyen t&#228;m&#228;n j&#228;lkeen lajille tyypilliseen pohjael&#228;m&#228;&#228;n. Sukukypsyyden ne saavuttavat 2&#8211;3-vuotiaina. H&#228;rk&#228;simpun suurin tunnettu ik&#228; on 13 vuotta.<br/></p>"
+      },
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37602",
+      "vernacularName": {
+        "fi": "eläimet",
+        "sv": "djur",
+        "en": "Animals"
+      },
+      "scientificName": "Animalia",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.37606",
+      "vernacularName": {
+        "sv": "ryggsträngsdjur",
+        "fi": "selkäjänteiset",
+        "en": "Chordates"
+      },
+      "scientificName": "Chordata",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.37608",
+      "vernacularName": {
+        "fi": "selkärankaiset",
+        "sv": "ryggradsdjur",
+        "en": "Vertebrates"
+      },
+      "scientificName": "Vertebrata",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.5111696",
+      "vernacularName": {
+        "sv": "fiskar",
+        "fi": "kalat",
+        "en": "Fishes"
+      },
+      "scientificName": "Pisces",
+      "rankName": {
+        "fi": "yläluokka",
+        "sv": "överklass",
+        "en": "superclass"
+      },
+      "rank": "MX.superclass"
+    },
+    {
+      "taxonId": "MX.37669",
+      "vernacularName": {
+        "fi": "viuhkaeväkalat",
+        "sv": "strålfeniga fiskar",
+        "en": "Ray-finned fishes"
+      },
+      "scientificName": "Actinopteri",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.53217",
+      "vernacularName": {
+        "fi": "ahvenkalat",
+        "sv": "abborrartade fiskar"
+      },
+      "scientificName": "Perciformes",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.53314",
+      "vernacularName": {
+        "sv": "kindpansrade fiskar",
+        "fi": "simppukalat"
+      },
+      "scientificName": "Cottoidei",
+      "rankName": {
+        "fi": "alalahko",
+        "sv": "underordning",
+        "en": "suborder"
+      },
+      "rank": "MX.suborder"
+    },
+    {
+      "taxonId": "MX.5084709",
+      "vernacularName": {
+        "fi": "merisimput",
+        "en": "Marine sculpins"
+      },
+      "scientificName": "Psychrolutidae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.5121777",
+      "vernacularName": null,
+      "scientificName": "Myoxocephalinae",
+      "rankName": {
+        "fi": "alaheimo",
+        "sv": "underfamilj",
+        "en": "subfamily"
+      },
+      "rank": "MX.subfamily"
+    },
+    {
+      "taxonId": "MX.53209",
+      "vernacularName": null,
+      "scientificName": "Myoxocephalus",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.53315",
+      "vernacularName": {
+        "fi": "härkäsimppu",
+        "sv": "hornsimpa",
+        "en": "Fourhorn sculpin"
+      },
+      "scientificName": "Myoxocephalus quadricornis",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 1659,
+  "images": [
+    {
+      "id": "MM.88080",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807421,
+        "license": "MZ.intellectualRightsARR",
+        "rightsOwner": "Markku Varjo",
+        "secret": false,
+        "capturers": [
+          "Markku Varjo"
+        ],
+        "uploadedBy": "nhellen@helsinki.fi",
+        "originalFilename": "Härkäsimpun pää MV.jpg",
+        "documentIds": [
+          "228"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.53315"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.88080/H%C3%A4rk%C3%A4simpun_p%C3%A4%C3%A4_MV.jpg",
+        "full": "https://image.laji.fi/MM.88080/H%C3%A4rk%C3%A4simpun_p%C3%A4%C3%A4_MV.jpg",
+        "large": "https://image.laji.fi/MM.88080/H%C3%A4rk%C3%A4simpun_p%C3%A4%C3%A4_MV_large.jpg",
+        "square": "https://image.laji.fi/MM.88080/H%C3%A4rk%C3%A4simpun_p%C3%A4%C3%A4_MV_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.88080/H%C3%A4rk%C3%A4simpun_p%C3%A4%C3%A4_MV_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.88079",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807421,
+        "license": "MZ.intellectualRightsARR",
+        "rightsOwner": "Markku Varjo",
+        "secret": false,
+        "capturers": [
+          "Markku Varjo"
+        ],
+        "uploadedBy": "nhellen@helsinki.fi",
+        "originalFilename": "Härkäsimppu MV.jpg",
+        "documentIds": [
+          "228"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.53315"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.88079/H%C3%A4rk%C3%A4simppu_MV.jpg",
+        "full": "https://image.laji.fi/MM.88079/H%C3%A4rk%C3%A4simppu_MV.jpg",
+        "large": "https://image.laji.fi/MM.88079/H%C3%A4rk%C3%A4simppu_MV_large.jpg",
+        "square": "https://image.laji.fi/MM.88079/H%C3%A4rk%C3%A4simppu_MV_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.88079/H%C3%A4rk%C3%A4simppu_MV_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.88373",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807421,
+        "license": "MZ.intellectualRightsARR",
+        "rightsOwner": "Markku Varjo",
+        "secret": false,
+        "capturers": [
+          "Markku Varjo"
+        ],
+        "uploadedBy": "nhellen@helsinki.fi",
+        "originalFilename": "härkäsimppu.jpg",
+        "documentIds": [
+          "254"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.53315"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.88373/h%C3%A4rk%C3%A4simppu.jpg",
+        "full": "https://image.laji.fi/MM.88373/h%C3%A4rk%C3%A4simppu.jpg",
+        "large": "https://image.laji.fi/MM.88373/h%C3%A4rk%C3%A4simppu_large.jpg",
+        "square": "https://image.laji.fi/MM.88373/h%C3%A4rk%C3%A4simppu_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.88373/h%C3%A4rk%C3%A4simppu_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 24,
+    "name": {
+      "fi": "Kalat"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 4,
+      "name": {
+        "fi": "Vesieliöiden lajintunnistus"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "Suomen vakituiset kalalajit."
+    },
+    "imageId": "MM.86260",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

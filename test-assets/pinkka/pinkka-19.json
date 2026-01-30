@@ -1,0 +1,69 @@
+{
+  "id": 19,
+  "name": {
+    "fi": "Kaskadian kasveja"
+  },
+  "hideScientific": false,
+  "hideVernacular": false,
+  "published": false,
+  "description": {
+    "fi": "526207 Kaskadian kasveja, 3 op\nBio- ja ympäristötieteellinen tiedekunta\nHelsingin yliopisto"
+  },
+  "owner": "ellaiho@helsinki.fi",
+  "permissions": [
+    "jrikkine@helsinki.fi",
+    "saralind@helsinki.fi"
+  ],
+  "subPinkkas": [
+    {
+      "id": 131,
+      "name": {
+        "fi": "Sammalet"
+      },
+      "orderNo": 0,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 132,
+      "name": {
+        "fi": "Jäkälät"
+      },
+      "orderNo": 1,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 133,
+      "name": {
+        "fi": "Sanikkaiset"
+      },
+      "orderNo": 2,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 134,
+      "name": {
+        "fi": "Paljassiemeniset"
+      },
+      "orderNo": 3,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 136,
+      "name": {
+        "fi": "Kaksisirkkaiset"
+      },
+      "orderNo": 4,
+      "entityType": "SUB_PINKKA"
+    },
+    {
+      "id": 135,
+      "name": {
+        "fi": "Yksisirkkaiset"
+      },
+      "orderNo": 5,
+      "entityType": "SUB_PINKKA"
+    }
+  ],
+  "hasPassword": false,
+  "entityType": "PINKKA"
+}

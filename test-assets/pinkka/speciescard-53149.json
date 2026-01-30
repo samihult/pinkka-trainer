@@ -1,0 +1,187 @@
+{
+  "taxonId": "MX.70000",
+  "vernacularName": {
+    "sv": "hakmaskar",
+    "fi": "väkäkärsämadot",
+    "en": "Thorny-headed worms"
+  },
+  "scientificName": "Acanthocephala",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Sukkulamaisia tai tasapaksuja matoja, joiden pituus vaihtelee 0.15 - 65 cm.</p><p>Tunnusomaista etupään kapeahko sisäänvedettävä kärsä (proboscis), jossa on väkäsiä. Väkästen avulla loisiva mato kiinnityy isäntänsä suoleen.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Aikuisina väkäkärsämadot ovat selkärankaisten suolistoloisia.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Elintavat",
+        "sv": "Beteende",
+        "en": "Behaviour"
+      },
+      "body": {},
+      "predicate": "MX.behaviour"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {
+        "fi": "<p>Elämänkiertoon kuuluu vähintään yksi väli-isäntä, joka on äyriäinen (yleensä katka, esim. <i><a href=\"https://fmnh-ws-prod.it.helsinki.fi/pinkka/#/speciescards/41495\">Gammarus</a></i>) tai hyönteinen.</p><p>Sen lisäksi elämänkierrossa on usein myös siirtoisäntä (kala), jonka avulla loinen pääsee pää-isäntäänsä.</p><p>Suomessä pääsiäntä on usein vesilintu tai hylje.</p>"
+      },
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Väkäkärsämadot luokitellaan samaan Syndermata-pääjaksoon rataseläimien (Rotifera) kanssa.</p><p>Malte Sielaff, Hanno Schmidt, Torsten H. Struck, David Rosenkranz, David B. Mark Welch, Thomas Hankeln, Holger Herlyn,</p><p>Phylogeny of Syndermata (syn. Rotifera): Mitochondrial gene order verifies epizoic Seisonidea as sister to endoparasitic Acanthocephala within monophyletic Hemirotifera, <a href=\"https://www.sciencedirect.com/science/article/pii/S105579031500370X#ab010\">Molecular Phylogenetics and Evolution,Volume 96,2016,Pages 79-92</a></p>"
+      },
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Kuvaustekstin laatijat",
+        "sv": "Författare av artbeskrivningen",
+        "en": "Description text authors"
+      },
+      "body": {},
+      "predicate": "MX.speciesCardAuthors"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37602",
+      "vernacularName": {
+        "fi": "eläimet",
+        "sv": "djur",
+        "en": "Animals"
+      },
+      "scientificName": "Animalia",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.70000",
+      "vernacularName": {
+        "sv": "hakmaskar",
+        "fi": "väkäkärsämadot",
+        "en": "Thorny-headed worms"
+      },
+      "scientificName": "Acanthocephala",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    }
+  ],
+  "id": 53149,
+  "images": [],
+  "subPinkka": {
+    "id": 664,
+    "name": {
+      "fi": "Muut selkärangattomat"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 20,
+      "name": {
+        "fi": "BIO-103 Eliöiden monimuotoisuus: eläimet"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": false,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.156011",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

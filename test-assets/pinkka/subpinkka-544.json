@@ -1,0 +1,295 @@
+{
+  "id": 544,
+  "name": {
+    "fi": "Sammalet"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 5,
+    "name": {
+      "fi": "BIO-103 Eliöiden monimuotoisuus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.53716",
+  "speciesCards": [
+    {
+      "taxonId": "MX.43789",
+      "vernacularName": {
+        "fi": "kalliokarstasammal",
+        "sv": "sotmossa"
+      },
+      "scientificName": "Andreaea rupestris",
+      "id": 46280,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43805",
+      "vernacularName": {
+        "fi": "suonihuopasammal",
+        "sv": "räffelmossa"
+      },
+      "scientificName": "Aulacomnium palustre",
+      "id": 46279,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43496",
+      "vernacularName": {
+        "sv": "brännmossa",
+        "fi": "metsäkulosammal"
+      },
+      "scientificName": "Ceratodon purpureus",
+      "id": 51076,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43502",
+      "vernacularName": {
+        "sv": "palmmossa",
+        "fi": "palmusammal"
+      },
+      "scientificName": "Climacium dendroides",
+      "id": 51081,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43553",
+      "vernacularName": {
+        "fi": "kangaskynsisammal",
+        "sv": "vågig kvastmossa"
+      },
+      "scientificName": "Dicranum polysetum",
+      "id": 51069,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43554",
+      "vernacularName": {
+        "sv": "kvastmossa",
+        "fi": "kivikynsisammal"
+      },
+      "scientificName": "Dicranum scoparium",
+      "id": 51078,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43613",
+      "vernacularName": {
+        "sv": "stor näckmossa",
+        "fi": "isonäkinsammal"
+      },
+      "scientificName": "Fontinalis antipyretica",
+      "id": 51067,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43983",
+      "vernacularName": {
+        "sv": "kransmossa",
+        "fi": "metsäliekosammal"
+      },
+      "scientificName": "Hylocomiadelphus triquetrus",
+      "id": 51072,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43668",
+      "vernacularName": {
+        "fi": "metsäkerrossammal",
+        "sv": "husmossa"
+      },
+      "scientificName": "Hylocomium splendens",
+      "id": 54494,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43673",
+      "vernacularName": {
+        "sv": "cypressfläta",
+        "fi": "kalliopalmikkosammal"
+      },
+      "scientificName": "Hypnum cupressiforme",
+      "id": 51079,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44366",
+      "vernacularName": {
+        "fi": "keuhkosammal",
+        "sv": "lungmossa"
+      },
+      "scientificName": "Marchantia polymorpha",
+      "id": 58995,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44392",
+      "vernacularName": {
+        "fi": "isokastesammal",
+        "sv": "praktbräkenmossa"
+      },
+      "scientificName": "Plagiochila asplenioides",
+      "id": 51070,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43877",
+      "vernacularName": {
+        "fi": "metsälehväsammal",
+        "sv": "lundpraktmossa"
+      },
+      "scientificName": "Plagiomnium cuspidatum",
+      "id": 51082,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43901",
+      "vernacularName": {
+        "sv": "väggmossa",
+        "fi": "seinäsammal"
+      },
+      "scientificName": "Pleurozium schreberi",
+      "id": 51068,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43922",
+      "vernacularName": {
+        "sv": "vanlig nickmossa",
+        "fi": "nuokkuvarstasammal"
+      },
+      "scientificName": "Pohlia nutans",
+      "id": 51083,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43933",
+      "vernacularName": {
+        "fi": "korpikarhunsammal",
+        "sv": "vanlig björnmossa"
+      },
+      "scientificName": "Polytrichum commune",
+      "id": 51066,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43936",
+      "vernacularName": {
+        "sv": "enbjörnmossa",
+        "fi": "kangaskarhunsammal"
+      },
+      "scientificName": "Polytrichum juniperinum",
+      "id": 51080,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44180",
+      "vernacularName": {
+        "sv": "stor fransmossa",
+        "fi": "isokorallisammal"
+      },
+      "scientificName": "Ptilidium ciliare",
+      "id": 51084,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43956",
+      "vernacularName": {
+        "fi": "sulkasammal",
+        "sv": "kammossa"
+      },
+      "scientificName": "Ptilium crista-castrensis",
+      "id": 51073,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43979",
+      "vernacularName": {
+        "fi": "lehtoruusukesammal",
+        "sv": "rosmossa"
+      },
+      "scientificName": "Rhodobryum roseum",
+      "id": 51071,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43981",
+      "vernacularName": {
+        "sv": "gräshakmossa",
+        "fi": "niittyliekosammal"
+      },
+      "scientificName": "Rhytidiadelphus squarrosus",
+      "id": 51077,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44044",
+      "vernacularName": {
+        "fi": "ruskorahkasammal",
+        "sv": "rostvitmossa"
+      },
+      "scientificName": "Sphagnum fuscum",
+      "id": 51074,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.5001616",
+      "vernacularName": {
+        "sv": "tät praktvitmossa",
+        "fi": "punarahkasammal"
+      },
+      "scientificName": "Sphagnum medium",
+      "id": 51075,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44062",
+      "vernacularName": {
+        "fi": "okarahkasammal",
+        "sv": "spärrvitmossa"
+      },
+      "scientificName": "Sphagnum squarrosum",
+      "id": 46299,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.53716",
+    "urls": {
+      "original": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034.JPG",
+      "full": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034.JPG",
+      "large": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034_large.jpg",
+      "square": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.53716/MX.43979_Rhodrose_JR_23_9_2007_034_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1412791982,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_meta_fix",
+      "originalFilename": "MX.43979_Rhodrose JR 23_9_2007 034.JPG",
+      "documentIds": [
+        "39618"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.43979"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

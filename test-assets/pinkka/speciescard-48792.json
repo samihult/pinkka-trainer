@@ -1,0 +1,931 @@
+{
+  "taxonId": "MX.41330",
+  "vernacularName": {
+    "sv": "baltnycklar",
+    "fi": "baltiankämmekkä"
+  },
+  "scientificName": "Dactylorhiza baltica",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "fi": "<p>Monivuotinen tanakka kämmekkä.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>30–50 cm.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {
+        "fi": "<p>Tanakka, paksu, varren keskiontelo on selvä.</p>"
+      },
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Kapeansoikeita pitkiä lehtiä on 4–8. Lehdet ovat päältä tummanvihreitä ja ruskeatäpläisiä, alta vaaleanvihreitä ja täplättömiä.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {
+        "fi": "<p>Kukinto on hyvin pitkä ja tiheä. Kukat ovat tummanpunaisia, tumman kirjavia. Kukkien alimmat tukilehdet ovat selvästi kukkia pidempiä, ja tukilehtien laidat ovat hienosahaisia. Kukan huuli on kolmiliuskainen ja kannuksellinen.</p>"
+      },
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {
+        "fi": "<p>Kota.</p>"
+      },
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {
+        "fi": "<p>Kesäkuu.</p>"
+      },
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Merenrantaniitty, kalkinsuosija.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {
+        "fi": "<p>Yksi populaatio itäisellä Uudellamaalla on melko tavanomaisella korkeakasvuisella merenrantaniityllä rannan tervalepikosta tihkuvan kosteikon suulla, jossa se jää ajoittain korkean veden alle. Seuralaisina kasvavat mm. mesiangervo (<i>Filipendula ulmaria</i>), käenkukka (<i>Lychnis flos-cuculi</i>), rantanätkelmä (<i>Lathyrus palustris</i>), luhtalemmikki (<i>Myosotis scorpioides</i>), ruohokanukka (<i>Cornus suecica</i>) ja rantatyräkki (<i>Euphorbia palustris</i>). Yksilömäärä on vaihdellut vuosittain, enimmillään se on ollut 20, joinain vuosina näkyviin ei ole noussut yhtään kasvia. Muiden kämmeköiden tapaan baltiankämmekän siemenet leviävät tuulten mukana, ja on mahdollista, että lajia voisi löytyä enemmänkin Suomesta. Siemenellinen lisääntyminen on tehokasta, ja Leningradin alueella kasvin on todettu viime vuosikymmeninä levinneen ja runsastuneen tuntuvasti. Siellä se kasvaa usein ihmistoiminnan muokkaamilla paikoilla, tien -ja radanvarsilla, ojissa ja hylätyissä louhoksissa.</p>"
+      },
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "fi": "<p>Aiemmin&#xa0;tunnettiin vain yksi monivartinen yksilö Dragsfjärdin saaristosta, josta&#xa0;kasvi löydettiin 1985. Se varastettiin. Myöhemmin on tutkijoiden tietoon tullut uusia esiintymiä, kuten itäiseltä Uudeltamaalta, josta selvästi vakiintunut pieni populaatio oli löytynyt jo 1982. Baltiankämmekäksi epäilty kasviyksilö löytyi lisäksi 2009 Imatralta, paikalta jolla säilytettiin Venäjältä tuotua puutavaraa. </p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {
+        "fi": "<p>Baltiankämmekän levinneisyys keskittyy Baltian alueelle, Valko-Venäjälle ja Venäjän luoteisosiin, pääasiassa Leningradin alueelle, mutta se on löydetty myös Karjalan tasavallasta ja Tveristä. </p>"
+      },
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "sv": "Bevarande i Finland",
+        "fi": "Uhanalaisuus Suomessa",
+        "en": "Conservation status in Finland"
+      },
+      "body": {
+        "fi": "<p>Erittäin uhanalainen (EN).</p><p>Rauhoitettu.</p><p>Erityisesti suojeltava.</p><p>Dragsfjärdin yksilö varastettiin toukokuussa 2008. Keräilyä voi edelleen pitää varteenotettavana uhkana kämmekkäharvinaisuuksillemme. Laidunnuksen loppumisesta ja Itämeren rehevöitymisestä seurannut rantaniittyjen umpeenkasvu voi muuttaa kasvupaikkoja sopimattomiksi. Uudenmaan populaation uhkana on järviruo'on leviäminen kasvupaikalle. Baltiankämmekkä etsintäkuulutettiin kesällä 2010, jolloin yleisöltä pyydettiin havaintoja kesäkuun alussa merenrantaniityillä havaituista kämmeköistä. Lopputuloksena oli kymmeniä havaintoja maariankämmeköistä sisämaassa, mutta ei yhtään baltiankämmekkän havaintoa. </p>"
+      },
+      "predicate": "MX.conservationStatusDescriptionFinland"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristön hoito-ohjeita",
+        "sv": "Instruktioner för hantering av habitat",
+        "en": "Instructions for habitat management"
+      },
+      "body": {
+        "fi": "<p>Rantaniityjen ennakoiva niitto.</p>"
+      },
+      "predicate": "MX.management"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Ryttäri, T. & Uotila, P. 2012: Teoksessa Ryttäri, T., Kalliovirta, M. & Lampinen, R. Julkaisijat Suomen ympäristökeskus ja Luonnontieteellinen keskusmuseo. Tammi. Helsinki. </p><p>Uotila, P. 2024: Orchidaceae. – Retkeilykasvio 5 p. Käsikirjoitus. Kasvimuseo. Helsinki.</p>"
+      },
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70035",
+      "vernacularName": null,
+      "scientificName": "Asparagales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.40029",
+      "vernacularName": {
+        "sv": "orkideer",
+        "fi": "kämmekkäkasvit"
+      },
+      "scientificName": "Orchidaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.40063",
+      "vernacularName": {
+        "sv": "handnycklar",
+        "fi": "liuskakämmekät"
+      },
+      "scientificName": "Dactylorhiza",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.40071",
+      "vernacularName": {
+        "fi": "toukokämmekkäryhmä"
+      },
+      "scientificName": "Dactylorhiza majalis -ryhmä",
+      "rankName": {
+        "sv": "aggregat",
+        "fi": "lajiryhmä",
+        "en": "aggregate"
+      },
+      "rank": "MX.aggregate"
+    },
+    {
+      "taxonId": "MX.41330",
+      "vernacularName": {
+        "sv": "baltnycklar",
+        "fi": "baltiankämmekkä"
+      },
+      "scientificName": "Dactylorhiza baltica",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 48792,
+  "images": [
+    {
+      "id": "MM.2256820",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR06756.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "Dactylorhiza majalis subsp. baltica",
+          "baltiankämmekkä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256820/JR06756.JPG",
+        "full": "https://image.laji.fi/MM.2256820/JR06756.JPG",
+        "large": "https://image.laji.fi/MM.2256820/JR06756_large.jpg",
+        "square": "https://image.laji.fi/MM.2256820/JR06756_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256820/JR06756_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2256821",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR06755.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "Dactylorhiza majalis subsp. baltica",
+          "baltiankämmekkä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256821/JR06755.JPG",
+        "full": "https://image.laji.fi/MM.2256821/JR06755.JPG",
+        "large": "https://image.laji.fi/MM.2256821/JR06755_large.jpg",
+        "square": "https://image.laji.fi/MM.2256821/JR06755_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256821/JR06755_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2256822",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR06754.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "baltiankämmekkä",
+          "Dactylorhiza majalis subsp. baltica"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256822/JR06754.JPG",
+        "full": "https://image.laji.fi/MM.2256822/JR06754.JPG",
+        "large": "https://image.laji.fi/MM.2256822/JR06754_large.jpg",
+        "square": "https://image.laji.fi/MM.2256822/JR06754_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256822/JR06754_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2256823",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR06753.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "Dactylorhiza majalis subsp. baltica",
+          "baltiankämmekkä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256823/JR06753.JPG",
+        "full": "https://image.laji.fi/MM.2256823/JR06753.JPG",
+        "large": "https://image.laji.fi/MM.2256823/JR06753_large.jpg",
+        "square": "https://image.laji.fi/MM.2256823/JR06753_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256823/JR06753_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2256824",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR06752.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "baltiankämmekkä",
+          "Dactylorhiza majalis subsp. baltica"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256824/JR06752.JPG",
+        "full": "https://image.laji.fi/MM.2256824/JR06752.JPG",
+        "large": "https://image.laji.fi/MM.2256824/JR06752_large.jpg",
+        "square": "https://image.laji.fi/MM.2256824/JR06752_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256824/JR06752_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2256818",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR06760.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "baltiankämmekkä",
+          "Dactylorhiza majalis subsp. baltica"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256818/JR06760.JPG",
+        "full": "https://image.laji.fi/MM.2256818/JR06760.JPG",
+        "large": "https://image.laji.fi/MM.2256818/JR06760_large.jpg",
+        "square": "https://image.laji.fi/MM.2256818/JR06760_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256818/JR06760_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2256819",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR06758.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "Dactylorhiza majalis subsp. baltica",
+          "baltiankämmekkä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256819/JR06758.JPG",
+        "full": "https://image.laji.fi/MM.2256819/JR06758.JPG",
+        "large": "https://image.laji.fi/MM.2256819/JR06758_large.jpg",
+        "square": "https://image.laji.fi/MM.2256819/JR06758_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256819/JR06758_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2256825",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR04852.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "Dactylorhiza majalis subsp. baltica",
+          "baltiankämmekkä"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256825/JR04852.JPG",
+        "full": "https://image.laji.fi/MM.2256825/JR04852.JPG",
+        "large": "https://image.laji.fi/MM.2256825/JR04852_large.jpg",
+        "square": "https://image.laji.fi/MM.2256825/JR04852_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256825/JR04852_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.2256826",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR04851.JPG",
+        "documentIds": [
+          "5516"
+        ],
+        "tags": [
+          "baltiankämmekkä",
+          "Dactylorhiza majalis subsp. baltica"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.2256826/JR04851.JPG",
+        "full": "https://image.laji.fi/MM.2256826/JR04851.JPG",
+        "large": "https://image.laji.fi/MM.2256826/JR04851_large.jpg",
+        "square": "https://image.laji.fi/MM.2256826/JR04851_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.2256826/JR04851_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.352622",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Dact balt 4.jpg",
+        "documentIds": [
+          "3661"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.352622/Dact_balt_4.jpg",
+        "full": "https://image.laji.fi/MM.352622/Dact_balt_4.jpg",
+        "large": "https://image.laji.fi/MM.352622/Dact_balt_4_large.jpg",
+        "square": "https://image.laji.fi/MM.352622/Dact_balt_4_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.352622/Dact_balt_4_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.352621",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Dact balt 5.jpg",
+        "documentIds": [
+          "3661"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.352621/Dact_balt_5.jpg",
+        "full": "https://image.laji.fi/MM.352621/Dact_balt_5.jpg",
+        "large": "https://image.laji.fi/MM.352621/Dact_balt_5_large.jpg",
+        "square": "https://image.laji.fi/MM.352621/Dact_balt_5_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.352621/Dact_balt_5_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.352620",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Dact balt 6.jpg",
+        "documentIds": [
+          "3661"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.352620/Dact_balt_6.jpg",
+        "full": "https://image.laji.fi/MM.352620/Dact_balt_6.jpg",
+        "large": "https://image.laji.fi/MM.352620/Dact_balt_6_large.jpg",
+        "square": "https://image.laji.fi/MM.352620/Dact_balt_6_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.352620/Dact_balt_6_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.352624",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Dact balt 2.jpg",
+        "documentIds": [
+          "3661"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.352624/Dact_balt_2.jpg",
+        "full": "https://image.laji.fi/MM.352624/Dact_balt_2.jpg",
+        "large": "https://image.laji.fi/MM.352624/Dact_balt_2_large.jpg",
+        "square": "https://image.laji.fi/MM.352624/Dact_balt_2_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.352624/Dact_balt_2_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.352623",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Dact balt 3.jpg",
+        "documentIds": [
+          "3661"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.352623/Dact_balt_3.jpg",
+        "full": "https://image.laji.fi/MM.352623/Dact_balt_3.jpg",
+        "large": "https://image.laji.fi/MM.352623/Dact_balt_3_large.jpg",
+        "square": "https://image.laji.fi/MM.352623/Dact_balt_3_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.352623/Dact_balt_3_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.352619",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807446,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Henry Väre",
+        "secret": false,
+        "capturers": [
+          "Henry Väre"
+        ],
+        "captureDateTime": 1767807446,
+        "uploadedBy": "huvare@helsinki.fi",
+        "originalFilename": "Dact balt 7.jpg",
+        "documentIds": [
+          "3661"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.41330"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.352619/Dact_balt_7.jpg",
+        "full": "https://image.laji.fi/MM.352619/Dact_balt_7.jpg",
+        "large": "https://image.laji.fi/MM.352619/Dact_balt_7_large.jpg",
+        "square": "https://image.laji.fi/MM.352619/Dact_balt_7_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.352619/Dact_balt_7_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 586,
+    "name": {
+      "fi": "Dactylorhiza-Gypsophila",
+      "sv": "Dactylorhiza-Gypsophila",
+      "en": "Dactylorhiza-Gypsophila"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 14,
+      "name": {
+        "fi": "IPS-178 Suomen uhanalaiset kasvit",
+        "sv": "IPS-178 Finlands hotade kärlväxtarter",
+        "en": "IPS-178 Threatened vascular plants of Finland"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": "",
+      "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+    },
+    "imageId": "MM.132491",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

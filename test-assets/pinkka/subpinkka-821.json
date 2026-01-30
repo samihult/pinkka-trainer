@@ -1,0 +1,325 @@
+{
+  "id": 821,
+  "name": {
+    "fi": "Bare ground",
+    "en": "Bare ground"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 17,
+    "name": {
+      "sv": "IPS-171 Finlands mossor och lavar",
+      "fi": "IPS-171 Suomen sammalet ja jäkälät",
+      "en": "IPS-171 Boreal bryophytes and lichens"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "",
+    "en": "Test your skills in identifying species on this page by pressing the link on the right. The program will offer 15 randomly selected species and you are expected to fill in the scientific names. Note that many plants are known by several synonym names and the program only recognizes the one that is currently accepted by the Finnish Biodiversity Information Facility.\n\nYou can access distribution maps and other information of each species by pressing the \"Read more at Laji.fi\" link at the bottom of the text column of each species card. Furthermore, you can check the systematic placement of each taxon by pressing the \"Taxonomy\" link and observe images of two taxa side by side using the \"Comparison\" tool."
+  },
+  "imageId": "MM.1607838",
+  "speciesCards": [
+    {
+      "taxonId": "MX.43768",
+      "vernacularName": {
+        "sv": "gruskammossa",
+        "fi": "ketohavusammal"
+      },
+      "scientificName": "Abietinella abietina",
+      "id": 59157,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43802",
+      "vernacularName": {
+        "fi": "pikkumyyränsammal",
+        "sv": "liten sågmossa"
+      },
+      "scientificName": "Atrichum tenellum",
+      "id": 59033,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43803",
+      "vernacularName": {
+        "sv": "vågig sågmossa",
+        "fi": "isomyyränsammal"
+      },
+      "scientificName": "Atrichum undulatum",
+      "id": 59158,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65327",
+      "vernacularName": {
+        "sv": "hattlav",
+        "fi": "törmänastajäkälä"
+      },
+      "scientificName": "Baeomyces rufus",
+      "id": 59032,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44260",
+      "vernacularName": {
+        "fi": "röyhelösammal",
+        "sv": "lerbålmossa"
+      },
+      "scientificName": "Blasia pusilla",
+      "id": 59031,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43813",
+      "vernacularName": {
+        "sv": "blek gräsmossa",
+        "fi": "ahosuikerosammal"
+      },
+      "scientificName": "Brachythecium albicans",
+      "id": 59160,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44285",
+      "vernacularName": {
+        "sv": "röd mikromossa",
+        "fi": "rusorahtusammal"
+      },
+      "scientificName": "Cephaloziella rubella",
+      "id": 59037,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65047",
+      "vernacularName": {
+        "sv": "rötbägarlav",
+        "fi": "törmätorvijäkälä"
+      },
+      "scientificName": "Cladonia cariosa",
+      "id": 59035,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65106",
+      "vernacularName": {
+        "fi": "nummitorvijäkälä",
+        "sv": "kuddbägarlav"
+      },
+      "scientificName": "Cladonia strepsilis",
+      "id": 59034,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65112",
+      "vernacularName": {
+        "fi": "sormitorvijäkälä",
+        "sv": "hornbägarlav"
+      },
+      "scientificName": "Cladonia subulata",
+      "id": 59038,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65120",
+      "vernacularName": {
+        "fi": "kerrostorvijäkälä",
+        "sv": "kransbägarlav"
+      },
+      "scientificName": "Cladonia verticillata",
+      "id": 59039,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43522",
+      "vernacularName": {
+        "sv": "myrsmaragdmossa",
+        "fi": "ojanukkasammal"
+      },
+      "scientificName": "Dicranella cerviculata",
+      "id": 59040,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43617",
+      "vernacularName": {
+        "fi": "nuotiosammal",
+        "sv": "spåmossa"
+      },
+      "scientificName": "Funaria hygrometrica",
+      "id": 59041,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44366",
+      "vernacularName": {
+        "fi": "keuhkosammal",
+        "sv": "lungmossa"
+      },
+      "scientificName": "Marchantia polymorpha",
+      "id": 59043,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44179",
+      "vernacularName": {
+        "sv": "kalklungmossa",
+        "fi": "hiidenkeuhkosammal"
+      },
+      "scientificName": "Marchantia quadrata",
+      "id": 60316,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66303",
+      "vernacularName": {
+        "sv": "styverlav",
+        "fi": "nuotionahkajäkälä"
+      },
+      "scientificName": "Peltigera didactyla",
+      "id": 60330,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66323",
+      "vernacularName": {
+        "fi": "ruskonahkajäkälä",
+        "sv": "krusig filtlav"
+      },
+      "scientificName": "Peltigera rufescens",
+      "id": 59044,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66326",
+      "vernacularName": {
+        "sv": "åderlav",
+        "fi": "suoninahkajäkälä"
+      },
+      "scientificName": "Peltigera venosa",
+      "id": 60156,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43905",
+      "vernacularName": {
+        "fi": "törmähiekkasammal",
+        "sv": "stor grävlingmossa"
+      },
+      "scientificName": "Pogonatum urnigerum",
+      "id": 59046,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43462",
+      "vernacularName": {
+        "fi": "rusohiirensammal",
+        "sv": "blekröd bryum"
+      },
+      "scientificName": "Ptychostomum pallens",
+      "id": 59047,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43962",
+      "vernacularName": {
+        "fi": "hietikkotierasammal",
+        "sv": "sandraggmossa"
+      },
+      "scientificName": "Racomitrium canescens",
+      "id": 59049,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43981",
+      "vernacularName": {
+        "sv": "gräshakmossa",
+        "fi": "niittyliekosammal"
+      },
+      "scientificName": "Rhytidiadelphus squarrosus",
+      "id": 59187,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44199",
+      "vernacularName": {
+        "fi": "törmähankasammal",
+        "sv": "rosettmossa"
+      },
+      "scientificName": "Riccia sorocarpa",
+      "id": 59048,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44208",
+      "vernacularName": {
+        "fi": "ojakinnassammal",
+        "sv": "jordskapania"
+      },
+      "scientificName": "Scapania curta",
+      "id": 59050,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.44095",
+      "vernacularName": {
+        "fi": "ahoneidonsammal",
+        "sv": "kalktujamossa"
+      },
+      "scientificName": "Thuidium recognitum",
+      "id": 59159,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.43853",
+      "vernacularName": {
+        "sv": "tranmossa",
+        "fi": "rutakaulasammal"
+      },
+      "scientificName": "Trematodon ambiguus",
+      "id": 59051,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.1607838",
+    "urls": {
+      "original": "https://image.laji.fi/MM.1607838/JR29433.JPG",
+      "full": "https://image.laji.fi/MM.1607838/JR29433.JPG",
+      "large": "https://image.laji.fi/MM.1607838/JR29433_large.jpg",
+      "square": "https://image.laji.fi/MM.1607838/JR29433_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.1607838/JR29433_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1610112353,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "captureDateTime": 1312892689,
+      "uploadedBy": "jrikkine@helsinki.fi",
+      "originalFilename": "JR29433.JPG",
+      "documentIds": [
+        "4716"
+      ],
+      "tags": [
+        "Blasia",
+        "Blasia pusilla",
+        "röyhelösammal"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.44260"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

@@ -1,0 +1,108 @@
+{
+  "id": 132,
+  "name": {
+    "fi": "Jäkälät"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 19,
+    "name": {
+      "fi": "Kaskadian kasveja"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": false,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": null,
+  "speciesCards": [
+    {
+      "taxonId": "MX.209667",
+      "vernacularName": {},
+      "scientificName": "Cetraria merrillii",
+      "id": 9747,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.210248",
+      "vernacularName": {},
+      "scientificName": "Teloschistes flavicans",
+      "id": 9756,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.210228",
+      "vernacularName": {},
+      "scientificName": "Sticta limbata",
+      "id": 9755,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.210227",
+      "vernacularName": {},
+      "scientificName": "Sticta fuliginosa",
+      "id": 9754,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209658",
+      "vernacularName": {},
+      "scientificName": "Ramalina menziesii",
+      "id": 9753,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.210165",
+      "vernacularName": {},
+      "scientificName": "Pseudocyphellaria anthraspis",
+      "id": 9752,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.210168",
+      "vernacularName": {},
+      "scientificName": "Pseudocyphellaria anomala",
+      "id": 9751,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.65598",
+      "vernacularName": {
+        "fi": "harmaamyhkyjäkälä",
+        "sv": "blank knöllav"
+      },
+      "scientificName": "Placopsis lambii",
+      "id": 9750,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.66076",
+      "vernacularName": {
+        "fi": "takkujäkälä",
+        "sv": "varglav"
+      },
+      "scientificName": "Letharia vulpina",
+      "id": 9749,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209670",
+      "vernacularName": {},
+      "scientificName": "Letharia columbiana",
+      "id": 9748,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.209663",
+      "vernacularName": {},
+      "scientificName": "Usnea rubicunda",
+      "id": 9757,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": null,
+  "entityType": "SUB_PINKKA"
+}

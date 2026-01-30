@@ -1,0 +1,196 @@
+{
+  "id": 766,
+  "name": {
+    "fi": "Metsät: lehtomaiset kankaat"
+  },
+  "orderNo": 1,
+  "pinkka": {
+    "id": 13,
+    "name": {
+      "fi": "BIO-503 Suomen kasvisto ja kasvillisuus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.82134",
+  "speciesCards": [
+    {
+      "taxonId": "MX.40593",
+      "vernacularName": {
+        "sv": "rödven",
+        "fi": "nurmirölli"
+      },
+      "scientificName": "Agrostis capillaris",
+      "id": 58211,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40567",
+      "vernacularName": {
+        "fi": "metsälauha",
+        "sv": "kruståtel"
+      },
+      "scientificName": "Avenella flexuosa",
+      "id": 58210,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39088",
+      "vernacularName": {
+        "sv": "mjölke",
+        "fi": "maitohorsma"
+      },
+      "scientificName": "Chamaenerion angustifolium",
+      "id": 58212,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40564",
+      "vernacularName": {
+        "fi": "nurmilauha",
+        "sv": "tuvtåtel"
+      },
+      "scientificName": "Deschampsia cespitosa",
+      "id": 58213,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37720",
+      "vernacularName": {
+        "sv": "ängsfräken",
+        "fi": "lehtokorte"
+      },
+      "scientificName": "Equisetum pratense",
+      "id": 58223,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37719",
+      "vernacularName": {
+        "sv": "skogsfräken",
+        "fi": "metsäkorte"
+      },
+      "scientificName": "Equisetum sylvaticum",
+      "id": 58221,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39343",
+      "vernacularName": {
+        "fi": "vanamo",
+        "sv": "linnea"
+      },
+      "scientificName": "Linnaea borealis",
+      "id": 58215,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.40241",
+      "vernacularName": {
+        "sv": "vårfryle",
+        "fi": "kevätpiippo"
+      },
+      "scientificName": "Luzula pilosa",
+      "id": 58214,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39633",
+      "vernacularName": {
+        "fi": "kangasmaitikka",
+        "sv": "ängskovall"
+      },
+      "scientificName": "Melampyrum pratense",
+      "id": 58218,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39632",
+      "vernacularName": {
+        "fi": "metsämaitikka",
+        "sv": "skogskovall"
+      },
+      "scientificName": "Melampyrum sylvaticum",
+      "id": 58216,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38634",
+      "vernacularName": {
+        "fi": "nuokkutalvikki",
+        "sv": "björkpyrola"
+      },
+      "scientificName": "Orthilia secunda",
+      "id": 58217,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.38590",
+      "vernacularName": {
+        "sv": "asp",
+        "fi": "metsähaapa",
+        "en": "Common aspen"
+      },
+      "scientificName": "Populus tremula",
+      "id": 58219,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.39728",
+      "vernacularName": {
+        "fi": "metsäkultapiisku",
+        "sv": "vanligt gullris"
+      },
+      "scientificName": "Solidago virgaurea subsp. virgaurea",
+      "id": 58224,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37691",
+      "vernacularName": {
+        "sv": "revlummer",
+        "fi": "riidenlieko"
+      },
+      "scientificName": "Spinulum annotinum",
+      "id": 58222,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.82134",
+    "urls": {
+      "original": "https://image.laji.fi/MM.82134/orig_28678.jpg",
+      "full": "https://image.laji.fi/MM.82134/orig_28678.jpg",
+      "large": "https://image.laji.fi/MM.82134/orig_28678.jpg",
+      "square": "https://image.laji.fi/MM.82134/orig_28678_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.82134/orig_28678_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1436185436,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_legacy_import",
+      "originalFilename": "orig_28678.jpg",
+      "documentIds": [
+        "28678"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.37720"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

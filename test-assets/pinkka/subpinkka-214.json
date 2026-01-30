@@ -1,0 +1,521 @@
+{
+  "id": 214,
+  "name": {
+    "fi": "Kasviplankton"
+  },
+  "orderNo": 0,
+  "pinkka": {
+    "id": 4,
+    "name": {
+      "fi": "Vesieliöiden lajintunnistus"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": "Suomen vesissä esiintyviä kasviplanktonryhmiä. Pinkka ei kata kaikkia meillä esiintyviä lajeja."
+  },
+  "imageId": "MM.118619",
+  "speciesCards": [
+    {
+      "taxonId": "MX.313102",
+      "vernacularName": {},
+      "scientificName": "Chroococcus",
+      "id": 25910,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70501",
+      "vernacularName": {
+        "fi": "tarttumalevät"
+      },
+      "scientificName": "Prymnesiophyceae",
+      "id": 25886,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70016",
+      "vernacularName": {
+        "fi": "piilevät"
+      },
+      "scientificName": "Bacillariophyta",
+      "id": 25885,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.53383",
+      "vernacularName": {
+        "fi": "panssarilevät"
+      },
+      "scientificName": "Dinophyceae",
+      "id": 25884,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313238",
+      "vernacularName": {},
+      "scientificName": "Ebria tripartita",
+      "id": 25883,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313163",
+      "vernacularName": {},
+      "scientificName": "Bacillaria paxillifera",
+      "id": 25911,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313200",
+      "vernacularName": {},
+      "scientificName": "Urosolenia eriensis",
+      "id": 25882,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313229",
+      "vernacularName": {},
+      "scientificName": "Monoraphidium",
+      "id": 25865,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313228",
+      "vernacularName": {},
+      "scientificName": "Kirchneriella",
+      "id": 25864,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313214",
+      "vernacularName": {},
+      "scientificName": "Eudorina",
+      "id": 25863,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313220",
+      "vernacularName": {},
+      "scientificName": "Pediastrum boryanum",
+      "id": 25862,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313124",
+      "vernacularName": {},
+      "scientificName": "Dinophysis acuminata",
+      "id": 25861,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313235",
+      "vernacularName": {},
+      "scientificName": "Staurastrum",
+      "id": 25860,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313232",
+      "vernacularName": {},
+      "scientificName": "Closterium",
+      "id": 25859,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313234",
+      "vernacularName": {},
+      "scientificName": "Cosmarium",
+      "id": 25858,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313333",
+      "vernacularName": {},
+      "scientificName": "Chaetoceros similis",
+      "id": 25857,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313174",
+      "vernacularName": {},
+      "scientificName": "Entomoneis ornata",
+      "id": 25856,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313332",
+      "vernacularName": {},
+      "scientificName": "Entomoneis paludosa",
+      "id": 25855,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313328",
+      "vernacularName": {},
+      "scientificName": "Heterocapsa triquetra",
+      "id": 25854,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313186",
+      "vernacularName": {},
+      "scientificName": "Skeletonema",
+      "id": 25866,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313182",
+      "vernacularName": {},
+      "scientificName": "Melosira lineata",
+      "id": 25867,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313183",
+      "vernacularName": {},
+      "scientificName": "Melosira moniliformis",
+      "id": 25868,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.292270",
+      "vernacularName": {
+        "sv": "konjugater",
+        "fi": "yhtymälevät"
+      },
+      "scientificName": "Conjugatophyceae",
+      "id": 25881,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70703",
+      "vernacularName": {},
+      "scientificName": "Chlorophyceae",
+      "id": 25879,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70142",
+      "vernacularName": {
+        "fi": "silmälevät"
+      },
+      "scientificName": "Euglenophyceae",
+      "id": 25878,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.292118",
+      "vernacularName": {
+        "fi": "sinilevät"
+      },
+      "scientificName": "Cyanophyceae",
+      "id": 25877,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70495",
+      "vernacularName": {
+        "fi": "nielulevät"
+      },
+      "scientificName": "Cryptophyceae",
+      "id": 25876,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.70515",
+      "vernacularName": {
+        "fi": "kultalevät",
+        "sv": "guldalger"
+      },
+      "scientificName": "Chrysophyceae",
+      "id": 25875,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313331",
+      "vernacularName": {},
+      "scientificName": "Bitrichia chodatii",
+      "id": 25874,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313149",
+      "vernacularName": {},
+      "scientificName": "Mallomonas",
+      "id": 25873,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313150",
+      "vernacularName": {},
+      "scientificName": "Synura",
+      "id": 25872,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313152",
+      "vernacularName": {},
+      "scientificName": "Uroglena",
+      "id": 25871,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313146",
+      "vernacularName": {},
+      "scientificName": "Dinobryon",
+      "id": 25870,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313148",
+      "vernacularName": {},
+      "scientificName": "Dinobryon bavaricum",
+      "id": 25869,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313125",
+      "vernacularName": {},
+      "scientificName": "Dinophysis norvegica",
+      "id": 25853,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313126",
+      "vernacularName": {},
+      "scientificName": "Dinophysis rotundata",
+      "id": 25852,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313223",
+      "vernacularName": {},
+      "scientificName": "Acutodesmus",
+      "id": 25835,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313225",
+      "vernacularName": {},
+      "scientificName": "Volvox",
+      "id": 25833,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313217",
+      "vernacularName": {},
+      "scientificName": "Oocystis",
+      "id": 25832,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313196",
+      "vernacularName": {},
+      "scientificName": "Thalassiosira baltica",
+      "id": 25831,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313154",
+      "vernacularName": {},
+      "scientificName": "Aulacoseira",
+      "id": 25830,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313167",
+      "vernacularName": {},
+      "scientificName": "Chaetoceros subtilis",
+      "id": 25829,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313166",
+      "vernacularName": {},
+      "scientificName": "Chaetoceros minimus",
+      "id": 25828,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313165",
+      "vernacularName": {},
+      "scientificName": "Chaetoceros wighamii",
+      "id": 25827,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313170",
+      "vernacularName": {},
+      "scientificName": "Coscinodiscus granii",
+      "id": 25826,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313191",
+      "vernacularName": {},
+      "scientificName": "Tabellaria flocculosa",
+      "id": 25825,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313177",
+      "vernacularName": {},
+      "scientificName": "Fragilaria crotonensis",
+      "id": 25823,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313157",
+      "vernacularName": {},
+      "scientificName": "Asterionella formosa",
+      "id": 25822,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313111",
+      "vernacularName": {},
+      "scientificName": "Nodularia",
+      "id": 25848,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313103",
+      "vernacularName": {},
+      "scientificName": "Dolichospermum",
+      "id": 25849,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313224",
+      "vernacularName": {},
+      "scientificName": "Desmodesmus",
+      "id": 25836,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313222",
+      "vernacularName": {},
+      "scientificName": "Scenedesmus",
+      "id": 25837,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313099",
+      "vernacularName": {},
+      "scientificName": "Aphanizomenon",
+      "id": 25847,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313221",
+      "vernacularName": {},
+      "scientificName": "Pediastrum duplex",
+      "id": 25838,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313135",
+      "vernacularName": {},
+      "scientificName": "Peridiniella catenata",
+      "id": 25851,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313132",
+      "vernacularName": {},
+      "scientificName": "Ceratium hirundinella",
+      "id": 25850,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313106",
+      "vernacularName": {},
+      "scientificName": "Microcystis wesenbergii",
+      "id": 25843,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313113",
+      "vernacularName": {},
+      "scientificName": "Woronichinia",
+      "id": 25846,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313107",
+      "vernacularName": {},
+      "scientificName": "Microcystis viridis",
+      "id": 25844,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313110",
+      "vernacularName": {},
+      "scientificName": "Merismopedia",
+      "id": 25845,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313204",
+      "vernacularName": {},
+      "scientificName": "Eutreptiella",
+      "id": 25842,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313206",
+      "vernacularName": {},
+      "scientificName": "Euglena",
+      "id": 25841,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313227",
+      "vernacularName": {},
+      "scientificName": "Quadrigula",
+      "id": 25839,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.313160",
+      "vernacularName": {},
+      "scientificName": "Acanthoceras zachariasii",
+      "id": 25821,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.118619",
+    "urls": {
+      "original": "https://image.laji.fi/MM.118619/Asterionella_formosa_SK_uusi.jpg",
+      "full": "https://image.laji.fi/MM.118619/Asterionella_formosa_SK_uusi.jpg",
+      "large": "https://image.laji.fi/MM.118619/Asterionella_formosa_SK_uusi_large.jpg",
+      "square": "https://image.laji.fi/MM.118619/Asterionella_formosa_SK_uusi_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.118619/Asterionella_formosa_SK_uusi_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.321",
+      "uploadDateTime": 1477641679,
+      "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+      "rightsOwner": "Sanna Korkonen",
+      "secret": false,
+      "capturers": [
+        "Sanna Korkonen"
+      ],
+      "uploadedBy": "skorkone@helsinki.fi",
+      "originalFilename": "Asterionella formosa SK uusi.jpg",
+      "documentIds": [
+        "1362"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.313157"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

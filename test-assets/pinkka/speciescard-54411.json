@@ -1,0 +1,431 @@
+{
+  "taxonId": "MX.43583",
+  "vernacularName": {
+    "fi": "tunturikellosammal",
+    "sv": "fjällklockmossa"
+  },
+  "scientificName": "Encalypta alpina",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {},
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {},
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {},
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {},
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {},
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {},
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {},
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {},
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {},
+      "predicate": "MX.miscText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.44109",
+      "vernacularName": {
+        "fi": "lehtisammalet",
+        "sv": "bladmossor",
+        "en": "Mosses"
+      },
+      "scientificName": "Bryophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.70676",
+      "vernacularName": null,
+      "scientificName": "Bryopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.325118",
+      "vernacularName": null,
+      "scientificName": "Encalyptidae",
+      "rankName": {
+        "fi": "alaluokka",
+        "sv": "underklass",
+        "en": "subclass"
+      },
+      "rank": "MX.subclass"
+    },
+    {
+      "taxonId": "MX.70683",
+      "vernacularName": null,
+      "scientificName": "Encalyptales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.212931",
+      "vernacularName": null,
+      "scientificName": "Encalyptaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.43428",
+      "vernacularName": {
+        "fi": "kellosammalet"
+      },
+      "scientificName": "Encalypta",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.43583",
+      "vernacularName": {
+        "fi": "tunturikellosammal",
+        "sv": "fjällklockmossa"
+      },
+      "scientificName": "Encalypta alpina",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 54411,
+  "images": [
+    {
+      "id": "MM.1612243",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR31485.JPG",
+        "documentIds": [
+          "4873"
+        ],
+        "tags": [
+          "Encalypta",
+          "tunturikellosammal",
+          "Encalypta alpina",
+          "kellosammalet"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43583"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1612243/JR31485.JPG",
+        "full": "https://image.laji.fi/MM.1612243/JR31485.JPG",
+        "large": "https://image.laji.fi/MM.1612243/JR31485_large.jpg",
+        "square": "https://image.laji.fi/MM.1612243/JR31485_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1612243/JR31485_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1612242",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR49733.JPG",
+        "documentIds": [
+          "4873"
+        ],
+        "tags": [
+          "kellosammalet",
+          "Encalypta",
+          "tunturikellosammal",
+          "Encalypta alpina"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43583"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1612242/JR49733.JPG",
+        "full": "https://image.laji.fi/MM.1612242/JR49733.JPG",
+        "large": "https://image.laji.fi/MM.1612242/JR49733_large.jpg",
+        "square": "https://image.laji.fi/MM.1612242/JR49733_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1612242/JR49733_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.1612244",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807418,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "captureDateTime": 1767807418,
+        "uploadedBy": "jrikkine@helsinki.fi",
+        "originalFilename": "JR10.8.2010C106.JPG",
+        "documentIds": [
+          "4873"
+        ],
+        "tags": [
+          "Encalypta",
+          "tunturikellosammal",
+          "Encalypta alpina",
+          "kellosammalet"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.43583"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.1612244/JR10.8.2010C106.JPG",
+        "full": "https://image.laji.fi/MM.1612244/JR10.8.2010C106.JPG",
+        "large": "https://image.laji.fi/MM.1612244/JR10.8.2010C106_large.jpg",
+        "square": "https://image.laji.fi/MM.1612244/JR10.8.2010C106_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.1612244/JR10.8.2010C106_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 677,
+    "name": {
+      "fi": "Encalypta-Kurzia",
+      "en": "Encalypta-Kiaeria"
+    },
+    "orderNo": 2,
+    "pinkka": {
+      "id": 3,
+      "name": {
+        "fi": "A Pohjolan sammalia ja jäkäliä",
+        "en": "A Nordic bryophytes and lichens"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": "MM.53607",
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

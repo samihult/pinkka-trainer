@@ -1,0 +1,1009 @@
+{
+  "taxonId": "MX.38939",
+  "vernacularName": {
+    "sv": "hägg",
+    "fi": "lehtotuomi"
+  },
+  "scientificName": "Prunus padus",
+  "distributionMapFinland": null,
+  "alternativeVernacularNames": {},
+  "description": [
+    {
+      "title": {
+        "fi": "Yleiskuvaus",
+        "sv": "Beskrivning",
+        "en": "Description"
+      },
+      "body": {
+        "sv": "<p>Buske eller ett litet träd, 2-15 m högt. Bark mörkgrå. Grenar utspärrande eller hängande. Grenar rödbruna, glänsande, med slät bark. Bladskiva 5-7 cm, hel, elliptisk, rund- eller hjärtformad bas, vass spets, vasst tandad, matt.</p>"
+      },
+      "predicate": "MX.descriptionText"
+    },
+    {
+      "title": {
+        "fi": "Kasvumuoto",
+        "sv": "Livsform",
+        "en": "Growing form"
+      },
+      "body": {
+        "fi": "<p>Pensas tai pieni puu.</p>"
+      },
+      "predicate": "MX.growthFormAndGrowthHabit"
+    },
+    {
+      "title": {
+        "fi": "Koko",
+        "sv": "Storlek",
+        "en": "Size"
+      },
+      "body": {
+        "fi": "<p>2–15 m korkea.</p>"
+      },
+      "predicate": "MX.descriptionOrganismSize"
+    },
+    {
+      "title": {
+        "fi": "Sekovarsi",
+        "sv": "Thallus",
+        "en": "Thallus"
+      },
+      "body": {},
+      "predicate": "MX.descriptionThallus"
+    },
+    {
+      "title": {
+        "fi": "Itiöemä",
+        "sv": "Fruktkropp",
+        "en": "Fruitbody"
+      },
+      "body": {},
+      "predicate": "MX.descriptionFruitbody"
+    },
+    {
+      "title": {
+        "fi": "Itiöpesäkkeet",
+        "sv": "Sporangium",
+        "en": "Sporangium"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSporangiumAndAsexualReproduction"
+    },
+    {
+      "title": {
+        "fi": "Itiöt",
+        "sv": "Sporer",
+        "en": "Spores"
+      },
+      "body": {},
+      "predicate": "MX.descriptionSpore"
+    },
+    {
+      "title": {
+        "fi": "Leväosakas",
+        "sv": "Algkomponent",
+        "en": "Algal partner"
+      },
+      "body": {},
+      "predicate": "MX.algalPartnerOfLichen"
+    },
+    {
+      "title": {
+        "fi": "Elinympäristö",
+        "sv": "Habitat",
+        "en": "Habitat"
+      },
+      "body": {
+        "fi": "<p>Lehdoissa, puronvarsilla, rantametsissä, metsänreunoissa, myös koristepuu.</p>",
+        "sv": "<p>Åkrar, trädgårdar, berg och ruderatmark.</p>"
+      },
+      "predicate": "MX.habitat"
+    },
+    {
+      "title": {
+        "fi": "Kasvualusta",
+        "sv": "Växtunderlag",
+        "en": "Substrate"
+      },
+      "body": {
+        "fi": "<p>Tuomi viihtyy runsasravinteisessa, multavassa maassa.</p>",
+        "sv": "<p>Häggen trivs på mullaktig näringsrik mark.</p>"
+      },
+      "predicate": "MX.habitatSubstrate"
+    },
+    {
+      "title": {
+        "fi": "Ekologinen ja taloudellinen merkitys",
+        "sv": "Ekologisk och ekonomisk betydelse",
+        "en": "Ecological and economic importance"
+      },
+      "body": {},
+      "predicate": "MX.ecology"
+    },
+    {
+      "title": {
+        "fi": "Levinneisyys Suomessa",
+        "sv": "Utbredning i Finland",
+        "en": "Distribution in Finland"
+      },
+      "body": {
+        "sv": "<p>Allmän i hela landet.</p>",
+        "fi": "<p>Yleinen koko maassa.</p>"
+      },
+      "predicate": "MX.distributionFinland"
+    },
+    {
+      "title": {
+        "fi": "Alkuperä ja yleislevinneisyys",
+        "sv": "Ursprung och helhetsutbredning",
+        "en": "Origin and general distribution"
+      },
+      "body": {},
+      "predicate": "MX.originAndDistributionText"
+    },
+    {
+      "title": {
+        "fi": "Lisätiedot",
+        "sv": "Tilläggsuppgifter",
+        "en": "Additional information"
+      },
+      "body": {
+        "fi": "<p>Tuoreet lehdot, kosteat lehdot.</p>"
+      },
+      "predicate": "MX.miscText"
+    },
+    {
+      "title": {
+        "fi": "Varsi",
+        "sv": "Stam",
+        "en": "Stem"
+      },
+      "body": {
+        "fi": "<p>Puun kuori on tummanharmaa. Haarat ovat siirottavia tai riippuvia. Oksat ovat punaruskeita, kiiltäviä, sileitä.</p>"
+      },
+      "predicate": "MX.descriptionStem"
+    },
+    {
+      "title": {
+        "fi": "Lehti",
+        "sv": "Blad",
+        "en": "Leaf"
+      },
+      "body": {
+        "fi": "<p>Lehtilapa (5–7 cm) on ehyt, soikea, pyöreä- tai herttatyvinen, suippokärkinen, terävästi sahalaitainen, himmeä.</p>"
+      },
+      "predicate": "MX.descriptionLeaf"
+    },
+    {
+      "title": {
+        "fi": "Juuri",
+        "sv": "Rot",
+        "en": "Root"
+      },
+      "body": {},
+      "predicate": "MX.descriptionRoot"
+    },
+    {
+      "title": {
+        "fi": "Tunnistaminen",
+        "sv": "Bestämning",
+        "en": "Identification"
+      },
+      "body": {},
+      "predicate": "MX.identificationText"
+    },
+    {
+      "title": {
+        "fi": "Elinkierto",
+        "sv": "Livscykel",
+        "en": "Life cycle"
+      },
+      "body": {},
+      "predicate": "MX.lifeCycle"
+    },
+    {
+      "title": {
+        "fi": "Lisääntyminen",
+        "sv": "Reproduktion",
+        "en": "Reproduction"
+      },
+      "body": {},
+      "predicate": "MX.reproduction"
+    },
+    {
+      "title": {
+        "fi": "Kukka",
+        "sv": "Blomma",
+        "en": "Flower"
+      },
+      "body": {
+        "sv": "<p>Blommar strax efter bladsprickning. Blomklase hängande, med flere blommor. Blommor doftande, vanligen 5 foder- och kronblad. Foderbladen tidigt avfallande, kronblad 6-9 mm, vita ibland ljusröda. Flere ståndare och pistiller.</p>",
+        "fi": "<p>Kukkii pian lehteen puhkeamisen jälkeen. Kukinto on riippuva, monikukkainen terttu. Kukat ovat melko pieniä, tuoksuvia. Verho- ja terälehtiä on yleensä viisi. Verholehdet karisevat varhain, terälehdet (6–9 mm) ovat valkeita tai joskus vaaleanpunaisia. Heteitä ja emejä on runsaasti.</p>"
+      },
+      "predicate": "MX.descriptionFlower"
+    },
+    {
+      "title": {
+        "fi": "Hedelmä ja siemen",
+        "sv": "Frukt och frö",
+        "en": "Fruit and seed"
+      },
+      "body": {
+        "sv": "<p>Frukt ett svart bär med ett frö (5-8 mm).</p>",
+        "fi": "<p>Hedelmä musta, yksisiemeninen luumarja (5–8 mm).</p>"
+      },
+      "predicate": "MX.descriptionFruitAndSeed"
+    },
+    {
+      "title": {
+        "fi": "Käpy",
+        "sv": "Kotte",
+        "en": "Cone"
+      },
+      "body": {},
+      "predicate": "MX.descriptionCone"
+    },
+    {
+      "title": {
+        "fi": "Kukinta-aika",
+        "sv": "Blomningstid",
+        "en": "Flowering time"
+      },
+      "body": {
+        "fi": "<p>Kukkii alkukesällä (V–VI).</p>",
+        "sv": "<p>Blommar i början av sommaren (maj-juni).</p>"
+      },
+      "predicate": "MX.reproductionFloweringTime"
+    },
+    {
+      "title": {
+        "fi": "Pölytys",
+        "sv": "Pollination",
+        "en": "Pollination"
+      },
+      "body": {
+        "sv": "<p>Insektpollinerad.</p>",
+        "fi": "<p>Hyönteispölytteinen.</p>"
+      },
+      "predicate": "MX.reproductionPollination"
+    },
+    {
+      "title": {
+        "fi": "Viljely",
+        "sv": "Odling",
+        "en": "Cultivation"
+      },
+      "body": {},
+      "predicate": "MX.cultivationText"
+    },
+    {
+      "title": {
+        "fi": "Käyttö",
+        "sv": "Användning",
+        "en": "Use"
+      },
+      "body": {},
+      "predicate": "MX.economicUseText"
+    },
+    {
+      "title": {
+        "fi": "Vieraslajiluokittelusta",
+        "sv": "Klassificering",
+        "en": "Classification"
+      },
+      "body": {},
+      "predicate": "MX.invasiveSpeciesClassificationDescription"
+    },
+    {
+      "title": {
+        "fi": "Haitat",
+        "sv": "Olägenheter",
+        "en": "Harmfulness"
+      },
+      "body": {},
+      "predicate": "MX.invasiveEffectText"
+    },
+    {
+      "title": {
+        "fi": "Torjuntakeinot",
+        "sv": "Bekämpningsmetoder",
+        "en": "Prevention methods"
+      },
+      "body": {},
+      "predicate": "MX.invasivePreventionMethodsText"
+    },
+    {
+      "title": {
+        "fi": "Taksonomia",
+        "sv": "Taxonomi",
+        "en": "Taxonomy"
+      },
+      "body": {},
+      "predicate": "MX.taxonomyText"
+    }
+  ],
+  "taxonomy": [
+    {
+      "taxonId": "MX.37600",
+      "vernacularName": {
+        "fi": "eliökunta",
+        "sv": "liv",
+        "en": "Biota"
+      },
+      "scientificName": "Biota",
+      "rankName": {
+        "sv": "liv",
+        "fi": "luonto",
+        "en": "superdomain"
+      },
+      "rank": "MX.superdomain"
+    },
+    {
+      "taxonId": "MX.53761",
+      "vernacularName": {
+        "fi": "aitotumaiset"
+      },
+      "scientificName": "Eucarya",
+      "rankName": {
+        "fi": "yläkunta",
+        "sv": "domän",
+        "en": "domain"
+      },
+      "rank": "MX.domain"
+    },
+    {
+      "taxonId": "MX.37601",
+      "vernacularName": {
+        "sv": "egentliga växter",
+        "fi": "kasvit",
+        "en": "Plants"
+      },
+      "scientificName": "Plantae",
+      "rankName": {
+        "fi": "kunta",
+        "sv": "rike",
+        "en": "kingdom"
+      },
+      "rank": "MX.kingdom"
+    },
+    {
+      "taxonId": "MX.4986648",
+      "vernacularName": null,
+      "scientificName": "Viridiplantae",
+      "rankName": {
+        "fi": "alakunta",
+        "sv": "underrike",
+        "en": "subkingdom"
+      },
+      "rank": "MX.subkingdom"
+    },
+    {
+      "taxonId": "MX.70120",
+      "vernacularName": {
+        "fi": "versokasvit"
+      },
+      "scientificName": "Streptophyta",
+      "rankName": {
+        "sv": "infrarike",
+        "fi": "infrakunta",
+        "en": "infrakingdom"
+      },
+      "rank": "MX.infrakingdom"
+    },
+    {
+      "taxonId": "MX.4986650",
+      "vernacularName": null,
+      "scientificName": "Embryophyta",
+      "rankName": {
+        "fi": "yläjakso",
+        "sv": "överfylum",
+        "en": "superphylum"
+      },
+      "rank": "MX.superphylum"
+    },
+    {
+      "taxonId": "MX.53078",
+      "vernacularName": {
+        "sv": "kärlväxter",
+        "fi": "putkilokasvit",
+        "en": "Vascular plants"
+      },
+      "scientificName": "Tracheophyta",
+      "rankName": {
+        "fi": "pääjakso / kaari",
+        "sv": "fylum",
+        "en": "phylum"
+      },
+      "rank": "MX.phylum"
+    },
+    {
+      "taxonId": "MX.4986645",
+      "vernacularName": null,
+      "scientificName": "Spermatophytina",
+      "rankName": {
+        "fi": "alajakso / alakaari",
+        "sv": "underfylum",
+        "en": "subphylum"
+      },
+      "rank": "MX.subphylum"
+    },
+    {
+      "taxonId": "MX.4976189",
+      "vernacularName": {
+        "fi": "koppisiemeniset"
+      },
+      "scientificName": "Magnoliopsida",
+      "rankName": {
+        "fi": "luokka",
+        "sv": "klass",
+        "en": "class"
+      },
+      "rank": "MX.class"
+    },
+    {
+      "taxonId": "MX.70070",
+      "vernacularName": null,
+      "scientificName": "Rosales",
+      "rankName": {
+        "fi": "lahko",
+        "sv": "ordning",
+        "en": "order"
+      },
+      "rank": "MX.order"
+    },
+    {
+      "taxonId": "MX.38784",
+      "vernacularName": {
+        "sv": "rosväxter",
+        "fi": "ruusukasvit"
+      },
+      "scientificName": "Rosaceae",
+      "rankName": {
+        "fi": "heimo",
+        "sv": "familj",
+        "en": "family"
+      },
+      "rank": "MX.family"
+    },
+    {
+      "taxonId": "MX.38933",
+      "vernacularName": {
+        "fi": "tuomet",
+        "sv": "prunusar"
+      },
+      "scientificName": "Prunus",
+      "rankName": {
+        "fi": "suku",
+        "sv": "släkte",
+        "en": "genus"
+      },
+      "rank": "MX.genus"
+    },
+    {
+      "taxonId": "MX.38939",
+      "vernacularName": {
+        "sv": "hägg",
+        "fi": "lehtotuomi"
+      },
+      "scientificName": "Prunus padus",
+      "rankName": {
+        "fi": "laji",
+        "sv": "art",
+        "en": "species"
+      },
+      "rank": "MX.species"
+    }
+  ],
+  "id": 64750,
+  "images": [
+    {
+      "id": "MM.51847",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu JR 21_5_2006 0067.JPG",
+        "documentIds": [
+          "3477"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51847/MX.38939_Prunpadu_JR_21_5_2006_0067.JPG",
+        "full": "https://image.laji.fi/MM.51847/MX.38939_Prunpadu_JR_21_5_2006_0067.JPG",
+        "large": "https://image.laji.fi/MM.51847/MX.38939_Prunpadu_JR_21_5_2006_0067_large.jpg",
+        "square": "https://image.laji.fi/MM.51847/MX.38939_Prunpadu_JR_21_5_2006_0067_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51847/MX.38939_Prunpadu_JR_21_5_2006_0067_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.129260",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Hanna Mononen",
+        "secret": false,
+        "capturers": [
+          "Hanna Mononen"
+        ],
+        "uploadedBy": "mnaukkar@helsinki.fi",
+        "originalFilename": "P1010025.JPG",
+        "documentIds": [
+          "2076"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.129260/P1010025.JPG",
+        "full": "https://image.laji.fi/MM.129260/P1010025.JPG",
+        "large": "https://image.laji.fi/MM.129260/P1010025_large.jpg",
+        "square": "https://image.laji.fi/MM.129260/P1010025_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.129260/P1010025_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51869",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Markku Lehtonen",
+        "secret": false,
+        "capturers": [
+          "Markku Lehtonen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu H736976 10_11_2006 126.jpg",
+        "documentIds": [
+          "3957"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51869/MX.38939_Prunpadu_H736976_10_11_2006_126.jpg",
+        "full": "https://image.laji.fi/MM.51869/MX.38939_Prunpadu_H736976_10_11_2006_126.jpg",
+        "large": "https://image.laji.fi/MM.51869/MX.38939_Prunpadu_H736976_10_11_2006_126_large.jpg",
+        "square": "https://image.laji.fi/MM.51869/MX.38939_Prunpadu_H736976_10_11_2006_126_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51869/MX.38939_Prunpadu_H736976_10_11_2006_126_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51874",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu JR 27_8_2006C 043.JPG",
+        "documentIds": [
+          "3480"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51874/MX.38939_Prunpadu_JR_27_8_2006C_043.JPG",
+        "full": "https://image.laji.fi/MM.51874/MX.38939_Prunpadu_JR_27_8_2006C_043.JPG",
+        "large": "https://image.laji.fi/MM.51874/MX.38939_Prunpadu_JR_27_8_2006C_043_large.jpg",
+        "square": "https://image.laji.fi/MM.51874/MX.38939_Prunpadu_JR_27_8_2006C_043_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51874/MX.38939_Prunpadu_JR_27_8_2006C_043_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51855",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu JR 27_8_2006C 041.JPG",
+        "documentIds": [
+          "3478"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51855/MX.38939_Prunpadu_JR_27_8_2006C_041.JPG",
+        "full": "https://image.laji.fi/MM.51855/MX.38939_Prunpadu_JR_27_8_2006C_041.JPG",
+        "large": "https://image.laji.fi/MM.51855/MX.38939_Prunpadu_JR_27_8_2006C_041_large.jpg",
+        "square": "https://image.laji.fi/MM.51855/MX.38939_Prunpadu_JR_27_8_2006C_041_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51855/MX.38939_Prunpadu_JR_27_8_2006C_041_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51864",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu JR 27_8_2006C 042.JPG",
+        "documentIds": [
+          "3479"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51864/MX.38939_Prunpadu_JR_27_8_2006C_042.JPG",
+        "full": "https://image.laji.fi/MM.51864/MX.38939_Prunpadu_JR_27_8_2006C_042.JPG",
+        "large": "https://image.laji.fi/MM.51864/MX.38939_Prunpadu_JR_27_8_2006C_042_large.jpg",
+        "square": "https://image.laji.fi/MM.51864/MX.38939_Prunpadu_JR_27_8_2006C_042_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51864/MX.38939_Prunpadu_JR_27_8_2006C_042_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.129261",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Hanna Mononen",
+        "secret": false,
+        "capturers": [
+          "Hanna Mononen"
+        ],
+        "uploadedBy": "mnaukkar@helsinki.fi",
+        "originalFilename": "P1010024.JPG",
+        "documentIds": [
+          "2076"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.129261/P1010024.JPG",
+        "full": "https://image.laji.fi/MM.129261/P1010024.JPG",
+        "large": "https://image.laji.fi/MM.129261/P1010024_large.jpg",
+        "square": "https://image.laji.fi/MM.129261/P1010024_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.129261/P1010024_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51879",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu JR 20_5_2006 0091.JPG",
+        "documentIds": [
+          "3474"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51879/MX.38939_Prunpadu_JR_20_5_2006_0091.JPG",
+        "full": "https://image.laji.fi/MM.51879/MX.38939_Prunpadu_JR_20_5_2006_0091.JPG",
+        "large": "https://image.laji.fi/MM.51879/MX.38939_Prunpadu_JR_20_5_2006_0091_large.jpg",
+        "square": "https://image.laji.fi/MM.51879/MX.38939_Prunpadu_JR_20_5_2006_0091_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51879/MX.38939_Prunpadu_JR_20_5_2006_0091_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51885",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu JR 4_6_2005 091.JPG",
+        "documentIds": [
+          "3469"
+        ],
+        "tags": [
+          "primary"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        },
+        "primaryForTaxon": [
+          "MX.38939"
+        ]
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51885/MX.38939_Prunpadu_JR_4_6_2005_091.JPG",
+        "full": "https://image.laji.fi/MM.51885/MX.38939_Prunpadu_JR_4_6_2005_091.JPG",
+        "large": "https://image.laji.fi/MM.51885/MX.38939_Prunpadu_JR_4_6_2005_091_large.jpg",
+        "square": "https://image.laji.fi/MM.51885/MX.38939_Prunpadu_JR_4_6_2005_091_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51885/MX.38939_Prunpadu_JR_4_6_2005_091_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51889",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu JR 20_5_2006 0092.JPG",
+        "documentIds": [
+          "3475"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51889/MX.38939_Prunpadu_JR_20_5_2006_0092.JPG",
+        "full": "https://image.laji.fi/MM.51889/MX.38939_Prunpadu_JR_20_5_2006_0092.JPG",
+        "large": "https://image.laji.fi/MM.51889/MX.38939_Prunpadu_JR_20_5_2006_0092_large.jpg",
+        "square": "https://image.laji.fi/MM.51889/MX.38939_Prunpadu_JR_20_5_2006_0092_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51889/MX.38939_Prunpadu_JR_20_5_2006_0092_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51860",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu Colorata JR 29_5_2006 0130.JPG",
+        "documentIds": [
+          "3487"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51860/MX.38939_Prunpadu_Colorata_JR_29_5_2006_0130.JPG",
+        "full": "https://image.laji.fi/MM.51860/MX.38939_Prunpadu_Colorata_JR_29_5_2006_0130.JPG",
+        "large": "https://image.laji.fi/MM.51860/MX.38939_Prunpadu_Colorata_JR_29_5_2006_0130_large.jpg",
+        "square": "https://image.laji.fi/MM.51860/MX.38939_Prunpadu_Colorata_JR_29_5_2006_0130_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51860/MX.38939_Prunpadu_Colorata_JR_29_5_2006_0130_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51850",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu Colorata JR 18_5_2006 0110.JPG",
+        "documentIds": [
+          "3486"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51850/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0110.JPG",
+        "full": "https://image.laji.fi/MM.51850/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0110.JPG",
+        "large": "https://image.laji.fi/MM.51850/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0110_large.jpg",
+        "square": "https://image.laji.fi/MM.51850/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0110_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51850/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0110_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51839",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu Colorata JR 18_5_2006 0109.JPG",
+        "documentIds": [
+          "3485"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51839/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0109.JPG",
+        "full": "https://image.laji.fi/MM.51839/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0109.JPG",
+        "large": "https://image.laji.fi/MM.51839/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0109_large.jpg",
+        "square": "https://image.laji.fi/MM.51839/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0109_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51839/MX.38939_Prunpadu_Colorata_JR_18_5_2006_0109_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.51903",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.3",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+        "rightsOwner": "Jouko Rikkinen",
+        "secret": false,
+        "capturers": [
+          "Jouko Rikkinen"
+        ],
+        "uploadedBy": "pinkka_meta_fix",
+        "originalFilename": "MX.38939_Prunpadu JR 4_6_2005 094.JPG",
+        "documentIds": [
+          "3471"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.51903/MX.38939_Prunpadu_JR_4_6_2005_094.JPG",
+        "full": "https://image.laji.fi/MM.51903/MX.38939_Prunpadu_JR_4_6_2005_094.JPG",
+        "large": "https://image.laji.fi/MM.51903/MX.38939_Prunpadu_JR_4_6_2005_094_large.jpg",
+        "square": "https://image.laji.fi/MM.51903/MX.38939_Prunpadu_JR_4_6_2005_094_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.51903/MX.38939_Prunpadu_JR_4_6_2005_094_thumb.jpg"
+      }
+    },
+    {
+      "id": "MM.128657",
+      "caption": {},
+      "taxonId": null,
+      "meta": {
+        "sourceSystem": "KE.321",
+        "uploadDateTime": 1767807474,
+        "license": "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+        "rightsOwner": "Johanna Kolehmainen",
+        "secret": false,
+        "capturers": [
+          "Johanna Kolehmainen"
+        ],
+        "captureDateTime": 1767807474,
+        "uploadedBy": "jkolehma@helsinki.fi",
+        "originalFilename": "Prun padu_2_Viikki_JK.JPG",
+        "documentIds": [
+          "2039"
+        ],
+        "identifications": {
+          "taxonIds": [
+            "MX.38939"
+          ]
+        }
+      },
+      "urls": {
+        "original": "https://image.laji.fi/MM.128657/Prun_padu_2_Viikki_JK.JPG",
+        "full": "https://image.laji.fi/MM.128657/Prun_padu_2_Viikki_JK.JPG",
+        "large": "https://image.laji.fi/MM.128657/Prun_padu_2_Viikki_JK_large.jpg",
+        "square": "https://image.laji.fi/MM.128657/Prun_padu_2_Viikki_JK_square.jpg",
+        "thumbnail": "https://image.laji.fi/MM.128657/Prun_padu_2_Viikki_JK_thumb.jpg"
+      }
+    }
+  ],
+  "subPinkka": {
+    "id": 913,
+    "name": {
+      "fi": "Kaikki lajit"
+    },
+    "orderNo": 0,
+    "pinkka": {
+      "id": 21,
+      "name": {
+        "fi": "Maatalouslajintuntemus"
+      },
+      "hideScientific": false,
+      "hideVernacular": false,
+      "published": true,
+      "entityType": "PINKKA"
+    },
+    "description": {
+      "fi": ""
+    },
+    "imageId": null,
+    "entityType": "SUB_PINKKA"
+  },
+  "entityType": "SPECIES_CARD"
+}

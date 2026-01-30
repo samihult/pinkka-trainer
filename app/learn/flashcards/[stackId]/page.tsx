@@ -1,40 +1,58 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Flashcard } from "@/components/flashcard";
+import { LearningSessionShell } from "@/components/learning-session-shell";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { getStack, getSpecies } from "@/lib/firestore-helpers";
-import type { Stack, Species } from "@/lib/types";
-import { ArrowLeft, Shuffle } from "lucide-react";
+import {
+  getGroups,
+  getStack,
+  getSpecies,
+} from "@/lib/firebase/firestore-helpers";
+import type { Group, Stack, Species } from "@/lib/types";
+import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getSpeciesImagesWithUrls } from "@/lib/pinkka/pinkka-display";
+import { logFirestoreError } from "@/lib/utils";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
+import { Shuffle } from "lucide-react";
 import Link from "next/link";
 
 export default function FlashcardsPage() {
+  const { language } = useLanguagePreference();
+  const preferredLanguage = toLanguageCode(language);
   const params = useParams();
-  const router = useRouter();
   const stackId = params.stackId as string;
 
   const [stack, setStack] = useState<Stack | null>(null);
+  const [group, setGroup] = useState<Group | null>(null);
   const [species, setSpecies] = useState<Species[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadData();
+    void loadData();
   }, [stackId]);
 
   const loadData = async () => {
     try {
-      const [stackData, speciesData] = await Promise.all([
+      const [stackData, speciesData, groupsData] = await Promise.all([
         getStack(stackId),
         getSpecies(stackId),
+        getGroups(),
       ]);
+      const speciesWithImages = speciesData.filter(
+        (item) => getSpeciesImagesWithUrls(item.data).length > 0,
+      );
+      const resolvedGroup =
+        groupsData.find((item) => item.stackIds?.includes(stackId)) ?? null;
       setStack(stackData);
-      setSpecies(speciesData);
+      setGroup(resolvedGroup);
+      setSpecies(speciesWithImages);
     } catch (error) {
-      console.error("Failed to load data:", error);
+      logFirestoreError("Failed to load flashcards data", error);
     } finally {
       setLoading(false);
     }
@@ -60,73 +78,65 @@ export default function FlashcardsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <Navbar />
-        <LoadingSpinner className="py-12" />
-      </div>
+      <LearningSessionShell
+        groupName="Loading"
+        stackName="Flashcards"
+        progressValue={0}
+        exitHref="/"
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      </LearningSessionShell>
     );
   }
 
   if (!stack || species.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-        <Navbar />
-        <main className="container mx-auto px-4 py-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/learn">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Learning
-            </Link>
+      <LearningSessionShell
+        groupName={group ? getLocalizedText(group.data.name, preferredLanguage) : "Study Group"}
+        stackName={stack ? getLocalizedText(stack.data.name, preferredLanguage) : "Flashcards"}
+        progressValue={0}
+        exitHref="/"
+      >
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
+          <p className="text-muted-foreground">
+            No species with images available in this stack.
+          </p>
+          <Button asChild>
+            <Link href="/">Browse Other Stacks</Link>
           </Button>
-          <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">
-              No species available in this stack
-            </p>
-            <Button asChild>
-              <Link href="/learn">Browse Other Stacks</Link>
-            </Button>
-          </div>
-        </main>
-      </div>
+        </div>
+      </LearningSessionShell>
     );
   }
 
+  const progressValue = ((currentIndex + 1) / species.length) * 100;
+  const groupName = group
+    ? getLocalizedText(group.data.name, preferredLanguage)
+    : getLocalizedText(stack.data.pinkka?.name, preferredLanguage);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-      <Navbar />
-
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/learn">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Learning
-            </Link>
-          </Button>
-
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold mb-2">{stack.name}</h1>
-              {stack.description && (
-                <p className="text-muted-foreground">{stack.description}</p>
-              )}
-            </div>
-
-            <Button onClick={handleShuffle} variant="outline">
-              <Shuffle className="mr-2 h-4 w-4" />
-              Shuffle
-            </Button>
-          </div>
-        </div>
-
-        <Flashcard
-          species={species[currentIndex]}
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-          currentIndex={currentIndex}
-          total={species.length}
-        />
-      </main>
-    </div>
+    <LearningSessionShell
+      groupName={groupName}
+      stackName={getLocalizedText(stack.data.name, preferredLanguage)}
+      progressValue={progressValue}
+      progressLabel={`Card ${currentIndex + 1} of ${species.length}`}
+      exitHref="/"
+      headerAction={
+        <Button onClick={handleShuffle} variant="outline" size="sm">
+          <Shuffle className="mr-1 h-4 w-4" />
+          Shuffle
+        </Button>
+      }
+    >
+      <Flashcard
+        species={species[currentIndex]}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+        currentIndex={currentIndex}
+        total={species.length}
+      />
+    </LearningSessionShell>
   );
 }

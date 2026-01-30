@@ -1,0 +1,78 @@
+{
+  "id": 120,
+  "name": {
+    "fi": "Paljassiemeniset",
+    "sv": "Nakenfröiga växter"
+  },
+  "orderNo": 2,
+  "pinkka": {
+    "id": 15,
+    "name": {
+      "fi": "Luonnonvaraiset lääkekasvit",
+      "sv": "Farmakognosi"
+    },
+    "hideScientific": false,
+    "hideVernacular": false,
+    "published": true,
+    "entityType": "PINKKA"
+  },
+  "description": {
+    "fi": ""
+  },
+  "imageId": "MM.50615",
+  "speciesCards": [
+    {
+      "taxonId": "MX.37819",
+      "vernacularName": {
+        "fi": "metsämänty",
+        "sv": "tall",
+        "en": "Scots pine"
+      },
+      "scientificName": "Pinus sylvestris",
+      "id": 26439,
+      "entityType": "SPECIES_CARD"
+    },
+    {
+      "taxonId": "MX.37827",
+      "vernacularName": {
+        "sv": "vanlig en",
+        "fi": "metsäkataja"
+      },
+      "scientificName": "Juniperus communis subsp. communis",
+      "id": 26440,
+      "entityType": "SPECIES_CARD"
+    }
+  ],
+  "image": {
+    "id": "MM.50615",
+    "urls": {
+      "original": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202.JPG",
+      "full": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202.JPG",
+      "large": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202_large.jpg",
+      "square": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202_square.jpg",
+      "thumbnail": "https://image.laji.fi/MM.50615/MX.37819_Pinusylv_C6_JR04202_thumb.jpg"
+    },
+    "meta": {
+      "metadataVersion": "v2",
+      "sourceSystem": "KE.3",
+      "uploadDateTime": 1412790524,
+      "license": "MZ.intellectualRightsCC-BY-NC-4.0",
+      "rightsOwner": "Jouko Rikkinen",
+      "secret": false,
+      "capturers": [
+        "Jouko Rikkinen"
+      ],
+      "uploadedBy": "pinkka_meta_fix",
+      "originalFilename": "MX.37819_Pinusylv C6 JR04202.JPG",
+      "documentIds": [
+        "39966"
+      ],
+      "identifications": {
+        "taxonIds": [
+          "MX.37819"
+        ]
+      }
+    }
+  },
+  "entityType": "SUB_PINKKA"
+}

@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 // <CHANGE> Added AuthProvider for Firebase authentication
 import { AuthProvider } from "@/lib/auth-context";
+import { LanguageProvider } from "@/lib/language-context";
 import { Toaster } from "@/components/ui/toaster";
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -12,9 +13,8 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   // <CHANGE> Updated metadata for Pinkka app
-  title: "Pinkka - Learn Species",
-  description:
-    "Educational platform for learning animal, plant, algae, and microbe species",
+  title: "Pinkka trainer",
+  description: "Educational platform for learning species",
   generator: "v0.app",
   icons: {
     icon: [
@@ -44,8 +44,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans antialiased`}>
         <AuthProvider>
-          {children}
-          <Toaster />
+          <LanguageProvider>
+            {children}
+            <Toaster />
+          </LanguageProvider>
         </AuthProvider>
         <Analytics />
       </body>
