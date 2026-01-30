@@ -443,33 +443,37 @@ export default function QuizPage() {
     if (!user) return;
     if (species.length === 0) return;
 
-    await flushPendingProgressUpdates();
-    const speciesIds = species.map((item) => item.id);
-    const progressMap = await getLearningProgressForSpeciesIds(
-      user.uid,
-      speciesIds,
-    );
-    const now = new Date();
-    const scientific = buildStackLearningHistogram(
-      speciesIds,
-      progressMap,
-      "scientific",
-      now,
-    );
-    const vernacular = buildStackLearningHistogram(
-      speciesIds,
-      progressMap,
-      "vernacular",
-      now,
-    );
-    const stored = await upsertStackLearningHistogram({
-      userId: user.uid,
-      stackId,
-      scientific,
-      vernacular,
-      updatedAt: now,
-    });
-    setStackHistogram(stored);
+    try {
+      await flushPendingProgressUpdates();
+      const speciesIds = species.map((item) => item.id);
+      const progressMap = await getLearningProgressForSpeciesIds(
+        user.uid,
+        speciesIds,
+      );
+      const now = new Date();
+      const scientific = buildStackLearningHistogram(
+        speciesIds,
+        progressMap,
+        "scientific",
+        now,
+      );
+      const vernacular = buildStackLearningHistogram(
+        speciesIds,
+        progressMap,
+        "vernacular",
+        now,
+      );
+      const stored = await upsertStackLearningHistogram({
+        userId: user.uid,
+        stackId,
+        scientific,
+        vernacular,
+        updatedAt: now,
+      });
+      setStackHistogram(stored);
+    } catch (error) {
+      logFirestoreError("Failed to update stack histogram", error);
+    }
   };
 
   const recordLearningProgress = async (
@@ -649,6 +653,7 @@ export default function QuizPage() {
         : { scientific: update };
     }
 
+    // Feature: we intentionally credit both names to reinforce dual recall.
     return vernacularName
       ? { scientific: update, vernacular: update }
       : { scientific: update };
@@ -943,14 +948,13 @@ export default function QuizPage() {
   if (showSettings) {
     const maxQuestions = species.length;
     const questionOptions = [10, 25, 50, 0];
-
-    // Default to 10 cards
-    if (!questionOptions.includes(quizPreferences.questionCount)) {
-      quizPreferences.questionCount = 10;
-    }
-
-    const displayQuestionCount = getQuestionCount(
+    const selectedQuestionCount = questionOptions.includes(
       quizPreferences.questionCount,
+    )
+      ? quizPreferences.questionCount
+      : 10;
+    const displayQuestionCount = getQuestionCount(
+      selectedQuestionCount,
       maxQuestions,
     );
 

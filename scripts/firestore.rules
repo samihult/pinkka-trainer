@@ -21,7 +21,7 @@ service cloud.firestore {
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['editor', 'admin'];
       allow update, delete: if request.auth != null && (
         // Owner can edit their own groups
-        resource.data.createdBy == request.auth.uid ||
+        resource.data.ownerId == request.auth.uid ||
         // Or user is an admin
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
       );
@@ -34,7 +34,7 @@ service cloud.firestore {
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['editor', 'admin'];
       allow update, delete: if request.auth != null && (
         // Owner can edit their own stacks
-        resource.data.createdBy == request.auth.uid ||
+        resource.data.ownerId == request.auth.uid ||
         // Or user is an admin
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
       );
@@ -47,7 +47,7 @@ service cloud.firestore {
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['editor', 'admin'];
       allow update, delete: if request.auth != null && (
         // Owner can edit their own species
-        resource.data.createdBy == request.auth.uid ||
+        resource.data.ownerId == request.auth.uid ||
         // Or user is an admin
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
       );
@@ -55,7 +55,8 @@ service cloud.firestore {
 
     // Learning progress collection - users can read/write their own progress
     match /learningProgress/{progressId} {
-      allow read: if request.auth != null;
+      allow read: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
       allow create: if request.auth != null &&
         request.resource.data.userId == request.auth.uid;
       allow update, delete: if request.auth != null &&
@@ -64,7 +65,8 @@ service cloud.firestore {
 
     // Stack learning histograms - users can read/write their own summaries
     match /stackLearningHistograms/{histogramId} {
-      allow read: if request.auth != null;
+      allow read: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
       allow create: if request.auth != null &&
         request.resource.data.userId == request.auth.uid;
       allow update, delete: if request.auth != null &&
