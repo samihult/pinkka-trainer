@@ -13,7 +13,11 @@ import type { Group, Stack, StackLearningHistogram } from "@/lib/types";
 import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
-import { toLanguageCode } from "@/lib/local-preferences";
+import {
+  getStoredHomeExpandedGroupId,
+  setStoredHomeExpandedGroupId,
+  toLanguageCode,
+} from "@/lib/local-preferences";
 import { useAuth } from "@/lib/auth-context";
 import {
   BookOpen,
@@ -54,7 +58,13 @@ export function HomePageClient() {
   }, []);
 
   useEffect(() => {
-    setExpandedGroupId(expandedGroupFromQuery);
+    if (expandedGroupFromQuery) {
+      setExpandedGroupId(expandedGroupFromQuery);
+      setStoredHomeExpandedGroupId(expandedGroupFromQuery);
+      return;
+    }
+
+    setExpandedGroupId(getStoredHomeExpandedGroupId());
   }, [expandedGroupFromQuery]);
 
   const loadData = async () => {
@@ -143,6 +153,7 @@ export function HomePageClient() {
                     }
 
                     setExpandedGroupId(nextExpandedId);
+                    setStoredHomeExpandedGroupId(nextExpandedId);
                     const nextQuery = params.toString();
                     router.replace(
                       nextQuery ? `${pathname}?${nextQuery}` : pathname,

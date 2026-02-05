@@ -12,6 +12,12 @@ export type LanguagePreference = (typeof AVAILABLE_LANGUAGES)[number];
 /** Layout variants for the species management view. */
 export type ManageSpeciesViewVariant = "detailed" | "minimal";
 
+/** Preferences for the home page UI. */
+export type HomePagePreferences = {
+  /** Last expanded group id on the home page. */
+  expandedGroupId?: string;
+};
+
 /** Shape of locally persisted UI preferences. */
 export type LocalPreferences = {
   /** Preferences scoped to species management UI. */
@@ -19,6 +25,8 @@ export type LocalPreferences = {
     /** Preferred layout for the species list. */
     viewVariant?: ManageSpeciesViewVariant;
   };
+  /** Preferences scoped to the home page UI. */
+  home?: HomePagePreferences;
   /** Preferences for global UI behavior. */
   ui?: {
     /** Preferred language for UI labels. */
@@ -101,4 +109,26 @@ export function setStoredQuizPreferences(next: QuizPreferences) {
     ...current,
     quiz: next,
   }));
+}
+
+/** Loads the stored home page expanded group id, if available. */
+export function getStoredHomeExpandedGroupId(): string | null {
+  const stored = loadLocalPreferences().home?.expandedGroupId;
+  return typeof stored === "string" && stored.length > 0 ? stored : null;
+}
+
+/** Persists the expanded group id for the home page. */
+export function setStoredHomeExpandedGroupId(next: string | null) {
+  updateLocalPreferences((current) => {
+    const nextHome: HomePagePreferences = {
+      ...current.home,
+      expandedGroupId: next ?? undefined,
+    };
+    const cleanedHome = nextHome.expandedGroupId ? nextHome : undefined;
+
+    return {
+      ...current,
+      home: cleanedHome,
+    };
+  });
 }
