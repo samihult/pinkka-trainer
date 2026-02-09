@@ -62,6 +62,14 @@ export function ManageStackCard({
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const isHidden = stack.isHidden ?? false;
+  const linkedPinkkaStackId =
+    stack.importId && stack.data.entityType === "subpinkka" ? stack.data.id : null;
+  const linkedPinkkaGroupId = stack.data.pinkka?.id;
+  const linkedPinkkaStackHref = linkedPinkkaStackId
+    ? linkedPinkkaGroupId
+      ? `/manage/pinkka?group=${linkedPinkkaGroupId}&stack=${linkedPinkkaStackId}`
+      : `/manage/pinkka?stack=${linkedPinkkaStackId}`
+    : null;
 
   return (
     <Card
@@ -76,6 +84,17 @@ export function ManageStackCard({
     >
       <CardContent className="flex flex-col gap-2 pr-16 items-start">
         {getLocalizedText(stack.data.name, preferredLanguage)}
+        {linkedPinkkaStackId && linkedPinkkaStackHref ? (
+          <p className="text-xs text-muted-foreground">
+            Linked Pinkka stack:{" "}
+            <Link
+              href={linkedPinkkaStackHref}
+              className="font-medium underline underline-offset-2 hover:text-foreground"
+            >
+              #{linkedPinkkaStackId}
+            </Link>
+          </p>
+        ) : null}
         <div className="flex flex-wrap items-center gap-2 mr-3">
           <Button
             size="icon-xs"

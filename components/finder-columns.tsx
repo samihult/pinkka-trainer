@@ -105,6 +105,10 @@ type FinderColumnsProps = {
   onActiveItemChange?: (item: FinderItem | null) => void;
   /** Called when selection state changes. */
   onSelectionChange?: (state: FinderSelectionState) => void;
+  /** Optional controlled path of selected ids by column depth. */
+  selectedPath?: Array<string | number | null | undefined>;
+  /** Selection interaction mode for list rows. */
+  selectionMode?: "single" | "multiple";
 };
 
 const createEmptyColumn = (): FinderColumnState => ({
@@ -138,6 +142,30 @@ const createDetailsColumn = (
   columnType: item.type,
 });
 
+const idsEqual = (left: string | number, right: string | number) =>
+  String(left) === String(right);
+
+const createColumnFromLoadResult = (
+  result: FinderItem[] | FinderItem | null,
+  fallbackType?: string,
+): FinderColumnState => {
+  if (!result) {
+    return createListColumn([], {
+      columnType: fallbackType,
+    });
+  }
+
+  if (Array.isArray(result)) {
+    return createListColumn(result, {
+      columnType: result[0]?.type ?? fallbackType,
+    });
+  }
+
+  return createDetailsColumn(result, {
+    columnType: result.type,
+  });
+};
+
 const DEFAULT_COLUMN_WIDTH = 288;
 const MIN_COLUMN_WIDTH = 220;
 
@@ -148,6 +176,8 @@ export function FinderColumns({
   className,
   onActiveItemChange,
   onSelectionChange,
+  selectedPath,
+  selectionMode = "multiple",
 }: FinderColumnsProps) {
   const rootTypeConfig = typeConfigs[rootItem.type];
   const rootChildType = rootTypeConfig?.childType;
@@ -173,6 +203,10 @@ export function FinderColumns({
   } | null>(null);
 
   useEffect(() => {
+    if (selectedPath !== undefined) {
+      return;
+    }
+
     setColumns([
       {
         ...createEmptyColumn(),
@@ -201,28 +235,7 @@ export function FinderColumns({
           if (pendingLoadRef.current[0] !== token) {
             return prev;
           }
-
-          if (!items) {
-            return [
-              createListColumn([], {
-                columnType: rootChildType,
-              }),
-            ];
-          }
-
-          if (Array.isArray(items)) {
-            return [
-              createListColumn(items, {
-                columnType: items[0]?.type ?? rootChildType,
-              }),
-            ];
-          }
-
-          return [
-            createDetailsColumn(items, {
-              columnType: items.type,
-            }),
-          ];
+          return [createColumnFromLoadResult(items, rootChildType)];
         });
       })
       .catch((error: Error) => {
@@ -239,7 +252,90 @@ export function FinderColumns({
           ];
         });
       });
-  }, [rootItem, rootTypeConfig, rootChildType]);
+  }, [rootItem, rootTypeConfig, rootChildType, selectedPath]);
+
+  useEffect(() => {
+    if (selectedPath === undefined) {
+      return;
+    }
+
+    const token = (loadTokenRef.current += 1);
+    pendingLoadRef.current = {};
+
+    const applyControlledPath = async () => {
+      const rootItems = rootTypeConfig?.loadChildren
+        ? await rootTypeConfig.loadChildren(rootItem)
+        : [];
+
+      if (loadTokenRef.current !== token) {
+        return;
+      }
+
+      const nextColumns: FinderColumnState[] = [
+        createColumnFromLoadResult(rootItems, rootChildType),
+      ];
+      let nextActiveColumnIndex: number | null = null;
+
+      for (let depth = 0; depth < selectedPath.length; depth += 1) {
+        const targetId = selectedPath[depth];
+        const currentColumn = nextColumns[depth];
+        if (!currentColumn || currentColumn.mode !== "list") {
+          break;
+        }
+
+        if (targetId === null || targetId === undefined) {
+          break;
+        }
+
+        const item = currentColumn.items.find((entry) =>
+          idsEqual(entry.id, targetId),
+        );
+        if (!item) {
+          break;
+        }
+
+        currentColumn.selectedIds = [item.id];
+        currentColumn.activeId = item.id;
+        currentColumn.anchorId = item.id;
+        nextActiveColumnIndex = depth;
+
+        const typeConfig = typeConfigs[item.type];
+        if (!typeConfig?.loadChildren) {
+          break;
+        }
+
+        const children = await typeConfig.loadChildren(item as FinderItem<unknown>);
+        if (loadTokenRef.current !== token) {
+          return;
+        }
+
+        nextColumns.push(
+          createColumnFromLoadResult(children, typeConfig.childType),
+        );
+      }
+
+      if (loadTokenRef.current !== token) {
+        return;
+      }
+
+      setColumns(nextColumns);
+      setActiveColumnIndex(nextActiveColumnIndex);
+    };
+
+    void applyControlledPath().catch((error: Error) => {
+      if (loadTokenRef.current !== token) {
+        return;
+      }
+      setColumns([
+        {
+          ...createEmptyColumn(),
+          error: error.message || "Failed to load items.",
+          columnType: rootChildType,
+        },
+      ]);
+      setActiveColumnIndex(null);
+    });
+  }, [rootChildType, rootItem, rootTypeConfig, selectedPath, typeConfigs]);
 
   useEffect(() => {
     setColumnWidths((prev) => {
@@ -313,6 +409,14 @@ export function FinderColumns({
     anchorId: string | number | null,
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
+    if (selectionMode === "single") {
+      return {
+        nextSelectedIds: [targetId],
+        nextAnchorId: targetId,
+        nextActiveId: targetId,
+      };
+    }
+
     const isMeta = event.metaKey || event.ctrlKey;
     const isShift = event.shiftKey;
     let nextSelectedIds: Array<string | number> = [];

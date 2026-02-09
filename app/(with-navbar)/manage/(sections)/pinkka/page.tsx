@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Navbar } from "@/components/navbar";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ProtectedRoute } from "@/components/protected-route";
 import { PinkkaExplorer } from "@/components/pinkka/pinkka-explorer";
 import { Button } from "@/components/ui/button";
@@ -14,13 +14,13 @@ import {
   importPinkkaSpeciesList,
   importPinkkaStacks,
 } from "@/lib/firebase/firestore-helpers";
-import type { FinderSelectionState } from "@/components/finder-columns";
-import type {
-  PinkkaGroup,
-  PinkkaSpeciesCard,
-  PinkkaSubStack,
-} from "@/lib/pinkka/pinkka-api";
 import { logFirestoreError } from "@/lib/utils";
+
+function parseNumericParam(value: string | null): number | null {
+  if (!value) return null;
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : null;
+}
 
 /** Admin-facing page for browsing Pinkka content. */
 export default function PinkkaContentPage() {
@@ -28,67 +28,102 @@ export default function PinkkaContentPage() {
   const preferredLanguage = toLanguageCode(language);
   const { user } = useAuth();
   const { toast } = useToast();
-  const [selectionState, setSelectionState] =
-    useState<FinderSelectionState | null>(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isImporting, setIsImporting] = useState(false);
   const [importStatusVersion, setImportStatusVersion] = useState(0);
 
-  const selectedItems = useMemo(
-    () => selectionState?.selectedItemsByColumn.flat() ?? [],
-    [selectionState],
+  const selectedGroupId = useMemo(
+    () => parseNumericParam(searchParams.get("group")),
+    [searchParams],
+  );
+  const selectedStackId = useMemo(
+    () =>
+      selectedGroupId === null
+        ? null
+        : parseNumericParam(searchParams.get("stack")),
+    [searchParams, selectedGroupId],
+  );
+  const selectedSpeciesId = useMemo(
+    () =>
+      selectedStackId === null
+        ? null
+        : parseNumericParam(searchParams.get("species")),
+    [searchParams, selectedStackId],
   );
 
-  const { selectedGroupIds, selectedStackIds, selectedSpeciesIds } =
-    useMemo(() => {
-      const groupIds = new Set<number>();
-      const stackIds = new Set<number>();
-      const speciesIds = new Set<number>();
+  useEffect(() => {
+    const nextParams = new URLSearchParams(searchParams.toString());
+    const normalizedGroup = selectedGroupId !== null ? String(selectedGroupId) : null;
+    const normalizedStack = selectedStackId !== null ? String(selectedStackId) : null;
+    const normalizedSpecies = selectedSpeciesId !== null ? String(selectedSpeciesId) : null;
 
-      selectedItems.forEach((item) => {
-        if (item.type === "group") {
-          const group = item.payload as PinkkaGroup;
-          groupIds.add(group.id);
-          return;
-        }
-        if (item.type === "stack") {
-          const stack = item.payload as PinkkaSubStack;
-          stackIds.add(stack.id);
-          return;
-        }
-        if (item.type === "species") {
-          const species = item.payload as PinkkaSpeciesCard;
-          speciesIds.add(species.id);
-        }
-      });
+    if (normalizedGroup) {
+      nextParams.set("group", normalizedGroup);
+    } else {
+      nextParams.delete("group");
+    }
 
-      return {
-        selectedGroupIds: Array.from(groupIds),
-        selectedStackIds: Array.from(stackIds),
-        selectedSpeciesIds: Array.from(speciesIds),
-      };
-    }, [selectedItems]);
+    if (normalizedStack) {
+      nextParams.set("stack", normalizedStack);
+    } else {
+      nextParams.delete("stack");
+    }
 
-  const importTarget = useMemo(() => {
-    if (selectedSpeciesIds.length > 0) return "species";
-    if (selectedStackIds.length > 0) return "stack";
-    if (selectedGroupIds.length > 0) return "group";
-    return null;
+    if (normalizedSpecies) {
+      nextParams.set("species", normalizedSpecies);
+    } else {
+      nextParams.delete("species");
+    }
+
+    const currentQuery = searchParams.toString();
+    const nextQuery = nextParams.toString();
+    if (currentQuery === nextQuery) {
+      return;
+    }
+
+    const nextUrl = nextQuery ? `${pathname}?${nextQuery}` : pathname;
+    router.replace(nextUrl, { scroll: false });
   }, [
-    selectedGroupIds.length,
-    selectedSpeciesIds.length,
-    selectedStackIds.length,
+    pathname,
+    router,
+    searchParams,
+    selectedGroupId,
+    selectedSpeciesId,
+    selectedStackId,
   ]);
 
+  const selectedGroupIds = useMemo(
+    () => (selectedGroupId ? [selectedGroupId] : []),
+    [selectedGroupId],
+  );
+  const selectedStackIds = useMemo(
+    () => (selectedStackId ? [selectedStackId] : []),
+    [selectedStackId],
+  );
+  const selectedSpeciesIds = useMemo(
+    () => (selectedSpeciesId ? [selectedSpeciesId] : []),
+    [selectedSpeciesId],
+  );
+
+  const importTarget = useMemo(() => {
+    if (selectedSpeciesId !== null) return "species";
+    if (selectedStackId !== null) return "stack";
+    if (selectedGroupId !== null) return "group";
+    return null;
+  }, [selectedGroupId, selectedSpeciesId, selectedStackId]);
+
   const importCount = useMemo(() => {
-    if (importTarget === "species") return selectedSpeciesIds.length;
-    if (importTarget === "stack") return selectedStackIds.length;
-    if (importTarget === "group") return selectedGroupIds.length;
+    if (importTarget === "species") return selectedSpeciesId ? 1 : 0;
+    if (importTarget === "stack") return selectedStackId ? 1 : 0;
+    if (importTarget === "group") return selectedGroupId ? 1 : 0;
     return 0;
   }, [
     importTarget,
-    selectedGroupIds.length,
-    selectedSpeciesIds.length,
-    selectedStackIds.length,
+    selectedGroupId,
+    selectedSpeciesId,
+    selectedStackId,
   ]);
 
   const importLabels = useMemo(() => {
@@ -135,6 +170,53 @@ export default function PinkkaContentPage() {
     }
   };
 
+  const handleSelectedIdsChange = useCallback(
+    (ids: { groupId: number | null; stackId: number | null; speciesId: number | null }) => {
+      const normalizedGroupId = ids.groupId;
+      const normalizedStackId = ids.groupId ? ids.stackId : null;
+      const normalizedSpeciesId = ids.groupId && ids.stackId ? ids.speciesId : null;
+
+      if (
+        normalizedGroupId === selectedGroupId &&
+        normalizedStackId === selectedStackId &&
+        normalizedSpeciesId === selectedSpeciesId
+      ) {
+        return;
+      }
+
+      const nextParams = new URLSearchParams(searchParams.toString());
+      if (normalizedGroupId !== null) {
+        nextParams.set("group", String(normalizedGroupId));
+      } else {
+        nextParams.delete("group");
+      }
+
+      if (normalizedStackId !== null) {
+        nextParams.set("stack", String(normalizedStackId));
+      } else {
+        nextParams.delete("stack");
+      }
+
+      if (normalizedSpeciesId !== null) {
+        nextParams.set("species", String(normalizedSpeciesId));
+      } else {
+        nextParams.delete("species");
+      }
+
+      const query = nextParams.toString();
+      const nextUrl = query ? `${pathname}?${query}` : pathname;
+      router.replace(nextUrl, { scroll: false });
+    },
+    [
+      pathname,
+      router,
+      searchParams,
+      selectedGroupId,
+      selectedSpeciesId,
+      selectedStackId,
+    ],
+  );
+
   return (
     <ProtectedRoute requiredRole="admin">
       <div className="min-h-screen bg-background">
@@ -158,9 +240,12 @@ export default function PinkkaContentPage() {
           <div className="flex-1">
             <div className="h-[70vh]">
               <PinkkaExplorer
-                onSelectionChange={setSelectionState}
                 importStatusVersion={importStatusVersion}
                 preferredLang={preferredLanguage}
+                selectedGroupId={selectedGroupId}
+                selectedStackId={selectedStackId}
+                selectedSpeciesId={selectedSpeciesId}
+                onSelectedIdsChange={handleSelectedIdsChange}
               />
             </div>
           </div>

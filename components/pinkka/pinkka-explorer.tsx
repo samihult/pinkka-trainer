@@ -48,6 +48,18 @@ interface PinkkaExplorerProps {
   importStatusVersion?: number;
   /** Optional API overrides for Storybook/testing. */
   api?: Partial<PinkkaApi>;
+  /** Controlled selected Pinkka group id. */
+  selectedGroupId?: number | null;
+  /** Controlled selected Pinkka stack id. */
+  selectedStackId?: number | null;
+  /** Controlled selected Pinkka species id. */
+  selectedSpeciesId?: number | null;
+  /** Called with selected ids when user selection changes. */
+  onSelectedIdsChange?: (ids: {
+    groupId: number | null;
+    stackId: number | null;
+    speciesId: number | null;
+  }) => void;
 }
 
 const defaultApi: PinkkaApi = {
@@ -64,6 +76,10 @@ export function PinkkaExplorer({
   onSelectionChange,
   importStatusVersion,
   api,
+  selectedGroupId,
+  selectedStackId,
+  selectedSpeciesId,
+  onSelectedIdsChange,
 }: PinkkaExplorerProps) {
   const pinkkaApi = useMemo(
     () => ({
@@ -86,6 +102,19 @@ export function PinkkaExplorer({
       payload: null,
     }),
     [],
+  );
+
+  const isControlledSelection =
+    selectedGroupId !== undefined ||
+    selectedStackId !== undefined ||
+    selectedSpeciesId !== undefined;
+
+  const selectedPath = useMemo(
+    () =>
+      isControlledSelection
+        ? [selectedGroupId ?? null, selectedStackId ?? null, selectedSpeciesId ?? null]
+        : undefined,
+    [isControlledSelection, selectedGroupId, selectedSpeciesId, selectedStackId],
   );
 
 
@@ -152,6 +181,18 @@ export function PinkkaExplorer({
   const handleSelectionChange = useCallback(
     (state: FinderSelectionState) => {
       onSelectionChange?.(state);
+
+      const selectedItems = state.selectedItemsByColumn.flat();
+      const groupItem = selectedItems.find((item) => item.type === "group");
+      const stackItem = selectedItems.find((item) => item.type === "stack");
+      const speciesItem = selectedItems.find((item) => item.type === "species");
+
+      onSelectedIdsChange?.({
+        groupId: groupItem ? Number(groupItem.id) : null,
+        stackId: stackItem ? Number(stackItem.id) : null,
+        speciesId: speciesItem ? Number(speciesItem.id) : null,
+      });
+
       if (state.activeColumnIndex === null) return;
       const selectedInColumn =
         state.selectedItemsByColumn[state.activeColumnIndex] ?? [];
@@ -160,7 +201,7 @@ export function PinkkaExplorer({
         onSelectSpecies?.(species);
       }
     },
-    [onSelectSpecies, onSelectionChange],
+    [onSelectSpecies, onSelectedIdsChange, onSelectionChange],
   );
 
   return (
@@ -170,6 +211,8 @@ export function PinkkaExplorer({
         rootItem={rootItem}
         typeConfigs={typeConfigs}
         onSelectionChange={handleSelectionChange}
+        selectedPath={selectedPath}
+        selectionMode={isControlledSelection ? "single" : "multiple"}
       />
     </div>
   );

@@ -2,14 +2,14 @@
 
 import type React from "react";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ProtectedRoute } from "@/components/protected-route";
-import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { SelectFromListDialog } from "@/components/select-from-list-dialog";
 import {
   Dialog,
   DialogContent,
@@ -17,6 +17,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { ManageGroupCard } from "@/components/manage-group-card";
 import { useToast } from "@/hooks/use-toast";
@@ -36,7 +42,7 @@ import {
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText, MultilingualText } from "@/lib/pinkka/pinkka-api";
-import { Plus, FolderOpen } from "lucide-react";
+import { ChevronDown, FolderOpen, Plus } from "lucide-react";
 
 export default function ManagePage() {
   const { user } = useAuth();
@@ -55,6 +61,7 @@ export default function ManagePage() {
   const [groupDescriptionFi, setGroupDescriptionFi] = useState("");
   const [groupDescriptionEn, setGroupDescriptionEn] = useState("");
   const [groupDescriptionSv, setGroupDescriptionSv] = useState("");
+  const [showPinkkaGroupSelector, setShowPinkkaGroupSelector] = useState(false);
 
   // Stack dialog state
   const [showStackDialog, setShowStackDialog] = useState(false);
@@ -126,6 +133,38 @@ export default function ManagePage() {
     if (values.sv) nextValue.sv = values.sv;
     return Object.keys(nextValue).length > 0 ? nextValue : {};
   };
+
+  const importedPinkkaGroups = useMemo(
+    () =>
+      groups.filter(
+        (group) =>
+          Boolean(group.importId) &&
+          group.ownerId === user?.uid &&
+          group.data.entityType === "pinkka",
+      ),
+    [groups, user?.uid],
+  );
+
+  const importedGroupOptions = useMemo(
+    () =>
+      importedPinkkaGroups.map((group) => {
+        const stackCount = group.stackIds?.length ?? 0;
+        const stackDescription =
+          stackCount === 1 ? "1 stack" : `${stackCount} stacks`;
+        const label =
+          getLocalizedText(group.data.name, "fi") ||
+          getLocalizedText(group.data.name, "en") ||
+          getLocalizedText(group.data.name, "sv") ||
+          `Group ${group.data.id}`;
+
+        return {
+          id: group.id,
+          label,
+          description: stackDescription,
+        };
+      }),
+    [importedPinkkaGroups],
+  );
 
   // Group handlers
   const handleGroupDialogOpen = (group?: Group) => {
@@ -255,6 +294,46 @@ export default function ManagePage() {
       toast({
         title: "Error",
         description: "Failed to update group visibility",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleCreateGroupFromPinkka = async (sourceGroupId: string) => {
+    if (!user) return;
+    const sourceGroup = importedPinkkaGroups.find(
+      (group) => group.id === sourceGroupId,
+    );
+
+    if (!sourceGroup) {
+      toast({
+        title: "Error",
+        description: "Selected Pinkka group was not found",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      await createGroup({
+        data: sourceGroup.data,
+        stackIds: sourceGroup.stackIds ?? [],
+        ownerId: user.uid,
+        order: groups.length,
+        isHidden: false,
+      });
+
+      setShowPinkkaGroupSelector(false);
+      toast({
+        title: "Success",
+        description: "Group created from Pinkka import",
+      });
+      void loadData();
+    } catch (error) {
+      logFirestoreError("Failed to create group from Pinkka import", error);
+      toast({
+        title: "Error",
+        description: "Failed to create group from Pinkka import",
         variant: "destructive",
       });
     }
@@ -481,10 +560,25 @@ export default function ManagePage() {
               <p className="text-muted-foreground">Drag to order</p>
             </div>
 
-            <Button onClick={() => handleGroupDialogOpen()}>
-              <Plus className="mr-1 h-4 w-4" />
-              New Group
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button>
+                  <Plus className="mr-1 h-4 w-4" />
+                  New Group
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onSelect={() => handleGroupDialogOpen()}>
+                  Blank
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => setShowPinkkaGroupSelector(true)}
+                >
+                  From Pinkka
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <div className="space-y-6">
@@ -524,6 +618,18 @@ export default function ManagePage() {
             )}
           </div>
         </main>
+
+        <SelectFromListDialog
+          open={showPinkkaGroupSelector}
+          onOpenChange={setShowPinkkaGroupSelector}
+          title="Create Group From Pinkka"
+          description="Select an imported Pinkka group to create a new editable group with the same stacks."
+          options={importedGroupOptions}
+          confirmLabel="Create Group"
+          emptyMessage="No imported Pinkka groups found. Import groups first from the Pinkka tab."
+          listAriaLabel="Imported Pinkka groups"
+          onConfirm={handleCreateGroupFromPinkka}
+        />
 
         {/* Group Dialog */}
         <Dialog open={showGroupDialog} onOpenChange={setShowGroupDialog}>

@@ -2,6 +2,7 @@
 
 import type React from "react";
 
+import Link from "next/link";
 import {
   Eye,
   EyeOff,
@@ -90,6 +91,8 @@ export function ManageGroupCard({
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const isHidden = group.isHidden ?? false;
+  const linkedPinkkaGroupId =
+    group.importId && group.data.entityType === "pinkka" ? group.data.id : null;
 
   return (
     <Card
@@ -125,6 +128,17 @@ export function ManageGroupCard({
                   {getLocalizedText(group.data.description, preferredLanguage)}
                 </CardDescription>
               )}
+              {linkedPinkkaGroupId ? (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Linked Pinkka group:{" "}
+                  <Link
+                    href={`/manage/pinkka?group=${linkedPinkkaGroupId}`}
+                    className="font-medium underline underline-offset-2 hover:text-foreground"
+                  >
+                    #{linkedPinkkaGroupId}
+                  </Link>
+                </p>
+              ) : null}
             </div>
           </div>
           <div className="flex gap-2">
