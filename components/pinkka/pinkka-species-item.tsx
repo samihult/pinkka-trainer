@@ -13,6 +13,10 @@ import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 export interface PinkkaSpeciesItemProps {
   /** Pinkka species card payload to display. */
   species: PinkkaSpeciesCard;
+  /** Optional selected parent group id. */
+  groupId?: number | null;
+  /** Optional selected parent stack id. */
+  stackId?: number | null;
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
   /** Optional version to refresh import status indicators. */
@@ -22,6 +26,8 @@ export interface PinkkaSpeciesItemProps {
 /** Display scientific and vernacular names for a Pinkka species. */
 export function PinkkaSpeciesItem({
   species,
+  groupId,
+  stackId,
   preferredLang,
   importStatusVersion,
 }: PinkkaSpeciesItemProps) {
@@ -30,14 +36,17 @@ export function PinkkaSpeciesItem({
 
   useEffect(() => {
     let isMounted = true;
-    void isPinkkaSpeciesImported(species.id).then((imported) => {
+    void isPinkkaSpeciesImported(species.id, {
+      groupId: groupId ?? undefined,
+      stackId: stackId ?? undefined,
+    }).then((imported) => {
       if (!isMounted) return;
       setIsImported(imported);
     });
     return () => {
       isMounted = false;
     };
-  }, [species.id, importStatusVersion]);
+  }, [groupId, importStatusVersion, species.id, stackId]);
 
   return (
     <div className="flex items-start gap-2">

@@ -1,5 +1,6 @@
 import {
   collection,
+  collectionGroup,
   doc,
   getDoc,
   getDocs,
@@ -635,68 +636,91 @@ export async function isPinkkaGroupImported(
     return pinkkaGroupImportStatusCache.get(groupId) === true;
   }
 
-  const groupDoc = await getDoc(doc(db, PINKKA_COLLECTION, String(groupId)));
-  const exists = groupDoc.exists();
-  pinkkaGroupImportStatusCache.set(groupId, exists);
-  return exists;
+  try {
+    const groupDoc = await getDoc(doc(db, PINKKA_COLLECTION, String(groupId)));
+    const exists = groupDoc.exists();
+    pinkkaGroupImportStatusCache.set(groupId, exists);
+    return exists;
+  } catch (error) {
+    console.error(`Failed to check imported Pinkka group ${groupId}`, error);
+    return false;
+  }
 }
 
 /** Check if a Pinkka stack id already exists in Firestore. */
 export async function isPinkkaStackImported(
   stackId: number,
+  options?: { groupId?: number },
 ): Promise<boolean> {
   if (pinkkaStackImportStatusCache.has(stackId)) {
     return pinkkaStackImportStatusCache.get(stackId) === true;
   }
 
-  const resolvedGroupId = await resolveGroupIdForStack(stackId);
-  if (resolvedGroupId === null) {
-    pinkkaStackImportStatusCache.set(stackId, false);
+  try {
+    if (options?.groupId !== undefined) {
+      const stackDoc = await getDoc(
+        doc(
+          db,
+          PINKKA_COLLECTION,
+          String(options.groupId),
+          "stacks",
+          String(stackId),
+        ),
+      );
+      const exists = stackDoc.exists();
+      pinkkaStackImportStatusCache.set(stackId, exists);
+      return exists;
+    }
+
+    const snapshot = await getDocs(
+      query(collectionGroup(db, "stacks"), where("entity.id", "==", stackId)),
+    );
+    const exists = !snapshot.empty;
+    pinkkaStackImportStatusCache.set(stackId, exists);
+    return exists;
+  } catch (error) {
+    console.error(`Failed to check imported Pinkka stack ${stackId}`, error);
     return false;
   }
-
-  const stackDoc = await getDoc(
-    doc(
-      db,
-      PINKKA_COLLECTION,
-      String(resolvedGroupId),
-      "stacks",
-      String(stackId),
-    ),
-  );
-  const exists = stackDoc.exists();
-  pinkkaStackImportStatusCache.set(stackId, exists);
-  return exists;
 }
 
 /** Check if a Pinkka species id already exists in Firestore. */
 export async function isPinkkaSpeciesImported(
   speciesId: number,
+  options?: { groupId?: number; stackId?: number },
 ): Promise<boolean> {
   if (pinkkaSpeciesImportStatusCache.has(speciesId)) {
     return pinkkaSpeciesImportStatusCache.get(speciesId) === true;
   }
 
-  const speciesLocation = await resolveSpeciesLocation(speciesId);
-  if (!speciesLocation) {
-    pinkkaSpeciesImportStatusCache.set(speciesId, false);
+  try {
+    if (options?.groupId !== undefined && options?.stackId !== undefined) {
+      const speciesDoc = await getDoc(
+        doc(
+          db,
+          PINKKA_COLLECTION,
+          String(options.groupId),
+          "stacks",
+          String(options.stackId),
+          "species",
+          String(speciesId),
+        ),
+      );
+      const exists = speciesDoc.exists();
+      pinkkaSpeciesImportStatusCache.set(speciesId, exists);
+      return exists;
+    }
+
+    const snapshot = await getDocs(
+      query(collectionGroup(db, "species"), where("entity.id", "==", speciesId)),
+    );
+    const exists = !snapshot.empty;
+    pinkkaSpeciesImportStatusCache.set(speciesId, exists);
+    return exists;
+  } catch (error) {
+    console.error(`Failed to check imported Pinkka species ${speciesId}`, error);
     return false;
   }
-
-  const speciesDoc = await getDoc(
-    doc(
-      db,
-      PINKKA_COLLECTION,
-      String(speciesLocation.groupId),
-      "stacks",
-      String(speciesLocation.stackId),
-      "species",
-      String(speciesId),
-    ),
-  );
-  const exists = speciesDoc.exists();
-  pinkkaSpeciesImportStatusCache.set(speciesId, exists);
-  return exists;
 }
 
 // Pinkka import operations

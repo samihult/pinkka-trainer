@@ -173,19 +173,32 @@ export default function PinkkaContentPage() {
       setImportedSelectedIds([]);
       setUnimportedSelectedIds([]);
       try {
-        const checker =
+        const results =
           importTarget === "group"
-            ? isPinkkaGroupImported
+            ? await Promise.all(
+                selectedTargetIds.map(async (id) => ({
+                  id,
+                  isImported: await isPinkkaGroupImported(id),
+                })),
+              )
             : importTarget === "stack"
-              ? isPinkkaStackImported
-              : isPinkkaSpeciesImported;
-
-        const results = await Promise.all(
-          selectedTargetIds.map(async (id) => ({
-            id,
-            isImported: await checker(id),
-          })),
-        );
+              ? await Promise.all(
+                  selectedTargetIds.map(async (id) => ({
+                    id,
+                    isImported: await isPinkkaStackImported(id, {
+                      groupId: selectedGroupId ?? undefined,
+                    }),
+                  })),
+                )
+              : await Promise.all(
+                  selectedTargetIds.map(async (id) => ({
+                    id,
+                    isImported: await isPinkkaSpeciesImported(id, {
+                      groupId: selectedGroupId ?? undefined,
+                      stackId: selectedStackId ?? undefined,
+                    }),
+                  })),
+                );
 
         if (!isMounted) {
           return;
@@ -216,7 +229,13 @@ export default function PinkkaContentPage() {
     return () => {
       isMounted = false;
     };
-  }, [importStatusVersion, importTarget, selectedTargetIds]);
+  }, [
+    importStatusVersion,
+    importTarget,
+    selectedGroupId,
+    selectedStackId,
+    selectedTargetIds,
+  ]);
 
   const handleImport = async () => {
     if (!user || !importTarget) return;

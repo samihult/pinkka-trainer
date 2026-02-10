@@ -10,6 +10,10 @@ import type { PinkkaSpeciesCard } from "@/lib/pinkka/pinkka-api";
 export interface CreateSpeciesTypeConfigOptions {
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
+  /** Optional selected parent group id for import-status lookup. */
+  selectedGroupId?: number | null;
+  /** Optional selected parent stack id for import-status lookup. */
+  selectedStackId?: number | null;
   /** Optional version to refresh import status indicators. */
   importStatusVersion?: number;
   /** Loader for child detail items. */
@@ -21,6 +25,8 @@ export interface CreateSpeciesTypeConfigOptions {
 /** Build the finder type config for Pinkka species cards. */
 export function createSpeciesTypeConfig({
   preferredLang,
+  selectedGroupId,
+  selectedStackId,
   importStatusVersion,
   loadChildren,
 }: CreateSpeciesTypeConfigOptions): FinderTypeConfig<PinkkaSpeciesCard> {
@@ -31,6 +37,8 @@ export function createSpeciesTypeConfig({
     renderItem: (item) => (
       <PinkkaSpeciesItem
         species={item.payload}
+        groupId={selectedGroupId}
+        stackId={selectedStackId}
         preferredLang={preferredLang}
         importStatusVersion={importStatusVersion}
       />

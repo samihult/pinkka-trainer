@@ -10,6 +10,8 @@ import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 export interface PinkkaStackItemProps {
   /** Pinkka stack payload to display. */
   stack: PinkkaSubStack;
+  /** Optional selected parent group id. */
+  groupId?: number | null;
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
   /** Optional version to refresh import status indicators. */
@@ -19,6 +21,7 @@ export interface PinkkaStackItemProps {
 /** Display label and description for a Pinkka stack item. */
 export function PinkkaStackItem({
   stack,
+  groupId,
   preferredLang,
   importStatusVersion,
 }: PinkkaStackItemProps) {
@@ -28,14 +31,16 @@ export function PinkkaStackItem({
 
   useEffect(() => {
     let isMounted = true;
-    void isPinkkaStackImported(stack.id).then((imported) => {
+    void isPinkkaStackImported(stack.id, {
+      groupId: groupId ?? stack.pinkka?.id,
+    }).then((imported) => {
       if (!isMounted) return;
       setIsImported(imported);
     });
     return () => {
       isMounted = false;
     };
-  }, [stack.id, importStatusVersion]);
+  }, [groupId, importStatusVersion, stack.id, stack.pinkka?.id]);
 
   return (
     <div className="flex items-start gap-2">

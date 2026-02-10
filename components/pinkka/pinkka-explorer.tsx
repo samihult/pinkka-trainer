@@ -140,20 +140,29 @@ export function PinkkaExplorer({
     () =>
       createStackTypeConfig({
         preferredLang,
+        selectedGroupId,
         importStatusVersion,
         loadChildren: loadStackSpecies,
       }),
-    [preferredLang, importStatusVersion, loadStackSpecies],
+    [preferredLang, selectedGroupId, importStatusVersion, loadStackSpecies],
   );
 
   const speciesTypeConfig = useMemo(
     () =>
       createSpeciesTypeConfig({
         preferredLang,
+        selectedGroupId,
+        selectedStackId,
         importStatusVersion,
         loadChildren: loadSpeciesDetail,
       }),
-    [preferredLang, importStatusVersion, loadSpeciesDetail],
+    [
+      preferredLang,
+      selectedGroupId,
+      selectedStackId,
+      importStatusVersion,
+      loadSpeciesDetail,
+    ],
   );
 
   const speciesDetailTypeConfig = useMemo(
