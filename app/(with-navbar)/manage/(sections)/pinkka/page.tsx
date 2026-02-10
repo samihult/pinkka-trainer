@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ProtectedRoute } from "@/components/protected-route";
 import { PinkkaExplorer } from "@/components/pinkka/pinkka-explorer";
+import { PinkkaImportProgressDialog } from "@/components/pinkka/pinkka-import-progress-dialog";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +12,8 @@ import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
 import {
   getPinkkaGroupImportStatusMap,
+  isPinkkaImportInterruptedError,
+  type PinkkaImportProgress,
   getPinkkaSpeciesImportStatusMap,
   getPinkkaStackImportStatusMap,
   importPinkkaGroups,
@@ -23,6 +26,24 @@ function parseNumericParam(value: string | null): number | null {
   if (!value) return null;
   const parsed = Number.parseInt(value, 10);
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+function createEmptyProgressLevel() {
+  return {
+    completed: 0,
+    total: 0,
+    currentEntityName: "",
+    imageDownloadsCompleted: 0,
+    imageDownloadsTotal: 0,
+  };
+}
+
+function createEmptyPinkkaImportProgress(): PinkkaImportProgress {
+  return {
+    groups: createEmptyProgressLevel(),
+    stacks: createEmptyProgressLevel(),
+    species: createEmptyProgressLevel(),
+  };
 }
 
 /** Admin-facing page for browsing Pinkka content. */
@@ -42,7 +63,11 @@ export default function PinkkaContentPage() {
   const [unimportedSelectedIds, setUnimportedSelectedIds] = useState<number[]>(
     [],
   );
+  const [importProgress, setImportProgress] = useState<PinkkaImportProgress>(
+    createEmptyPinkkaImportProgress(),
+  );
   const [importStatusVersion, setImportStatusVersion] = useState(0);
+  const interruptRequestedRef = useRef(false);
 
   const selectedGroupId = useMemo(
     () => parseNumericParam(searchParams.get("group")),
@@ -244,6 +269,8 @@ export default function PinkkaContentPage() {
     }
 
     setActiveImportAction("import");
+    interruptRequestedRef.current = false;
+    setImportProgress(createEmptyPinkkaImportProgress());
     try {
       let results = [];
       if (importTarget === "species") {
@@ -254,6 +281,8 @@ export default function PinkkaContentPage() {
           {
             groupId: selectedGroupId ?? undefined,
             stackId: selectedStackId ?? undefined,
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
           },
         );
       } else if (importTarget === "stack") {
@@ -261,10 +290,22 @@ export default function PinkkaContentPage() {
           unimportedSelectedIds,
           user.uid,
           undefined,
-          { groupId: selectedGroupId ?? undefined },
+          {
+            groupId: selectedGroupId ?? undefined,
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
+          },
         );
       } else {
-        results = await importPinkkaGroups(unimportedSelectedIds, user.uid);
+        results = await importPinkkaGroups(
+          unimportedSelectedIds,
+          user.uid,
+          undefined,
+          {
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
+          },
+        );
       }
       toast({
         title: "Import complete",
@@ -274,6 +315,13 @@ export default function PinkkaContentPage() {
       });
       setImportStatusVersion((prev) => prev + 1);
     } catch (error) {
+      if (isPinkkaImportInterruptedError(error)) {
+        toast({
+          title: "Import interrupted",
+          description: "The Pinkka import was interrupted.",
+        });
+        return;
+      }
       logFirestoreError("Failed to import Pinkka entities", error);
       toast({
         title: "Import failed",
@@ -281,6 +329,7 @@ export default function PinkkaContentPage() {
         variant: "destructive",
       });
     } finally {
+      interruptRequestedRef.current = false;
       setActiveImportAction(null);
     }
   };
@@ -293,6 +342,8 @@ export default function PinkkaContentPage() {
     if (reimportIds.length === 0) return;
 
     setActiveImportAction("reimport");
+    interruptRequestedRef.current = false;
+    setImportProgress(createEmptyPinkkaImportProgress());
     try {
       let results = [];
       if (importTarget === "species") {
@@ -303,14 +354,31 @@ export default function PinkkaContentPage() {
           {
             groupId: selectedGroupId ?? undefined,
             stackId: selectedStackId ?? undefined,
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
           },
         );
       } else if (importTarget === "stack") {
-        results = await importPinkkaStacks(reimportIds, user.uid, undefined, {
-          groupId: selectedGroupId ?? undefined,
-        });
+        results = await importPinkkaStacks(
+          reimportIds,
+          user.uid,
+          undefined,
+          {
+            groupId: selectedGroupId ?? undefined,
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
+          },
+        );
       } else {
-        results = await importPinkkaGroups(reimportIds, user.uid);
+        results = await importPinkkaGroups(
+          reimportIds,
+          user.uid,
+          undefined,
+          {
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
+          },
+        );
       }
       toast({
         title: hasMixedSelection
@@ -322,6 +390,15 @@ export default function PinkkaContentPage() {
       });
       setImportStatusVersion((prev) => prev + 1);
     } catch (error) {
+      if (isPinkkaImportInterruptedError(error)) {
+        toast({
+          title: hasMixedSelection
+            ? "Import/Reimport interrupted"
+            : "Re-import interrupted",
+          description: "The Pinkka import was interrupted.",
+        });
+        return;
+      }
       logFirestoreError("Failed to re-import Pinkka entities", error);
       toast({
         title: hasMixedSelection
@@ -331,9 +408,14 @@ export default function PinkkaContentPage() {
         variant: "destructive",
       });
     } finally {
+      interruptRequestedRef.current = false;
       setActiveImportAction(null);
     }
   };
+
+  const handleInterruptImport = useCallback(() => {
+    interruptRequestedRef.current = true;
+  }, []);
 
   const handleSelectedIdsChange = useCallback(
     (ids: {
@@ -451,6 +533,11 @@ export default function PinkkaContentPage() {
             </div>
           </div>
         </main>
+        <PinkkaImportProgressDialog
+          open={isImporting}
+          progress={importProgress}
+          onInterrupt={handleInterruptImport}
+        />
       </div>
     </ProtectedRoute>
   );

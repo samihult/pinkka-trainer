@@ -56,6 +56,47 @@ export interface PinkkaImportResult {
   speciesIds: string[];
 }
 
+/** Progress state for one Pinkka entity level. */
+export interface PinkkaImportProgressLevel {
+  /** Number of completed entities. */
+  completed: number;
+  /** Total number of entities to import. */
+  total: number;
+  /** Name of the entity currently being imported. */
+  currentEntityName: string;
+  /** Completed image downloads for the current entity. */
+  imageDownloadsCompleted: number;
+  /** Total image downloads for the current entity. */
+  imageDownloadsTotal: number;
+}
+
+/** Hierarchical Pinkka import progress state. */
+export interface PinkkaImportProgress {
+  /** Group-level progress. */
+  groups: PinkkaImportProgressLevel;
+  /** Stack-level progress. */
+  stacks: PinkkaImportProgressLevel;
+  /** Species-level progress. */
+  species: PinkkaImportProgressLevel;
+}
+
+/** Callback for receiving Pinkka import progress updates. */
+export type PinkkaImportProgressCallback = (
+  progress: PinkkaImportProgress,
+) => void;
+
+/** User-facing message for manual interruption. */
+export const PINKKA_IMPORT_INTERRUPTED_ERROR_MESSAGE =
+  "Pinkka import interrupted.";
+
+/** Check whether an error indicates user-requested Pinkka import interruption. */
+export function isPinkkaImportInterruptedError(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    error.message === PINKKA_IMPORT_INTERRUPTED_ERROR_MESSAGE
+  );
+}
+
 const pinkkaGroupImportStatusCache = new Map<number, boolean>();
 const pinkkaStackImportStatusCache = new Map<number, boolean>();
 const pinkkaSpeciesImportStatusCache = new Map<number, boolean>();
@@ -93,6 +134,56 @@ let pendingPinkkaSpeciesStatusFlush:
   | undefined;
 const pinkkaImportedImageUrlCache = new Map<string, string>();
 
+type PinkkaImportProgressContext = {
+  progress: PinkkaImportProgress;
+  mode: "groups" | "stacks" | "species";
+  onProgress?: PinkkaImportProgressCallback;
+  shouldInterrupt?: () => boolean;
+  completedGroupIds: Set<number>;
+  completedStackKeys: Set<string>;
+};
+
+type PinkkaImportControlOptions = {
+  onProgress?: PinkkaImportProgressCallback;
+  shouldInterrupt?: () => boolean;
+};
+
+function createPinkkaImportProgressContext(params: {
+  mode: "groups" | "stacks" | "species";
+  onProgress?: PinkkaImportProgressCallback;
+  shouldInterrupt?: () => boolean;
+  initialProgress?: {
+    groups?: Partial<PinkkaImportProgressLevel>;
+    stacks?: Partial<PinkkaImportProgressLevel>;
+    species?: Partial<PinkkaImportProgressLevel>;
+  };
+}): PinkkaImportProgressContext {
+  const progress = createInitialPinkkaImportProgress();
+  if (params.initialProgress) {
+    progress.groups = {
+      ...progress.groups,
+      ...params.initialProgress.groups,
+    };
+    progress.stacks = {
+      ...progress.stacks,
+      ...params.initialProgress.stacks,
+    };
+    progress.species = {
+      ...progress.species,
+      ...params.initialProgress.species,
+    };
+  }
+
+  return {
+    progress,
+    mode: params.mode,
+    onProgress: params.onProgress,
+    shouldInterrupt: params.shouldInterrupt,
+    completedGroupIds: new Set<number>(),
+    completedStackKeys: new Set<string>(),
+  };
+}
+
 function chunkArray<T>(items: T[], size: number): T[][] {
   const chunks: T[][] = [];
   for (let i = 0; i < items.length; i += size) {
@@ -103,6 +194,128 @@ function chunkArray<T>(items: T[], size: number): T[][] {
 
 function toUniqueIds(ids: number[]): number[] {
   return [...new Set(ids)];
+}
+
+function createEmptyProgressLevel(): PinkkaImportProgressLevel {
+  return {
+    completed: 0,
+    total: 0,
+    currentEntityName: "",
+    imageDownloadsCompleted: 0,
+    imageDownloadsTotal: 0,
+  };
+}
+
+function createInitialPinkkaImportProgress(): PinkkaImportProgress {
+  return {
+    groups: createEmptyProgressLevel(),
+    stacks: createEmptyProgressLevel(),
+    species: createEmptyProgressLevel(),
+  };
+}
+
+function clonePinkkaImportProgress(
+  progress: PinkkaImportProgress,
+): PinkkaImportProgress {
+  return {
+    groups: { ...progress.groups },
+    stacks: { ...progress.stacks },
+    species: { ...progress.species },
+  };
+}
+
+function assertPinkkaImportNotInterrupted(
+  context?: PinkkaImportProgressContext,
+): void {
+  if (context?.shouldInterrupt?.() !== true) {
+    return;
+  }
+  throw new Error(PINKKA_IMPORT_INTERRUPTED_ERROR_MESSAGE);
+}
+
+function emitPinkkaImportProgress(
+  context?: PinkkaImportProgressContext,
+): void {
+  context?.onProgress?.(clonePinkkaImportProgress(context.progress));
+}
+
+function getMultilingualName(
+  value:
+    | { fi?: string; en?: string; sv?: string }
+    | undefined,
+  fallback: string,
+): string {
+  return value?.fi || value?.en || value?.sv || fallback;
+}
+
+function getPinkkaGroupDisplayName(group: PinkkaGroup): string {
+  return getMultilingualName(group.name, `Group ${group.id}`);
+}
+
+function getPinkkaStackDisplayName(stack: PinkkaSubStack): string {
+  return getMultilingualName(stack.name, `Stack ${stack.id}`);
+}
+
+function getPinkkaSpeciesDisplayName(
+  speciesId: number,
+  detail: PinkkaSpeciesDetail,
+): string {
+  return detail.scientificName || `Species ${speciesId}`;
+}
+
+function updateCurrentEntityProgress(
+  context: PinkkaImportProgressContext | undefined,
+  level: keyof PinkkaImportProgress,
+  name: string,
+  imageTotal = 0,
+): void {
+  if (!context) {
+    return;
+  }
+  const targetLevel = context.progress[level];
+  targetLevel.currentEntityName = name;
+  targetLevel.imageDownloadsCompleted = 0;
+  targetLevel.imageDownloadsTotal = imageTotal;
+  emitPinkkaImportProgress(context);
+}
+
+function markGroupCompleted(
+  context: PinkkaImportProgressContext | undefined,
+  groupId: number,
+  groupName: string,
+): void {
+  if (!context || context.completedGroupIds.has(groupId)) {
+    return;
+  }
+  context.completedGroupIds.add(groupId);
+  context.progress.groups.currentEntityName = groupName;
+  context.progress.groups.completed += 1;
+  if (context.progress.groups.completed > context.progress.groups.total) {
+    context.progress.groups.total = context.progress.groups.completed;
+  }
+  emitPinkkaImportProgress(context);
+}
+
+function markStackCompleted(
+  context: PinkkaImportProgressContext | undefined,
+  groupId: number,
+  stackId: number,
+  stackName: string,
+): void {
+  if (!context) {
+    return;
+  }
+  const key = stackStatusKey(groupId, stackId);
+  if (context.completedStackKeys.has(key)) {
+    return;
+  }
+  context.completedStackKeys.add(key);
+  context.progress.stacks.currentEntityName = stackName;
+  context.progress.stacks.completed += 1;
+  if (context.progress.stacks.completed > context.progress.stacks.total) {
+    context.progress.stacks.total = context.progress.stacks.completed;
+  }
+  emitPinkkaImportProgress(context);
 }
 
 /** Fetch imported status for Pinkka groups in batch. */
@@ -310,10 +523,23 @@ async function uploadPinkkaImageFromSource(params: {
   pinkkaImageId: string;
   filename: string;
   sourceUrl: string;
+  progressContext?: PinkkaImportProgressContext;
+  progressLevel?: "stacks" | "species";
 }): Promise<string | null> {
-  const { pinkkaImageId, filename, sourceUrl } = params;
+  const {
+    pinkkaImageId,
+    filename,
+    sourceUrl,
+    progressContext,
+    progressLevel,
+  } = params;
+  assertPinkkaImportNotInterrupted(progressContext);
   const cached = pinkkaImportedImageUrlCache.get(sourceUrl);
   if (cached) {
+    if (progressContext && progressLevel) {
+      progressContext.progress[progressLevel].imageDownloadsCompleted += 1;
+      emitPinkkaImportProgress(progressContext);
+    }
     return cached;
   }
 
@@ -335,6 +561,10 @@ async function uploadPinkkaImageFromSource(params: {
     });
     const downloadUrl = await getDownloadURL(imageRef);
     pinkkaImportedImageUrlCache.set(sourceUrl, downloadUrl);
+    if (progressContext && progressLevel) {
+      progressContext.progress[progressLevel].imageDownloadsCompleted += 1;
+      emitPinkkaImportProgress(progressContext);
+    }
     return downloadUrl;
   } catch (error) {
     console.error(
@@ -348,9 +578,11 @@ async function uploadPinkkaImageFromSource(params: {
 async function storePinkkaSpeciesImages(
   speciesId: number,
   detail: PinkkaSpeciesDetail,
+  progressContext?: PinkkaImportProgressContext,
 ): Promise<void> {
   const images = detail.images ?? [];
   for (let index = 0; index < images.length; index += 1) {
+    assertPinkkaImportNotInterrupted(progressContext);
     const image = images[index] as PinkkaImageAsset;
     const sourceUrl = getPreferredPinkkaImageUrl(image);
     if (!sourceUrl) {
@@ -365,6 +597,8 @@ async function storePinkkaSpeciesImages(
       pinkkaImageId,
       filename,
       sourceUrl,
+      progressContext,
+      progressLevel: "species",
     });
   }
 }
@@ -372,7 +606,9 @@ async function storePinkkaSpeciesImages(
 async function storePinkkaStackImage(
   stackId: number,
   stack: PinkkaSubStack,
+  progressContext?: PinkkaImportProgressContext,
 ): Promise<void> {
+  assertPinkkaImportNotInterrupted(progressContext);
   const stackImage = stack.image;
   if (!stackImage) {
     return;
@@ -391,6 +627,8 @@ async function storePinkkaStackImage(
     pinkkaImageId,
     filename,
     sourceUrl,
+    progressContext,
+    progressLevel: "stacks",
   });
 }
 
@@ -1130,18 +1368,29 @@ export async function isPinkkaSpeciesImported(
 export async function importPinkkaGroup(
   groupId: number,
   ownerId: string,
-  options?: { importId?: string; upsert?: boolean },
+  options?: {
+    importId?: string;
+    upsert?: boolean;
+    progressContext?: PinkkaImportProgressContext;
+  },
 ): Promise<PinkkaImportResult | null> {
   void ownerId;
   void options?.upsert;
+  assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
   const group = await fetchPinkkaGroupWithStacks(groupId);
   if (!group) return null;
+  const groupName = getPinkkaGroupDisplayName(group);
+  updateCurrentEntityProgress(options?.progressContext, "groups", groupName);
 
   const stackEntries = [...(group.subPinkkas ?? [])].sort(
     (a, b) => a.orderNo - b.orderNo,
   );
+  if (options?.progressContext?.mode === "groups") {
+    options.progressContext.progress.stacks.total += stackEntries.length;
+    emitPinkkaImportProgress(options.progressContext);
+  }
   const stackIds = stackEntries.map((stack) => String(stack.id));
   const speciesIds: string[] = [];
 
@@ -1149,29 +1398,63 @@ export async function importPinkkaGroup(
   pinkkaGroupImportStatusCache.set(group.id, true);
 
   for (const stackEntry of stackEntries) {
+    assertPinkkaImportNotInterrupted(options?.progressContext);
     const stackDetail = await fetchPinkkaSubStack(stackEntry.id);
     const stackData = stackDetail ?? stackEntry;
     const stackSpeciesCards = stackData.speciesCards ?? [];
+    const stackName = getPinkkaStackDisplayName(stackData);
+    updateCurrentEntityProgress(
+      options?.progressContext,
+      "stacks",
+      stackName,
+      stackData.image ? 1 : 0,
+    );
+    if (options?.progressContext?.mode === "groups") {
+      options.progressContext.progress.species.total += stackSpeciesCards.length;
+      emitPinkkaImportProgress(options.progressContext);
+    }
 
-    await storePinkkaStackImage(stackData.id, stackData);
+    await storePinkkaStackImage(
+      stackData.id,
+      stackData,
+      options?.progressContext,
+    );
     await writePinkkaEntity(
       getPinkkaStackPath(group.id, stackData.id),
       stackData,
     );
     pinkkaStackImportStatusCache.set(stackData.id, true);
+    markStackCompleted(options?.progressContext, group.id, stackData.id, stackName);
 
     for (const card of stackSpeciesCards) {
+      assertPinkkaImportNotInterrupted(options?.progressContext);
       const speciesDetail = await fetchPinkkaSpecies(card.id);
       if (!speciesDetail) continue;
-      await storePinkkaSpeciesImages(card.id, speciesDetail);
+      const speciesName = getPinkkaSpeciesDisplayName(card.id, speciesDetail);
+      updateCurrentEntityProgress(
+        options?.progressContext,
+        "species",
+        speciesName,
+        speciesDetail.images?.length ?? 0,
+      );
+      await storePinkkaSpeciesImages(
+        card.id,
+        speciesDetail,
+        options?.progressContext,
+      );
       await writePinkkaEntity(
         getPinkkaSpeciesPath(group.id, stackData.id, card.id),
         speciesDetail,
       );
       pinkkaSpeciesImportStatusCache.set(card.id, true);
       speciesIds.push(String(card.id));
+      if (options?.progressContext) {
+        options.progressContext.progress.species.completed += 1;
+        emitPinkkaImportProgress(options.progressContext);
+      }
     }
   }
+  markGroupCompleted(options?.progressContext, group.id, groupName);
 
   return {
     importId: resolvedImportId,
@@ -1188,10 +1471,16 @@ export async function importPinkkaGroup(
 export async function importPinkkaStack(
   stackId: number,
   ownerId: string,
-  options?: { importId?: string; upsert?: boolean; groupId?: number },
+  options?: {
+    importId?: string;
+    upsert?: boolean;
+    groupId?: number;
+    progressContext?: PinkkaImportProgressContext;
+  },
 ): Promise<PinkkaImportResult | null> {
   void ownerId;
   void options?.upsert;
+  assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
   const stackDetail = await fetchPinkkaSubStack(stackId);
@@ -1206,23 +1495,62 @@ export async function importPinkkaStack(
     stackEntity: stackDetail,
   });
   if (!hierarchy) return null;
+  const groupName = getPinkkaGroupDisplayName(hierarchy.group);
+  markGroupCompleted(options?.progressContext, resolvedGroupId, groupName);
 
   pinkkaGroupImportStatusCache.set(resolvedGroupId, true);
   pinkkaStackImportStatusCache.set(stackDetail.id, true);
   const speciesIds: string[] = [];
   const stackSpeciesCards = hierarchy.stack.speciesCards ?? [];
+  const stackName = getPinkkaStackDisplayName(hierarchy.stack);
+  updateCurrentEntityProgress(
+    options?.progressContext,
+    "stacks",
+    stackName,
+    hierarchy.stack.image ? 1 : 0,
+  );
+  if (options?.progressContext?.mode === "stacks") {
+    options.progressContext.progress.species.total += stackSpeciesCards.length;
+    emitPinkkaImportProgress(options.progressContext);
+  }
 
-  await storePinkkaStackImage(hierarchy.stack.id, hierarchy.stack);
+  await storePinkkaStackImage(
+    hierarchy.stack.id,
+    hierarchy.stack,
+    options?.progressContext,
+  );
+  markStackCompleted(
+    options?.progressContext,
+    resolvedGroupId,
+    hierarchy.stack.id,
+    stackName,
+  );
   for (const card of stackSpeciesCards) {
+    assertPinkkaImportNotInterrupted(options?.progressContext);
     const speciesDetail = await fetchPinkkaSpecies(card.id);
     if (!speciesDetail) continue;
-    await storePinkkaSpeciesImages(card.id, speciesDetail);
+    const speciesName = getPinkkaSpeciesDisplayName(card.id, speciesDetail);
+    updateCurrentEntityProgress(
+      options?.progressContext,
+      "species",
+      speciesName,
+      speciesDetail.images?.length ?? 0,
+    );
+    await storePinkkaSpeciesImages(
+      card.id,
+      speciesDetail,
+      options?.progressContext,
+    );
     await writePinkkaEntity(
       getPinkkaSpeciesPath(resolvedGroupId, hierarchy.stack.id, card.id),
       speciesDetail,
     );
     speciesIds.push(String(card.id));
     pinkkaSpeciesImportStatusCache.set(card.id, true);
+    if (options?.progressContext) {
+      options.progressContext.progress.species.completed += 1;
+      emitPinkkaImportProgress(options.progressContext);
+    }
   }
 
   return {
@@ -1240,14 +1568,33 @@ export async function importPinkkaStacks(
   stackIds: number[],
   ownerId: string,
   importId?: string,
-  options?: { groupId?: number },
+  options?: {
+    groupId?: number;
+    onProgress?: PinkkaImportProgressCallback;
+    shouldInterrupt?: () => boolean;
+  },
 ): Promise<PinkkaImportResult[]> {
   const resolvedImportId =
     importId ?? doc(collection(db, "imports")).id;
   const shouldUpsert = Boolean(importId);
   const results: PinkkaImportResult[] = [];
+  const progressContext = createPinkkaImportProgressContext({
+    mode: "stacks",
+    onProgress: options?.onProgress,
+    shouldInterrupt: options?.shouldInterrupt,
+    initialProgress: {
+      groups: {
+        total: options?.groupId !== undefined ? 1 : 0,
+      },
+      stacks: {
+        total: stackIds.length,
+      },
+    },
+  });
+  emitPinkkaImportProgress(progressContext);
 
   for (const stackId of stackIds) {
+    assertPinkkaImportNotInterrupted(progressContext);
     const result = await importPinkkaStack(
       stackId,
       ownerId,
@@ -1255,6 +1602,7 @@ export async function importPinkkaStacks(
         importId: resolvedImportId,
         upsert: shouldUpsert,
         groupId: options?.groupId,
+        progressContext,
       },
     );
     if (result) {
@@ -1277,10 +1625,12 @@ export async function importPinkkaSpecies(
     upsert?: boolean;
     groupId?: number;
     stackId?: number;
+    progressContext?: PinkkaImportProgressContext;
   },
 ): Promise<PinkkaImportResult | null> {
   void ownerId;
   void options?.upsert;
+  assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
   const speciesDetail = await fetchPinkkaSpecies(speciesId);
@@ -1296,9 +1646,38 @@ export async function importPinkkaSpecies(
     stackId: speciesLocation.stackId,
   });
   if (!hierarchy) return null;
-
-  await storePinkkaStackImage(hierarchy.stack.id, hierarchy.stack);
-  await storePinkkaSpeciesImages(speciesId, speciesDetail);
+  const groupName = getPinkkaGroupDisplayName(hierarchy.group);
+  markGroupCompleted(options?.progressContext, hierarchy.group.id, groupName);
+  const stackName = getPinkkaStackDisplayName(hierarchy.stack);
+  updateCurrentEntityProgress(
+    options?.progressContext,
+    "stacks",
+    stackName,
+    hierarchy.stack.image ? 1 : 0,
+  );
+  await storePinkkaStackImage(
+    hierarchy.stack.id,
+    hierarchy.stack,
+    options?.progressContext,
+  );
+  markStackCompleted(
+    options?.progressContext,
+    hierarchy.group.id,
+    hierarchy.stack.id,
+    stackName,
+  );
+  const speciesName = getPinkkaSpeciesDisplayName(speciesId, speciesDetail);
+  updateCurrentEntityProgress(
+    options?.progressContext,
+    "species",
+    speciesName,
+    speciesDetail.images?.length ?? 0,
+  );
+  await storePinkkaSpeciesImages(
+    speciesId,
+    speciesDetail,
+    options?.progressContext,
+  );
   await writePinkkaEntity(
     getPinkkaSpeciesPath(
       speciesLocation.groupId,
@@ -1310,6 +1689,10 @@ export async function importPinkkaSpecies(
   pinkkaGroupImportStatusCache.set(speciesLocation.groupId, true);
   pinkkaStackImportStatusCache.set(speciesLocation.stackId, true);
   pinkkaSpeciesImportStatusCache.set(speciesId, true);
+  if (options?.progressContext) {
+    options.progressContext.progress.species.completed += 1;
+    emitPinkkaImportProgress(options.progressContext);
+  }
 
   return {
     importId: resolvedImportId,
@@ -1326,14 +1709,37 @@ export async function importPinkkaSpeciesList(
   speciesIds: number[],
   ownerId: string,
   importId?: string,
-  options?: { groupId?: number; stackId?: number },
+  options?: {
+    groupId?: number;
+    stackId?: number;
+    onProgress?: PinkkaImportProgressCallback;
+    shouldInterrupt?: () => boolean;
+  },
 ): Promise<PinkkaImportResult[]> {
   const resolvedImportId =
     importId ?? doc(collection(db, "imports")).id;
   const shouldUpsert = Boolean(importId);
   const results: PinkkaImportResult[] = [];
+  const progressContext = createPinkkaImportProgressContext({
+    mode: "species",
+    onProgress: options?.onProgress,
+    shouldInterrupt: options?.shouldInterrupt,
+    initialProgress: {
+      groups: {
+        total: options?.groupId !== undefined ? 1 : 0,
+      },
+      stacks: {
+        total: options?.stackId !== undefined ? 1 : 0,
+      },
+      species: {
+        total: speciesIds.length,
+      },
+    },
+  });
+  emitPinkkaImportProgress(progressContext);
 
   for (const speciesId of speciesIds) {
+    assertPinkkaImportNotInterrupted(progressContext);
     const result = await importPinkkaSpecies(
       speciesId,
       ownerId,
@@ -1342,6 +1748,7 @@ export async function importPinkkaSpeciesList(
         upsert: shouldUpsert,
         groupId: options?.groupId,
         stackId: options?.stackId,
+        progressContext,
       },
     );
     if (result) {
@@ -1360,17 +1767,34 @@ export async function importPinkkaGroups(
   groupIds: number[],
   ownerId: string,
   importId?: string,
+  options?: PinkkaImportControlOptions,
 ): Promise<PinkkaImportResult[]> {
   const resolvedImportId =
     importId ?? doc(collection(db, "imports")).id;
   const shouldUpsert = Boolean(importId);
   const results: PinkkaImportResult[] = [];
+  const progressContext = createPinkkaImportProgressContext({
+    mode: "groups",
+    onProgress: options?.onProgress,
+    shouldInterrupt: options?.shouldInterrupt,
+    initialProgress: {
+      groups: {
+        total: groupIds.length,
+      },
+    },
+  });
+  emitPinkkaImportProgress(progressContext);
 
   for (const groupId of groupIds) {
+    assertPinkkaImportNotInterrupted(progressContext);
     const result = await importPinkkaGroup(
       groupId,
       ownerId,
-      { importId: resolvedImportId, upsert: shouldUpsert },
+      {
+        importId: resolvedImportId,
+        upsert: shouldUpsert,
+        progressContext,
+      },
     );
     if (result) {
       results.push(result);
