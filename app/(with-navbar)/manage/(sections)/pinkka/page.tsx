@@ -13,6 +13,9 @@ import {
   importPinkkaGroups,
   importPinkkaSpeciesList,
   importPinkkaStacks,
+  isPinkkaGroupImported,
+  isPinkkaSpeciesImported,
+  isPinkkaStackImported,
 } from "@/lib/firebase/firestore-helpers";
 import { logFirestoreError } from "@/lib/utils";
 
@@ -31,7 +34,14 @@ export default function PinkkaContentPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isImporting, setIsImporting] = useState(false);
+  const [activeImportAction, setActiveImportAction] = useState<
+    "import" | "reimport" | null
+  >(null);
+  const [isCheckingImportStatus, setIsCheckingImportStatus] = useState(false);
+  const [importedSelectedIds, setImportedSelectedIds] = useState<number[]>([]);
+  const [unimportedSelectedIds, setUnimportedSelectedIds] = useState<number[]>(
+    [],
+  );
   const [importStatusVersion, setImportStatusVersion] = useState(0);
 
   const selectedGroupId = useMemo(
@@ -55,9 +65,12 @@ export default function PinkkaContentPage() {
 
   useEffect(() => {
     const nextParams = new URLSearchParams(searchParams.toString());
-    const normalizedGroup = selectedGroupId !== null ? String(selectedGroupId) : null;
-    const normalizedStack = selectedStackId !== null ? String(selectedStackId) : null;
-    const normalizedSpecies = selectedSpeciesId !== null ? String(selectedSpeciesId) : null;
+    const normalizedGroup =
+      selectedGroupId !== null ? String(selectedGroupId) : null;
+    const normalizedStack =
+      selectedStackId !== null ? String(selectedStackId) : null;
+    const normalizedSpecies =
+      selectedSpeciesId !== null ? String(selectedSpeciesId) : null;
 
     if (normalizedGroup) {
       nextParams.set("group", normalizedGroup);
@@ -95,15 +108,15 @@ export default function PinkkaContentPage() {
   ]);
 
   const selectedGroupIds = useMemo(
-    () => (selectedGroupId ? [selectedGroupId] : []),
+    () => (selectedGroupId !== null ? [selectedGroupId] : []),
     [selectedGroupId],
   );
   const selectedStackIds = useMemo(
-    () => (selectedStackId ? [selectedStackId] : []),
+    () => (selectedStackId !== null ? [selectedStackId] : []),
     [selectedStackId],
   );
   const selectedSpeciesIds = useMemo(
-    () => (selectedSpeciesId ? [selectedSpeciesId] : []),
+    () => (selectedSpeciesId !== null ? [selectedSpeciesId] : []),
     [selectedSpeciesId],
   );
 
@@ -114,17 +127,23 @@ export default function PinkkaContentPage() {
     return null;
   }, [selectedGroupId, selectedSpeciesId, selectedStackId]);
 
-  const importCount = useMemo(() => {
-    if (importTarget === "species") return selectedSpeciesId ? 1 : 0;
-    if (importTarget === "stack") return selectedStackId ? 1 : 0;
-    if (importTarget === "group") return selectedGroupId ? 1 : 0;
-    return 0;
-  }, [
-    importTarget,
-    selectedGroupId,
-    selectedSpeciesId,
-    selectedStackId,
-  ]);
+  const selectedTargetIds = useMemo(() => {
+    if (importTarget === "species") return selectedSpeciesIds;
+    if (importTarget === "stack") return selectedStackIds;
+    if (importTarget === "group") return selectedGroupIds;
+    return [];
+  }, [importTarget, selectedGroupIds, selectedSpeciesIds, selectedStackIds]);
+
+  const hasImportedSelection = importedSelectedIds.length > 0;
+  const hasUnimportedSelection = unimportedSelectedIds.length > 0;
+  const hasMixedSelection = hasImportedSelection && hasUnimportedSelection;
+  const hasSelection = selectedTargetIds.length > 0;
+  const isImporting = activeImportAction !== null;
+  const importCount = unimportedSelectedIds.length;
+  const reimportCount = hasMixedSelection
+    ? selectedTargetIds.length
+    : importedSelectedIds.length;
+  const showImportButton = hasSelection && !hasImportedSelection;
 
   const importLabels = useMemo(() => {
     if (importTarget === "species") {
@@ -139,14 +158,82 @@ export default function PinkkaContentPage() {
     return { title: "Items", singular: "item", plural: "items" };
   }, [importTarget]);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!importTarget || selectedTargetIds.length === 0) {
+      setImportedSelectedIds([]);
+      setUnimportedSelectedIds([]);
+      setIsCheckingImportStatus(false);
+      return;
+    }
+
+    const checkImportStatus = async () => {
+      setIsCheckingImportStatus(true);
+      setImportedSelectedIds([]);
+      setUnimportedSelectedIds([]);
+      try {
+        const checker =
+          importTarget === "group"
+            ? isPinkkaGroupImported
+            : importTarget === "stack"
+              ? isPinkkaStackImported
+              : isPinkkaSpeciesImported;
+
+        const results = await Promise.all(
+          selectedTargetIds.map(async (id) => ({
+            id,
+            isImported: await checker(id),
+          })),
+        );
+
+        if (!isMounted) {
+          return;
+        }
+
+        setImportedSelectedIds(
+          results.filter((item) => item.isImported).map((item) => item.id),
+        );
+        setUnimportedSelectedIds(
+          results.filter((item) => !item.isImported).map((item) => item.id),
+        );
+      } catch (error) {
+        if (!isMounted) {
+          return;
+        }
+        logFirestoreError("Failed to check Pinkka import status", error);
+        setImportedSelectedIds([]);
+        setUnimportedSelectedIds(selectedTargetIds);
+      } finally {
+        if (isMounted) {
+          setIsCheckingImportStatus(false);
+        }
+      }
+    };
+
+    void checkImportStatus();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [importStatusVersion, importTarget, selectedTargetIds]);
+
   const handleImport = async () => {
     if (!user || !importTarget) return;
-    setIsImporting(true);
+    if (unimportedSelectedIds.length === 0) {
+      toast({
+        title: "Nothing to import",
+        description: "All selected entities are already imported.",
+      });
+      return;
+    }
+
+    setActiveImportAction("import");
     try {
       let results = [];
       if (importTarget === "species") {
         results = await importPinkkaSpeciesList(
-          selectedSpeciesIds,
+          unimportedSelectedIds,
           user.uid,
           undefined,
           {
@@ -156,13 +243,13 @@ export default function PinkkaContentPage() {
         );
       } else if (importTarget === "stack") {
         results = await importPinkkaStacks(
-          selectedStackIds,
+          unimportedSelectedIds,
           user.uid,
           undefined,
           { groupId: selectedGroupId ?? undefined },
         );
       } else {
-        results = await importPinkkaGroups(selectedGroupIds, user.uid);
+        results = await importPinkkaGroups(unimportedSelectedIds, user.uid);
       }
       toast({
         title: "Import complete",
@@ -172,22 +259,77 @@ export default function PinkkaContentPage() {
       });
       setImportStatusVersion((prev) => prev + 1);
     } catch (error) {
-      logFirestoreError("Failed to import Pinkka groups", error);
+      logFirestoreError("Failed to import Pinkka entities", error);
       toast({
         title: "Import failed",
-        description: "Unable to import the selected groups.",
+        description: "Unable to import the selected entities.",
         variant: "destructive",
       });
     } finally {
-      setIsImporting(false);
+      setActiveImportAction(null);
+    }
+  };
+
+  const handleReimport = async () => {
+    if (!user || !importTarget) return;
+    const reimportIds = hasMixedSelection
+      ? selectedTargetIds
+      : importedSelectedIds;
+    if (reimportIds.length === 0) return;
+
+    setActiveImportAction("reimport");
+    try {
+      let results = [];
+      if (importTarget === "species") {
+        results = await importPinkkaSpeciesList(
+          reimportIds,
+          user.uid,
+          undefined,
+          {
+            groupId: selectedGroupId ?? undefined,
+            stackId: selectedStackId ?? undefined,
+          },
+        );
+      } else if (importTarget === "stack") {
+        results = await importPinkkaStacks(reimportIds, user.uid, undefined, {
+          groupId: selectedGroupId ?? undefined,
+        });
+      } else {
+        results = await importPinkkaGroups(reimportIds, user.uid);
+      }
+      toast({
+        title: hasMixedSelection
+          ? "Import/Reimport complete"
+          : "Re-import complete",
+        description: `${hasMixedSelection ? "Imported/Re-imported" : "Re-imported"} ${
+          results.length
+        } ${results.length === 1 ? importLabels.singular : importLabels.plural}.`,
+      });
+      setImportStatusVersion((prev) => prev + 1);
+    } catch (error) {
+      logFirestoreError("Failed to re-import Pinkka entities", error);
+      toast({
+        title: hasMixedSelection
+          ? "Import/Reimport failed"
+          : "Re-import failed",
+        description: "Unable to import/re-import the selected entities.",
+        variant: "destructive",
+      });
+    } finally {
+      setActiveImportAction(null);
     }
   };
 
   const handleSelectedIdsChange = useCallback(
-    (ids: { groupId: number | null; stackId: number | null; speciesId: number | null }) => {
+    (ids: {
+      groupId: number | null;
+      stackId: number | null;
+      speciesId: number | null;
+    }) => {
       const normalizedGroupId = ids.groupId;
       const normalizedStackId = ids.groupId ? ids.stackId : null;
-      const normalizedSpeciesId = ids.groupId && ids.stackId ? ids.speciesId : null;
+      const normalizedSpeciesId =
+        ids.groupId && ids.stackId ? ids.speciesId : null;
 
       if (
         normalizedGroupId === selectedGroupId &&
@@ -241,14 +383,45 @@ export default function PinkkaContentPage() {
                 Browse Pinkka groups, stacks, and species details.
               </p>
             </div>
-            <Button
-              onClick={handleImport}
-              disabled={!user || !importTarget || isImporting}
-            >
-              {isImporting
-                ? "Importing..."
-                : `Import Selected ${importLabels.title} (${importCount})`}
-            </Button>
+            <div className="flex flex-wrap items-center gap-2">
+              {showImportButton && (
+                <Button
+                  onClick={handleImport}
+                  disabled={
+                    !user ||
+                    !importTarget ||
+                    isImporting ||
+                    isCheckingImportStatus ||
+                    importCount === 0
+                  }
+                >
+                  {activeImportAction === "import"
+                    ? "Importing..."
+                    : `Import Selected ${importLabels.title} (${importCount})`}
+                </Button>
+              )}
+              {hasImportedSelection && (
+                <Button
+                  variant="secondary"
+                  onClick={handleReimport}
+                  disabled={
+                    !user ||
+                    !importTarget ||
+                    isImporting ||
+                    isCheckingImportStatus ||
+                    reimportCount === 0
+                  }
+                >
+                  {activeImportAction === "reimport"
+                    ? hasMixedSelection
+                      ? "Importing/Reimporting..."
+                      : "Re-importing..."
+                    : `${
+                        hasMixedSelection ? "Import/Reimport" : "Re-import"
+                      } Selected ${importLabels.title} (${reimportCount})`}
+                </Button>
+              )}
+            </div>
           </div>
           <div className="flex-1">
             <div className="h-[70vh]">
