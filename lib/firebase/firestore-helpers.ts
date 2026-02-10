@@ -34,8 +34,11 @@ import type {
 import { normalizeQuizPreferences } from "../quiz/quiz-preferences";
 import {
   fetchPinkkaGroupWithStacks,
+  fetchPinkkaGroups,
   fetchPinkkaSpecies,
   fetchPinkkaSubStack,
+  type PinkkaGroup,
+  type PinkkaSubStack,
 } from "../pinkka/pinkka-api";
 
 /** Result summary for a Pinkka import. */
@@ -53,6 +56,7 @@ export interface PinkkaImportResult {
 const pinkkaGroupImportStatusCache = new Map<number, boolean>();
 const pinkkaStackImportStatusCache = new Map<number, boolean>();
 const pinkkaSpeciesImportStatusCache = new Map<number, boolean>();
+const PINKKA_COLLECTION = "pinkka";
 
 function chunkArray<T>(items: T[], size: number): T[][] {
   const chunks: T[][] = [];
@@ -71,30 +75,131 @@ function buildLearningProgressDocId(
   return `${userId}_${speciesId}_${nameType}`;
 }
 
-/** Build a deterministic document id for a Pinkka import. */
-function buildImportDocId(importId: string, pinkkaId: number): string {
-  return `${importId}_${pinkkaId}`;
+type PinkkaEntityDocument<T> = {
+  /** Timestamp when the entity was imported. */
+  importDate: Timestamp;
+  /** Original Pinkka API response payload. */
+  entity: T;
+};
+
+async function writePinkkaEntity<T>(
+  pathSegments: string[],
+  entity: T,
+): Promise<void> {
+  const [path, ...rest] = pathSegments;
+  if (!path) {
+    throw new Error("Pinkka entity path is required.");
+  }
+  const payload: PinkkaEntityDocument<T> = {
+    importDate: Timestamp.now(),
+    entity,
+  };
+  await setDoc(doc(db, path, ...rest), payload);
 }
 
-/** Write a Firestore document with timestamps. */
-async function writeWithTimestamps<T extends Record<string, unknown>>(
-  collectionName: string,
-  docId: string,
-  payload: T,
-  upsert: boolean,
-): Promise<void> {
-  const docRef = doc(db, collectionName, docId);
-  const existingDoc = upsert ? await getDoc(docRef) : null;
-  const createdAt =
-    upsert && existingDoc?.exists()
-      ? existingDoc.data().createdAt
-      : Timestamp.now();
+function getPinkkaGroupPath(groupId: number): string[] {
+  return [PINKKA_COLLECTION, String(groupId)];
+}
 
-  await setDoc(docRef, {
-    ...payload,
-    createdAt,
-    updatedAt: Timestamp.now(),
-  });
+function getPinkkaStackPath(
+  groupId: number,
+  stackId: number,
+): string[] {
+  return [...getPinkkaGroupPath(groupId), "stacks", String(stackId)];
+}
+
+function getPinkkaSpeciesPath(
+  groupId: number,
+  stackId: number,
+  speciesId: number,
+): string[] {
+  return [...getPinkkaStackPath(groupId, stackId), "species", String(speciesId)];
+}
+
+async function resolveGroupIdForStack(
+  stackId: number,
+  stackDetail?: PinkkaSubStack | null,
+): Promise<number | null> {
+  if (stackDetail?.pinkka?.id) {
+    return stackDetail.pinkka.id;
+  }
+
+  const groups = await fetchPinkkaGroups();
+  for (const group of groups) {
+    const groupDetail = await fetchPinkkaGroupWithStacks(group.id);
+    if (!groupDetail) {
+      continue;
+    }
+    if ((groupDetail.subPinkkas ?? []).some((subStack) => subStack.id === stackId)) {
+      return groupDetail.id;
+    }
+  }
+
+  return null;
+}
+
+type PinkkaSpeciesLocation = {
+  /** Parent group id for the species. */
+  groupId: number;
+  /** Parent stack id for the species. */
+  stackId: number;
+};
+
+async function resolveSpeciesLocation(
+  speciesId: number,
+): Promise<PinkkaSpeciesLocation | null> {
+  const groups = await fetchPinkkaGroups();
+  for (const group of groups) {
+    const groupDetail = await fetchPinkkaGroupWithStacks(group.id);
+    if (!groupDetail) {
+      continue;
+    }
+
+    for (const stackEntry of groupDetail.subPinkkas ?? []) {
+      const stackDetail = await fetchPinkkaSubStack(stackEntry.id);
+      if (!stackDetail) {
+        continue;
+      }
+
+      const containsSpecies = (stackDetail.speciesCards ?? []).some(
+        (card) => card.id === speciesId,
+      );
+      if (containsSpecies) {
+        return { groupId: groupDetail.id, stackId: stackDetail.id };
+      }
+    }
+  }
+
+  return null;
+}
+
+async function writePinkkaGroupAndStackHierarchy(params: {
+  groupId: number;
+  stackId: number;
+  groupEntity?: PinkkaGroup | null;
+  stackEntity?: PinkkaSubStack | null;
+}): Promise<{ group: PinkkaGroup; stack: PinkkaSubStack } | null> {
+  const { groupId, stackId, groupEntity, stackEntity } = params;
+  const resolvedGroup = groupEntity ?? (await fetchPinkkaGroupWithStacks(groupId));
+  if (!resolvedGroup) {
+    return null;
+  }
+
+  const resolvedStack = stackEntity ?? (await fetchPinkkaSubStack(stackId));
+  if (!resolvedStack) {
+    return null;
+  }
+
+  await writePinkkaEntity(getPinkkaGroupPath(groupId), resolvedGroup);
+  await writePinkkaEntity(
+    getPinkkaStackPath(groupId, resolvedStack.id),
+    resolvedStack,
+  );
+
+  return {
+    group: resolvedGroup,
+    stack: resolvedStack,
+  };
 }
 
 // User operations
@@ -530,10 +635,8 @@ export async function isPinkkaGroupImported(
     return pinkkaGroupImportStatusCache.get(groupId) === true;
   }
 
-  const snapshot = await getDocs(
-    query(collection(db, "groups"), where("data.id", "==", groupId)),
-  );
-  const exists = !snapshot.empty;
+  const groupDoc = await getDoc(doc(db, PINKKA_COLLECTION, String(groupId)));
+  const exists = groupDoc.exists();
   pinkkaGroupImportStatusCache.set(groupId, exists);
   return exists;
 }
@@ -546,10 +649,22 @@ export async function isPinkkaStackImported(
     return pinkkaStackImportStatusCache.get(stackId) === true;
   }
 
-  const snapshot = await getDocs(
-    query(collection(db, "stacks"), where("data.id", "==", stackId)),
+  const resolvedGroupId = await resolveGroupIdForStack(stackId);
+  if (resolvedGroupId === null) {
+    pinkkaStackImportStatusCache.set(stackId, false);
+    return false;
+  }
+
+  const stackDoc = await getDoc(
+    doc(
+      db,
+      PINKKA_COLLECTION,
+      String(resolvedGroupId),
+      "stacks",
+      String(stackId),
+    ),
   );
-  const exists = !snapshot.empty;
+  const exists = stackDoc.exists();
   pinkkaStackImportStatusCache.set(stackId, exists);
   return exists;
 }
@@ -562,178 +677,143 @@ export async function isPinkkaSpeciesImported(
     return pinkkaSpeciesImportStatusCache.get(speciesId) === true;
   }
 
-  const snapshot = await getDocs(
-    query(collection(db, "species"), where("data.id", "==", speciesId)),
+  const speciesLocation = await resolveSpeciesLocation(speciesId);
+  if (!speciesLocation) {
+    pinkkaSpeciesImportStatusCache.set(speciesId, false);
+    return false;
+  }
+
+  const speciesDoc = await getDoc(
+    doc(
+      db,
+      PINKKA_COLLECTION,
+      String(speciesLocation.groupId),
+      "stacks",
+      String(speciesLocation.stackId),
+      "species",
+      String(speciesId),
+    ),
   );
-  const exists = !snapshot.empty;
+  const exists = speciesDoc.exists();
   pinkkaSpeciesImportStatusCache.set(speciesId, exists);
   return exists;
 }
 
 // Pinkka import operations
 /**
- * Import a Pinkka group with its stacks and species into Firestore.
- * When an importId is provided, the import upserts those documents.
+ * Import a Pinkka group with its stacks and species into Firestore under
+ * the pinkka hierarchy.
  */
 export async function importPinkkaGroup(
   groupId: number,
   ownerId: string,
   options?: { importId?: string; upsert?: boolean },
 ): Promise<PinkkaImportResult | null> {
+  void ownerId;
+  void options?.upsert;
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
-  const shouldUpsert = options?.upsert ?? false;
   const group = await fetchPinkkaGroupWithStacks(groupId);
   if (!group) return null;
 
   const stackEntries = [...(group.subPinkkas ?? [])].sort(
     (a, b) => a.orderNo - b.orderNo,
   );
-  const stackIds = stackEntries.map((stack) =>
-    buildImportDocId(resolvedImportId, stack.id),
-  );
+  const stackIds = stackEntries.map((stack) => String(stack.id));
   const speciesIds: string[] = [];
 
+  await writePinkkaEntity(getPinkkaGroupPath(group.id), group);
+  pinkkaGroupImportStatusCache.set(group.id, true);
+
   for (const stackEntry of stackEntries) {
-    const stackId = buildImportDocId(resolvedImportId, stackEntry.id);
     const stackDetail = await fetchPinkkaSubStack(stackEntry.id);
     const stackData = stackDetail ?? stackEntry;
-    const stackSpeciesCards = stackDetail?.speciesCards ?? [];
-    const stackSpeciesIds = stackSpeciesCards.map((card) =>
-      buildImportDocId(resolvedImportId, card.id),
-    );
+    const stackSpeciesCards = stackData.speciesCards ?? [];
 
-    speciesIds.push(...stackSpeciesIds);
-
-    await writeWithTimestamps(
-      "stacks",
-      stackId,
-      {
-        data: stackData,
-        isHidden: false,
-        speciesIds: stackSpeciesIds,
-        importId: resolvedImportId,
-        ownerId,
-      },
-      shouldUpsert,
+    await writePinkkaEntity(
+      getPinkkaStackPath(group.id, stackData.id),
+      stackData,
     );
-    pinkkaStackImportStatusCache.set(stackEntry.id, true);
+    pinkkaStackImportStatusCache.set(stackData.id, true);
 
     for (const card of stackSpeciesCards) {
       const speciesDetail = await fetchPinkkaSpecies(card.id);
       if (!speciesDetail) continue;
-      const speciesId = buildImportDocId(resolvedImportId, card.id);
-      await writeWithTimestamps(
-        "species",
-        speciesId,
-        {
-          data: speciesDetail,
-          isHidden: false,
-          importId: resolvedImportId,
-          ownerId,
-        },
-        shouldUpsert,
+      await writePinkkaEntity(
+        getPinkkaSpeciesPath(group.id, stackData.id, card.id),
+        speciesDetail,
       );
       pinkkaSpeciesImportStatusCache.set(card.id, true);
+      speciesIds.push(String(card.id));
     }
   }
 
-  const groupDocId = buildImportDocId(resolvedImportId, group.id);
-  const groupDocRef = doc(db, "groups", groupDocId);
-  const groupDoc = await getDoc(groupDocRef);
-  const order = groupDoc.exists() ? groupDoc.data().order : group.id;
-
-  await writeWithTimestamps(
-    "groups",
-    groupDocId,
-    {
-      data: group,
-      isHidden: true,
-      stackIds,
-      importId: resolvedImportId,
-      ownerId,
-      order,
-    },
-    shouldUpsert,
-  );
-
-  pinkkaGroupImportStatusCache.set(group.id, true);
-
   return {
     importId: resolvedImportId,
-    groupId: groupDocId,
+    groupId: String(group.id),
     stackIds,
     speciesIds,
   };
 }
 
 /**
- * Import a Pinkka stack with its species into Firestore.
- * When an importId is provided, the import upserts those documents.
+ * Import a Pinkka stack with its species into Firestore under the pinkka
+ * hierarchy.
  */
 export async function importPinkkaStack(
   stackId: number,
   ownerId: string,
-  options?: { importId?: string; upsert?: boolean },
+  options?: { importId?: string; upsert?: boolean; groupId?: number },
 ): Promise<PinkkaImportResult | null> {
+  void ownerId;
+  void options?.upsert;
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
-  const shouldUpsert = options?.upsert ?? false;
   const stackDetail = await fetchPinkkaSubStack(stackId);
   if (!stackDetail) return null;
+  const resolvedGroupId =
+    options?.groupId ?? (await resolveGroupIdForStack(stackId, stackDetail));
+  if (resolvedGroupId === null) return null;
 
+  const hierarchy = await writePinkkaGroupAndStackHierarchy({
+    groupId: resolvedGroupId,
+    stackId: stackDetail.id,
+    stackEntity: stackDetail,
+  });
+  if (!hierarchy) return null;
+
+  pinkkaGroupImportStatusCache.set(resolvedGroupId, true);
+  pinkkaStackImportStatusCache.set(stackDetail.id, true);
   const speciesIds: string[] = [];
-  const stackSpeciesCards = stackDetail.speciesCards ?? [];
+  const stackSpeciesCards = hierarchy.stack.speciesCards ?? [];
 
   for (const card of stackSpeciesCards) {
     const speciesDetail = await fetchPinkkaSpecies(card.id);
     if (!speciesDetail) continue;
-    const speciesDocId = buildImportDocId(resolvedImportId, card.id);
-    await writeWithTimestamps(
-      "species",
-      speciesDocId,
-      {
-        data: speciesDetail,
-        isHidden: false,
-        importId: resolvedImportId,
-        ownerId,
-      },
-      shouldUpsert,
+    await writePinkkaEntity(
+      getPinkkaSpeciesPath(resolvedGroupId, hierarchy.stack.id, card.id),
+      speciesDetail,
     );
-    speciesIds.push(speciesDocId);
+    speciesIds.push(String(card.id));
     pinkkaSpeciesImportStatusCache.set(card.id, true);
   }
 
-  const stackDocId = buildImportDocId(resolvedImportId, stackDetail.id);
-  await writeWithTimestamps(
-    "stacks",
-    stackDocId,
-    {
-      data: stackDetail,
-      isHidden: false,
-      speciesIds,
-      importId: resolvedImportId,
-      ownerId,
-    },
-    shouldUpsert,
-  );
-  pinkkaStackImportStatusCache.set(stackDetail.id, true);
-
   return {
     importId: resolvedImportId,
-    stackIds: [stackDocId],
+    groupId: String(resolvedGroupId),
+    stackIds: [String(stackDetail.id)],
     speciesIds,
   };
 }
 
 /**
- * Import multiple Pinkka stacks with their species.
- * When importId is provided, all documents in that batch are upserted.
+ * Import multiple Pinkka stacks with their species into the pinkka hierarchy.
  */
 export async function importPinkkaStacks(
   stackIds: number[],
   ownerId: string,
   importId?: string,
+  options?: { groupId?: number },
 ): Promise<PinkkaImportResult[]> {
   const resolvedImportId =
     importId ?? doc(collection(db, "imports")).id;
@@ -744,7 +824,11 @@ export async function importPinkkaStacks(
     const result = await importPinkkaStack(
       stackId,
       ownerId,
-      { importId: resolvedImportId, upsert: shouldUpsert },
+      {
+        importId: resolvedImportId,
+        upsert: shouldUpsert,
+        groupId: options?.groupId,
+      },
     );
     if (result) {
       results.push(result);
@@ -755,48 +839,65 @@ export async function importPinkkaStacks(
 }
 
 /**
- * Import a single Pinkka species detail into Firestore.
- * When an importId is provided, the import upserts the document.
+ * Import a single Pinkka species detail into Firestore under the pinkka
+ * hierarchy.
  */
 export async function importPinkkaSpecies(
   speciesId: number,
   ownerId: string,
-  options?: { importId?: string; upsert?: boolean },
+  options?: {
+    importId?: string;
+    upsert?: boolean;
+    groupId?: number;
+    stackId?: number;
+  },
 ): Promise<PinkkaImportResult | null> {
+  void ownerId;
+  void options?.upsert;
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
-  const shouldUpsert = options?.upsert ?? false;
   const speciesDetail = await fetchPinkkaSpecies(speciesId);
   if (!speciesDetail) return null;
+  const speciesLocation =
+    options?.groupId !== undefined && options?.stackId !== undefined
+      ? { groupId: options.groupId, stackId: options.stackId }
+      : await resolveSpeciesLocation(speciesId);
+  if (!speciesLocation) return null;
 
-  const speciesDocId = buildImportDocId(resolvedImportId, speciesId);
-  await writeWithTimestamps(
-    "species",
-    speciesDocId,
-    {
-      data: speciesDetail,
-      importId: resolvedImportId,
-      ownerId,
-    },
-    shouldUpsert,
+  const hierarchy = await writePinkkaGroupAndStackHierarchy({
+    groupId: speciesLocation.groupId,
+    stackId: speciesLocation.stackId,
+  });
+  if (!hierarchy) return null;
+
+  await writePinkkaEntity(
+    getPinkkaSpeciesPath(
+      speciesLocation.groupId,
+      speciesLocation.stackId,
+      speciesId,
+    ),
+    speciesDetail,
   );
+  pinkkaGroupImportStatusCache.set(speciesLocation.groupId, true);
+  pinkkaStackImportStatusCache.set(speciesLocation.stackId, true);
   pinkkaSpeciesImportStatusCache.set(speciesId, true);
 
   return {
     importId: resolvedImportId,
-    stackIds: [],
-    speciesIds: [speciesDocId],
+    groupId: String(speciesLocation.groupId),
+    stackIds: [String(speciesLocation.stackId)],
+    speciesIds: [String(speciesId)],
   };
 }
 
 /**
- * Import multiple Pinkka species details.
- * When importId is provided, all documents in that batch are upserted.
+ * Import multiple Pinkka species details into the pinkka hierarchy.
  */
 export async function importPinkkaSpeciesList(
   speciesIds: number[],
   ownerId: string,
   importId?: string,
+  options?: { groupId?: number; stackId?: number },
 ): Promise<PinkkaImportResult[]> {
   const resolvedImportId =
     importId ?? doc(collection(db, "imports")).id;
@@ -807,7 +908,12 @@ export async function importPinkkaSpeciesList(
     const result = await importPinkkaSpecies(
       speciesId,
       ownerId,
-      { importId: resolvedImportId, upsert: shouldUpsert },
+      {
+        importId: resolvedImportId,
+        upsert: shouldUpsert,
+        groupId: options?.groupId,
+        stackId: options?.stackId,
+      },
     );
     if (result) {
       results.push(result);
@@ -818,8 +924,8 @@ export async function importPinkkaSpeciesList(
 }
 
 /**
- * Import multiple Pinkka groups with their stacks and species.
- * When importId is provided, all documents in that batch are upserted.
+ * Import multiple Pinkka groups with their stacks and species into the
+ * pinkka hierarchy.
  */
 export async function importPinkkaGroups(
   groupIds: number[],

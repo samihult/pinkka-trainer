@@ -53,6 +53,14 @@ service cloud.firestore {
       );
     }
 
+    // Pinkka hierarchy collection - authenticated users can read,
+    // only editors and admins can write.
+    match /pinkka/{document=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['editor', 'admin'];
+    }
+
     // Learning progress collection - users can read/write their own progress
     match /learningProgress/{progressId} {
       allow read: if request.auth != null &&

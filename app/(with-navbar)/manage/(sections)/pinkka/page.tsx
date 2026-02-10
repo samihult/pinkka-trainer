@@ -145,9 +145,22 @@ export default function PinkkaContentPage() {
     try {
       let results = [];
       if (importTarget === "species") {
-        results = await importPinkkaSpeciesList(selectedSpeciesIds, user.uid);
+        results = await importPinkkaSpeciesList(
+          selectedSpeciesIds,
+          user.uid,
+          undefined,
+          {
+            groupId: selectedGroupId ?? undefined,
+            stackId: selectedStackId ?? undefined,
+          },
+        );
       } else if (importTarget === "stack") {
-        results = await importPinkkaStacks(selectedStackIds, user.uid);
+        results = await importPinkkaStacks(
+          selectedStackIds,
+          user.uid,
+          undefined,
+          { groupId: selectedGroupId ?? undefined },
+        );
       } else {
         results = await importPinkkaGroups(selectedGroupIds, user.uid);
       }
