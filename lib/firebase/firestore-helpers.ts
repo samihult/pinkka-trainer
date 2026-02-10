@@ -1,6 +1,5 @@
 import {
   collection,
-  collectionGroup,
   doc,
   getDoc,
   getDocs,
@@ -656,26 +655,21 @@ export async function isPinkkaStackImported(
     return pinkkaStackImportStatusCache.get(stackId) === true;
   }
 
-  try {
-    if (options?.groupId !== undefined) {
-      const stackDoc = await getDoc(
-        doc(
-          db,
-          PINKKA_COLLECTION,
-          String(options.groupId),
-          "stacks",
-          String(stackId),
-        ),
-      );
-      const exists = stackDoc.exists();
-      pinkkaStackImportStatusCache.set(stackId, exists);
-      return exists;
-    }
+  if (options?.groupId === undefined) {
+    return false;
+  }
 
-    const snapshot = await getDocs(
-      query(collectionGroup(db, "stacks"), where("entity.id", "==", stackId)),
+  try {
+    const stackDoc = await getDoc(
+      doc(
+        db,
+        PINKKA_COLLECTION,
+        String(options.groupId),
+        "stacks",
+        String(stackId),
+      ),
     );
-    const exists = !snapshot.empty;
+    const exists = stackDoc.exists();
     pinkkaStackImportStatusCache.set(stackId, exists);
     return exists;
   } catch (error) {
@@ -693,28 +687,23 @@ export async function isPinkkaSpeciesImported(
     return pinkkaSpeciesImportStatusCache.get(speciesId) === true;
   }
 
-  try {
-    if (options?.groupId !== undefined && options?.stackId !== undefined) {
-      const speciesDoc = await getDoc(
-        doc(
-          db,
-          PINKKA_COLLECTION,
-          String(options.groupId),
-          "stacks",
-          String(options.stackId),
-          "species",
-          String(speciesId),
-        ),
-      );
-      const exists = speciesDoc.exists();
-      pinkkaSpeciesImportStatusCache.set(speciesId, exists);
-      return exists;
-    }
+  if (options?.groupId === undefined || options?.stackId === undefined) {
+    return false;
+  }
 
-    const snapshot = await getDocs(
-      query(collectionGroup(db, "species"), where("entity.id", "==", speciesId)),
+  try {
+    const speciesDoc = await getDoc(
+      doc(
+        db,
+        PINKKA_COLLECTION,
+        String(options.groupId),
+        "stacks",
+        String(options.stackId),
+        "species",
+        String(speciesId),
+      ),
     );
-    const exists = !snapshot.empty;
+    const exists = speciesDoc.exists();
     pinkkaSpeciesImportStatusCache.set(speciesId, exists);
     return exists;
   } catch (error) {
