@@ -13,6 +13,25 @@ export interface MultilingualText {
   sv?: string;
 }
 
+/** Shared Pinkka image asset payload. */
+export interface PinkkaImageAsset {
+  /** Image id. */
+  id: string;
+  /** Image URLs at various sizes. */
+  urls?: {
+    /** Original image URL. */
+    original?: string;
+    /** Full-size image URL. */
+    full?: string;
+    /** Large image URL. */
+    large?: string;
+    /** Square-cropped image URL. */
+    square?: string;
+    /** Thumbnail image URL. */
+    thumbnail?: string;
+  };
+}
+
 /** Pinkka group with optional sub-stacks. */
 export interface PinkkaGroup {
   /** Group id. */
@@ -45,6 +64,8 @@ export interface PinkkaSubStack {
   description?: MultilingualText;
   /** Optional cover image id. */
   imageId?: string;
+  /** Optional stack cover image payload. */
+  image?: PinkkaImageAsset | null;
   /** Entity type identifier. */
   entityType: string;
   /** Optional species cards under this stack. */

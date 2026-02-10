@@ -39,6 +39,8 @@ import {
   fetchPinkkaSpecies,
   fetchPinkkaSubStack,
   type PinkkaGroup,
+  type PinkkaImageAsset,
+  type PinkkaSpeciesDetail,
   type PinkkaSubStack,
 } from "../pinkka/pinkka-api";
 
@@ -89,6 +91,7 @@ const pendingPinkkaSpeciesStatusResolvers = new Map<string, PendingSpeciesStatus
 let pendingPinkkaSpeciesStatusFlush:
   | ReturnType<typeof setTimeout>
   | undefined;
+const pinkkaImportedImageUrlCache = new Map<string, string>();
 
 function chunkArray<T>(items: T[], size: number): T[][] {
   const chunks: T[][] = [];
@@ -269,6 +272,126 @@ function speciesStatusKey(
   speciesId: number,
 ): string {
   return `${groupId}:${stackId}:${speciesId}`;
+}
+
+function getPreferredPinkkaImageUrl(
+  image: PinkkaImageAsset,
+): string | null {
+  const urls = image.urls;
+  if (!urls) {
+    return null;
+  }
+
+  return (
+    urls.original ??
+    urls.full ??
+    urls.large ??
+    urls.square ??
+    urls.thumbnail ??
+    null
+  );
+}
+
+function getImageFilenameFromUrl(imageUrl: string): string | null {
+  try {
+    const pathname = new URL(imageUrl).pathname;
+    const segments = pathname.split("/").filter(Boolean);
+    const candidate = segments[segments.length - 1];
+    if (!candidate) {
+      return null;
+    }
+    return decodeURIComponent(candidate);
+  } catch {
+    return null;
+  }
+}
+
+async function uploadPinkkaImageFromSource(params: {
+  pinkkaImageId: string;
+  filename: string;
+  sourceUrl: string;
+}): Promise<string | null> {
+  const { pinkkaImageId, filename, sourceUrl } = params;
+  const cached = pinkkaImportedImageUrlCache.get(sourceUrl);
+  if (cached) {
+    return cached;
+  }
+
+  try {
+    const response = await fetch(sourceUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    const imageIdPathPart = pinkkaImageId.replaceAll("/", "_");
+    const filenamePathPart = filename.replaceAll("/", "_");
+    const imageRef = ref(
+      storage,
+      `pinkka/${imageIdPathPart}/${filenamePathPart}`,
+    );
+    await uploadBytes(imageRef, blob, {
+      contentType: blob.type || "image/jpeg",
+    });
+    const downloadUrl = await getDownloadURL(imageRef);
+    pinkkaImportedImageUrlCache.set(sourceUrl, downloadUrl);
+    return downloadUrl;
+  } catch (error) {
+    console.error(
+      `Failed to store Pinkka image ${pinkkaImageId}/${filename}`,
+      error,
+    );
+    return null;
+  }
+}
+
+async function storePinkkaSpeciesImages(
+  speciesId: number,
+  detail: PinkkaSpeciesDetail,
+): Promise<void> {
+  const images = detail.images ?? [];
+  for (let index = 0; index < images.length; index += 1) {
+    const image = images[index] as PinkkaImageAsset;
+    const sourceUrl = getPreferredPinkkaImageUrl(image);
+    if (!sourceUrl) {
+      continue;
+    }
+
+    const pinkkaImageId = image.id || `species-${speciesId}-${index + 1}`;
+    const filename =
+      getImageFilenameFromUrl(sourceUrl) ??
+      `${pinkkaImageId}.jpg`;
+    await uploadPinkkaImageFromSource({
+      pinkkaImageId,
+      filename,
+      sourceUrl,
+    });
+  }
+}
+
+async function storePinkkaStackImage(
+  stackId: number,
+  stack: PinkkaSubStack,
+): Promise<void> {
+  const stackImage = stack.image;
+  if (!stackImage) {
+    return;
+  }
+
+  const sourceUrl = getPreferredPinkkaImageUrl(stackImage);
+  if (!sourceUrl) {
+    return;
+  }
+
+  const pinkkaImageId = stackImage.id || stack.imageId || `stack-${stackId}`;
+  const filename =
+    getImageFilenameFromUrl(sourceUrl) ??
+    `${pinkkaImageId}.jpg`;
+  await uploadPinkkaImageFromSource({
+    pinkkaImageId,
+    filename,
+    sourceUrl,
+  });
 }
 
 /** Build a deterministic document id for learning progress. */
@@ -1030,6 +1153,7 @@ export async function importPinkkaGroup(
     const stackData = stackDetail ?? stackEntry;
     const stackSpeciesCards = stackData.speciesCards ?? [];
 
+    await storePinkkaStackImage(stackData.id, stackData);
     await writePinkkaEntity(
       getPinkkaStackPath(group.id, stackData.id),
       stackData,
@@ -1039,6 +1163,7 @@ export async function importPinkkaGroup(
     for (const card of stackSpeciesCards) {
       const speciesDetail = await fetchPinkkaSpecies(card.id);
       if (!speciesDetail) continue;
+      await storePinkkaSpeciesImages(card.id, speciesDetail);
       await writePinkkaEntity(
         getPinkkaSpeciesPath(group.id, stackData.id, card.id),
         speciesDetail,
@@ -1087,9 +1212,11 @@ export async function importPinkkaStack(
   const speciesIds: string[] = [];
   const stackSpeciesCards = hierarchy.stack.speciesCards ?? [];
 
+  await storePinkkaStackImage(hierarchy.stack.id, hierarchy.stack);
   for (const card of stackSpeciesCards) {
     const speciesDetail = await fetchPinkkaSpecies(card.id);
     if (!speciesDetail) continue;
+    await storePinkkaSpeciesImages(card.id, speciesDetail);
     await writePinkkaEntity(
       getPinkkaSpeciesPath(resolvedGroupId, hierarchy.stack.id, card.id),
       speciesDetail,
@@ -1170,6 +1297,8 @@ export async function importPinkkaSpecies(
   });
   if (!hierarchy) return null;
 
+  await storePinkkaStackImage(hierarchy.stack.id, hierarchy.stack);
+  await storePinkkaSpeciesImages(speciesId, speciesDetail);
   await writePinkkaEntity(
     getPinkkaSpeciesPath(
       speciesLocation.groupId,
