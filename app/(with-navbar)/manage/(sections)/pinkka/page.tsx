@@ -10,12 +10,12 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
 import {
+  getPinkkaGroupImportStatusMap,
+  getPinkkaSpeciesImportStatusMap,
+  getPinkkaStackImportStatusMap,
   importPinkkaGroups,
   importPinkkaSpeciesList,
   importPinkkaStacks,
-  isPinkkaGroupImported,
-  isPinkkaSpeciesImported,
-  isPinkkaStackImported,
 } from "@/lib/firebase/firestore-helpers";
 import { logFirestoreError } from "@/lib/utils";
 
@@ -173,32 +173,28 @@ export default function PinkkaContentPage() {
       setImportedSelectedIds([]);
       setUnimportedSelectedIds([]);
       try {
-        const results =
+        const statusMap =
           importTarget === "group"
-            ? await Promise.all(
-                selectedTargetIds.map(async (id) => ({
-                  id,
-                  isImported: await isPinkkaGroupImported(id),
-                })),
-              )
-            : importTarget === "stack"
-              ? await Promise.all(
-                  selectedTargetIds.map(async (id) => ({
-                    id,
-                    isImported: await isPinkkaStackImported(id, {
-                      groupId: selectedGroupId ?? undefined,
-                    }),
-                  })),
+            ? await getPinkkaGroupImportStatusMap(selectedTargetIds)
+            : importTarget === "stack" && selectedGroupId !== null
+              ? await getPinkkaStackImportStatusMap(
+                  selectedGroupId,
+                  selectedTargetIds,
                 )
-              : await Promise.all(
-                  selectedTargetIds.map(async (id) => ({
-                    id,
-                    isImported: await isPinkkaSpeciesImported(id, {
-                      groupId: selectedGroupId ?? undefined,
-                      stackId: selectedStackId ?? undefined,
-                    }),
-                  })),
-                );
+              : importTarget === "species" &&
+                  selectedGroupId !== null &&
+                  selectedStackId !== null
+                ? await getPinkkaSpeciesImportStatusMap(
+                    selectedGroupId,
+                    selectedStackId,
+                    selectedTargetIds,
+                  )
+                : {};
+
+        const results = selectedTargetIds.map((id) => ({
+          id,
+          isImported: statusMap[id] === true,
+        }));
 
         if (!isMounted) {
           return;
