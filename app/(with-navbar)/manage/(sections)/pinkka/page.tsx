@@ -11,11 +11,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
 import {
-  getPinkkaGroupImportStatusMap,
+  getPinkkaGroupImportStateMap,
   isPinkkaImportInterruptedError,
   type PinkkaImportProgress,
-  getPinkkaSpeciesImportStatusMap,
-  getPinkkaStackImportStatusMap,
+  getPinkkaSpeciesImportStateMap,
+  getPinkkaStackImportStateMap,
   importPinkkaGroups,
   importPinkkaSpeciesList,
   importPinkkaStacks,
@@ -56,10 +56,16 @@ export default function PinkkaContentPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [activeImportAction, setActiveImportAction] = useState<
-    "import" | "reimport" | null
+    "import" | "reimport" | "importmissing" | null
   >(null);
   const [isCheckingImportStatus, setIsCheckingImportStatus] = useState(false);
   const [importedSelectedIds, setImportedSelectedIds] = useState<number[]>([]);
+  const [reimportableSelectedIds, setReimportableSelectedIds] = useState<
+    number[]
+  >([]);
+  const [incompleteSelectedIds, setIncompleteSelectedIds] = useState<number[]>(
+    [],
+  );
   const [unimportedSelectedIds, setUnimportedSelectedIds] = useState<number[]>(
     [],
   );
@@ -160,15 +166,23 @@ export default function PinkkaContentPage() {
   }, [importTarget, selectedGroupIds, selectedSpeciesIds, selectedStackIds]);
 
   const hasImportedSelection = importedSelectedIds.length > 0;
+  const hasReimportableSelection = reimportableSelectedIds.length > 0;
+  const hasIncompleteSelection = incompleteSelectedIds.length > 0;
   const hasUnimportedSelection = unimportedSelectedIds.length > 0;
   const hasMixedSelection = hasImportedSelection && hasUnimportedSelection;
   const hasSelection = selectedTargetIds.length > 0;
   const isImporting = activeImportAction !== null;
   const importCount = unimportedSelectedIds.length;
+  const importMissingSelectedIds = useMemo(
+    () => [...new Set([...unimportedSelectedIds, ...incompleteSelectedIds])],
+    [incompleteSelectedIds, unimportedSelectedIds],
+  );
+  const importMissingCount = importMissingSelectedIds.length;
   const reimportCount = hasMixedSelection
     ? selectedTargetIds.length
-    : importedSelectedIds.length;
+    : reimportableSelectedIds.length;
   const showImportButton = hasSelection && !hasImportedSelection;
+  const showReimportButton = hasReimportableSelection && !hasIncompleteSelection;
 
   const importLabels = useMemo(() => {
     if (importTarget === "species") {
@@ -188,6 +202,8 @@ export default function PinkkaContentPage() {
 
     if (!importTarget || selectedTargetIds.length === 0) {
       setImportedSelectedIds([]);
+      setReimportableSelectedIds([]);
+      setIncompleteSelectedIds([]);
       setUnimportedSelectedIds([]);
       setIsCheckingImportStatus(false);
       return;
@@ -196,20 +212,22 @@ export default function PinkkaContentPage() {
     const checkImportStatus = async () => {
       setIsCheckingImportStatus(true);
       setImportedSelectedIds([]);
+      setReimportableSelectedIds([]);
+      setIncompleteSelectedIds([]);
       setUnimportedSelectedIds([]);
       try {
         const statusMap =
           importTarget === "group"
-            ? await getPinkkaGroupImportStatusMap(selectedTargetIds)
+            ? await getPinkkaGroupImportStateMap(selectedTargetIds)
             : importTarget === "stack" && selectedGroupId !== null
-              ? await getPinkkaStackImportStatusMap(
+              ? await getPinkkaStackImportStateMap(
                   selectedGroupId,
                   selectedTargetIds,
                 )
               : importTarget === "species" &&
                   selectedGroupId !== null &&
                   selectedStackId !== null
-                ? await getPinkkaSpeciesImportStatusMap(
+                ? await getPinkkaSpeciesImportStateMap(
                     selectedGroupId,
                     selectedStackId,
                     selectedTargetIds,
@@ -218,7 +236,8 @@ export default function PinkkaContentPage() {
 
         const results = selectedTargetIds.map((id) => ({
           id,
-          isImported: statusMap[id] === true,
+          isImported: statusMap[id]?.isImported === true,
+          isIncomplete: statusMap[id]?.isIncomplete === true,
         }));
 
         if (!isMounted) {
@@ -227,6 +246,14 @@ export default function PinkkaContentPage() {
 
         setImportedSelectedIds(
           results.filter((item) => item.isImported).map((item) => item.id),
+        );
+        setReimportableSelectedIds(
+          results
+            .filter((item) => item.isImported && !item.isIncomplete)
+            .map((item) => item.id),
+        );
+        setIncompleteSelectedIds(
+          results.filter((item) => item.isIncomplete).map((item) => item.id),
         );
         setUnimportedSelectedIds(
           results.filter((item) => !item.isImported).map((item) => item.id),
@@ -237,6 +264,8 @@ export default function PinkkaContentPage() {
         }
         logFirestoreError("Failed to check Pinkka import status", error);
         setImportedSelectedIds([]);
+        setReimportableSelectedIds([]);
+        setIncompleteSelectedIds([]);
         setUnimportedSelectedIds(selectedTargetIds);
       } finally {
         if (isMounted) {
@@ -283,7 +312,6 @@ export default function PinkkaContentPage() {
             stackId: selectedStackId ?? undefined,
             onProgress: setImportProgress,
             shouldInterrupt: () => interruptRequestedRef.current,
-            force: true,
           },
         );
       } else if (importTarget === "stack") {
@@ -295,7 +323,6 @@ export default function PinkkaContentPage() {
             groupId: selectedGroupId ?? undefined,
             onProgress: setImportProgress,
             shouldInterrupt: () => interruptRequestedRef.current,
-            force: true,
           },
         );
       } else {
@@ -306,7 +333,6 @@ export default function PinkkaContentPage() {
           {
             onProgress: setImportProgress,
             shouldInterrupt: () => interruptRequestedRef.current,
-            force: true,
           },
         );
       }
@@ -341,7 +367,7 @@ export default function PinkkaContentPage() {
     if (!user || !importTarget) return;
     const reimportIds = hasMixedSelection
       ? selectedTargetIds
-      : importedSelectedIds;
+      : reimportableSelectedIds;
     if (reimportIds.length === 0) return;
 
     setActiveImportAction("reimport");
@@ -411,6 +437,79 @@ export default function PinkkaContentPage() {
           ? "Import/Reimport failed"
           : "Re-import failed",
         description: "Unable to import/re-import the selected entities.",
+        variant: "destructive",
+      });
+    } finally {
+      interruptRequestedRef.current = false;
+      setActiveImportAction(null);
+    }
+  };
+
+  const handleImportMissing = async () => {
+    if (!user || !importTarget) return;
+    if (importMissingSelectedIds.length === 0) return;
+
+    setActiveImportAction("importmissing");
+    interruptRequestedRef.current = false;
+    setImportProgress(createEmptyPinkkaImportProgress());
+    try {
+      let results = [];
+      if (importTarget === "species") {
+        results = await importPinkkaSpeciesList(
+          importMissingSelectedIds,
+          user.uid,
+          undefined,
+          {
+            groupId: selectedGroupId ?? undefined,
+            stackId: selectedStackId ?? undefined,
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
+            force: true,
+          },
+        );
+      } else if (importTarget === "stack") {
+        results = await importPinkkaStacks(
+          importMissingSelectedIds,
+          user.uid,
+          undefined,
+          {
+            groupId: selectedGroupId ?? undefined,
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
+            force: true,
+          },
+        );
+      } else {
+        results = await importPinkkaGroups(
+          importMissingSelectedIds,
+          user.uid,
+          undefined,
+          {
+            onProgress: setImportProgress,
+            shouldInterrupt: () => interruptRequestedRef.current,
+            force: true,
+          },
+        );
+      }
+      toast({
+        title: "Import missing complete",
+        description: `Imported missing ${results.length} ${
+          results.length === 1 ? importLabels.singular : importLabels.plural
+        }.`,
+      });
+      setImportStatusVersion((prev) => prev + 1);
+    } catch (error) {
+      if (isPinkkaImportInterruptedError(error)) {
+        toast({
+          title: "Import missing interrupted",
+          description: "The Pinkka import was interrupted.",
+        });
+        return;
+      }
+      logFirestoreError("Failed to import missing Pinkka entities", error);
+      toast({
+        title: "Import missing failed",
+        description: "Unable to import missing entities for the selection.",
         variant: "destructive",
       });
     } finally {
@@ -503,7 +602,24 @@ export default function PinkkaContentPage() {
                     : `Import Selected ${importLabels.title} (${importCount})`}
                 </Button>
               )}
-              {hasImportedSelection && (
+              {hasIncompleteSelection && (
+                <Button
+                  variant="secondary"
+                  onClick={handleImportMissing}
+                  disabled={
+                    !user ||
+                    !importTarget ||
+                    isImporting ||
+                    isCheckingImportStatus ||
+                    importMissingCount === 0
+                  }
+                >
+                  {activeImportAction === "importmissing"
+                    ? "Importing Missing..."
+                    : `Import Missing Selected ${importLabels.title} (${importMissingCount})`}
+                </Button>
+              )}
+              {showReimportButton && (
                 <Button
                   variant="secondary"
                   onClick={handleReimport}

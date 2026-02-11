@@ -2,6 +2,7 @@ import {
   collection,
   doc,
   documentId,
+  deleteField,
   getDoc,
   getDocs,
   setDoc,
@@ -85,6 +86,14 @@ export type PinkkaImportProgressCallback = (
   progress: PinkkaImportProgress,
 ) => void;
 
+/** Import status for a Pinkka entity document. */
+export interface PinkkaImportStatus {
+  /** Whether the entity has any Pinkka import document in Firestore. */
+  isImported: boolean;
+  /** Whether the entity import is currently incomplete. */
+  isIncomplete: boolean;
+}
+
 /** User-facing message for manual interruption. */
 export const PINKKA_IMPORT_INTERRUPTED_ERROR_MESSAGE =
   "Pinkka import interrupted.";
@@ -97,15 +106,33 @@ export function isPinkkaImportInterruptedError(error: unknown): boolean {
   );
 }
 
-const pinkkaGroupImportStatusCache = new Map<number, boolean>();
-const pinkkaStackImportStatusCache = new Map<number, boolean>();
-const pinkkaSpeciesImportStatusCache = new Map<number, boolean>();
+const NOT_IMPORTED_STATUS: PinkkaImportStatus = Object.freeze({
+  isImported: false,
+  isIncomplete: false,
+});
+
+const IMPORTED_COMPLETE_STATUS: PinkkaImportStatus = Object.freeze({
+  isImported: true,
+  isIncomplete: false,
+});
+
+const IMPORTED_INCOMPLETE_STATUS: PinkkaImportStatus = Object.freeze({
+  isImported: true,
+  isIncomplete: true,
+});
+
+const pinkkaGroupImportStatusCache = new Map<number, PinkkaImportStatus>();
+const pinkkaStackImportStatusCache = new Map<number, PinkkaImportStatus>();
+const pinkkaSpeciesImportStatusCache = new Map<number, PinkkaImportStatus>();
 const PINKKA_COLLECTION = "pinkka";
 const FIRESTORE_IN_QUERY_MAX = 10;
 
 type Resolver<T> = (value: T) => void;
 
-const pendingPinkkaGroupStatusResolvers = new Map<number, Resolver<boolean>[]>();
+const pendingPinkkaGroupStatusResolvers = new Map<
+  number,
+  Resolver<PinkkaImportStatus>[]
+>();
 let pendingPinkkaGroupStatusFlush:
   | ReturnType<typeof setTimeout>
   | undefined;
@@ -113,7 +140,7 @@ let pendingPinkkaGroupStatusFlush:
 type PendingStackStatus = {
   groupId: number;
   stackId: number;
-  resolvers: Resolver<boolean>[];
+  resolvers: Resolver<PinkkaImportStatus>[];
 };
 
 const pendingPinkkaStackStatusResolvers = new Map<string, PendingStackStatus>();
@@ -125,7 +152,7 @@ type PendingSpeciesStatus = {
   groupId: number;
   stackId: number;
   speciesId: number;
-  resolvers: Resolver<boolean>[];
+  resolvers: Resolver<PinkkaImportStatus>[];
 };
 
 const pendingPinkkaSpeciesStatusResolvers = new Map<string, PendingSpeciesStatus>();
@@ -319,17 +346,33 @@ function markStackCompleted(
   emitPinkkaImportProgress(context);
 }
 
-/** Fetch imported status for Pinkka groups in batch. */
-export async function getPinkkaGroupImportStatusMap(
+function hasImportStartedFlag(data: unknown): boolean {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "importStarted" in data &&
+    (data as { importStarted?: unknown }).importStarted !== undefined
+  );
+}
+
+function getPinkkaImportStatusFromDocData(data: unknown): PinkkaImportStatus {
+  const importStarted = hasImportStartedFlag(data);
+
+  return importStarted ? IMPORTED_INCOMPLETE_STATUS : IMPORTED_COMPLETE_STATUS;
+}
+
+/** Fetch import state for Pinkka groups in batch. */
+export async function getPinkkaGroupImportStateMap(
   groupIds: number[],
-): Promise<Record<number, boolean>> {
+): Promise<Record<number, PinkkaImportStatus>> {
   const uniqueIds = toUniqueIds(groupIds);
-  const statuses: Record<number, boolean> = {};
+  const statuses: Record<number, PinkkaImportStatus> = {};
   const missingIds: number[] = [];
 
   for (const groupId of uniqueIds) {
-    if (pinkkaGroupImportStatusCache.has(groupId)) {
-      statuses[groupId] = pinkkaGroupImportStatusCache.get(groupId) === true;
+    const cachedStatus = pinkkaGroupImportStatusCache.get(groupId);
+    if (cachedStatus !== undefined) {
+      statuses[groupId] = cachedStatus;
       continue;
     }
     missingIds.push(groupId);
@@ -343,41 +386,49 @@ export async function getPinkkaGroupImportStatusMap(
           where(documentId(), "in", chunk.map(String)),
         ),
       );
-      const importedIds = new Set(snapshot.docs.map((docSnapshot) => docSnapshot.id));
+      const statusById = new Map<string, PinkkaImportStatus>();
+      for (const docSnapshot of snapshot.docs) {
+        statusById.set(
+          docSnapshot.id,
+          getPinkkaImportStatusFromDocData(docSnapshot.data()),
+        );
+      }
+
       for (const groupId of chunk) {
-        const isImported = importedIds.has(String(groupId));
-        pinkkaGroupImportStatusCache.set(groupId, isImported);
-        statuses[groupId] = isImported;
+        const status = statusById.get(String(groupId)) ?? NOT_IMPORTED_STATUS;
+        pinkkaGroupImportStatusCache.set(groupId, status);
+        statuses[groupId] = status;
       }
     }
   } catch (error) {
-    console.error("Failed to fetch batch Pinkka group import statuses", error);
+    console.error("Failed to fetch batch Pinkka group import states", error);
     for (const groupId of missingIds) {
-      statuses[groupId] = false;
+      statuses[groupId] = NOT_IMPORTED_STATUS;
     }
   }
 
   for (const groupId of uniqueIds) {
     if (statuses[groupId] === undefined) {
-      statuses[groupId] = false;
+      statuses[groupId] = NOT_IMPORTED_STATUS;
     }
   }
 
   return statuses;
 }
 
-/** Fetch imported status for Pinkka stacks in a group, in batch. */
-export async function getPinkkaStackImportStatusMap(
+/** Fetch import state for Pinkka stacks in a group, in batch. */
+export async function getPinkkaStackImportStateMap(
   groupId: number,
   stackIds: number[],
-): Promise<Record<number, boolean>> {
+): Promise<Record<number, PinkkaImportStatus>> {
   const uniqueIds = toUniqueIds(stackIds);
-  const statuses: Record<number, boolean> = {};
+  const statuses: Record<number, PinkkaImportStatus> = {};
   const missingIds: number[] = [];
 
   for (const stackId of uniqueIds) {
-    if (pinkkaStackImportStatusCache.has(stackId)) {
-      statuses[stackId] = pinkkaStackImportStatusCache.get(stackId) === true;
+    const cachedStatus = pinkkaStackImportStatusCache.get(stackId);
+    if (cachedStatus !== undefined) {
+      statuses[stackId] = cachedStatus;
       continue;
     }
     missingIds.push(stackId);
@@ -391,45 +442,53 @@ export async function getPinkkaStackImportStatusMap(
           where(documentId(), "in", chunk.map(String)),
         ),
       );
-      const importedIds = new Set(snapshot.docs.map((docSnapshot) => docSnapshot.id));
+      const statusById = new Map<string, PinkkaImportStatus>();
+      for (const docSnapshot of snapshot.docs) {
+        statusById.set(
+          docSnapshot.id,
+          getPinkkaImportStatusFromDocData(docSnapshot.data()),
+        );
+      }
+
       for (const stackId of chunk) {
-        const isImported = importedIds.has(String(stackId));
-        pinkkaStackImportStatusCache.set(stackId, isImported);
-        statuses[stackId] = isImported;
+        const status = statusById.get(String(stackId)) ?? NOT_IMPORTED_STATUS;
+        pinkkaStackImportStatusCache.set(stackId, status);
+        statuses[stackId] = status;
       }
     }
   } catch (error) {
     console.error(
-      `Failed to fetch batch Pinkka stack import statuses for group ${groupId}`,
+      `Failed to fetch batch Pinkka stack import states for group ${groupId}`,
       error,
     );
     for (const stackId of missingIds) {
-      statuses[stackId] = false;
+      statuses[stackId] = NOT_IMPORTED_STATUS;
     }
   }
 
   for (const stackId of uniqueIds) {
     if (statuses[stackId] === undefined) {
-      statuses[stackId] = false;
+      statuses[stackId] = NOT_IMPORTED_STATUS;
     }
   }
 
   return statuses;
 }
 
-/** Fetch imported status for Pinkka species in a stack, in batch. */
-export async function getPinkkaSpeciesImportStatusMap(
+/** Fetch import state for Pinkka species in a stack, in batch. */
+export async function getPinkkaSpeciesImportStateMap(
   groupId: number,
   stackId: number,
   speciesIds: number[],
-): Promise<Record<number, boolean>> {
+): Promise<Record<number, PinkkaImportStatus>> {
   const uniqueIds = toUniqueIds(speciesIds);
-  const statuses: Record<number, boolean> = {};
+  const statuses: Record<number, PinkkaImportStatus> = {};
   const missingIds: number[] = [];
 
   for (const speciesId of uniqueIds) {
-    if (pinkkaSpeciesImportStatusCache.has(speciesId)) {
-      statuses[speciesId] = pinkkaSpeciesImportStatusCache.get(speciesId) === true;
+    const cachedStatus = pinkkaSpeciesImportStatusCache.get(speciesId);
+    if (cachedStatus !== undefined) {
+      statuses[speciesId] = cachedStatus;
       continue;
     }
     missingIds.push(speciesId);
@@ -450,30 +509,77 @@ export async function getPinkkaSpeciesImportStatusMap(
           where(documentId(), "in", chunk.map(String)),
         ),
       );
-      const importedIds = new Set(snapshot.docs.map((docSnapshot) => docSnapshot.id));
+      const statusById = new Map<string, PinkkaImportStatus>();
+      for (const docSnapshot of snapshot.docs) {
+        statusById.set(
+          docSnapshot.id,
+          getPinkkaImportStatusFromDocData(docSnapshot.data()),
+        );
+      }
+
       for (const speciesId of chunk) {
-        const isImported = importedIds.has(String(speciesId));
-        pinkkaSpeciesImportStatusCache.set(speciesId, isImported);
-        statuses[speciesId] = isImported;
+        const status = statusById.get(String(speciesId)) ?? NOT_IMPORTED_STATUS;
+        pinkkaSpeciesImportStatusCache.set(speciesId, status);
+        statuses[speciesId] = status;
       }
     }
   } catch (error) {
     console.error(
-      `Failed to fetch batch Pinkka species import statuses for group ${groupId}, stack ${stackId}`,
+      `Failed to fetch batch Pinkka species import states for group ${groupId}, stack ${stackId}`,
       error,
     );
     for (const speciesId of missingIds) {
-      statuses[speciesId] = false;
+      statuses[speciesId] = NOT_IMPORTED_STATUS;
     }
   }
 
   for (const speciesId of uniqueIds) {
     if (statuses[speciesId] === undefined) {
-      statuses[speciesId] = false;
+      statuses[speciesId] = NOT_IMPORTED_STATUS;
     }
   }
 
   return statuses;
+}
+
+/** Fetch imported status for Pinkka groups in batch. */
+export async function getPinkkaGroupImportStatusMap(
+  groupIds: number[],
+): Promise<Record<number, boolean>> {
+  const statusMap = await getPinkkaGroupImportStateMap(groupIds);
+  return Object.fromEntries(
+    groupIds.map((groupId) => [groupId, statusMap[groupId]?.isImported === true]),
+  );
+}
+
+/** Fetch imported status for Pinkka stacks in a group, in batch. */
+export async function getPinkkaStackImportStatusMap(
+  groupId: number,
+  stackIds: number[],
+): Promise<Record<number, boolean>> {
+  const statusMap = await getPinkkaStackImportStateMap(groupId, stackIds);
+  return Object.fromEntries(
+    stackIds.map((stackId) => [stackId, statusMap[stackId]?.isImported === true]),
+  );
+}
+
+/** Fetch imported status for Pinkka species in a stack, in batch. */
+export async function getPinkkaSpeciesImportStatusMap(
+  groupId: number,
+  stackId: number,
+  speciesIds: number[],
+): Promise<Record<number, boolean>> {
+  const statusMap = await getPinkkaSpeciesImportStateMap(
+    groupId,
+    stackId,
+    speciesIds,
+  );
+  return Object.fromEntries(
+    speciesIds.map((speciesId) => [
+      speciesId,
+      statusMap[speciesId]?.isImported === true,
+    ]),
+  );
 }
 
 function stackStatusKey(groupId: number, stackId: number): string {
@@ -651,23 +757,133 @@ function buildLearningProgressDocId(
 type PinkkaEntityDocument<T> = {
   /** Timestamp when the entity was imported. */
   importDate: Timestamp;
+  /** Timestamp when an import/re-import for this entity started. */
+  importStarted?: Timestamp;
+  /** Timestamp when the most recent import/re-import completed. */
+  importCompleted?: Timestamp;
   /** Original Pinkka API response payload. */
   entity: T;
 };
+
+function getPinkkaEntityDocumentRef(pathSegments: string[]) {
+  const [path, ...rest] = pathSegments;
+  if (!path) {
+    throw new Error("Pinkka entity path is required.");
+  }
+
+  return doc(db, path, ...rest);
+}
+
+function setPinkkaGroupImportStatus(
+  groupId: number,
+  status: PinkkaImportStatus,
+): void {
+  pinkkaGroupImportStatusCache.set(groupId, status);
+}
+
+function setPinkkaStackImportStatus(
+  stackId: number,
+  status: PinkkaImportStatus,
+): void {
+  pinkkaStackImportStatusCache.set(stackId, status);
+}
+
+function setPinkkaSpeciesImportStatus(
+  speciesId: number,
+  status: PinkkaImportStatus,
+): void {
+  pinkkaSpeciesImportStatusCache.set(speciesId, status);
+}
+
+async function markPinkkaEntityImportStarted(pathSegments: string[]): Promise<void> {
+  await setDoc(
+    getPinkkaEntityDocumentRef(pathSegments),
+    {
+      importStarted: Timestamp.now(),
+      importCompleted: deleteField(),
+    },
+    { merge: true },
+  );
+}
+
+async function markPinkkaEntityImportCompleted(
+  pathSegments: string[],
+): Promise<void> {
+  await setDoc(
+    getPinkkaEntityDocumentRef(pathSegments),
+    {
+      importStarted: deleteField(),
+      importCompleted: Timestamp.now(),
+    },
+    { merge: true },
+  );
+}
+
+async function markPinkkaGroupImportStarted(groupId: number): Promise<void> {
+  await markPinkkaEntityImportStarted(getPinkkaGroupPath(groupId));
+  setPinkkaGroupImportStatus(groupId, IMPORTED_INCOMPLETE_STATUS);
+}
+
+async function markPinkkaGroupImportCompleted(groupId: number): Promise<void> {
+  if (await hasIncompleteImportsInGroupDescendants(groupId)) {
+    setPinkkaGroupImportStatus(groupId, IMPORTED_INCOMPLETE_STATUS);
+    return;
+  }
+  await markPinkkaEntityImportCompleted(getPinkkaGroupPath(groupId));
+  setPinkkaGroupImportStatus(groupId, IMPORTED_COMPLETE_STATUS);
+}
+
+async function markPinkkaStackImportStarted(
+  groupId: number,
+  stackId: number,
+): Promise<void> {
+  await markPinkkaEntityImportStarted(getPinkkaStackPath(groupId, stackId));
+  setPinkkaStackImportStatus(stackId, IMPORTED_INCOMPLETE_STATUS);
+}
+
+async function markPinkkaStackImportCompleted(
+  groupId: number,
+  stackId: number,
+): Promise<void> {
+  if (await hasIncompleteImportsInStackDescendants(groupId, stackId)) {
+    setPinkkaStackImportStatus(stackId, IMPORTED_INCOMPLETE_STATUS);
+    return;
+  }
+  await markPinkkaEntityImportCompleted(getPinkkaStackPath(groupId, stackId));
+  setPinkkaStackImportStatus(stackId, IMPORTED_COMPLETE_STATUS);
+}
+
+async function markPinkkaSpeciesImportStarted(
+  groupId: number,
+  stackId: number,
+  speciesId: number,
+): Promise<void> {
+  await markPinkkaEntityImportStarted(
+    getPinkkaSpeciesPath(groupId, stackId, speciesId),
+  );
+  setPinkkaSpeciesImportStatus(speciesId, IMPORTED_INCOMPLETE_STATUS);
+}
+
+async function markPinkkaSpeciesImportCompleted(
+  groupId: number,
+  stackId: number,
+  speciesId: number,
+): Promise<void> {
+  await markPinkkaEntityImportCompleted(
+    getPinkkaSpeciesPath(groupId, stackId, speciesId),
+  );
+  setPinkkaSpeciesImportStatus(speciesId, IMPORTED_COMPLETE_STATUS);
+}
 
 async function writePinkkaEntity<T>(
   pathSegments: string[],
   entity: T,
 ): Promise<void> {
-  const [path, ...rest] = pathSegments;
-  if (!path) {
-    throw new Error("Pinkka entity path is required.");
-  }
   const payload: PinkkaEntityDocument<T> = {
     importDate: Timestamp.now(),
     entity,
   };
-  await setDoc(doc(db, path, ...rest), payload);
+  await setDoc(getPinkkaEntityDocumentRef(pathSegments), payload, { merge: true });
 }
 
 function getPinkkaGroupPath(groupId: number): string[] {
@@ -687,6 +903,50 @@ function getPinkkaSpeciesPath(
   speciesId: number,
 ): string[] {
   return [...getPinkkaStackPath(groupId, stackId), "species", String(speciesId)];
+}
+
+async function hasIncompleteImportsInStackDescendants(
+  groupId: number,
+  stackId: number,
+): Promise<boolean> {
+  const speciesSnapshot = await getDocs(
+    collection(
+      db,
+      PINKKA_COLLECTION,
+      String(groupId),
+      "stacks",
+      String(stackId),
+      "species",
+    ),
+  );
+  return speciesSnapshot.docs.some((docSnapshot) =>
+    hasImportStartedFlag(docSnapshot.data()),
+  );
+}
+
+async function hasIncompleteImportsInGroupDescendants(
+  groupId: number,
+): Promise<boolean> {
+  const stackSnapshot = await getDocs(
+    collection(db, PINKKA_COLLECTION, String(groupId), "stacks"),
+  );
+
+  for (const stackDoc of stackSnapshot.docs) {
+    if (hasImportStartedFlag(stackDoc.data())) {
+      return true;
+    }
+
+    const stackId = Number.parseInt(stackDoc.id, 10);
+    if (!Number.isFinite(stackId)) {
+      continue;
+    }
+
+    if (await hasIncompleteImportsInStackDescendants(groupId, stackId)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 async function resolveGroupIdForStack(
@@ -1200,12 +1460,13 @@ export async function updateStackSpeciesOrder(
   });
 }
 
-/** Check if a Pinkka group id already exists in Firestore. */
-export async function isPinkkaGroupImported(
+/** Fetch import status for a Pinkka group id. */
+export async function getPinkkaGroupImportStatus(
   groupId: number,
-): Promise<boolean> {
-  if (pinkkaGroupImportStatusCache.has(groupId)) {
-    return pinkkaGroupImportStatusCache.get(groupId) === true;
+): Promise<PinkkaImportStatus> {
+  const cached = pinkkaGroupImportStatusCache.get(groupId);
+  if (cached !== undefined) {
+    return cached;
   }
 
   return await new Promise((resolve) => {
@@ -1221,27 +1482,36 @@ export async function isPinkkaGroupImported(
       const entries = [...pendingPinkkaGroupStatusResolvers.entries()];
       pendingPinkkaGroupStatusResolvers.clear();
       const ids = entries.map(([id]) => id);
-      const statuses = await getPinkkaGroupImportStatusMap(ids);
+      const statuses = await getPinkkaGroupImportStateMap(ids);
 
       for (const [id, resolvers] of entries) {
-        const value = statuses[id] === true;
+        const value = statuses[id] ?? NOT_IMPORTED_STATUS;
         resolvers.forEach((resolver) => resolver(value));
       }
     }, 0);
   });
 }
 
-/** Check if a Pinkka stack id already exists in Firestore. */
-export async function isPinkkaStackImported(
+/** Check if a Pinkka group id already exists in Firestore. */
+export async function isPinkkaGroupImported(
+  groupId: number,
+): Promise<boolean> {
+  const status = await getPinkkaGroupImportStatus(groupId);
+  return status.isImported;
+}
+
+/** Fetch import status for a Pinkka stack id. */
+export async function getPinkkaStackImportStatus(
   stackId: number,
   options?: { groupId?: number },
-): Promise<boolean> {
-  if (pinkkaStackImportStatusCache.has(stackId)) {
-    return pinkkaStackImportStatusCache.get(stackId) === true;
+): Promise<PinkkaImportStatus> {
+  const cached = pinkkaStackImportStatusCache.get(stackId);
+  if (cached !== undefined) {
+    return cached;
   }
 
   if (options?.groupId === undefined) {
-    return false;
+    return NOT_IMPORTED_STATUS;
   }
 
   return await new Promise((resolve) => {
@@ -1273,34 +1543,44 @@ export async function isPinkkaStackImported(
         idsByGroup.set(entry.groupId, current);
       }
 
-      const statusesByGroup = new Map<number, Record<number, boolean>>();
+      const statusesByGroup = new Map<number, Record<number, PinkkaImportStatus>>();
       await Promise.all(
         [...idsByGroup.entries()].map(async ([groupId, stackIds]) => {
-          const statuses = await getPinkkaStackImportStatusMap(groupId, stackIds);
+          const statuses = await getPinkkaStackImportStateMap(groupId, stackIds);
           statusesByGroup.set(groupId, statuses);
         }),
       );
 
       for (const entry of entries) {
         const groupStatuses = statusesByGroup.get(entry.groupId);
-        const value = groupStatuses?.[entry.stackId] === true;
+        const value = groupStatuses?.[entry.stackId] ?? NOT_IMPORTED_STATUS;
         entry.resolvers.forEach((resolver) => resolver(value));
       }
     }, 0);
   });
 }
 
-/** Check if a Pinkka species id already exists in Firestore. */
-export async function isPinkkaSpeciesImported(
+/** Check if a Pinkka stack id already exists in Firestore. */
+export async function isPinkkaStackImported(
+  stackId: number,
+  options?: { groupId?: number },
+): Promise<boolean> {
+  const status = await getPinkkaStackImportStatus(stackId, options);
+  return status.isImported;
+}
+
+/** Fetch import status for a Pinkka species id. */
+export async function getPinkkaSpeciesImportStatus(
   speciesId: number,
   options?: { groupId?: number; stackId?: number },
-): Promise<boolean> {
-  if (pinkkaSpeciesImportStatusCache.has(speciesId)) {
-    return pinkkaSpeciesImportStatusCache.get(speciesId) === true;
+): Promise<PinkkaImportStatus> {
+  const cached = pinkkaSpeciesImportStatusCache.get(speciesId);
+  if (cached !== undefined) {
+    return cached;
   }
 
   if (options?.groupId === undefined || options?.stackId === undefined) {
-    return false;
+    return NOT_IMPORTED_STATUS;
   }
 
   return await new Promise((resolve) => {
@@ -1345,10 +1625,10 @@ export async function isPinkkaSpeciesImported(
         }
       }
 
-      const statusesByParent = new Map<string, Record<number, boolean>>();
+      const statusesByParent = new Map<string, Record<number, PinkkaImportStatus>>();
       await Promise.all(
         [...idsByParent.entries()].map(async ([parentKey, value]) => {
-          const statuses = await getPinkkaSpeciesImportStatusMap(
+          const statuses = await getPinkkaSpeciesImportStateMap(
             value.groupId,
             value.stackId,
             value.speciesIds,
@@ -1360,11 +1640,20 @@ export async function isPinkkaSpeciesImported(
       for (const entry of entries) {
         const parentKey = `${entry.groupId}:${entry.stackId}`;
         const parentStatuses = statusesByParent.get(parentKey);
-        const value = parentStatuses?.[entry.speciesId] === true;
+        const value = parentStatuses?.[entry.speciesId] ?? NOT_IMPORTED_STATUS;
         entry.resolvers.forEach((resolver) => resolver(value));
       }
     }, 0);
   });
+}
+
+/** Check if a Pinkka species id already exists in Firestore. */
+export async function isPinkkaSpeciesImported(
+  speciesId: number,
+  options?: { groupId?: number; stackId?: number },
+): Promise<boolean> {
+  const status = await getPinkkaSpeciesImportStatus(speciesId, options);
+  return status.isImported;
 }
 
 // Pinkka import operations
@@ -1420,13 +1709,14 @@ export async function importPinkkaGroup(
   const stackIds = importableStackEntries.map((stack) => String(stack.id));
   const speciesIds: string[] = [];
 
+  await markPinkkaGroupImportStarted(group.id);
   await writePinkkaEntity(getPinkkaGroupPath(group.id), group);
-  pinkkaGroupImportStatusCache.set(group.id, true);
 
   for (const stackEntry of importableStackEntries) {
     assertPinkkaImportNotInterrupted(options?.progressContext);
     const stackDetail = await fetchPinkkaSubStack(stackEntry.id);
     const stackData = stackDetail ?? stackEntry;
+    await markPinkkaStackImportStarted(group.id, stackData.id);
     const stackSpeciesCards = stackData.speciesCards ?? [];
     const speciesStatusById = forceImport
       ? {}
@@ -1461,11 +1751,10 @@ export async function importPinkkaGroup(
       getPinkkaStackPath(group.id, stackData.id),
       stackData,
     );
-    pinkkaStackImportStatusCache.set(stackData.id, true);
-    markStackCompleted(options?.progressContext, group.id, stackData.id, stackName);
 
     for (const card of importableSpeciesCards) {
       assertPinkkaImportNotInterrupted(options?.progressContext);
+      await markPinkkaSpeciesImportStarted(group.id, stackData.id, card.id);
       const speciesDetail = await fetchPinkkaSpecies(card.id);
       if (!speciesDetail) continue;
       const speciesName = getPinkkaSpeciesDisplayName(card.id, speciesDetail);
@@ -1485,14 +1774,18 @@ export async function importPinkkaGroup(
         getPinkkaSpeciesPath(group.id, stackData.id, card.id),
         speciesDetail,
       );
-      pinkkaSpeciesImportStatusCache.set(card.id, true);
+      await markPinkkaSpeciesImportCompleted(group.id, stackData.id, card.id);
       speciesIds.push(String(card.id));
       if (options?.progressContext) {
         options.progressContext.progress.species.completed += 1;
         emitPinkkaImportProgress(options.progressContext);
       }
     }
+
+    await markPinkkaStackImportCompleted(group.id, stackData.id);
+    markStackCompleted(options?.progressContext, group.id, stackData.id, stackName);
   }
+  await markPinkkaGroupImportCompleted(group.id);
   markGroupCompleted(options?.progressContext, group.id, groupName);
 
   return {
@@ -1538,6 +1831,8 @@ export async function importPinkkaStack(
     }
   }
 
+  await markPinkkaGroupImportStarted(resolvedGroupId);
+  await markPinkkaStackImportStarted(resolvedGroupId, stackDetail.id);
   const hierarchy = await writePinkkaGroupAndStackHierarchy({
     groupId: resolvedGroupId,
     stackId: stackDetail.id,
@@ -1547,8 +1842,6 @@ export async function importPinkkaStack(
   const groupName = getPinkkaGroupDisplayName(hierarchy.group);
   markGroupCompleted(options?.progressContext, resolvedGroupId, groupName);
 
-  pinkkaGroupImportStatusCache.set(resolvedGroupId, true);
-  pinkkaStackImportStatusCache.set(stackDetail.id, true);
   const speciesIds: string[] = [];
   const stackSpeciesCards = hierarchy.stack.speciesCards ?? [];
   const speciesStatusById = forceImport
@@ -1588,6 +1881,11 @@ export async function importPinkkaStack(
   );
   for (const card of importableSpeciesCards) {
     assertPinkkaImportNotInterrupted(options?.progressContext);
+    await markPinkkaSpeciesImportStarted(
+      resolvedGroupId,
+      hierarchy.stack.id,
+      card.id,
+    );
     const speciesDetail = await fetchPinkkaSpecies(card.id);
     if (!speciesDetail) continue;
     const speciesName = getPinkkaSpeciesDisplayName(card.id, speciesDetail);
@@ -1608,12 +1906,19 @@ export async function importPinkkaStack(
       speciesDetail,
     );
     speciesIds.push(String(card.id));
-    pinkkaSpeciesImportStatusCache.set(card.id, true);
+    await markPinkkaSpeciesImportCompleted(
+      resolvedGroupId,
+      hierarchy.stack.id,
+      card.id,
+    );
     if (options?.progressContext) {
       options.progressContext.progress.species.completed += 1;
       emitPinkkaImportProgress(options.progressContext);
     }
   }
+
+  await markPinkkaStackImportCompleted(resolvedGroupId, hierarchy.stack.id);
+  await markPinkkaGroupImportCompleted(resolvedGroupId);
 
   return {
     importId: resolvedImportId,
@@ -1728,6 +2033,16 @@ export async function importPinkkaSpecies(
     }
   }
 
+  await markPinkkaGroupImportStarted(speciesLocation.groupId);
+  await markPinkkaStackImportStarted(
+    speciesLocation.groupId,
+    speciesLocation.stackId,
+  );
+  await markPinkkaSpeciesImportStarted(
+    speciesLocation.groupId,
+    speciesLocation.stackId,
+    speciesId,
+  );
   const hierarchy = await writePinkkaGroupAndStackHierarchy({
     groupId: speciesLocation.groupId,
     stackId: speciesLocation.stackId,
@@ -1775,9 +2090,16 @@ export async function importPinkkaSpecies(
     ),
     speciesDetail,
   );
-  pinkkaGroupImportStatusCache.set(speciesLocation.groupId, true);
-  pinkkaStackImportStatusCache.set(speciesLocation.stackId, true);
-  pinkkaSpeciesImportStatusCache.set(speciesId, true);
+  await markPinkkaSpeciesImportCompleted(
+    speciesLocation.groupId,
+    speciesLocation.stackId,
+    speciesId,
+  );
+  await markPinkkaStackImportCompleted(
+    speciesLocation.groupId,
+    speciesLocation.stackId,
+  );
+  await markPinkkaGroupImportCompleted(speciesLocation.groupId);
   if (options?.progressContext) {
     options.progressContext.progress.species.completed += 1;
     emitPinkkaImportProgress(options.progressContext);

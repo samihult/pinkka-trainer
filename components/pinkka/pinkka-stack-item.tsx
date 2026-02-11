@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
-import { isPinkkaStackImported } from "@/lib/firebase/firestore-helpers";
+import {
+  getPinkkaStackImportStatus,
+  type PinkkaImportStatus,
+} from "@/lib/firebase/firestore-helpers";
 import { getLocalizedText, type PinkkaSubStack } from "@/lib/pinkka/pinkka-api";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 
@@ -26,16 +29,18 @@ export function PinkkaStackItem({
   importStatusVersion,
 }: PinkkaStackItemProps) {
   const label = getLocalizedText(stack.name, preferredLang);
-  const description = getLocalizedText(stack.description, preferredLang);
-  const [isImported, setIsImported] = useState(false);
+  const [status, setStatus] = useState<PinkkaImportStatus>({
+    isImported: false,
+    isIncomplete: false,
+  });
 
   useEffect(() => {
     let isMounted = true;
-    void isPinkkaStackImported(stack.id, {
+    void getPinkkaStackImportStatus(stack.id, {
       groupId: groupId ?? stack.pinkka?.id,
-    }).then((imported) => {
+    }).then((nextStatus) => {
       if (!isMounted) return;
-      setIsImported(imported);
+      setStatus(nextStatus);
     });
     return () => {
       isMounted = false;
@@ -46,7 +51,9 @@ export function PinkkaStackItem({
     <div className="flex items-start gap-2">
       <span
         className={
-          isImported
+          status.isIncomplete
+            ? "shrink-0 mt-1.5 h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.7)]"
+            : status.isImported
             ? "shrink-0 mt-1.5 h-2 w-2 rounded-full bg-sky-500 shadow-[0_0_6px_rgba(14,165,233,0.7)]"
             : "shrink-0 mt-1.5 h-2 w-2 rounded-full bg-transparent"
         }

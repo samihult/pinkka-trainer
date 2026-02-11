@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
-import { isPinkkaGroupImported } from "@/lib/firebase/firestore-helpers";
+import {
+  getPinkkaGroupImportStatus,
+  type PinkkaImportStatus,
+} from "@/lib/firebase/firestore-helpers";
 import { getLocalizedText, type PinkkaGroup } from "@/lib/pinkka/pinkka-api";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 
@@ -23,13 +26,16 @@ export function PinkkaGroupItem({
   importStatusVersion,
 }: PinkkaGroupItemProps) {
   const label = getLocalizedText(group.name, preferredLang);
-  const [isImported, setIsImported] = useState(false);
+  const [status, setStatus] = useState<PinkkaImportStatus>({
+    isImported: false,
+    isIncomplete: false,
+  });
 
   useEffect(() => {
     let isMounted = true;
-    void isPinkkaGroupImported(group.id).then((imported) => {
+    void getPinkkaGroupImportStatus(group.id).then((nextStatus) => {
       if (!isMounted) return;
-      setIsImported(imported);
+      setStatus(nextStatus);
     });
     return () => {
       isMounted = false;
@@ -40,7 +46,9 @@ export function PinkkaGroupItem({
     <div className="flex items-center gap-2">
       <span
         className={
-          isImported
+          status.isIncomplete
+            ? "shrink-0 h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.7)]"
+            : status.isImported
             ? "shrink-0 h-2 w-2 rounded-full bg-sky-500 shadow-[0_0_6px_rgba(14,165,233,0.7)]"
             : "shrink-0 h-2 w-2 rounded-full bg-transparent"
         }
