@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getLocalizedText } from "@/lib/content/content-display";
 import type { Stack } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
@@ -58,13 +58,12 @@ export function ManageStackCard({
   onDelete,
   onToggleVisibility,
   className,
-}: React.ComponentProps<Card> & ManageStackCardProps) {
+}: ManageStackCardProps) {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const isHidden = stack.isHidden ?? false;
-  const linkedPinkkaStackId =
-    stack.importId && stack.data.entityType === "subpinkka" ? stack.data.id : null;
-  const linkedPinkkaGroupId = stack.data.pinkka?.id;
+  const linkedPinkkaStackId = stack.pinkkaRef?.stackId ?? null;
+  const linkedPinkkaGroupId = stack.pinkkaRef?.groupId;
   const linkedPinkkaStackHref = linkedPinkkaStackId
     ? linkedPinkkaGroupId
       ? `/manage/pinkka?group=${linkedPinkkaGroupId}&stack=${linkedPinkkaStackId}`

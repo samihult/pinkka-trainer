@@ -4,8 +4,10 @@ import Image from "next/image";
 import { Eye, EyeOff, Pencil, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Species } from "@/lib/types";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import {
+  getLocalizedText,
+  getSpeciesImageUrl,
+} from "@/lib/content/content-display";
 import { cn } from "@/lib/utils";
 
 /** Props for rendering the horizontal content of a species card. */

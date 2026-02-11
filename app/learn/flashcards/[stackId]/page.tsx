@@ -7,13 +7,16 @@ import { Flashcard } from "@/components/flashcard";
 import { LearningSessionShell } from "@/components/learning-session-shell";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import {
+  getGroup,
   getGroups,
   getStack,
   getSpecies,
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack, Species } from "@/lib/types";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesImagesWithUrls } from "@/lib/pinkka/pinkka-display";
+import {
+  getLocalizedText,
+  getSpeciesImagesWithUrls,
+} from "@/lib/content/content-display";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
@@ -38,18 +41,23 @@ export default function FlashcardsPage() {
 
   const loadData = async () => {
     try {
-      const [stackData, speciesData, groupsData] = await Promise.all([
-        getStack(stackId),
+      const stackData = await getStack(stackId);
+      const [speciesData, directGroupData, allGroups] = await Promise.all([
         getSpecies(stackId),
-        getGroups(),
+        stackData?.parentGroupId
+          ? getGroup(stackData.parentGroupId)
+          : Promise.resolve(null),
+        stackData?.parentGroupId ? Promise.resolve([]) : getGroups(),
       ]);
+      const legacyGroupData =
+        directGroupData ??
+        allGroups.find((candidate) => candidate.stackIds?.includes(stackId)) ??
+        null;
       const speciesWithImages = speciesData.filter(
         (item) => getSpeciesImagesWithUrls(item.data).length > 0,
       );
-      const resolvedGroup =
-        groupsData.find((item) => item.stackIds?.includes(stackId)) ?? null;
       setStack(stackData);
-      setGroup(resolvedGroup);
+      setGroup(legacyGroupData);
       setSpecies(speciesWithImages);
     } catch (error) {
       logFirestoreError("Failed to load flashcards data", error);
@@ -114,7 +122,7 @@ export default function FlashcardsPage() {
   const progressValue = ((currentIndex + 1) / species.length) * 100;
   const groupName = group
     ? getLocalizedText(group.data.name, preferredLanguage)
-    : getLocalizedText(stack.data.pinkka?.name, preferredLanguage);
+    : "";
 
   return (
     <LearningSessionShell

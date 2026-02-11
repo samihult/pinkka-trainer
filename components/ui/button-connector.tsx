@@ -18,4 +18,5 @@ function ButtonConnector({ className, primary = false }: ButtonConnectorProps) {
   );
 }
 
-export { ButtonConnector, ButtonConnectorProps };
+export { ButtonConnector };
+export type { ButtonConnectorProps };

@@ -13,8 +13,10 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Counter from "yet-another-react-lightbox/plugins/counter";
 
 import type { SpeciesImage } from "@/lib/types";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import {
+  getLocalizedText,
+  getSpeciesImageUrl,
+} from "@/lib/content/content-display";
 import { cn } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
@@ -73,30 +75,34 @@ export function SpeciesImageCarousel({
     [resetKey, images],
   );
   const slides = useMemo<Slide[]>(() => {
-    return images
-      .map((image) => {
-        const src = getSpeciesImageUrl(image);
-        if (!src) return null;
-        const caption = getLocalizedText(image.caption, preferredLanguage);
-        const rightsOwner = image.meta?.rightsOwner
-          ? `(c) ${image.meta.rightsOwner}`
-          : "";
-        const thumbnail =
-          image.urls?.thumbnail ||
-          image.urls?.square ||
-          image.urls?.large ||
-          image.urls?.full ||
-          image.urls?.original ||
-          src;
-        return {
-          src,
-          alt,
-          title: caption || alt,
-          description: rightsOwner || undefined,
-          thumbnail,
-        };
-      })
-      .filter((slide): slide is Slide => Boolean(slide));
+    const nextSlides: Slide[] = [];
+    for (const image of images) {
+      const src = getSpeciesImageUrl(image);
+      if (!src) {
+        continue;
+      }
+
+      const caption = getLocalizedText(image.caption, preferredLanguage);
+      const rightsOwner = image.meta?.rightsOwner
+        ? `(c) ${image.meta.rightsOwner}`
+        : "";
+      const thumbnail =
+        image.urls?.thumbnail ||
+        image.urls?.square ||
+        image.urls?.large ||
+        image.urls?.full ||
+        image.urls?.original ||
+        src;
+
+      nextSlides.push({
+        src,
+        alt,
+        title: caption || alt,
+        description: rightsOwner || undefined,
+        thumbnail,
+      });
+    }
+    return nextSlides;
   }, [alt, images, preferredLanguage]);
 
   useEffect(() => {

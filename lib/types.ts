@@ -121,19 +121,22 @@ export interface User {
   preferences?: UserPreferences;
 }
 
-import type {
-  MultilingualText,
-  PinkkaGroup,
-  PinkkaSpeciesDetail,
-  PinkkaSubStack,
-} from "./pinkka/pinkka-api";
+/** Localized text map keyed by language code. */
+export interface LocalizedText {
+  /** Finnish translation. */
+  fi?: string;
+  /** English translation. */
+  en?: string;
+  /** Swedish translation. */
+  sv?: string;
+}
 
 /** Image metadata for a species detail entry. */
 export interface SpeciesImage {
   /** Image id. */
   id: string;
   /** Optional localized image caption. */
-  caption?: MultilingualText;
+  caption?: LocalizedText;
   /** Optional taxonomy id for the image. */
   taxonId?: string | null;
   /** Image URLs at various sizes. */
@@ -164,10 +167,43 @@ export interface SpeciesImage {
 export interface Species {
   /** Species document id. */
   id: string;
-  /** Pinkka species detail payload. */
-  data: PinkkaSpeciesDetail;
+  /** Parent group id. */
+  parentGroupId?: string;
+  /** Parent stack id. */
+  parentStackId?: string;
+  /** Core species content used by flashcards and quizzes. */
+  data: {
+    /** Taxonomy id for the species. */
+    taxonId: string;
+    /** Scientific species name. */
+    scientificName: string;
+    /** Optional localized common names. */
+    vernacularName?: LocalizedText;
+    /** Optional descriptive sections. */
+    description?: Array<{
+      /** Localized section title. */
+      title: LocalizedText;
+      /** Localized section body. */
+      body: LocalizedText;
+      /** Optional section predicate identifier. */
+      predicate?: string;
+    }>;
+    /** Optional species images stored in Firebase Storage. */
+    images?: SpeciesImage[];
+  };
+  /** Optional link back to imported Pinkka entity ids. */
+  pinkkaRef?: {
+    /** Linked Pinkka group id. */
+    groupId?: number;
+    /** Linked Pinkka stack id. */
+    stackId?: number;
+    /** Linked Pinkka species id. */
+    speciesId: number;
+  };
   /** Image ids enabled for quizzes; defaults to all images when unset. */
   quizImageIds?: string[];
+  /** Optional order index within the parent stack. */
+  order?: number;
   /** Whether the species is hidden from learners. */
   isHidden?: boolean;
   /** Optional import batch id for grouping. */
@@ -184,12 +220,28 @@ export interface Species {
 export interface Stack {
   /** Stack document id. */
   id: string;
-  /** Pinkka sub-stack payload. */
-  data: PinkkaSubStack;
+  /** Parent group id. */
+  parentGroupId?: string;
+  /** Core stack content used by flashcards and quizzes. */
+  data: {
+    /** Localized stack name. */
+    name: LocalizedText;
+    /** Optional localized stack description. */
+    description?: LocalizedText;
+  };
+  /** Optional link back to imported Pinkka entity ids. */
+  pinkkaRef?: {
+    /** Linked Pinkka group id. */
+    groupId?: number;
+    /** Linked Pinkka stack id. */
+    stackId: number;
+  };
   /** Whether the stack is hidden from learners. */
   isHidden?: boolean;
-  /** Ordered species ids in the stack. */
-  speciesIds: string[];
+  /** Legacy ordered species ids in the stack. */
+  speciesIds?: string[];
+  /** Optional order index within the parent group. */
+  order?: number;
   /** Optional import batch id for grouping. */
   importId?: string;
   /** UID of the creator for access control. */
@@ -204,12 +256,22 @@ export interface Stack {
 export interface Group {
   /** Group document id. */
   id: string;
-  /** Pinkka group payload. */
-  data: PinkkaGroup;
+  /** Core group content used by flashcards and quizzes. */
+  data: {
+    /** Localized group name. */
+    name: LocalizedText;
+    /** Optional localized group description. */
+    description?: LocalizedText;
+  };
+  /** Optional link back to imported Pinkka group id. */
+  pinkkaRef?: {
+    /** Linked Pinkka group id. */
+    groupId: number;
+  };
   /** Whether the group is hidden from learners. */
   isHidden?: boolean;
-  /** Stack ids referenced by the group. */
-  stackIds: string[];
+  /** Legacy stack ids referenced by the group. */
+  stackIds?: string[];
   /** Optional import batch id for grouping. */
   importId?: string;
   /** UID of the creator for access control. */

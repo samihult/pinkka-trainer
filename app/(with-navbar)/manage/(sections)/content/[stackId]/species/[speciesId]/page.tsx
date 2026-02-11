@@ -18,8 +18,6 @@ import {
   updateSpecies,
 } from "@/lib/firebase/firestore-helpers";
 import type { Species, Stack } from "@/lib/types";
-import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 
 /** Manage a single species within a stack. */
 export default function ManageSpeciesDetailPage() {
@@ -61,7 +59,7 @@ export default function ManageSpeciesDetailPage() {
   };
 
   const handleSubmit = async (payload: {
-    data: PinkkaSpeciesDetail;
+    data: Species["data"];
     quizImageIds: string[];
   }) => {
     if (!user) return;

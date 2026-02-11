@@ -11,8 +11,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { Species } from "@/lib/types";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesDescription } from "@/lib/pinkka/pinkka-display";
+import {
+  getLocalizedText,
+  getSpeciesDescription,
+} from "@/lib/content/content-display";
 import { ChevronLeft, ChevronRight, Keyboard, RotateCw } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 import { useLanguagePreference } from "@/lib/language-context";

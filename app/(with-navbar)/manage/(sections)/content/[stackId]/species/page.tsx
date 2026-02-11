@@ -22,7 +22,7 @@ import {
 import type { Species, Stack } from "@/lib/types";
 import { ArrowLeft, Plus } from "lucide-react";
 import Link from "next/link";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getLocalizedText } from "@/lib/content/content-display";
 import {
   loadLocalPreferences,
   toLanguageCode,

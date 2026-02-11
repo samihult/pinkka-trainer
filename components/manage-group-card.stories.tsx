@@ -6,15 +6,12 @@ import type { Group, Stack } from "@/lib/types";
 const exampleGroup: Group = {
   id: "group-1",
   data: {
-    id: 101,
     name: { fi: "Woodland Mammals" },
     description: { fi: "Stacks for forest-dwelling mammals." },
-    hideScientific: false,
-    hideVernacular: false,
-    published: true,
-    entityType: "pinkka",
   },
-  stackIds: ["stack-1", "stack-2", "stack-3"],
+  pinkkaRef: {
+    groupId: 101,
+  },
   ownerId: "storybook-user",
   createdAt: new Date("2024-01-01T12:00:00.000Z"),
   updatedAt: new Date("2024-01-01T12:00:00.000Z"),
@@ -24,13 +21,15 @@ const exampleStacks: Stack[] = [
   {
     id: "stack-1",
     data: {
-      id: 201,
       name: { fi: "Foxes" },
-      orderNo: 0,
       description: { fi: "Common fox species." },
-      entityType: "subpinkka",
     },
-    speciesIds: [],
+    parentGroupId: "group-1",
+    order: 0,
+    pinkkaRef: {
+      groupId: 101,
+      stackId: 201,
+    },
     ownerId: "storybook-user",
     createdAt: new Date("2024-01-01T12:00:00.000Z"),
     updatedAt: new Date("2024-01-01T12:00:00.000Z"),
@@ -38,13 +37,15 @@ const exampleStacks: Stack[] = [
   {
     id: "stack-2",
     data: {
-      id: 202,
       name: { fi: "Bears" },
-      orderNo: 1,
       description: { fi: "Brown, black, and beyond." },
-      entityType: "subpinkka",
     },
-    speciesIds: [],
+    parentGroupId: "group-1",
+    order: 1,
+    pinkkaRef: {
+      groupId: 101,
+      stackId: 202,
+    },
     ownerId: "storybook-user",
     createdAt: new Date("2024-01-01T12:00:00.000Z"),
     updatedAt: new Date("2024-01-01T12:00:00.000Z"),
@@ -52,13 +53,15 @@ const exampleStacks: Stack[] = [
   {
     id: "stack-3",
     data: {
-      id: 203,
       name: { fi: "Mustelids" },
-      orderNo: 2,
       description: { fi: "Weasels, martens, and otters." },
-      entityType: "subpinkka",
     },
-    speciesIds: [],
+    parentGroupId: "group-1",
+    order: 2,
+    pinkkaRef: {
+      groupId: 101,
+      stackId: 203,
+    },
     ownerId: "storybook-user",
     createdAt: new Date("2024-01-01T12:00:00.000Z"),
     updatedAt: new Date("2024-01-01T12:00:00.000Z"),
@@ -70,13 +73,15 @@ const manyStacks: Stack[] = [
   {
     id: "stack-4",
     data: {
-      id: 204,
       name: { fi: "Wolves" },
-      orderNo: 3,
       description: { fi: "Wolves and close relatives." },
-      entityType: "subpinkka",
     },
-    speciesIds: [],
+    parentGroupId: "group-1",
+    order: 3,
+    pinkkaRef: {
+      groupId: 101,
+      stackId: 204,
+    },
     ownerId: "storybook-user",
     createdAt: new Date("2024-01-01T12:00:00.000Z"),
     updatedAt: new Date("2024-01-01T12:00:00.000Z"),
@@ -84,13 +89,15 @@ const manyStacks: Stack[] = [
   {
     id: "stack-5",
     data: {
-      id: 205,
       name: { fi: "Lynx" },
-      orderNo: 4,
       description: { fi: "Forest cats and relatives." },
-      entityType: "subpinkka",
     },
-    speciesIds: [],
+    parentGroupId: "group-1",
+    order: 4,
+    pinkkaRef: {
+      groupId: 101,
+      stackId: 205,
+    },
     ownerId: "storybook-user",
     createdAt: new Date("2024-01-01T12:00:00.000Z"),
     updatedAt: new Date("2024-01-01T12:00:00.000Z"),
@@ -98,13 +105,15 @@ const manyStacks: Stack[] = [
   {
     id: "stack-6",
     data: {
-      id: 206,
       name: { fi: "Rodents" },
-      orderNo: 5,
       description: { fi: "Small mammals and burrowers." },
-      entityType: "subpinkka",
     },
-    speciesIds: [],
+    parentGroupId: "group-1",
+    order: 5,
+    pinkkaRef: {
+      groupId: 101,
+      stackId: 206,
+    },
     ownerId: "storybook-user",
     createdAt: new Date("2024-01-01T12:00:00.000Z"),
     updatedAt: new Date("2024-01-01T12:00:00.000Z"),

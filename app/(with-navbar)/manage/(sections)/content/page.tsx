@@ -38,12 +38,15 @@ import {
   deleteGroup,
   deleteStack,
   getImportedPinkkaGroups,
+  getImportedPinkkaSpeciesEntries,
+  mapPinkkaSpeciesDetailToContentData,
   reorderItems,
   updateGroupStackOrder,
+  createSpecies,
   type ImportedPinkkaGroupEntry,
 } from "@/lib/firebase/firestore-helpers";
-import type { Group, Stack } from "@/lib/types";
-import { getLocalizedText, MultilingualText } from "@/lib/pinkka/pinkka-api";
+import type { Group, LocalizedText, Stack } from "@/lib/types";
+import { getLocalizedText } from "@/lib/content/content-display";
 import { ChevronDown, FolderOpen, Plus } from "lucide-react";
 
 export default function ManagePage() {
@@ -89,30 +92,8 @@ export default function ManagePage() {
     null,
   );
 
-  const buildLegacyImportedPinkkaGroupEntries = useCallback(
-    (sourceGroups: Group[]): ImportedPinkkaGroupEntry[] => {
-      const results = sourceGroups
-        .filter(
-          (group) =>
-            Boolean(group.importId) &&
-            group.data.entityType === "pinkka" &&
-            typeof group.data.id === "number",
-        )
-        .map((group) => ({
-          groupId: group.data.id,
-          entity: group.data,
-          stackCount: group.stackIds?.length ?? 0,
-          isIncomplete: false,
-        }));
-
-      results.sort((left, right) => left.groupId - right.groupId);
-      return results;
-    },
-    [],
-  );
-
   const loadImportedPinkkaGroupEntries = useCallback(
-    async (fallbackGroups: Group[] = []) => {
+    async () => {
       if (!user) {
         setImportedPinkkaGroups([]);
         return;
@@ -120,21 +101,13 @@ export default function ManagePage() {
 
       try {
         const importedPinkkaGroupsData = await getImportedPinkkaGroups();
-        if (importedPinkkaGroupsData.length > 0) {
-          setImportedPinkkaGroups(importedPinkkaGroupsData);
-          return;
-        }
-        setImportedPinkkaGroups(
-          buildLegacyImportedPinkkaGroupEntries(fallbackGroups),
-        );
+        setImportedPinkkaGroups(importedPinkkaGroupsData);
       } catch (error) {
         logFirestoreError("Failed to load imported Pinkka groups", error);
-        setImportedPinkkaGroups(
-          buildLegacyImportedPinkkaGroupEntries(fallbackGroups),
-        );
+        setImportedPinkkaGroups([]);
       }
     },
-    [buildLegacyImportedPinkkaGroupEntries, user],
+    [user],
   );
 
   const loadData = useCallback(async () => {
@@ -146,14 +119,19 @@ export default function ManagePage() {
         getStacks(undefined, user.uid, { includeHidden: true }),
       ]);
       setGroups(groupsData);
-      await loadImportedPinkkaGroupEntries(groupsData);
+      await loadImportedPinkkaGroupEntries();
 
-      const stackById = new Map(allStacks.map((stack) => [stack.id, stack]));
       const stacksData = groupsData.reduce<{ [key: string]: Stack[] }>(
         (acc, group) => {
-          const orderedStacks = (group.stackIds ?? [])
-            .map((stackId) => stackById.get(stackId))
-            .filter((stack): stack is Stack => Boolean(stack));
+          const legacyStackIds = new Set(group.stackIds ?? []);
+          const orderedStacks = [...allStacks]
+            .filter(
+              (stack) =>
+                stack.parentGroupId === group.id ||
+                (stack.parentGroupId === undefined &&
+                  legacyStackIds.has(stack.id)),
+            )
+            .sort((left, right) => (left.order ?? 0) - (right.order ?? 0));
           acc[group.id] = orderedStacks;
           return acc;
         },
@@ -178,16 +156,16 @@ export default function ManagePage() {
   }, [loadData]);
 
   const handleOpenPinkkaGroupSelector = useCallback(() => {
-    void loadImportedPinkkaGroupEntries(groups).finally(() =>
+    void loadImportedPinkkaGroupEntries().finally(() =>
       setShowPinkkaGroupSelector(true),
     );
-  }, [groups, loadImportedPinkkaGroupEntries]);
+  }, [loadImportedPinkkaGroupEntries]);
 
   const buildLocalizedValue = (values: {
     fi?: string;
     en?: string;
     sv?: string;
-  }): MultilingualText => {
+  }): LocalizedText => {
     const nextValue: { fi?: string; en?: string; sv?: string } = {};
     if (values.fi) nextValue.fi = values.fi;
     if (values.en) nextValue.en = values.en;
@@ -263,7 +241,6 @@ export default function ManagePage() {
       } else {
         await createGroup({
           data: {
-            id: Date.now(),
             name: {
               fi: groupNameFi,
               ...(groupNameEn ? { en: groupNameEn } : {}),
@@ -274,12 +251,7 @@ export default function ManagePage() {
               en: groupDescriptionEn,
               sv: groupDescriptionSv,
             }),
-            hideScientific: false,
-            hideVernacular: false,
-            published: true,
-            entityType: "pinkka",
           },
-          stackIds: [],
           ownerId: user.uid,
           order: groups.length,
         });
@@ -366,8 +338,15 @@ export default function ManagePage() {
 
     try {
       const createdGroupId = await createGroup({
-        data: sourceGroup.entity,
-        stackIds: [],
+        data: {
+          name: sourceGroup.entity.name,
+          ...(sourceGroup.entity.description
+            ? { description: sourceGroup.entity.description }
+            : {}),
+        },
+        pinkkaRef: {
+          groupId: sourceGroup.groupId,
+        },
         ownerId: user.uid,
         order: groups.length,
         isHidden: false,
@@ -376,15 +355,77 @@ export default function ManagePage() {
         (left, right) => left.orderNo - right.orderNo,
       );
       for (const sourceStack of sourceStacks) {
-        await createStack(
+        const createdStackId = await createStack(
           {
-            data: sourceStack,
-            speciesIds: [],
+            data: {
+              name: sourceStack.name,
+              ...(sourceStack.description
+                ? { description: sourceStack.description }
+                : {}),
+            },
+            pinkkaRef: {
+              groupId: sourceGroup.groupId,
+              stackId: sourceStack.id,
+            },
             ownerId: user.uid,
             isHidden: false,
           },
           [createdGroupId],
         );
+
+        const importedSpecies = await getImportedPinkkaSpeciesEntries(
+          sourceGroup.groupId,
+          sourceStack.id,
+        );
+
+        if (importedSpecies.length > 0) {
+          for (let index = 0; index < importedSpecies.length; index += 1) {
+            const sourceSpecies = importedSpecies[index];
+            const mappedSpeciesData = await mapPinkkaSpeciesDetailToContentData(
+              sourceSpecies.entity,
+            );
+            await createSpecies(
+              {
+                data: mappedSpeciesData,
+                pinkkaRef: {
+                  groupId: sourceGroup.groupId,
+                  stackId: sourceStack.id,
+                  speciesId: sourceSpecies.speciesId,
+                },
+                ownerId: user.uid,
+                isHidden: false,
+                order: index,
+              },
+              [createdStackId],
+            );
+          }
+          continue;
+        }
+
+        for (let index = 0; index < (sourceStack.speciesCards ?? []).length; index += 1) {
+          const sourceSpeciesCard = (sourceStack.speciesCards ?? [])[index];
+          await createSpecies(
+            {
+              data: {
+                taxonId: sourceSpeciesCard.taxonId,
+                scientificName: sourceSpeciesCard.scientificName,
+                ...(sourceSpeciesCard.vernacularName
+                  ? { vernacularName: sourceSpeciesCard.vernacularName }
+                  : {}),
+                images: [],
+              },
+              pinkkaRef: {
+                groupId: sourceGroup.groupId,
+                stackId: sourceStack.id,
+                speciesId: sourceSpeciesCard.id,
+              },
+              ownerId: user.uid,
+              isHidden: false,
+              order: index,
+            },
+            [createdStackId],
+          );
+        }
       }
 
       setShowPinkkaGroupSelector(false);
@@ -453,21 +494,18 @@ export default function ManagePage() {
         await createStack(
           {
             data: {
-              id: Date.now(),
               name: {
                 fi: stackNameFi,
                 ...(stackNameEn ? { en: stackNameEn } : {}),
                 ...(stackNameSv ? { sv: stackNameSv } : {}),
               },
-              orderNo: groupStacks.length,
               description: buildLocalizedValue({
                 fi: stackDescriptionFi,
                 en: stackDescriptionEn,
                 sv: stackDescriptionSv,
               }),
-              entityType: "subpinkka",
             },
-            speciesIds: [],
+            order: groupStacks.length,
             ownerId: user.uid,
           },
           [selectedGroupId],

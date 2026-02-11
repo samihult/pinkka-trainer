@@ -10,7 +10,7 @@ import {
   getStacks,
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack, StackLearningHistogram } from "@/lib/types";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getLocalizedText } from "@/lib/content/content-display";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import {
@@ -76,12 +76,17 @@ export function HomePageClient() {
       setGroups(groupsData);
       setAllStacks(allStacks);
 
-      const stackById = new Map(allStacks.map((stack) => [stack.id, stack]));
       const stacksData = groupsData.reduce<{ [key: string]: Stack[] }>(
         (acc, group) => {
-          const orderedStacks = (group.stackIds ?? [])
-            .map((stackId) => stackById.get(stackId))
-            .filter((stack): stack is Stack => Boolean(stack));
+          const legacyStackIds = new Set(group.stackIds ?? []);
+          const orderedStacks = [...allStacks]
+            .filter(
+              (stack) =>
+                stack.parentGroupId === group.id ||
+                (stack.parentGroupId === undefined &&
+                  legacyStackIds.has(stack.id)),
+            )
+            .sort((left, right) => (left.order ?? 0) - (right.order ?? 0));
           acc[group.id] = orderedStacks;
           return acc;
         },

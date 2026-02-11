@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Upload, X, GripVertical } from "lucide-react";
 import type { SpeciesImage } from "@/lib/types";
-import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import { getSpeciesImageUrl } from "@/lib/content/content-display";
 import Image from "next/image";
 
 /** Props for the image upload and reorder widget. */

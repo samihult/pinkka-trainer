@@ -1,5 +1,6 @@
 import {
   collection,
+  collectionGroup,
   doc,
   documentId,
   deleteField,
@@ -10,9 +11,10 @@ import {
   deleteDoc,
   query,
   where,
-  orderBy,
+  limit,
   Timestamp,
   writeBatch,
+  type DocumentData,
 } from "firebase/firestore";
 import {
   ref,
@@ -104,6 +106,14 @@ export interface ImportedPinkkaGroupEntry {
   stackCount: number;
   /** Whether the imported group is currently incomplete. */
   isIncomplete: boolean;
+}
+
+/** Imported Pinkka species entry available for creating editable species. */
+export interface ImportedPinkkaSpeciesEntry {
+  /** Numeric Pinkka species id. */
+  speciesId: number;
+  /** Original Pinkka species payload. */
+  entity: PinkkaSpeciesDetail;
 }
 
 /** User-facing message for manual interruption. */
@@ -409,6 +419,47 @@ export async function getImportedPinkkaGroups(): Promise<
   }
 
   results.sort((left, right) => left.groupId - right.groupId);
+  return results;
+}
+
+/** List imported Pinkka species for a group stack from the pinkka hierarchy. */
+export async function getImportedPinkkaSpeciesEntries(
+  groupId: number,
+  stackId: number,
+): Promise<ImportedPinkkaSpeciesEntry[]> {
+  const snapshot = await getDocs(
+    collection(
+      db,
+      PINKKA_COLLECTION,
+      String(groupId),
+      "stacks",
+      String(stackId),
+      "species",
+    ),
+  );
+
+  const results: ImportedPinkkaSpeciesEntry[] = [];
+  for (const docSnapshot of snapshot.docs) {
+    const data = docSnapshot.data() as { entity?: unknown };
+    const entity = data.entity as PinkkaSpeciesDetail | undefined;
+    if (!entity) {
+      continue;
+    }
+
+    const normalizedSpeciesId = Number.parseInt(docSnapshot.id, 10);
+    if (!Number.isFinite(normalizedSpeciesId)) {
+      continue;
+    }
+
+    results.push({
+      speciesId: normalizedSpeciesId,
+      entity,
+    });
+  }
+
+  results.sort((left, right) =>
+    left.entity.scientificName.localeCompare(right.entity.scientificName),
+  );
   return results;
 }
 
@@ -794,6 +845,76 @@ async function storePinkkaStackImage(
     progressLevel: "stacks",
     forceDownload,
   });
+}
+
+async function getStoredPinkkaImageDownloadUrl(params: {
+  pinkkaImageId: string;
+  filename: string;
+}): Promise<string | null> {
+  const imageIdPathPart = params.pinkkaImageId.replaceAll("/", "_");
+  const filenamePathPart = params.filename.replaceAll("/", "_");
+  const imageRef = ref(storage, `pinkka/${imageIdPathPart}/${filenamePathPart}`);
+  try {
+    return await getDownloadURL(imageRef);
+  } catch {
+    return null;
+  }
+}
+
+/** Convert Pinkka species detail payload to app species data with storage URLs. */
+export async function mapPinkkaSpeciesDetailToContentData(
+  detail: PinkkaSpeciesDetail,
+): Promise<Species["data"]> {
+  const mappedImages: SpeciesImage[] = [];
+  const sourceImages = detail.images ?? [];
+
+  for (let index = 0; index < sourceImages.length; index += 1) {
+    const sourceImage = sourceImages[index];
+    const sourceUrl = getPreferredPinkkaImageUrl(sourceImage);
+    let finalUrl = sourceUrl ?? null;
+
+    if (sourceUrl) {
+      const pinkkaImageId =
+        sourceImage.id || `${detail.taxonId || detail.scientificName}-${index + 1}`;
+      const filename = getImageFilenameFromUrl(sourceUrl);
+      if (filename) {
+        const storedUrl = await getStoredPinkkaImageDownloadUrl({
+          pinkkaImageId,
+          filename,
+        });
+        finalUrl = storedUrl ?? sourceUrl;
+      }
+    }
+
+    if (!finalUrl) {
+      continue;
+    }
+
+    const mappedImage: SpeciesImage = {
+      id:
+        sourceImage.id || `${detail.taxonId || detail.scientificName}-${index + 1}`,
+      urls: {
+        original: finalUrl,
+        full: finalUrl,
+        large: finalUrl,
+        square: finalUrl,
+        thumbnail: finalUrl,
+      },
+      ...(sourceImage.caption ? { caption: sourceImage.caption } : {}),
+      ...(sourceImage.taxonId ? { taxonId: sourceImage.taxonId } : {}),
+      ...(sourceImage.meta ? { meta: sourceImage.meta } : {}),
+    };
+
+    mappedImages.push(mappedImage);
+  }
+
+  return {
+    taxonId: detail.taxonId,
+    scientificName: detail.scientificName,
+    ...(detail.vernacularName ? { vernacularName: detail.vernacularName } : {}),
+    ...(detail.description ? { description: detail.description } : {}),
+    images: mappedImages,
+  };
 }
 
 /** Build a deterministic document id for learning progress. */
@@ -1282,20 +1403,190 @@ export async function upsertStackLearningHistogram(
   };
 }
 
+function toDate(value: unknown): Date {
+  if (value instanceof Date) {
+    return value;
+  }
+  if (
+    typeof value === "object" &&
+    value !== null &&
+    "toDate" in value &&
+    typeof (value as { toDate?: unknown }).toDate === "function"
+  ) {
+    return ((value as { toDate: () => Date }).toDate?.() ?? new Date(0));
+  }
+  return new Date(0);
+}
+
+type FirestoreDocLike = {
+  id: string;
+  data: () => DocumentData | undefined;
+};
+
+function toGroupFromDoc(groupDoc: FirestoreDocLike): Group {
+  const data = groupDoc.data() ?? {};
+  return {
+    id: groupDoc.id,
+    ...data,
+    createdAt: toDate(data.createdAt),
+    updatedAt: toDate(data.updatedAt),
+  } as Group;
+}
+
+function toStackFromDoc(stackDoc: FirestoreDocLike): Stack {
+  const data = stackDoc.data() ?? {};
+  return {
+    id: stackDoc.id,
+    ...data,
+    createdAt: toDate(data.createdAt),
+    updatedAt: toDate(data.updatedAt),
+  } as Stack;
+}
+
+function toSpeciesFromDoc(speciesDoc: FirestoreDocLike): Species {
+  const data = speciesDoc.data() ?? {};
+  return {
+    id: speciesDoc.id,
+    ...data,
+    createdAt: toDate(data.createdAt),
+    updatedAt: toDate(data.updatedAt),
+  } as Species;
+}
+
+function buildUrnId(kind: "group" | "stack" | "species"): string {
+  const randomPart = doc(collection(db, "__idSeeds")).id;
+  return `pinkka:${kind}:${randomPart}`;
+}
+
+function sortByOrder<T extends { order?: number }>(items: T[]): T[] {
+  return [...items].sort((left, right) => (left.order ?? 0) - (right.order ?? 0));
+}
+
+type ResolvedStackLocation = {
+  groupId: string;
+  stackId: string;
+  doc: FirestoreDocLike & { ref: ReturnType<typeof doc> };
+};
+
+type ResolvedSpeciesLocation = {
+  groupId: string;
+  stackId: string;
+  speciesId: string;
+  doc: FirestoreDocLike & { ref: ReturnType<typeof doc> };
+};
+
+async function resolveNestedStackLocation(
+  stackId: string,
+): Promise<ResolvedStackLocation | null> {
+  try {
+    const snapshot = await getDocs(
+      query(
+        collectionGroup(db, "stacks"),
+        where("stackId", "==", stackId),
+        limit(1),
+      ),
+    );
+    const stackDoc = snapshot.docs[0];
+    if (stackDoc) {
+      const groupId = stackDoc.ref.parent.parent?.id;
+      if (groupId) {
+        return {
+          groupId,
+          stackId: stackDoc.id,
+          doc: stackDoc as FirestoreDocLike & { ref: ReturnType<typeof doc> },
+        };
+      }
+    }
+  } catch {
+    // Fall through to parent-path scan when collectionGroup is restricted.
+  }
+
+  const groupsSnapshot = await getDocs(collection(db, "groups"));
+  for (const groupDoc of groupsSnapshot.docs) {
+    const nestedStackDoc = await getDoc(
+      doc(db, "groups", groupDoc.id, "stacks", stackId),
+    );
+    if (!nestedStackDoc.exists()) {
+      continue;
+    }
+    return {
+      groupId: groupDoc.id,
+      stackId: nestedStackDoc.id,
+      doc: nestedStackDoc as FirestoreDocLike & { ref: ReturnType<typeof doc> },
+    };
+  }
+
+  return null;
+}
+
+async function resolveNestedSpeciesLocation(
+  speciesId: string,
+): Promise<ResolvedSpeciesLocation | null> {
+  try {
+    const snapshot = await getDocs(
+      query(
+        collectionGroup(db, "species"),
+        where("speciesId", "==", speciesId),
+        limit(1),
+      ),
+    );
+    const speciesDoc = snapshot.docs[0];
+    if (speciesDoc) {
+      const stackId = speciesDoc.ref.parent.parent?.id;
+      const groupId = speciesDoc.ref.parent.parent?.parent?.parent?.id;
+      if (stackId && groupId) {
+        return {
+          groupId,
+          stackId,
+          speciesId: speciesDoc.id,
+          doc: speciesDoc as FirestoreDocLike & { ref: ReturnType<typeof doc> },
+        };
+      }
+    }
+  } catch {
+    // Fall through to parent-path scan when collectionGroup is restricted.
+  }
+
+  const groupsSnapshot = await getDocs(collection(db, "groups"));
+  for (const groupDoc of groupsSnapshot.docs) {
+    const stacksSnapshot = await getDocs(
+      collection(db, "groups", groupDoc.id, "stacks"),
+    );
+    for (const stackDoc of stacksSnapshot.docs) {
+      const nestedSpeciesDoc = await getDoc(
+        doc(db, "groups", groupDoc.id, "stacks", stackDoc.id, "species", speciesId),
+      );
+      if (!nestedSpeciesDoc.exists()) {
+        continue;
+      }
+      return {
+        groupId: groupDoc.id,
+        stackId: stackDoc.id,
+        speciesId: nestedSpeciesDoc.id,
+        doc: nestedSpeciesDoc as FirestoreDocLike & { ref: ReturnType<typeof doc> },
+      };
+    }
+  }
+
+  return null;
+}
+
 // Group operations
 /** Create a new group and return its id. */
 export async function createGroup(
   group: Omit<Group, "id" | "createdAt" | "updatedAt">,
 ): Promise<string> {
-  const groupRef = doc(collection(db, "groups"));
+  const groupId = buildUrnId("group");
+  const groupRef = doc(db, "groups", groupId);
+  const now = Timestamp.now();
   const newGroup = {
     ...group,
     isHidden: group.isHidden ?? false,
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
+    createdAt: now,
+    updatedAt: now,
   };
   await setDoc(groupRef, newGroup);
-  return groupRef.id;
+  return groupId;
 }
 
 /** Fetch groups, optionally filtered by owner and visibility. */
@@ -1304,26 +1595,11 @@ export async function getGroups(
   options?: { includeHidden?: boolean },
 ): Promise<Group[]> {
   const includeHidden = options?.includeHidden ?? false;
-  let q = query(collection(db, "groups"), orderBy("order"));
-
-  if (ownerId) {
-    q = query(
-      collection(db, "groups"),
-      where("ownerId", "==", ownerId),
-      orderBy("order"),
-    );
-  }
-
-  const snapshot = await getDocs(q);
-  const groups = snapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate(),
-        updatedAt: doc.data().updatedAt?.toDate(),
-      }) as Group,
-  );
+  const groupsQuery = ownerId
+    ? query(collection(db, "groups"), where("ownerId", "==", ownerId))
+    : query(collection(db, "groups"));
+  const snapshot = await getDocs(groupsQuery);
+  const groups = sortByOrder(snapshot.docs.map((docSnapshot) => toGroupFromDoc(docSnapshot)));
   return includeHidden ? groups : groups.filter((group) => !group.isHidden);
 }
 
@@ -1331,13 +1607,7 @@ export async function getGroups(
 export async function getGroup(groupId: string): Promise<Group | null> {
   const groupDoc = await getDoc(doc(db, "groups", groupId));
   if (!groupDoc.exists()) return null;
-
-  return {
-    id: groupDoc.id,
-    ...groupDoc.data(),
-    createdAt: groupDoc.data().createdAt?.toDate(),
-    updatedAt: groupDoc.data().updatedAt?.toDate(),
-  } as Group;
+  return toGroupFromDoc(groupDoc);
 }
 
 /** Update a group with partial fields. */
@@ -1351,38 +1621,43 @@ export async function updateGroup(
   });
 }
 
-/** Delete a group document. */
+/** Delete a group and its descendant stacks/species. */
 export async function deleteGroup(groupId: string): Promise<void> {
+  const stacks = await getStacks(groupId, undefined, { includeHidden: true });
+  for (const stack of stacks) {
+    await deleteStack(stack.id);
+  }
   await deleteDoc(doc(db, "groups", groupId));
 }
 
 // Stack operations
-/** Create a stack and link it to the provided groups. */
+/** Create a stack and link it to a parent group. */
 export async function createStack(
   stack: Omit<Stack, "id" | "createdAt" | "updatedAt">,
   groupIds: string[] = [],
 ): Promise<string> {
-  const stackRef = doc(collection(db, "stacks"));
-  const newStack = {
-    ...stack,
-    isHidden: stack.isHidden ?? false,
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
-  };
-  await setDoc(stackRef, newStack);
-
-  // Update groups' stackIds in order
-  for (const groupId of groupIds) {
-    const groupDoc = await getDoc(doc(db, "groups", groupId));
-    if (!groupDoc.exists()) continue;
-    const currentStackIds = groupDoc.data().stackIds || [];
-    await updateDoc(doc(db, "groups", groupId), {
-      stackIds: [...currentStackIds, stackRef.id],
-      updatedAt: Timestamp.now(),
-    });
+  const parentGroupId = stack.parentGroupId ?? groupIds[0];
+  if (!parentGroupId) {
+    throw new Error("A parent group id is required when creating a stack.");
   }
 
-  return stackRef.id;
+  const siblingStacks = await getStacks(parentGroupId, undefined, {
+    includeHidden: true,
+  });
+  const stackId = buildUrnId("stack");
+  const stackRef = doc(db, "groups", parentGroupId, "stacks", stackId);
+  const now = Timestamp.now();
+  const newStack = {
+    ...stack,
+    stackId,
+    parentGroupId,
+    order: stack.order ?? siblingStacks.length,
+    isHidden: stack.isHidden ?? false,
+    createdAt: now,
+    updatedAt: now,
+  };
+  await setDoc(stackRef, newStack);
+  return stackId;
 }
 
 /** Fetch stacks, optionally filtered by group, owner, and visibility. */
@@ -1396,47 +1671,64 @@ export async function getStacks(
     const groupDoc = await getDoc(doc(db, "groups", groupId));
     if (!groupDoc.exists()) return [];
     if (!includeHidden && groupDoc.data().isHidden) return [];
-    const stackIds: string[] = groupDoc.data().stackIds || [];
-    if (stackIds.length === 0) return [];
 
-    const stackDocs = await Promise.all(
-      stackIds.map((id) => getDoc(doc(db, "stacks", id))),
+    const nestedQuery = ownerId
+      ? query(
+          collection(db, "groups", groupId, "stacks"),
+          where("ownerId", "==", ownerId),
+        )
+      : query(collection(db, "groups", groupId, "stacks"));
+    const nestedSnapshot = await getDocs(nestedQuery);
+    let stacks = sortByOrder(
+      nestedSnapshot.docs.map((docSnapshot) => toStackFromDoc(docSnapshot)),
     );
 
-    const stacks = stackDocs
-      .filter((stackDoc) => stackDoc.exists())
-      .map(
-        (stackDoc) =>
-          ({
-            id: stackDoc.id,
-            ...stackDoc.data(),
-            createdAt: stackDoc.data()?.createdAt?.toDate(),
-            updatedAt: stackDoc.data()?.updatedAt?.toDate(),
-          }) as Stack,
-      )
-      .filter((stack) => (ownerId ? stack.ownerId === ownerId : true));
+    // Legacy fallback for historical docs linked only with group.stackIds.
+    if (stacks.length === 0) {
+      const legacyStackIds = (groupDoc.data().stackIds ?? []) as string[];
+      if (legacyStackIds.length > 0) {
+        const stackDocs = await Promise.all(
+          legacyStackIds.map((id) => getDoc(doc(db, "stacks", id))),
+        );
+        stacks = sortByOrder(
+          stackDocs
+            .filter((stackDoc) => stackDoc.exists())
+            .map((stackDoc) => toStackFromDoc(stackDoc))
+            .filter((stackItem) => (ownerId ? stackItem.ownerId === ownerId : true)),
+        );
+      }
+    }
+
     return includeHidden ? stacks : stacks.filter((stack) => !stack.isHidden);
   }
 
-  let q = query(collection(db, "stacks"), orderBy("data.id"));
-  if (ownerId) {
-    q = query(
-      collection(db, "stacks"),
-      where("ownerId", "==", ownerId),
-      orderBy("data.id"),
-    );
+  const groups = await getGroups(ownerId, { includeHidden: includeHidden });
+  const mergedById = new Map<string, Stack>();
+
+  for (const group of groups) {
+    try {
+      const groupStacks = await getStacks(group.id, ownerId, {
+        includeHidden,
+      });
+      for (const stack of groupStacks) {
+        mergedById.set(stack.id, stack);
+      }
+    } catch (error) {
+      console.error(`Failed to fetch stacks for group ${group.id}`, error);
+    }
   }
 
-  const snapshot = await getDocs(q);
-  const stacks = snapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate(),
-        updatedAt: doc.data().updatedAt?.toDate(),
-      }) as Stack,
-  );
+  const legacyQuery = ownerId
+    ? query(collection(db, "stacks"), where("ownerId", "==", ownerId))
+    : query(collection(db, "stacks"));
+  const legacySnapshot = await getDocs(legacyQuery);
+  for (const docSnapshot of legacySnapshot.docs) {
+    if (!mergedById.has(docSnapshot.id)) {
+      mergedById.set(docSnapshot.id, toStackFromDoc(docSnapshot));
+    }
+  }
+
+  const stacks = sortByOrder([...mergedById.values()]);
   return includeHidden ? stacks : stacks.filter((stack) => !stack.isHidden);
 }
 
@@ -1446,15 +1738,20 @@ export async function getStack(
   options?: { includeHidden?: boolean },
 ): Promise<Stack | null> {
   const includeHidden = options?.includeHidden ?? false;
-  const stackDoc = await getDoc(doc(db, "stacks", stackId));
-  if (!stackDoc.exists()) return null;
+  const nestedLocation = await resolveNestedStackLocation(stackId);
+  let stack: Stack | null = null;
 
-  const stack = {
-    id: stackDoc.id,
-    ...stackDoc.data(),
-    createdAt: stackDoc.data().createdAt?.toDate(),
-    updatedAt: stackDoc.data().updatedAt?.toDate(),
-  } as Stack;
+  if (nestedLocation) {
+    stack = toStackFromDoc(nestedLocation.doc);
+  } else {
+    const stackDoc = await getDoc(doc(db, "stacks", stackId));
+    if (!stackDoc.exists()) return null;
+    stack = toStackFromDoc(stackDoc);
+  }
+
+  if (!stack) {
+    return null;
+  }
   if (!includeHidden && stack.isHidden) return null;
   return stack;
 }
@@ -1464,20 +1761,35 @@ export async function updateStack(
   stackId: string,
   updates: Partial<Stack>,
 ): Promise<void> {
-  await updateDoc(doc(db, "stacks", stackId), {
+  const nestedLocation = await resolveNestedStackLocation(stackId);
+  const targetRef = nestedLocation
+    ? doc(db, "groups", nestedLocation.groupId, "stacks", stackId)
+    : doc(db, "stacks", stackId);
+  await updateDoc(targetRef, {
     ...updates,
     updatedAt: Timestamp.now(),
   });
 }
 
-/** Delete a stack document and unlink it from groups. */
+/** Delete a stack document and all descendant species. */
 export async function deleteStack(stackId: string): Promise<void> {
+  const nestedLocation = await resolveNestedStackLocation(stackId);
+  if (nestedLocation) {
+    const speciesSnapshot = await getDocs(
+      collection(db, "groups", nestedLocation.groupId, "stacks", stackId, "species"),
+    );
+    for (const speciesDoc of speciesSnapshot.docs) {
+      await deleteSpecies(speciesDoc.id);
+    }
+    await deleteDoc(doc(db, "groups", nestedLocation.groupId, "stacks", stackId));
+  }
+
+  // Legacy unlink for historical groups still using stackIds arrays.
   const groupQuery = query(
     collection(db, "groups"),
     where("stackIds", "array-contains", stackId),
   );
   const groupSnapshot = await getDocs(groupQuery);
-
   for (const groupDoc of groupSnapshot.docs) {
     const stackIds = groupDoc.data().stackIds || [];
     await updateDoc(doc(db, "groups", groupDoc.id), {
@@ -1486,29 +1798,78 @@ export async function deleteStack(stackId: string): Promise<void> {
     });
   }
 
-  await deleteDoc(doc(db, "stacks", stackId));
+  const legacyStackDoc = await getDoc(doc(db, "stacks", stackId));
+  if (legacyStackDoc.exists()) {
+    const species = await getSpecies(stackId, { includeHidden: true });
+    for (const speciesItem of species) {
+      await deleteSpecies(speciesItem.id);
+    }
+    await deleteDoc(doc(db, "stacks", stackId));
+  }
 }
 
-/** Update the ordered stack ids for a group. */
+/** Update stack ordering under a group. */
 export async function updateGroupStackOrder(
   groupId: string,
   stackIds: string[],
 ): Promise<void> {
-  await updateDoc(doc(db, "groups", groupId), {
-    stackIds,
-    updatedAt: Timestamp.now(),
-  });
+  const batch = writeBatch(db);
+  for (let index = 0; index < stackIds.length; index += 1) {
+    const stackId = stackIds[index];
+    const nestedLocation = await resolveNestedStackLocation(stackId);
+    const targetRef = nestedLocation
+      ? doc(db, "groups", nestedLocation.groupId, "stacks", stackId)
+      : doc(db, "stacks", stackId);
+    batch.update(targetRef, {
+      stackId,
+      parentGroupId: groupId,
+      order: index,
+      updatedAt: Timestamp.now(),
+    });
+  }
+  await batch.commit();
+
+  const groupDoc = await getDoc(doc(db, "groups", groupId));
+  if (groupDoc.exists()) {
+    await updateDoc(doc(db, "groups", groupId), {
+      stackIds,
+      updatedAt: Timestamp.now(),
+    });
+  }
 }
 
-/** Update the ordered species ids for a stack. */
+/** Update species ordering under a stack. */
 export async function updateStackSpeciesOrder(
   stackId: string,
   speciesIds: string[],
 ): Promise<void> {
-  await updateDoc(doc(db, "stacks", stackId), {
-    speciesIds,
-    updatedAt: Timestamp.now(),
-  });
+  const stack = await getStack(stackId, { includeHidden: true });
+  const nestedLocation = await resolveNestedStackLocation(stackId);
+  const batch = writeBatch(db);
+  for (let index = 0; index < speciesIds.length; index += 1) {
+    const speciesId = speciesIds[index];
+    const nestedSpeciesLocation = await resolveNestedSpeciesLocation(speciesId);
+    const targetRef =
+      nestedSpeciesLocation && nestedLocation
+        ? doc(
+            db,
+            "groups",
+            nestedLocation.groupId,
+            "stacks",
+            stackId,
+            "species",
+            speciesId,
+          )
+        : doc(db, "species", speciesId);
+    batch.update(targetRef, {
+      speciesId,
+      parentStackId: stackId,
+      parentGroupId: stack?.parentGroupId ?? null,
+      order: index,
+      updatedAt: Timestamp.now(),
+    });
+  }
+  await batch.commit();
 }
 
 /** Fetch import status for a Pinkka group id. */
@@ -2329,27 +2690,43 @@ export async function createSpecies(
   species: Omit<Species, "id" | "createdAt" | "updatedAt">,
   stackIds: string[] = [],
 ): Promise<string> {
-  const speciesRef = doc(collection(db, "species"));
-  const newSpecies = {
-    ...species,
-    isHidden: species.isHidden ?? false,
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
-  };
-  await setDoc(speciesRef, newSpecies);
-
-  // Update stacks' speciesIds in order
-  for (const stackId of stackIds) {
-    const stackDoc = await getDoc(doc(db, "stacks", stackId));
-    if (!stackDoc.exists()) continue;
-    const currentSpeciesIds = stackDoc.data().speciesIds || [];
-    await updateDoc(doc(db, "stacks", stackId), {
-      speciesIds: [...currentSpeciesIds, speciesRef.id],
-      updatedAt: Timestamp.now(),
-    });
+  const parentStackId = species.parentStackId ?? stackIds[0];
+  if (!parentStackId) {
+    throw new Error("A parent stack id is required when creating a species.");
   }
 
-  return speciesRef.id;
+  const parentStack = await getStack(parentStackId, { includeHidden: true });
+  const nestedStackLocation = await resolveNestedStackLocation(parentStackId);
+  const siblingSpecies = await getSpecies(parentStackId, { includeHidden: true });
+  const parentGroupId =
+    species.parentGroupId ?? nestedStackLocation?.groupId ?? parentStack?.parentGroupId;
+
+  const speciesId = buildUrnId("species");
+  const speciesRef =
+    nestedStackLocation && parentGroupId
+      ? doc(
+          db,
+          "groups",
+          parentGroupId,
+          "stacks",
+          parentStackId,
+          "species",
+          speciesId,
+        )
+      : doc(db, "species", speciesId);
+  const now = Timestamp.now();
+  const newSpecies = {
+    ...species,
+    speciesId,
+    parentStackId,
+    parentGroupId,
+    order: species.order ?? siblingSpecies.length,
+    isHidden: species.isHidden ?? false,
+    createdAt: now,
+    updatedAt: now,
+  };
+  await setDoc(speciesRef, newSpecies);
+  return speciesId;
 }
 
 /** Fetch species, optionally filtered by stack and visibility. */
@@ -2359,40 +2736,86 @@ export async function getSpecies(
 ): Promise<Species[]> {
   const includeHidden = options?.includeHidden ?? false;
   if (stackId) {
+    const nestedStackLocation = await resolveNestedStackLocation(stackId);
+    if (nestedStackLocation) {
+      const parentGroupDoc = await getDoc(
+        doc(db, "groups", nestedStackLocation.groupId),
+      );
+      if (!parentGroupDoc.exists()) return [];
+      if (!includeHidden && parentGroupDoc.data().isHidden) return [];
+
+      const nestedStack = toStackFromDoc(nestedStackLocation.doc);
+      if (!includeHidden && nestedStack.isHidden) return [];
+
+      const speciesSnapshot = await getDocs(
+        collection(
+          db,
+          "groups",
+          nestedStackLocation.groupId,
+          "stacks",
+          stackId,
+          "species",
+        ),
+      );
+      const species = sortByOrder(
+        speciesSnapshot.docs.map((docSnapshot) => toSpeciesFromDoc(docSnapshot)),
+      );
+      return includeHidden ? species : species.filter((item) => !item.isHidden);
+    }
+
     const stackDoc = await getDoc(doc(db, "stacks", stackId));
     if (!stackDoc.exists()) return [];
     if (!includeHidden && stackDoc.data().isHidden) return [];
-    const speciesIds: string[] = stackDoc.data().speciesIds || [];
-    if (speciesIds.length === 0) return [];
 
-    const speciesDocs = await Promise.all(
-      speciesIds.map((id) => getDoc(doc(db, "species", id))),
+    const hierarchicalSnapshot = await getDocs(
+      query(collection(db, "species"), where("parentStackId", "==", stackId)),
+    );
+    let species = sortByOrder(
+      hierarchicalSnapshot.docs.map((docSnapshot) =>
+        toSpeciesFromDoc(docSnapshot),
+      ),
     );
 
-    const species = speciesDocs
-      .filter((speciesDoc) => speciesDoc.exists())
-      .map(
-        (speciesDoc) =>
-          ({
-            id: speciesDoc.id,
-            ...speciesDoc.data(),
-            createdAt: speciesDoc.data()?.createdAt?.toDate(),
-            updatedAt: speciesDoc.data()?.updatedAt?.toDate(),
-          }) as Species,
-      );
+    // Legacy fallback for historical stacks linked only with speciesIds arrays.
+    if (species.length === 0) {
+      const legacySpeciesIds = (stackDoc.data().speciesIds ?? []) as string[];
+      if (legacySpeciesIds.length > 0) {
+        const speciesDocs = await Promise.all(
+          legacySpeciesIds.map((id) => getDoc(doc(db, "species", id))),
+        );
+        species = sortByOrder(
+          speciesDocs
+            .filter((speciesDoc) => speciesDoc.exists())
+            .map((speciesDoc) => toSpeciesFromDoc(speciesDoc)),
+        );
+      }
+    }
+
     return includeHidden ? species : species.filter((item) => !item.isHidden);
   }
 
-  const snapshot = await getDocs(query(collection(db, "species")));
-  const species = snapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate(),
-        updatedAt: doc.data().updatedAt?.toDate(),
-      }) as Species,
-  );
+  const mergedById = new Map<string, Species>();
+
+  const stacks = await getStacks(undefined, undefined, { includeHidden: true });
+  for (const stack of stacks) {
+    try {
+      const stackSpecies = await getSpecies(stack.id, { includeHidden: true });
+      for (const species of stackSpecies) {
+        mergedById.set(species.id, species);
+      }
+    } catch (error) {
+      console.error(`Failed to fetch species for stack ${stack.id}`, error);
+    }
+  }
+
+  const legacySnapshot = await getDocs(query(collection(db, "species")));
+  for (const docSnapshot of legacySnapshot.docs) {
+    if (mergedById.has(docSnapshot.id)) {
+      continue;
+    }
+    mergedById.set(docSnapshot.id, toSpeciesFromDoc(docSnapshot));
+  }
+  const species = sortByOrder([...mergedById.values()]);
   return includeHidden ? species : species.filter((item) => !item.isHidden);
 }
 
@@ -2400,15 +2823,14 @@ export async function getSpecies(
 export async function getSpeciesById(
   speciesId: string,
 ): Promise<Species | null> {
+  const nestedLocation = await resolveNestedSpeciesLocation(speciesId);
+  if (nestedLocation) {
+    return toSpeciesFromDoc(nestedLocation.doc);
+  }
+
   const speciesDoc = await getDoc(doc(db, "species", speciesId));
   if (!speciesDoc.exists()) return null;
-
-  return {
-    id: speciesDoc.id,
-    ...speciesDoc.data(),
-    createdAt: speciesDoc.data().createdAt?.toDate(),
-    updatedAt: speciesDoc.data().updatedAt?.toDate(),
-  } as Species;
+  return toSpeciesFromDoc(speciesDoc);
 }
 
 /** Update a species with partial fields. */
@@ -2416,7 +2838,19 @@ export async function updateSpecies(
   speciesId: string,
   updates: Partial<Species>,
 ): Promise<void> {
-  await updateDoc(doc(db, "species", speciesId), {
+  const nestedLocation = await resolveNestedSpeciesLocation(speciesId);
+  const targetRef = nestedLocation
+    ? doc(
+        db,
+        "groups",
+        nestedLocation.groupId,
+        "stacks",
+        nestedLocation.stackId,
+        "species",
+        speciesId,
+      )
+    : doc(db, "species", speciesId);
+  await updateDoc(targetRef, {
     ...updates,
     updatedAt: Timestamp.now(),
   });
@@ -2424,7 +2858,20 @@ export async function updateSpecies(
 
 /** Delete a species and its stored images. */
 export async function deleteSpecies(speciesId: string): Promise<void> {
-  const speciesDoc = await getDoc(doc(db, "species", speciesId));
+  const nestedLocation = await resolveNestedSpeciesLocation(speciesId);
+  const speciesDoc = nestedLocation
+    ? await getDoc(
+        doc(
+          db,
+          "groups",
+          nestedLocation.groupId,
+          "stacks",
+          nestedLocation.stackId,
+          "species",
+          speciesId,
+        ),
+      )
+    : await getDoc(doc(db, "species", speciesId));
 
   if (speciesDoc.exists()) {
     // Delete all images from storage
@@ -2442,7 +2889,7 @@ export async function deleteSpecies(speciesId: string): Promise<void> {
       }
     }
 
-    // Remove from stacks' speciesIds
+    // Legacy unlink for historical stacks still using speciesIds arrays.
     const stackQuery = query(
       collection(db, "stacks"),
       where("speciesIds", "array-contains", speciesId),
@@ -2457,7 +2904,24 @@ export async function deleteSpecies(speciesId: string): Promise<void> {
     }
   }
 
-  await deleteDoc(doc(db, "species", speciesId));
+  if (nestedLocation) {
+    await deleteDoc(
+      doc(
+        db,
+        "groups",
+        nestedLocation.groupId,
+        "stacks",
+        nestedLocation.stackId,
+        "species",
+        speciesId,
+      ),
+    );
+  }
+
+  const legacyDoc = await getDoc(doc(db, "species", speciesId));
+  if (legacyDoc.exists()) {
+    await deleteDoc(doc(db, "species", speciesId));
+  }
 }
 
 // Image operations

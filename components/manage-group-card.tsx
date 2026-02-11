@@ -21,7 +21,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ManageStackCard } from "@/components/manage-stack-card";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
+import { getLocalizedText } from "@/lib/content/content-display";
 import type { Group, Stack } from "@/lib/types";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
@@ -91,8 +91,7 @@ export function ManageGroupCard({
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const isHidden = group.isHidden ?? false;
-  const linkedPinkkaGroupId =
-    group.importId && group.data.entityType === "pinkka" ? group.data.id : null;
+  const linkedPinkkaGroupId = group.pinkkaRef?.groupId ?? null;
 
   return (
     <Card

@@ -20,21 +20,24 @@ export function normalizeQuizPreferences(
   input?: Partial<QuizPreferences> | null,
   defaults: QuizPreferences = DEFAULT_QUIZ_PREFERENCES,
 ): QuizPreferences {
-  const normalizedQuestionCount = questionCountOptions.includes(
-    input?.questionCount,
-  )
-    ? input.questionCount
-    : defaults.questionCount;
+  const requestedQuestionCount = input?.questionCount;
+  const normalizedQuestionCount =
+    typeof requestedQuestionCount === "number" &&
+    questionCountOptions.includes(requestedQuestionCount)
+      ? requestedQuestionCount
+      : defaults.questionCount;
 
-  const normalizedMode = quizModes.includes(input?.mode as QuizMode)
-    ? (input?.mode as QuizMode)
-    : defaults.mode;
+  const requestedMode = input?.mode;
+  const normalizedMode =
+    requestedMode && quizModes.includes(requestedMode)
+      ? requestedMode
+      : defaults.mode;
 
-  const normalizedAnswerMode = answerModes.includes(
-    input?.answerMode as QuizAnswerMode,
-  )
-    ? (input?.answerMode as QuizAnswerMode)
-    : defaults.answerMode;
+  const requestedAnswerMode = input?.answerMode;
+  const normalizedAnswerMode =
+    requestedAnswerMode && answerModes.includes(requestedAnswerMode)
+      ? requestedAnswerMode
+      : defaults.answerMode;
 
   return {
     questionCount: normalizedQuestionCount,

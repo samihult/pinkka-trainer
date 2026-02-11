@@ -12,9 +12,10 @@ import { ImageUpload } from "./image-upload";
 import type { Species, SpeciesImage } from "@/lib/types";
 import { uploadSpeciesImage } from "@/lib/firebase/firestore-helpers";
 import { useToast } from "@/hooks/use-toast";
-import type { PinkkaSpeciesDetail } from "@/lib/pinkka/pinkka-api";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
-import { getSpeciesImageUrl } from "@/lib/pinkka/pinkka-display";
+import {
+  getLocalizedText,
+  getSpeciesImageUrl,
+} from "@/lib/content/content-display";
 import Image from "next/image";
 
 /** Props for creating or editing a species. */
@@ -26,7 +27,7 @@ interface SpeciesFormProps {
   /** Submit handler for form data. */
   onSubmit: (payload: {
     /** Updated species detail payload. */
-    data: PinkkaSpeciesDetail;
+    data: Species["data"];
     /** Image ids enabled for quiz prompts. */
     quizImageIds: string[];
   }) => Promise<void>;
@@ -177,7 +178,7 @@ export function SpeciesForm({
       if (descriptionBody.sv) {
         descriptionTitle.sv = descriptionEntry?.title?.sv ?? "Description";
       }
-      const detail: PinkkaSpeciesDetail = {
+      const detail: Species["data"] = {
         ...(species?.data || {}),
         taxonId: species?.data.taxonId || `local-${Date.now()}`,
         scientificName,

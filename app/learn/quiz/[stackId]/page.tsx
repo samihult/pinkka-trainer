@@ -13,6 +13,7 @@ import { QuizSettingsCard } from "@/components/quiz/quiz-settings-card";
 import { QuizSpeciesCard } from "@/components/quiz/quiz-species-card";
 import { useAuth } from "@/lib/auth-context";
 import {
+  getGroup,
   getGroups,
   getLearningProgress,
   getLearningProgressForSpeciesIds,
@@ -35,11 +36,11 @@ import type {
   Group,
   StackLearningHistogram,
 } from "@/lib/types";
-import { getLocalizedText } from "@/lib/pinkka/pinkka-api";
 import {
+  getLocalizedText,
   getSpeciesImageUrl,
   getSpeciesImagesWithUrls,
-} from "@/lib/pinkka/pinkka-display";
+} from "@/lib/content/content-display";
 import {
   DEFAULT_QUIZ_PREFERENCES,
   normalizeQuizPreferences,
@@ -163,17 +164,22 @@ export default function QuizPage() {
     setLoading(true);
     setPreferencesLoaded(false);
     try {
-      const [stackData, speciesData, groupsData] = await Promise.all([
-        getStack(stackId),
+      const stackData = await getStack(stackId);
+      const [speciesData, directGroupData, allGroups] = await Promise.all([
         getSpecies(stackId),
-        getGroups(),
+        stackData?.parentGroupId
+          ? getGroup(stackData.parentGroupId)
+          : Promise.resolve(null),
+        stackData?.parentGroupId ? Promise.resolve([]) : getGroups(),
       ]);
+      const resolvedGroup =
+        directGroupData ??
+        allGroups.find((candidate) => candidate.stackIds?.includes(stackId)) ??
+        null;
       const speciesWithImages = speciesData.filter(
         (item) =>
           getSpeciesImagesWithUrls(item.data, item.quizImageIds).length > 0,
       );
-      const resolvedGroup =
-        groupsData.find((item) => item.stackIds?.includes(stackId)) ?? null;
       setStack(stackData);
       setGroup(resolvedGroup);
       setSpecies(speciesWithImages);
@@ -893,7 +899,7 @@ export default function QuizPage() {
     : "Quiz";
   const groupName = group
     ? getLocalizedText(group.data.name, preferredLanguage)
-    : getLocalizedText(stack?.data.pinkka?.name, preferredLanguage);
+    : "";
 
   if (loading) {
     return (
