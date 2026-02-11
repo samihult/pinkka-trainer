@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ProtectedRoute } from "@/components/protected-route";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -37,8 +37,10 @@ import {
   updateStack,
   deleteGroup,
   deleteStack,
+  getImportedPinkkaGroups,
   reorderItems,
   updateGroupStackOrder,
+  type ImportedPinkkaGroupEntry,
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText, MultilingualText } from "@/lib/pinkka/pinkka-api";
@@ -50,6 +52,9 @@ export default function ManagePage() {
 
   const [groups, setGroups] = useState<Group[]>([]);
   const [stacks, setStacks] = useState<{ [key: string]: Stack[] }>({});
+  const [importedPinkkaGroups, setImportedPinkkaGroups] = useState<
+    ImportedPinkkaGroupEntry[]
+  >([]);
   const [loading, setLoading] = useState(true);
 
   // Group dialog state
@@ -84,11 +89,55 @@ export default function ManagePage() {
     null,
   );
 
-  useEffect(() => {
-    void loadData();
-  }, [user]);
+  const buildLegacyImportedPinkkaGroupEntries = useCallback(
+    (sourceGroups: Group[]): ImportedPinkkaGroupEntry[] => {
+      const results = sourceGroups
+        .filter(
+          (group) =>
+            Boolean(group.importId) &&
+            group.data.entityType === "pinkka" &&
+            typeof group.data.id === "number",
+        )
+        .map((group) => ({
+          groupId: group.data.id,
+          entity: group.data,
+          stackCount: group.stackIds?.length ?? 0,
+          isIncomplete: false,
+        }));
 
-  const loadData = async () => {
+      results.sort((left, right) => left.groupId - right.groupId);
+      return results;
+    },
+    [],
+  );
+
+  const loadImportedPinkkaGroupEntries = useCallback(
+    async (fallbackGroups: Group[] = []) => {
+      if (!user) {
+        setImportedPinkkaGroups([]);
+        return;
+      }
+
+      try {
+        const importedPinkkaGroupsData = await getImportedPinkkaGroups();
+        if (importedPinkkaGroupsData.length > 0) {
+          setImportedPinkkaGroups(importedPinkkaGroupsData);
+          return;
+        }
+        setImportedPinkkaGroups(
+          buildLegacyImportedPinkkaGroupEntries(fallbackGroups),
+        );
+      } catch (error) {
+        logFirestoreError("Failed to load imported Pinkka groups", error);
+        setImportedPinkkaGroups(
+          buildLegacyImportedPinkkaGroupEntries(fallbackGroups),
+        );
+      }
+    },
+    [buildLegacyImportedPinkkaGroupEntries, user],
+  );
+
+  const loadData = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -97,6 +146,7 @@ export default function ManagePage() {
         getStacks(undefined, user.uid, { includeHidden: true }),
       ]);
       setGroups(groupsData);
+      await loadImportedPinkkaGroupEntries(groupsData);
 
       const stackById = new Map(allStacks.map((stack) => [stack.id, stack]));
       const stacksData = groupsData.reduce<{ [key: string]: Stack[] }>(
@@ -112,6 +162,7 @@ export default function ManagePage() {
       setStacks(stacksData);
     } catch (error) {
       logFirestoreError("Failed to load groups/stacks", error);
+      setImportedPinkkaGroups([]);
       toast({
         title: "Error",
         description: "Failed to load data",
@@ -120,7 +171,17 @@ export default function ManagePage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [loadImportedPinkkaGroupEntries, toast, user]);
+
+  useEffect(() => {
+    void loadData();
+  }, [loadData]);
+
+  const handleOpenPinkkaGroupSelector = useCallback(() => {
+    void loadImportedPinkkaGroupEntries(groups).finally(() =>
+      setShowPinkkaGroupSelector(true),
+    );
+  }, [groups, loadImportedPinkkaGroupEntries]);
 
   const buildLocalizedValue = (values: {
     fi?: string;
@@ -134,31 +195,20 @@ export default function ManagePage() {
     return Object.keys(nextValue).length > 0 ? nextValue : {};
   };
 
-  const importedPinkkaGroups = useMemo(
-    () =>
-      groups.filter(
-        (group) =>
-          Boolean(group.importId) &&
-          group.ownerId === user?.uid &&
-          group.data.entityType === "pinkka",
-      ),
-    [groups, user?.uid],
-  );
-
   const importedGroupOptions = useMemo(
     () =>
       importedPinkkaGroups.map((group) => {
-        const stackCount = group.stackIds?.length ?? 0;
+        const stackCount = group.stackCount;
         const stackDescription =
           stackCount === 1 ? "1 stack" : `${stackCount} stacks`;
         const label =
-          getLocalizedText(group.data.name, "fi") ||
-          getLocalizedText(group.data.name, "en") ||
-          getLocalizedText(group.data.name, "sv") ||
-          `Group ${group.data.id}`;
+          getLocalizedText(group.entity.name, "fi") ||
+          getLocalizedText(group.entity.name, "en") ||
+          getLocalizedText(group.entity.name, "sv") ||
+          `Group ${group.groupId}`;
 
         return {
-          id: group.id,
+          id: String(group.groupId),
           label,
           description: stackDescription,
         };
@@ -302,7 +352,7 @@ export default function ManagePage() {
   const handleCreateGroupFromPinkka = async (sourceGroupId: string) => {
     if (!user) return;
     const sourceGroup = importedPinkkaGroups.find(
-      (group) => group.id === sourceGroupId,
+      (group) => String(group.groupId) === sourceGroupId,
     );
 
     if (!sourceGroup) {
@@ -315,13 +365,27 @@ export default function ManagePage() {
     }
 
     try {
-      await createGroup({
-        data: sourceGroup.data,
-        stackIds: sourceGroup.stackIds ?? [],
+      const createdGroupId = await createGroup({
+        data: sourceGroup.entity,
+        stackIds: [],
         ownerId: user.uid,
         order: groups.length,
         isHidden: false,
       });
+      const sourceStacks = [...(sourceGroup.entity.subPinkkas ?? [])].sort(
+        (left, right) => left.orderNo - right.orderNo,
+      );
+      for (const sourceStack of sourceStacks) {
+        await createStack(
+          {
+            data: sourceStack,
+            speciesIds: [],
+            ownerId: user.uid,
+            isHidden: false,
+          },
+          [createdGroupId],
+        );
+      }
 
       setShowPinkkaGroupSelector(false);
       toast({
@@ -573,7 +637,7 @@ export default function ManagePage() {
                   Blank
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onSelect={() => setShowPinkkaGroupSelector(true)}
+                  onSelect={handleOpenPinkkaGroupSelector}
                 >
                   From Pinkka
                 </DropdownMenuItem>

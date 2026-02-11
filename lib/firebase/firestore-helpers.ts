@@ -94,6 +94,18 @@ export interface PinkkaImportStatus {
   isIncomplete: boolean;
 }
 
+/** Imported Pinkka group entry available for creating editable groups. */
+export interface ImportedPinkkaGroupEntry {
+  /** Numeric Pinkka group id. */
+  groupId: number;
+  /** Original Pinkka group payload. */
+  entity: PinkkaGroup;
+  /** Number of stacks in the imported group payload. */
+  stackCount: number;
+  /** Whether the imported group is currently incomplete. */
+  isIncomplete: boolean;
+}
+
 /** User-facing message for manual interruption. */
 export const PINKKA_IMPORT_INTERRUPTED_ERROR_MESSAGE =
   "Pinkka import interrupted.";
@@ -359,6 +371,45 @@ function getPinkkaImportStatusFromDocData(data: unknown): PinkkaImportStatus {
   const importStarted = hasImportStartedFlag(data);
 
   return importStarted ? IMPORTED_INCOMPLETE_STATUS : IMPORTED_COMPLETE_STATUS;
+}
+
+/** List fully imported Pinkka groups from the pinkka hierarchy. */
+export async function getImportedPinkkaGroups(): Promise<
+  ImportedPinkkaGroupEntry[]
+> {
+  const snapshot = await getDocs(collection(db, PINKKA_COLLECTION));
+  const results: ImportedPinkkaGroupEntry[] = [];
+
+  for (const docSnapshot of snapshot.docs) {
+    const status = getPinkkaImportStatusFromDocData(docSnapshot.data());
+    if (!status.isImported) {
+      continue;
+    }
+
+    const data = docSnapshot.data() as { entity?: unknown };
+    const entity = data.entity as PinkkaGroup | undefined;
+    if (!entity) {
+      continue;
+    }
+
+    const normalizedGroupId =
+      typeof entity.id === "number"
+        ? entity.id
+        : Number.parseInt(docSnapshot.id, 10);
+    if (!Number.isFinite(normalizedGroupId)) {
+      continue;
+    }
+
+    results.push({
+      groupId: normalizedGroupId,
+      entity,
+      stackCount: entity.subPinkkas?.length ?? 0,
+      isIncomplete: status.isIncomplete,
+    });
+  }
+
+  results.sort((left, right) => left.groupId - right.groupId);
+  return results;
 }
 
 /** Fetch import state for Pinkka groups in batch. */
