@@ -117,6 +117,14 @@ export interface ImportedPinkkaSpeciesEntry {
   entity: PinkkaSpeciesDetail;
 }
 
+/** Imported Pinkka stack entry available for creating editable stacks. */
+export interface ImportedPinkkaStackEntry {
+  /** Numeric Pinkka stack id. */
+  stackId: number;
+  /** Original Pinkka stack payload. */
+  entity: PinkkaSubStack;
+}
+
 /** Result summary for creating editable content from one imported Pinkka group. */
 export interface CreateGroupFromPinkkaImportResult {
   /** Created editable group id. */
@@ -542,6 +550,42 @@ export async function getImportedPinkkaSpeciesEntries(
 
   results.sort((left, right) =>
     left.entity.scientificName.localeCompare(right.entity.scientificName),
+  );
+  return results;
+}
+
+/** List imported Pinkka stacks for a group from the pinkka hierarchy. */
+export async function getImportedPinkkaStackEntries(
+  groupId: number,
+): Promise<ImportedPinkkaStackEntry[]> {
+  const snapshot = await getDocs(
+    collection(db, PINKKA_COLLECTION, String(groupId), "stacks"),
+  );
+
+  const results: ImportedPinkkaStackEntry[] = [];
+  for (const docSnapshot of snapshot.docs) {
+    const data = docSnapshot.data() as { entity?: unknown };
+    const entity = data.entity as PinkkaSubStack | undefined;
+    if (!entity) {
+      continue;
+    }
+
+    const normalizedStackId =
+      typeof entity.id === "number"
+        ? entity.id
+        : Number.parseInt(docSnapshot.id, 10);
+    if (!Number.isFinite(normalizedStackId)) {
+      continue;
+    }
+
+    results.push({
+      stackId: normalizedStackId,
+      entity,
+    });
+  }
+
+  results.sort(
+    (left, right) => (left.entity.orderNo ?? 0) - (right.entity.orderNo ?? 0),
   );
   return results;
 }
@@ -1047,9 +1091,23 @@ export async function createEditableGroupFromImportedPinkka(params: {
     },
   });
 
-  const sourceStacks = [...(params.sourceGroup.entity.subPinkkas ?? [])].sort(
-    (left, right) => left.orderNo - right.orderNo,
+  const importedStackEntries = await getImportedPinkkaStackEntries(
+    params.sourceGroup.groupId,
   );
+  const importedStackById = new Map<number, PinkkaSubStack>(
+    importedStackEntries.map((entry) => [entry.stackId, entry.entity]),
+  );
+  const groupStackById = new Map<number, PinkkaSubStack>(
+    (params.sourceGroup.entity.subPinkkas ?? []).map((stack) => [stack.id, stack]),
+  );
+  const mergedStackIds = new Set<number>([
+    ...groupStackById.keys(),
+    ...importedStackById.keys(),
+  ]);
+  const sourceStacks = [...mergedStackIds]
+    .map((stackId) => importedStackById.get(stackId) ?? groupStackById.get(stackId))
+    .filter((stack): stack is PinkkaSubStack => stack !== undefined)
+    .sort((left, right) => (left.orderNo ?? 0) - (right.orderNo ?? 0));
   const importedSpeciesByStack = await Promise.all(
     sourceStacks.map(async (sourceStack) => ({
       stackId: sourceStack.id,
@@ -1089,64 +1147,66 @@ export async function createEditableGroupFromImportedPinkka(params: {
     });
 
     const importedSpecies = importedSpeciesMap.get(sourceStack.id) ?? [];
-    if (importedSpecies.length > 0) {
-      for (let speciesIndex = 0; speciesIndex < importedSpecies.length; speciesIndex += 1) {
-        const importedSpeciesEntry = importedSpecies[speciesIndex];
-        const speciesId = buildUrnId("species");
-        const mappedData = await mapPinkkaSpeciesDetailToContentData(
-          importedSpeciesEntry.entity,
-          { includeImages },
-        );
-        operations.push({
-          ref: doc(
-            db,
-            "groups",
-            groupId,
-            "stacks",
-            stackId,
-            "species",
-            speciesId,
-          ),
-          data: {
-            speciesId,
-            parentGroupId: groupId,
-            parentStackId: stackId,
-            data: mappedData,
-            pinkkaRef: {
-              groupId: params.sourceGroup.groupId,
-              stackId: sourceStack.id,
-              speciesId: importedSpeciesEntry.speciesId,
-            },
-            ownerId: params.ownerId,
-            order: speciesIndex,
-            isHidden: false,
-            createdAt: now,
-            updatedAt: now,
+    const importedSpeciesIds = new Set<number>();
+    let speciesIndex = 0;
+    for (const importedSpeciesEntry of importedSpecies) {
+      importedSpeciesIds.add(importedSpeciesEntry.speciesId);
+      const speciesId = buildUrnId("species");
+      const mappedData = await mapPinkkaSpeciesDetailToContentData(
+        importedSpeciesEntry.entity,
+        { includeImages },
+      );
+      operations.push({
+        ref: doc(
+          db,
+          "groups",
+          groupId,
+          "stacks",
+          stackId,
+          "species",
+          speciesId,
+        ),
+        data: {
+          speciesId,
+          parentGroupId: groupId,
+          parentStackId: stackId,
+          data: mappedData,
+          pinkkaRef: {
+            groupId: params.sourceGroup.groupId,
+            stackId: sourceStack.id,
+            speciesId: importedSpeciesEntry.speciesId,
           },
-        });
-        createdSpeciesCount += 1;
-      }
-      continue;
+          ownerId: params.ownerId,
+          order: speciesIndex,
+          isHidden: false,
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
+      createdSpeciesCount += 1;
+      speciesIndex += 1;
     }
 
-    const sourceSpeciesCards = sourceStack.speciesCards ?? [];
-    for (let speciesIndex = 0; speciesIndex < sourceSpeciesCards.length; speciesIndex += 1) {
-      const sourceSpeciesCard = sourceSpeciesCards[speciesIndex];
+    const sourceSpeciesCards = (sourceStack.speciesCards ?? []).filter(
+      (card) => !importedSpeciesIds.has(card.id),
+    );
+    for (const sourceSpeciesCard of sourceSpeciesCards) {
       const speciesId = buildUrnId("species");
+      const speciesData: Species["data"] = {
+        taxonId: sourceSpeciesCard.taxonId ?? "",
+        scientificName: sourceSpeciesCard.scientificName ?? "",
+        ...(sourceSpeciesCard.vernacularName
+          ? { vernacularName: sourceSpeciesCard.vernacularName }
+          : {}),
+        images: [],
+      };
       operations.push({
         ref: doc(db, "groups", groupId, "stacks", stackId, "species", speciesId),
         data: {
           speciesId,
           parentGroupId: groupId,
           parentStackId: stackId,
-          data: {
-            taxonId: sourceSpeciesCard.taxonId,
-            scientificName: sourceSpeciesCard.scientificName,
-            ...(sourceSpeciesCard.vernacularName
-              ? { vernacularName: sourceSpeciesCard.vernacularName }
-              : {}),
-            images: [],
-          },
+          data: speciesData,
           pinkkaRef: {
             groupId: params.sourceGroup.groupId,
             stackId: sourceStack.id,
@@ -1160,6 +1220,7 @@ export async function createEditableGroupFromImportedPinkka(params: {
         },
       });
       createdSpeciesCount += 1;
+      speciesIndex += 1;
     }
   }
 

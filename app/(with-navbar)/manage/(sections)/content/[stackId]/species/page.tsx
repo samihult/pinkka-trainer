@@ -35,7 +35,8 @@ export default function ManageSpeciesPage() {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const params = useParams();
-  const stackId = params.stackId as string;
+  const stackIdParam = params.stackId as string;
+  const stackId = decodeURIComponent(stackIdParam);
   const { toast } = useToast();
   const router = useRouter();
 

@@ -23,8 +23,8 @@ import type { Species, Stack } from "@/lib/types";
 export default function ManageSpeciesDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const stackId = params.stackId as string;
-  const speciesId = params.speciesId as string;
+  const stackId = decodeURIComponent(params.stackId as string);
+  const speciesId = decodeURIComponent(params.speciesId as string);
   const { user } = useAuth();
   const { toast } = useToast();
 
