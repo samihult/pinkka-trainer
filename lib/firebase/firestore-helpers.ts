@@ -15,6 +15,7 @@ import {
   Timestamp,
   writeBatch,
   type DocumentData,
+  type DocumentReference,
 } from "firebase/firestore";
 import {
   ref,
@@ -114,6 +115,16 @@ export interface ImportedPinkkaSpeciesEntry {
   speciesId: number;
   /** Original Pinkka species payload. */
   entity: PinkkaSpeciesDetail;
+}
+
+/** Result summary for creating editable content from one imported Pinkka group. */
+export interface CreateGroupFromPinkkaImportResult {
+  /** Created editable group id. */
+  groupId: string;
+  /** Number of created stacks. */
+  createdStackCount: number;
+  /** Number of created species. */
+  createdSpeciesCount: number;
 }
 
 /** User-facing message for manual interruption. */
@@ -240,6 +251,78 @@ function chunkArray<T>(items: T[], size: number): T[][] {
     chunks.push(items.slice(i, i + size));
   }
   return chunks;
+}
+
+const FIRESTORE_BATCH_WRITE_MAX = 450;
+
+type BatchSetOperation = {
+  ref: DocumentReference;
+  data: Record<string, unknown>;
+};
+
+async function commitSetOperationsInBatches(
+  operations: BatchSetOperation[],
+): Promise<void> {
+  for (const chunk of chunkArray(operations, FIRESTORE_BATCH_WRITE_MAX)) {
+    const batch = writeBatch(db);
+    for (const operation of chunk) {
+      batch.set(operation.ref, operation.data);
+    }
+    await batch.commit();
+  }
+}
+
+async function commitDeleteReferencesInBatches(
+  refs: DocumentReference[],
+): Promise<void> {
+  for (const chunk of chunkArray(refs, FIRESTORE_BATCH_WRITE_MAX)) {
+    const batch = writeBatch(db);
+    for (const refToDelete of chunk) {
+      batch.delete(refToDelete);
+    }
+    await batch.commit();
+  }
+}
+
+function collectSpeciesImageUrls(data: DocumentData): string[] {
+  const images = data.data?.images;
+  if (!Array.isArray(images)) {
+    return [];
+  }
+
+  const urls = new Set<string>();
+  for (const image of images) {
+    if (typeof image !== "object" || image === null) {
+      continue;
+    }
+
+    const imageUrls = (image as { urls?: Record<string, unknown> }).urls;
+    if (!imageUrls || typeof imageUrls !== "object") {
+      continue;
+    }
+
+    for (const value of Object.values(imageUrls)) {
+      if (typeof value === "string" && value.length > 0) {
+        urls.add(value);
+      }
+    }
+  }
+
+  return [...urls];
+}
+
+async function deleteSpeciesImagesFromDocumentData(
+  speciesData: DocumentData,
+): Promise<void> {
+  const imageUrls = collectSpeciesImageUrls(speciesData);
+  for (const imageUrl of imageUrls) {
+    try {
+      const imageRef = ref(storage, imageUrl);
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error("Error deleting image:", error);
+    }
+  }
 }
 
 function toUniqueIds(ids: number[]): number[] {
@@ -864,7 +947,19 @@ async function getStoredPinkkaImageDownloadUrl(params: {
 /** Convert Pinkka species detail payload to app species data with storage URLs. */
 export async function mapPinkkaSpeciesDetailToContentData(
   detail: PinkkaSpeciesDetail,
+  options?: { includeImages?: boolean },
 ): Promise<Species["data"]> {
+  const includeImages = options?.includeImages ?? true;
+  if (!includeImages) {
+    return {
+      taxonId: detail.taxonId,
+      scientificName: detail.scientificName,
+      ...(detail.vernacularName ? { vernacularName: detail.vernacularName } : {}),
+      ...(detail.description ? { description: detail.description } : {}),
+      images: [],
+    };
+  }
+
   const mappedImages: SpeciesImage[] = [];
   const sourceImages = detail.images ?? [];
 
@@ -914,6 +1009,166 @@ export async function mapPinkkaSpeciesDetailToContentData(
     ...(detail.vernacularName ? { vernacularName: detail.vernacularName } : {}),
     ...(detail.description ? { description: detail.description } : {}),
     images: mappedImages,
+  };
+}
+
+/**
+ * Create editable app content (group, stacks, species) from one imported
+ * Pinkka group using large Firestore write batches.
+ */
+export async function createEditableGroupFromImportedPinkka(params: {
+  sourceGroup: ImportedPinkkaGroupEntry;
+  ownerId: string;
+  order: number;
+  includeImages?: boolean;
+}): Promise<CreateGroupFromPinkkaImportResult> {
+  const includeImages = params.includeImages ?? false;
+  const groupId = buildUrnId("group");
+  const now = Timestamp.now();
+
+  const operations: BatchSetOperation[] = [];
+  operations.push({
+    ref: doc(db, "groups", groupId),
+    data: {
+      data: {
+        name: params.sourceGroup.entity.name,
+        ...(params.sourceGroup.entity.description
+          ? { description: params.sourceGroup.entity.description }
+          : {}),
+      },
+      pinkkaRef: {
+        groupId: params.sourceGroup.groupId,
+      },
+      ownerId: params.ownerId,
+      order: params.order,
+      isHidden: false,
+      createdAt: now,
+      updatedAt: now,
+    },
+  });
+
+  const sourceStacks = [...(params.sourceGroup.entity.subPinkkas ?? [])].sort(
+    (left, right) => left.orderNo - right.orderNo,
+  );
+  const importedSpeciesByStack = await Promise.all(
+    sourceStacks.map(async (sourceStack) => ({
+      stackId: sourceStack.id,
+      entries: await getImportedPinkkaSpeciesEntries(
+        params.sourceGroup.groupId,
+        sourceStack.id,
+      ),
+    })),
+  );
+  const importedSpeciesMap = new Map<number, ImportedPinkkaSpeciesEntry[]>(
+    importedSpeciesByStack.map((entry) => [entry.stackId, entry.entries]),
+  );
+
+  let createdSpeciesCount = 0;
+  for (let stackIndex = 0; stackIndex < sourceStacks.length; stackIndex += 1) {
+    const sourceStack = sourceStacks[stackIndex];
+    const stackId = buildUrnId("stack");
+    operations.push({
+      ref: doc(db, "groups", groupId, "stacks", stackId),
+      data: {
+        stackId,
+        parentGroupId: groupId,
+        data: {
+          name: sourceStack.name,
+          ...(sourceStack.description ? { description: sourceStack.description } : {}),
+        },
+        pinkkaRef: {
+          groupId: params.sourceGroup.groupId,
+          stackId: sourceStack.id,
+        },
+        ownerId: params.ownerId,
+        order: stackIndex,
+        isHidden: false,
+        createdAt: now,
+        updatedAt: now,
+      },
+    });
+
+    const importedSpecies = importedSpeciesMap.get(sourceStack.id) ?? [];
+    if (importedSpecies.length > 0) {
+      for (let speciesIndex = 0; speciesIndex < importedSpecies.length; speciesIndex += 1) {
+        const importedSpeciesEntry = importedSpecies[speciesIndex];
+        const speciesId = buildUrnId("species");
+        const mappedData = await mapPinkkaSpeciesDetailToContentData(
+          importedSpeciesEntry.entity,
+          { includeImages },
+        );
+        operations.push({
+          ref: doc(
+            db,
+            "groups",
+            groupId,
+            "stacks",
+            stackId,
+            "species",
+            speciesId,
+          ),
+          data: {
+            speciesId,
+            parentGroupId: groupId,
+            parentStackId: stackId,
+            data: mappedData,
+            pinkkaRef: {
+              groupId: params.sourceGroup.groupId,
+              stackId: sourceStack.id,
+              speciesId: importedSpeciesEntry.speciesId,
+            },
+            ownerId: params.ownerId,
+            order: speciesIndex,
+            isHidden: false,
+            createdAt: now,
+            updatedAt: now,
+          },
+        });
+        createdSpeciesCount += 1;
+      }
+      continue;
+    }
+
+    const sourceSpeciesCards = sourceStack.speciesCards ?? [];
+    for (let speciesIndex = 0; speciesIndex < sourceSpeciesCards.length; speciesIndex += 1) {
+      const sourceSpeciesCard = sourceSpeciesCards[speciesIndex];
+      const speciesId = buildUrnId("species");
+      operations.push({
+        ref: doc(db, "groups", groupId, "stacks", stackId, "species", speciesId),
+        data: {
+          speciesId,
+          parentGroupId: groupId,
+          parentStackId: stackId,
+          data: {
+            taxonId: sourceSpeciesCard.taxonId,
+            scientificName: sourceSpeciesCard.scientificName,
+            ...(sourceSpeciesCard.vernacularName
+              ? { vernacularName: sourceSpeciesCard.vernacularName }
+              : {}),
+            images: [],
+          },
+          pinkkaRef: {
+            groupId: params.sourceGroup.groupId,
+            stackId: sourceStack.id,
+            speciesId: sourceSpeciesCard.id,
+          },
+          ownerId: params.ownerId,
+          order: speciesIndex,
+          isHidden: false,
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
+      createdSpeciesCount += 1;
+    }
+  }
+
+  await commitSetOperationsInBatches(operations);
+
+  return {
+    groupId,
+    createdStackCount: sourceStacks.length,
+    createdSpeciesCount,
   };
 }
 
@@ -1623,11 +1878,53 @@ export async function updateGroup(
 
 /** Delete a group and its descendant stacks/species. */
 export async function deleteGroup(groupId: string): Promise<void> {
-  const stacks = await getStacks(groupId, undefined, { includeHidden: true });
-  for (const stack of stacks) {
-    await deleteStack(stack.id);
+  const groupRef = doc(db, "groups", groupId);
+  const groupDoc = await getDoc(groupRef);
+  if (!groupDoc.exists()) {
+    return;
   }
-  await deleteDoc(doc(db, "groups", groupId));
+
+  const groupData = groupDoc.data();
+  const groupIsPinkkaLinked = Boolean(groupData.pinkkaRef);
+  const deletedStackIds = new Set<string>();
+  const refsToDelete: DocumentReference[] = [];
+  const speciesImageDeletionTasks: Promise<void>[] = [];
+
+  const nestedStacksSnapshot = await getDocs(
+    collection(db, "groups", groupId, "stacks"),
+  );
+  for (const stackDoc of nestedStacksSnapshot.docs) {
+    deletedStackIds.add(stackDoc.id);
+    const stackIsPinkkaLinked =
+      groupIsPinkkaLinked || Boolean(stackDoc.data().pinkkaRef);
+    const speciesSnapshot = await getDocs(
+      collection(db, "groups", groupId, "stacks", stackDoc.id, "species"),
+    );
+    for (const speciesDoc of speciesSnapshot.docs) {
+      const speciesData = speciesDoc.data();
+      const speciesIsPinkkaLinked =
+        stackIsPinkkaLinked || Boolean(speciesData.pinkkaRef);
+      if (!speciesIsPinkkaLinked) {
+        speciesImageDeletionTasks.push(
+          deleteSpeciesImagesFromDocumentData(speciesData),
+        );
+      }
+      refsToDelete.push(speciesDoc.ref);
+    }
+    refsToDelete.push(stackDoc.ref);
+  }
+
+  const legacyStackIds = (groupData.stackIds ?? []) as string[];
+  for (const legacyStackId of legacyStackIds) {
+    if (deletedStackIds.has(legacyStackId)) {
+      continue;
+    }
+    await deleteStack(legacyStackId);
+  }
+
+  await Promise.all(speciesImageDeletionTasks);
+  refsToDelete.push(groupRef);
+  await commitDeleteReferencesInBatches(refsToDelete);
 }
 
 // Stack operations
@@ -1772,14 +2069,37 @@ export async function updateStack(
 }
 
 /** Delete a stack document and all descendant species. */
-export async function deleteStack(stackId: string): Promise<void> {
-  const nestedLocation = await resolveNestedStackLocation(stackId);
+export async function deleteStack(
+  stackId: string,
+  options?: { groupId?: string },
+): Promise<void> {
+  let nestedLocation: ResolvedStackLocation | null = null;
+  if (options?.groupId) {
+    const nestedStackDoc = await getDoc(
+      doc(db, "groups", options.groupId, "stacks", stackId),
+    );
+    if (nestedStackDoc.exists()) {
+      nestedLocation = {
+        groupId: options.groupId,
+        stackId: nestedStackDoc.id,
+        doc: nestedStackDoc as FirestoreDocLike & { ref: ReturnType<typeof doc> },
+      };
+    }
+  }
+
+  if (!nestedLocation) {
+    nestedLocation = await resolveNestedStackLocation(stackId);
+  }
+
   if (nestedLocation) {
     const speciesSnapshot = await getDocs(
       collection(db, "groups", nestedLocation.groupId, "stacks", stackId, "species"),
     );
     for (const speciesDoc of speciesSnapshot.docs) {
-      await deleteSpecies(speciesDoc.id);
+      await deleteSpecies(speciesDoc.id, {
+        groupId: nestedLocation.groupId,
+        stackId,
+      });
     }
     await deleteDoc(doc(db, "groups", nestedLocation.groupId, "stacks", stackId));
   }
@@ -2857,8 +3177,37 @@ export async function updateSpecies(
 }
 
 /** Delete a species and its stored images. */
-export async function deleteSpecies(speciesId: string): Promise<void> {
-  const nestedLocation = await resolveNestedSpeciesLocation(speciesId);
+export async function deleteSpecies(
+  speciesId: string,
+  options?: { groupId?: string; stackId?: string },
+): Promise<void> {
+  let nestedLocation: ResolvedSpeciesLocation | null = null;
+  if (options?.groupId && options?.stackId) {
+    const nestedSpeciesDoc = await getDoc(
+      doc(
+        db,
+        "groups",
+        options.groupId,
+        "stacks",
+        options.stackId,
+        "species",
+        speciesId,
+      ),
+    );
+    if (nestedSpeciesDoc.exists()) {
+      nestedLocation = {
+        groupId: options.groupId,
+        stackId: options.stackId,
+        speciesId: nestedSpeciesDoc.id,
+        doc: nestedSpeciesDoc as FirestoreDocLike & { ref: ReturnType<typeof doc> },
+      };
+    }
+  }
+
+  if (!nestedLocation) {
+    nestedLocation = await resolveNestedSpeciesLocation(speciesId);
+  }
+
   const speciesDoc = nestedLocation
     ? await getDoc(
         doc(
@@ -2874,19 +3223,17 @@ export async function deleteSpecies(speciesId: string): Promise<void> {
     : await getDoc(doc(db, "species", speciesId));
 
   if (speciesDoc.exists()) {
-    // Delete all images from storage
-    const images = speciesDoc.data().data?.images || [];
-    for (const image of images) {
-      try {
-        const urls = image.urls || {};
-        const urlList = Object.values(urls).filter(Boolean) as string[];
-        for (const url of urlList) {
-          const imageRef = ref(storage, url);
-          await deleteObject(imageRef);
-        }
-      } catch (error) {
-        console.error("Error deleting image:", error);
-      }
+    const speciesData = speciesDoc.data();
+    let isLinkedToPinkka = Boolean(speciesData.pinkkaRef);
+
+    if (!isLinkedToPinkka && nestedLocation) {
+      const nestedStackDoc = await getDoc(
+        doc(db, "groups", nestedLocation.groupId, "stacks", nestedLocation.stackId),
+      );
+      const nestedGroupDoc = await getDoc(doc(db, "groups", nestedLocation.groupId));
+      isLinkedToPinkka =
+        Boolean(nestedStackDoc.data()?.pinkkaRef) ||
+        Boolean(nestedGroupDoc.data()?.pinkkaRef);
     }
 
     // Legacy unlink for historical stacks still using speciesIds arrays.
@@ -2895,6 +3242,29 @@ export async function deleteSpecies(speciesId: string): Promise<void> {
       where("speciesIds", "array-contains", speciesId),
     );
     const stackSnapshot = await getDocs(stackQuery);
+    if (!isLinkedToPinkka) {
+      isLinkedToPinkka = stackSnapshot.docs.some((stackDoc) =>
+        Boolean(stackDoc.data().pinkkaRef),
+      );
+    }
+
+    if (!isLinkedToPinkka) {
+      // Only local content images are removed. Pinkka-linked images remain.
+      const images = speciesData.data?.images || [];
+      for (const image of images) {
+        try {
+          const urls = image.urls || {};
+          const urlList = Object.values(urls).filter(Boolean) as string[];
+          for (const url of urlList) {
+            const imageRef = ref(storage, url);
+            await deleteObject(imageRef);
+          }
+        } catch (error) {
+          console.error("Error deleting image:", error);
+        }
+      }
+    }
+
     for (const stackDoc of stackSnapshot.docs) {
       const speciesIds = stackDoc.data().speciesIds || [];
       await updateDoc(doc(db, "stacks", stackDoc.id), {

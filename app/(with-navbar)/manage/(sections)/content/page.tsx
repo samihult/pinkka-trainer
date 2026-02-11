@@ -33,16 +33,14 @@ import {
   getStacks,
   createGroup,
   createStack,
+  createEditableGroupFromImportedPinkka,
   updateGroup,
   updateStack,
   deleteGroup,
   deleteStack,
   getImportedPinkkaGroups,
-  getImportedPinkkaSpeciesEntries,
-  mapPinkkaSpeciesDetailToContentData,
   reorderItems,
   updateGroupStackOrder,
-  createSpecies,
   type ImportedPinkkaGroupEntry,
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, LocalizedText, Stack } from "@/lib/types";
@@ -337,101 +335,17 @@ export default function ManagePage() {
     }
 
     try {
-      const createdGroupId = await createGroup({
-        data: {
-          name: sourceGroup.entity.name,
-          ...(sourceGroup.entity.description
-            ? { description: sourceGroup.entity.description }
-            : {}),
-        },
-        pinkkaRef: {
-          groupId: sourceGroup.groupId,
-        },
+      const creationResult = await createEditableGroupFromImportedPinkka({
+        sourceGroup,
         ownerId: user.uid,
         order: groups.length,
-        isHidden: false,
+        includeImages: false,
       });
-      const sourceStacks = [...(sourceGroup.entity.subPinkkas ?? [])].sort(
-        (left, right) => left.orderNo - right.orderNo,
-      );
-      for (const sourceStack of sourceStacks) {
-        const createdStackId = await createStack(
-          {
-            data: {
-              name: sourceStack.name,
-              ...(sourceStack.description
-                ? { description: sourceStack.description }
-                : {}),
-            },
-            pinkkaRef: {
-              groupId: sourceGroup.groupId,
-              stackId: sourceStack.id,
-            },
-            ownerId: user.uid,
-            isHidden: false,
-          },
-          [createdGroupId],
-        );
-
-        const importedSpecies = await getImportedPinkkaSpeciesEntries(
-          sourceGroup.groupId,
-          sourceStack.id,
-        );
-
-        if (importedSpecies.length > 0) {
-          for (let index = 0; index < importedSpecies.length; index += 1) {
-            const sourceSpecies = importedSpecies[index];
-            const mappedSpeciesData = await mapPinkkaSpeciesDetailToContentData(
-              sourceSpecies.entity,
-            );
-            await createSpecies(
-              {
-                data: mappedSpeciesData,
-                pinkkaRef: {
-                  groupId: sourceGroup.groupId,
-                  stackId: sourceStack.id,
-                  speciesId: sourceSpecies.speciesId,
-                },
-                ownerId: user.uid,
-                isHidden: false,
-                order: index,
-              },
-              [createdStackId],
-            );
-          }
-          continue;
-        }
-
-        for (let index = 0; index < (sourceStack.speciesCards ?? []).length; index += 1) {
-          const sourceSpeciesCard = (sourceStack.speciesCards ?? [])[index];
-          await createSpecies(
-            {
-              data: {
-                taxonId: sourceSpeciesCard.taxonId,
-                scientificName: sourceSpeciesCard.scientificName,
-                ...(sourceSpeciesCard.vernacularName
-                  ? { vernacularName: sourceSpeciesCard.vernacularName }
-                  : {}),
-                images: [],
-              },
-              pinkkaRef: {
-                groupId: sourceGroup.groupId,
-                stackId: sourceStack.id,
-                speciesId: sourceSpeciesCard.id,
-              },
-              ownerId: user.uid,
-              isHidden: false,
-              order: index,
-            },
-            [createdStackId],
-          );
-        }
-      }
 
       setShowPinkkaGroupSelector(false);
       toast({
         title: "Success",
-        description: "Group created from Pinkka import",
+        description: `Group created from Pinkka import (${creationResult.createdStackCount} stacks, ${creationResult.createdSpeciesCount} species)`,
       });
       void loadData();
     } catch (error) {
@@ -725,7 +639,7 @@ export default function ManagePage() {
           open={showPinkkaGroupSelector}
           onOpenChange={setShowPinkkaGroupSelector}
           title="Create Group From Pinkka"
-          description="Select an imported Pinkka group to create a new editable group with the same stacks."
+          description="Select an imported Pinkka group to create a new editable group with the same stacks and species."
           options={importedGroupOptions}
           confirmLabel="Create Group"
           emptyMessage="No imported Pinkka groups found. Import groups first from the Pinkka tab."
