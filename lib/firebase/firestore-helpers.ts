@@ -146,6 +146,7 @@ type PinkkaImportProgressContext = {
 type PinkkaImportControlOptions = {
   onProgress?: PinkkaImportProgressCallback;
   shouldInterrupt?: () => boolean;
+  force?: boolean;
 };
 
 function createPinkkaImportProgressContext(params: {
@@ -1372,13 +1373,23 @@ export async function importPinkkaGroup(
     importId?: string;
     upsert?: boolean;
     progressContext?: PinkkaImportProgressContext;
+    force?: boolean;
   },
 ): Promise<PinkkaImportResult | null> {
   void ownerId;
   void options?.upsert;
+  const forceImport = options?.force === true;
   assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
+
+  if (!forceImport) {
+    const groupStatus = await getPinkkaGroupImportStatusMap([groupId]);
+    if (groupStatus[groupId] === true) {
+      return null;
+    }
+  }
+
   const group = await fetchPinkkaGroupWithStacks(groupId);
   if (!group) return null;
   const groupName = getPinkkaGroupDisplayName(group);
@@ -1387,21 +1398,40 @@ export async function importPinkkaGroup(
   const stackEntries = [...(group.subPinkkas ?? [])].sort(
     (a, b) => a.orderNo - b.orderNo,
   );
+  const stackStatusById = forceImport
+    ? {}
+    : await getPinkkaStackImportStatusMap(
+        group.id,
+        stackEntries.map((stack) => stack.id),
+      );
+  const importableStackEntries = stackEntries.filter(
+    (stack) => stackStatusById[stack.id] !== true,
+  );
   if (options?.progressContext?.mode === "groups") {
-    options.progressContext.progress.stacks.total += stackEntries.length;
+    options.progressContext.progress.stacks.total += importableStackEntries.length;
     emitPinkkaImportProgress(options.progressContext);
   }
-  const stackIds = stackEntries.map((stack) => String(stack.id));
+  const stackIds = importableStackEntries.map((stack) => String(stack.id));
   const speciesIds: string[] = [];
 
   await writePinkkaEntity(getPinkkaGroupPath(group.id), group);
   pinkkaGroupImportStatusCache.set(group.id, true);
 
-  for (const stackEntry of stackEntries) {
+  for (const stackEntry of importableStackEntries) {
     assertPinkkaImportNotInterrupted(options?.progressContext);
     const stackDetail = await fetchPinkkaSubStack(stackEntry.id);
     const stackData = stackDetail ?? stackEntry;
     const stackSpeciesCards = stackData.speciesCards ?? [];
+    const speciesStatusById = forceImport
+      ? {}
+      : await getPinkkaSpeciesImportStatusMap(
+          group.id,
+          stackData.id,
+          stackSpeciesCards.map((card) => card.id),
+        );
+    const importableSpeciesCards = stackSpeciesCards.filter(
+      (card) => speciesStatusById[card.id] !== true,
+    );
     const stackName = getPinkkaStackDisplayName(stackData);
     updateCurrentEntityProgress(
       options?.progressContext,
@@ -1410,7 +1440,8 @@ export async function importPinkkaGroup(
       stackData.image ? 1 : 0,
     );
     if (options?.progressContext?.mode === "groups") {
-      options.progressContext.progress.species.total += stackSpeciesCards.length;
+      options.progressContext.progress.species.total +=
+        importableSpeciesCards.length;
       emitPinkkaImportProgress(options.progressContext);
     }
 
@@ -1426,7 +1457,7 @@ export async function importPinkkaGroup(
     pinkkaStackImportStatusCache.set(stackData.id, true);
     markStackCompleted(options?.progressContext, group.id, stackData.id, stackName);
 
-    for (const card of stackSpeciesCards) {
+    for (const card of importableSpeciesCards) {
       assertPinkkaImportNotInterrupted(options?.progressContext);
       const speciesDetail = await fetchPinkkaSpecies(card.id);
       if (!speciesDetail) continue;
@@ -1476,10 +1507,12 @@ export async function importPinkkaStack(
     upsert?: boolean;
     groupId?: number;
     progressContext?: PinkkaImportProgressContext;
+    force?: boolean;
   },
 ): Promise<PinkkaImportResult | null> {
   void ownerId;
   void options?.upsert;
+  const forceImport = options?.force === true;
   assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
@@ -1488,6 +1521,14 @@ export async function importPinkkaStack(
   const resolvedGroupId =
     options?.groupId ?? (await resolveGroupIdForStack(stackId, stackDetail));
   if (resolvedGroupId === null) return null;
+  if (!forceImport) {
+    const stackStatus = await getPinkkaStackImportStatusMap(resolvedGroupId, [
+      stackId,
+    ]);
+    if (stackStatus[stackId] === true) {
+      return null;
+    }
+  }
 
   const hierarchy = await writePinkkaGroupAndStackHierarchy({
     groupId: resolvedGroupId,
@@ -1502,6 +1543,16 @@ export async function importPinkkaStack(
   pinkkaStackImportStatusCache.set(stackDetail.id, true);
   const speciesIds: string[] = [];
   const stackSpeciesCards = hierarchy.stack.speciesCards ?? [];
+  const speciesStatusById = forceImport
+    ? {}
+    : await getPinkkaSpeciesImportStatusMap(
+        resolvedGroupId,
+        hierarchy.stack.id,
+        stackSpeciesCards.map((card) => card.id),
+      );
+  const importableSpeciesCards = stackSpeciesCards.filter(
+    (card) => speciesStatusById[card.id] !== true,
+  );
   const stackName = getPinkkaStackDisplayName(hierarchy.stack);
   updateCurrentEntityProgress(
     options?.progressContext,
@@ -1510,7 +1561,8 @@ export async function importPinkkaStack(
     hierarchy.stack.image ? 1 : 0,
   );
   if (options?.progressContext?.mode === "stacks") {
-    options.progressContext.progress.species.total += stackSpeciesCards.length;
+    options.progressContext.progress.species.total +=
+      importableSpeciesCards.length;
     emitPinkkaImportProgress(options.progressContext);
   }
 
@@ -1525,7 +1577,7 @@ export async function importPinkkaStack(
     hierarchy.stack.id,
     stackName,
   );
-  for (const card of stackSpeciesCards) {
+  for (const card of importableSpeciesCards) {
     assertPinkkaImportNotInterrupted(options?.progressContext);
     const speciesDetail = await fetchPinkkaSpecies(card.id);
     if (!speciesDetail) continue;
@@ -1572,12 +1624,24 @@ export async function importPinkkaStacks(
     groupId?: number;
     onProgress?: PinkkaImportProgressCallback;
     shouldInterrupt?: () => boolean;
+    force?: boolean;
   },
 ): Promise<PinkkaImportResult[]> {
   const resolvedImportId =
     importId ?? doc(collection(db, "imports")).id;
   const shouldUpsert = Boolean(importId);
   const results: PinkkaImportResult[] = [];
+  const forceImport = options?.force === true;
+  const stackIdsToImport =
+    !forceImport && options?.groupId !== undefined
+      ? (
+          await getPinkkaStackImportStatusMap(options.groupId, stackIds)
+        )
+      : null;
+  const filteredStackIds =
+    stackIdsToImport === null
+      ? stackIds
+      : stackIds.filter((stackId) => stackIdsToImport[stackId] !== true);
   const progressContext = createPinkkaImportProgressContext({
     mode: "stacks",
     onProgress: options?.onProgress,
@@ -1587,13 +1651,13 @@ export async function importPinkkaStacks(
         total: options?.groupId !== undefined ? 1 : 0,
       },
       stacks: {
-        total: stackIds.length,
+        total: filteredStackIds.length,
       },
     },
   });
   emitPinkkaImportProgress(progressContext);
 
-  for (const stackId of stackIds) {
+  for (const stackId of filteredStackIds) {
     assertPinkkaImportNotInterrupted(progressContext);
     const result = await importPinkkaStack(
       stackId,
@@ -1603,6 +1667,7 @@ export async function importPinkkaStacks(
         upsert: shouldUpsert,
         groupId: options?.groupId,
         progressContext,
+        force: forceImport,
       },
     );
     if (result) {
@@ -1626,10 +1691,12 @@ export async function importPinkkaSpecies(
     groupId?: number;
     stackId?: number;
     progressContext?: PinkkaImportProgressContext;
+    force?: boolean;
   },
 ): Promise<PinkkaImportResult | null> {
   void ownerId;
   void options?.upsert;
+  const forceImport = options?.force === true;
   assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
@@ -1640,6 +1707,16 @@ export async function importPinkkaSpecies(
       ? { groupId: options.groupId, stackId: options.stackId }
       : await resolveSpeciesLocation(speciesId);
   if (!speciesLocation) return null;
+  if (!forceImport) {
+    const speciesStatus = await getPinkkaSpeciesImportStatusMap(
+      speciesLocation.groupId,
+      speciesLocation.stackId,
+      [speciesId],
+    );
+    if (speciesStatus[speciesId] === true) {
+      return null;
+    }
+  }
 
   const hierarchy = await writePinkkaGroupAndStackHierarchy({
     groupId: speciesLocation.groupId,
@@ -1714,12 +1791,28 @@ export async function importPinkkaSpeciesList(
     stackId?: number;
     onProgress?: PinkkaImportProgressCallback;
     shouldInterrupt?: () => boolean;
+    force?: boolean;
   },
 ): Promise<PinkkaImportResult[]> {
   const resolvedImportId =
     importId ?? doc(collection(db, "imports")).id;
   const shouldUpsert = Boolean(importId);
   const results: PinkkaImportResult[] = [];
+  const forceImport = options?.force === true;
+  const speciesStatusById =
+    !forceImport &&
+    options?.groupId !== undefined &&
+    options?.stackId !== undefined
+      ? await getPinkkaSpeciesImportStatusMap(
+          options.groupId,
+          options.stackId,
+          speciesIds,
+        )
+      : null;
+  const filteredSpeciesIds =
+    speciesStatusById === null
+      ? speciesIds
+      : speciesIds.filter((speciesId) => speciesStatusById[speciesId] !== true);
   const progressContext = createPinkkaImportProgressContext({
     mode: "species",
     onProgress: options?.onProgress,
@@ -1732,13 +1825,13 @@ export async function importPinkkaSpeciesList(
         total: options?.stackId !== undefined ? 1 : 0,
       },
       species: {
-        total: speciesIds.length,
+        total: filteredSpeciesIds.length,
       },
     },
   });
   emitPinkkaImportProgress(progressContext);
 
-  for (const speciesId of speciesIds) {
+  for (const speciesId of filteredSpeciesIds) {
     assertPinkkaImportNotInterrupted(progressContext);
     const result = await importPinkkaSpecies(
       speciesId,
@@ -1749,6 +1842,7 @@ export async function importPinkkaSpeciesList(
         groupId: options?.groupId,
         stackId: options?.stackId,
         progressContext,
+        force: forceImport,
       },
     );
     if (result) {
@@ -1773,19 +1867,27 @@ export async function importPinkkaGroups(
     importId ?? doc(collection(db, "imports")).id;
   const shouldUpsert = Boolean(importId);
   const results: PinkkaImportResult[] = [];
+  const forceImport = options?.force === true;
+  const groupStatusById = forceImport
+    ? null
+    : await getPinkkaGroupImportStatusMap(groupIds);
+  const filteredGroupIds =
+    groupStatusById === null
+      ? groupIds
+      : groupIds.filter((groupId) => groupStatusById[groupId] !== true);
   const progressContext = createPinkkaImportProgressContext({
     mode: "groups",
     onProgress: options?.onProgress,
     shouldInterrupt: options?.shouldInterrupt,
     initialProgress: {
       groups: {
-        total: groupIds.length,
+        total: filteredGroupIds.length,
       },
     },
   });
   emitPinkkaImportProgress(progressContext);
 
-  for (const groupId of groupIds) {
+  for (const groupId of filteredGroupIds) {
     assertPinkkaImportNotInterrupted(progressContext);
     const result = await importPinkkaGroup(
       groupId,
@@ -1794,6 +1896,7 @@ export async function importPinkkaGroups(
         importId: resolvedImportId,
         upsert: shouldUpsert,
         progressContext,
+        force: forceImport,
       },
     );
     if (result) {
