@@ -1679,8 +1679,12 @@ export async function importPinkkaGroup(
     options?.importId ?? doc(collection(db, "imports")).id;
 
   if (!forceImport) {
-    const groupStatus = await getPinkkaGroupImportStatusMap([groupId]);
-    if (groupStatus[groupId] === true) {
+    const groupStatusMap = await getPinkkaGroupImportStateMap([groupId]);
+    const groupStatus = groupStatusMap[groupId];
+    if (
+      groupStatus?.isImported === true &&
+      groupStatus.isIncomplete !== true
+    ) {
       return null;
     }
   }
@@ -1694,13 +1698,16 @@ export async function importPinkkaGroup(
     (a, b) => a.orderNo - b.orderNo,
   );
   const stackStatusById = forceImport
-    ? {}
-    : await getPinkkaStackImportStatusMap(
+    ? null
+    : await getPinkkaStackImportStateMap(
         group.id,
         stackEntries.map((stack) => stack.id),
       );
   const importableStackEntries = stackEntries.filter(
-    (stack) => stackStatusById[stack.id] !== true,
+    (stack) =>
+      stackStatusById === null ||
+      stackStatusById[stack.id]?.isImported !== true ||
+      stackStatusById[stack.id]?.isIncomplete === true,
   );
   if (options?.progressContext?.mode === "groups") {
     options.progressContext.progress.stacks.total += importableStackEntries.length;
@@ -1719,14 +1726,17 @@ export async function importPinkkaGroup(
     await markPinkkaStackImportStarted(group.id, stackData.id);
     const stackSpeciesCards = stackData.speciesCards ?? [];
     const speciesStatusById = forceImport
-      ? {}
-      : await getPinkkaSpeciesImportStatusMap(
+      ? null
+      : await getPinkkaSpeciesImportStateMap(
           group.id,
           stackData.id,
           stackSpeciesCards.map((card) => card.id),
         );
     const importableSpeciesCards = stackSpeciesCards.filter(
-      (card) => speciesStatusById[card.id] !== true,
+      (card) =>
+        speciesStatusById === null ||
+        speciesStatusById[card.id]?.isImported !== true ||
+        speciesStatusById[card.id]?.isIncomplete === true,
     );
     const stackName = getPinkkaStackDisplayName(stackData);
     updateCurrentEntityProgress(
@@ -1823,10 +1833,14 @@ export async function importPinkkaStack(
     options?.groupId ?? (await resolveGroupIdForStack(stackId, stackDetail));
   if (resolvedGroupId === null) return null;
   if (!forceImport) {
-    const stackStatus = await getPinkkaStackImportStatusMap(resolvedGroupId, [
+    const stackStatusMap = await getPinkkaStackImportStateMap(resolvedGroupId, [
       stackId,
     ]);
-    if (stackStatus[stackId] === true) {
+    const stackStatus = stackStatusMap[stackId];
+    if (
+      stackStatus?.isImported === true &&
+      stackStatus.isIncomplete !== true
+    ) {
       return null;
     }
   }
@@ -1845,14 +1859,17 @@ export async function importPinkkaStack(
   const speciesIds: string[] = [];
   const stackSpeciesCards = hierarchy.stack.speciesCards ?? [];
   const speciesStatusById = forceImport
-    ? {}
-    : await getPinkkaSpeciesImportStatusMap(
+    ? null
+    : await getPinkkaSpeciesImportStateMap(
         resolvedGroupId,
         hierarchy.stack.id,
         stackSpeciesCards.map((card) => card.id),
       );
   const importableSpeciesCards = stackSpeciesCards.filter(
-    (card) => speciesStatusById[card.id] !== true,
+    (card) =>
+      speciesStatusById === null ||
+      speciesStatusById[card.id]?.isImported !== true ||
+      speciesStatusById[card.id]?.isIncomplete === true,
   );
   const stackName = getPinkkaStackDisplayName(hierarchy.stack);
   updateCurrentEntityProgress(
@@ -1947,16 +1964,18 @@ export async function importPinkkaStacks(
   const shouldUpsert = Boolean(importId);
   const results: PinkkaImportResult[] = [];
   const forceImport = options?.force === true;
-  const stackIdsToImport =
+  const stackStateById =
     !forceImport && options?.groupId !== undefined
-      ? (
-          await getPinkkaStackImportStatusMap(options.groupId, stackIds)
-        )
+      ? await getPinkkaStackImportStateMap(options.groupId, stackIds)
       : null;
   const filteredStackIds =
-    stackIdsToImport === null
+    stackStateById === null
       ? stackIds
-      : stackIds.filter((stackId) => stackIdsToImport[stackId] !== true);
+      : stackIds.filter(
+          (stackId) =>
+            stackStateById[stackId]?.isImported !== true ||
+            stackStateById[stackId]?.isIncomplete === true,
+        );
   const progressContext = createPinkkaImportProgressContext({
     mode: "stacks",
     onProgress: options?.onProgress,
@@ -2023,12 +2042,16 @@ export async function importPinkkaSpecies(
       : await resolveSpeciesLocation(speciesId);
   if (!speciesLocation) return null;
   if (!forceImport) {
-    const speciesStatus = await getPinkkaSpeciesImportStatusMap(
+    const speciesStatusMap = await getPinkkaSpeciesImportStateMap(
       speciesLocation.groupId,
       speciesLocation.stackId,
       [speciesId],
     );
-    if (speciesStatus[speciesId] === true) {
+    const speciesStatus = speciesStatusMap[speciesId];
+    if (
+      speciesStatus?.isImported === true &&
+      speciesStatus.isIncomplete !== true
+    ) {
       return null;
     }
   }
@@ -2137,7 +2160,7 @@ export async function importPinkkaSpeciesList(
     !forceImport &&
     options?.groupId !== undefined &&
     options?.stackId !== undefined
-      ? await getPinkkaSpeciesImportStatusMap(
+      ? await getPinkkaSpeciesImportStateMap(
           options.groupId,
           options.stackId,
           speciesIds,
@@ -2146,7 +2169,11 @@ export async function importPinkkaSpeciesList(
   const filteredSpeciesIds =
     speciesStatusById === null
       ? speciesIds
-      : speciesIds.filter((speciesId) => speciesStatusById[speciesId] !== true);
+      : speciesIds.filter(
+          (speciesId) =>
+            speciesStatusById[speciesId]?.isImported !== true ||
+            speciesStatusById[speciesId]?.isIncomplete === true,
+        );
   const progressContext = createPinkkaImportProgressContext({
     mode: "species",
     onProgress: options?.onProgress,
@@ -2204,11 +2231,15 @@ export async function importPinkkaGroups(
   const forceImport = options?.force === true;
   const groupStatusById = forceImport
     ? null
-    : await getPinkkaGroupImportStatusMap(groupIds);
+    : await getPinkkaGroupImportStateMap(groupIds);
   const filteredGroupIds =
     groupStatusById === null
       ? groupIds
-      : groupIds.filter((groupId) => groupStatusById[groupId] !== true);
+      : groupIds.filter(
+          (groupId) =>
+            groupStatusById[groupId]?.isImported !== true ||
+            groupStatusById[groupId]?.isIncomplete === true,
+        );
   const progressContext = createPinkkaImportProgressContext({
     mode: "groups",
     onProgress: options?.onProgress,
