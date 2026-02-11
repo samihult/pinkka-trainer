@@ -359,6 +359,7 @@ export default function PinkkaContentPage() {
             stackId: selectedStackId ?? undefined,
             onProgress: setImportProgress,
             shouldInterrupt: () => interruptRequestedRef.current,
+            force: true,
           },
         );
       } else if (importTarget === "stack") {
@@ -370,6 +371,7 @@ export default function PinkkaContentPage() {
             groupId: selectedGroupId ?? undefined,
             onProgress: setImportProgress,
             shouldInterrupt: () => interruptRequestedRef.current,
+            force: true,
           },
         );
       } else {
@@ -380,6 +382,7 @@ export default function PinkkaContentPage() {
           {
             onProgress: setImportProgress,
             shouldInterrupt: () => interruptRequestedRef.current,
+            force: true,
           },
         );
       }

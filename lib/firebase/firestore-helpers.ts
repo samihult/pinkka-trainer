@@ -526,6 +526,7 @@ async function uploadPinkkaImageFromSource(params: {
   sourceUrl: string;
   progressContext?: PinkkaImportProgressContext;
   progressLevel?: "stacks" | "species";
+  forceDownload?: boolean;
 }): Promise<string | null> {
   const {
     pinkkaImageId,
@@ -533,10 +534,11 @@ async function uploadPinkkaImageFromSource(params: {
     sourceUrl,
     progressContext,
     progressLevel,
+    forceDownload,
   } = params;
   assertPinkkaImportNotInterrupted(progressContext);
-  const cached = pinkkaImportedImageUrlCache.get(sourceUrl);
-  if (cached) {
+  const cached = forceDownload ? undefined : pinkkaImportedImageUrlCache.get(sourceUrl);
+  if (cached !== undefined) {
     if (progressContext && progressLevel) {
       progressContext.progress[progressLevel].imageDownloadsCompleted += 1;
       emitPinkkaImportProgress(progressContext);
@@ -580,6 +582,7 @@ async function storePinkkaSpeciesImages(
   speciesId: number,
   detail: PinkkaSpeciesDetail,
   progressContext?: PinkkaImportProgressContext,
+  forceDownload = false,
 ): Promise<void> {
   const images = detail.images ?? [];
   for (let index = 0; index < images.length; index += 1) {
@@ -600,6 +603,7 @@ async function storePinkkaSpeciesImages(
       sourceUrl,
       progressContext,
       progressLevel: "species",
+      forceDownload,
     });
   }
 }
@@ -608,6 +612,7 @@ async function storePinkkaStackImage(
   stackId: number,
   stack: PinkkaSubStack,
   progressContext?: PinkkaImportProgressContext,
+  forceDownload = false,
 ): Promise<void> {
   assertPinkkaImportNotInterrupted(progressContext);
   const stackImage = stack.image;
@@ -630,6 +635,7 @@ async function storePinkkaStackImage(
     sourceUrl,
     progressContext,
     progressLevel: "stacks",
+    forceDownload,
   });
 }
 
@@ -1449,6 +1455,7 @@ export async function importPinkkaGroup(
       stackData.id,
       stackData,
       options?.progressContext,
+      forceImport,
     );
     await writePinkkaEntity(
       getPinkkaStackPath(group.id, stackData.id),
@@ -1472,6 +1479,7 @@ export async function importPinkkaGroup(
         card.id,
         speciesDetail,
         options?.progressContext,
+        forceImport,
       );
       await writePinkkaEntity(
         getPinkkaSpeciesPath(group.id, stackData.id, card.id),
@@ -1570,6 +1578,7 @@ export async function importPinkkaStack(
     hierarchy.stack.id,
     hierarchy.stack,
     options?.progressContext,
+    forceImport,
   );
   markStackCompleted(
     options?.progressContext,
@@ -1592,6 +1601,7 @@ export async function importPinkkaStack(
       card.id,
       speciesDetail,
       options?.progressContext,
+      forceImport,
     );
     await writePinkkaEntity(
       getPinkkaSpeciesPath(resolvedGroupId, hierarchy.stack.id, card.id),
@@ -1736,6 +1746,7 @@ export async function importPinkkaSpecies(
     hierarchy.stack.id,
     hierarchy.stack,
     options?.progressContext,
+    forceImport,
   );
   markStackCompleted(
     options?.progressContext,
@@ -1754,6 +1765,7 @@ export async function importPinkkaSpecies(
     speciesId,
     speciesDetail,
     options?.progressContext,
+    forceImport,
   );
   await writePinkkaEntity(
     getPinkkaSpeciesPath(
