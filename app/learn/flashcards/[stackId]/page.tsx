@@ -27,7 +27,7 @@ export default function FlashcardsPage() {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const params = useParams();
-  const stackId = params.stackId as string;
+  const stackId = decodeURIComponent(params.stackId as string);
 
   const [stack, setStack] = useState<Stack | null>(null);
   const [group, setGroup] = useState<Group | null>(null);

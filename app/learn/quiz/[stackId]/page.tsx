@@ -102,7 +102,7 @@ export default function QuizPage() {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const params = useParams();
-  const stackId = params.stackId as string;
+  const stackId = decodeURIComponent(params.stackId as string);
   const { user } = useAuth();
 
   const [stack, setStack] = useState<Stack | null>(null);
