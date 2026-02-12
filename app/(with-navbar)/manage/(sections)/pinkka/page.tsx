@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ProtectedRoute } from "@/components/protected-route";
 import { PinkkaExplorer } from "@/components/pinkka/pinkka-explorer";
@@ -47,7 +54,7 @@ function createEmptyPinkkaImportProgress(): PinkkaImportProgress {
 }
 
 /** Admin-facing page for browsing Pinkka content. */
-export default function PinkkaContentPage() {
+function PinkkaContentPageContent() {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const { user } = useAuth();
@@ -598,92 +605,115 @@ export default function PinkkaContentPage() {
   );
 
   return (
+    <div className="min-h-screen bg-background">
+      <main className="container mx-auto flex flex-1 flex-col px-4 py-6">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold">Pinkka Content</h1>
+            <p className="text-sm text-muted-foreground">
+              Browse Pinkka groups, stacks, and species details.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {showImportButton && (
+              <Button
+                onClick={handleImport}
+                disabled={
+                  !user ||
+                  !importTarget ||
+                  isImporting ||
+                  isCheckingImportStatus ||
+                  importCount === 0
+                }
+              >
+                {activeImportAction === "import"
+                  ? "Importing..."
+                  : `Import Selected ${importLabels.title} (${importCount})`}
+              </Button>
+            )}
+            {hasIncompleteSelection && (
+              <Button
+                variant="secondary"
+                onClick={handleImportMissing}
+                disabled={
+                  !user ||
+                  !importTarget ||
+                  isImporting ||
+                  isCheckingImportStatus ||
+                  importMissingCount === 0
+                }
+              >
+                {activeImportAction === "importmissing"
+                  ? "Importing Missing..."
+                  : `Import Missing Selected ${importLabels.title} (${importMissingCount})`}
+              </Button>
+            )}
+            {showReimportButton && (
+              <Button
+                variant="secondary"
+                onClick={handleReimport}
+                disabled={
+                  !user ||
+                  !importTarget ||
+                  isImporting ||
+                  isCheckingImportStatus ||
+                  reimportCount === 0
+                }
+              >
+                {activeImportAction === "reimport"
+                  ? hasMixedSelection
+                    ? "Importing/Reimporting..."
+                    : "Re-importing..."
+                  : `${
+                      hasMixedSelection ? "Import/Reimport" : "Re-import"
+                    } Selected ${importLabels.title} (${reimportCount})`}
+              </Button>
+            )}
+          </div>
+        </div>
+        <div className="flex-1">
+          <div className="h-[70vh]">
+            <PinkkaExplorer
+              importStatusVersion={importStatusVersion}
+              preferredLang={preferredLanguage}
+              selectedGroupId={selectedGroupId}
+              selectedStackId={selectedStackId}
+              selectedSpeciesId={selectedSpeciesId}
+              onSelectedIdsChange={handleSelectedIdsChange}
+            />
+          </div>
+        </div>
+      </main>
+      <PinkkaImportProgressDialog
+        open={isImporting}
+        progress={importProgress}
+        onInterrupt={handleInterruptImport}
+      />
+    </div>
+  );
+}
+
+function PinkkaContentPageFallback() {
+  return (
+    <div className="min-h-screen bg-background">
+      <main className="container mx-auto flex flex-1 flex-col px-4 py-6">
+        <div className="mb-4">
+          <h1 className="text-2xl font-semibold">Pinkka Content</h1>
+          <p className="text-sm text-muted-foreground">Loading content...</p>
+        </div>
+        <div className="h-[70vh] rounded-md border border-border bg-muted/20" />
+      </main>
+    </div>
+  );
+}
+
+/** Admin-facing page for browsing Pinkka content. */
+export default function PinkkaContentPage() {
+  return (
     <ProtectedRoute requiredRole="admin">
-      <div className="min-h-screen bg-background">
-        <main className="container mx-auto flex flex-1 flex-col px-4 py-6">
-          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold">Pinkka Content</h1>
-              <p className="text-sm text-muted-foreground">
-                Browse Pinkka groups, stacks, and species details.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              {showImportButton && (
-                <Button
-                  onClick={handleImport}
-                  disabled={
-                    !user ||
-                    !importTarget ||
-                    isImporting ||
-                    isCheckingImportStatus ||
-                    importCount === 0
-                  }
-                >
-                  {activeImportAction === "import"
-                    ? "Importing..."
-                    : `Import Selected ${importLabels.title} (${importCount})`}
-                </Button>
-              )}
-              {hasIncompleteSelection && (
-                <Button
-                  variant="secondary"
-                  onClick={handleImportMissing}
-                  disabled={
-                    !user ||
-                    !importTarget ||
-                    isImporting ||
-                    isCheckingImportStatus ||
-                    importMissingCount === 0
-                  }
-                >
-                  {activeImportAction === "importmissing"
-                    ? "Importing Missing..."
-                    : `Import Missing Selected ${importLabels.title} (${importMissingCount})`}
-                </Button>
-              )}
-              {showReimportButton && (
-                <Button
-                  variant="secondary"
-                  onClick={handleReimport}
-                  disabled={
-                    !user ||
-                    !importTarget ||
-                    isImporting ||
-                    isCheckingImportStatus ||
-                    reimportCount === 0
-                  }
-                >
-                  {activeImportAction === "reimport"
-                    ? hasMixedSelection
-                      ? "Importing/Reimporting..."
-                      : "Re-importing..."
-                    : `${
-                        hasMixedSelection ? "Import/Reimport" : "Re-import"
-                      } Selected ${importLabels.title} (${reimportCount})`}
-                </Button>
-              )}
-            </div>
-          </div>
-          <div className="flex-1">
-            <div className="h-[70vh]">
-              <PinkkaExplorer
-                importStatusVersion={importStatusVersion}
-                preferredLang={preferredLanguage}
-                selectedGroupId={selectedGroupId}
-                selectedStackId={selectedStackId}
-                selectedSpeciesId={selectedSpeciesId}
-                onSelectedIdsChange={handleSelectedIdsChange}
-              />
-            </div>
-          </div>
-        </main>
-        <PinkkaImportProgressDialog
-          open={isImporting}
-          progress={importProgress}
-          onInterrupt={handleInterruptImport}
-        />
-      </div>
+      <Suspense fallback={<PinkkaContentPageFallback />}>
+        <PinkkaContentPageContent />
+      </Suspense>
     </ProtectedRoute>
   );
 }
