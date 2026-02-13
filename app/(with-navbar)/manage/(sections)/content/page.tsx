@@ -339,7 +339,7 @@ export default function ManagePage() {
         sourceGroup,
         ownerId: user.uid,
         order: groups.length,
-        includeImages: false,
+        includeImages: true,
       });
 
       setShowPinkkaGroupSelector(false);

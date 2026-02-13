@@ -34,6 +34,7 @@ import type {
   Stack,
   Group,
   SpeciesImage,
+  EntityImage,
   User,
 } from "../types";
 import { normalizeQuizPreferences } from "../quiz/quiz-preferences";
@@ -841,6 +842,45 @@ function getPreferredPinkkaImageUrl(
   );
 }
 
+function isPinkkaImageAsset(value: unknown): value is PinkkaImageAsset {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  const candidate = value as { id?: unknown; urls?: unknown };
+  return typeof candidate.id === "string" || typeof candidate.urls === "object";
+}
+
+function getPinkkaImageAssetsFromUnknown(value: unknown): PinkkaImageAsset[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value.filter(isPinkkaImageAsset);
+}
+
+function getPinkkaGroupImageAssets(group: PinkkaGroup): PinkkaImageAsset[] {
+  const candidate = group as unknown as {
+    image?: unknown;
+    images?: unknown;
+  };
+  const imageAssets = getPinkkaImageAssetsFromUnknown(candidate.images);
+  if (imageAssets.length > 0) {
+    return imageAssets;
+  }
+  return isPinkkaImageAsset(candidate.image) ? [candidate.image] : [];
+}
+
+function getPinkkaStackImageAssets(stack: PinkkaSubStack): PinkkaImageAsset[] {
+  const candidate = stack as unknown as {
+    image?: unknown;
+    images?: unknown;
+  };
+  const imageAssets = getPinkkaImageAssetsFromUnknown(candidate.images);
+  if (imageAssets.length > 0) {
+    return imageAssets;
+  }
+  return isPinkkaImageAsset(candidate.image) ? [candidate.image] : [];
+}
+
 function getImageFilenameFromUrl(imageUrl: string): string | null {
   try {
     const pathname = new URL(imageUrl).pathname;
@@ -988,6 +1028,55 @@ async function getStoredPinkkaImageDownloadUrl(params: {
   }
 }
 
+async function mapPinkkaImageAssetsToEntityImages(params: {
+  assets: PinkkaImageAsset[];
+  fallbackIdPrefix: string;
+}): Promise<EntityImage[]> {
+  const mappedImages: EntityImage[] = [];
+  for (let index = 0; index < params.assets.length; index += 1) {
+    const asset = params.assets[index];
+    const sourceUrl = getPreferredPinkkaImageUrl(asset);
+    if (!sourceUrl) {
+      continue;
+    }
+
+    const pinkkaImageId =
+      asset.id || `${params.fallbackIdPrefix}-${index + 1}`;
+    const filename =
+      getImageFilenameFromUrl(sourceUrl) ?? `${pinkkaImageId}.jpg`;
+
+    let storedUrl = await getStoredPinkkaImageDownloadUrl({
+      pinkkaImageId,
+      filename,
+    });
+
+    if (!storedUrl) {
+      storedUrl = await uploadPinkkaImageFromSource({
+        pinkkaImageId,
+        filename,
+        sourceUrl,
+      });
+    }
+
+    if (!storedUrl) {
+      continue;
+    }
+
+    mappedImages.push({
+      id: pinkkaImageId,
+      urls: {
+        original: storedUrl,
+        full: storedUrl,
+        large: storedUrl,
+        square: storedUrl,
+        thumbnail: storedUrl,
+      },
+    });
+  }
+
+  return mappedImages;
+}
+
 /** Convert Pinkka species detail payload to app species data with storage URLs. */
 export async function mapPinkkaSpeciesDetailToContentData(
   detail: PinkkaSpeciesDetail,
@@ -1069,6 +1158,10 @@ export async function createEditableGroupFromImportedPinkka(params: {
   const includeImages = params.includeImages ?? false;
   const groupId = buildUrnId("group");
   const now = Timestamp.now();
+  const groupImages = await mapPinkkaImageAssetsToEntityImages({
+    assets: getPinkkaGroupImageAssets(params.sourceGroup.entity),
+    fallbackIdPrefix: `group-${params.sourceGroup.groupId}`,
+  });
 
   const operations: BatchSetOperation[] = [];
   operations.push({
@@ -1083,6 +1176,7 @@ export async function createEditableGroupFromImportedPinkka(params: {
       pinkkaRef: {
         groupId: params.sourceGroup.groupId,
       },
+      images: groupImages,
       ownerId: params.ownerId,
       order: params.order,
       isHidden: false,
@@ -1125,6 +1219,10 @@ export async function createEditableGroupFromImportedPinkka(params: {
   for (let stackIndex = 0; stackIndex < sourceStacks.length; stackIndex += 1) {
     const sourceStack = sourceStacks[stackIndex];
     const stackId = buildUrnId("stack");
+    const stackImages = await mapPinkkaImageAssetsToEntityImages({
+      assets: getPinkkaStackImageAssets(sourceStack),
+      fallbackIdPrefix: sourceStack.imageId || `stack-${sourceStack.id}`,
+    });
     operations.push({
       ref: doc(db, "groups", groupId, "stacks", stackId),
       data: {
@@ -1138,6 +1236,7 @@ export async function createEditableGroupFromImportedPinkka(params: {
           groupId: params.sourceGroup.groupId,
           stackId: sourceStack.id,
         },
+        images: stackImages,
         ownerId: params.ownerId,
         order: stackIndex,
         isHidden: false,

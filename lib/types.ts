@@ -163,6 +163,25 @@ export interface SpeciesImage {
   };
 }
 
+/** Image metadata for group/stack level entities. */
+export interface EntityImage {
+  /** Image id. */
+  id: string;
+  /** Image URLs at various sizes. */
+  urls?: {
+    /** Original image URL. */
+    original?: string;
+    /** Full-size image URL. */
+    full?: string;
+    /** Large image URL. */
+    large?: string;
+    /** Square-cropped image URL. */
+    square?: string;
+    /** Thumbnail image URL. */
+    thumbnail?: string;
+  };
+}
+
 /** Species document stored in Firestore. */
 export interface Species {
   /** Species document id. */
@@ -236,6 +255,8 @@ export interface Stack {
     /** Linked Pinkka stack id. */
     stackId: number;
   };
+  /** Optional stack images stored in Firebase Storage. */
+  images?: EntityImage[];
   /** Whether the stack is hidden from learners. */
   isHidden?: boolean;
   /** Legacy ordered species ids in the stack. */
@@ -268,6 +289,8 @@ export interface Group {
     /** Linked Pinkka group id. */
     groupId: number;
   };
+  /** Optional group images stored in Firebase Storage. */
+  images?: EntityImage[];
   /** Whether the group is hidden from learners. */
   isHidden?: boolean;
   /** Legacy stack ids referenced by the group. */
