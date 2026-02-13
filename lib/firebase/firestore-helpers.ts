@@ -45,6 +45,7 @@ import {
   fetchPinkkaSubStack,
   type PinkkaGroup,
   type PinkkaImageAsset,
+  type PinkkaSpeciesCard,
   type PinkkaSpeciesDetail,
   type PinkkaSubStack,
 } from "../pinkka/pinkka-api";
@@ -134,6 +135,32 @@ export interface CreateGroupFromPinkkaImportResult {
   createdStackCount: number;
   /** Number of created species. */
   createdSpeciesCount: number;
+}
+
+/** Result summary for refreshing one editable group from linked Pinkka data. */
+export interface RefreshGroupFromPinkkaResult {
+  /** Number of newly created stacks. */
+  createdStackCount: number;
+  /** Number of updated existing stacks. */
+  updatedStackCount: number;
+  /** Number of removed linked stacks no longer present in Pinkka. */
+  deletedStackCount: number;
+  /** Number of newly created species. */
+  createdSpeciesCount: number;
+  /** Number of updated existing species. */
+  updatedSpeciesCount: number;
+  /** Number of removed linked species no longer present in Pinkka. */
+  deletedSpeciesCount: number;
+}
+
+/** Result summary for refreshing one editable stack from linked Pinkka data. */
+export interface RefreshStackFromPinkkaResult {
+  /** Number of newly created species. */
+  createdSpeciesCount: number;
+  /** Number of updated existing species. */
+  updatedSpeciesCount: number;
+  /** Number of removed linked species no longer present in Pinkka. */
+  deletedSpeciesCount: number;
 }
 
 /** User-facing message for manual interruption. */
@@ -1077,6 +1104,69 @@ async function mapPinkkaImageAssetsToEntityImages(params: {
   return mappedImages;
 }
 
+function assertInterrupted(shouldInterrupt?: () => boolean): void {
+  if (shouldInterrupt?.() === true) {
+    throw new Error(PINKKA_IMPORT_INTERRUPTED_ERROR_MESSAGE);
+  }
+}
+
+async function getImportedPinkkaGroupEntity(
+  groupId: number,
+): Promise<PinkkaGroup | null> {
+  const groupDoc = await getDoc(doc(db, PINKKA_COLLECTION, String(groupId)));
+  if (!groupDoc.exists()) {
+    return null;
+  }
+
+  const entity = (groupDoc.data() as { entity?: unknown }).entity as
+    | PinkkaGroup
+    | undefined;
+  return entity ?? null;
+}
+
+async function getImportedPinkkaStackEntity(params: {
+  groupId: number;
+  stackId: number;
+}): Promise<PinkkaSubStack | null> {
+  const stackDoc = await getDoc(
+    doc(
+      db,
+      PINKKA_COLLECTION,
+      String(params.groupId),
+      "stacks",
+      String(params.stackId),
+    ),
+  );
+  if (!stackDoc.exists()) {
+    return null;
+  }
+
+  const entity = (stackDoc.data() as { entity?: unknown }).entity as
+    | PinkkaSubStack
+    | undefined;
+  return entity ?? null;
+}
+
+function mergeImportedAndGroupStacks(params: {
+  sourceGroup: ImportedPinkkaGroupEntry;
+  importedStacks: ImportedPinkkaStackEntry[];
+}): PinkkaSubStack[] {
+  const importedStackById = new Map<number, PinkkaSubStack>(
+    params.importedStacks.map((entry) => [entry.stackId, entry.entity]),
+  );
+  const groupStackById = new Map<number, PinkkaSubStack>(
+    (params.sourceGroup.entity.subPinkkas ?? []).map((stack) => [stack.id, stack]),
+  );
+  const mergedStackIds = new Set<number>([
+    ...groupStackById.keys(),
+    ...importedStackById.keys(),
+  ]);
+  return [...mergedStackIds]
+    .map((stackId) => importedStackById.get(stackId) ?? groupStackById.get(stackId))
+    .filter((stack): stack is PinkkaSubStack => stack !== undefined)
+    .sort((left, right) => (left.orderNo ?? 0) - (right.orderNo ?? 0));
+}
+
 /** Convert Pinkka species detail payload to app species data with storage URLs. */
 export async function mapPinkkaSpeciesDetailToContentData(
   detail: PinkkaSpeciesDetail,
@@ -1188,20 +1278,10 @@ export async function createEditableGroupFromImportedPinkka(params: {
   const importedStackEntries = await getImportedPinkkaStackEntries(
     params.sourceGroup.groupId,
   );
-  const importedStackById = new Map<number, PinkkaSubStack>(
-    importedStackEntries.map((entry) => [entry.stackId, entry.entity]),
-  );
-  const groupStackById = new Map<number, PinkkaSubStack>(
-    (params.sourceGroup.entity.subPinkkas ?? []).map((stack) => [stack.id, stack]),
-  );
-  const mergedStackIds = new Set<number>([
-    ...groupStackById.keys(),
-    ...importedStackById.keys(),
-  ]);
-  const sourceStacks = [...mergedStackIds]
-    .map((stackId) => importedStackById.get(stackId) ?? groupStackById.get(stackId))
-    .filter((stack): stack is PinkkaSubStack => stack !== undefined)
-    .sort((left, right) => (left.orderNo ?? 0) - (right.orderNo ?? 0));
+  const sourceStacks = mergeImportedAndGroupStacks({
+    sourceGroup: params.sourceGroup,
+    importedStacks: importedStackEntries,
+  });
   const importedSpeciesByStack = await Promise.all(
     sourceStacks.map(async (sourceStack) => ({
       stackId: sourceStack.id,
@@ -1231,6 +1311,7 @@ export async function createEditableGroupFromImportedPinkka(params: {
         data: {
           name: sourceStack.name,
           ...(sourceStack.description ? { description: sourceStack.description } : {}),
+          images: stackImages,
         },
         pinkkaRef: {
           groupId: params.sourceGroup.groupId,
@@ -1329,6 +1410,425 @@ export async function createEditableGroupFromImportedPinkka(params: {
     groupId,
     createdStackCount: sourceStacks.length,
     createdSpeciesCount,
+  };
+}
+
+type EditableStackRefreshOperationsResult = {
+  stackId: string;
+  createdStack: boolean;
+  createdSpeciesCount: number;
+  updatedSpeciesCount: number;
+  deletedSpeciesCount: number;
+  operations: BatchSetOperation[];
+  deleteRefs: DocumentReference[];
+};
+
+async function buildEditableStackRefreshOperations(params: {
+  groupId: string;
+  ownerId: string;
+  pinkkaGroupId: number;
+  sourceStack: PinkkaSubStack;
+  importedSpecies: ImportedPinkkaSpeciesEntry[];
+  order: number;
+  existingStack?: {
+    id: string;
+    data: DocumentData;
+  };
+  includeSpeciesImages: boolean;
+  shouldInterrupt?: () => boolean;
+}): Promise<EditableStackRefreshOperationsResult> {
+  assertInterrupted(params.shouldInterrupt);
+  const now = Timestamp.now();
+  const stackId = params.existingStack?.id ?? buildUrnId("stack");
+  const stackData = params.existingStack?.data ?? {};
+  const stackImages = await mapPinkkaImageAssetsToEntityImages({
+    assets: getPinkkaStackImageAssets(params.sourceStack),
+    fallbackIdPrefix:
+      params.sourceStack.imageId || `stack-${params.sourceStack.id}`,
+  });
+
+  const operations: BatchSetOperation[] = [
+    {
+      ref: doc(db, "groups", params.groupId, "stacks", stackId),
+      data: {
+        stackId,
+        parentGroupId: params.groupId,
+        data: {
+          name: params.sourceStack.name,
+          ...(params.sourceStack.description
+            ? { description: params.sourceStack.description }
+            : {}),
+          images: stackImages,
+        },
+        pinkkaRef: {
+          groupId: params.pinkkaGroupId,
+          stackId: params.sourceStack.id,
+        },
+        images: stackImages,
+        ownerId: stackData.ownerId ?? params.ownerId,
+        order: params.order,
+        isHidden: stackData.isHidden ?? false,
+        createdAt: stackData.createdAt ?? now,
+        updatedAt: now,
+      },
+    },
+  ];
+
+  const speciesSnapshot = await getDocs(
+    collection(db, "groups", params.groupId, "stacks", stackId, "species"),
+  );
+  const existingLinkedSpeciesByPinkkaId = new Map<
+    number,
+    { id: string; data: DocumentData; ref: DocumentReference }
+  >();
+  for (const speciesDoc of speciesSnapshot.docs) {
+    const pinkkaSpeciesId = speciesDoc.data().pinkkaRef?.speciesId;
+    if (typeof pinkkaSpeciesId !== "number") {
+      continue;
+    }
+    existingLinkedSpeciesByPinkkaId.set(pinkkaSpeciesId, {
+      id: speciesDoc.id,
+      data: speciesDoc.data(),
+      ref: speciesDoc.ref,
+    });
+  }
+
+  const seenPinkkaSpeciesIds = new Set<number>();
+  let createdSpeciesCount = 0;
+  let updatedSpeciesCount = 0;
+  const sourceSpeciesCards = params.sourceStack.speciesCards ?? [];
+  const importedSpeciesIds = new Set(params.importedSpecies.map((item) => item.speciesId));
+  const fallbackSpeciesCards = sourceSpeciesCards.filter(
+    (card) => !importedSpeciesIds.has(card.id),
+  );
+  const sourceSpeciesEntries: Array<
+    | {
+        speciesId: number;
+        detail: PinkkaSpeciesDetail;
+      }
+    | {
+        speciesId: number;
+        card: PinkkaSpeciesCard;
+      }
+  > = [
+    ...params.importedSpecies.map((item) => ({
+      speciesId: item.speciesId,
+      detail: item.entity,
+    })),
+    ...fallbackSpeciesCards.map((card) => ({ speciesId: card.id, card })),
+  ];
+
+  for (let speciesIndex = 0; speciesIndex < sourceSpeciesEntries.length; speciesIndex += 1) {
+    assertInterrupted(params.shouldInterrupt);
+    const sourceSpecies = sourceSpeciesEntries[speciesIndex];
+    const existingSpecies = existingLinkedSpeciesByPinkkaId.get(sourceSpecies.speciesId);
+    const speciesId = existingSpecies?.id ?? buildUrnId("species");
+    const speciesDocData = existingSpecies?.data ?? {};
+    const mappedData =
+      "detail" in sourceSpecies
+        ? await mapPinkkaSpeciesDetailToContentData(sourceSpecies.detail, {
+            includeImages: params.includeSpeciesImages,
+          })
+        : {
+            taxonId: sourceSpecies.card.taxonId ?? "",
+            scientificName: sourceSpecies.card.scientificName ?? "",
+            ...(sourceSpecies.card.vernacularName
+              ? { vernacularName: sourceSpecies.card.vernacularName }
+              : {}),
+            images: [],
+          };
+    const imageIds = new Set((mappedData.images ?? []).map((image) => image.id));
+    const existingQuizImageIds = Array.isArray(speciesDocData.quizImageIds)
+      ? (speciesDocData.quizImageIds as string[]).filter((id) => imageIds.has(id))
+      : [];
+
+    operations.push({
+      ref: doc(db, "groups", params.groupId, "stacks", stackId, "species", speciesId),
+      data: {
+        speciesId,
+        parentGroupId: params.groupId,
+        parentStackId: stackId,
+        data: mappedData,
+        pinkkaRef: {
+          groupId: params.pinkkaGroupId,
+          stackId: params.sourceStack.id,
+          speciesId: sourceSpecies.speciesId,
+        },
+        ownerId: speciesDocData.ownerId ?? stackData.ownerId ?? params.ownerId,
+        order: speciesIndex,
+        isHidden: speciesDocData.isHidden ?? false,
+        ...(existingQuizImageIds.length > 0
+          ? { quizImageIds: existingQuizImageIds }
+          : {}),
+        createdAt: speciesDocData.createdAt ?? now,
+        updatedAt: now,
+      },
+    });
+
+    seenPinkkaSpeciesIds.add(sourceSpecies.speciesId);
+    if (existingSpecies) {
+      updatedSpeciesCount += 1;
+    } else {
+      createdSpeciesCount += 1;
+    }
+  }
+
+  const deleteRefs: DocumentReference[] = [];
+  let deletedSpeciesCount = 0;
+  for (const [pinkkaSpeciesId, existingSpecies] of existingLinkedSpeciesByPinkkaId) {
+    if (seenPinkkaSpeciesIds.has(pinkkaSpeciesId)) {
+      continue;
+    }
+    deleteRefs.push(existingSpecies.ref);
+    deletedSpeciesCount += 1;
+  }
+
+  return {
+    stackId,
+    createdStack: params.existingStack === undefined,
+    createdSpeciesCount,
+    updatedSpeciesCount,
+    deletedSpeciesCount,
+    operations,
+    deleteRefs,
+  };
+}
+
+/** Refresh one editable group and linked descendants from Pinkka. */
+export async function refreshEditableGroupFromPinkka(params: {
+  groupId: string;
+  ownerId: string;
+  onProgress?: PinkkaImportProgressCallback;
+  shouldInterrupt?: () => boolean;
+  includeSpeciesImages?: boolean;
+}): Promise<RefreshGroupFromPinkkaResult> {
+  const includeSpeciesImages = params.includeSpeciesImages ?? true;
+  const groupRef = doc(db, "groups", params.groupId);
+  const groupDoc = await getDoc(groupRef);
+  if (!groupDoc.exists()) {
+    throw new Error(`Group ${params.groupId} was not found.`);
+  }
+
+  const existingGroupData = groupDoc.data();
+  const pinkkaGroupId = existingGroupData.pinkkaRef?.groupId;
+  if (typeof pinkkaGroupId !== "number") {
+    throw new Error(`Group ${params.groupId} is not linked to Pinkka.`);
+  }
+
+  await importPinkkaGroups([pinkkaGroupId], params.ownerId, undefined, {
+    onProgress: params.onProgress,
+    shouldInterrupt: params.shouldInterrupt,
+    force: true,
+  });
+  assertInterrupted(params.shouldInterrupt);
+
+  const importedGroupEntity = await getImportedPinkkaGroupEntity(pinkkaGroupId);
+  if (!importedGroupEntity) {
+    throw new Error(`Imported Pinkka group ${pinkkaGroupId} was not found.`);
+  }
+
+  const sourceGroup: ImportedPinkkaGroupEntry = {
+    groupId: pinkkaGroupId,
+    entity: importedGroupEntity,
+    stackCount: importedGroupEntity.subPinkkas?.length ?? 0,
+    isIncomplete: false,
+  };
+  const importedStacks = await getImportedPinkkaStackEntries(pinkkaGroupId);
+  const sourceStacks = mergeImportedAndGroupStacks({
+    sourceGroup,
+    importedStacks,
+  });
+  const importedSpeciesByStack = await Promise.all(
+    sourceStacks.map(async (sourceStack) => ({
+      stackId: sourceStack.id,
+      entries: await getImportedPinkkaSpeciesEntries(pinkkaGroupId, sourceStack.id),
+    })),
+  );
+  const importedSpeciesMap = new Map<number, ImportedPinkkaSpeciesEntry[]>(
+    importedSpeciesByStack.map((entry) => [entry.stackId, entry.entries]),
+  );
+
+  const now = Timestamp.now();
+  const groupImages = await mapPinkkaImageAssetsToEntityImages({
+    assets: getPinkkaGroupImageAssets(importedGroupEntity),
+    fallbackIdPrefix: `group-${pinkkaGroupId}`,
+  });
+  const operations: BatchSetOperation[] = [
+    {
+      ref: groupRef,
+      data: {
+        data: {
+          name: importedGroupEntity.name,
+          ...(importedGroupEntity.description
+            ? { description: importedGroupEntity.description }
+            : {}),
+        },
+        pinkkaRef: {
+          groupId: pinkkaGroupId,
+        },
+        images: groupImages,
+        ownerId: existingGroupData.ownerId ?? params.ownerId,
+        order:
+          typeof existingGroupData.order === "number"
+            ? existingGroupData.order
+            : 0,
+        isHidden: existingGroupData.isHidden ?? false,
+        createdAt: existingGroupData.createdAt ?? now,
+        updatedAt: now,
+      },
+    },
+  ];
+  const deleteRefs: DocumentReference[] = [];
+
+  const result: RefreshGroupFromPinkkaResult = {
+    createdStackCount: 0,
+    updatedStackCount: 0,
+    deletedStackCount: 0,
+    createdSpeciesCount: 0,
+    updatedSpeciesCount: 0,
+    deletedSpeciesCount: 0,
+  };
+
+  const existingStacksSnapshot = await getDocs(
+    collection(db, "groups", params.groupId, "stacks"),
+  );
+  const existingLinkedStacksByPinkkaId = new Map<
+    number,
+    { id: string; data: DocumentData; ref: DocumentReference }
+  >();
+  for (const stackDoc of existingStacksSnapshot.docs) {
+    const pinkkaStackId = stackDoc.data().pinkkaRef?.stackId;
+    if (typeof pinkkaStackId !== "number") {
+      continue;
+    }
+    existingLinkedStacksByPinkkaId.set(pinkkaStackId, {
+      id: stackDoc.id,
+      data: stackDoc.data(),
+      ref: stackDoc.ref,
+    });
+  }
+
+  const seenPinkkaStackIds = new Set<number>();
+  for (let stackIndex = 0; stackIndex < sourceStacks.length; stackIndex += 1) {
+    assertInterrupted(params.shouldInterrupt);
+    const sourceStack = sourceStacks[stackIndex];
+    const stackRefreshResult = await buildEditableStackRefreshOperations({
+      groupId: params.groupId,
+      ownerId: params.ownerId,
+      pinkkaGroupId,
+      sourceStack,
+      importedSpecies: importedSpeciesMap.get(sourceStack.id) ?? [],
+      order: stackIndex,
+      existingStack: existingLinkedStacksByPinkkaId.get(sourceStack.id),
+      includeSpeciesImages,
+      shouldInterrupt: params.shouldInterrupt,
+    });
+    seenPinkkaStackIds.add(sourceStack.id);
+    operations.push(...stackRefreshResult.operations);
+    deleteRefs.push(...stackRefreshResult.deleteRefs);
+    if (stackRefreshResult.createdStack) {
+      result.createdStackCount += 1;
+    } else {
+      result.updatedStackCount += 1;
+    }
+    result.createdSpeciesCount += stackRefreshResult.createdSpeciesCount;
+    result.updatedSpeciesCount += stackRefreshResult.updatedSpeciesCount;
+    result.deletedSpeciesCount += stackRefreshResult.deletedSpeciesCount;
+  }
+
+  for (const [pinkkaStackId, existingStack] of existingLinkedStacksByPinkkaId) {
+    if (seenPinkkaStackIds.has(pinkkaStackId)) {
+      continue;
+    }
+    const speciesSnapshot = await getDocs(
+      collection(db, "groups", params.groupId, "stacks", existingStack.id, "species"),
+    );
+    for (const speciesDoc of speciesSnapshot.docs) {
+      deleteRefs.push(speciesDoc.ref);
+      result.deletedSpeciesCount += 1;
+    }
+    deleteRefs.push(existingStack.ref);
+    result.deletedStackCount += 1;
+  }
+
+  await commitSetOperationsInBatches(operations);
+  await commitDeleteReferencesInBatches(deleteRefs);
+  return result;
+}
+
+/** Refresh one editable stack and linked species from Pinkka. */
+export async function refreshEditableStackFromPinkka(params: {
+  groupId: string;
+  stackId: string;
+  ownerId: string;
+  onProgress?: PinkkaImportProgressCallback;
+  shouldInterrupt?: () => boolean;
+  includeSpeciesImages?: boolean;
+}): Promise<RefreshStackFromPinkkaResult> {
+  const includeSpeciesImages = params.includeSpeciesImages ?? true;
+  const stackRef = doc(db, "groups", params.groupId, "stacks", params.stackId);
+  const stackDoc = await getDoc(stackRef);
+  if (!stackDoc.exists()) {
+    throw new Error(`Stack ${params.stackId} was not found.`);
+  }
+
+  const stackData = stackDoc.data();
+  const pinkkaStackId = stackData.pinkkaRef?.stackId;
+  if (typeof pinkkaStackId !== "number") {
+    throw new Error(`Stack ${params.stackId} is not linked to Pinkka.`);
+  }
+
+  const groupDoc = await getDoc(doc(db, "groups", params.groupId));
+  const pinkkaGroupId =
+    typeof stackData.pinkkaRef?.groupId === "number"
+      ? stackData.pinkkaRef.groupId
+      : groupDoc.data()?.pinkkaRef?.groupId;
+  if (typeof pinkkaGroupId !== "number") {
+    throw new Error(
+      `Stack ${params.stackId} is not linked to a Pinkka group.`,
+    );
+  }
+
+  await importPinkkaStacks([pinkkaStackId], params.ownerId, undefined, {
+    groupId: pinkkaGroupId,
+    onProgress: params.onProgress,
+    shouldInterrupt: params.shouldInterrupt,
+    force: true,
+  });
+  assertInterrupted(params.shouldInterrupt);
+
+  const importedStackEntity = await getImportedPinkkaStackEntity({
+    groupId: pinkkaGroupId,
+    stackId: pinkkaStackId,
+  });
+  if (!importedStackEntity) {
+    throw new Error(`Imported Pinkka stack ${pinkkaStackId} was not found.`);
+  }
+
+  const stackRefreshResult = await buildEditableStackRefreshOperations({
+    groupId: params.groupId,
+    ownerId: params.ownerId,
+    pinkkaGroupId,
+    sourceStack: importedStackEntity,
+    importedSpecies: await getImportedPinkkaSpeciesEntries(
+      pinkkaGroupId,
+      pinkkaStackId,
+    ),
+    order: typeof stackData.order === "number" ? stackData.order : 0,
+    existingStack: {
+      id: params.stackId,
+      data: stackData,
+    },
+    includeSpeciesImages,
+    shouldInterrupt: params.shouldInterrupt,
+  });
+
+  await commitSetOperationsInBatches(stackRefreshResult.operations);
+  await commitDeleteReferencesInBatches(stackRefreshResult.deleteRefs);
+  return {
+    createdSpeciesCount: stackRefreshResult.createdSpeciesCount,
+    updatedSpeciesCount: stackRefreshResult.updatedSpeciesCount,
+    deletedSpeciesCount: stackRefreshResult.deletedSpeciesCount,
   };
 }
 

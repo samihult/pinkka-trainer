@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProtectedRoute } from "@/components/protected-route";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { ManageGroupCard } from "@/components/manage-group-card";
+import { PinkkaImportProgressDialog } from "@/components/pinkka/pinkka-import-progress-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth-context";
 import { logFirestoreError } from "@/lib/utils";
@@ -34,6 +35,9 @@ import {
   createGroup,
   createStack,
   createEditableGroupFromImportedPinkka,
+  isPinkkaImportInterruptedError,
+  refreshEditableGroupFromPinkka,
+  refreshEditableStackFromPinkka,
   updateGroup,
   updateStack,
   deleteGroup,
@@ -41,11 +45,30 @@ import {
   getImportedPinkkaGroups,
   reorderItems,
   updateGroupStackOrder,
+  type PinkkaImportProgress,
   type ImportedPinkkaGroupEntry,
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, LocalizedText, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/content/content-display";
 import { ChevronDown, FolderOpen, Plus } from "lucide-react";
+
+function createEmptyProgressLevel() {
+  return {
+    completed: 0,
+    total: 0,
+    currentEntityName: "",
+    imageDownloadsCompleted: 0,
+    imageDownloadsTotal: 0,
+  };
+}
+
+function createEmptyPinkkaImportProgress(): PinkkaImportProgress {
+  return {
+    groups: createEmptyProgressLevel(),
+    stacks: createEmptyProgressLevel(),
+    species: createEmptyProgressLevel(),
+  };
+}
 
 export default function ManagePage() {
   const { user } = useAuth();
@@ -57,6 +80,13 @@ export default function ManagePage() {
     ImportedPinkkaGroupEntry[]
   >([]);
   const [loading, setLoading] = useState(true);
+  const [activePinkkaRefresh, setActivePinkkaRefresh] = useState<{
+    type: "group" | "stack";
+    id: string;
+  } | null>(null);
+  const [pinkkaRefreshProgress, setPinkkaRefreshProgress] =
+    useState<PinkkaImportProgress>(createEmptyPinkkaImportProgress());
+  const interruptRefreshRef = useRef(false);
 
   // Group dialog state
   const [showGroupDialog, setShowGroupDialog] = useState(false);
@@ -358,6 +388,99 @@ export default function ManagePage() {
     }
   };
 
+  const handleRefreshPinkkaGroup = useCallback(
+    async (group: Group) => {
+      if (!user || typeof group.pinkkaRef?.groupId !== "number") {
+        return;
+      }
+
+      setActivePinkkaRefresh({ type: "group", id: group.id });
+      setPinkkaRefreshProgress(createEmptyPinkkaImportProgress());
+      interruptRefreshRef.current = false;
+      try {
+        await refreshEditableGroupFromPinkka({
+          groupId: group.id,
+          ownerId: user.uid,
+          onProgress: setPinkkaRefreshProgress,
+          shouldInterrupt: () => interruptRefreshRef.current,
+          includeSpeciesImages: true,
+        });
+        toast({
+          title: "Success",
+          description: "Group refreshed from Pinkka",
+        });
+        void loadData();
+      } catch (error) {
+        if (isPinkkaImportInterruptedError(error)) {
+          toast({
+            title: "Refresh interrupted",
+            description: "The Pinkka refresh was interrupted.",
+          });
+        } else {
+          logFirestoreError("Failed to refresh linked Pinkka group", error);
+          toast({
+            title: "Error",
+            description: "Failed to refresh linked group from Pinkka",
+            variant: "destructive",
+          });
+        }
+      } finally {
+        interruptRefreshRef.current = false;
+        setActivePinkkaRefresh(null);
+      }
+    },
+    [loadData, toast, user],
+  );
+
+  const handleRefreshPinkkaStack = useCallback(
+    async (groupId: string, stack: Stack) => {
+      if (!user || typeof stack.pinkkaRef?.stackId !== "number") {
+        return;
+      }
+
+      setActivePinkkaRefresh({ type: "stack", id: stack.id });
+      setPinkkaRefreshProgress(createEmptyPinkkaImportProgress());
+      interruptRefreshRef.current = false;
+      try {
+        await refreshEditableStackFromPinkka({
+          groupId,
+          stackId: stack.id,
+          ownerId: user.uid,
+          onProgress: setPinkkaRefreshProgress,
+          shouldInterrupt: () => interruptRefreshRef.current,
+          includeSpeciesImages: true,
+        });
+        toast({
+          title: "Success",
+          description: "Stack refreshed from Pinkka",
+        });
+        void loadData();
+      } catch (error) {
+        if (isPinkkaImportInterruptedError(error)) {
+          toast({
+            title: "Refresh interrupted",
+            description: "The Pinkka refresh was interrupted.",
+          });
+        } else {
+          logFirestoreError("Failed to refresh linked Pinkka stack", error);
+          toast({
+            title: "Error",
+            description: "Failed to refresh linked stack from Pinkka",
+            variant: "destructive",
+          });
+        }
+      } finally {
+        interruptRefreshRef.current = false;
+        setActivePinkkaRefresh(null);
+      }
+    },
+    [loadData, toast, user],
+  );
+
+  const handleInterruptPinkkaRefresh = useCallback(() => {
+    interruptRefreshRef.current = true;
+  }, []);
+
   // Stack handlers
   const handleStackDialogOpen = (groupId: string, stack?: Stack) => {
     setSelectedGroupId(groupId);
@@ -617,6 +740,18 @@ export default function ManagePage() {
                 onStackDragStart={handleStackDragStart}
                 onStackDragOver={handleStackDragOver}
                 onStackDragEnd={handleStackDragEnd}
+                onRefreshPinkkaGroup={handleRefreshPinkkaGroup}
+                refreshingPinkkaGroupId={
+                  activePinkkaRefresh?.type === "group"
+                    ? activePinkkaRefresh.id
+                    : null
+                }
+                refreshingPinkkaStackId={
+                  activePinkkaRefresh?.type === "stack"
+                    ? activePinkkaRefresh.id
+                    : null
+                }
+                onRefreshPinkkaStack={handleRefreshPinkkaStack}
               />
             ))}
 
@@ -645,6 +780,11 @@ export default function ManagePage() {
           emptyMessage="No imported Pinkka groups found. Import groups first from the Pinkka tab."
           listAriaLabel="Imported Pinkka groups"
           onConfirm={handleCreateGroupFromPinkka}
+        />
+        <PinkkaImportProgressDialog
+          open={activePinkkaRefresh !== null}
+          progress={pinkkaRefreshProgress}
+          onInterrupt={handleInterruptPinkkaRefresh}
         />
 
         {/* Group Dialog */}

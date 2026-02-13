@@ -247,6 +247,8 @@ export interface Stack {
     name: LocalizedText;
     /** Optional localized stack description. */
     description?: LocalizedText;
+    /** Optional stack images stored in Firebase Storage. */
+    images?: SpeciesImage[];
   };
   /** Optional link back to imported Pinkka entity ids. */
   pinkkaRef?: {

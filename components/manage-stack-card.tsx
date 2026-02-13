@@ -9,6 +9,7 @@ import {
   Eye,
   EyeOff,
   Pencil,
+  RefreshCw,
   Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -43,6 +44,10 @@ export interface ManageStackCardProps {
   onDelete: (stackId: string) => void;
   /** Called when toggling stack visibility. */
   onToggleVisibility: (groupId: string, stack: Stack) => void;
+  /** Called when refreshing a Pinkka-linked stack. */
+  onRefreshPinkkaStack?: (groupId: string, stack: Stack) => void;
+  /** Whether this stack is currently refreshing from Pinkka. */
+  isRefreshingPinkkaStack?: boolean;
   className?: string;
 }
 
@@ -57,6 +62,8 @@ export function ManageStackCard({
   onEdit,
   onDelete,
   onToggleVisibility,
+  onRefreshPinkkaStack,
+  isRefreshingPinkkaStack = false,
   className,
 }: ManageStackCardProps) {
   const { language } = useLanguagePreference();
@@ -84,7 +91,7 @@ export function ManageStackCard({
       <CardContent className="flex flex-col gap-2 pr-16 items-start">
         {getLocalizedText(stack.data.name, preferredLanguage)}
         {linkedPinkkaStackId && linkedPinkkaStackHref ? (
-          <p className="text-xs text-muted-foreground">
+          <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
             Linked Pinkka stack:{" "}
             <Link
               href={linkedPinkkaStackHref}
@@ -92,6 +99,20 @@ export function ManageStackCard({
             >
               #{linkedPinkkaStackId}
             </Link>
+            {onRefreshPinkkaStack ? (
+              <Button
+                size="icon-xs"
+                variant="ghost"
+                onClick={() => onRefreshPinkkaStack(groupId, stack)}
+                disabled={isRefreshingPinkkaStack}
+                aria-label={`Refresh linked Pinkka stack ${linkedPinkkaStackId}`}
+                title="Refresh from Pinkka"
+              >
+                <RefreshCw
+                  className={`h-3 w-3 ${isRefreshingPinkkaStack ? "animate-spin" : ""}`}
+                />
+              </Button>
+            ) : null}
           </p>
         ) : null}
         <div className="flex flex-wrap items-center gap-2 mr-3">

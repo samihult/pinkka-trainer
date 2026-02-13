@@ -10,6 +10,7 @@ import {
   GripVertical,
   Pencil,
   Plus,
+  RefreshCw,
   Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -67,6 +68,14 @@ export interface ManageGroupCardProps {
   ) => void;
   /** Called when stack dragging ends. */
   onStackDragEnd: () => void;
+  /** Called when refreshing a Pinkka-linked group. */
+  onRefreshPinkkaGroup?: (group: Group) => void;
+  /** Id of the group currently refreshing from Pinkka. */
+  refreshingPinkkaGroupId?: string | null;
+  /** Id of the stack currently refreshing from Pinkka. */
+  refreshingPinkkaStackId?: string | null;
+  /** Called when refreshing a Pinkka-linked stack. */
+  onRefreshPinkkaStack?: (groupId: string, stack: Stack) => void;
 }
 
 /** Render a group card with its stacks on the manage content page. */
@@ -87,6 +96,10 @@ export function ManageGroupCard({
   onStackDragStart,
   onStackDragOver,
   onStackDragEnd,
+  onRefreshPinkkaGroup,
+  refreshingPinkkaGroupId,
+  refreshingPinkkaStackId,
+  onRefreshPinkkaStack,
 }: ManageGroupCardProps) {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
@@ -128,7 +141,7 @@ export function ManageGroupCard({
                 </CardDescription>
               )}
               {linkedPinkkaGroupId ? (
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="mt-1 inline-flex items-center gap-1 text-xs text-muted-foreground">
                   Linked Pinkka group:{" "}
                   <Link
                     href={`/manage/pinkka?group=${linkedPinkkaGroupId}`}
@@ -136,6 +149,24 @@ export function ManageGroupCard({
                   >
                     #{linkedPinkkaGroupId}
                   </Link>
+                  {onRefreshPinkkaGroup ? (
+                    <Button
+                      size="icon-xs"
+                      variant="ghost"
+                      onClick={() => onRefreshPinkkaGroup(group)}
+                      disabled={refreshingPinkkaGroupId === group.id}
+                      aria-label={`Refresh linked Pinkka group ${linkedPinkkaGroupId}`}
+                      title="Refresh from Pinkka"
+                    >
+                      <RefreshCw
+                        className={`h-3 w-3 ${
+                          refreshingPinkkaGroupId === group.id
+                            ? "animate-spin"
+                            : ""
+                        }`}
+                      />
+                    </Button>
+                  ) : null}
                 </p>
               ) : null}
             </div>
@@ -191,6 +222,8 @@ export function ManageGroupCard({
               onEdit={onEditStack}
               onDelete={onDeleteStack}
               onToggleVisibility={onToggleStackVisibility}
+              onRefreshPinkkaStack={onRefreshPinkkaStack}
+              isRefreshingPinkkaStack={refreshingPinkkaStackId === stack.id}
               className="mb-3"
             />
           ))}
