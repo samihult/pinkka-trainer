@@ -16,8 +16,22 @@ export function getLocalizedText(
 }
 
 /** Pick the most suitable image URL for a species image entry. */
-export function getSpeciesImageUrl(image?: SpeciesImage): string {
+export function getSpeciesImageUrl(
+  image?: SpeciesImage,
+  options?: { preferThumbnail?: boolean },
+): string {
   if (!image?.urls) return "";
+  if (options?.preferThumbnail) {
+    return (
+      image.urls.thumbnail ||
+      image.urls.square ||
+      image.urls.large ||
+      image.urls.full ||
+      image.urls.original ||
+      ""
+    );
+  }
+
   return (
     image.urls.full ||
     image.urls.large ||
@@ -55,4 +69,3 @@ export function getSpeciesImagesWithUrls(
     return Boolean(getSpeciesImageUrl(image));
   });
 }
-

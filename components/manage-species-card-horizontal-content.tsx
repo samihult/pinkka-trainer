@@ -153,7 +153,10 @@ export function ManageSpeciesCardHorizontalContent({
                 aria-label={`Toggle quiz image ${index + 1}`}
               >
                 <Image
-                  src={getSpeciesImageUrl(image) || "/placeholder.svg"}
+                  src={
+                    getSpeciesImageUrl(image, { preferThumbnail: true }) ||
+                    "/placeholder.svg"
+                  }
                   alt={`${species.data.scientificName} image ${index + 1}`}
                   fill
                   className={cn(
