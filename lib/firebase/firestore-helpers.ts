@@ -1416,12 +1416,52 @@ export async function createEditableGroupFromImportedPinkka(params: {
 type EditableStackRefreshOperationsResult = {
   stackId: string;
   createdStack: boolean;
+  updatedStack: boolean;
   createdSpeciesCount: number;
   updatedSpeciesCount: number;
   deletedSpeciesCount: number;
   operations: BatchSetOperation[];
   deleteRefs: DocumentReference[];
 };
+
+function isTimestampLike(value: unknown): value is { toDate: () => Date } {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "toDate" in value &&
+    typeof (value as { toDate?: unknown }).toDate === "function"
+  );
+}
+
+function normalizeSyncComparableValue(value: unknown): unknown {
+  if (value instanceof Date) {
+    return value.toISOString();
+  }
+  if (isTimestampLike(value)) {
+    return value.toDate().toISOString();
+  }
+  if (Array.isArray(value)) {
+    return value.map((entry) => normalizeSyncComparableValue(entry));
+  }
+  if (typeof value === "object" && value !== null) {
+    const normalized: Record<string, unknown> = {};
+    const entries = Object.entries(value as Record<string, unknown>)
+      .filter(([, entry]) => entry !== undefined)
+      .sort(([leftKey], [rightKey]) => leftKey.localeCompare(rightKey));
+    for (const [key, entry] of entries) {
+      normalized[key] = normalizeSyncComparableValue(entry);
+    }
+    return normalized;
+  }
+  return value;
+}
+
+function areSyncComparableValuesEqual(left: unknown, right: unknown): boolean {
+  return (
+    JSON.stringify(normalizeSyncComparableValue(left)) ===
+    JSON.stringify(normalizeSyncComparableValue(right))
+  );
+}
 
 async function buildEditableStackRefreshOperations(params: {
   groupId: string;
@@ -1446,33 +1486,57 @@ async function buildEditableStackRefreshOperations(params: {
     fallbackIdPrefix:
       params.sourceStack.imageId || `stack-${params.sourceStack.id}`,
   });
-
-  const operations: BatchSetOperation[] = [
-    {
-      ref: doc(db, "groups", params.groupId, "stacks", stackId),
-      data: {
+  const stackOwnerId = stackData.ownerId ?? params.ownerId;
+  const stackIsHidden = stackData.isHidden ?? false;
+  const existingStackOrder =
+    typeof stackData.order === "number" ? stackData.order : 0;
+  const stackDocumentData = {
+    stackId,
+    parentGroupId: params.groupId,
+    data: {
+      name: params.sourceStack.name,
+      ...(params.sourceStack.description
+        ? { description: params.sourceStack.description }
+        : {}),
+      images: stackImages,
+    },
+    pinkkaRef: {
+      groupId: params.pinkkaGroupId,
+      stackId: params.sourceStack.id,
+    },
+    images: stackImages,
+    ownerId: stackOwnerId,
+    order: params.order,
+    isHidden: stackIsHidden,
+    createdAt: stackData.createdAt ?? now,
+    updatedAt: now,
+  };
+  const stackCoreDataChanged =
+    params.existingStack === undefined ||
+    !areSyncComparableValuesEqual(
+      {
         stackId,
         parentGroupId: params.groupId,
-        data: {
-          name: params.sourceStack.name,
-          ...(params.sourceStack.description
-            ? { description: params.sourceStack.description }
-            : {}),
-          images: stackImages,
-        },
-        pinkkaRef: {
-          groupId: params.pinkkaGroupId,
-          stackId: params.sourceStack.id,
-        },
-        images: stackImages,
-        ownerId: stackData.ownerId ?? params.ownerId,
-        order: params.order,
-        isHidden: stackData.isHidden ?? false,
-        createdAt: stackData.createdAt ?? now,
-        updatedAt: now,
+        data: stackData.data,
+        pinkkaRef: stackData.pinkkaRef,
+        images: stackData.images,
+        ownerId: stackOwnerId,
+        order: existingStackOrder,
+        isHidden: stackIsHidden,
       },
-    },
-  ];
+      {
+        stackId,
+        parentGroupId: params.groupId,
+        data: stackDocumentData.data,
+        pinkkaRef: stackDocumentData.pinkkaRef,
+        images: stackDocumentData.images,
+        ownerId: stackDocumentData.ownerId,
+        order: stackDocumentData.order,
+        isHidden: stackDocumentData.isHidden,
+      },
+    );
+
+  const operations: BatchSetOperation[] = [];
 
   const speciesSnapshot = await getDocs(
     collection(db, "groups", params.groupId, "stacks", stackId, "species"),
@@ -1541,33 +1605,80 @@ async function buildEditableStackRefreshOperations(params: {
     const existingQuizImageIds = Array.isArray(speciesDocData.quizImageIds)
       ? (speciesDocData.quizImageIds as string[]).filter((id) => imageIds.has(id))
       : [];
-
-    operations.push({
-      ref: doc(db, "groups", params.groupId, "stacks", stackId, "species", speciesId),
-      data: {
-        speciesId,
-        parentGroupId: params.groupId,
-        parentStackId: stackId,
-        data: mappedData,
-        pinkkaRef: {
-          groupId: params.pinkkaGroupId,
-          stackId: params.sourceStack.id,
-          speciesId: sourceSpecies.speciesId,
-        },
-        ownerId: speciesDocData.ownerId ?? stackData.ownerId ?? params.ownerId,
-        order: speciesIndex,
-        isHidden: speciesDocData.isHidden ?? false,
-        ...(existingQuizImageIds.length > 0
-          ? { quizImageIds: existingQuizImageIds }
-          : {}),
-        createdAt: speciesDocData.createdAt ?? now,
-        updatedAt: now,
+    const speciesOwnerId =
+      speciesDocData.ownerId ?? stackData.ownerId ?? params.ownerId;
+    const speciesIsHidden = speciesDocData.isHidden ?? false;
+    const existingSpeciesOrder =
+      typeof speciesDocData.order === "number" ? speciesDocData.order : 0;
+    const existingSpeciesQuizImageIds = Array.isArray(speciesDocData.quizImageIds)
+      ? (speciesDocData.quizImageIds as string[])
+      : undefined;
+    const speciesDocumentData = {
+      speciesId,
+      parentGroupId: params.groupId,
+      parentStackId: stackId,
+      data: mappedData,
+      pinkkaRef: {
+        groupId: params.pinkkaGroupId,
+        stackId: params.sourceStack.id,
+        speciesId: sourceSpecies.speciesId,
       },
-    });
+      ownerId: speciesOwnerId,
+      order: speciesIndex,
+      isHidden: speciesIsHidden,
+      ...(existingQuizImageIds.length > 0
+        ? { quizImageIds: existingQuizImageIds }
+        : {}),
+      createdAt: speciesDocData.createdAt ?? now,
+      updatedAt: now,
+    };
+    const speciesShouldBeUpdated =
+      existingSpecies === undefined ||
+      !areSyncComparableValuesEqual(
+        {
+          speciesId,
+          parentGroupId: params.groupId,
+          parentStackId: stackId,
+          data: speciesDocData.data,
+          pinkkaRef: speciesDocData.pinkkaRef,
+          ownerId: speciesOwnerId,
+          order: existingSpeciesOrder,
+          isHidden: speciesIsHidden,
+          quizImageIds: existingSpeciesQuizImageIds,
+        },
+        {
+          speciesId,
+          parentGroupId: params.groupId,
+          parentStackId: stackId,
+          data: speciesDocumentData.data,
+          pinkkaRef: speciesDocumentData.pinkkaRef,
+          ownerId: speciesDocumentData.ownerId,
+          order: speciesDocumentData.order,
+          isHidden: speciesDocumentData.isHidden,
+          quizImageIds: speciesDocumentData.quizImageIds,
+        },
+      );
+
+    if (speciesShouldBeUpdated) {
+      operations.push({
+        ref: doc(
+          db,
+          "groups",
+          params.groupId,
+          "stacks",
+          stackId,
+          "species",
+          speciesId,
+        ),
+        data: speciesDocumentData,
+      });
+    }
 
     seenPinkkaSpeciesIds.add(sourceSpecies.speciesId);
     if (existingSpecies) {
-      updatedSpeciesCount += 1;
+      if (speciesShouldBeUpdated) {
+        updatedSpeciesCount += 1;
+      }
     } else {
       createdSpeciesCount += 1;
     }
@@ -1583,9 +1694,21 @@ async function buildEditableStackRefreshOperations(params: {
     deletedSpeciesCount += 1;
   }
 
+  const hasSpeciesChanges =
+    createdSpeciesCount > 0 || updatedSpeciesCount > 0 || deletedSpeciesCount > 0;
+  const shouldWriteStack =
+    params.existingStack === undefined || stackCoreDataChanged || hasSpeciesChanges;
+  if (shouldWriteStack) {
+    operations.unshift({
+      ref: doc(db, "groups", params.groupId, "stacks", stackId),
+      data: stackDocumentData,
+    });
+  }
+
   return {
     stackId,
     createdStack: params.existingStack === undefined,
+    updatedStack: params.existingStack !== undefined && shouldWriteStack,
     createdSpeciesCount,
     updatedSpeciesCount,
     deletedSpeciesCount,
@@ -1653,31 +1776,47 @@ export async function refreshEditableGroupFromPinkka(params: {
     assets: getPinkkaGroupImageAssets(importedGroupEntity),
     fallbackIdPrefix: `group-${pinkkaGroupId}`,
   });
-  const operations: BatchSetOperation[] = [
-    {
-      ref: groupRef,
-      data: {
-        data: {
-          name: importedGroupEntity.name,
-          ...(importedGroupEntity.description
-            ? { description: importedGroupEntity.description }
-            : {}),
-        },
-        pinkkaRef: {
-          groupId: pinkkaGroupId,
-        },
-        images: groupImages,
-        ownerId: existingGroupData.ownerId ?? params.ownerId,
-        order:
-          typeof existingGroupData.order === "number"
-            ? existingGroupData.order
-            : 0,
-        isHidden: existingGroupData.isHidden ?? false,
-        createdAt: existingGroupData.createdAt ?? now,
-        updatedAt: now,
-      },
+  const groupOwnerId = existingGroupData.ownerId ?? params.ownerId;
+  const existingGroupOrder =
+    typeof existingGroupData.order === "number" ? existingGroupData.order : 0;
+  const groupIsHidden = existingGroupData.isHidden ?? false;
+  const groupDocumentData = {
+    data: {
+      name: importedGroupEntity.name,
+      ...(importedGroupEntity.description
+        ? { description: importedGroupEntity.description }
+        : {}),
     },
-  ];
+    pinkkaRef: {
+      groupId: pinkkaGroupId,
+    },
+    images: groupImages,
+    ownerId: groupOwnerId,
+    order: existingGroupOrder,
+    isHidden: groupIsHidden,
+    createdAt: existingGroupData.createdAt ?? now,
+    updatedAt: now,
+  };
+  const groupCoreDataChanged = !areSyncComparableValuesEqual(
+    {
+      data: existingGroupData.data,
+      pinkkaRef: existingGroupData.pinkkaRef,
+      images: existingGroupData.images,
+      ownerId: groupOwnerId,
+      order: existingGroupOrder,
+      isHidden: groupIsHidden,
+    },
+    {
+      data: groupDocumentData.data,
+      pinkkaRef: groupDocumentData.pinkkaRef,
+      images: groupDocumentData.images,
+      ownerId: groupDocumentData.ownerId,
+      order: groupDocumentData.order,
+      isHidden: groupDocumentData.isHidden,
+    },
+  );
+
+  const operations: BatchSetOperation[] = [];
   const deleteRefs: DocumentReference[] = [];
 
   const result: RefreshGroupFromPinkkaResult = {
@@ -1728,7 +1867,8 @@ export async function refreshEditableGroupFromPinkka(params: {
     deleteRefs.push(...stackRefreshResult.deleteRefs);
     if (stackRefreshResult.createdStack) {
       result.createdStackCount += 1;
-    } else {
+    }
+    if (stackRefreshResult.updatedStack) {
       result.updatedStackCount += 1;
     }
     result.createdSpeciesCount += stackRefreshResult.createdSpeciesCount;
@@ -1749,6 +1889,20 @@ export async function refreshEditableGroupFromPinkka(params: {
     }
     deleteRefs.push(existingStack.ref);
     result.deletedStackCount += 1;
+  }
+
+  const groupHasDescendantChanges =
+    result.createdStackCount > 0 ||
+    result.updatedStackCount > 0 ||
+    result.deletedStackCount > 0 ||
+    result.createdSpeciesCount > 0 ||
+    result.updatedSpeciesCount > 0 ||
+    result.deletedSpeciesCount > 0;
+  if (groupCoreDataChanged || groupHasDescendantChanges) {
+    operations.unshift({
+      ref: groupRef,
+      data: groupDocumentData,
+    });
   }
 
   await commitSetOperationsInBatches(operations);
