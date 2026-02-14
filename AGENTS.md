@@ -10,15 +10,15 @@ Project conventions for Codex agents working in this repo.
 
 ### External libraries
 
-- Prefer non-sticky licenses, such as MIT.
-- Sticky licenses are subject to manual approval.
-- Commercial licenses are not allowed.
-- Only use open-source libraries.
-- If available, pick active, popular libraries.
-- Avoid libraries that have lots of forks.
-- Never use abandoned libraries.
+- Prefer non-sticky licenses, such as MIT
+- Sticky licenses are subject to manual approval
+- Commercial licenses are not allowed
+- Only use open-source libraries
+- If available, pick active, popular libraries
+- Avoid libraries that have lots of forks
+- Never use abandoned libraries
 
-## General code quality constraints
+## General quality constraints
 
 - Keep changes minimal and localized to the requested feature
 - Always, after making changes into React code, make the following checks and fix the potential issues:
@@ -28,9 +28,14 @@ Project conventions for Codex agents working in this repo.
     - Files, functions, etc. should be compact, if possible, and split so that the logic is easy to read
     - Directory structure and file naming is logical, so that it is easy to understand what can be found and where
     - If blocks or loops and compact, and larger functionalities are extracted into functions or components
+- Database structures must be sound:
+    - Relational databases:
+        - Foreign keys with cascading must be used where the tables form an atomic structure
+        - Foreign keys must not be used where the entities may not be atomic, e.g. because of asynchronicity
+    - Proper indexes must be kept for performance, but their number must be kept minimal
 
-After finishing a task, state briefly the state of these aspects, and if they have been made fixes to. This is
-non-negotiable.
+After finishing a task, state briefly the state of these aspects on the top-level, and if they have been made fixes to.
+This is non-negotiable.
 
 ## UI code style
 
