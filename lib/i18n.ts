@@ -73,7 +73,7 @@ const EN_MESSAGES = {
   "test.settings.acceptedAnswer": "Accepted answer",
   "test.settings.answer.scientific": "Scientific name only",
   "test.settings.answer.vernacular": "Vernacular name only",
-  "test.settings.answer.either": "Either",
+  "test.settings.answer.either": "Scientific or vernacular name",
   "test.settings.answer.description":
     "Applies to both test modes; answers ignore case and extra spaces.",
   "test.settings.start": "Start ⏎",
@@ -93,7 +93,7 @@ const EN_MESSAGES = {
   "learning.histogram.new": "New",
   "learning.histogram.label.scientific": "Scientific",
   "learning.histogram.label.vernacular": "Vernacular",
-  "learning.histogram.label.either": "Scientific or vernacular",
+  "learning.histogram.label.either": "Either",
   "learning.histogram.barTitle":
     "{label}: New {newPercent}%, Learning {learningPercent}%, Strengthening {strengtheningPercent}%, Mastered {masteredPercent}%",
 
@@ -182,7 +182,7 @@ const FI_MESSAGES: TranslationTable = {
   "test.settings.acceptedAnswer": "Hyväksytty vastaus",
   "test.settings.answer.scientific": "Vain tieteellinen nimi",
   "test.settings.answer.vernacular": "Vain kansankielinen nimi",
-  "test.settings.answer.either": "Kumpi vain",
+  "test.settings.answer.either": "Tieteellinen tai kansankielinen nimi",
   "test.settings.answer.description":
     "Koskee molempia testitapoja; kirjainkoko ja ylimääräiset välit ohitetaan.",
   "test.settings.start": "Aloita ⏎",
@@ -202,7 +202,7 @@ const FI_MESSAGES: TranslationTable = {
   "learning.histogram.new": "Uusi",
   "learning.histogram.label.scientific": "Tieteellinen",
   "learning.histogram.label.vernacular": "Kansankielinen",
-  "learning.histogram.label.either": "Tieteellinen tai kansankielinen",
+  "learning.histogram.label.either": "Kumpi vain",
   "learning.histogram.barTitle":
     "{label}: Uusi {newPercent}%, Opettelussa {learningPercent}%, Vahvistumassa {strengtheningPercent}%, Hallussa {masteredPercent}%",
 
@@ -283,7 +283,7 @@ const SV_MESSAGES: TranslationTable = {
   "test.settings.acceptedAnswer": "Godkänt svar",
   "test.settings.answer.scientific": "Endast vetenskapligt namn",
   "test.settings.answer.vernacular": "Endast vardagligt namn",
-  "test.settings.answer.either": "Endera",
+  "test.settings.answer.either": "Vetenskapligt eller vardagligt namn",
   "test.settings.answer.description":
     "Gäller båda testlägen; svar ignorerar versaler och extra mellanslag.",
   "test.settings.start": "Starta ⏎",
@@ -303,7 +303,7 @@ const SV_MESSAGES: TranslationTable = {
   "learning.histogram.new": "Ny",
   "learning.histogram.label.scientific": "Vetenskaplig",
   "learning.histogram.label.vernacular": "Vardaglig",
-  "learning.histogram.label.either": "Vetenskaplig eller vardaglig",
+  "learning.histogram.label.either": "Endera",
   "learning.histogram.barTitle":
     "{label}: Ny {newPercent}%, Lärs in {learningPercent}%, Stärks {strengtheningPercent}%, Behärskad {masteredPercent}%",
 
