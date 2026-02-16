@@ -136,6 +136,16 @@ export interface LocalizedText {
   sv?: string;
 }
 
+/** Multilingual identification hint with an optional referenced species image. */
+export interface SpeciesIdentificationHint {
+  /** Stable hint id used for reliable updates in clients. */
+  id: string;
+  /** Localized hint text content. */
+  text: LocalizedText;
+  /** Optional referenced species image id for hint visuals. */
+  imageId?: string;
+}
+
 /** Image metadata for a species detail entry. */
 export interface SpeciesImage {
   /** Image id. */
@@ -215,7 +225,7 @@ export interface Species {
     /** Optional species images stored in Firebase Storage. */
     images?: SpeciesImage[];
     /** Optional localized identification hints shown in learning view. */
-    identificationHints?: LocalizedText[];
+    identificationHints?: SpeciesIdentificationHint[];
     /** @deprecated Legacy plain-text hints kept for backward compatibility. */
     identificationTips?: string[];
   };

@@ -83,6 +83,8 @@ const EN_MESSAGES = {
   "learn.cards.info.tab.pinkka": "Pinkka info",
   "learn.cards.info.identificationPlaceholder":
     "No identification hints available.",
+  "learn.cards.info.identificationImageAlt":
+    "Image referenced by identification hint",
   "learn.cards.info.noDescription": "No description available.",
   "manage.speciesForm.title.edit": "Edit Species",
   "manage.speciesForm.title.create": "Create New Species",
@@ -153,6 +155,18 @@ const EN_MESSAGES = {
   "manage.speciesHintDialog.action.cancel": "Cancel",
   "manage.speciesHintDialog.action.save": "Save Changes",
   "manage.speciesHintDialog.action.add": "Add Hint",
+  "manage.speciesHintDialog.section.imageReference": "Referenced Image",
+  "manage.speciesHintDialog.help.imageReference":
+    "Optionally attach one species image to the hint.",
+  "manage.speciesHintDialog.action.addImage": "Add Image",
+  "manage.speciesHintDialog.action.changeImage": "Change Image",
+  "manage.speciesHintDialog.action.deleteImage": "Delete Image",
+  "manage.speciesHintDialog.emptyImages": "No species images available.",
+  "manage.speciesHintDialog.imageDialog.title": "Select Referenced Image",
+  "manage.speciesHintDialog.imageDialog.description":
+    "Select one species image for this hint.",
+  "manage.speciesHintDialog.imageDialog.gridAria": "Species image selector",
+  "manage.speciesHintDialog.imageDialog.action.select": "Select Image",
 
   "test.settings.title": "Test Settings",
   "test.settings.description": "Customize how this test will run.",
@@ -288,6 +302,8 @@ const FI_MESSAGES: TranslationTable = {
   "learn.cards.info.tab.pinkka": "Pinkka-tiedot",
   "learn.cards.info.identificationPlaceholder":
     "Tunnistusvihjeitä ei ole saatavilla.",
+  "learn.cards.info.identificationImageAlt":
+    "Tunnistusvihjeeseen liitetty kuva",
   "learn.cards.info.noDescription": "Kuvausta ei saatavilla.",
   "manage.speciesForm.title.edit": "Muokkaa lajia",
   "manage.speciesForm.title.create": "Luo uusi laji",
@@ -359,6 +375,18 @@ const FI_MESSAGES: TranslationTable = {
   "manage.speciesHintDialog.action.cancel": "Peruuta",
   "manage.speciesHintDialog.action.save": "Tallenna muutokset",
   "manage.speciesHintDialog.action.add": "Lisää vihje",
+  "manage.speciesHintDialog.section.imageReference": "Viittauskuva",
+  "manage.speciesHintDialog.help.imageReference":
+    "Halutessasi voit liittää vihjeeseen yhden lajikuvan.",
+  "manage.speciesHintDialog.action.addImage": "Lisää kuva",
+  "manage.speciesHintDialog.action.changeImage": "Vaihda kuva",
+  "manage.speciesHintDialog.action.deleteImage": "Poista kuva",
+  "manage.speciesHintDialog.emptyImages": "Lajikuvia ei ole saatavilla.",
+  "manage.speciesHintDialog.imageDialog.title": "Valitse viittauskuva",
+  "manage.speciesHintDialog.imageDialog.description":
+    "Valitse yksi lajikuva tälle vihjeelle.",
+  "manage.speciesHintDialog.imageDialog.gridAria": "Lajikuvavalitsin",
+  "manage.speciesHintDialog.imageDialog.action.select": "Valitse kuva",
 
   "test.settings.title": "Testin asetukset",
   "test.settings.description": "Muokkaa testin toimintaa.",
@@ -486,6 +514,8 @@ const SV_MESSAGES: TranslationTable = {
   "learn.cards.info.tab.pinkka": "Pinkka-info",
   "learn.cards.info.identificationPlaceholder":
     "Inga identifieringsledtrådar tillgängliga.",
+  "learn.cards.info.identificationImageAlt":
+    "Bild som refereras av identifieringsledtråden",
   "learn.cards.info.noDescription": "Ingen beskrivning tillgänglig.",
   "manage.speciesForm.title.edit": "Redigera art",
   "manage.speciesForm.title.create": "Skapa ny art",
@@ -557,6 +587,18 @@ const SV_MESSAGES: TranslationTable = {
   "manage.speciesHintDialog.action.cancel": "Avbryt",
   "manage.speciesHintDialog.action.save": "Spara ändringar",
   "manage.speciesHintDialog.action.add": "Lägg till ledtråd",
+  "manage.speciesHintDialog.section.imageReference": "Referensbild",
+  "manage.speciesHintDialog.help.imageReference":
+    "Du kan valfritt koppla en artbild till ledtråden.",
+  "manage.speciesHintDialog.action.addImage": "Lägg till bild",
+  "manage.speciesHintDialog.action.changeImage": "Byt bild",
+  "manage.speciesHintDialog.action.deleteImage": "Ta bort bild",
+  "manage.speciesHintDialog.emptyImages": "Inga artbilder tillgängliga.",
+  "manage.speciesHintDialog.imageDialog.title": "Välj referensbild",
+  "manage.speciesHintDialog.imageDialog.description":
+    "Välj en artbild för den här ledtråden.",
+  "manage.speciesHintDialog.imageDialog.gridAria": "Artbildsväljare",
+  "manage.speciesHintDialog.imageDialog.action.select": "Välj bild",
 
   "test.settings.title": "Testinställningar",
   "test.settings.description": "Anpassa hur testet ska köras.",

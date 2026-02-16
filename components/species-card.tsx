@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,10 +12,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { KeyboardHint } from "@/components/ui/keyboard-hint";
-import type { Species } from "@/lib/types";
+import type {
+  LocalizedText,
+  Species,
+  SpeciesIdentificationHint,
+} from "@/lib/types";
 import {
   getLocalizedText,
   getSpeciesDescription,
+  getSpeciesImageUrl,
 } from "@/lib/content/content-display";
 import { useI18n } from "@/lib/i18n";
 import { ChevronRight, ExternalLink, Keyboard, X } from "lucide-react";
@@ -48,6 +54,12 @@ interface SpeciesCardProps {
 
 type InfoTab = "identification" | "pinkka";
 
+interface ResolvedIdentificationHint {
+  id: string;
+  text: string;
+  imageUrl?: string;
+}
+
 /** Interactive learning view with image navigation and side info pane controls. */
 export function SpeciesCard({
   species,
@@ -73,24 +85,54 @@ export function SpeciesCard({
     Record<number, PinkkaSpeciesDetail | null>
   >({});
 
-  const images = species.data.images ?? [];
+  const images = useMemo(
+    () => species.data.images ?? [],
+    [species.data.images],
+  );
   const pinkkaSpeciesId = species.pinkkaRef?.speciesId ?? null;
   const vernacularName = getLocalizedText(
     species.data.vernacularName,
     preferredLanguage,
   );
   const description = getSpeciesDescription(species.data, preferredLanguage);
-  const identificationHints = useMemo(() => {
-    const localizedHints = (species.data.identificationHints ?? [])
-      .map((hint) => getLocalizedText(hint, preferredLanguage).trim())
-      .filter((hint) => hint.length > 0);
+  const identificationHints = useMemo<ResolvedIdentificationHint[]>(() => {
+    const rawHints = (species.data.identificationHints ?? []) as Array<
+      SpeciesIdentificationHint | LocalizedText
+    >;
+    const localizedHints = rawHints
+      .map((hint, index) => {
+        const textSource = "text" in hint ? hint.text : hint;
+        const text = getLocalizedText(textSource, preferredLanguage).trim();
+        if (!text) return null;
+
+        const imageId = "imageId" in hint ? hint.imageId : undefined;
+        const image = imageId
+          ? images.find((candidate) => candidate.id === imageId)
+          : undefined;
+
+        return {
+          id: "id" in hint ? hint.id : `legacy-hint-${index}`,
+          text,
+          ...(image
+            ? { imageUrl: getSpeciesImageUrl(image) || "/placeholder.svg" }
+            : {}),
+        };
+      })
+      .filter((hint): hint is ResolvedIdentificationHint => hint !== null);
+
     if (localizedHints.length > 0) {
       return localizedHints;
     }
+
     return (species.data.identificationTips ?? [])
       .map((hint) => hint.trim())
-      .filter((hint) => hint.length > 0);
+      .filter((hint) => hint.length > 0)
+      .map((hint, index) => ({
+        id: `legacy-tip-${index}-${hint}`,
+        text: hint,
+      }));
   }, [
+    images,
     preferredLanguage,
     species.data.identificationHints,
     species.data.identificationTips,
@@ -318,12 +360,24 @@ export function SpeciesCard({
                   {activeInfoTab === "identification" ? (
                     identificationHints.length > 0 ? (
                       <ul className="space-y-2">
-                        {identificationHints.map((hint, index) => (
+                        {identificationHints.map((hint) => (
                           <li
-                            key={`${hint}-${index}`}
+                            key={hint.id}
                             className="rounded-md border border-border bg-muted/30 px-3 py-2 text-sm"
                           >
-                            {hint}
+                            {hint.imageUrl ? (
+                              <div className="relative mb-2 aspect-square w-full max-w-56 overflow-hidden rounded-md border border-border/70 bg-muted/20">
+                                <Image
+                                  src={hint.imageUrl}
+                                  alt={t(
+                                    "learn.cards.info.identificationImageAlt",
+                                  )}
+                                  fill
+                                  className="object-contain"
+                                />
+                              </div>
+                            ) : null}
+                            {hint.text}
                           </li>
                         ))}
                       </ul>

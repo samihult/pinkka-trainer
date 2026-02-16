@@ -9,8 +9,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ImageUpload } from "./image-upload";
-import { SpeciesIdentificationHintDialog } from "@/components/species-identification-hint-dialog";
-import type { LocalizedText, Species, SpeciesImage } from "@/lib/types";
+import {
+  SpeciesIdentificationHintDialog,
+  type SpeciesIdentificationHintDialogValue,
+} from "@/components/species-identification-hint-dialog";
+import type {
+  LocalizedText,
+  Species,
+  SpeciesIdentificationHint,
+  SpeciesImage,
+} from "@/lib/types";
 import { uploadSpeciesImage } from "@/lib/firebase/firestore-helpers";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -21,6 +29,35 @@ import { useI18n } from "@/lib/i18n";
 import Image from "next/image";
 
 type SpeciesFormTab = "information" | "pictures" | "identification";
+
+/** Generate a stable id for a newly created local identification hint. */
+function createHintId(): string {
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.randomUUID === "function"
+  ) {
+    return crypto.randomUUID();
+  }
+  return `hint-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+/** Normalize legacy hint payloads into the current structured hint format. */
+function normalizeIdentificationHint(
+  hint: SpeciesIdentificationHint | LocalizedText,
+): SpeciesIdentificationHint {
+  if ("text" in hint) {
+    return {
+      id: hint.id || createHintId(),
+      text: hint.text,
+      ...(hint.imageId ? { imageId: hint.imageId } : {}),
+    };
+  }
+
+  return {
+    id: createHintId(),
+    text: hint,
+  };
+}
 
 /** Props for creating or editing a species. */
 interface SpeciesFormProps {
@@ -73,15 +110,22 @@ export function SpeciesForm({
     species?.data.images || [],
   );
   const [identificationHints, setIdentificationHints] = useState<
-    LocalizedText[]
+    SpeciesIdentificationHint[]
   >(() => {
     if (species?.data.identificationHints?.length) {
-      return species.data.identificationHints;
+      const rawHints = species.data.identificationHints as Array<
+        SpeciesIdentificationHint | LocalizedText
+      >;
+      return rawHints.map(normalizeIdentificationHint);
     }
-    return (species?.data.identificationTips ?? []).map((tip) => ({ fi: tip }));
+
+    return (species?.data.identificationTips ?? []).map((tip) => ({
+      id: createHintId(),
+      text: { fi: tip },
+    }));
   });
   const [isHintDialogOpen, setIsHintDialogOpen] = useState(false);
-  const [editingHintIndex, setEditingHintIndex] = useState<number | null>(null);
+  const [editingHintId, setEditingHintId] = useState<string | null>(null);
   const [testImageIds, setTestImageIds] = useState<string[]>(() => {
     const imageIds = (species?.data.images || []).map((image) => image.id);
     const existingIds = species?.testImageIds?.filter((id) =>
@@ -97,9 +141,18 @@ export function SpeciesForm({
   const { t } = useI18n();
   const { toast } = useToast();
   const testSelectionError = images.length > 0 && testImageIds.length === 0;
-  const editingHintValue =
-    editingHintIndex !== null
-      ? identificationHints[editingHintIndex]
+  const editingHintValue: SpeciesIdentificationHintDialogValue | undefined =
+    editingHintId !== null
+      ? (() => {
+          const currentHint = identificationHints.find(
+            (hint) => hint.id === editingHintId,
+          );
+          if (!currentHint) return undefined;
+          return {
+            text: currentHint.text,
+            ...(currentHint.imageId ? { imageId: currentHint.imageId } : {}),
+          };
+        })()
       : undefined;
 
   useEffect(() => {
@@ -111,6 +164,15 @@ export function SpeciesForm({
       const newIds = imageIds.filter((id) => !previousImageIds.includes(id));
       return [...preserved, ...newIds];
     });
+
+    const imageIdSet = new Set(imageIds);
+    setIdentificationHints((prev) =>
+      prev.map((hint) =>
+        hint.imageId && !imageIdSet.has(hint.imageId)
+          ? { ...hint, imageId: undefined }
+          : hint,
+      ),
+    );
 
     previousImageIdsRef.current = imageIds;
   }, [images]);
@@ -212,13 +274,28 @@ export function SpeciesForm({
       if (descriptionBody.sv) {
         descriptionTitle.sv = descriptionEntry?.title?.sv ?? "Description";
       }
+      const imageIdSet = new Set(images.map((image) => image.id));
       const normalizedIdentificationHints = identificationHints
-        .map((hint) => ({
-          ...(hint.fi?.trim() ? { fi: hint.fi.trim() } : {}),
-          ...(hint.en?.trim() ? { en: hint.en.trim() } : {}),
-          ...(hint.sv?.trim() ? { sv: hint.sv.trim() } : {}),
-        }))
-        .filter((hint) => Object.keys(hint).length > 0);
+        .map((hint) => {
+          const normalizedText = {
+            ...(hint.text.fi?.trim() ? { fi: hint.text.fi.trim() } : {}),
+            ...(hint.text.en?.trim() ? { en: hint.text.en.trim() } : {}),
+            ...(hint.text.sv?.trim() ? { sv: hint.text.sv.trim() } : {}),
+          };
+
+          if (Object.keys(normalizedText).length === 0) {
+            return null;
+          }
+
+          return {
+            id: hint.id,
+            text: normalizedText,
+            ...(hint.imageId && imageIdSet.has(hint.imageId)
+              ? { imageId: hint.imageId }
+              : {}),
+          };
+        })
+        .filter((hint): hint is SpeciesIdentificationHint => hint !== null);
       const detail: Species["data"] = {
         ...(species?.data || {}),
         taxonId: species?.data.taxonId || `local-${Date.now()}`,
@@ -280,33 +357,45 @@ export function SpeciesForm({
   const handleHintDialogOpenChange = (open: boolean) => {
     setIsHintDialogOpen(open);
     if (!open) {
-      setEditingHintIndex(null);
+      setEditingHintId(null);
     }
   };
 
   const handleAddHint = () => {
-    setEditingHintIndex(null);
+    setEditingHintId(null);
     setIsHintDialogOpen(true);
   };
 
-  const handleEditHint = (index: number) => {
-    setEditingHintIndex(index);
+  const handleEditHint = (hintId: string) => {
+    setEditingHintId(hintId);
     setIsHintDialogOpen(true);
   };
 
-  const handleDeleteHint = (index: number) => {
-    setIdentificationHints((prev) =>
-      prev.filter((_, hintIndex) => hintIndex !== index),
-    );
+  const handleDeleteHint = (hintId: string) => {
+    setIdentificationHints((prev) => prev.filter((hint) => hint.id !== hintId));
   };
 
-  const handleSaveHint = (value: LocalizedText) => {
+  const handleSaveHint = (value: SpeciesIdentificationHintDialogValue) => {
     setIdentificationHints((prev) => {
-      if (editingHintIndex === null) {
-        return [...prev, value];
+      if (editingHintId === null) {
+        return [
+          ...prev,
+          {
+            id: createHintId(),
+            text: value.text,
+            ...(value.imageId ? { imageId: value.imageId } : {}),
+          },
+        ];
       }
-      return prev.map((hint, index) =>
-        index === editingHintIndex ? value : hint,
+
+      return prev.map((hint) =>
+        hint.id === editingHintId
+          ? {
+              ...hint,
+              text: value.text,
+              ...(value.imageId ? { imageId: value.imageId } : {}),
+            }
+          : hint,
       );
     });
     handleHintDialogOpenChange(false);
@@ -560,48 +649,80 @@ export function SpeciesForm({
                 </p>
               ) : (
                 <div className="space-y-2">
-                  {identificationHints.map((hint, index) => (
-                    <div
-                      key={`${hint.fi ?? hint.en ?? hint.sv ?? "hint"}-${index}`}
-                      className="flex items-start justify-between gap-2 rounded-md border border-border px-3 py-2"
-                    >
-                      <div className="space-y-1 text-sm">
-                        {hint.fi ? (
-                          <p className="whitespace-pre-wrap">
-                            <span className="font-medium">FI:</span> {hint.fi}
-                          </p>
-                        ) : null}
-                        {hint.en ? (
-                          <p className="whitespace-pre-wrap">
-                            <span className="font-medium">EN:</span> {hint.en}
-                          </p>
-                        ) : null}
-                        {hint.sv ? (
-                          <p className="whitespace-pre-wrap">
-                            <span className="font-medium">SV:</span> {hint.sv}
-                          </p>
-                        ) : null}
+                  {identificationHints.map((hint, index) => {
+                    const referencedImageIndex = hint.imageId
+                      ? images.findIndex((image) => image.id === hint.imageId)
+                      : -1;
+                    const referencedImage =
+                      referencedImageIndex >= 0
+                        ? images[referencedImageIndex]
+                        : undefined;
+                    const referencedImageUrl = referencedImage
+                      ? getSpeciesImageUrl(referencedImage) ||
+                        "/placeholder.svg"
+                      : null;
+
+                    return (
+                      <div
+                        key={hint.id}
+                        className="flex items-start justify-between gap-2 rounded-md border border-border px-3 py-2"
+                      >
+                        <div className="space-y-2 text-sm">
+                          {referencedImageUrl ? (
+                            <div className="relative aspect-square w-24 overflow-hidden rounded-md border border-border/70 bg-muted/20">
+                              <Image
+                                src={referencedImageUrl}
+                                alt={t("manage.speciesForm.imageAlt", {
+                                  number:
+                                    referencedImageIndex >= 0
+                                      ? referencedImageIndex + 1
+                                      : index + 1,
+                                })}
+                                fill
+                                className="object-contain"
+                              />
+                            </div>
+                          ) : null}
+                          {hint.text.fi ? (
+                            <p className="whitespace-pre-wrap">
+                              <span className="font-medium">FI:</span>{" "}
+                              {hint.text.fi}
+                            </p>
+                          ) : null}
+                          {hint.text.en ? (
+                            <p className="whitespace-pre-wrap">
+                              <span className="font-medium">EN:</span>{" "}
+                              {hint.text.en}
+                            </p>
+                          ) : null}
+                          {hint.text.sv ? (
+                            <p className="whitespace-pre-wrap">
+                              <span className="font-medium">SV:</span>{" "}
+                              {hint.text.sv}
+                            </p>
+                          ) : null}
+                        </div>
+                        <div className="flex shrink-0 items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleEditHint(hint.id)}
+                          >
+                            {t("manage.speciesForm.action.editHint")}
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleDeleteHint(hint.id)}
+                          >
+                            {t("manage.speciesForm.action.deleteHint")}
+                          </Button>
+                        </div>
                       </div>
-                      <div className="flex shrink-0 items-center gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEditHint(index)}
-                        >
-                          {t("manage.speciesForm.action.editHint")}
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleDeleteHint(index)}
-                        >
-                          {t("manage.speciesForm.action.deleteHint")}
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -621,11 +742,13 @@ export function SpeciesForm({
           </div>
         </form>
         <SpeciesIdentificationHintDialog
+          key={`${editingHintId ?? "new"}-${isHintDialogOpen ? "open" : "closed"}`}
           open={isHintDialogOpen}
           onOpenChange={handleHintDialogOpenChange}
+          availableImages={images}
           initialValue={editingHintValue}
           onSave={handleSaveHint}
-          mode={editingHintIndex === null ? "create" : "edit"}
+          mode={editingHintId === null ? "create" : "edit"}
         />
       </CardContent>
     </Card>

@@ -7,4 +7,4 @@ Shared application logic and domain models.
 - `firebase/`: Firebase client configuration and Firestore data helpers.
 - `hooks/`: Shared hooks used across app routes and components.
 - `types.ts`: Core TypeScript domain types for users, content, and learning state, including species-level multilingual
-  identification hint support used in learning mode.
+  identification hint support used in learning mode, with stable hint ids and optional referenced species image ids.
