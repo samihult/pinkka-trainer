@@ -62,7 +62,7 @@ export function StackLearningHistogram({
   ] as const;
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-2">
       <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-emerald-600" />
