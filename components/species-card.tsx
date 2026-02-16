@@ -22,6 +22,7 @@ import {
   getSpeciesImageUrl,
 } from "@/lib/content/content-display";
 import { useI18n } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 import { ChevronRight, ExternalLink, Keyboard, X } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 import { useLanguagePreference } from "@/lib/language-context";
@@ -74,6 +75,7 @@ export function SpeciesCard({
   const preferredLanguage = toLanguageCode(language);
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
   const [isCarouselModalOpen, setIsCarouselModalOpen] = useState(false);
+  const [activeHintId, setActiveHintId] = useState<string | null>(null);
   const [carouselState, setCarouselState] = useState<{
     speciesId: string;
     activeIndex: number;
@@ -81,6 +83,7 @@ export function SpeciesCard({
     speciesId: species.id,
     activeIndex: 0,
   });
+  const pendingHintNavigationRef = useRef(false);
   const [activeInfoTab, setActiveInfoTab] = useState<InfoTab>("pinkka");
   const [pinkkaDetail, setPinkkaDetail] = useState<PinkkaSpeciesDetail | null>(
     null,
@@ -220,23 +223,65 @@ export function SpeciesCard({
   }, [activeInfoTab, isInfoPanelOpen, pinkkaSpeciesId]);
 
   const handleCarouselIndexChange = (index: number) => {
-    setCarouselState((prev) => {
-      if (prev.speciesId === species.id && prev.activeIndex === index) {
-        return prev;
-      }
-      return {
-        speciesId: species.id,
-        activeIndex: index,
-      };
+    if (index === activeCarouselIndex) {
+      return;
+    }
+
+    setCarouselState({
+      speciesId: species.id,
+      activeIndex: index,
     });
+
+    if (pendingHintNavigationRef.current) {
+      pendingHintNavigationRef.current = false;
+      return;
+    }
+
+    setActiveHintId(null);
   };
 
   const handleHintClick = (hint: ResolvedIdentificationHint) => {
+    if (activeHintId === hint.id) {
+      setActiveHintId(null);
+      return;
+    }
+
+    setActiveHintId(hint.id);
+
     if (hint.imageIndex === undefined) {
       return;
     }
+
+    if (hint.imageIndex === activeCarouselIndex) {
+      return;
+    }
+
+    pendingHintNavigationRef.current = true;
     handleCarouselIndexChange(hint.imageIndex);
   };
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!(event.target instanceof Element)) return;
+      if (
+        event.target.closest(
+          "button, a, input, textarea, select, [role='button'], [role='link'], [role='option'], [data-interactive='true']",
+        )
+      ) {
+        return;
+      }
+      setActiveHintId(null);
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown, {
+      capture: true,
+    });
+    return () => {
+      window.removeEventListener("pointerdown", handlePointerDown, {
+        capture: true,
+      });
+    };
+  }, []);
 
   const shortcutContent = useMemo(
     () => [
@@ -332,19 +377,21 @@ export function SpeciesCard({
                   : "h-full"
               }
             >
-              <SpeciesImageCarousel
-                images={images}
-                alt={species.data.scientificName}
-                resetKey={species.id}
-                activeIndex={activeCarouselIndex}
-                onIndexChange={handleCarouselIndexChange}
-                onModalOpenChange={setIsCarouselModalOpen}
-                heightClassName="h-full"
-                fullScreenLightboxProps={{
-                  captions: { hidden: true, showToggle: false },
-                  zoom: { maxZoomPixelRatio: 3 },
-                }}
-              />
+              <div data-interactive="true" className="h-full">
+                <SpeciesImageCarousel
+                  images={images}
+                  alt={species.data.scientificName}
+                  resetKey={species.id}
+                  activeIndex={activeCarouselIndex}
+                  onIndexChange={handleCarouselIndexChange}
+                  onModalOpenChange={setIsCarouselModalOpen}
+                  heightClassName="h-full"
+                  fullScreenLightboxProps={{
+                    captions: { hidden: true, showToggle: false },
+                    zoom: { maxZoomPixelRatio: 3 },
+                  }}
+                />
+              </div>
             </div>
             {isInfoPanelOpen ? (
               <aside className="flex min-h-0 flex-col bg-card">
@@ -399,24 +446,26 @@ export function SpeciesCard({
                   {activeInfoTab === "identification" ? (
                     identificationHints.length > 0 ? (
                       <ul className="space-y-2">
-                        {identificationHints.map((hint) => (
-                          <li
-                            key={hint.id}
-                            className="rounded-md border border-border bg-muted/30 px-3 py-2 text-sm"
-                          >
-                            {hint.imageIndex !== undefined ? (
+                        {identificationHints.map((hint) => {
+                          const isActive = activeHintId === hint.id;
+                          return (
+                            <li key={hint.id}>
                               <button
                                 type="button"
-                                className="w-full text-left hover:text-foreground/90"
+                                className={cn(
+                                  "w-full rounded-md border border-border px-3 py-2 text-left text-sm transition-colors duration-200",
+                                  isActive
+                                    ? "bg-primary hover:bg-primary/90 text-background/90"
+                                    : "bg-muted hover:bg-muted/60 hover:text-foreground/90",
+                                )}
                                 onClick={() => handleHintClick(hint)}
+                                aria-pressed={isActive}
                               >
                                 {hint.text}
                               </button>
-                            ) : (
-                              hint.text
-                            )}
-                          </li>
-                        ))}
+                            </li>
+                          );
+                        })}
                       </ul>
                     ) : (
                       <p className="text-sm text-muted-foreground">
