@@ -5,6 +5,7 @@ import Lightbox, {
   LightboxExternalProps,
   type Slide,
   type ControllerRef,
+  type ZoomRef,
 } from "yet-another-react-lightbox";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import Inline from "yet-another-react-lightbox/plugins/inline";
@@ -70,6 +71,7 @@ export function SpeciesImageCarousel({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const inlineControllerRef = useRef<ControllerRef | null>(null);
   const modalControllerRef = useRef<ControllerRef | null>(null);
+  const modalZoomRef = useRef<ZoomRef | null>(null);
   const lightboxKey = useMemo(
     () => resetKey ?? images.map((image) => image.id).join("-"),
     [resetKey, images],
@@ -171,19 +173,42 @@ export function SpeciesImageCarousel({
       }
 
       if (event.key === "ArrowUp") {
-        if (enableModal) {
+        if (isLightboxOpen) {
+          event.preventDefault();
+          const modalZoom = modalZoomRef.current;
+          if (modalZoom && !modalZoom.disabled) {
+            modalZoom.zoomIn();
+          }
+          modalControllerRef.current?.focus();
+        } else if (enableModal) {
+          event.preventDefault();
           setIsLightboxOpen(true);
+          controller.focus();
         }
-        controller.focus();
       } else if (event.key === "ArrowDown") {
-        setIsLightboxOpen(false);
+        if (isLightboxOpen) {
+          event.preventDefault();
+          const modalZoom = modalZoomRef.current;
+          const canZoomOut =
+            modalZoom !== null &&
+            !modalZoom.disabled &&
+            modalZoom.zoom - modalZoom.minZoom > 0.001;
+          if (canZoomOut) {
+            modalZoom.zoomOut();
+            modalControllerRef.current?.focus();
+          } else {
+            setIsLightboxOpen(false);
+          }
+        } else {
+          setIsLightboxOpen(false);
+        }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown, { capture: true });
     return () =>
       window.removeEventListener("keydown", handleKeyDown, { capture: true });
-  }, [isLightboxOpen]);
+  }, [enableModal, isLightboxOpen]);
 
   if (slides.length === 0) {
     return (
@@ -227,6 +252,7 @@ export function SpeciesImageCarousel({
           index={currentImageIndex}
           on={{ view: handleView }}
           controller={{ ref: modalControllerRef }}
+          zoom={{ ref: modalZoomRef }}
           toolbar={{ buttons: ["zoom", "close"] }}
           captions={{ showToggle: false }}
           thumbnails={{ showToggle: false, hidden: !showPagination }}

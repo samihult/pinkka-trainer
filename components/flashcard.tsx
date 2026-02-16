@@ -73,8 +73,8 @@ export function Flashcard({
   const shortcutContent = useMemo(
     () => [
       { label: "Flip card", keys: ["Space"] },
-      { label: "Open larger", keys: ["↑"] },
-      { label: "Show smaller", keys: ["↓"] },
+      { label: "Open larger / zoom in", keys: ["↑"] },
+      { label: "Zoom out / close at fit", keys: ["↓"] },
       { label: "Previous image", keys: ["←"] },
       { label: "Next image", keys: ["→"] },
       { label: "Previous card", keys: ["⌘/Ctrl", "←"] },
