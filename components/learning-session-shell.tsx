@@ -22,6 +22,8 @@ export interface LearningSessionShellProps {
   progressSegments?: LearningProgressSegment[];
   /** Active segment index for segmented progress rendering. */
   activeProgressSegmentIndex?: number;
+  /** Whether segmented progress should show hover/focus name overlays. */
+  showProgressSegmentNameOverlay?: boolean;
   /** Optional callback for segment click navigation. */
   onSelectProgressSegment?: (index: number) => void;
   /** Optional progress label shown in the header. */
@@ -41,6 +43,7 @@ export function LearningSessionShell({
   progressValue,
   progressSegments,
   activeProgressSegmentIndex = 0,
+  showProgressSegmentNameOverlay = true,
   onSelectProgressSegment,
   progressLabel,
   headerAction,
@@ -82,6 +85,7 @@ export function LearningSessionShell({
           <SegmentedLearningProgress
             segments={progressSegments ?? []}
             activeIndex={activeProgressSegmentIndex}
+            showNameOverlay={showProgressSegmentNameOverlay}
             onSelectIndex={onSelectProgressSegment}
           />
         ) : (

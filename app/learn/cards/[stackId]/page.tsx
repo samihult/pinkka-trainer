@@ -195,6 +195,7 @@ export default function CardsPage() {
       progressValue={progressValue}
       progressSegments={progressSegments}
       activeProgressSegmentIndex={currentIndex}
+      showProgressSegmentNameOverlay={isInfoPanelOpen}
       onSelectProgressSegment={handleSelectSpeciesFromProgress}
       progressLabel={t("learn.cards.progressLabel", {
         current: currentIndex + 1,

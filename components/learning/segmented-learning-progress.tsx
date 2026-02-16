@@ -19,6 +19,8 @@ export interface SegmentedLearningProgressProps {
   segments: LearningProgressSegment[];
   /** Zero-based index of the currently active species. */
   activeIndex: number;
+  /** Whether the zoomed name overlay is shown on hover/focus. */
+  showNameOverlay?: boolean;
   /** Called when a segment reaction area is clicked. */
   onSelectIndex?: (index: number) => void;
   /** Optional class name for outer wrapper styling overrides. */
@@ -29,6 +31,7 @@ export interface SegmentedLearningProgressProps {
 export function SegmentedLearningProgress({
   segments,
   activeIndex,
+  showNameOverlay = true,
   onSelectIndex,
   className,
 }: SegmentedLearningProgressProps) {
@@ -47,6 +50,7 @@ export function SegmentedLearningProgress({
             isActive={index === activeIndex}
             isVisited={index <= activeIndex}
             isHovered={hoveredIndex === index}
+            showNameOverlay={showNameOverlay}
             onHoverStart={() => setHoveredIndex(index)}
             onHoverEnd={() =>
               setHoveredIndex((current) => (current === index ? null : current))
@@ -67,6 +71,7 @@ type SegmentProgressItemProps = {
   isActive: boolean;
   isVisited: boolean;
   isHovered: boolean;
+  showNameOverlay: boolean;
   onHoverStart: () => void;
   onHoverEnd: () => void;
   onSelectIndex?: (index: number) => void;
@@ -94,6 +99,7 @@ function SegmentProgressItem({
   isActive,
   isVisited,
   isHovered,
+  showNameOverlay,
   onHoverStart,
   onHoverEnd,
   onSelectIndex,
@@ -105,6 +111,8 @@ function SegmentProgressItem({
   );
 
   useLayoutEffect(() => {
+    if (!showNameOverlay) return;
+
     const barElement = barRef.current;
     const popupElement = popupRef.current;
     if (!barElement || !popupElement) return;
@@ -136,7 +144,7 @@ function SegmentProgressItem({
     resizeObserver.observe(popupElement);
 
     return () => resizeObserver.disconnect();
-  }, [segment.scientificName, segment.vernacularName]);
+  }, [segment.scientificName, segment.vernacularName, showNameOverlay]);
 
   const barToneClasses = isActive
     ? "bg-primary"
@@ -155,6 +163,7 @@ function SegmentProgressItem({
     transform: isHovered ? expandedTransform : restingTransform,
     clipPath: isHovered ? expandedClipPath : restingClipPath,
   };
+  const shouldShowPopup = showNameOverlay && isHovered;
 
   return (
     <button
@@ -188,36 +197,38 @@ function SegmentProgressItem({
         )}
       />
 
-      <div
-        ref={popupRef}
-        aria-hidden
-        className={cn(
-          "pointer-events-none absolute left-1/2 top-1/2 z-20 w-max max-w-[18rem] px-3 py-2 shadow-lg",
-          "transition-[transform,clip-path,opacity] duration-100 ease-out ease-in",
-          popupToneClasses,
-          isHovered ? "opacity-100" : "opacity-0",
-        )}
-        style={popupStyle}
-      >
-        <p
+      {showNameOverlay ? (
+        <div
+          ref={popupRef}
+          aria-hidden
           className={cn(
-            "text-sm font-semibold leading-tight italic transition-opacity duration-150",
-            isHovered ? "opacity-100" : "opacity-0",
+            "pointer-events-none absolute left-1/2 top-1/2 z-20 w-max max-w-[18rem] px-3 py-2 shadow-lg",
+            "transition-[transform,clip-path,opacity] duration-100 ease-out ease-in",
+            popupToneClasses,
+            shouldShowPopup ? "opacity-100" : "opacity-0",
           )}
+          style={popupStyle}
         >
-          {segment.scientificName}
-        </p>
-        {segment.vernacularName ? (
           <p
             className={cn(
-              "text-xs leading-tight transition-opacity duration-150",
-              isHovered ? "opacity-90" : "opacity-0",
+              "text-sm font-semibold leading-tight italic transition-opacity duration-150",
+              shouldShowPopup ? "opacity-100" : "opacity-0",
             )}
           >
-            {segment.vernacularName}
+            {segment.scientificName}
           </p>
-        ) : null}
-      </div>
+          {segment.vernacularName ? (
+            <p
+              className={cn(
+                "text-xs leading-tight transition-opacity duration-150",
+                shouldShowPopup ? "opacity-90" : "opacity-0",
+              )}
+            >
+              {segment.vernacularName}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
     </button>
   );
 }
