@@ -81,7 +81,7 @@ export function StackLearningHistogram({
           {t("learning.histogram.new")}
         </span>
       </div>
-      <div className="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-3 gap-y-2">
+      <div className="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-3 gap-y-1">
         {rows.map((row) => (
           <Fragment key={row.key}>
             <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
