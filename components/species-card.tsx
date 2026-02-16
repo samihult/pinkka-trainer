@@ -15,6 +15,7 @@ import {
   getLocalizedText,
   getSpeciesDescription,
 } from "@/lib/content/content-display";
+import { useI18n } from "@/lib/i18n";
 import { ChevronLeft, ChevronRight, Keyboard, RotateCw, X } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 import { useLanguagePreference } from "@/lib/language-context";
@@ -24,33 +25,37 @@ import { toLanguageCode } from "@/lib/local-preferences";
 interface SpeciesCardProps {
   /** Species displayed on the card. */
   species: Species;
-  /** Advance to the next card. */
+  /** Advance to the next item. */
   onNext: () => void;
-  /** Navigate to the previous card. */
+  /** Navigate to the previous item. */
   onPrevious: () => void;
-  /** Zero-based index of the current card. */
+  /** Zero-based index of the current item. */
   currentIndex: number;
-  /** Total number of cards in the session. */
+  /** Total number of items in the session. */
   total: number;
-  /** Whether the backside panel is currently visible. */
-  isBacksidePanelOpen: boolean;
-  /** Toggle the backside panel visibility. */
-  onToggleBacksidePanel: () => void;
+  /** Whether the info pane is currently visible. */
+  isInfoPanelOpen: boolean;
+  /** Toggle the info pane visibility. */
+  onToggleInfoPanel: () => void;
 }
 
-/** Interactive learning card with image navigation and backside panel controls. */
+type InfoTab = "identification" | "pinkka";
+
+/** Interactive learning view with image navigation and side info pane controls. */
 export function SpeciesCard({
   species,
   onNext,
   onPrevious,
   currentIndex,
   total,
-  isBacksidePanelOpen,
-  onToggleBacksidePanel,
+  isInfoPanelOpen,
+  onToggleInfoPanel,
 }: SpeciesCardProps) {
   const { language } = useLanguagePreference();
+  const { t } = useI18n();
   const preferredLanguage = toLanguageCode(language);
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
+  const [activeInfoTab, setActiveInfoTab] = useState<InfoTab>("pinkka");
 
   const images = species.data.images ?? [];
   const vernacularName = getLocalizedText(
@@ -65,15 +70,17 @@ export function SpeciesCard({
 
   const shortcutContent = useMemo(
     () => [
-      { label: "Toggle backside panel", keys: ["Space"] },
-      { label: "Open larger / zoom in", keys: ["↑"] },
-      { label: "Zoom out / close at fit", keys: ["↓"] },
-      { label: "Previous image", keys: ["←"] },
-      { label: "Next image", keys: ["→"] },
-      { label: "Previous card", keys: ["⌘/Ctrl", "←"] },
-      { label: "Next card", keys: ["⌘/Ctrl", "→"] },
+      { label: t("learn.cards.shortcut.toggleInfoPanel"), keys: ["Space"] },
+      { label: t("learn.cards.shortcut.openLarger"), keys: ["↑"] },
+      { label: t("learn.cards.shortcut.zoomOut"), keys: ["↓"] },
+      { label: t("learn.cards.shortcut.previousImage"), keys: ["←"] },
+      { label: t("learn.cards.shortcut.nextImage"), keys: ["→"] },
+      { label: t("learn.cards.shortcut.previousSpecies"), keys: ["⌘/Ctrl", "←"] },
+      { label: t("learn.cards.shortcut.nextSpecies"), keys: ["⌘/Ctrl", "→"] },
+      { label: t("learn.cards.shortcut.showIdentificationTab"), keys: ["1"] },
+      { label: t("learn.cards.shortcut.showPinkkaTab"), keys: ["2"] },
     ],
-    [],
+    [t],
   );
 
   useEffect(() => {
@@ -93,7 +100,19 @@ export function SpeciesCard({
 
       if (event.key === " " || event.code === "Space") {
         event.preventDefault();
-        onToggleBacksidePanel();
+        onToggleInfoPanel();
+        return;
+      }
+
+      if (isInfoPanelOpen && event.key === "1") {
+        event.preventDefault();
+        setActiveInfoTab("identification");
+        return;
+      }
+
+      if (isInfoPanelOpen && event.key === "2") {
+        event.preventDefault();
+        setActiveInfoTab("pinkka");
         return;
       }
 
@@ -113,63 +132,103 @@ export function SpeciesCard({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onNext, onPrevious, onToggleBacksidePanel]);
+  }, [isInfoPanelOpen, onNext, onPrevious, onToggleInfoPanel]);
 
   return (
     <div className="relative h-full w-full">
       <Card className="absolute inset-x-4 top-0 bottom-24 overflow-hidden p-0 sm:inset-x-8">
         <CardContent className="h-full p-0">
-          <SpeciesImageCarousel
-            images={images}
-            alt={species.data.scientificName}
-            resetKey={species.id}
-            heightClassName="h-full"
-            fullScreenLightboxProps={{
-              captions: { hidden: true, showToggle: false },
-            }}
-          />
-
-          {isBacksidePanelOpen ? (
-            <div className="absolute top-4 right-4 bottom-4 z-10 flex w-[min(30rem,calc(100%-2rem))]">
-              <div className="flex h-full w-full flex-col rounded-lg border border-border/80 bg-card/95 shadow-lg backdrop-blur-sm">
-                <div className="flex items-start justify-between gap-3 border-b px-4 py-3">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Backside
-                    </p>
-                    <h2 className="line-clamp-2 text-lg font-semibold">
-                      {species.data.scientificName}
-                    </h2>
-                    {vernacularName ? (
-                      <p className="text-sm text-primary">{vernacularName}</p>
-                    ) : null}
-                  </div>
+          {isInfoPanelOpen ? (
+            <div className="grid h-full min-h-0 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+              <div className="min-h-0 border-b md:border-b-0 md:border-r">
+                <SpeciesImageCarousel
+                  images={images}
+                  alt={species.data.scientificName}
+                  resetKey={species.id}
+                  heightClassName="h-full"
+                  fullScreenLightboxProps={{
+                    captions: { hidden: true, showToggle: false },
+                  }}
+                />
+              </div>
+              <aside className="flex min-h-0 flex-col bg-card">
+                <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
+                  <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                    {t("learn.cards.info.title")}
+                  </p>
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon"
-                    onClick={onToggleBacksidePanel}
-                    aria-label="Hide backside panel"
+                    onClick={onToggleInfoPanel}
+                    aria-label={t("learn.cards.info.hideAria")}
                   >
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
-
+                <div className="border-b px-4 py-2">
+                  <div className="inline-flex rounded-md border border-border bg-muted/40 p-1">
+                    <Button
+                      type="button"
+                      variant={
+                        activeInfoTab === "identification" ? "secondary" : "ghost"
+                      }
+                      size="sm"
+                      onClick={() => setActiveInfoTab("identification")}
+                    >
+                      1. {t("learn.cards.info.tab.identification")}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={activeInfoTab === "pinkka" ? "secondary" : "ghost"}
+                      size="sm"
+                      onClick={() => setActiveInfoTab("pinkka")}
+                    >
+                      2. {t("learn.cards.info.tab.pinkka")}
+                    </Button>
+                  </div>
+                </div>
                 <div className="min-h-0 flex-1 overflow-y-auto p-4">
-                  {description ? (
-                    <div
-                      className="text-sm text-muted-foreground leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
-                      dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
-                    />
-                  ) : (
+                  {activeInfoTab === "identification" ? (
                     <p className="text-sm text-muted-foreground">
-                      No description available.
+                      {t("learn.cards.info.identificationPlaceholder")}
                     </p>
+                  ) : (
+                    <div className="space-y-3">
+                      <div>
+                        <h2 className="line-clamp-2 text-lg font-semibold">
+                          {species.data.scientificName}
+                        </h2>
+                        {vernacularName ? (
+                          <p className="text-sm text-primary">{vernacularName}</p>
+                        ) : null}
+                      </div>
+                      {description ? (
+                        <div
+                          className="text-sm leading-relaxed text-muted-foreground [&_p]:mb-4 [&_p:last-child]:mb-0"
+                          dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+                        />
+                      ) : (
+                        <p className="text-sm text-muted-foreground">
+                          {t("learn.cards.info.noDescription")}
+                        </p>
+                      )}
+                    </div>
                   )}
                 </div>
-              </div>
+              </aside>
             </div>
-          ) : null}
+          ) : (
+            <SpeciesImageCarousel
+              images={images}
+              alt={species.data.scientificName}
+              resetKey={species.id}
+              heightClassName="h-full"
+              fullScreenLightboxProps={{
+                captions: { hidden: true, showToggle: false },
+              }}
+            />
+          )}
         </CardContent>
       </Card>
 
@@ -181,13 +240,15 @@ export function SpeciesCard({
           size="lg"
         >
           <ChevronLeft className="mr-1 h-4 w-4" />
-          Previous
+          {t("learn.cards.previous")}
         </Button>
 
         <div className="flex items-center gap-2">
-          <Button onClick={onToggleBacksidePanel} variant="outline" size="lg">
+          <Button onClick={onToggleInfoPanel} variant="outline" size="lg">
             <RotateCw className="mr-1 h-4 w-4" />
-            {isBacksidePanelOpen ? "Hide Backside" : "Show Backside"}
+            {isInfoPanelOpen
+              ? t("learn.cards.info.hide")
+              : t("learn.cards.info.show")}
           </Button>
           <TooltipProvider>
             <Tooltip
@@ -198,7 +259,7 @@ export function SpeciesCard({
                 <Button
                   variant="ghost"
                   size="icon"
-                  aria-label="Keyboard shortcuts"
+                  aria-label={t("learn.cards.keyboardAria")}
                   onClick={() => setKeyboardTooltipOpen(true)}
                 >
                   <Keyboard className="h-4 w-4" />
@@ -206,7 +267,9 @@ export function SpeciesCard({
               </TooltipTrigger>
               <TooltipContent className="w-56">
                 <div className="space-y-2 text-xs">
-                  <div className="text-muted-foreground">Shortcuts</div>
+                  <div className="text-muted-foreground">
+                    {t("learn.cards.shortcutsTitle")}
+                  </div>
                   <div className="space-y-1">
                     {shortcutContent.map((shortcut) => (
                       <div
@@ -238,7 +301,7 @@ export function SpeciesCard({
           disabled={currentIndex === total - 1}
           size="lg"
         >
-          Next
+          {t("learn.cards.next")}
           <ChevronRight className="ml-1 h-4 w-4" />
         </Button>
       </div>

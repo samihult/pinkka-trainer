@@ -26,18 +26,20 @@ import {
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
+import { useI18n } from "@/lib/i18n";
 import { Shuffle } from "lucide-react";
 import Link from "next/link";
 
 const LEGACY_BACKSIDE_PANEL_QUERY_PARAM = "back";
-const LEARNING_PANEL_QUERY_PARAM = "learningPanel";
+const LEARNING_INFO_PANEL_QUERY_PARAM = "learningPanel";
 
-function parseBacksidePanelVisibility(value: string | null): boolean {
+function parseInfoPanelVisibility(value: string | null): boolean {
   return value === "1" || value === "true" || value === "open";
 }
 
 export default function CardsPage() {
   const { language } = useLanguagePreference();
+  const { t } = useI18n();
   const preferredLanguage = toLanguageCode(language);
   const pathname = usePathname();
   const router = useRouter();
@@ -51,19 +53,19 @@ export default function CardsPage() {
   const [species, setSpecies] = useState<Species[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-  const isBacksidePanelOpen = useMemo(
+  const isInfoPanelOpen = useMemo(
     () =>
-      parseBacksidePanelVisibility(
-        searchParams.get(LEARNING_PANEL_QUERY_PARAM) ??
+      parseInfoPanelVisibility(
+        searchParams.get(LEARNING_INFO_PANEL_QUERY_PARAM) ??
           searchParams.get(LEGACY_BACKSIDE_PANEL_QUERY_PARAM),
       ),
     [searchParams],
   );
 
-  const updateBacksidePanelVisibility = useCallback(
+  const updateInfoPanelVisibility = useCallback(
     (nextOpen: boolean) => {
       const nextParams = new URLSearchParams(searchParams.toString());
-      nextParams.set(LEARNING_PANEL_QUERY_PARAM, nextOpen ? "1" : "0");
+      nextParams.set(LEARNING_INFO_PANEL_QUERY_PARAM, nextOpen ? "1" : "0");
       nextParams.delete(LEGACY_BACKSIDE_PANEL_QUERY_PARAM);
       const nextQuery = nextParams.toString();
       const nextUrl = nextQuery ? `${pathname}?${nextQuery}` : pathname;
@@ -72,9 +74,9 @@ export default function CardsPage() {
     [pathname, router, searchParams],
   );
 
-  const toggleBacksidePanel = useCallback(() => {
-    updateBacksidePanelVisibility(!isBacksidePanelOpen);
-  }, [isBacksidePanelOpen, updateBacksidePanelVisibility]);
+  const toggleInfoPanel = useCallback(() => {
+    updateInfoPanelVisibility(!isInfoPanelOpen);
+  }, [isInfoPanelOpen, updateInfoPanelVisibility]);
 
   const loadData = useCallback(async () => {
     try {
@@ -157,10 +159,10 @@ export default function CardsPage() {
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
           <p className="text-muted-foreground">
-            No species with images available in this stack.
+            {t("learn.cards.noSpeciesWithImages")}
           </p>
           <Button asChild>
-            <Link href="/">Browse Other Stacks</Link>
+            <Link href="/">{t("learn.cards.browseOtherStacks")}</Link>
           </Button>
         </div>
       </LearningSessionShell>
@@ -177,12 +179,15 @@ export default function CardsPage() {
       groupName={groupName}
       stackName={getLocalizedText(stack.data.name, preferredLanguage)}
       progressValue={progressValue}
-      progressLabel={`Card ${currentIndex + 1} of ${species.length}`}
+      progressLabel={t("learn.cards.progressLabel", {
+        current: currentIndex + 1,
+        total: species.length,
+      })}
       exitHref="/"
       headerAction={
         <Button onClick={handleShuffle} variant="outline" size="sm">
           <Shuffle className="mr-1 h-4 w-4" />
-          Shuffle
+          {t("learn.cards.shuffle")}
         </Button>
       }
     >
@@ -192,8 +197,8 @@ export default function CardsPage() {
         onPrevious={handlePrevious}
         currentIndex={currentIndex}
         total={species.length}
-        isBacksidePanelOpen={isBacksidePanelOpen}
-        onToggleBacksidePanel={toggleBacksidePanel}
+        isInfoPanelOpen={isInfoPanelOpen}
+        onToggleInfoPanel={toggleInfoPanel}
       />
     </LearningSessionShell>
   );
