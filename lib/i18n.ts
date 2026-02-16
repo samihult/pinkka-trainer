@@ -84,6 +84,75 @@ const EN_MESSAGES = {
   "learn.cards.info.identificationPlaceholder":
     "No identification hints available.",
   "learn.cards.info.noDescription": "No description available.",
+  "manage.speciesForm.title.edit": "Edit Species",
+  "manage.speciesForm.title.create": "Create New Species",
+  "manage.speciesForm.tab.information": "Information",
+  "manage.speciesForm.tab.pictures": "Pictures",
+  "manage.speciesForm.tab.identification": "Identification",
+  "manage.speciesForm.field.scientificName": "Scientific Name *",
+  "manage.speciesForm.field.finnishName": "Finnish Name",
+  "manage.speciesForm.field.englishName": "English Name",
+  "manage.speciesForm.field.swedishName": "Swedish Name",
+  "manage.speciesForm.field.descriptionFi": "Description (FI)",
+  "manage.speciesForm.field.descriptionEn": "Description (EN)",
+  "manage.speciesForm.field.descriptionSv": "Description (SV)",
+  "manage.speciesForm.placeholder.scientificName": "e.g., Vulpes vulpes",
+  "manage.speciesForm.placeholder.finnishName": "e.g., Kettu",
+  "manage.speciesForm.placeholder.englishName": "e.g., Red Fox",
+  "manage.speciesForm.placeholder.swedishName": "e.g., Rodrav",
+  "manage.speciesForm.placeholder.description": "Enter species description...",
+  "manage.speciesForm.section.images": "Images",
+  "manage.speciesForm.section.testImages": "Test Images",
+  "manage.speciesForm.help.testImages":
+    "Select which images can appear in tests. Cards always show all images.",
+  "manage.speciesForm.help.addImagesForTests":
+    "Add images to enable test selection.",
+  "manage.speciesForm.imageLabel": "Image {number}",
+  "manage.speciesForm.imageAlt": "Species image {number}",
+  "manage.speciesForm.imageState.test": "Test",
+  "manage.speciesForm.imageState.excluded": "Excluded",
+  "manage.speciesForm.error.testImageRequired":
+    "Select at least one image for tests.",
+  "manage.speciesForm.section.identificationHints": "Identification Hints",
+  "manage.speciesForm.action.addHint": "Add Hint",
+  "manage.speciesForm.help.identificationHints":
+    "Hints are shown in the learning page identification tab.",
+  "manage.speciesForm.empty.identificationHints":
+    "No identification hints added yet.",
+  "manage.speciesForm.action.editHint": "Edit",
+  "manage.speciesForm.action.deleteHint": "Delete",
+  "manage.speciesForm.action.saving": "Saving...",
+  "manage.speciesForm.action.update": "Update Species",
+  "manage.speciesForm.action.create": "Create Species",
+  "manage.speciesForm.action.cancel": "Cancel",
+  "manage.speciesForm.toast.imageUploadedTitle": "Image uploaded",
+  "manage.speciesForm.toast.imageUploadedDescription":
+    "Image has been uploaded successfully",
+  "manage.speciesForm.toast.uploadErrorDescription": "Failed to upload image",
+  "manage.speciesForm.toast.selectTestImagesTitle": "Select test images",
+  "manage.speciesForm.toast.selectTestImagesDescription":
+    "Choose at least one image to use in tests.",
+  "manage.speciesForm.toast.scientificNameRequiredTitle":
+    "Scientific name is required",
+  "manage.speciesForm.toast.scientificNameRequiredDescription":
+    "Enter a scientific name before saving.",
+  "manage.speciesForm.toast.saveErrorDescription": "Failed to save species",
+  "manage.speciesHintDialog.title.edit": "Edit Identification Hint",
+  "manage.speciesHintDialog.title.create": "Add Identification Hint",
+  "manage.speciesHintDialog.description":
+    "Hints are shown in the learning view identification tab.",
+  "manage.speciesHintDialog.field.fi": "Hint (FI)",
+  "manage.speciesHintDialog.field.en": "Hint (EN)",
+  "manage.speciesHintDialog.field.sv": "Hint (SV)",
+  "manage.speciesHintDialog.placeholder.fi":
+    "Write an identification hint in Finnish...",
+  "manage.speciesHintDialog.placeholder.en":
+    "Write an identification hint in English...",
+  "manage.speciesHintDialog.placeholder.sv":
+    "Write an identification hint in Swedish...",
+  "manage.speciesHintDialog.action.cancel": "Cancel",
+  "manage.speciesHintDialog.action.save": "Save Changes",
+  "manage.speciesHintDialog.action.add": "Add Hint",
 
   "test.settings.title": "Test Settings",
   "test.settings.description": "Customize how this test will run.",
@@ -220,6 +289,76 @@ const FI_MESSAGES: TranslationTable = {
   "learn.cards.info.identificationPlaceholder":
     "Tunnistusvihjeitä ei ole saatavilla.",
   "learn.cards.info.noDescription": "Kuvausta ei saatavilla.",
+  "manage.speciesForm.title.edit": "Muokkaa lajia",
+  "manage.speciesForm.title.create": "Luo uusi laji",
+  "manage.speciesForm.tab.information": "Tiedot",
+  "manage.speciesForm.tab.pictures": "Kuvat",
+  "manage.speciesForm.tab.identification": "Tunnistus",
+  "manage.speciesForm.field.scientificName": "Tieteellinen nimi *",
+  "manage.speciesForm.field.finnishName": "Suomenkielinen nimi",
+  "manage.speciesForm.field.englishName": "Englanninkielinen nimi",
+  "manage.speciesForm.field.swedishName": "Ruotsinkielinen nimi",
+  "manage.speciesForm.field.descriptionFi": "Kuvaus (FI)",
+  "manage.speciesForm.field.descriptionEn": "Kuvaus (EN)",
+  "manage.speciesForm.field.descriptionSv": "Kuvaus (SV)",
+  "manage.speciesForm.placeholder.scientificName": "esim. Vulpes vulpes",
+  "manage.speciesForm.placeholder.finnishName": "esim. Kettu",
+  "manage.speciesForm.placeholder.englishName": "esim. Red Fox",
+  "manage.speciesForm.placeholder.swedishName": "esim. Rodrav",
+  "manage.speciesForm.placeholder.description": "Kirjoita lajin kuvaus...",
+  "manage.speciesForm.section.images": "Kuvat",
+  "manage.speciesForm.section.testImages": "Testikuvat",
+  "manage.speciesForm.help.testImages":
+    "Valitse mitkä kuvat voivat näkyä testeissä. Korteilla näytetään aina kaikki kuvat.",
+  "manage.speciesForm.help.addImagesForTests":
+    "Lisää kuvia ottaaksesi testikuvavalinnan käyttöön.",
+  "manage.speciesForm.imageLabel": "Kuva {number}",
+  "manage.speciesForm.imageAlt": "Lajin kuva {number}",
+  "manage.speciesForm.imageState.test": "Testi",
+  "manage.speciesForm.imageState.excluded": "Poissuljettu",
+  "manage.speciesForm.error.testImageRequired":
+    "Valitse vähintään yksi kuva testeihin.",
+  "manage.speciesForm.section.identificationHints": "Tunnistusvihjeet",
+  "manage.speciesForm.action.addHint": "Lisää vihje",
+  "manage.speciesForm.help.identificationHints":
+    "Vihjeet näytetään oppimissivun tunnistusvälilehdellä.",
+  "manage.speciesForm.empty.identificationHints":
+    "Tunnistusvihjeitä ei ole vielä lisätty.",
+  "manage.speciesForm.action.editHint": "Muokkaa",
+  "manage.speciesForm.action.deleteHint": "Poista",
+  "manage.speciesForm.action.saving": "Tallennetaan...",
+  "manage.speciesForm.action.update": "Päivitä laji",
+  "manage.speciesForm.action.create": "Luo laji",
+  "manage.speciesForm.action.cancel": "Peruuta",
+  "manage.speciesForm.toast.imageUploadedTitle": "Kuva ladattu",
+  "manage.speciesForm.toast.imageUploadedDescription":
+    "Kuva ladattiin onnistuneesti",
+  "manage.speciesForm.toast.uploadErrorDescription": "Kuvan lataus epäonnistui",
+  "manage.speciesForm.toast.selectTestImagesTitle": "Valitse testikuvat",
+  "manage.speciesForm.toast.selectTestImagesDescription":
+    "Valitse vähintään yksi testissä käytettävä kuva.",
+  "manage.speciesForm.toast.scientificNameRequiredTitle":
+    "Tieteellinen nimi on pakollinen",
+  "manage.speciesForm.toast.scientificNameRequiredDescription":
+    "Lisää tieteellinen nimi ennen tallennusta.",
+  "manage.speciesForm.toast.saveErrorDescription":
+    "Lajin tallennus epäonnistui",
+  "manage.speciesHintDialog.title.edit": "Muokkaa tunnistusvihjettä",
+  "manage.speciesHintDialog.title.create": "Lisää tunnistusvihje",
+  "manage.speciesHintDialog.description":
+    "Vihjeet näytetään oppimissivun tunnistusvälilehdellä.",
+  "manage.speciesHintDialog.field.fi": "Vihje (FI)",
+  "manage.speciesHintDialog.field.en": "Vihje (EN)",
+  "manage.speciesHintDialog.field.sv": "Vihje (SV)",
+  "manage.speciesHintDialog.placeholder.fi":
+    "Kirjoita tunnistusvihje suomeksi...",
+  "manage.speciesHintDialog.placeholder.en":
+    "Kirjoita tunnistusvihje englanniksi...",
+  "manage.speciesHintDialog.placeholder.sv":
+    "Kirjoita tunnistusvihje ruotsiksi...",
+  "manage.speciesHintDialog.action.cancel": "Peruuta",
+  "manage.speciesHintDialog.action.save": "Tallenna muutokset",
+  "manage.speciesHintDialog.action.add": "Lisää vihje",
 
   "test.settings.title": "Testin asetukset",
   "test.settings.description": "Muokkaa testin toimintaa.",
@@ -348,6 +487,76 @@ const SV_MESSAGES: TranslationTable = {
   "learn.cards.info.identificationPlaceholder":
     "Inga identifieringsledtrådar tillgängliga.",
   "learn.cards.info.noDescription": "Ingen beskrivning tillgänglig.",
+  "manage.speciesForm.title.edit": "Redigera art",
+  "manage.speciesForm.title.create": "Skapa ny art",
+  "manage.speciesForm.tab.information": "Information",
+  "manage.speciesForm.tab.pictures": "Bilder",
+  "manage.speciesForm.tab.identification": "Identifiering",
+  "manage.speciesForm.field.scientificName": "Vetenskapligt namn *",
+  "manage.speciesForm.field.finnishName": "Finskt namn",
+  "manage.speciesForm.field.englishName": "Engelskt namn",
+  "manage.speciesForm.field.swedishName": "Svenskt namn",
+  "manage.speciesForm.field.descriptionFi": "Beskrivning (FI)",
+  "manage.speciesForm.field.descriptionEn": "Beskrivning (EN)",
+  "manage.speciesForm.field.descriptionSv": "Beskrivning (SV)",
+  "manage.speciesForm.placeholder.scientificName": "t.ex. Vulpes vulpes",
+  "manage.speciesForm.placeholder.finnishName": "t.ex. Kettu",
+  "manage.speciesForm.placeholder.englishName": "t.ex. Red Fox",
+  "manage.speciesForm.placeholder.swedishName": "t.ex. Rodrav",
+  "manage.speciesForm.placeholder.description": "Ange artbeskrivning...",
+  "manage.speciesForm.section.images": "Bilder",
+  "manage.speciesForm.section.testImages": "Testbilder",
+  "manage.speciesForm.help.testImages":
+    "Välj vilka bilder som kan visas i tester. Kort visar alltid alla bilder.",
+  "manage.speciesForm.help.addImagesForTests":
+    "Lägg till bilder för att aktivera testbildsval.",
+  "manage.speciesForm.imageLabel": "Bild {number}",
+  "manage.speciesForm.imageAlt": "Artbild {number}",
+  "manage.speciesForm.imageState.test": "Test",
+  "manage.speciesForm.imageState.excluded": "Utesluten",
+  "manage.speciesForm.error.testImageRequired":
+    "Välj minst en bild för tester.",
+  "manage.speciesForm.section.identificationHints": "Identifieringsledtrådar",
+  "manage.speciesForm.action.addHint": "Lägg till ledtråd",
+  "manage.speciesForm.help.identificationHints":
+    "Ledtrådar visas på identifieringsfliken i inlärningsvyn.",
+  "manage.speciesForm.empty.identificationHints":
+    "Inga identifieringsledtrådar har lagts till ännu.",
+  "manage.speciesForm.action.editHint": "Redigera",
+  "manage.speciesForm.action.deleteHint": "Ta bort",
+  "manage.speciesForm.action.saving": "Sparar...",
+  "manage.speciesForm.action.update": "Uppdatera art",
+  "manage.speciesForm.action.create": "Skapa art",
+  "manage.speciesForm.action.cancel": "Avbryt",
+  "manage.speciesForm.toast.imageUploadedTitle": "Bild uppladdad",
+  "manage.speciesForm.toast.imageUploadedDescription": "Bilden laddades upp.",
+  "manage.speciesForm.toast.uploadErrorDescription":
+    "Det gick inte att ladda upp bilden",
+  "manage.speciesForm.toast.selectTestImagesTitle": "Välj testbilder",
+  "manage.speciesForm.toast.selectTestImagesDescription":
+    "Välj minst en bild som ska användas i tester.",
+  "manage.speciesForm.toast.scientificNameRequiredTitle":
+    "Vetenskapligt namn krävs",
+  "manage.speciesForm.toast.scientificNameRequiredDescription":
+    "Ange ett vetenskapligt namn innan du sparar.",
+  "manage.speciesForm.toast.saveErrorDescription":
+    "Det gick inte att spara arten",
+  "manage.speciesHintDialog.title.edit": "Redigera identifieringsledtråd",
+  "manage.speciesHintDialog.title.create": "Lägg till identifieringsledtråd",
+  "manage.speciesHintDialog.description":
+    "Ledtrådar visas på identifieringsfliken i inlärningsvyn.",
+  "manage.speciesHintDialog.field.fi": "Ledtråd (FI)",
+  "manage.speciesHintDialog.field.en": "Ledtråd (EN)",
+  "manage.speciesHintDialog.field.sv": "Ledtråd (SV)",
+  "manage.speciesHintDialog.placeholder.fi":
+    "Skriv en identifieringsledtråd på finska...",
+  "manage.speciesHintDialog.placeholder.en":
+    "Skriv en identifieringsledtråd på engelska...",
+  "manage.speciesHintDialog.placeholder.sv":
+    "Skriv en identifieringsledtråd på svenska...",
+  "manage.speciesHintDialog.action.cancel": "Avbryt",
+  "manage.speciesHintDialog.action.save": "Spara ändringar",
+  "manage.speciesHintDialog.action.add": "Lägg till ledtråd",
 
   "test.settings.title": "Testinställningar",
   "test.settings.description": "Anpassa hur testet ska köras.",

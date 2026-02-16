@@ -80,13 +80,21 @@ export function SpeciesCard({
     preferredLanguage,
   );
   const description = getSpeciesDescription(species.data, preferredLanguage);
-  const identificationTips = useMemo(
-    () =>
-      (species.data.identificationTips ?? [])
-        .map((tip) => tip.trim())
-        .filter((tip) => tip.length > 0),
-    [species.data.identificationTips],
-  );
+  const identificationHints = useMemo(() => {
+    const localizedHints = (species.data.identificationHints ?? [])
+      .map((hint) => getLocalizedText(hint, preferredLanguage).trim())
+      .filter((hint) => hint.length > 0);
+    if (localizedHints.length > 0) {
+      return localizedHints;
+    }
+    return (species.data.identificationTips ?? [])
+      .map((hint) => hint.trim())
+      .filter((hint) => hint.length > 0);
+  }, [
+    preferredLanguage,
+    species.data.identificationHints,
+    species.data.identificationTips,
+  ]);
   const sanitizedDescription = useMemo(
     () => (description ? sanitizeHtml(description) : ""),
     [description],
@@ -308,14 +316,14 @@ export function SpeciesCard({
                 </div>
                 <div className="min-h-0 flex-1 overflow-y-auto p-4">
                   {activeInfoTab === "identification" ? (
-                    identificationTips.length > 0 ? (
+                    identificationHints.length > 0 ? (
                       <ul className="space-y-2">
-                        {identificationTips.map((tip, index) => (
+                        {identificationHints.map((hint, index) => (
                           <li
-                            key={`${tip}-${index}`}
+                            key={`${hint}-${index}`}
                             className="rounded-md border border-border bg-muted/30 px-3 py-2 text-sm"
                           >
-                            {tip}
+                            {hint}
                           </li>
                         ))}
                       </ul>

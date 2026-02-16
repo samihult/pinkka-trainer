@@ -214,7 +214,9 @@ export interface Species {
     }>;
     /** Optional species images stored in Firebase Storage. */
     images?: SpeciesImage[];
-    /** Optional plain-text identification tips shown in learning view. */
+    /** Optional localized identification hints shown in learning view. */
+    identificationHints?: LocalizedText[];
+    /** @deprecated Legacy plain-text hints kept for backward compatibility. */
     identificationTips?: string[];
   };
   /** Optional link back to imported Pinkka entity ids. */

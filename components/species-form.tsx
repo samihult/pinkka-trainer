@@ -9,14 +9,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ImageUpload } from "./image-upload";
-import { SpeciesIdentificationTipDialog } from "@/components/species-identification-tip-dialog";
-import type { Species, SpeciesImage } from "@/lib/types";
+import { SpeciesIdentificationHintDialog } from "@/components/species-identification-hint-dialog";
+import type { LocalizedText, Species, SpeciesImage } from "@/lib/types";
 import { uploadSpeciesImage } from "@/lib/firebase/firestore-helpers";
 import { useToast } from "@/hooks/use-toast";
 import {
   getLocalizedText,
   getSpeciesImageUrl,
 } from "@/lib/content/content-display";
+import { useI18n } from "@/lib/i18n";
 import Image from "next/image";
 
 type SpeciesFormTab = "information" | "pictures" | "identification";
@@ -38,7 +39,7 @@ interface SpeciesFormProps {
   onCancel: () => void;
 }
 
-/** Tabbed form for creating or editing species metadata, images, and identification tips. */
+/** Tabbed form for creating or editing species metadata, images, and multilingual identification hints. */
 export function SpeciesForm({
   species,
   stackId: _stackId,
@@ -71,11 +72,16 @@ export function SpeciesForm({
   const [images, setImages] = useState<SpeciesImage[]>(
     species?.data.images || [],
   );
-  const [identificationTips, setIdentificationTips] = useState<string[]>(
-    species?.data.identificationTips ?? [],
-  );
-  const [isTipDialogOpen, setIsTipDialogOpen] = useState(false);
-  const [editingTipIndex, setEditingTipIndex] = useState<number | null>(null);
+  const [identificationHints, setIdentificationHints] = useState<
+    LocalizedText[]
+  >(() => {
+    if (species?.data.identificationHints?.length) {
+      return species.data.identificationHints;
+    }
+    return (species?.data.identificationTips ?? []).map((tip) => ({ fi: tip }));
+  });
+  const [isHintDialogOpen, setIsHintDialogOpen] = useState(false);
+  const [editingHintIndex, setEditingHintIndex] = useState<number | null>(null);
   const [testImageIds, setTestImageIds] = useState<string[]>(() => {
     const imageIds = (species?.data.images || []).map((image) => image.id);
     const existingIds = species?.testImageIds?.filter((id) =>
@@ -88,10 +94,13 @@ export function SpeciesForm({
   );
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const { t } = useI18n();
   const { toast } = useToast();
   const testSelectionError = images.length > 0 && testImageIds.length === 0;
-  const editingTipValue =
-    editingTipIndex !== null ? (identificationTips[editingTipIndex] ?? "") : "";
+  const editingHintValue =
+    editingHintIndex !== null
+      ? identificationHints[editingHintIndex]
+      : undefined;
 
   useEffect(() => {
     const imageIds = images.map((image) => image.id);
@@ -120,8 +129,8 @@ export function SpeciesForm({
         );
         setImages([...images, newImage]);
         toast({
-          title: "Image uploaded",
-          description: "Image has been uploaded successfully",
+          title: t("manage.speciesForm.toast.imageUploadedTitle"),
+          description: t("manage.speciesForm.toast.imageUploadedDescription"),
         });
       } else {
         // Store file temporarily for upload after species creation
@@ -143,8 +152,8 @@ export function SpeciesForm({
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to upload image",
+        title: t("auth.errorTitle"),
+        description: t("manage.speciesForm.toast.uploadErrorDescription"),
         variant: "destructive",
       });
     } finally {
@@ -161,8 +170,10 @@ export function SpeciesForm({
       if (testSelectionError) {
         setActiveTab("pictures");
         toast({
-          title: "Select test images",
-          description: "Choose at least one image to use in tests.",
+          title: t("manage.speciesForm.toast.selectTestImagesTitle"),
+          description: t(
+            "manage.speciesForm.toast.selectTestImagesDescription",
+          ),
           variant: "destructive",
         });
         return;
@@ -170,8 +181,10 @@ export function SpeciesForm({
       if (!scientificName.trim()) {
         setActiveTab("information");
         toast({
-          title: "Scientific name is required",
-          description: "Enter a scientific name before saving.",
+          title: t("manage.speciesForm.toast.scientificNameRequiredTitle"),
+          description: t(
+            "manage.speciesForm.toast.scientificNameRequiredDescription",
+          ),
           variant: "destructive",
         });
         return;
@@ -199,9 +212,13 @@ export function SpeciesForm({
       if (descriptionBody.sv) {
         descriptionTitle.sv = descriptionEntry?.title?.sv ?? "Description";
       }
-      const normalizedIdentificationTips = identificationTips
-        .map((tip) => tip.trim())
-        .filter((tip) => tip.length > 0);
+      const normalizedIdentificationHints = identificationHints
+        .map((hint) => ({
+          ...(hint.fi?.trim() ? { fi: hint.fi.trim() } : {}),
+          ...(hint.en?.trim() ? { en: hint.en.trim() } : {}),
+          ...(hint.sv?.trim() ? { sv: hint.sv.trim() } : {}),
+        }))
+        .filter((hint) => Object.keys(hint).length > 0);
       const detail: Species["data"] = {
         ...(species?.data || {}),
         taxonId: species?.data.taxonId || `local-${Date.now()}`,
@@ -224,11 +241,12 @@ export function SpeciesForm({
       } else {
         delete detail.description;
       }
-      if (normalizedIdentificationTips.length > 0) {
-        detail.identificationTips = normalizedIdentificationTips;
+      if (normalizedIdentificationHints.length > 0) {
+        detail.identificationHints = normalizedIdentificationHints;
       } else {
-        delete detail.identificationTips;
+        delete detail.identificationHints;
       }
+      delete detail.identificationTips;
 
       await onSubmit({
         data: detail,
@@ -239,8 +257,8 @@ export function SpeciesForm({
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to save species",
+        title: t("auth.errorTitle"),
+        description: t("manage.speciesForm.toast.saveErrorDescription"),
         variant: "destructive",
       });
     } finally {
@@ -259,45 +277,49 @@ export function SpeciesForm({
     });
   };
 
-  const handleTipDialogOpenChange = (open: boolean) => {
-    setIsTipDialogOpen(open);
+  const handleHintDialogOpenChange = (open: boolean) => {
+    setIsHintDialogOpen(open);
     if (!open) {
-      setEditingTipIndex(null);
+      setEditingHintIndex(null);
     }
   };
 
-  const handleAddTip = () => {
-    setEditingTipIndex(null);
-    setIsTipDialogOpen(true);
+  const handleAddHint = () => {
+    setEditingHintIndex(null);
+    setIsHintDialogOpen(true);
   };
 
-  const handleEditTip = (index: number) => {
-    setEditingTipIndex(index);
-    setIsTipDialogOpen(true);
+  const handleEditHint = (index: number) => {
+    setEditingHintIndex(index);
+    setIsHintDialogOpen(true);
   };
 
-  const handleDeleteTip = (index: number) => {
-    setIdentificationTips((prev) =>
-      prev.filter((_, tipIndex) => tipIndex !== index),
+  const handleDeleteHint = (index: number) => {
+    setIdentificationHints((prev) =>
+      prev.filter((_, hintIndex) => hintIndex !== index),
     );
   };
 
-  const handleSaveTip = (value: string) => {
-    setIdentificationTips((prev) => {
-      if (editingTipIndex === null) {
+  const handleSaveHint = (value: LocalizedText) => {
+    setIdentificationHints((prev) => {
+      if (editingHintIndex === null) {
         return [...prev, value];
       }
-      return prev.map((tip, index) =>
-        index === editingTipIndex ? value : tip,
+      return prev.map((hint, index) =>
+        index === editingHintIndex ? value : hint,
       );
     });
-    handleTipDialogOpenChange(false);
+    handleHintDialogOpenChange(false);
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{species ? "Edit Species" : "Create New Species"}</CardTitle>
+        <CardTitle>
+          {species
+            ? t("manage.speciesForm.title.edit")
+            : t("manage.speciesForm.title.create")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -308,7 +330,7 @@ export function SpeciesForm({
               size="sm"
               onClick={() => setActiveTab("information")}
             >
-              Information
+              {t("manage.speciesForm.tab.information")}
             </Button>
             <Button
               type="button"
@@ -316,7 +338,7 @@ export function SpeciesForm({
               size="sm"
               onClick={() => setActiveTab("pictures")}
             >
-              Pictures
+              {t("manage.speciesForm.tab.pictures")}
             </Button>
             <Button
               type="button"
@@ -324,82 +346,110 @@ export function SpeciesForm({
               size="sm"
               onClick={() => setActiveTab("identification")}
             >
-              Identification
+              {t("manage.speciesForm.tab.identification")}
             </Button>
           </div>
 
           {activeTab === "information" ? (
             <div className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="scientificName">Scientific Name *</Label>
+                <Label htmlFor="scientificName">
+                  {t("manage.speciesForm.field.scientificName")}
+                </Label>
                 <Input
                   id="scientificName"
                   value={scientificName}
                   onChange={(e) => setScientificName(e.target.value)}
-                  placeholder="e.g., Vulpes vulpes"
+                  placeholder={t(
+                    "manage.speciesForm.placeholder.scientificName",
+                  )}
                   required
                 />
               </div>
 
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="space-y-2">
-                  <Label htmlFor="finnishName">Finnish Name</Label>
+                  <Label htmlFor="finnishName">
+                    {t("manage.speciesForm.field.finnishName")}
+                  </Label>
                   <Input
                     id="finnishName"
                     value={finnishName}
                     onChange={(e) => setFinnishName(e.target.value)}
-                    placeholder="e.g., Kettu"
+                    placeholder={t(
+                      "manage.speciesForm.placeholder.finnishName",
+                    )}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="englishName">English Name</Label>
+                  <Label htmlFor="englishName">
+                    {t("manage.speciesForm.field.englishName")}
+                  </Label>
                   <Input
                     id="englishName"
                     value={englishName}
                     onChange={(e) => setEnglishName(e.target.value)}
-                    placeholder="e.g., Red Fox"
+                    placeholder={t(
+                      "manage.speciesForm.placeholder.englishName",
+                    )}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="swedishName">Swedish Name</Label>
+                  <Label htmlFor="swedishName">
+                    {t("manage.speciesForm.field.swedishName")}
+                  </Label>
                   <Input
                     id="swedishName"
                     value={swedishName}
                     onChange={(e) => setSwedishName(e.target.value)}
-                    placeholder="e.g., Rodrav"
+                    placeholder={t(
+                      "manage.speciesForm.placeholder.swedishName",
+                    )}
                   />
                 </div>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="space-y-2">
-                  <Label htmlFor="descriptionFi">Description (FI)</Label>
+                  <Label htmlFor="descriptionFi">
+                    {t("manage.speciesForm.field.descriptionFi")}
+                  </Label>
                   <Textarea
                     id="descriptionFi"
                     value={descriptionFi}
                     onChange={(e) => setDescriptionFi(e.target.value)}
-                    placeholder="Enter species description..."
+                    placeholder={t(
+                      "manage.speciesForm.placeholder.description",
+                    )}
                     rows={4}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="descriptionEn">Description (EN)</Label>
+                  <Label htmlFor="descriptionEn">
+                    {t("manage.speciesForm.field.descriptionEn")}
+                  </Label>
                   <Textarea
                     id="descriptionEn"
                     value={descriptionEn}
                     onChange={(e) => setDescriptionEn(e.target.value)}
-                    placeholder="Enter species description..."
+                    placeholder={t(
+                      "manage.speciesForm.placeholder.description",
+                    )}
                     rows={4}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="descriptionSv">Description (SV)</Label>
+                  <Label htmlFor="descriptionSv">
+                    {t("manage.speciesForm.field.descriptionSv")}
+                  </Label>
                   <Textarea
                     id="descriptionSv"
                     value={descriptionSv}
                     onChange={(e) => setDescriptionSv(e.target.value)}
-                    placeholder="Enter species description..."
+                    placeholder={t(
+                      "manage.speciesForm.placeholder.description",
+                    )}
                     rows={4}
                   />
                 </div>
@@ -410,7 +460,7 @@ export function SpeciesForm({
           {activeTab === "pictures" ? (
             <div className="space-y-6">
               <div className="space-y-2">
-                <Label>Images</Label>
+                <Label>{t("manage.speciesForm.section.images")}</Label>
                 <ImageUpload
                   images={images}
                   onImagesChange={setImages}
@@ -419,14 +469,13 @@ export function SpeciesForm({
               </div>
 
               <div className="space-y-2">
-                <Label>Test Images</Label>
+                <Label>{t("manage.speciesForm.section.testImages")}</Label>
                 <p className="text-sm text-muted-foreground">
-                  Select which images can appear in tests. Cards always show all
-                  images.
+                  {t("manage.speciesForm.help.testImages")}
                 </p>
                 {images.length === 0 ? (
                   <p className="text-sm text-muted-foreground">
-                    Add images to enable test selection.
+                    {t("manage.speciesForm.help.addImagesForTests")}
                   </p>
                 ) : (
                   <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
@@ -454,19 +503,27 @@ export function SpeciesForm({
                             <div className="relative aspect-square">
                               <Image
                                 src={imageUrl}
-                                alt={`Species image ${index + 1}`}
+                                alt={t("manage.speciesForm.imageAlt", {
+                                  number: index + 1,
+                                })}
                                 fill
                                 className="object-cover"
                               />
                             </div>
                             <div className="flex items-center justify-between p-2 text-xs text-muted-foreground">
-                              <span>Image {index + 1}</span>
+                              <span>
+                                {t("manage.speciesForm.imageLabel", {
+                                  number: index + 1,
+                                })}
+                              </span>
                               <span
                                 className={
                                   isChecked ? "text-foreground" : undefined
                                 }
                               >
-                                {isChecked ? "Test" : "Excluded"}
+                                {isChecked
+                                  ? t("manage.speciesForm.imageState.test")
+                                  : t("manage.speciesForm.imageState.excluded")}
                               </span>
                             </div>
                           </Card>
@@ -477,7 +534,7 @@ export function SpeciesForm({
                 )}
                 {testSelectionError && (
                   <p className="text-sm text-destructive">
-                    Select at least one image for tests.
+                    {t("manage.speciesForm.error.testImageRequired")}
                   </p>
                 )}
               </div>
@@ -487,42 +544,60 @@ export function SpeciesForm({
           {activeTab === "identification" ? (
             <div className="space-y-4">
               <div className="flex items-center justify-between gap-2">
-                <Label>Identification Tips</Label>
-                <Button type="button" size="sm" onClick={handleAddTip}>
-                  Add Tip
+                <Label>
+                  {t("manage.speciesForm.section.identificationHints")}
+                </Label>
+                <Button type="button" size="sm" onClick={handleAddHint}>
+                  {t("manage.speciesForm.action.addHint")}
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground">
-                Tips are shown in the learning page identification tab.
+                {t("manage.speciesForm.help.identificationHints")}
               </p>
-              {identificationTips.length === 0 ? (
+              {identificationHints.length === 0 ? (
                 <p className="rounded-md border border-dashed px-3 py-4 text-sm text-muted-foreground">
-                  No identification tips added yet.
+                  {t("manage.speciesForm.empty.identificationHints")}
                 </p>
               ) : (
                 <div className="space-y-2">
-                  {identificationTips.map((tip, index) => (
+                  {identificationHints.map((hint, index) => (
                     <div
-                      key={`${tip}-${index}`}
+                      key={`${hint.fi ?? hint.en ?? hint.sv ?? "hint"}-${index}`}
                       className="flex items-start justify-between gap-2 rounded-md border border-border px-3 py-2"
                     >
-                      <p className="text-sm whitespace-pre-wrap">{tip}</p>
+                      <div className="space-y-1 text-sm">
+                        {hint.fi ? (
+                          <p className="whitespace-pre-wrap">
+                            <span className="font-medium">FI:</span> {hint.fi}
+                          </p>
+                        ) : null}
+                        {hint.en ? (
+                          <p className="whitespace-pre-wrap">
+                            <span className="font-medium">EN:</span> {hint.en}
+                          </p>
+                        ) : null}
+                        {hint.sv ? (
+                          <p className="whitespace-pre-wrap">
+                            <span className="font-medium">SV:</span> {hint.sv}
+                          </p>
+                        ) : null}
+                      </div>
                       <div className="flex shrink-0 items-center gap-2">
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => handleEditTip(index)}
+                          onClick={() => handleEditHint(index)}
                         >
-                          Edit
+                          {t("manage.speciesForm.action.editHint")}
                         </Button>
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => handleDeleteTip(index)}
+                          onClick={() => handleDeleteHint(index)}
                         >
-                          Delete
+                          {t("manage.speciesForm.action.deleteHint")}
                         </Button>
                       </div>
                     </div>
@@ -535,22 +610,22 @@ export function SpeciesForm({
           <div className="flex gap-2">
             <Button type="submit" disabled={saving || uploading}>
               {saving
-                ? "Saving..."
+                ? t("manage.speciesForm.action.saving")
                 : species
-                  ? "Update Species"
-                  : "Create Species"}
+                  ? t("manage.speciesForm.action.update")
+                  : t("manage.speciesForm.action.create")}
             </Button>
             <Button type="button" variant="outline" onClick={onCancel}>
-              Cancel
+              {t("manage.speciesForm.action.cancel")}
             </Button>
           </div>
         </form>
-        <SpeciesIdentificationTipDialog
-          open={isTipDialogOpen}
-          onOpenChange={handleTipDialogOpenChange}
-          initialValue={editingTipValue}
-          onSave={handleSaveTip}
-          mode={editingTipIndex === null ? "create" : "edit"}
+        <SpeciesIdentificationHintDialog
+          open={isHintDialogOpen}
+          onOpenChange={handleHintDialogOpenChange}
+          initialValue={editingHintValue}
+          onSave={handleSaveHint}
+          mode={editingHintIndex === null ? "create" : "edit"}
         />
       </CardContent>
     </Card>

@@ -6,5 +6,5 @@ Shared application logic and domain models.
 - `i18n.ts`: UI translation dictionary and language-aware translation hook.
 - `firebase/`: Firebase client configuration and Firestore data helpers.
 - `hooks/`: Shared hooks used across app routes and components.
-- `types.ts`: Core TypeScript domain types for users, content, and learning state, including species-level
-  identification tip support used in learning mode.
+- `types.ts`: Core TypeScript domain types for users, content, and learning state, including species-level multilingual
+  identification hint support used in learning mode.
