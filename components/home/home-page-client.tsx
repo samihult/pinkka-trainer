@@ -10,7 +10,7 @@ import {
   getStackLearningHistograms,
   getStacks,
 } from "@/lib/firebase/firestore-helpers";
-import type { Group, Stack, StackLearningHistogram } from "@/lib/types";
+import type { Group, Species, Stack, StackLearningHistogram } from "@/lib/types";
 import {
   getLocalizedText,
   getSpeciesImageUrl,
@@ -55,6 +55,9 @@ export function HomePageClient() {
   const [stackSpeciesPreviewUrls, setStackSpeciesPreviewUrls] = useState<
     Map<string, string>
   >(new Map());
+  const [stackSpeciesCounts, setStackSpeciesCounts] = useState<
+    Map<string, number>
+  >(new Map());
   const [expandedGroupId, setExpandedGroupId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -65,6 +68,21 @@ export function HomePageClient() {
       if (url) return url;
     }
     return null;
+  }, []);
+
+  const getFirstSpeciesImageUrl = useCallback((species: Species[]): string => {
+    for (const item of species) {
+      const imageWithUrl =
+        item.data.images?.find((image) =>
+          Boolean(getSpeciesImageUrl(image, { preferThumbnail: true })),
+        ) ?? null;
+      if (!imageWithUrl) continue;
+      const imageUrl = getSpeciesImageUrl(imageWithUrl, {
+        preferThumbnail: true,
+      });
+      if (imageUrl) return imageUrl;
+    }
+    return "";
   }, []);
 
   const expandedGroupFromQuery = useMemo(() => {
@@ -144,53 +162,51 @@ export function HomePageClient() {
   useEffect(() => {
     if (allStacks.length === 0) {
       setStackSpeciesPreviewUrls(new Map());
+      setStackSpeciesCounts(new Map());
       return;
     }
 
     let isCancelled = false;
 
-    const loadFallbackSpeciesPreviews = async () => {
-      const stacksNeedingFallback = allStacks.filter(
-        (stack) => !getStackImageUrl(stack),
+    const loadStackSpeciesMetadata = async () => {
+      const stacksNeedingFallback = new Set(
+        allStacks
+          .filter((stack) => !getStackImageUrl(stack))
+          .map((stack) => stack.id),
       );
-      if (stacksNeedingFallback.length === 0) {
-        setStackSpeciesPreviewUrls(new Map());
-        return;
-      }
-
-      const previewEntries = await Promise.allSettled(
-        stacksNeedingFallback.map(async (stack) => {
+      const speciesByStack = await Promise.allSettled(
+        allStacks.map(async (stack) => {
           const stackSpecies = await getSpecies(stack.id);
-          const firstSpecies = stackSpecies[0];
-          const speciesImage =
-            firstSpecies?.data.images?.find((image) =>
-              Boolean(getSpeciesImageUrl(image, { preferThumbnail: true })),
-            ) ?? null;
-          const previewUrl = speciesImage
-            ? getSpeciesImageUrl(speciesImage, { preferThumbnail: true })
-            : "";
-          return [stack.id, previewUrl] as const;
+          return [stack.id, stackSpecies] as const;
         }),
       );
 
       if (isCancelled) return;
 
+      const nextCountsMap = new Map<string, number>();
       const nextPreviewMap = new Map<string, string>();
-      previewEntries.forEach((entry) => {
+      speciesByStack.forEach((entry) => {
         if (entry.status !== "fulfilled") return;
-        const [stackId, previewUrl] = entry.value;
+        const [stackId, stackSpecies] = entry.value;
+        nextCountsMap.set(stackId, stackSpecies.length);
+
+        if (!stacksNeedingFallback.has(stackId)) return;
+
+        const previewUrl = getFirstSpeciesImageUrl(stackSpecies);
         if (previewUrl) {
           nextPreviewMap.set(stackId, previewUrl);
         }
       });
+
+      setStackSpeciesCounts(nextCountsMap);
       setStackSpeciesPreviewUrls(nextPreviewMap);
     };
 
-    void loadFallbackSpeciesPreviews();
+    void loadStackSpeciesMetadata();
     return () => {
       isCancelled = true;
     };
-  }, [allStacks, getStackImageUrl]);
+  }, [allStacks, getFirstSpeciesImageUrl, getStackImageUrl]);
 
   if (loading) {
     return (
@@ -280,6 +296,7 @@ export function HomePageClient() {
                         getStackImageUrl(stack) ??
                         stackSpeciesPreviewUrls.get(stack.id) ??
                         null;
+                      const stackSpeciesCount = stackSpeciesCounts.get(stack.id);
 
                       return (
                         <div
@@ -309,6 +326,13 @@ export function HomePageClient() {
                                 <h3 className="text-base font-semibold">
                                   {stackName}
                                 </h3>
+                                {typeof stackSpeciesCount === "number" && (
+                                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                                    {t("home.speciesCount", {
+                                      count: stackSpeciesCount,
+                                    })}
+                                  </span>
+                                )}
                               </div>
                               {stackDescription && (
                                 <p className="mt-1 text-sm text-muted-foreground">
