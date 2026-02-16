@@ -32,7 +32,7 @@ A comprehensive biology education platform for learning animal, plant, algae, mi
 - **UI Components:** shadcn/ui
 - **Styling:** Tailwind CSS v4
 - **Database:** Firebase Firestore
-- **Authentication:** Firebase Auth (Email/Password & Google)
+- **Authentication:** Firebase Auth (Email/Password, Google, Anonymous)
 - **Storage:** Firebase Storage (for images)
 - **Hosting:** Vercel
 
@@ -58,7 +58,7 @@ A comprehensive biology education platform for learning animal, plant, algae, mi
 
 3. **Enable Authentication**
    - Go to Authentication > Sign-in method
-   - Enable Email/Password and Google
+   - Enable Email/Password, Google, and Anonymous
 
 4. **Create Firebase Storage**
    - Go to Storage

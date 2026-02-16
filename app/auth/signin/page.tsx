@@ -19,12 +19,14 @@ import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 
+/** Sign-in page supporting email/password, Google, and anonymous auth. */
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const { signIn, signInWithGoogle } = useAuth();
+  const [anonymousLoading, setAnonymousLoading] = useState(false);
+  const { signIn, signInWithGoogle, signInAnonymously } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -75,6 +77,26 @@ export default function SignInPage() {
     }
   };
 
+  const handleAnonymousSignIn = async () => {
+    setAnonymousLoading(true);
+    try {
+      await signInAnonymously();
+      toast({
+        title: "Welcome!",
+        description: "You are now signed in as a guest.",
+      });
+      router.push("/");
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description:
+          error.message || "Failed to continue as guest. Please try again.",
+        variant: "destructive",
+      });
+      setAnonymousLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20 p-4">
       <Card className="w-full max-w-md">
@@ -113,7 +135,11 @@ export default function SignInPage() {
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading || googleLoading || anonymousLoading}
+            >
               {loading ? "Signing In..." : "Sign In"}
             </Button>
 
@@ -132,7 +158,7 @@ export default function SignInPage() {
               type="button"
               variant="outline"
               onClick={handleGoogleSignIn}
-              disabled={googleLoading}
+              disabled={loading || googleLoading || anonymousLoading}
               className="w-full bg-transparent"
             >
               {googleLoading ? (
@@ -160,6 +186,16 @@ export default function SignInPage() {
                   Continue with Google
                 </>
               )}
+            </Button>
+
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={handleAnonymousSignIn}
+              disabled={loading || googleLoading || anonymousLoading}
+              className="w-full"
+            >
+              {anonymousLoading ? "Continuing as guest..." : "Continue as Guest"}
             </Button>
 
             <p className="text-sm text-center text-muted-foreground">

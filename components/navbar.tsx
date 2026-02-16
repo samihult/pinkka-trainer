@@ -1,5 +1,6 @@
 "use client";
 
+/** Top navigation with language controls and auth-aware user actions. */
 import { useAuth } from "@/lib/auth-context";
 import {
   AVAILABLE_LANGUAGES,
@@ -90,7 +91,7 @@ export function Navbar() {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium">{user.email}</p>
+                      <p className="text-sm font-medium">{user.email ?? "Guest user"}</p>
                       <p className="text-xs text-muted-foreground">
                         Role: {user.role}
                       </p>

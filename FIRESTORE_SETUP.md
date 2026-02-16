@@ -36,7 +36,7 @@ Firestore requires composite indexes for queries that filter and sort on multipl
 
 Once the rules are published, the app should work correctly:
 
-- Users can sign in with Google or email/password
+- Users can sign in with Google, email/password, or anonymously
 - User profiles are automatically created
 - Editors can create and manage species, stacks, and groups
 - Admins can grant roles to other users

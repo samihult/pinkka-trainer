@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   createUserWithEmailAndPassword,
+  signInAnonymously as firebaseSignInAnonymously,
   GoogleAuthProvider,
   signInWithPopup,
   signInWithRedirect,
@@ -20,6 +21,7 @@ import { auth, db } from "./firebase/firebase-config";
 import type { User, UserRole } from "./types";
 import { normalizeTestPreferences } from "./tests/test-preferences";
 
+/** Provides app-wide auth state and actions for Firebase providers. */
 /** Context shape for authentication state and actions. */
 interface AuthContextType {
   /** App-specific user profile. */
@@ -34,6 +36,8 @@ interface AuthContextType {
   signUp: (email: string, password: string) => Promise<void>;
   /** Start Google sign-in flow. */
   signInWithGoogle: () => Promise<void>;
+  /** Start anonymous sign-in flow. */
+  signInAnonymously: () => Promise<void>;
   /** Sign out of the current session. */
   signOut: () => Promise<void>;
 }
@@ -59,7 +63,8 @@ async function createOrGetUserDocument(
         : undefined;
       return {
         uid: firebaseUser.uid,
-        email: firebaseUser.email!,
+        email: firebaseUser.email ?? undefined,
+        isAnonymous: firebaseUser.isAnonymous,
         role: userData.role as UserRole,
         displayName: userData.displayName,
         createdAt: userData.createdAt?.toDate(),
@@ -68,7 +73,8 @@ async function createOrGetUserDocument(
     } else {
       const newUser: User = {
         uid: firebaseUser.uid,
-        email: firebaseUser.email!,
+        email: firebaseUser.email ?? undefined,
+        isAnonymous: firebaseUser.isAnonymous,
         role: "viewer",
         displayName: firebaseUser.displayName || undefined,
         createdAt: new Date(),
@@ -93,7 +99,8 @@ async function createOrGetUserDocument(
 
     return {
       uid: firebaseUser.uid,
-      email: firebaseUser.email!,
+      email: firebaseUser.email ?? undefined,
+      isAnonymous: firebaseUser.isAnonymous,
       role: "viewer",
       displayName: firebaseUser.displayName || undefined,
       createdAt: new Date(),
@@ -178,6 +185,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const signInAnonymously = async () => {
+    const result = await firebaseSignInAnonymously(auth);
+    await createOrGetUserDocument(result.user);
+  };
+
   const signOut = async () => {
     await firebaseSignOut(auth);
     router.push("/");
@@ -192,6 +204,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signIn,
         signUp,
         signInWithGoogle,
+        signInAnonymously,
         signOut,
       }}
     >

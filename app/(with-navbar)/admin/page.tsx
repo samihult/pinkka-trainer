@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+/** Admin dashboard for viewing users and updating role assignments. */
+import { useCallback, useEffect, useState } from "react";
 import { ProtectedRoute } from "@/components/protected-route";
-import { Navbar } from "@/components/navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Select,
@@ -23,11 +23,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    loadUsers();
-  }, []);
-
-  const loadUsers = async () => {
+  const loadUsers = useCallback(async () => {
     try {
       const allUsers = await getAllUsers();
       setUsers(allUsers);
@@ -41,7 +37,11 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    loadUsers();
+  }, [loadUsers]);
 
   const handleRoleChange = async (userId: string, newRole: UserRole) => {
     try {
@@ -96,7 +96,9 @@ export default function AdminPage() {
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <Mail className="h-4 w-4 text-muted-foreground" />
-                          <span className="font-medium">{user.email}</span>
+                          <span className="font-medium">
+                            {user.email ?? "Guest user"}
+                          </span>
                         </div>
 
                         <div className="flex items-center gap-2">

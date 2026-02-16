@@ -1,3 +1,4 @@
+/** Shared domain types for auth, learning, and content entities. */
 /** Supported application roles. */
 export type UserRole = "viewer" | "editor" | "admin";
 
@@ -109,8 +110,10 @@ export interface UserPreferences {
 export interface User {
   /** Firebase auth uid. */
   uid: string;
-  /** User email address. */
-  email: string;
+  /** User email address when available. */
+  email?: string;
+  /** Whether the current account is anonymous. */
+  isAnonymous?: boolean;
   /** Role used for authorization. */
   role: UserRole;
   /** Optional display name. */
