@@ -73,7 +73,7 @@ const EN_MESSAGES = {
   "test.settings.acceptedAnswer": "Accepted answer",
   "test.settings.answer.scientific": "Scientific name only",
   "test.settings.answer.vernacular": "Vernacular name only",
-  "test.settings.answer.either": "Scientific or vernacular",
+  "test.settings.answer.either": "Either",
   "test.settings.answer.description":
     "Applies to both test modes; answers ignore case and extra spaces.",
   "test.settings.start": "Start ⏎",
@@ -134,8 +134,7 @@ const FI_MESSAGES: TranslationTable = {
   "auth.signIn.googleContinue": "Jatka Googlella",
   "auth.signIn.signingIn": "Kirjaudutaan...",
   "auth.signIn.redirectingTitle": "Kirjaudutaan...",
-  "auth.signIn.redirectingDescription":
-    "Ohjataan Googlen kirjautumissivulle.",
+  "auth.signIn.redirectingDescription": "Ohjataan Googlen kirjautumissivulle.",
   "auth.signIn.orEmail": "Tai kirjaudu sähköpostilla",
   "auth.signIn.submit": "Kirjaudu sisään",
   "auth.signIn.submitLoading": "Kirjaudutaan...",
@@ -145,8 +144,7 @@ const FI_MESSAGES: TranslationTable = {
   "auth.signIn.failureDescription":
     "Kirjautuminen epäonnistui. Tarkista tunnuksesi.",
   "auth.signIn.googleWelcomeTitle": "Tervetuloa!",
-  "auth.signIn.googleWelcomeDescription":
-    "Google-kirjautuminen onnistui.",
+  "auth.signIn.googleWelcomeDescription": "Google-kirjautuminen onnistui.",
 
   "auth.signUp.title": "Luo käyttäjätili",
   "auth.signUp.description": "Rekisteröidy aloittaaksesi lajien opiskelun",
@@ -184,7 +182,7 @@ const FI_MESSAGES: TranslationTable = {
   "test.settings.acceptedAnswer": "Hyväksytty vastaus",
   "test.settings.answer.scientific": "Vain tieteellinen nimi",
   "test.settings.answer.vernacular": "Vain kansankielinen nimi",
-  "test.settings.answer.either": "Tieteellinen tai kansankielinen",
+  "test.settings.answer.either": "Kumpi vain",
   "test.settings.answer.description":
     "Koskee molempia testitapoja; kirjainkoko ja ylimääräiset välit ohitetaan.",
   "test.settings.start": "Aloita ⏎",
@@ -209,8 +207,7 @@ const FI_MESSAGES: TranslationTable = {
     "{label}: Uusi {newPercent}%, Opettelussa {learningPercent}%, Vahvistumassa {strengtheningPercent}%, Hallussa {masteredPercent}%",
 
   "test.completed.title": "Testi valmis!",
-  "test.completed.scoreLine":
-    "Sait oikein {correctAnswers} / {totalQuestions}",
+  "test.completed.scoreLine": "Sait oikein {correctAnswers} / {totalQuestions}",
   "test.completed.stackStatus": "Pinkan oppimistila",
   "test.completed.takeAgain": "Tee testi uudelleen",
   "test.completed.studyCards": "Opiskele korteilla",
@@ -248,8 +245,7 @@ const SV_MESSAGES: TranslationTable = {
   "auth.signIn.failureDescription":
     "Inloggningen misslyckades. Kontrollera dina uppgifter.",
   "auth.signIn.googleWelcomeTitle": "Välkommen!",
-  "auth.signIn.googleWelcomeDescription":
-    "Du har loggat in med Google.",
+  "auth.signIn.googleWelcomeDescription": "Du har loggat in med Google.",
 
   "auth.signUp.title": "Skapa ditt konto",
   "auth.signUp.description": "Registrera dig för att börja lära arter",
@@ -287,7 +283,7 @@ const SV_MESSAGES: TranslationTable = {
   "test.settings.acceptedAnswer": "Godkänt svar",
   "test.settings.answer.scientific": "Endast vetenskapligt namn",
   "test.settings.answer.vernacular": "Endast vardagligt namn",
-  "test.settings.answer.either": "Vetenskapligt eller vardagligt",
+  "test.settings.answer.either": "Endera",
   "test.settings.answer.description":
     "Gäller båda testlägen; svar ignorerar versaler och extra mellanslag.",
   "test.settings.start": "Starta ⏎",
@@ -326,10 +322,7 @@ const MESSAGES: Record<LanguagePreference, TranslationTable> = {
   SV: SV_MESSAGES,
 };
 
-function formatMessage(
-  template: string,
-  params?: TranslationParams,
-): string {
+function formatMessage(template: string, params?: TranslationParams): string {
   if (!params) return template;
   return Object.entries(params).reduce(
     (result, [key, value]) =>

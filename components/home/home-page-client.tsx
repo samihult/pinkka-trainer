@@ -5,12 +5,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import {
+  getSpecies,
   getGroups,
   getStackLearningHistograms,
   getStacks,
 } from "@/lib/firebase/firestore-helpers";
 import type { Group, Stack, StackLearningHistogram } from "@/lib/types";
-import { getLocalizedText } from "@/lib/content/content-display";
+import {
+  getLocalizedText,
+  getSpeciesImageUrl,
+} from "@/lib/content/content-display";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import { useI18n } from "@/lib/i18n";
@@ -27,6 +31,7 @@ import {
   RectangleHorizontal,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { StackLearningHistogram as StackLearningHistogramBars } from "@/components/learning/stack-learning-histogram";
 
@@ -47,8 +52,20 @@ export function HomePageClient() {
   const [stackHistograms, setStackHistograms] = useState<
     Map<string, StackLearningHistogram>
   >(new Map());
+  const [stackSpeciesPreviewUrls, setStackSpeciesPreviewUrls] = useState<
+    Map<string, string>
+  >(new Map());
   const [expandedGroupId, setExpandedGroupId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const getStackImageUrl = useCallback((stack: Stack): string | null => {
+    const stackImages = [...(stack.data.images ?? []), ...(stack.images ?? [])];
+    for (const image of stackImages) {
+      const url = getSpeciesImageUrl(image, { preferThumbnail: true });
+      if (url) return url;
+    }
+    return null;
+  }, []);
 
   const expandedGroupFromQuery = useMemo(() => {
     const value = searchParams.get("g");
@@ -124,6 +141,57 @@ export function HomePageClient() {
     void loadHistograms();
   }, [allStacks, user]);
 
+  useEffect(() => {
+    if (allStacks.length === 0) {
+      setStackSpeciesPreviewUrls(new Map());
+      return;
+    }
+
+    let isCancelled = false;
+
+    const loadFallbackSpeciesPreviews = async () => {
+      const stacksNeedingFallback = allStacks.filter(
+        (stack) => !getStackImageUrl(stack),
+      );
+      if (stacksNeedingFallback.length === 0) {
+        setStackSpeciesPreviewUrls(new Map());
+        return;
+      }
+
+      const previewEntries = await Promise.allSettled(
+        stacksNeedingFallback.map(async (stack) => {
+          const stackSpecies = await getSpecies(stack.id);
+          const firstSpecies = stackSpecies[0];
+          const speciesImage =
+            firstSpecies?.data.images?.find((image) =>
+              Boolean(getSpeciesImageUrl(image, { preferThumbnail: true })),
+            ) ?? null;
+          const previewUrl = speciesImage
+            ? getSpeciesImageUrl(speciesImage, { preferThumbnail: true })
+            : "";
+          return [stack.id, previewUrl] as const;
+        }),
+      );
+
+      if (isCancelled) return;
+
+      const nextPreviewMap = new Map<string, string>();
+      previewEntries.forEach((entry) => {
+        if (entry.status !== "fulfilled") return;
+        const [stackId, previewUrl] = entry.value;
+        if (previewUrl) {
+          nextPreviewMap.set(stackId, previewUrl);
+        }
+      });
+      setStackSpeciesPreviewUrls(nextPreviewMap);
+    };
+
+    void loadFallbackSpeciesPreviews();
+    return () => {
+      isCancelled = true;
+    };
+  }, [allStacks, getStackImageUrl]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
@@ -197,74 +265,101 @@ export function HomePageClient() {
                 {isExpanded && (
                   <div
                     id={`group-${group.id}-stacks`}
-                    className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(min(100%,480px),1fr))] gap-4 pl-10"
+                    className="mt-4 space-y-4 pl-10"
                   >
-                    {(stacksByGroup[group.id] || []).map((stack) => (
-                      <div
-                        key={stack.id}
-                        className="flex h-full flex-col gap-6 rounded-lg border border-border bg-card px-4 py-3 sm:flex-row sm:justify-between"
-                      >
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <BookOpen className="h-4 w-4 text-primary" />
-                            <h3 className="text-base font-semibold">
-                              {getLocalizedText(
-                                stack.data.name,
-                                preferredLanguage,
-                              )}
-                            </h3>
-                          </div>
-                          {getLocalizedText(
-                            stack.data.description,
-                            preferredLanguage,
-                          ) && (
-                            <p className="mt-1 text-sm text-muted-foreground">
-                              {getLocalizedText(
-                                stack.data.description,
-                                preferredLanguage,
-                              )}
-                            </p>
-                          )}
-                          {user && (
-                            <div className="mt-3">
-                              {stackHistograms.get(stack.id) ? (
-                                <StackLearningHistogramBars
-                                  scientific={
-                                    stackHistograms.get(stack.id)!.scientific
-                                  }
-                                  vernacular={
-                                    stackHistograms.get(stack.id)!.vernacular
-                                  }
-                                  either={stackHistograms.get(stack.id)!.either}
+                    {(stacksByGroup[group.id] || []).map((stack) => {
+                      const stackName = getLocalizedText(
+                        stack.data.name,
+                        preferredLanguage,
+                      );
+                      const stackDescription = getLocalizedText(
+                        stack.data.description,
+                        preferredLanguage,
+                      );
+                      const previewImageUrl =
+                        getStackImageUrl(stack) ??
+                        stackSpeciesPreviewUrls.get(stack.id) ??
+                        null;
+
+                      return (
+                        <div
+                          key={stack.id}
+                          className="w-full max-w-xl rounded-lg border border-border bg-card px-4 py-3 sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl"
+                        >
+                          <div className="flex h-full flex-col gap-4 sm:flex-row sm:items-stretch sm:gap-5">
+                            <div className="relative h-28 w-full shrink-0 overflow-hidden rounded-md bg-muted sm:h-auto sm:min-h-28 sm:w-36">
+                              {previewImageUrl ? (
+                                <Image
+                                  src={previewImageUrl}
+                                  alt={stackName}
+                                  fill
+                                  className="object-cover"
+                                  sizes="(max-width: 640px) 100vw, 144px"
                                 />
                               ) : (
-                                <p className="text-xs text-muted-foreground">
-                                  {t("home.noLearningDataYet")}
-                                </p>
+                                <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+                                  <BookOpen className="h-6 w-6" />
+                                </div>
                               )}
                             </div>
-                          )}
+
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center gap-2">
+                                <BookOpen className="h-4 w-4 text-primary" />
+                                <h3 className="text-base font-semibold">
+                                  {stackName}
+                                </h3>
+                              </div>
+                              {stackDescription && (
+                                <p className="mt-1 text-sm text-muted-foreground">
+                                  {stackDescription}
+                                </p>
+                              )}
+                              {user && (
+                                <div className="mt-3">
+                                  {stackHistograms.get(stack.id) ? (
+                                    <StackLearningHistogramBars
+                                      scientific={
+                                        stackHistograms.get(stack.id)!.scientific
+                                      }
+                                      vernacular={
+                                        stackHistograms.get(stack.id)!.vernacular
+                                      }
+                                      either={
+                                        stackHistograms.get(stack.id)!.either
+                                      }
+                                    />
+                                  ) : (
+                                    <p className="text-xs text-muted-foreground">
+                                      {t("home.noLearningDataYet")}
+                                    </p>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="flex shrink-0 flex-col gap-2 sm:w-40">
+                              <Button asChild className="w-full">
+                                <Link href={`/learn/cards/${stack.id}`}>
+                                  <RectangleHorizontal className="mr-1 h-4 w-4" />
+                                  {t("home.learn")}
+                                </Link>
+                              </Button>
+                              <Button
+                                asChild
+                                variant="outline"
+                                className="w-full bg-transparent"
+                              >
+                                <Link href={`/learn/tests/${stack.id}`}>
+                                  <Brain className="mr-1 h-4 w-4" />
+                                  {t("home.takeTest")}
+                                </Link>
+                              </Button>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex shrink-0 flex-col gap-2 sm:w-40">
-                          <Button asChild className="w-full">
-                            <Link href={`/learn/cards/${stack.id}`}>
-                              <RectangleHorizontal className="mr-1 h-4 w-4" />
-                              {t("home.learn")}
-                            </Link>
-                          </Button>
-                          <Button
-                            asChild
-                            variant="outline"
-                            className="w-full bg-transparent"
-                          >
-                            <Link href={`/learn/tests/${stack.id}`}>
-                              <Brain className="mr-1 h-4 w-4" />
-                              {t("home.takeTest")}
-                            </Link>
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
 
                     {(stacksByGroup[group.id] || []).length === 0 && (
                       <Card>
