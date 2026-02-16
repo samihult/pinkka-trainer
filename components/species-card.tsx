@@ -142,20 +142,26 @@ export function SpeciesCard({
     <div className="relative h-full w-full">
       <Card className="absolute inset-x-4 top-0 bottom-24 overflow-hidden p-0 sm:inset-x-8">
         <CardContent className="h-full p-0">
-          {isInfoPanelOpen ? (
-            <div className="grid h-full min-h-0 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-              <div className="min-h-0 border-b md:border-b-0 md:border-r">
-                <SpeciesImageCarousel
-                  images={images}
-                  alt={species.data.scientificName}
-                  resetKey={species.id}
-                  heightClassName="h-full"
-                  fullScreenLightboxProps={{
-                    captions: { hidden: true, showToggle: false },
-                    zoom: { maxZoomPixelRatio: 3 },
-                  }}
-                />
-              </div>
+          <div
+            className={`h-full min-h-0 ${
+              isInfoPanelOpen
+                ? "grid md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"
+                : ""
+            }`}
+          >
+            <div className={isInfoPanelOpen ? "min-h-0 border-b md:border-b-0 md:border-r" : "h-full"}>
+              <SpeciesImageCarousel
+                images={images}
+                alt={species.data.scientificName}
+                resetKey={species.id}
+                heightClassName="h-full"
+                fullScreenLightboxProps={{
+                  captions: { hidden: true, showToggle: false },
+                  zoom: { maxZoomPixelRatio: 3 },
+                }}
+              />
+            </div>
+            {isInfoPanelOpen ? (
               <aside className="flex min-h-0 flex-col bg-card">
                 <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
                   <div>
@@ -227,19 +233,8 @@ export function SpeciesCard({
                   )}
                 </div>
               </aside>
-            </div>
-          ) : (
-            <SpeciesImageCarousel
-              images={images}
-              alt={species.data.scientificName}
-              resetKey={species.id}
-              heightClassName="h-full"
-              fullScreenLightboxProps={{
-                captions: { hidden: true, showToggle: false },
-                zoom: { maxZoomPixelRatio: 3 },
-              }}
-            />
-          )}
+            ) : null}
+          </div>
         </CardContent>
       </Card>
 
