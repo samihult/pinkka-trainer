@@ -18,7 +18,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useI18n } from "@/lib/i18n";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
+import { HatGlasses } from "lucide-react";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -76,7 +76,7 @@ export default function SignUpPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <BookOpen className="h-12 w-12 text-primary" />
+            <HatGlasses className="h-12 w-12 text-primary" />
           </div>
           <CardTitle className="text-2xl">{t("auth.signUp.title")}</CardTitle>
           <CardDescription>{t("auth.signUp.description")}</CardDescription>

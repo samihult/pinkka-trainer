@@ -18,7 +18,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useI18n } from "@/lib/i18n";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
+import { HatGlasses } from "lucide-react";
 
 /** Sign-in page supporting Google and email/password auth. */
 export default function SignInPage() {
@@ -83,7 +83,7 @@ export default function SignInPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <BookOpen className="h-12 w-12 text-primary" />
+            <HatGlasses className="h-12 w-12 text-primary" />
           </div>
           <CardTitle className="text-2xl">{t("auth.signIn.title")}</CardTitle>
           <CardDescription>

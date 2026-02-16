@@ -17,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BookOpen, User, LogOut, Settings, Library } from "lucide-react";
+import { HatGlasses, User, LogOut, Settings, Library } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -78,7 +78,7 @@ export function Navbar() {
             href="/"
             className="flex items-center gap-2 text-xl font-semibold"
           >
-            <BookOpen className="h-6 w-6 text-primary" />
+            <HatGlasses className="h-6 w-6 text-primary" />
             <span>Varjopinkka</span>
           </Link>
 

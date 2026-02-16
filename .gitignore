@@ -1,6 +1,7 @@
 .idea/
 .next/
 node_modules/
+.pnpm-store/
 
 .env.local
 *storybook.log

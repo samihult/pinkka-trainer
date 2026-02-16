@@ -10,7 +10,12 @@ import {
   getStackLearningHistograms,
   getStacks,
 } from "@/lib/firebase/firestore-helpers";
-import type { Group, Species, Stack, StackLearningHistogram } from "@/lib/types";
+import type {
+  Group,
+  Species,
+  Stack,
+  StackLearningHistogram,
+} from "@/lib/types";
 import {
   getLocalizedText,
   getSpeciesImageUrl,
@@ -227,6 +232,15 @@ export function HomePageClient() {
         <div className="space-y-8">
           {groups.map((group) => {
             const isExpanded = expandedGroupId === group.id;
+            const groupStacks = stacksByGroup[group.id] || [];
+            const groupSpeciesCount = groupStacks.reduce(
+              (total, stack) =>
+                total +
+                (stackSpeciesCounts.get(stack.id) ??
+                  stack.speciesIds?.length ??
+                  0),
+              0,
+            );
             return (
               <div key={group.id}>
                 <button
@@ -261,8 +275,13 @@ export function HomePageClient() {
                     />
                   </span>
                   <span className="pt-1">
-                    <span className="text-2xl font-bold">
-                      {getLocalizedText(group.data.name, preferredLanguage)}
+                    <span className="flex items-center gap-2">
+                      <span className="text-2xl font-bold">
+                        {getLocalizedText(group.data.name, preferredLanguage)}
+                      </span>
+                      <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                        {t("home.speciesCount", { count: groupSpeciesCount })}
+                      </span>
                     </span>
                     {getLocalizedText(
                       group.data.description,
@@ -283,7 +302,7 @@ export function HomePageClient() {
                     id={`group-${group.id}-stacks`}
                     className="mt-4 space-y-4 pl-10"
                   >
-                    {(stacksByGroup[group.id] || []).map((stack) => {
+                    {groupStacks.map((stack) => {
                       const stackName = getLocalizedText(
                         stack.data.name,
                         preferredLanguage,
@@ -296,74 +315,83 @@ export function HomePageClient() {
                         getStackImageUrl(stack) ??
                         stackSpeciesPreviewUrls.get(stack.id) ??
                         null;
-                      const stackSpeciesCount = stackSpeciesCounts.get(stack.id);
+                      const stackSpeciesCount = stackSpeciesCounts.get(
+                        stack.id,
+                      );
 
                       return (
                         <div
                           key={stack.id}
-                          className="w-full max-w-xl rounded-lg border border-border bg-card px-4 py-3 sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl"
+                          className="w-full max-w-3xl rounded-lg border border-border bg-card px-4 py-3 sm:max-w-3xl lg:max-w-3xl xl:max-w-3xl"
                         >
-                          <div className="flex h-full flex-col gap-4 sm:flex-row sm:items-stretch sm:gap-5">
-                            <div className="relative h-28 w-full shrink-0 overflow-hidden rounded-md bg-muted sm:h-auto sm:min-h-28 sm:w-36">
-                              {previewImageUrl ? (
-                                <Image
-                                  src={previewImageUrl}
-                                  alt={stackName}
-                                  fill
-                                  className="object-cover"
-                                  sizes="(max-width: 640px) 100vw, 144px"
-                                />
-                              ) : (
-                                <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-                                  <BookOpen className="h-6 w-6" />
-                                </div>
-                              )}
-                            </div>
-
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-center gap-2">
-                                <BookOpen className="h-4 w-4 text-primary" />
-                                <h3 className="text-base font-semibold">
-                                  {stackName}
-                                </h3>
-                                {typeof stackSpeciesCount === "number" && (
-                                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                                    {t("home.speciesCount", {
-                                      count: stackSpeciesCount,
-                                    })}
-                                  </span>
+                          <div className="flex h-full flex-col gap-4 lg:flex-row sm:items-stretch sm:gap-5">
+                            <div className="flex flex-grow-1 gap-4 flex-col sm:flex-row sm:items-stretch sm:gap-5">
+                              <div className="relative h-28 w-full shrink-0 overflow-hidden rounded-md bg-muted sm:h-auto sm:min-h-28 sm:w-36">
+                                {previewImageUrl ? (
+                                  <Image
+                                    src={previewImageUrl}
+                                    alt={stackName}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 640px) 100vw, 144px"
+                                  />
+                                ) : (
+                                  <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+                                    <BookOpen className="h-6 w-6" />
+                                  </div>
                                 )}
                               </div>
-                              {stackDescription && (
-                                <p className="mt-1 text-sm text-muted-foreground">
-                                  {stackDescription}
-                                </p>
-                              )}
-                              {user && (
-                                <div className="mt-3">
-                                  {stackHistograms.get(stack.id) ? (
-                                    <StackLearningHistogramBars
-                                      scientific={
-                                        stackHistograms.get(stack.id)!.scientific
-                                      }
-                                      vernacular={
-                                        stackHistograms.get(stack.id)!.vernacular
-                                      }
-                                      either={
-                                        stackHistograms.get(stack.id)!.either
-                                      }
-                                    />
-                                  ) : (
-                                    <p className="text-xs text-muted-foreground">
-                                      {t("home.noLearningDataYet")}
-                                    </p>
+
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center gap-2">
+                                  <BookOpen className="h-4 w-4 text-primary" />
+                                  <h3 className="text-base font-semibold">
+                                    {stackName}
+                                  </h3>
+                                  {typeof stackSpeciesCount === "number" && (
+                                    <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                                      {t("home.speciesCount", {
+                                        count: stackSpeciesCount,
+                                      })}
+                                    </span>
                                   )}
                                 </div>
-                              )}
+                                {stackDescription && (
+                                  <p className="mt-1 text-sm text-muted-foreground">
+                                    {stackDescription}
+                                  </p>
+                                )}
+                                {user && (
+                                  <div className="mt-3">
+                                    {stackHistograms.get(stack.id) ? (
+                                      <StackLearningHistogramBars
+                                        scientific={
+                                          stackHistograms.get(stack.id)!
+                                            .scientific
+                                        }
+                                        vernacular={
+                                          stackHistograms.get(stack.id)!
+                                            .vernacular
+                                        }
+                                        either={
+                                          stackHistograms.get(stack.id)!.either
+                                        }
+                                      />
+                                    ) : (
+                                      <p className="text-xs text-muted-foreground">
+                                        {t("home.noLearningDataYet")}
+                                      </p>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
                             </div>
 
-                            <div className="flex shrink-0 flex-col gap-2 sm:w-40">
-                              <Button asChild className="w-full">
+                            <div className="flex flex-col sm:flex-row lg:flex-col gap-2 lg:w-40">
+                              <Button
+                                asChild
+                                className="flex-grow-1 sm:max-w-50"
+                              >
                                 <Link href={`/learn/cards/${stack.id}`}>
                                   <RectangleHorizontal className="mr-1 h-4 w-4" />
                                   {t("home.learn")}
@@ -372,7 +400,7 @@ export function HomePageClient() {
                               <Button
                                 asChild
                                 variant="outline"
-                                className="w-full bg-transparent"
+                                className="flex-grow-1 bg-transparent sm:max-w-50"
                               >
                                 <Link href={`/learn/tests/${stack.id}`}>
                                   <Brain className="mr-1 h-4 w-4" />
@@ -385,7 +413,7 @@ export function HomePageClient() {
                       );
                     })}
 
-                    {(stacksByGroup[group.id] || []).length === 0 && (
+                    {groupStacks.length === 0 && (
                       <Card>
                         <CardContent className="py-6 text-center text-muted-foreground">
                           {t("home.noStacksInGroup")}
