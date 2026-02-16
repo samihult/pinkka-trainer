@@ -17,6 +17,7 @@ import {
   getStack,
   getSpecies,
 } from "@/lib/firebase/firestore-helpers";
+import { useAuth } from "@/lib/auth-context";
 import type { Group, Stack, Species } from "@/lib/types";
 import {
   getLocalizedText,
@@ -43,6 +44,7 @@ export default function CardsPage() {
   const searchParams = useSearchParams();
   const params = useParams();
   const stackId = decodeURIComponent(params.stackId as string);
+  const { user, loading: authLoading } = useAuth();
 
   const [stack, setStack] = useState<Stack | null>(null);
   const [group, setGroup] = useState<Group | null>(null);
@@ -57,10 +59,6 @@ export default function CardsPage() {
       ),
     [searchParams],
   );
-
-  useEffect(() => {
-    void loadData();
-  }, [stackId]);
 
   const updateBacksidePanelVisibility = useCallback(
     (nextOpen: boolean) => {
@@ -78,7 +76,7 @@ export default function CardsPage() {
     updateBacksidePanelVisibility(!isBacksidePanelOpen);
   }, [isBacksidePanelOpen, updateBacksidePanelVisibility]);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const stackData = await getStack(stackId);
       const [speciesData, directGroupData, allGroups] = await Promise.all([
@@ -103,7 +101,12 @@ export default function CardsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [stackId]);
+
+  useEffect(() => {
+    if (authLoading || !user) return;
+    void loadData();
+  }, [authLoading, loadData, user]);
 
   const handleShuffle = () => {
     const shuffled = [...species].sort(() => Math.random() - 0.5);

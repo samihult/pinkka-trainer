@@ -79,7 +79,15 @@ async function createOrGetUserDocument(
         displayName: firebaseUser.displayName || undefined,
         createdAt: new Date(),
       };
-      await setDoc(doc(db, "users", firebaseUser.uid), newUser);
+      const userDocumentData: Record<string, unknown> = {
+        uid: newUser.uid,
+        isAnonymous: newUser.isAnonymous,
+        role: newUser.role,
+        createdAt: newUser.createdAt,
+      };
+      if (newUser.email) userDocumentData.email = newUser.email;
+      if (newUser.displayName) userDocumentData.displayName = newUser.displayName;
+      await setDoc(doc(db, "users", firebaseUser.uid), userDocumentData);
       return newUser;
     }
   } catch (error: any) {
@@ -144,18 +152,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setLoading(false);
       } else {
         setUser(null);
-        if (!isSigningInAnonymouslyRef.current) {
-          isSigningInAnonymouslyRef.current = true;
-          try {
-            await firebaseSignInAnonymously(auth);
-            return;
-          } catch (error: any) {
-            console.error("Anonymous sign-in error:", error.message);
-          } finally {
-            isSigningInAnonymouslyRef.current = false;
-          }
+        if (isSigningInAnonymouslyRef.current) return;
+
+        isSigningInAnonymouslyRef.current = true;
+        try {
+          await firebaseSignInAnonymously(auth);
+          return;
+        } catch (error: any) {
+          console.error("Anonymous sign-in error:", error.message);
+          setLoading(false);
+        } finally {
+          isSigningInAnonymouslyRef.current = false;
         }
-        setLoading(false);
       }
     });
 

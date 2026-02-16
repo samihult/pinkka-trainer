@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/loading-spinner";
@@ -36,7 +36,7 @@ export function HomePageClient() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [groups, setGroups] = useState<Group[]>([]);
   const [allStacks, setAllStacks] = useState<Stack[]>([]);
   const [stacksByGroup, setStacksByGroup] = useState<{
@@ -54,10 +54,6 @@ export function HomePageClient() {
   }, [searchParams]);
 
   useEffect(() => {
-    void loadData();
-  }, []);
-
-  useEffect(() => {
     if (expandedGroupFromQuery) {
       setExpandedGroupId(expandedGroupFromQuery);
       setStoredHomeExpandedGroupId(expandedGroupFromQuery);
@@ -67,7 +63,7 @@ export function HomePageClient() {
     setExpandedGroupId(getStoredHomeExpandedGroupId());
   }, [expandedGroupFromQuery]);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const [groupsData, allStacks] = await Promise.all([
         getGroups(),
@@ -98,7 +94,12 @@ export function HomePageClient() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (authLoading || !user) return;
+    void loadData();
+  }, [authLoading, loadData, user]);
 
   useEffect(() => {
     if (!user || allStacks.length === 0) {
