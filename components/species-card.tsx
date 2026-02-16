@@ -75,7 +75,10 @@ export function SpeciesCard({
       { label: t("learn.cards.shortcut.zoomOut"), keys: ["↓"] },
       { label: t("learn.cards.shortcut.previousImage"), keys: ["←"] },
       { label: t("learn.cards.shortcut.nextImage"), keys: ["→"] },
-      { label: t("learn.cards.shortcut.previousSpecies"), keys: ["⌘/Ctrl", "←"] },
+      {
+        label: t("learn.cards.shortcut.previousSpecies"),
+        keys: ["⌘/Ctrl", "←"],
+      },
       { label: t("learn.cards.shortcut.nextSpecies"), keys: ["⌘/Ctrl", "→"] },
       { label: t("learn.cards.shortcut.showIdentificationTab"), keys: ["1"] },
       { label: t("learn.cards.shortcut.showPinkkaTab"), keys: ["2"] },
@@ -153,9 +156,14 @@ export function SpeciesCard({
               </div>
               <aside className="flex min-h-0 flex-col bg-card">
                 <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
-                  <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                    {t("learn.cards.info.title")}
-                  </p>
+                  <div>
+                    <h2 className="line-clamp-2 text-lg font-semibold">
+                      {species.data.scientificName}
+                    </h2>
+                    {vernacularName ? (
+                      <p className="text-sm text-primary">{vernacularName}</p>
+                    ) : null}
+                  </div>
                   <Button
                     type="button"
                     variant="ghost"
@@ -171,7 +179,9 @@ export function SpeciesCard({
                     <Button
                       type="button"
                       variant={
-                        activeInfoTab === "identification" ? "secondary" : "ghost"
+                        activeInfoTab === "identification"
+                          ? "secondary"
+                          : "ghost"
                       }
                       size="sm"
                       onClick={() => setActiveInfoTab("identification")}
@@ -180,7 +190,9 @@ export function SpeciesCard({
                     </Button>
                     <Button
                       type="button"
-                      variant={activeInfoTab === "pinkka" ? "secondary" : "ghost"}
+                      variant={
+                        activeInfoTab === "pinkka" ? "secondary" : "ghost"
+                      }
                       size="sm"
                       onClick={() => setActiveInfoTab("pinkka")}
                     >
@@ -195,18 +207,12 @@ export function SpeciesCard({
                     </p>
                   ) : (
                     <div className="space-y-3">
-                      <div>
-                        <h2 className="line-clamp-2 text-lg font-semibold">
-                          {species.data.scientificName}
-                        </h2>
-                        {vernacularName ? (
-                          <p className="text-sm text-primary">{vernacularName}</p>
-                        ) : null}
-                      </div>
                       {description ? (
                         <div
                           className="text-sm leading-relaxed text-muted-foreground [&_p]:mb-4 [&_p:last-child]:mb-0"
-                          dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+                          dangerouslySetInnerHTML={{
+                            __html: sanitizedDescription,
+                          }}
                         />
                       ) : (
                         <p className="text-sm text-muted-foreground">
