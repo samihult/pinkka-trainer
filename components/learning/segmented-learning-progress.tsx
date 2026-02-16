@@ -42,7 +42,7 @@ type OverlayLayout = {
 
 const OVERLAY_HORIZONTAL_MARGIN_LEFT = 8;
 const OVERLAY_HORIZONTAL_MARGIN_RIGHT = 10;
-const OVERLAY_VERTICAL_GAP = 0;
+const OVERLAY_VERTICAL_GAP = -2;
 const DEFAULT_OVERLAY_LAYOUT: OverlayLayout = { left: 0, top: 0, width: 0 };
 
 /** Segmented progress bar with enlarged hit areas and one animated hover name box. */
@@ -241,7 +241,7 @@ export function SegmentedLearningProgress({
       ) : null}
 
       <div
-        className="flex w-full flex-wrap items-center gap-1"
+        className="grid w-full grid-cols-[repeat(auto-fit,minmax(1.5em,1fr))] gap-1"
         onPointerMove={handleTouchMove}
       >
         {segments.map((segment, index) => {
@@ -299,7 +299,7 @@ export function SegmentedLearningProgress({
               onPointerUp={handlePointerUp}
               onPointerCancel={handlePointerCancel}
               className={cn(
-                "relative flex h-10 min-w-[1.5em] flex-1 basis-0 touch-none items-center px-0",
+                "relative flex h-8 w-full touch-none items-center px-0",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                 onSelectIndex ? "cursor-pointer" : "cursor-default",
               )}
