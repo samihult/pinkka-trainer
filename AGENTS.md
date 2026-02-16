@@ -35,7 +35,7 @@ Project conventions for Codex agents working in this repo.
     - Foreign keys must not be used where the entities may not be atomic, e.g. because of asynchronicity
   - Proper indexes must be kept for performance, but their number must be kept minimal
 - Internationalization:
-  - All strings have translations
+  - All strings have translations – there must not be any hard-coded strings, except for proper nouns like "Varjopinkka"
   - Dates, numbers, percentages etc. follow the locale conventions
 
 After finishing a task, state briefly the state of these aspects on the top-level, and if they have been made fixes to.
