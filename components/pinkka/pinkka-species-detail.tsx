@@ -29,6 +29,8 @@ export interface PinkkaSpeciesDetailProps {
   detail: PinkkaSpeciesDetail;
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
+  /** Whether to render scientific and vernacular names in this panel. */
+  showSpeciesHeader?: boolean;
   /** Whether to render the image gallery block. */
   showImages?: boolean;
   /** Whether sections without content should be omitted. */
@@ -39,6 +41,7 @@ export interface PinkkaSpeciesDetailProps {
 export function PinkkaSpeciesDetail({
   detail,
   preferredLang,
+  showSpeciesHeader = true,
   showImages = true,
   hideEmptySections = true,
 }: PinkkaSpeciesDetailProps) {
@@ -115,12 +118,14 @@ export function PinkkaSpeciesDetail({
 
   return (
     <div className="space-y-4 px-1 text-sm">
-      <div>
-        <div className="text-lg font-semibold">{detail.scientificName}</div>
-        <div className="text-muted-foreground">
-          {getLocalizedText(detail.vernacularName, preferredLang)}
+      {showSpeciesHeader ? (
+        <div>
+          <div className="text-lg font-semibold">{detail.scientificName}</div>
+          <div className="text-muted-foreground">
+            {getLocalizedText(detail.vernacularName, preferredLang)}
+          </div>
         </div>
-      </div>
+      ) : null}
       {showImages && activeImage && (
         <div className="space-y-2">
           <div className="overflow-hidden rounded-md border border-border bg-muted/20">

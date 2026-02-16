@@ -17,7 +17,7 @@ import {
   getSpeciesDescription,
 } from "@/lib/content/content-display";
 import { useI18n } from "@/lib/i18n";
-import { ChevronRight, Keyboard, X } from "lucide-react";
+import { ChevronRight, ExternalLink, Keyboard, X } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
@@ -306,6 +306,24 @@ export function SpeciesCard({
                     </p>
                   ) : (
                     <div className="space-y-3">
+                      {pinkkaSpeciesId ? (
+                        <Button
+                          type="button"
+                          variant="link"
+                          size="sm"
+                          className="h-auto p-0 text-sm font-medium"
+                          asChild
+                        >
+                          <a
+                            href={`https://pinkka.laji.fi/pinkat/#/speciescards/${pinkkaSpeciesId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            pinkka
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        </Button>
+                      ) : null}
                       {pinkkaLoading ? (
                         <div className="py-3 flex justify-center">
                           <LoadingSpinner />
@@ -314,6 +332,7 @@ export function SpeciesCard({
                         <PinkkaSpeciesDetailPanel
                           detail={pinkkaDetail}
                           preferredLang={preferredLanguage}
+                          showSpeciesHeader={false}
                           showImages={false}
                         />
                       ) : description ? (
