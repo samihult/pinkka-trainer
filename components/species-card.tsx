@@ -72,8 +72,8 @@ export function SpeciesCard({
   const shortcutContent = useMemo(
     () => [
       { label: t("learn.cards.shortcut.toggleInfoPanel"), keys: ["Space"] },
-      { label: t("learn.cards.shortcut.openLarger"), keys: ["↑"] },
-      { label: t("learn.cards.shortcut.zoomOut"), keys: ["↓"] },
+      { label: t("learn.cards.shortcut.openLarger"), keys: ["Z"] },
+      { label: t("learn.cards.shortcut.zoomOut"), keys: ["X"] },
       { label: t("learn.cards.shortcut.previousImage"), keys: ["←"] },
       { label: t("learn.cards.shortcut.nextImage"), keys: ["→"] },
       {

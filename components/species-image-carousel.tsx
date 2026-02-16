@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Lightbox, {
   LightboxExternalProps,
   type Slide,
@@ -50,6 +50,20 @@ export interface SpeciesImageCarouselProps {
   fullScreenLightboxProps?: LightboxExternalProps;
 }
 
+type CarouselState = {
+  key: string;
+  currentImageIndex: number;
+  isLightboxOpen: boolean;
+};
+
+function createDefaultCarouselState(key: string): CarouselState {
+  return {
+    key,
+    currentImageIndex: 0,
+    isLightboxOpen: false,
+  };
+}
+
 /** Carousel for displaying species images with lightbox controls. */
 export function SpeciesImageCarousel({
   images,
@@ -67,8 +81,11 @@ export function SpeciesImageCarousel({
 }: SpeciesImageCarouselProps) {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [carouselState, setCarouselState] = useState<CarouselState>(() =>
+    createDefaultCarouselState(
+      resetKey ?? images.map((image) => image.id).join("-"),
+    ),
+  );
   const inlineControllerRef = useRef<ControllerRef | null>(null);
   const modalControllerRef = useRef<ControllerRef | null>(null);
   const modalZoomRef = useRef<ZoomRef | null>(null);
@@ -107,31 +124,63 @@ export function SpeciesImageCarousel({
     return nextSlides;
   }, [alt, images, preferredLanguage]);
 
-  useEffect(() => {
-    setCurrentImageIndex(0);
-    setIsLightboxOpen(false);
-  }, [images.length, resetKey]);
-
-  useEffect(() => {
-    if (currentImageIndex >= slides.length && slides.length > 0) {
-      setCurrentImageIndex(0);
-    }
-  }, [currentImageIndex, slides.length]);
+  const normalizedCarouselState =
+    carouselState.key === lightboxKey
+      ? carouselState
+      : createDefaultCarouselState(lightboxKey);
+  const currentImageIndex =
+    slides.length > 0
+      ? Math.min(normalizedCarouselState.currentImageIndex, slides.length - 1)
+      : 0;
+  const isLightboxOpen = normalizedCarouselState.isLightboxOpen;
 
   const handleView = ({ index }: { index: number }) => {
-    setCurrentImageIndex((prev) => {
-      if (prev === index) return prev;
+    setCarouselState((prev) => {
+      const normalized =
+        prev.key === lightboxKey ? prev : createDefaultCarouselState(lightboxKey);
+      if (normalized.currentImageIndex === index) {
+        return prev.key === lightboxKey ? prev : normalized;
+      }
       onIndexChange?.(index);
-      return index;
+      return {
+        ...normalized,
+        currentImageIndex: index,
+      };
     });
   };
 
   const handleClick = () => {
     onImageClick?.(currentImageIndex);
     if (enableModal) {
-      setIsLightboxOpen(true);
+      setCarouselState((prev) => {
+        const normalized =
+          prev.key === lightboxKey
+            ? prev
+            : createDefaultCarouselState(lightboxKey);
+        if (normalized.isLightboxOpen) {
+          return prev.key === lightboxKey ? prev : normalized;
+        }
+        return {
+          ...normalized,
+          isLightboxOpen: true,
+        };
+      });
     }
   };
+
+  const closeLightbox = useCallback(() => {
+    setCarouselState((prev) => {
+      const normalized =
+        prev.key === lightboxKey ? prev : createDefaultCarouselState(lightboxKey);
+      if (!normalized.isLightboxOpen) {
+        return prev.key === lightboxKey ? prev : normalized;
+      }
+      return {
+        ...normalized,
+        isLightboxOpen: false,
+      };
+    });
+  }, [lightboxKey]);
 
   useEffect(() => {
     const isEditableTarget = (target: EventTarget | null) => {
@@ -147,11 +196,12 @@ export function SpeciesImageCarousel({
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
+      const lowerKey = event.key.toLowerCase();
       if (
         event.key !== "ArrowLeft" &&
         event.key !== "ArrowRight" &&
-        event.key !== "ArrowUp" &&
-        event.key !== "ArrowDown"
+        lowerKey !== "z" &&
+        lowerKey !== "x"
       )
         return;
       if (isEditableTarget(event.target)) return;
@@ -172,7 +222,7 @@ export function SpeciesImageCarousel({
         controller.focus();
       }
 
-      if (event.key === "ArrowUp") {
+      if (lowerKey === "z") {
         if (isLightboxOpen) {
           event.preventDefault();
           const modalZoom = modalZoomRef.current;
@@ -182,10 +232,22 @@ export function SpeciesImageCarousel({
           modalControllerRef.current?.focus();
         } else if (enableModal) {
           event.preventDefault();
-          setIsLightboxOpen(true);
+          setCarouselState((prev) => {
+            const normalized =
+              prev.key === lightboxKey
+                ? prev
+                : createDefaultCarouselState(lightboxKey);
+            if (normalized.isLightboxOpen) {
+              return prev.key === lightboxKey ? prev : normalized;
+            }
+            return {
+              ...normalized,
+              isLightboxOpen: true,
+            };
+          });
           controller.focus();
         }
-      } else if (event.key === "ArrowDown") {
+      } else if (lowerKey === "x") {
         if (isLightboxOpen) {
           event.preventDefault();
           const modalZoom = modalZoomRef.current;
@@ -197,10 +259,10 @@ export function SpeciesImageCarousel({
             modalZoom.zoomOut();
             modalControllerRef.current?.focus();
           } else {
-            setIsLightboxOpen(false);
+            closeLightbox();
           }
         } else {
-          setIsLightboxOpen(false);
+          closeLightbox();
         }
       }
     };
@@ -208,7 +270,7 @@ export function SpeciesImageCarousel({
     window.addEventListener("keydown", handleKeyDown, { capture: true });
     return () =>
       window.removeEventListener("keydown", handleKeyDown, { capture: true });
-  }, [enableModal, isLightboxOpen]);
+  }, [closeLightbox, enableModal, isLightboxOpen, lightboxKey]);
 
   if (slides.length === 0) {
     return (
@@ -247,7 +309,7 @@ export function SpeciesImageCarousel({
       {enableModal && (
         <Lightbox
           open={isLightboxOpen}
-          close={() => setIsLightboxOpen(false)}
+          close={closeLightbox}
           slides={slides}
           index={currentImageIndex}
           on={{ view: handleView }}
