@@ -23,16 +23,19 @@ export interface StackLearningHistogramProps {
   scientific: LearningStatusHistogram;
   /** Vernacular name histogram. */
   vernacular: LearningStatusHistogram;
+  /** Scientific-or-vernacular histogram. */
+  either: LearningStatusHistogram;
 }
 
-/** Render stacked-bar histograms for scientific and vernacular learning. */
+/** Render stacked-bar histograms for scientific, vernacular, and either learning. */
 export function StackLearningHistogram({
   scientific,
   vernacular,
+  either,
 }: StackLearningHistogramProps) {
   const renderBar = (label: string, histogram: LearningStatusHistogram) => (
     <div className="flex items-center gap-3">
-      <span className="w-20 text-xs font-medium text-muted-foreground">
+      <span className="w-40 text-xs font-medium text-muted-foreground">
         {label}
       </span>
       <div
@@ -92,6 +95,7 @@ export function StackLearningHistogram({
       <div>
         {renderBar("Scientific", scientific)}
         {renderBar("Vernacular", vernacular)}
+        {renderBar("Scientific or vernacular", either)}
       </div>
     </div>
   );

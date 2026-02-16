@@ -55,6 +55,7 @@ export function TestCompletedCard({
             <StackLearningHistogram
               scientific={learningHistogram.scientific}
               vernacular={learningHistogram.vernacular}
+              either={learningHistogram.either}
             />
           </div>
         )}

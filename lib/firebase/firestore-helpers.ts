@@ -2423,6 +2423,18 @@ export async function upsertLearningProgressBatch(
   await batch.commit();
 }
 
+function createEmptyLearningStatusHistogram(
+  total: number,
+): StackLearningHistogram["scientific"] {
+  return {
+    total,
+    new: { count: total, percent: total > 0 ? 100 : 0 },
+    learning: { count: 0, percent: 0 },
+    strengthening: { count: 0, percent: 0 },
+    mastered: { count: 0, percent: 0 },
+  };
+}
+
 /** Fetch stack learning histograms for a user. */
 export async function getStackLearningHistograms(
   userId: string,
@@ -2444,12 +2456,24 @@ export async function getStackLearningHistograms(
     snapshot.docs.forEach((docSnapshot) => {
       const data = docSnapshot.data();
       const stackId = data.stackId as string;
+      const fallbackTotal =
+        data.scientific?.total ??
+        data.vernacular?.total ??
+        data.either?.total ??
+        0;
+      const scientific =
+        data.scientific ?? createEmptyLearningStatusHistogram(fallbackTotal);
+      const vernacular =
+        data.vernacular ?? createEmptyLearningStatusHistogram(fallbackTotal);
       histogramMap.set(stackId, {
         id: docSnapshot.id,
         userId: data.userId,
         stackId,
-        scientific: data.scientific,
-        vernacular: data.vernacular,
+        scientific,
+        vernacular,
+        either:
+          data.either ??
+          createEmptyLearningStatusHistogram(fallbackTotal),
         updatedAt: data.updatedAt?.toDate() ?? new Date(0),
       } as StackLearningHistogram);
     });
@@ -2471,6 +2495,7 @@ export async function upsertStackLearningHistogram(
       stackId: record.stackId,
       scientific: record.scientific,
       vernacular: record.vernacular,
+      either: record.either,
       updatedAt: now,
     },
     { merge: true },

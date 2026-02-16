@@ -90,6 +90,11 @@ type LearningScoreUpdate = {
   expectedMs: number;
 };
 
+type SpeciesLearningProgress = Record<
+  LearningNameType,
+  LearningProgressState | null
+>;
+
 const CLOSE_SCORE_THRESHOLD = 0.85;
 const CORRECT_SCORE_THRESHOLD = 1.0;
 const DEFAULT_EXPECTED_RESPONSE_MS: Record<TestMode, number> = {
@@ -119,10 +124,8 @@ export default function TestPage() {
     useState<TestPreferences | null>(null);
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
   const [showSettings, setShowSettings] = useState(true);
-  const [currentLearningProgress, setCurrentLearningProgress] = useState<{
-    scientific: LearningProgressState | null;
-    vernacular: LearningProgressState | null;
-  } | null>(null);
+  const [currentLearningProgress, setCurrentLearningProgress] =
+    useState<SpeciesLearningProgress | null>(null);
   const [learningMetric, setLearningMetric] = useState<{
     label: string;
     combinedScore: number;
@@ -343,48 +346,77 @@ export default function TestPage() {
     getLocalizedText(targetSpecies.data.vernacularName, preferredLanguage);
 
   const setLearningMetricFromProgress = (
-    scientificProgress: LearningProgressState | null,
-    vernacularProgress: LearningProgressState | null,
+    progress: SpeciesLearningProgress,
+    answerMode: TestAnswerMode,
     now: Date = new Date(),
   ) => {
-    const scientificAccuracy = scientificProgress
+    const scientificAccuracy = progress.scientific
       ? estimateRetention(
-          scientificProgress,
+          progress.scientific,
           now,
           DEFAULT_RETENTION_HORIZON_DAYS,
           "accuracy",
         )
       : null;
-    const scientificSpeed = scientificProgress
+    const scientificSpeed = progress.scientific
       ? estimateRetention(
-          scientificProgress,
+          progress.scientific,
           now,
           DEFAULT_RETENTION_HORIZON_DAYS,
           "speed",
         )
       : null;
-    const vernacularAccuracy = vernacularProgress
+    const vernacularAccuracy = progress.vernacular
       ? estimateRetention(
-          vernacularProgress,
+          progress.vernacular,
           now,
           DEFAULT_RETENTION_HORIZON_DAYS,
           "accuracy",
         )
       : null;
-    const vernacularSpeed = vernacularProgress
+    const vernacularSpeed = progress.vernacular
       ? estimateRetention(
-          vernacularProgress,
+          progress.vernacular,
+          now,
+          DEFAULT_RETENTION_HORIZON_DAYS,
+          "speed",
+        )
+      : null;
+    const eitherAccuracy = progress.either
+      ? estimateRetention(
+          progress.either,
+          now,
+          DEFAULT_RETENTION_HORIZON_DAYS,
+          "accuracy",
+        )
+      : null;
+    const eitherSpeed = progress.either
+      ? estimateRetention(
+          progress.either,
           now,
           DEFAULT_RETENTION_HORIZON_DAYS,
           "speed",
         )
       : null;
 
-    const accuracyScore = combineRetention(
-      scientificAccuracy,
-      vernacularAccuracy,
-    );
-    const speedScore = combineRetention(scientificSpeed, vernacularSpeed);
+    let accuracyScore: number | null = null;
+    let speedScore: number | null = null;
+
+    if (answerMode === "scientific") {
+      accuracyScore = scientificAccuracy;
+      speedScore = scientificSpeed;
+    } else if (answerMode === "vernacular") {
+      accuracyScore = vernacularAccuracy ?? scientificAccuracy;
+      speedScore = vernacularSpeed ?? scientificSpeed;
+    } else if (progress.either) {
+      accuracyScore = eitherAccuracy;
+      speedScore = eitherSpeed;
+    } else {
+      // Backward compatibility for older records created before "either" tracking.
+      accuracyScore = combineRetention(scientificAccuracy, vernacularAccuracy);
+      speedScore = combineRetention(scientificSpeed, vernacularSpeed);
+    }
+
     const combinedScore = combineRetention(accuracyScore, speedScore);
 
     setLearningMetric({
@@ -401,14 +433,16 @@ export default function TestPage() {
   const loadLearningProgressForSpecies = async (speciesId: string) => {
     if (!user) return;
     try {
-      const [scientific, vernacular] = await Promise.all([
+      const [scientific, vernacular, either] = await Promise.all([
         getLearningProgress(user.uid, speciesId, "scientific"),
         getLearningProgress(user.uid, speciesId, "vernacular"),
+        getLearningProgress(user.uid, speciesId, "either"),
       ]);
 
-      const nextProgress = {
+      const nextProgress: SpeciesLearningProgress = {
         scientific: scientific ?? null,
         vernacular: vernacular ?? null,
+        either: either ?? null,
       };
 
       if (scientific) {
@@ -423,17 +457,24 @@ export default function TestPage() {
           vernacular,
         );
       }
+      if (either) {
+        progressCacheRef.current.set(
+          buildProgressKey(speciesId, "either"),
+          either,
+        );
+      }
 
       setCurrentLearningProgress(nextProgress);
       setLearningMetricFromProgress(
-        nextProgress.scientific,
-        nextProgress.vernacular,
+        nextProgress,
+        testPreferences?.answerMode ?? "either",
       );
     } catch (error) {
       logFirestoreError("Failed to load learning progress", error);
       setCurrentLearningProgress({
         scientific: null,
         vernacular: null,
+        either: null,
       });
       setLearningMetric(null);
     }
@@ -477,11 +518,18 @@ export default function TestPage() {
         "vernacular",
         now,
       );
+      const either = buildStackLearningHistogram(
+        speciesIds,
+        progressMap,
+        "either",
+        now,
+      );
       const stored = await upsertStackLearningHistogram({
         userId: user.uid,
         stackId,
         scientific,
         vernacular,
+        either,
         updatedAt: now,
       });
       setStackHistogram(stored);
@@ -500,7 +548,7 @@ export default function TestPage() {
     if (!scoresByType || Object.keys(scoresByType).length === 0) return;
     try {
       const now = new Date();
-      const nextProgress = {
+      const nextProgress: SpeciesLearningProgress = {
         scientific:
           currentLearningProgress?.scientific ??
           progressCacheRef.current.get(
@@ -511,6 +559,12 @@ export default function TestPage() {
           currentLearningProgress?.vernacular ??
           progressCacheRef.current.get(
             buildProgressKey(targetSpecies.id, "vernacular"),
+          ) ??
+          null,
+        either:
+          currentLearningProgress?.either ??
+          progressCacheRef.current.get(
+            buildProgressKey(targetSpecies.id, "either"),
           ) ??
           null,
       };
@@ -560,17 +614,13 @@ export default function TestPage() {
           ...updated,
         });
 
-        if (nameType === "scientific") {
-          nextProgress.scientific = updated;
-        } else {
-          nextProgress.vernacular = updated;
-        }
+        nextProgress[nameType] = updated;
       }
 
       setCurrentLearningProgress(nextProgress);
       setLearningMetricFromProgress(
-        nextProgress.scientific,
-        nextProgress.vernacular,
+        nextProgress,
+        testPreferences?.answerMode ?? "either",
         now,
       );
     } catch (error) {
@@ -623,7 +673,7 @@ export default function TestPage() {
 
     if (vernacularScore === null) {
       return {
-        scientific: {
+        either: {
           accuracyScore: scientificScore,
           responseMs,
           expectedMs,
@@ -632,13 +682,8 @@ export default function TestPage() {
     }
 
     return {
-      scientific: {
-        accuracyScore: scientificScore,
-        responseMs,
-        expectedMs,
-      },
-      vernacular: {
-        accuracyScore: vernacularScore,
+      either: {
+        accuracyScore: Math.max(scientificScore, vernacularScore),
         responseMs,
         expectedMs,
       },
@@ -670,9 +715,8 @@ export default function TestPage() {
         : { scientific: update };
     }
 
-    // Feature: we intentionally credit both names to reinforce dual recall.
     return vernacularName
-      ? { scientific: update, vernacular: update }
+      ? { either: update }
       : { scientific: update };
   };
 
@@ -806,10 +850,10 @@ export default function TestPage() {
   useEffect(() => {
     if (!currentLearningProgress) return;
     setLearningMetricFromProgress(
-      currentLearningProgress.scientific,
-      currentLearningProgress.vernacular,
+      currentLearningProgress,
+      testPreferences?.answerMode ?? "either",
     );
-  }, [currentLearningProgress]);
+  }, [currentLearningProgress, testPreferences?.answerMode]);
 
   useEffect(() => {
     return () => {

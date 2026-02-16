@@ -9,7 +9,7 @@ export type TestMode = "multiple-choice" | "write-name";
 export type TestAnswerMode = "scientific" | "vernacular" | "either";
 
 /** Name variants tracked for learning progress. */
-export type LearningNameType = "scientific" | "vernacular";
+export type LearningNameType = "scientific" | "vernacular" | "either";
 
 /** Learning status buckets for histogram summaries. */
 export type LearningStatusCategory =
@@ -86,6 +86,8 @@ export interface StackLearningHistogram {
   scientific: LearningStatusHistogram;
   /** Vernacular-name histogram. */
   vernacular: LearningStatusHistogram;
+  /** Scientific-or-vernacular histogram (used by "either" answer mode). */
+  either: LearningStatusHistogram;
   /** Last update timestamp. */
   updatedAt: Date;
 }

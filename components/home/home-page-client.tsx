@@ -234,6 +234,7 @@ export function HomePageClient() {
                                 vernacular={
                                   stackHistograms.get(stack.id)!.vernacular
                                 }
+                                either={stackHistograms.get(stack.id)!.either}
                               />
                             ) : (
                               <p className="text-xs text-muted-foreground">
