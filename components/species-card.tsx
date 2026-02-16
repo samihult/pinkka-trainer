@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,10 +17,16 @@ import {
   getSpeciesDescription,
 } from "@/lib/content/content-display";
 import { useI18n } from "@/lib/i18n";
-import { ChevronLeft, ChevronRight, Keyboard, RotateCw, X } from "lucide-react";
+import { ChevronRight, Keyboard, X } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import {
+  fetchPinkkaSpecies,
+  type PinkkaSpeciesDetail,
+} from "@/lib/pinkka/pinkka-api";
+import { PinkkaSpeciesDetail as PinkkaSpeciesDetailPanel } from "@/components/pinkka/pinkka-species-detail";
 
 /** Props for the species-card viewer. */
 interface SpeciesCardProps {
@@ -58,8 +64,17 @@ export function SpeciesCard({
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
   const [isCarouselModalOpen, setIsCarouselModalOpen] = useState(false);
   const [activeInfoTab, setActiveInfoTab] = useState<InfoTab>("pinkka");
+  const [pinkkaDetail, setPinkkaDetail] = useState<PinkkaSpeciesDetail | null>(
+    null,
+  );
+  const [pinkkaLoading, setPinkkaLoading] = useState(false);
+  const [pinkkaLoadFailed, setPinkkaLoadFailed] = useState(false);
+  const pinkkaDetailCacheRef = useRef<
+    Record<number, PinkkaSpeciesDetail | null>
+  >({});
 
   const images = species.data.images ?? [];
+  const pinkkaSpeciesId = species.pinkkaRef?.speciesId ?? null;
   const vernacularName = getLocalizedText(
     species.data.vernacularName,
     preferredLanguage,
@@ -69,6 +84,65 @@ export function SpeciesCard({
     () => (description ? sanitizeHtml(description) : ""),
     [description],
   );
+
+  useEffect(() => {
+    if (!pinkkaSpeciesId) {
+      setPinkkaDetail(null);
+      setPinkkaLoading(false);
+      setPinkkaLoadFailed(false);
+      return;
+    }
+
+    const cached = pinkkaDetailCacheRef.current[pinkkaSpeciesId];
+    if (cached !== undefined) {
+      setPinkkaDetail(cached);
+      setPinkkaLoading(false);
+      setPinkkaLoadFailed(!cached);
+      return;
+    }
+
+    setPinkkaDetail(null);
+    setPinkkaLoadFailed(false);
+  }, [pinkkaSpeciesId]);
+
+  useEffect(() => {
+    if (!isInfoPanelOpen || activeInfoTab !== "pinkka" || !pinkkaSpeciesId) {
+      return;
+    }
+
+    const cached = pinkkaDetailCacheRef.current[pinkkaSpeciesId];
+    if (cached !== undefined) {
+      setPinkkaDetail(cached);
+      setPinkkaLoadFailed(!cached);
+      return;
+    }
+
+    let isCancelled = false;
+    setPinkkaLoading(true);
+    setPinkkaLoadFailed(false);
+
+    void fetchPinkkaSpecies(pinkkaSpeciesId)
+      .then((detail) => {
+        if (isCancelled) return;
+        pinkkaDetailCacheRef.current[pinkkaSpeciesId] = detail;
+        setPinkkaDetail(detail);
+        setPinkkaLoadFailed(!detail);
+      })
+      .catch(() => {
+        if (isCancelled) return;
+        pinkkaDetailCacheRef.current[pinkkaSpeciesId] = null;
+        setPinkkaDetail(null);
+        setPinkkaLoadFailed(true);
+      })
+      .finally(() => {
+        if (isCancelled) return;
+        setPinkkaLoading(false);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [activeInfoTab, isInfoPanelOpen, pinkkaSpeciesId]);
 
   const shortcutContent = useMemo(
     () => [
@@ -232,13 +306,27 @@ export function SpeciesCard({
                     </p>
                   ) : (
                     <div className="space-y-3">
-                      {description ? (
+                      {pinkkaLoading ? (
+                        <div className="py-3 flex justify-center">
+                          <LoadingSpinner />
+                        </div>
+                      ) : pinkkaDetail ? (
+                        <PinkkaSpeciesDetailPanel
+                          detail={pinkkaDetail}
+                          preferredLang={preferredLanguage}
+                          showImages={false}
+                        />
+                      ) : description ? (
                         <div
                           className="text-sm leading-relaxed text-muted-foreground [&_p]:mb-4 [&_p:last-child]:mb-0"
                           dangerouslySetInnerHTML={{
                             __html: sanitizedDescription,
                           }}
                         />
+                      ) : pinkkaLoadFailed ? (
+                        <p className="text-sm text-muted-foreground">
+                          {t("learn.cards.info.noDescription")}
+                        </p>
                       ) : (
                         <p className="text-sm text-muted-foreground">
                           {t("learn.cards.info.noDescription")}

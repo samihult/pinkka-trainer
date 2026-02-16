@@ -29,12 +29,18 @@ export interface PinkkaSpeciesDetailProps {
   detail: PinkkaSpeciesDetail;
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
+  /** Whether to render the image gallery block. */
+  showImages?: boolean;
+  /** Whether sections without content should be omitted. */
+  hideEmptySections?: boolean;
 }
 
 /** Detailed description view for a Pinkka species. */
 export function PinkkaSpeciesDetail({
   detail,
   preferredLang,
+  showImages = true,
+  hideEmptySections = true,
 }: PinkkaSpeciesDetailProps) {
   const images = useMemo<PinkkaDetailImage[]>(() => {
     return (detail.images ?? [])
@@ -56,6 +62,27 @@ export function PinkkaSpeciesDetail({
       .filter((image) => image.url);
   }, [detail.images]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const descriptionSections = useMemo(() => {
+    return (detail.description ?? [])
+      .map((section) => {
+        const title = getLocalizedText(section.title, preferredLang);
+        const bodyHtml = sanitizeHtml(
+          getLocalizedText(section.body, preferredLang) ?? "",
+        );
+        const bodyText = bodyHtml
+          .replace(/<[^>]*>/g, "")
+          .replace(/&nbsp;/g, " ")
+          .trim();
+
+        return {
+          predicate: section.predicate,
+          title,
+          bodyHtml,
+          hasContent: bodyText.length > 0,
+        };
+      })
+      .filter((section) => (hideEmptySections ? section.hasContent : true));
+  }, [detail.description, hideEmptySections, preferredLang]);
 
   useEffect(() => {
     setActiveIndex(0);
@@ -94,7 +121,7 @@ export function PinkkaSpeciesDetail({
           {getLocalizedText(detail.vernacularName, preferredLang)}
         </div>
       </div>
-      {activeImage && (
+      {showImages && activeImage && (
         <div className="space-y-2">
           <div className="overflow-hidden rounded-md border border-border bg-muted/20">
             <img
@@ -130,22 +157,22 @@ export function PinkkaSpeciesDetail({
           </div>
         </div>
       )}
-      {detail.description?.map((section) => (
+      {descriptionSections.map((section) => (
         <div key={section.predicate} className="space-y-1">
-          <div className="text-xs font-semibold uppercase text-muted-foreground">
-            {getLocalizedText(section.title, preferredLang)}
-          </div>
+          {section.title ? (
+            <div className="text-xs font-semibold uppercase text-muted-foreground">
+              {section.title}
+            </div>
+          ) : null}
           <div
             className="text-sm text-foreground"
             dangerouslySetInnerHTML={{
-              __html: sanitizeHtml(
-                getLocalizedText(section.body, preferredLang) ?? "",
-              ),
+              __html: section.bodyHtml,
             }}
           />
         </div>
       ))}
-      {!detail.description?.length && (
+      {!descriptionSections.length && (
         <div className="text-muted-foreground">
           No description available for this species.
         </div>
