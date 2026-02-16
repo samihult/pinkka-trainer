@@ -79,6 +79,8 @@ interface TestQuestion {
   correctAnswer: Species;
   /** Image URL chosen for the test prompt. */
   imageUrl: string | null;
+  /** Familiarity score (0-1) for this species under active test settings. */
+  familiarityScore: number | null;
 }
 
 /** Learning update payload for a name variant. */
@@ -95,6 +97,8 @@ type SpeciesLearningProgress = Record<
   LearningNameType,
   LearningProgressState | null
 >;
+
+type SpeciesLearningBand = "well" | "middle" | "low";
 
 const CLOSE_SCORE_THRESHOLD = 0.85;
 const CORRECT_SCORE_THRESHOLD = 1.0;
@@ -246,12 +250,135 @@ export default function TestPage() {
     return getSpeciesImageUrl(selected) || null;
   };
 
-  const generateQuestions = (allSpecies: Species[], questionCount: number) => {
-    const shuffled = [...allSpecies].sort(() => Math.random() - 0.5);
-    const testQuestions: TestQuestion[] = [];
-    const selectedSpecies = shuffled.slice(
+  const shuffleSpecies = (items: Species[]) =>
+    [...items].sort(() => Math.random() - 0.5);
+
+  const getLearningScoreFromProgress = (
+    progress: LearningProgressState | null,
+    now: Date,
+  ): number | null => {
+    if (!progress) return null;
+
+    const accuracy = estimateRetention(
+      progress,
+      now,
+      DEFAULT_RETENTION_HORIZON_DAYS,
+      "accuracy",
+    );
+    const speed = estimateRetention(
+      progress,
+      now,
+      DEFAULT_RETENTION_HORIZON_DAYS,
+      "speed",
+    );
+    return combineRetention(accuracy, speed);
+  };
+
+  const getVernacularName = (targetSpecies: Species) =>
+    getLocalizedText(targetSpecies.data.vernacularName, preferredLanguage);
+
+  const getSpeciesFamiliarityScore = (
+    targetSpecies: Species,
+    answerMode: TestAnswerMode,
+    progressMap: Map<string, LearningProgressState>,
+    now: Date,
+  ): number | null => {
+    const scientificProgress =
+      progressMap.get(buildProgressKey(targetSpecies.id, "scientific")) ?? null;
+    const vernacularProgress =
+      progressMap.get(buildProgressKey(targetSpecies.id, "vernacular")) ?? null;
+    const eitherProgress =
+      progressMap.get(buildProgressKey(targetSpecies.id, "either")) ?? null;
+
+    const scientificScore = getLearningScoreFromProgress(
+      scientificProgress,
+      now,
+    );
+    const vernacularScore = getLearningScoreFromProgress(
+      vernacularProgress,
+      now,
+    );
+    const eitherScore = getLearningScoreFromProgress(eitherProgress, now);
+    const hasVernacularName = Boolean(getVernacularName(targetSpecies));
+
+    if (answerMode === "scientific") return scientificScore;
+    if (answerMode === "vernacular") {
+      return hasVernacularName ? vernacularScore : scientificScore;
+    }
+
+    if (eitherScore !== null) return eitherScore;
+    if (scientificScore === null && vernacularScore === null) return null;
+    return combineRetention(scientificScore, vernacularScore);
+  };
+
+  const getSpeciesLearningBand = (
+    familiarityScore: number | null,
+  ): SpeciesLearningBand => {
+    if (familiarityScore === null) return "low";
+    if (familiarityScore > LEARNING_STATUS_THRESHOLDS.strengtheningMax) {
+      return "well";
+    }
+    if (familiarityScore >= LEARNING_STATUS_THRESHOLDS.learningMax) {
+      return "middle";
+    }
+    return "low";
+  };
+
+  const selectSpeciesForTest = (
+    allSpecies: Species[],
+    questionCount: number,
+    familiarityBySpeciesId: Map<string, number | null>,
+  ): Species[] => {
+    const total = Math.min(questionCount, allSpecies.length);
+    if (total <= 0) return [];
+
+    const byBand: Record<SpeciesLearningBand, Species[]> = {
+      well: [],
+      middle: [],
+      low: [],
+    };
+
+    allSpecies.forEach((speciesItem) => {
+      const familiarity = familiarityBySpeciesId.get(speciesItem.id) ?? null;
+      byBand[getSpeciesLearningBand(familiarity)].push(speciesItem);
+    });
+
+    // Intentionally bias selection from well-learned -> middle -> low bands.
+    const targetWell = Math.max(1, Math.floor(total * 0.2));
+    const targetMiddle = Math.max(1, Math.floor(total * 0.3));
+    const selectedWell = shuffleSpecies(byBand.well).slice(0, targetWell);
+    const selectedMiddle = shuffleSpecies(byBand.middle).slice(0, targetMiddle);
+    const remainingAfterPrimary = Math.max(
       0,
-      Math.min(questionCount, allSpecies.length),
+      total - selectedWell.length - selectedMiddle.length,
+    );
+    const selectedLow = shuffleSpecies(byBand.low).slice(0, remainingAfterPrimary);
+
+    const selectedById = new Set(
+      [...selectedWell, ...selectedMiddle, ...selectedLow].map((item) => item.id),
+    );
+    const fallbackPool = [
+      ...shuffleSpecies(byBand.middle),
+      ...shuffleSpecies(byBand.low),
+      ...shuffleSpecies(byBand.well),
+    ].filter((item) => !selectedById.has(item.id));
+    const remainingSlots =
+      total - selectedWell.length - selectedMiddle.length - selectedLow.length;
+    const fallback = fallbackPool.slice(0, Math.max(0, remainingSlots));
+
+    return [...selectedWell, ...selectedMiddle, ...selectedLow, ...fallback];
+  };
+
+  const generateQuestions = (
+    allSpecies: Species[],
+    questionCount: number,
+    familiarityBySpeciesId: Map<string, number | null>,
+  ) => {
+    const testQuestions: TestQuestion[] = [];
+    const selectedSpecies = selectSpeciesForTest(
+      allSpecies,
+      questionCount,
+      familiarityBySpeciesId,
     );
 
     selectedSpecies.forEach((correctSpecies) => {
@@ -270,6 +397,7 @@ export default function TestPage() {
         options,
         correctAnswer: correctSpecies,
         imageUrl: pickTestImageUrl(correctSpecies),
+        familiarityScore: familiarityBySpeciesId.get(correctSpecies.id) ?? null,
       });
     });
 
@@ -370,9 +498,6 @@ export default function TestPage() {
 
     return vernacularName ? [scientificName, vernacularName] : [scientificName];
   };
-
-  const getVernacularName = (targetSpecies: Species) =>
-    getLocalizedText(targetSpecies.data.vernacularName, preferredLanguage);
 
   const setLearningMetricFromProgress = (
     progress: SpeciesLearningProgress,
@@ -840,7 +965,27 @@ export default function TestPage() {
       species.length,
     );
 
-    generateQuestions(species, clampedCount);
+    const familiarityBySpeciesId = new Map<string, number | null>();
+    if (user) {
+      const now = new Date();
+      const progressMap = await getLearningProgressForSpeciesIds(
+        user.uid,
+        species.map((speciesItem) => speciesItem.id),
+      );
+      species.forEach((speciesItem) => {
+        familiarityBySpeciesId.set(
+          speciesItem.id,
+          getSpeciesFamiliarityScore(
+            speciesItem,
+            testPreferences.answerMode,
+            progressMap,
+            now,
+          ),
+        );
+      });
+    }
+
+    generateQuestions(species, clampedCount, familiarityBySpeciesId);
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
     setEliminatedOptionIds(new Set());
@@ -1143,7 +1288,14 @@ export default function TestPage() {
           {currentQuestion && (
             <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:grid-rows-1">
               <div className="min-h-0">
-                <TestSpeciesCard imageUrl={currentQuestion.imageUrl} />
+                <TestSpeciesCard
+                  imageUrl={currentQuestion.imageUrl}
+                  familiarityPercent={
+                    currentQuestion.familiarityScore === null
+                      ? null
+                      : Math.round(currentQuestion.familiarityScore * 100)
+                  }
+                />
               </div>
 
               <div className="flex h-full min-h-0 flex-col gap-4">
