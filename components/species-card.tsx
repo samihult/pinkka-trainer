@@ -176,7 +176,7 @@ export function SpeciesCard({
                   </Button>
                 </div>
                 <div className="border-b px-4 py-2">
-                  <div className="inline-flex rounded-md border border-border bg-muted/40 p-1">
+                  <div className="inline-flex gap-1">
                     <Button
                       type="button"
                       variant={
@@ -187,7 +187,8 @@ export function SpeciesCard({
                       size="sm"
                       onClick={() => setActiveInfoTab("identification")}
                     >
-                      1. {t("learn.cards.info.tab.identification")}
+                      <KeyboardHint keys={["1"]} />{" "}
+                      {t("learn.cards.info.tab.identification")}
                     </Button>
                     <Button
                       type="button"
@@ -197,7 +198,8 @@ export function SpeciesCard({
                       size="sm"
                       onClick={() => setActiveInfoTab("pinkka")}
                     >
-                      2. {t("learn.cards.info.tab.pinkka")}
+                      <KeyboardHint keys={["2"]} />{" "}
+                      {t("learn.cards.info.tab.pinkka")}
                     </Button>
                   </div>
                 </div>
@@ -246,13 +248,12 @@ export function SpeciesCard({
           variant="outline"
           size="lg"
         >
-          <ChevronLeft className="mr-1 h-4 w-4" />
-          {t("learn.cards.previous")}
+          <KeyboardHint keys={["⌘/Ctrl", "←"]} /> {t("learn.cards.previous")}
         </Button>
 
         <div className="flex items-center gap-2">
           <Button onClick={onToggleInfoPanel} variant="outline" size="lg">
-            <RotateCw className="mr-1 h-4 w-4" />
+            <KeyboardHint keys={["Space"]} />
             {isInfoPanelOpen
               ? t("learn.cards.info.hide")
               : t("learn.cards.info.show")}
@@ -299,6 +300,7 @@ export function SpeciesCard({
           disabled={currentIndex === total - 1}
           size="lg"
         >
+          <KeyboardHint keys={["⌘/Ctrl", "→"]} />
           {t("learn.cards.next")}
           <ChevronRight className="ml-1 h-4 w-4" />
         </Button>
