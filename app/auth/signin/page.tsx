@@ -19,14 +19,13 @@ import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 
-/** Sign-in page supporting email/password, Google, and anonymous auth. */
+/** Sign-in page supporting Google and email/password auth. */
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const [anonymousLoading, setAnonymousLoading] = useState(false);
-  const { signIn, signInWithGoogle, signInAnonymously } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -77,26 +76,6 @@ export default function SignInPage() {
     }
   };
 
-  const handleAnonymousSignIn = async () => {
-    setAnonymousLoading(true);
-    try {
-      await signInAnonymously();
-      toast({
-        title: "Welcome!",
-        description: "You are now signed in as a guest.",
-      });
-      router.push("/");
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description:
-          error.message || "Failed to continue as guest. Please try again.",
-        variant: "destructive",
-      });
-      setAnonymousLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20 p-4">
       <Card className="w-full max-w-md">
@@ -111,54 +90,11 @@ export default function SignInPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={loading || googleLoading || anonymousLoading}
-            >
-              {loading ? "Signing In..." : "Sign In"}
-            </Button>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Or continue with
-                </span>
-              </div>
-            </div>
-
             <Button
               type="button"
               variant="outline"
               onClick={handleGoogleSignIn}
-              disabled={loading || googleLoading || anonymousLoading}
+              disabled={loading || googleLoading}
               className="w-full bg-transparent"
             >
               {googleLoading ? (
@@ -188,14 +124,47 @@ export default function SignInPage() {
               )}
             </Button>
 
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or sign in with email
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
             <Button
-              type="button"
-              variant="secondary"
-              onClick={handleAnonymousSignIn}
-              disabled={loading || googleLoading || anonymousLoading}
+              type="submit"
               className="w-full"
+              disabled={loading || googleLoading}
             >
-              {anonymousLoading ? "Continuing as guest..." : "Continue as Guest"}
+              {loading ? "Signing In..." : "Sign In"}
             </Button>
 
             <p className="text-sm text-center text-muted-foreground">

@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import {
   type User as FirebaseUser,
   onAuthStateChanged,
@@ -114,6 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [redirectHandled, setRedirectHandled] = useState(false);
+  const isSigningInAnonymouslyRef = useRef(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -140,11 +141,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (firebaseUser) {
         const userData = await createOrGetUserDocument(firebaseUser);
         setUser(userData);
+        setLoading(false);
       } else {
         setUser(null);
+        if (!isSigningInAnonymouslyRef.current) {
+          isSigningInAnonymouslyRef.current = true;
+          try {
+            await firebaseSignInAnonymously(auth);
+            return;
+          } catch (error: any) {
+            console.error("Anonymous sign-in error:", error.message);
+          } finally {
+            isSigningInAnonymouslyRef.current = false;
+          }
+        }
+        setLoading(false);
       }
-
-      setLoading(false);
     });
 
     return () => unsubscribe();

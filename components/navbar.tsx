@@ -62,6 +62,7 @@ function LanguageSelector({
 export function Navbar() {
   const { user, signOut } = useAuth();
   const { language, setLanguage } = useLanguagePreference();
+  const isFullySignedIn = Boolean(user && !user.isAnonymous);
 
   const handleLanguageChange = (next: LanguagePreference) => {
     setLanguage(next);
@@ -81,7 +82,7 @@ export function Navbar() {
 
           <div className="flex items-center gap-4">
             <LanguageSelector value={language} onChange={handleLanguageChange} />
-            {user ? (
+            {isFullySignedIn && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
@@ -124,14 +125,9 @@ export function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="flex gap-2">
-                <Button asChild variant="outline">
-                  <Link href="/auth/signin">Sign In</Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/auth/signup">Sign Up</Link>
-                </Button>
-              </div>
+              <Button asChild variant="outline">
+                <Link href="/auth/signin">Sign In</Link>
+              </Button>
             )}
           </div>
         </div>
