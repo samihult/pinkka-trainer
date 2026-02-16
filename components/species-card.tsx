@@ -152,6 +152,7 @@ export function SpeciesCard({
                   heightClassName="h-full"
                   fullScreenLightboxProps={{
                     captions: { hidden: true, showToggle: false },
+                    zoom: { maxZoomPixelRatio: 3 },
                   }}
                 />
               </div>
@@ -235,6 +236,7 @@ export function SpeciesCard({
               heightClassName="h-full"
               fullScreenLightboxProps={{
                 captions: { hidden: true, showToggle: false },
+                zoom: { maxZoomPixelRatio: 3 },
               }}
             />
           )}

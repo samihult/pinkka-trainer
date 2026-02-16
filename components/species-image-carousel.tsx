@@ -137,7 +137,9 @@ export function SpeciesImageCarousel({
   const handleView = ({ index }: { index: number }) => {
     setCarouselState((prev) => {
       const normalized =
-        prev.key === lightboxKey ? prev : createDefaultCarouselState(lightboxKey);
+        prev.key === lightboxKey
+          ? prev
+          : createDefaultCarouselState(lightboxKey);
       if (normalized.currentImageIndex === index) {
         return prev.key === lightboxKey ? prev : normalized;
       }
@@ -171,7 +173,9 @@ export function SpeciesImageCarousel({
   const closeLightbox = useCallback(() => {
     setCarouselState((prev) => {
       const normalized =
-        prev.key === lightboxKey ? prev : createDefaultCarouselState(lightboxKey);
+        prev.key === lightboxKey
+          ? prev
+          : createDefaultCarouselState(lightboxKey);
       if (!normalized.isLightboxOpen) {
         return prev.key === lightboxKey ? prev : normalized;
       }
@@ -181,6 +185,18 @@ export function SpeciesImageCarousel({
       };
     });
   }, [lightboxKey]);
+
+  const resolvedFullScreenLightboxProps = useMemo(
+    () => ({
+      ...fullScreenLightboxProps,
+      zoom: {
+        keyboardMoveDistance: 75,
+        ...(fullScreenLightboxProps?.zoom ?? {}),
+        ref: modalZoomRef,
+      },
+    }),
+    [fullScreenLightboxProps],
+  );
 
   useEffect(() => {
     const isEditableTarget = (target: EventTarget | null) => {
@@ -206,20 +222,22 @@ export function SpeciesImageCarousel({
         return;
       if (isEditableTarget(event.target)) return;
 
-      const controller = isLightboxOpen
-        ? modalControllerRef.current
-        : inlineControllerRef.current;
-      if (!controller) return;
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        const controller = isLightboxOpen
+          ? modalControllerRef.current
+          : inlineControllerRef.current;
+        if (!controller) return;
 
-      // Change the picture even if the lightbox doesn't have to focus
-      if (event.target === document.body) {
-        event.preventDefault();
-        if (event.key === "ArrowLeft") {
-          controller.prev();
-        } else if (event.key === "ArrowRight") {
-          controller.next();
+        // Change the picture even if the lightbox doesn't have to focus
+        if (event.target === document.body) {
+          event.preventDefault();
+          if (event.key === "ArrowLeft") {
+            controller.prev();
+          } else {
+            controller.next();
+          }
+          controller.focus();
         }
-        controller.focus();
       }
 
       if (lowerKey === "z") {
@@ -245,7 +263,7 @@ export function SpeciesImageCarousel({
               isLightboxOpen: true,
             };
           });
-          controller.focus();
+          inlineControllerRef.current?.focus();
         }
       } else if (lowerKey === "x") {
         if (isLightboxOpen) {
@@ -314,7 +332,6 @@ export function SpeciesImageCarousel({
           index={currentImageIndex}
           on={{ view: handleView }}
           controller={{ ref: modalControllerRef }}
-          zoom={{ ref: modalZoomRef }}
           toolbar={{ buttons: ["zoom", "close"] }}
           captions={{ showToggle: false }}
           thumbnails={{ showToggle: false, hidden: !showPagination }}
@@ -331,7 +348,7 @@ export function SpeciesImageCarousel({
             },
           }}
           plugins={[Captions, Thumbnails, Zoom, Counter]}
-          {...fullScreenLightboxProps}
+          {...resolvedFullScreenLightboxProps}
         />
       )}
     </>
