@@ -53,6 +53,7 @@ import {
   setStoredTestPreferences,
   toLanguageCode,
 } from "@/lib/local-preferences";
+import { useI18n } from "@/lib/i18n";
 import {
   combineRetention,
   DEFAULT_RETENTION_HORIZON_DAYS,
@@ -105,6 +106,7 @@ const DEFAULT_EXPECTED_RESPONSE_MS: Record<TestMode, number> = {
 /** Test experience for a single stack. */
 export default function TestPage() {
   const { language } = useLanguagePreference();
+  const { t } = useI18n();
   const preferredLanguage = toLanguageCode(language);
   const params = useParams();
   const stackId = decodeURIComponent(params.stackId as string);
@@ -1156,8 +1158,8 @@ export default function TestPage() {
                         disabled={answered || eliminatedOptionIds.size > 0}
                       >
                         {eliminatedOptionIds.size > 0
-                          ? "50/50 used"
-                          : "Eliminate 50%"}
+                          ? t("test.multipleChoice.eliminateHalfUsed")
+                          : t("test.multipleChoice.eliminateHalf")}
                       </Button>
                     </div>
                     <div className="grid h-full min-h-0 auto-rows-fr gap-4 sm:grid-cols-2">
@@ -1210,7 +1212,7 @@ export default function TestPage() {
                                 )}
                                 {isEliminated && (
                                   <p className="text-xs uppercase tracking-wide opacity-80">
-                                    Eliminated
+                                    {t("test.multipleChoice.eliminated")}
                                   </p>
                                 )}
                               </div>

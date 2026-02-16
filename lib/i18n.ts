@@ -77,6 +77,9 @@ const EN_MESSAGES = {
   "test.settings.answer.description":
     "Applies to both test modes; answers ignore case and extra spaces.",
   "test.settings.start": "Start ⏎",
+  "test.multipleChoice.eliminateHalf": "Eliminate 50%",
+  "test.multipleChoice.eliminateHalfUsed": "50/50 used",
+  "test.multipleChoice.eliminated": "Eliminated",
 
   "learning.histogram.mastered": "Mastered",
   "learning.histogram.strengthening": "Strengthening",
@@ -179,6 +182,9 @@ const FI_MESSAGES: TranslationTable = {
   "test.settings.answer.description":
     "Koskee molempia testitapoja; kirjainkoko ja ylimääräiset välit ohitetaan.",
   "test.settings.start": "Aloita ⏎",
+  "test.multipleChoice.eliminateHalf": "Poista 50 %",
+  "test.multipleChoice.eliminateHalfUsed": "50/50 käytetty",
+  "test.multipleChoice.eliminated": "Poistettu",
 
   "learning.histogram.mastered": "Hallussa",
   "learning.histogram.strengthening": "Vahvistumassa",
@@ -273,6 +279,9 @@ const SV_MESSAGES: TranslationTable = {
   "test.settings.answer.description":
     "Gäller båda testlägen; svar ignorerar versaler och extra mellanslag.",
   "test.settings.start": "Starta ⏎",
+  "test.multipleChoice.eliminateHalf": "Ta bort 50 %",
+  "test.multipleChoice.eliminateHalfUsed": "50/50 använd",
+  "test.multipleChoice.eliminated": "Borttagen",
 
   "learning.histogram.mastered": "Behärskad",
   "learning.histogram.strengthening": "Stärks",
