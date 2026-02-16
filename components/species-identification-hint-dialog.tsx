@@ -124,8 +124,8 @@ export function SpeciesIdentificationHintDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
-          <DialogHeader>
+        <DialogContent className="h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] max-w-none grid-rows-[auto_minmax(0,1fr)] gap-0 overflow-hidden p-0">
+          <DialogHeader className="shrink-0 space-y-0 border-b px-4 py-3">
             <DialogTitle>
               {mode === "edit"
                 ? t("manage.speciesHintDialog.title.edit")
@@ -135,67 +135,72 @@ export function SpeciesIdentificationHintDialog({
               {t("manage.speciesHintDialog.description")}
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-3">
-            <div className="space-y-2">
-              <Label htmlFor="identification-hint-fi">
-                {t("manage.speciesHintDialog.field.fi")}
-              </Label>
-              <Textarea
-                id="identification-hint-fi"
-                value={finnishValue}
-                onChange={(event) => setFinnishValue(event.target.value)}
-                placeholder={t("manage.speciesHintDialog.placeholder.fi")}
-                rows={3}
-                autoFocus
-              />
+          <div className="grid min-h-0 flex-1 grid-cols-[minmax(240px,2fr)_minmax(240px,1fr)]">
+            <div className="flex min-h-0 flex-col gap-3 p-6">
+              <div className="relative min-h-0 flex-1 overflow-hidden rounded-md border border-border/70 bg-black">
+                {selectedImage ? (
+                  <Image
+                    src={
+                      getSpeciesImageUrl(selectedImage.image) ||
+                      "/placeholder.svg"
+                    }
+                    alt={t("manage.speciesForm.imageAlt", {
+                      number: selectedImage.index + 1,
+                    })}
+                    fill
+                    className="object-contain"
+                  />
+                ) : null}
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="identification-hint-en">
-                {t("manage.speciesHintDialog.field.en")}
-              </Label>
-              <Textarea
-                id="identification-hint-en"
-                value={englishValue}
-                onChange={(event) => setEnglishValue(event.target.value)}
-                placeholder={t("manage.speciesHintDialog.placeholder.en")}
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="identification-hint-sv">
-                {t("manage.speciesHintDialog.field.sv")}
-              </Label>
-              <Textarea
-                id="identification-hint-sv"
-                value={swedishValue}
-                onChange={(event) => setSwedishValue(event.target.value)}
-                placeholder={t("manage.speciesHintDialog.placeholder.sv")}
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>
-                {t("manage.speciesHintDialog.section.imageReference")}
-              </Label>
-              <p className="text-sm text-muted-foreground">
-                {t("manage.speciesHintDialog.help.imageReference")}
-              </p>
-              {selectedImage ? (
-                <div className="space-y-2 rounded-md border border-border p-2">
-                  <div className="relative mx-auto aspect-square w-full max-w-56 overflow-hidden rounded-md border border-border/70 bg-muted/20">
-                    <Image
-                      src={
-                        getSpeciesImageUrl(selectedImage.image) ||
-                        "/placeholder.svg"
-                      }
-                      alt={t("manage.speciesForm.imageAlt", {
-                        number: selectedImage.index + 1,
-                      })}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <div className="flex justify-end gap-2">
+            <div className="flex min-h-0 flex-col p-6 pl-3">
+              <div className="min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
+                <div className="space-y-2">
+                  <Label htmlFor="identification-hint-fi">
+                    {t("manage.speciesHintDialog.field.fi")}
+                  </Label>
+                  <Textarea
+                    id="identification-hint-fi"
+                    value={finnishValue}
+                    onChange={(event) => setFinnishValue(event.target.value)}
+                    placeholder={t("manage.speciesHintDialog.placeholder.fi")}
+                    rows={5}
+                    autoFocus
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="identification-hint-en">
+                    {t("manage.speciesHintDialog.field.en")}
+                  </Label>
+                  <Textarea
+                    id="identification-hint-en"
+                    value={englishValue}
+                    onChange={(event) => setEnglishValue(event.target.value)}
+                    placeholder={t("manage.speciesHintDialog.placeholder.en")}
+                    rows={5}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="identification-hint-sv">
+                    {t("manage.speciesHintDialog.field.sv")}
+                  </Label>
+                  <Textarea
+                    id="identification-hint-sv"
+                    value={swedishValue}
+                    onChange={(event) => setSwedishValue(event.target.value)}
+                    placeholder={t("manage.speciesHintDialog.placeholder.sv")}
+                    rows={5}
+                  />
+                </div>
+
+                <Label className="pt-6">
+                  {t("manage.speciesHintDialog.section.imageReference")}
+                </Label>
+                <p className="text-sm text-muted-foreground">
+                  {t("manage.speciesHintDialog.help.imageReference")}
+                </p>
+                {selectedImage ? (
+                  <div className="flex flex-wrap justify-start gap-2">
                     <Button
                       type="button"
                       variant="outline"
@@ -211,49 +216,49 @@ export function SpeciesIdentificationHintDialog({
                       {t("manage.speciesHintDialog.action.deleteImage")}
                     </Button>
                   </div>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleImageSelectorOpen}
-                    disabled={availableImages.length === 0}
-                  >
-                    {t("manage.speciesHintDialog.action.addImage")}
-                  </Button>
-                  {availableImages.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
-                      {t("manage.speciesHintDialog.emptyImages")}
-                    </p>
-                  ) : null}
-                </div>
-              )}
+                ) : (
+                  <div className="space-y-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleImageSelectorOpen}
+                      disabled={availableImages.length === 0}
+                    >
+                      {t("manage.speciesHintDialog.action.addImage")}
+                    </Button>
+                    {availableImages.length === 0 ? (
+                      <p className="text-sm text-muted-foreground">
+                        {t("manage.speciesHintDialog.emptyImages")}
+                      </p>
+                    ) : null}
+                  </div>
+                )}
+              </div>
+              <DialogFooter className="mt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => onOpenChange(false)}
+                >
+                  {t("manage.speciesHintDialog.action.cancel")}
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() =>
+                    onSave({
+                      text: normalizedHintText,
+                      ...(selectedImageId ? { imageId: selectedImageId } : {}),
+                    })
+                  }
+                  disabled={!hasAnyHintText}
+                >
+                  {mode === "edit"
+                    ? t("manage.speciesHintDialog.action.save")
+                    : t("manage.speciesHintDialog.action.add")}
+                </Button>
+              </DialogFooter>
             </div>
           </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              {t("manage.speciesHintDialog.action.cancel")}
-            </Button>
-            <Button
-              type="button"
-              onClick={() =>
-                onSave({
-                  text: normalizedHintText,
-                  ...(selectedImageId ? { imageId: selectedImageId } : {}),
-                })
-              }
-              disabled={!hasAnyHintText}
-            >
-              {mode === "edit"
-                ? t("manage.speciesHintDialog.action.save")
-                : t("manage.speciesHintDialog.action.add")}
-            </Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
 
