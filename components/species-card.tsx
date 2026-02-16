@@ -56,6 +56,7 @@ export function SpeciesCard({
   const { t } = useI18n();
   const preferredLanguage = toLanguageCode(language);
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
+  const [isCarouselModalOpen, setIsCarouselModalOpen] = useState(false);
   const [activeInfoTab, setActiveInfoTab] = useState<InfoTab>("pinkka");
 
   const images = species.data.images ?? [];
@@ -103,6 +104,7 @@ export function SpeciesCard({
       if (isEditableTarget(event.target)) return;
 
       if (event.key === " " || event.code === "Space") {
+        if (isCarouselModalOpen) return;
         event.preventDefault();
         onToggleInfoPanel();
         return;
@@ -136,7 +138,7 @@ export function SpeciesCard({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isInfoPanelOpen, onNext, onPrevious, onToggleInfoPanel]);
+  }, [isCarouselModalOpen, isInfoPanelOpen, onNext, onPrevious, onToggleInfoPanel]);
 
   return (
     <div className="relative h-full w-full">
@@ -154,6 +156,7 @@ export function SpeciesCard({
                 images={images}
                 alt={species.data.scientificName}
                 resetKey={species.id}
+                onModalOpenChange={setIsCarouselModalOpen}
                 heightClassName="h-full"
                 fullScreenLightboxProps={{
                   captions: { hidden: true, showToggle: false },

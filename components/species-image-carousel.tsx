@@ -44,6 +44,8 @@ export interface SpeciesImageCarouselProps {
   onImageClick?: (index: number) => void;
   /** Whether to enable the full-viewport modal on image click. */
   enableModal?: boolean;
+  /** Callback fired when the full-size modal open state changes. */
+  onModalOpenChange?: (open: boolean) => void;
   /** Lightbox props for the embedded version */
   embeddedLightboxProps?: LightboxExternalProps;
   /** Lightbox props for the full-screen version */
@@ -76,6 +78,7 @@ export function SpeciesImageCarousel({
   onIndexChange,
   onImageClick,
   enableModal = true,
+  onModalOpenChange,
   embeddedLightboxProps,
   fullScreenLightboxProps,
 }: SpeciesImageCarouselProps) {
@@ -133,6 +136,10 @@ export function SpeciesImageCarousel({
       ? Math.min(normalizedCarouselState.currentImageIndex, slides.length - 1)
       : 0;
   const isLightboxOpen = normalizedCarouselState.isLightboxOpen;
+
+  useEffect(() => {
+    onModalOpenChange?.(isLightboxOpen);
+  }, [isLightboxOpen, onModalOpenChange]);
 
   const handleView = ({ index }: { index: number }) => {
     setCarouselState((prev) => {
