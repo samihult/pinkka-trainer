@@ -116,6 +116,9 @@ export default function TestPage() {
   const [questions, setQuestions] = useState<TestQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Species | null>(null);
+  const [eliminatedOptionIds, setEliminatedOptionIds] = useState<Set<string>>(
+    new Set(),
+  );
   const [answered, setAnswered] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [testComplete, setTestComplete] = useState(false);
@@ -189,6 +192,7 @@ export default function TestPage() {
       setQuestions([]);
       setCurrentQuestionIndex(0);
       setSelectedAnswer(null);
+      setEliminatedOptionIds(new Set());
       setAnswered(false);
       setCorrectAnswers(0);
       setTestComplete(false);
@@ -273,6 +277,7 @@ export default function TestPage() {
   const handleAnswerSelect = (answer: Species) => {
     if (answered) return;
     if (!currentQuestion || !testPreferences) return;
+    if (eliminatedOptionIds.has(answer.id)) return;
 
     setSelectedAnswer(answer);
     setAnswered(true);
@@ -319,6 +324,28 @@ export default function TestPage() {
       primary: scientificName,
       secondary: vernacularName ?? null,
     };
+  };
+
+  const handleEliminateHalfOptions = () => {
+    if (answered) return;
+    const activeQuestion = questions[currentQuestionIndex];
+    if (!activeQuestion) return;
+    if (eliminatedOptionIds.size > 0) return;
+
+    const wrongOptions = activeQuestion.options.filter(
+      (option) => option.id !== activeQuestion.correctAnswer.id,
+    );
+    const eliminationCount = Math.min(
+      Math.floor(activeQuestion.options.length / 2),
+      wrongOptions.length,
+    );
+    if (eliminationCount <= 0) return;
+
+    const eliminated = [...wrongOptions]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, eliminationCount)
+      .map((option) => option.id);
+    setEliminatedOptionIds(new Set(eliminated));
   };
 
   const getAcceptedAnswers = (
@@ -767,6 +794,7 @@ export default function TestPage() {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
+      setEliminatedOptionIds(new Set());
       setAnswered(false);
       setTextAnswer("");
       setTextAnswerCorrect(null);
@@ -813,6 +841,7 @@ export default function TestPage() {
     generateQuestions(species, clampedCount);
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
+    setEliminatedOptionIds(new Set());
     setAnswered(false);
     setCorrectAnswers(0);
     setTestComplete(false);
@@ -901,7 +930,7 @@ export default function TestPage() {
           const optionIndex = Number(event.key) - 1;
           const currentQuestion = questions[currentQuestionIndex];
           const option = currentQuestion?.options[optionIndex];
-          if (option) {
+          if (option && !eliminatedOptionIds.has(option.id)) {
             event.preventDefault();
             handleAnswerSelect(option);
           }
@@ -922,6 +951,7 @@ export default function TestPage() {
   }, [
     answered,
     currentQuestionIndex,
+    eliminatedOptionIds,
     handleAnswerSelect,
     handleNext,
     handleRestart,
@@ -1116,61 +1146,85 @@ export default function TestPage() {
 
               <div className="flex h-full min-h-0 flex-col gap-4">
                 {testPreferences.mode === "multiple-choice" ? (
-                  <div className="grid h-full min-h-0 auto-rows-fr gap-4 sm:grid-cols-2">
-                    {currentQuestion.options.map((option, optionsIndex) => {
-                      const displayNames = getDisplayNames(
-                        option,
-                        testPreferences.answerMode,
-                      );
-                      const isSelected = selectedAnswer?.id === option.id;
-                      const isCorrect =
-                        option.id === currentQuestion.correctAnswer.id;
-                      const showResult = answered;
+                  <div className="flex h-full min-h-0 flex-col gap-3">
+                    <div className="flex justify-end">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={handleEliminateHalfOptions}
+                        disabled={answered || eliminatedOptionIds.size > 0}
+                      >
+                        {eliminatedOptionIds.size > 0
+                          ? "50/50 used"
+                          : "Eliminate 50%"}
+                      </Button>
+                    </div>
+                    <div className="grid h-full min-h-0 auto-rows-fr gap-4 sm:grid-cols-2">
+                      {currentQuestion.options.map((option, optionsIndex) => {
+                        const displayNames = getDisplayNames(
+                          option,
+                          testPreferences.answerMode,
+                        );
+                        const isSelected = selectedAnswer?.id === option.id;
+                        const isCorrect =
+                          option.id === currentQuestion.correctAnswer.id;
+                        const showResult = answered;
+                        const isEliminated =
+                          !showResult && eliminatedOptionIds.has(option.id);
 
-                      let buttonVariant: "outline" | "default" | "destructive" =
-                        "outline";
-                      if (showResult) {
-                        if (isCorrect) {
-                          buttonVariant = "default";
-                        } else if (isSelected && !isCorrect) {
-                          buttonVariant = "destructive";
+                        let buttonVariant:
+                          | "outline"
+                          | "default"
+                          | "destructive" = "outline";
+                        if (showResult) {
+                          if (isCorrect) {
+                            buttonVariant = "default";
+                          } else if (isSelected && !isCorrect) {
+                            buttonVariant = "destructive";
+                          }
                         }
-                      }
 
-                      return (
-                        <Button
-                          key={option.id}
-                          onClick={() => handleAnswerSelect(option)}
-                          variant={buttonVariant}
-                          disabled={answered}
-                          className={`h-full text-left justify-start ${
-                            showResult && isCorrect ? "bg-primary" : ""
-                          }`}
-                        >
-                          <div className="flex items-center gap-3 w-full">
-                            <p className="mr-2 text-lg font-semibold">
-                              {optionsIndex + 1}
-                            </p>
-                            <div className="flex-1">
-                              <p className="text-lg font-semibold">
-                                {displayNames.primary}
+                        return (
+                          <Button
+                            key={option.id}
+                            onClick={() => handleAnswerSelect(option)}
+                            variant={buttonVariant}
+                            disabled={answered || isEliminated}
+                            className={`h-full text-left justify-start ${
+                              showResult && isCorrect ? "bg-primary" : ""
+                            } ${isEliminated ? "opacity-40" : ""}`}
+                          >
+                            <div className="flex items-center gap-3 w-full">
+                              <p className="mr-2 text-lg font-semibold">
+                                {optionsIndex + 1}
                               </p>
-                              {displayNames.secondary && (
-                                <p className="text-sm opacity-80">
-                                  {displayNames.secondary}
+                              <div className="flex-1">
+                                <p className="text-lg font-semibold">
+                                  {displayNames.primary}
                                 </p>
+                                {displayNames.secondary && (
+                                  <p className="text-sm opacity-80">
+                                    {displayNames.secondary}
+                                  </p>
+                                )}
+                                {isEliminated && (
+                                  <p className="text-xs uppercase tracking-wide opacity-80">
+                                    Eliminated
+                                  </p>
+                                )}
+                              </div>
+                              {showResult && isCorrect && (
+                                <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+                              )}
+                              {showResult && isSelected && !isCorrect && (
+                                <XCircle className="h-5 w-5 flex-shrink-0" />
                               )}
                             </div>
-                            {showResult && isCorrect && (
-                              <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
-                            )}
-                            {showResult && isSelected && !isCorrect && (
-                              <XCircle className="h-5 w-5 flex-shrink-0" />
-                            )}
-                          </div>
-                        </Button>
-                      );
-                    })}
+                          </Button>
+                        );
+                      })}
+                    </div>
                   </div>
                 ) : (
                   <div className="flex h-full min-h-0 flex-col gap-4">
