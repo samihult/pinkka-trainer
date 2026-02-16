@@ -29,7 +29,7 @@ import type {
   LearningProgress,
   LearningProgressState,
   StackLearningHistogram,
-  QuizPreferences,
+  TestPreferences,
   Species,
   Stack,
   Group,
@@ -37,7 +37,7 @@ import type {
   EntityImage,
   User,
 } from "../types";
-import { normalizeQuizPreferences } from "../quiz/quiz-preferences";
+import { normalizeTestPreferences } from "../tests/test-preferences";
 import {
   fetchPinkkaGroupWithStacks,
   fetchPinkkaGroups,
@@ -1602,16 +1602,16 @@ async function buildEditableStackRefreshOperations(params: {
             images: [],
           };
     const imageIds = new Set((mappedData.images ?? []).map((image) => image.id));
-    const existingQuizImageIds = Array.isArray(speciesDocData.quizImageIds)
-      ? (speciesDocData.quizImageIds as string[]).filter((id) => imageIds.has(id))
+    const existingTestImageIds = Array.isArray(speciesDocData.testImageIds)
+      ? (speciesDocData.testImageIds as string[]).filter((id) => imageIds.has(id))
       : [];
     const speciesOwnerId =
       speciesDocData.ownerId ?? stackData.ownerId ?? params.ownerId;
     const speciesIsHidden = speciesDocData.isHidden ?? false;
     const existingSpeciesOrder =
       typeof speciesDocData.order === "number" ? speciesDocData.order : 0;
-    const existingSpeciesQuizImageIds = Array.isArray(speciesDocData.quizImageIds)
-      ? (speciesDocData.quizImageIds as string[])
+    const existingSpeciesTestImageIds = Array.isArray(speciesDocData.testImageIds)
+      ? (speciesDocData.testImageIds as string[])
       : undefined;
     const speciesDocumentData = {
       speciesId,
@@ -1626,8 +1626,8 @@ async function buildEditableStackRefreshOperations(params: {
       ownerId: speciesOwnerId,
       order: speciesIndex,
       isHidden: speciesIsHidden,
-      ...(existingQuizImageIds.length > 0
-        ? { quizImageIds: existingQuizImageIds }
+      ...(existingTestImageIds.length > 0
+        ? { testImageIds: existingTestImageIds }
         : {}),
       createdAt: speciesDocData.createdAt ?? now,
       updatedAt: now,
@@ -1644,7 +1644,7 @@ async function buildEditableStackRefreshOperations(params: {
           ownerId: speciesOwnerId,
           order: existingSpeciesOrder,
           isHidden: speciesIsHidden,
-          quizImageIds: existingSpeciesQuizImageIds,
+          testImageIds: existingSpeciesTestImageIds,
         },
         {
           speciesId,
@@ -1655,7 +1655,7 @@ async function buildEditableStackRefreshOperations(params: {
           ownerId: speciesDocumentData.ownerId,
           order: speciesDocumentData.order,
           isHidden: speciesDocumentData.isHidden,
-          quizImageIds: speciesDocumentData.quizImageIds,
+          testImageIds: speciesDocumentData.testImageIds,
         },
       );
 
@@ -2304,23 +2304,25 @@ export async function getAllUsers(): Promise<User[]> {
   );
 }
 
-/** Fetch quiz preferences for a user by uid. */
-export async function getUserQuizPreferences(
+/** Fetch test preferences for a user by uid. */
+export async function getUserTestPreferences(
   userId: string,
-): Promise<QuizPreferences | null> {
+): Promise<TestPreferences | null> {
   const userDoc = await getDoc(doc(db, "users", userId));
   if (!userDoc.exists()) return null;
-  const quizPreferences = userDoc.data().preferences?.quiz;
-  return quizPreferences ? normalizeQuizPreferences(quizPreferences) : null;
+  const testPreferences =
+    userDoc.data().preferences?.test ?? userDoc.data().preferences?.quiz;
+  return testPreferences ? normalizeTestPreferences(testPreferences) : null;
 }
 
-/** Update quiz preferences for a user by uid. */
-export async function updateUserQuizPreferences(
+/** Update test preferences for a user by uid. */
+export async function updateUserTestPreferences(
   userId: string,
-  preferences: QuizPreferences,
+  preferences: TestPreferences,
 ): Promise<void> {
   await updateDoc(doc(db, "users", userId), {
-    "preferences.quiz": preferences,
+    "preferences.test": preferences,
+    "preferences.quiz": deleteField(),
   });
 }
 

@@ -7,10 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { LearningSessionShell } from "@/components/learning-session-shell";
-import { QuizCompletedCard } from "@/components/quiz/quiz-completed-card";
-import { LearningStatusCard } from "@/components/quiz/learning-status-card";
-import { QuizSettingsCard } from "@/components/quiz/quiz-settings-card";
-import { QuizSpeciesCard } from "@/components/quiz/quiz-species-card";
+import { TestCompletedCard } from "@/components/tests/test-completed-card";
+import { LearningStatusCard } from "@/components/tests/learning-status-card";
+import { TestSettingsCard } from "@/components/tests/test-settings-card";
+import { TestSpeciesCard } from "@/components/tests/test-species-card";
 import { useAuth } from "@/lib/auth-context";
 import {
   getGroup,
@@ -19,18 +19,18 @@ import {
   getLearningProgressForSpeciesIds,
   getStack,
   getSpecies,
-  getUserQuizPreferences,
+  getUserTestPreferences,
   upsertLearningProgressBatch,
   upsertStackLearningHistogram,
-  updateUserQuizPreferences,
+  updateUserTestPreferences,
 } from "@/lib/firebase/firestore-helpers";
 import type {
   LearningNameType,
   LearningProgress,
   LearningProgressState,
-  QuizAnswerMode,
-  QuizPreferences,
-  QuizMode,
+  TestAnswerMode,
+  TestPreferences,
+  TestMode,
   Stack,
   Species,
   Group,
@@ -42,15 +42,15 @@ import {
   getSpeciesImagesWithUrls,
 } from "@/lib/content/content-display";
 import {
-  DEFAULT_QUIZ_PREFERENCES,
-  normalizeQuizPreferences,
-} from "@/lib/quiz/quiz-preferences";
-import { scoreAnswer } from "@/lib/quiz/scoring";
+  DEFAULT_TEST_PREFERENCES,
+  normalizeTestPreferences,
+} from "@/lib/tests/test-preferences";
+import { scoreAnswer } from "@/lib/tests/scoring";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import {
-  getStoredQuizPreferences,
-  setStoredQuizPreferences,
+  getStoredTestPreferences,
+  setStoredTestPreferences,
   toLanguageCode,
 } from "@/lib/local-preferences";
 import {
@@ -68,15 +68,15 @@ import { buildStackLearningHistogram } from "@/lib/learning/learning-histogram";
 import { CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
-/** Quiz prompt data for a single question. */
-interface QuizQuestion {
+/** Test prompt data for a single question. */
+interface TestQuestion {
   /** Species being asked about. */
   species: Species;
   /** Multiple-choice options for the prompt. */
   options: Species[];
   /** Correct answer for grading. */
   correctAnswer: Species;
-  /** Image URL chosen for the quiz prompt. */
+  /** Image URL chosen for the test prompt. */
   imageUrl: string | null;
 }
 
@@ -92,13 +92,13 @@ type LearningScoreUpdate = {
 
 const CLOSE_SCORE_THRESHOLD = 0.85;
 const CORRECT_SCORE_THRESHOLD = 1.0;
-const DEFAULT_EXPECTED_RESPONSE_MS: Record<QuizMode, number> = {
+const DEFAULT_EXPECTED_RESPONSE_MS: Record<TestMode, number> = {
   "multiple-choice": 4000,
   "write-name": 9000,
 };
 
-/** Quiz experience for a single stack. */
-export default function QuizPage() {
+/** Test experience for a single stack. */
+export default function TestPage() {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const params = useParams();
@@ -108,15 +108,15 @@ export default function QuizPage() {
   const [stack, setStack] = useState<Stack | null>(null);
   const [group, setGroup] = useState<Group | null>(null);
   const [species, setSpecies] = useState<Species[]>([]);
-  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [questions, setQuestions] = useState<TestQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<Species | null>(null);
   const [answered, setAnswered] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [quizComplete, setQuizComplete] = useState(false);
+  const [testComplete, setTestComplete] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [quizPreferences, setQuizPreferences] =
-    useState<QuizPreferences | null>(null);
+  const [testPreferences, setTestPreferences] =
+    useState<TestPreferences | null>(null);
   const [preferencesLoaded, setPreferencesLoaded] = useState(false);
   const [showSettings, setShowSettings] = useState(true);
   const [currentLearningProgress, setCurrentLearningProgress] = useState<{
@@ -178,7 +178,7 @@ export default function QuizPage() {
         null;
       const speciesWithImages = speciesData.filter(
         (item) =>
-          getSpeciesImagesWithUrls(item.data, item.quizImageIds).length > 0,
+          getSpeciesImagesWithUrls(item.data, item.testImageIds).length > 0,
       );
       setStack(stackData);
       setGroup(resolvedGroup);
@@ -188,7 +188,7 @@ export default function QuizPage() {
       setSelectedAnswer(null);
       setAnswered(false);
       setCorrectAnswers(0);
-      setQuizComplete(false);
+      setTestComplete(false);
       setShowSettings(true);
       setTextAnswer("");
       setTextAnswerCorrect(null);
@@ -201,24 +201,24 @@ export default function QuizPage() {
       pendingProgressRef.current = new Map();
 
       const storedPreferences = user
-        ? await getUserQuizPreferences(user.uid)
+        ? await getUserTestPreferences(user.uid)
         : null;
-      const localQuizPreferences = getStoredQuizPreferences();
-      const normalizedPreferences = normalizeQuizPreferences(
-        storedPreferences ?? localQuizPreferences,
-        DEFAULT_QUIZ_PREFERENCES,
+      const localTestPreferences = getStoredTestPreferences();
+      const normalizedPreferences = normalizeTestPreferences(
+        storedPreferences ?? localTestPreferences,
+        DEFAULT_TEST_PREFERENCES,
       );
-      setQuizPreferences(normalizedPreferences);
-      setStoredQuizPreferences(normalizedPreferences);
+      setTestPreferences(normalizedPreferences);
+      setStoredTestPreferences(normalizedPreferences);
       setPreferencesLoaded(true);
     } catch (error) {
-      logFirestoreError("Failed to load quiz data", error);
+      logFirestoreError("Failed to load test data", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const getExpectedResponseMs = (mode: QuizMode) =>
+  const getExpectedResponseMs = (mode: TestMode) =>
     DEFAULT_EXPECTED_RESPONSE_MS[mode];
 
   const getResponseMs = () => {
@@ -226,8 +226,8 @@ export default function QuizPage() {
     return Math.max(0, Date.now() - questionStartRef.current);
   };
 
-  const pickQuizImageUrl = (targetSpecies: Species) => {
-    const enabledIds = targetSpecies.quizImageIds;
+  const pickTestImageUrl = (targetSpecies: Species) => {
+    const enabledIds = targetSpecies.testImageIds;
     const candidates = getSpeciesImagesWithUrls(
       targetSpecies.data,
       enabledIds,
@@ -239,7 +239,7 @@ export default function QuizPage() {
 
   const generateQuestions = (allSpecies: Species[], questionCount: number) => {
     const shuffled = [...allSpecies].sort(() => Math.random() - 0.5);
-    const quizQuestions: QuizQuestion[] = [];
+    const testQuestions: TestQuestion[] = [];
     const selectedSpecies = shuffled.slice(
       0,
       Math.min(questionCount, allSpecies.length),
@@ -256,20 +256,20 @@ export default function QuizPage() {
         () => Math.random() - 0.5,
       );
 
-      quizQuestions.push({
+      testQuestions.push({
         species: correctSpecies,
         options,
         correctAnswer: correctSpecies,
-        imageUrl: pickQuizImageUrl(correctSpecies),
+        imageUrl: pickTestImageUrl(correctSpecies),
       });
     });
 
-    setQuestions(quizQuestions);
+    setQuestions(testQuestions);
   };
 
   const handleAnswerSelect = (answer: Species) => {
     if (answered) return;
-    if (!currentQuestion || !quizPreferences) return;
+    if (!currentQuestion || !testPreferences) return;
 
     setSelectedAnswer(answer);
     setAnswered(true);
@@ -283,7 +283,7 @@ export default function QuizPage() {
       currentQuestion.species,
       getLearningScoresForChoice(
         currentQuestion.species,
-        quizPreferences.answerMode,
+        testPreferences.answerMode,
         isCorrect,
         getResponseMs(),
         getExpectedResponseMs("multiple-choice"),
@@ -293,7 +293,7 @@ export default function QuizPage() {
 
   const getDisplayNames = (
     targetSpecies: Species,
-    answerMode: QuizAnswerMode,
+    answerMode: TestAnswerMode,
   ) => {
     const scientificName = targetSpecies.data.scientificName;
     const vernacularName = getLocalizedText(
@@ -320,7 +320,7 @@ export default function QuizPage() {
 
   const getAcceptedAnswers = (
     targetSpecies: Species,
-    answerMode: QuizAnswerMode,
+    answerMode: TestAnswerMode,
   ) => {
     const scientificName = targetSpecies.data.scientificName;
     const vernacularName = getLocalizedText(
@@ -569,7 +569,7 @@ export default function QuizPage() {
 
   const getLearningScoresForTextAnswer = (
     targetSpecies: Species,
-    answerMode: QuizAnswerMode,
+    answerMode: TestAnswerMode,
     answerText: string,
     responseMs: number,
     expectedMs: number,
@@ -636,7 +636,7 @@ export default function QuizPage() {
 
   const getLearningScoresForChoice = (
     targetSpecies: Species,
-    answerMode: QuizAnswerMode,
+    answerMode: TestAnswerMode,
     isCorrect: boolean,
     responseMs: number,
     expectedMs: number,
@@ -666,11 +666,11 @@ export default function QuizPage() {
   };
 
   const handleTextAnswerSubmit = () => {
-    if (answered || !currentQuestion || !quizPreferences) return;
+    if (answered || !currentQuestion || !testPreferences) return;
 
     const acceptedAnswers = getAcceptedAnswers(
       currentQuestion.species,
-      quizPreferences.answerMode,
+      testPreferences.answerMode,
     );
     const score = scoreAnswer(textAnswer, acceptedAnswers);
     const isCorrect = score >= CORRECT_SCORE_THRESHOLD;
@@ -678,7 +678,7 @@ export default function QuizPage() {
     const expectedMs = getExpectedResponseMs("write-name");
     const learningScores = getLearningScoresForTextAnswer(
       currentQuestion.species,
-      quizPreferences.answerMode,
+      testPreferences.answerMode,
       textAnswer,
       responseMs,
       expectedMs,
@@ -719,39 +719,39 @@ export default function QuizPage() {
       setTextAnswerRetryUsed(false);
       setLearningMetric(null);
     } else {
-      setQuizComplete(true);
+      setTestComplete(true);
       void updateStackHistogram();
     }
   };
 
   const handleRestart = () => {
-    void startQuiz();
+    void startTest();
   };
 
-  const handlePreferencesChange = async (updates: Partial<QuizPreferences>) => {
-    if (!quizPreferences) return;
+  const handlePreferencesChange = async (updates: Partial<TestPreferences>) => {
+    if (!testPreferences) return;
 
-    const nextPreferences = normalizeQuizPreferences({
-      ...quizPreferences,
+    const nextPreferences = normalizeTestPreferences({
+      ...testPreferences,
       ...updates,
     });
-    setQuizPreferences(nextPreferences);
-    setStoredQuizPreferences(nextPreferences);
+    setTestPreferences(nextPreferences);
+    setStoredTestPreferences(nextPreferences);
 
     if (!preferencesLoaded || !user) return;
 
     try {
-      await updateUserQuizPreferences(user.uid, nextPreferences);
+      await updateUserTestPreferences(user.uid, nextPreferences);
     } catch (error) {
-      logFirestoreError("Failed to save quiz preferences", error);
+      logFirestoreError("Failed to save test preferences", error);
     }
   };
 
-  const startQuiz = async () => {
-    if (!quizPreferences) return;
+  const startTest = async () => {
+    if (!testPreferences) return;
     await flushPendingProgressUpdates();
     const clampedCount = getQuestionCount(
-      quizPreferences.questionCount,
+      testPreferences.questionCount,
       species.length,
     );
 
@@ -760,7 +760,7 @@ export default function QuizPage() {
     setSelectedAnswer(null);
     setAnswered(false);
     setCorrectAnswers(0);
-    setQuizComplete(false);
+    setTestComplete(false);
     setTextAnswer("");
     setTextAnswerCorrect(null);
     setTextAnswerFeedback(null);
@@ -786,11 +786,11 @@ export default function QuizPage() {
   }, [currentQuestionIndex, questions, user?.uid]);
 
   useEffect(() => {
-    if (showSettings || quizComplete) return;
+    if (showSettings || testComplete) return;
     const activeQuestion = questions[currentQuestionIndex];
     if (!activeQuestion) return;
     questionStartRef.current = Date.now();
-  }, [currentQuestionIndex, questions, quizComplete, showSettings]);
+  }, [currentQuestionIndex, questions, testComplete, showSettings]);
 
   useEffect(() => {
     if (!currentLearningProgress) return;
@@ -811,21 +811,21 @@ export default function QuizPage() {
       if (event.defaultPrevented) return;
 
       if (showSettings) {
-        if (event.key === "Enter" && quizPreferences) {
+        if (event.key === "Enter" && testPreferences) {
           const maxQuestions = species.length;
           const displayQuestionCount = getQuestionCount(
-            quizPreferences.questionCount,
+            testPreferences.questionCount,
             maxQuestions,
           );
           if (displayQuestionCount >= 2) {
             event.preventDefault();
-            void startQuiz();
+            void startTest();
           }
         }
         return;
       }
 
-      if (quizComplete) {
+      if (testComplete) {
         if (event.key === "Enter") {
           event.preventDefault();
           handleRestart();
@@ -833,9 +833,9 @@ export default function QuizPage() {
         return;
       }
 
-      if (!quizPreferences || !questions.length) return;
+      if (!testPreferences || !questions.length) return;
 
-      const isTextMode = quizPreferences.mode === "write-name";
+      const isTextMode = testPreferences.mode === "write-name";
       if (isTextMode) {
         if (event.key === "Enter") {
           event.preventDefault();
@@ -871,17 +871,17 @@ export default function QuizPage() {
     handleNext,
     handleRestart,
     handleTextAnswerSubmit,
-    quizComplete,
-    quizPreferences,
+    testComplete,
+    testPreferences,
     questions,
     showSettings,
     species.length,
-    startQuiz,
+    startTest,
   ]);
 
   useEffect(() => {
-    if (showSettings || quizComplete) return;
-    if (quizPreferences?.mode !== "write-name") return;
+    if (showSettings || testComplete) return;
+    if (testPreferences?.mode !== "write-name") return;
     if (answered || questions.length === 0) return;
 
     textAnswerRef.current?.focus();
@@ -889,14 +889,14 @@ export default function QuizPage() {
     answered,
     questions.length,
     currentQuestionIndex,
-    quizComplete,
-    quizPreferences?.mode,
+    testComplete,
+    testPreferences?.mode,
     showSettings,
   ]);
 
   const stackName = stack
     ? getLocalizedText(stack.data.name, preferredLanguage)
-    : "Quiz";
+    : "Test";
   const groupName = group
     ? getLocalizedText(group.data.name, preferredLanguage)
     : "";
@@ -926,7 +926,7 @@ export default function QuizPage() {
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
           <p className="text-muted-foreground">
-            This stack needs at least 2 species with images to create a quiz.
+            This stack needs at least 2 species with images to create a test.
           </p>
           <Button asChild>
             <Link href="/">Browse Other Stacks</Link>
@@ -936,7 +936,7 @@ export default function QuizPage() {
     );
   }
 
-  if (!quizPreferences) {
+  if (!testPreferences) {
     return (
       <LearningSessionShell
         groupName={groupName}
@@ -955,34 +955,34 @@ export default function QuizPage() {
     const maxQuestions = species.length;
     const questionOptions = [10, 25, 50, 0];
     const selectedQuestionCount = questionOptions.includes(
-      quizPreferences.questionCount,
+      testPreferences.questionCount,
     )
-      ? quizPreferences.questionCount
+      ? testPreferences.questionCount
       : 10;
     const displayQuestionCount = getQuestionCount(
       selectedQuestionCount,
       maxQuestions,
     );
 
-    const canStartQuiz = displayQuestionCount >= 2;
+    const canStartTest = displayQuestionCount >= 2;
 
     return (
       <LearningSessionShell
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
-        progressLabel="Quiz settings"
+        progressLabel="Test settings"
         exitHref="/"
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-full max-w-3xl">
-            <QuizSettingsCard
+            <TestSettingsCard
               questionOptions={questionOptions}
               speciesCount={species.length}
-              quizPreferences={quizPreferences}
-              canStartQuiz={canStartQuiz}
+              testPreferences={testPreferences}
+              canStartTest={canStartTest}
               onPreferencesChange={handlePreferencesChange}
-              onStartQuiz={startQuiz}
+              onStartTest={startTest}
             />
           </div>
         </div>
@@ -1013,10 +1013,10 @@ export default function QuizPage() {
   );
   const currentDisplayNames = getDisplayNames(
     currentQuestion.species,
-    quizPreferences.answerMode,
+    testPreferences.answerMode,
   );
 
-  if (quizComplete) {
+  if (testComplete) {
     const percentage = Math.round((correctAnswers / questions.length) * 100);
 
     return (
@@ -1029,7 +1029,7 @@ export default function QuizPage() {
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-full max-w-3xl">
-            <QuizCompletedCard
+            <TestCompletedCard
               percentage={percentage}
               correctAnswers={correctAnswers}
               totalQuestions={questions.length}
@@ -1056,16 +1056,16 @@ export default function QuizPage() {
           {currentQuestion && (
             <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:grid-rows-1">
               <div className="min-h-0">
-                <QuizSpeciesCard imageUrl={currentQuestion.imageUrl} />
+                <TestSpeciesCard imageUrl={currentQuestion.imageUrl} />
               </div>
 
               <div className="flex h-full min-h-0 flex-col gap-4">
-                {quizPreferences.mode === "multiple-choice" ? (
+                {testPreferences.mode === "multiple-choice" ? (
                   <div className="grid h-full min-h-0 auto-rows-fr gap-4 sm:grid-cols-2">
                     {currentQuestion.options.map((option, optionsIndex) => {
                       const displayNames = getDisplayNames(
                         option,
-                        quizPreferences.answerMode,
+                        testPreferences.answerMode,
                       );
                       const isSelected = selectedAnswer?.id === option.id;
                       const isCorrect =
@@ -1134,13 +1134,13 @@ export default function QuizPage() {
                         spellCheck={false}
                       />
                       <p className="text-sm text-muted-foreground">
-                        {quizPreferences.answerMode === "scientific" &&
+                        {testPreferences.answerMode === "scientific" &&
                           "Scientific name required."}
-                        {quizPreferences.answerMode === "vernacular" &&
+                        {testPreferences.answerMode === "vernacular" &&
                           (currentVernacularName
                             ? "Vernacular name required."
                             : "Vernacular name missing; scientific name accepted.")}
-                        {quizPreferences.answerMode === "either" &&
+                        {testPreferences.answerMode === "either" &&
                           "Scientific or vernacular name accepted."}
                       </p>
                       {textAnswerFeedback && !answered && (
@@ -1198,7 +1198,7 @@ export default function QuizPage() {
             <Button onClick={handleNext} size="lg">
               {currentQuestionIndex < questions.length - 1
                 ? "Next Question"
-                : "Finish Quiz"}
+                : "Finish Test"}
             </Button>
           </div>
         )}

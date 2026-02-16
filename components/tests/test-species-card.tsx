@@ -3,14 +3,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 
-/** Props for the QuizSpeciesCard component. */
-export interface QuizSpeciesCardProps {
-  /** Image URL chosen for the quiz prompt. */
+/** Props for the TestSpeciesCard component. */
+export interface TestSpeciesCardProps {
+  /** Image URL chosen for the test prompt. */
   imageUrl: string | null;
 }
 
-/** Renders the quiz prompt image card for the current species. */
-export function QuizSpeciesCard({ imageUrl }: QuizSpeciesCardProps) {
+/** Renders the test prompt image card for the current species. */
+export function TestSpeciesCard({ imageUrl }: TestSpeciesCardProps) {
   return (
     <Card className="h-full">
       <CardContent className="flex h-full flex-col gap-4 p-6">

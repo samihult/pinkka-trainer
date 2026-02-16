@@ -75,7 +75,7 @@ export function Navbar() {
             className="flex items-center gap-2 text-xl font-semibold"
           >
             <BookOpen className="h-6 w-6 text-primary" />
-            <span>Pinkka trainer</span>
+            <span>Varjopinkka</span>
           </Link>
 
           <div className="flex items-center gap-4">

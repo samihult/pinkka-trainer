@@ -20,8 +20,8 @@ import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
 
-/** Props for the flashcard viewer. */
-interface FlashcardProps {
+/** Props for the species-card viewer. */
+interface SpeciesCardProps {
   /** Species displayed on the card. */
   species: Species;
   /** Advance to the next card. */
@@ -38,8 +38,8 @@ interface FlashcardProps {
   onToggleBacksidePanel: () => void;
 }
 
-/** Interactive flashcard with image navigation and backside panel controls. */
-export function Flashcard({
+/** Interactive learning card with image navigation and backside panel controls. */
+export function SpeciesCard({
   species,
   onNext,
   onPrevious,
@@ -47,7 +47,7 @@ export function Flashcard({
   total,
   isBacksidePanelOpen,
   onToggleBacksidePanel,
-}: FlashcardProps) {
+}: SpeciesCardProps) {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);

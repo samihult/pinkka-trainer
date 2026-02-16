@@ -3,40 +3,40 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import type { QuizPreferences } from "@/lib/types";
+import type { TestPreferences } from "@/lib/types";
 import { ListChecks, PenLine } from "lucide-react";
 
-/** Props for the QuizSettingsCard component. */
-export interface QuizSettingsCardProps {
+/** Props for the TestSettingsCard component. */
+export interface TestSettingsCardProps {
   /** Available question count options. */
   questionOptions: number[];
   /** Total number of species in the stack. */
   speciesCount: number;
-  /** Current quiz preferences. */
-  quizPreferences: QuizPreferences;
-  /** Whether the quiz can be started. */
-  canStartQuiz: boolean;
-  /** Updates quiz preference values. */
-  onPreferencesChange: (updates: Partial<QuizPreferences>) => void;
-  /** Starts the quiz. */
-  onStartQuiz: () => void;
+  /** Current test preferences. */
+  testPreferences: TestPreferences;
+  /** Whether the test can be started. */
+  canStartTest: boolean;
+  /** Updates test preference values. */
+  onPreferencesChange: (updates: Partial<TestPreferences>) => void;
+  /** Starts the test. */
+  onStartTest: () => void;
 }
 
-/** Renders the quiz settings card for selecting quiz options. */
-export function QuizSettingsCard({
+/** Renders the test settings card for selecting test options. */
+export function TestSettingsCard({
   questionOptions,
   speciesCount,
-  quizPreferences,
-  canStartQuiz,
+  testPreferences,
+  canStartTest,
   onPreferencesChange,
-  onStartQuiz,
-}: QuizSettingsCardProps) {
+  onStartTest,
+}: TestSettingsCardProps) {
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl">Quiz Settings</CardTitle>
+        <CardTitle className="text-2xl">Test Settings</CardTitle>
         <p className="text-sm text-muted-foreground">
-          Customize how this quiz will run.
+          Customize how this test will run.
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -44,7 +44,7 @@ export function QuizSettingsCard({
           <Label>Number of species</Label>
           <div className="flex flex-wrap gap-2">
             {questionOptions.map((option) => {
-              const isSelected = quizPreferences.questionCount === option;
+              const isSelected = testPreferences.questionCount === option;
               return (
                 <Button
                   key={option}
@@ -57,14 +57,14 @@ export function QuizSettingsCard({
               );
             })}
           </div>
-          {quizPreferences.questionCount > 0 &&
-            quizPreferences.questionCount < speciesCount && (
+          {testPreferences.questionCount > 0 &&
+            testPreferences.questionCount < speciesCount && (
               <p className="text-sm text-muted-foreground">
                 Randomly selected from {speciesCount} species.
               </p>
             )}
-          {(quizPreferences.questionCount >= speciesCount ||
-            quizPreferences.questionCount === 0) && (
+          {(testPreferences.questionCount >= speciesCount ||
+            testPreferences.questionCount === 0) && (
             <p className="text-sm text-muted-foreground">
               All {speciesCount} species.
             </p>
@@ -72,12 +72,12 @@ export function QuizSettingsCard({
         </div>
 
         <div className="space-y-2">
-          <Label>Quiz mode</Label>
+          <Label>Test mode</Label>
           <div className="flex flex-wrap gap-3">
             <Button
               type="button"
               variant={
-                quizPreferences.mode === "multiple-choice"
+                testPreferences.mode === "multiple-choice"
                   ? "default"
                   : "outline"
               }
@@ -98,7 +98,7 @@ export function QuizSettingsCard({
             <Button
               type="button"
               variant={
-                quizPreferences.mode === "write-name" ? "default" : "outline"
+                testPreferences.mode === "write-name" ? "default" : "outline"
               }
               onClick={() => onPreferencesChange({ mode: "write-name" })}
               className="w-40 h-30 flex-col items-center justify-between gap-0 whitespace-normal p-3 text-center"
@@ -126,7 +126,7 @@ export function QuizSettingsCard({
             <Button
               type="button"
               variant={
-                quizPreferences.answerMode === "scientific"
+                testPreferences.answerMode === "scientific"
                   ? "default"
                   : "outline"
               }
@@ -137,7 +137,7 @@ export function QuizSettingsCard({
             <Button
               type="button"
               variant={
-                quizPreferences.answerMode === "vernacular"
+                testPreferences.answerMode === "vernacular"
                   ? "default"
                   : "outline"
               }
@@ -148,7 +148,7 @@ export function QuizSettingsCard({
             <Button
               type="button"
               variant={
-                quizPreferences.answerMode === "either" ? "default" : "outline"
+                testPreferences.answerMode === "either" ? "default" : "outline"
               }
               onClick={() => onPreferencesChange({ answerMode: "either" })}
             >
@@ -156,15 +156,15 @@ export function QuizSettingsCard({
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
-            Applies to both quiz modes; answers ignore case and extra spaces.
+            Applies to both test modes; answers ignore case and extra spaces.
           </p>
         </div>
 
         <Button
-          onClick={onStartQuiz}
+          onClick={onStartTest}
           className="w-full"
           size="lg"
-          disabled={!canStartQuiz}
+          disabled={!canStartTest}
         >
           Start ⏎
         </Button>

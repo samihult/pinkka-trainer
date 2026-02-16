@@ -1,25 +1,25 @@
-import type { QuizAnswerMode, QuizMode, QuizPreferences } from "../types";
+import type { TestAnswerMode, TestMode, TestPreferences } from "../types";
 
-/** Default quiz preferences applied when user settings are missing. */
-export const DEFAULT_QUIZ_PREFERENCES: QuizPreferences = {
+/** Default test preferences applied when user settings are missing. */
+export const DEFAULT_TEST_PREFERENCES: TestPreferences = {
   questionCount: 10,
   mode: "multiple-choice",
   answerMode: "either",
 };
 
-const quizModes: QuizMode[] = ["multiple-choice", "write-name"];
-const answerModes: QuizAnswerMode[] = ["scientific", "vernacular", "either"];
+const testModes: TestMode[] = ["multiple-choice", "write-name"];
+const answerModes: TestAnswerMode[] = ["scientific", "vernacular", "either"];
 
 export const questionCountOptions = [10, 25, 50, 0];
 
 /**
- * Normalize quiz preferences, filling missing fields with defaults and
+ * Normalize test preferences, filling missing fields with defaults and
  * validating enum values.
  */
-export function normalizeQuizPreferences(
-  input?: Partial<QuizPreferences> | null,
-  defaults: QuizPreferences = DEFAULT_QUIZ_PREFERENCES,
-): QuizPreferences {
+export function normalizeTestPreferences(
+  input?: Partial<TestPreferences> | null,
+  defaults: TestPreferences = DEFAULT_TEST_PREFERENCES,
+): TestPreferences {
   const requestedQuestionCount = input?.questionCount;
   const normalizedQuestionCount =
     typeof requestedQuestionCount === "number" &&
@@ -29,7 +29,7 @@ export function normalizeQuizPreferences(
 
   const requestedMode = input?.mode;
   const normalizedMode =
-    requestedMode && quizModes.includes(requestedMode)
+    requestedMode && testModes.includes(requestedMode)
       ? requestedMode
       : defaults.mode;
 

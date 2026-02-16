@@ -60,7 +60,7 @@ export default function ManageSpeciesDetailPage() {
 
   const handleSubmit = async (payload: {
     data: Species["data"];
-    quizImageIds: string[];
+    testImageIds: string[];
   }) => {
     if (!user) return;
 
@@ -69,7 +69,7 @@ export default function ManageSpeciesDetailPage() {
         await createSpecies(
           {
             data: payload.data,
-            quizImageIds: payload.quizImageIds,
+            testImageIds: payload.testImageIds,
             ownerId: user.uid,
           },
           [stackId],
@@ -84,7 +84,7 @@ export default function ManageSpeciesDetailPage() {
 
       await updateSpecies(speciesId, {
         data: payload.data,
-        quizImageIds: payload.quizImageIds,
+        testImageIds: payload.testImageIds,
       });
       toast({
         title: "Success",

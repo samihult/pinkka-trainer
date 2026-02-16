@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Flashcard } from "./flashcard";
+import { SpeciesCard } from "./species-card";
 import type { Species } from "@/lib/types";
 
 const baseSpecies: Species = {
@@ -36,9 +36,9 @@ const baseSpecies: Species = {
   updatedAt: new Date(),
 };
 
-const meta: Meta<typeof Flashcard> = {
-  title: "Components/Flashcard",
-  component: Flashcard,
+const meta: Meta<typeof SpeciesCard> = {
+  title: "Components/SpeciesCard",
+  component: SpeciesCard,
   decorators: [
     (Story) => (
       <div className="h-[680px] w-full bg-background p-6">
@@ -57,7 +57,7 @@ const meta: Meta<typeof Flashcard> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Flashcard>;
+type Story = StoryObj<typeof SpeciesCard>;
 
 export const Default: Story = {};
 

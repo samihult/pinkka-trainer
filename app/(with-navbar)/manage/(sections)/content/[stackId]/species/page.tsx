@@ -95,20 +95,20 @@ export default function ManageSpeciesPage() {
     router.push(`/manage/content/${stackId}/species/${item.id}`);
   };
 
-  const handleToggleQuizImage = async (target: Species, imageId: string) => {
+  const handleToggleTestImage = async (target: Species, imageId: string) => {
     const imageIds = target.data.images?.map((image) => image.id) ?? [];
     if (imageIds.length === 0) return;
 
     const currentEnabled =
-      target.quizImageIds && target.quizImageIds.length > 0
-        ? target.quizImageIds
+      target.testImageIds && target.testImageIds.length > 0
+        ? target.testImageIds
         : imageIds;
     const isEnabled = currentEnabled.includes(imageId);
 
     if (isEnabled && currentEnabled.length === 1) {
       toast({
-        title: "Select quiz images",
-        description: "At least one image must remain enabled for quizzes.",
+        title: "Select test images",
+        description: "At least one image must remain enabled for tests.",
         variant: "destructive",
       });
       return;
@@ -118,30 +118,30 @@ export default function ManageSpeciesPage() {
       ? currentEnabled.filter((id) => id !== imageId)
       : [...currentEnabled, imageId];
     const orderedEnabled = imageIds.filter((id) => nextEnabled.includes(id));
-    const previousEnabled = target.quizImageIds;
+    const previousEnabled = target.testImageIds;
 
     setSpecies((prev) =>
       prev.map((item) =>
         item.id === target.id
-          ? { ...item, quizImageIds: orderedEnabled }
+          ? { ...item, testImageIds: orderedEnabled }
           : item,
       ),
     );
 
     try {
-      await updateSpecies(target.id, { quizImageIds: orderedEnabled });
+      await updateSpecies(target.id, { testImageIds: orderedEnabled });
     } catch (error) {
-      logFirestoreError("Failed to update quiz images", error);
+      logFirestoreError("Failed to update test images", error);
       setSpecies((prev) =>
         prev.map((item) =>
           item.id === target.id
-            ? { ...item, quizImageIds: previousEnabled }
+            ? { ...item, testImageIds: previousEnabled }
             : item,
         ),
       );
       toast({
         title: "Error",
-        description: "Failed to update quiz images",
+        description: "Failed to update test images",
         variant: "destructive",
       });
     }
@@ -343,7 +343,7 @@ export default function ManageSpeciesPage() {
                     onEdit={handleEdit}
                     onDelete={handleDelete}
                     onToggleVisibility={handleToggleSpeciesVisibility}
-                    onToggleQuizImage={handleToggleQuizImage}
+                    onToggleTestImage={handleToggleTestImage}
                   />
                 </DraggableHorizontalItem>
               );

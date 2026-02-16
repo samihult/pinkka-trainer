@@ -24,7 +24,7 @@ export interface LearningSessionShellProps {
   children: ReactNode;
 }
 
-/** Fullscreen shell used by flashcards and quiz sessions. */
+/** Fullscreen shell used by cards and test sessions. */
 export function LearningSessionShell({
   groupName,
   stackName,

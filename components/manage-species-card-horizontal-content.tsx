@@ -22,8 +22,8 @@ export interface ManageSpeciesCardHorizontalContentProps {
   onDelete: (id: string) => void;
   /** Called when toggling species visibility. */
   onToggleVisibility: (species: Species) => void;
-  /** Called when toggling quiz image availability. */
-  onToggleQuizImage?: (species: Species, imageId: string) => void;
+  /** Called when toggling test image availability. */
+  onToggleTestImage?: (species: Species, imageId: string) => void;
 }
 
 /** Horizontal content block for a species entry, suitable for multiple containers. */
@@ -33,13 +33,13 @@ export function ManageSpeciesCardHorizontalContent({
   onEdit,
   onDelete,
   onToggleVisibility,
-  onToggleQuizImage,
+  onToggleTestImage,
 }: ManageSpeciesCardHorizontalContentProps) {
   const finnishName = getLocalizedText(species.data.vernacularName, "fi");
   const englishName = getLocalizedText(species.data.vernacularName, "en");
   const images = species.data.images ?? [];
   const isHidden = species.isHidden ?? false;
-  const quizImageIds = species.quizImageIds ?? [];
+  const testImageIds = species.testImageIds ?? [];
 
   const isMinimal = variant === "minimal";
 
@@ -141,16 +141,16 @@ export function ManageSpeciesCardHorizontalContent({
         <div className="flex gap-2 overflow-x-auto pb-3 overscroll-x-contain touch-pan-x">
           {images.map((image, index) => {
             const isEnabled =
-              quizImageIds.length === 0 || quizImageIds.includes(image.id);
+              testImageIds.length === 0 || testImageIds.includes(image.id);
 
             return (
               <button
                 key={image.id}
                 type="button"
                 className="group relative h-20 w-28 shrink-0 overflow-hidden rounded-sm border border-border bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                onClick={() => onToggleQuizImage?.(species, image.id)}
+                onClick={() => onToggleTestImage?.(species, image.id)}
                 aria-pressed={isEnabled}
-                aria-label={`Toggle quiz image ${index + 1}`}
+                aria-label={`Toggle test image ${index + 1}`}
               >
                 <Image
                   src={

@@ -1,14 +1,14 @@
 # Pinkka Species Learning Application
 
-A comprehensive biology education platform for learning animal, plant, algae, microbe, and other species through interactive flashcards and quizzes.
+A comprehensive biology education platform for learning animal, plant, algae, microbe, and other species through interactive cards and tests.
 
 ## Features
 
 ### For Students (Viewer Role)
 
 - Browse species organized in stacks and groups
-- Study with interactive flashcards featuring multiple images
-- Test knowledge with randomized quizzes
+- Study with interactive cards featuring multiple images
+- Test knowledge with randomized tests
 - Track learning progress
 
 ### For Educators (Editor Role)
@@ -100,7 +100,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=
 
 - Navigate to **Learn** page
 - Choose a group and stack
-- Select **Study Flashcards** or **Take Quiz**
+  - Select **Learning Mode** or **Take Test**
 - Use arrow keys or buttons to navigate
 
 ### Content Management (Editors)

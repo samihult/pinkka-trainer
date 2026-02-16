@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Flashcard } from "@/components/flashcard";
+import { SpeciesCard } from "@/components/species-card";
 import { LearningSessionShell } from "@/components/learning-session-shell";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import {
@@ -23,13 +23,14 @@ import { toLanguageCode } from "@/lib/local-preferences";
 import { Shuffle } from "lucide-react";
 import Link from "next/link";
 
-const BACKSIDE_PANEL_QUERY_PARAM = "back";
+const LEGACY_BACKSIDE_PANEL_QUERY_PARAM = "back";
+const LEARNING_PANEL_QUERY_PARAM = "learningPanel";
 
 function parseBacksidePanelVisibility(value: string | null): boolean {
   return value === "1" || value === "true" || value === "open";
 }
 
-export default function FlashcardsPage() {
+export default function CardsPage() {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const pathname = usePathname();
@@ -46,7 +47,8 @@ export default function FlashcardsPage() {
   const isBacksidePanelOpen = useMemo(
     () =>
       parseBacksidePanelVisibility(
-        searchParams.get(BACKSIDE_PANEL_QUERY_PARAM),
+        searchParams.get(LEARNING_PANEL_QUERY_PARAM) ??
+          searchParams.get(LEGACY_BACKSIDE_PANEL_QUERY_PARAM),
       ),
     [searchParams],
   );
@@ -58,7 +60,8 @@ export default function FlashcardsPage() {
   const updateBacksidePanelVisibility = useCallback(
     (nextOpen: boolean) => {
       const nextParams = new URLSearchParams(searchParams.toString());
-      nextParams.set(BACKSIDE_PANEL_QUERY_PARAM, nextOpen ? "1" : "0");
+      nextParams.set(LEARNING_PANEL_QUERY_PARAM, nextOpen ? "1" : "0");
+      nextParams.delete(LEGACY_BACKSIDE_PANEL_QUERY_PARAM);
       const nextQuery = nextParams.toString();
       const nextUrl = nextQuery ? `${pathname}?${nextQuery}` : pathname;
       router.replace(nextUrl, { scroll: false });
@@ -91,7 +94,7 @@ export default function FlashcardsPage() {
       setGroup(legacyGroupData);
       setSpecies(speciesWithImages);
     } catch (error) {
-      logFirestoreError("Failed to load flashcards data", error);
+      logFirestoreError("Failed to load cards data", error);
     } finally {
       setLoading(false);
     }
@@ -119,7 +122,7 @@ export default function FlashcardsPage() {
     return (
       <LearningSessionShell
         groupName="Loading"
-        stackName="Flashcards"
+        stackName="Learning Mode"
         progressValue={0}
         exitHref="/"
       >
@@ -134,7 +137,7 @@ export default function FlashcardsPage() {
     return (
       <LearningSessionShell
         groupName={group ? getLocalizedText(group.data.name, preferredLanguage) : "Study Group"}
-        stackName={stack ? getLocalizedText(stack.data.name, preferredLanguage) : "Flashcards"}
+        stackName={stack ? getLocalizedText(stack.data.name, preferredLanguage) : "Learning Mode"}
         progressValue={0}
         exitHref="/"
       >
@@ -169,7 +172,7 @@ export default function FlashcardsPage() {
         </Button>
       }
     >
-      <Flashcard
+      <SpeciesCard
         species={species[currentIndex]}
         onNext={handleNext}
         onPrevious={handlePrevious}

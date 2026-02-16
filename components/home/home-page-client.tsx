@@ -135,7 +135,7 @@ export function HomePageClient() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Learn Species</h1>
           <p className="text-muted-foreground">
-            Choose a stack to study with flashcards or take a quiz
+            Choose a stack to study with cards or take a test
           </p>
         </div>
 
@@ -243,9 +243,9 @@ export function HomePageClient() {
                         )}
                         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                           <Button asChild className="sm:w-auto">
-                            <Link href={`/learn/flashcards/${stack.id}`}>
+                            <Link href={`/learn/cards/${stack.id}`}>
                               <RectangleHorizontal className="mr-1 h-4 w-4" />
-                              Flashcards
+                              Learning Mode
                             </Link>
                           </Button>
                           <Button
@@ -253,9 +253,9 @@ export function HomePageClient() {
                             variant="outline"
                             className="bg-transparent sm:w-auto"
                           >
-                            <Link href={`/learn/quiz/${stack.id}`}>
+                            <Link href={`/learn/tests/${stack.id}`}>
                               <Brain className="mr-1 h-4 w-4" />
-                              Take Quiz
+                              Take Test
                             </Link>
                           </Button>
                         </div>

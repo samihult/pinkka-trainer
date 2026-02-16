@@ -28,8 +28,8 @@ interface SpeciesFormProps {
   onSubmit: (payload: {
     /** Updated species detail payload. */
     data: Species["data"];
-    /** Image ids enabled for quiz prompts. */
-    quizImageIds: string[];
+    /** Image ids enabled for test prompts. */
+    testImageIds: string[];
   }) => Promise<void>;
   /** Cancel handler for dismissing the form. */
   onCancel: () => void;
@@ -67,9 +67,9 @@ export function SpeciesForm({
   const [images, setImages] = useState<SpeciesImage[]>(
     species?.data.images || [],
   );
-  const [quizImageIds, setQuizImageIds] = useState<string[]>(() => {
+  const [testImageIds, setTestImageIds] = useState<string[]>(() => {
     const imageIds = (species?.data.images || []).map((image) => image.id);
-    const existingIds = species?.quizImageIds?.filter((id) =>
+    const existingIds = species?.testImageIds?.filter((id) =>
       imageIds.includes(id),
     );
     return existingIds && existingIds.length > 0 ? existingIds : imageIds;
@@ -80,13 +80,13 @@ export function SpeciesForm({
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
-  const quizSelectionError = images.length > 0 && quizImageIds.length === 0;
+  const testSelectionError = images.length > 0 && testImageIds.length === 0;
 
   useEffect(() => {
     const imageIds = images.map((image) => image.id);
     const previousImageIds = previousImageIdsRef.current;
 
-    setQuizImageIds((prev) => {
+    setTestImageIds((prev) => {
       const preserved = prev.filter((id) => imageIds.includes(id));
       const newIds = imageIds.filter((id) => !previousImageIds.includes(id));
       return [...preserved, ...newIds];
@@ -147,10 +147,10 @@ export function SpeciesForm({
     setSaving(true);
 
     try {
-      if (quizSelectionError) {
+      if (testSelectionError) {
         toast({
-          title: "Select quiz images",
-          description: "Choose at least one image to use in quizzes.",
+          title: "Select test images",
+          description: "Choose at least one image to use in tests.",
           variant: "destructive",
         });
         return;
@@ -197,9 +197,9 @@ export function SpeciesForm({
 
       await onSubmit({
         data: detail,
-        quizImageIds:
-          quizImageIds.length > 0
-            ? quizImageIds
+        testImageIds:
+          testImageIds.length > 0
+            ? testImageIds
             : images.map((image) => image.id),
       });
     } catch (error) {
@@ -213,8 +213,8 @@ export function SpeciesForm({
     }
   };
 
-  const handleQuizImageToggle = (imageId: string) => {
-    setQuizImageIds((prev) => {
+  const handleTestImageToggle = (imageId: string) => {
+    setTestImageIds((prev) => {
       const isEnabled = prev.includes(imageId);
       if (isEnabled) {
         return prev.filter((id) => id !== imageId);
@@ -316,21 +316,21 @@ export function SpeciesForm({
           </div>
 
           <div className="space-y-2">
-            <Label>Quiz Images</Label>
+            <Label>Test Images</Label>
             <p className="text-sm text-muted-foreground">
-              Select which images can appear in quizzes. Flashcards always show
+              Select which images can appear in tests. Cards always show
               all images.
             </p>
             {images.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                Add images to enable quiz selection.
+                Add images to enable test selection.
               </p>
             ) : (
               <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                 {images.map((image, index) => {
                   const imageId = image.id;
-                  const inputId = `quiz-image-${imageId}`;
-                  const isChecked = quizImageIds.includes(imageId);
+                  const inputId = `test-image-${imageId}`;
+                  const isChecked = testImageIds.includes(imageId);
                   const imageUrl =
                     getSpeciesImageUrl(image) || "/placeholder.svg";
 
@@ -345,7 +345,7 @@ export function SpeciesForm({
                         type="checkbox"
                         className="peer sr-only"
                         checked={isChecked}
-                        onChange={() => handleQuizImageToggle(imageId)}
+                        onChange={() => handleTestImageToggle(imageId)}
                       />
                       <Card className="overflow-hidden border border-border transition peer-checked:ring-2 peer-checked:ring-primary">
                         <div className="relative aspect-square">
@@ -363,7 +363,7 @@ export function SpeciesForm({
                               isChecked ? "text-foreground" : undefined
                             }
                           >
-                            {isChecked ? "Quiz" : "Excluded"}
+                            {isChecked ? "Test" : "Excluded"}
                           </span>
                         </div>
                       </Card>
@@ -372,9 +372,9 @@ export function SpeciesForm({
                 })}
               </div>
             )}
-            {quizSelectionError && (
+            {testSelectionError && (
               <p className="text-sm text-destructive">
-                Select at least one image for quizzes.
+                Select at least one image for tests.
               </p>
             )}
           </div>

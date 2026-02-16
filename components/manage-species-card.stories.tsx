@@ -38,7 +38,7 @@ const exampleSpecies: Species = {
       },
     ],
   },
-  quizImageIds: ["img-1"],
+  testImageIds: ["img-1"],
   ownerId: "storybook-user",
   createdAt: new Date("2024-01-01T12:00:00.000Z"),
   updatedAt: new Date("2024-01-01T12:00:00.000Z"),
@@ -59,8 +59,8 @@ const meta: Meta<typeof ManageSpeciesCardHorizontalContent> = {
     onToggleVisibility: (species) => {
       console.log("toggle visibility", species.id);
     },
-    onToggleQuizImage: (species, imageId) => {
-      console.log("toggle quiz image", species.id, imageId);
+    onToggleTestImage: (species, imageId) => {
+      console.log("toggle test image", species.id, imageId);
     },
   },
   render: (args) => (

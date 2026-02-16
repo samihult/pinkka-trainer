@@ -1,5 +1,5 @@
 /*
-  Fuzzy quiz scoring for TypeScript
+  Fuzzy test scoring for TypeScript
    - Returns score in [0, 1]
    - Handles multiple correct answers (takes the best score)
    - Unicode aware normalization (NFKC + optional diacritics removal)
@@ -21,7 +21,7 @@ const DEFAULTS: Required<ScoreOptions> = {
 function normalizeText(input: string, opts: Required<ScoreOptions>): string {
   let s = input.normalize("NFKC");
 
-  // Lowercase in a locale-agnostic way; for most quiz uses this is fine.
+  // Lowercase in a locale-agnostic way; for most test uses this is fine.
   // If you need Turkish-specific behavior, pass locale explicitly and customize.
   s = s.toLowerCase();
 

@@ -56,7 +56,7 @@ export function estimateRetention(
  * Convert a response time into a speed score in [0, 1], capped by accuracy.
  *
  * The expectedMs input should come from a per-item baseline (EMA) or a
- * default per quiz mode when no prior data exists.
+ * default per test mode when no prior data exists.
  */
 export function getSpeedScore(
   responseMs: number,

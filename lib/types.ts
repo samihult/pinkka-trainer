@@ -1,11 +1,11 @@
 /** Supported application roles. */
 export type UserRole = "viewer" | "editor" | "admin";
 
-/** Quiz presentation mode. */
-export type QuizMode = "multiple-choice" | "write-name";
+/** Test presentation mode. */
+export type TestMode = "multiple-choice" | "write-name";
 
 /** Accepted answer rules when typing a species name. */
-export type QuizAnswerMode = "scientific" | "vernacular" | "either";
+export type TestAnswerMode = "scientific" | "vernacular" | "either";
 
 /** Name variants tracked for learning progress. */
 export type LearningNameType = "scientific" | "vernacular";
@@ -89,20 +89,20 @@ export interface StackLearningHistogram {
   updatedAt: Date;
 }
 
-/** Quiz configuration stored in user preferences. */
-export interface QuizPreferences {
-  /** Number of questions to include in each quiz session (0 means all). */
+/** Test configuration stored in user preferences. */
+export interface TestPreferences {
+  /** Number of questions to include in each test session (0 means all). */
   questionCount: number;
-  /** Quiz interaction mode. */
-  mode: QuizMode;
-  /** Required answer type for quizzes. */
-  answerMode: QuizAnswerMode;
+  /** Test interaction mode. */
+  mode: TestMode;
+  /** Required answer type for tests. */
+  answerMode: TestAnswerMode;
 }
 
 /** User-specific preferences stored with the profile. */
 export interface UserPreferences {
-  /** Quiz settings used when starting a new quiz. */
-  quiz: QuizPreferences;
+  /** Test settings used when starting a new test. */
+  test: TestPreferences;
 }
 
 /** Authenticated user profile. */
@@ -190,7 +190,7 @@ export interface Species {
   parentGroupId?: string;
   /** Parent stack id. */
   parentStackId?: string;
-  /** Core species content used by flashcards and quizzes. */
+  /** Core species content used by cards and tests. */
   data: {
     /** Taxonomy id for the species. */
     taxonId: string;
@@ -219,8 +219,8 @@ export interface Species {
     /** Linked Pinkka species id. */
     speciesId: number;
   };
-  /** Image ids enabled for quizzes; defaults to all images when unset. */
-  quizImageIds?: string[];
+  /** Image ids enabled for tests; defaults to all images when unset. */
+  testImageIds?: string[];
   /** Optional order index within the parent stack. */
   order?: number;
   /** Whether the species is hidden from learners. */
@@ -241,7 +241,7 @@ export interface Stack {
   id: string;
   /** Parent group id. */
   parentGroupId?: string;
-  /** Core stack content used by flashcards and quizzes. */
+  /** Core stack content used by cards and tests. */
   data: {
     /** Localized stack name. */
     name: LocalizedText;
@@ -279,7 +279,7 @@ export interface Stack {
 export interface Group {
   /** Group document id. */
   id: string;
-  /** Core group content used by flashcards and quizzes. */
+  /** Core group content used by cards and tests. */
   data: {
     /** Localized group name. */
     name: LocalizedText;
@@ -309,13 +309,13 @@ export interface Group {
   updatedAt: Date;
 }
 
-/** Result record for a quiz attempt. */
-export interface QuizResult {
-  /** Quiz result document id. */
+/** Result record for a test attempt. */
+export interface TestResult {
+  /** Test result document id. */
   id: string;
-  /** UID of the user who took the quiz. */
+  /** UID of the user who took the test. */
   userId: string;
-  /** Stack id that was quizzed. */
+  /** Stack id that was tested. */
   stackId: string;
   /** Number of correct answers. */
   score: number;

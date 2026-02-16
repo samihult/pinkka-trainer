@@ -7,35 +7,35 @@ import type { StackLearningHistogram as StackLearningHistogramData } from "@/lib
 import { RotateCw } from "lucide-react";
 import Link from "next/link";
 
-/** Props for the QuizCompletedCard component. */
-export interface QuizCompletedCardProps {
-  /** Final score percentage for the quiz. */
+/** Props for the TestCompletedCard component. */
+export interface TestCompletedCardProps {
+  /** Final score percentage for the test. */
   percentage: number;
   /** Number of correct answers. */
   correctAnswers: number;
-  /** Total number of questions in the quiz. */
+  /** Total number of questions in the test. */
   totalQuestions: number;
   /** Stack identifier used for navigation links. */
   stackId: string;
   /** Optional learning histogram for the stack. */
   learningHistogram?: StackLearningHistogramData | null;
-  /** Handler for restarting the quiz. */
+  /** Handler for restarting the test. */
   onRestart: () => void;
 }
 
-/** Renders the completed quiz summary card and next actions. */
-export function QuizCompletedCard({
+/** Renders the completed test summary card and next actions. */
+export function TestCompletedCard({
   percentage,
   correctAnswers,
   totalQuestions,
   stackId,
   learningHistogram,
   onRestart,
-}: QuizCompletedCardProps) {
+}: TestCompletedCardProps) {
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-center text-3xl">Quiz Complete!</CardTitle>
+        <CardTitle className="text-center text-3xl">Test Complete!</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="text-center">
@@ -62,7 +62,7 @@ export function QuizCompletedCard({
         <div className="pt-3 space-y-2">
           <Button onClick={onRestart} className="w-full" size="lg">
             <RotateCw className="mr-2 h-4 w-4" />
-            Take Quiz Again
+            Take Test Again
           </Button>
           <Button
             asChild
@@ -70,7 +70,7 @@ export function QuizCompletedCard({
             className="w-full bg-transparent"
             size="lg"
           >
-            <Link href={`/learn/flashcards/${stackId}`}>Study Flashcards</Link>
+            <Link href={`/learn/cards/${stackId}`}>Study Cards</Link>
           </Button>
           <Button asChild variant="ghost" className="w-full">
             <Link href="/">Back to All Stacks</Link>

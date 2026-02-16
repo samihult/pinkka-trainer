@@ -1,4 +1,4 @@
-import type { QuizPreferences } from "@/lib/types";
+import type { TestPreferences } from "@/lib/types";
 
 /** Local storage key used for persisted UI preferences. */
 export const LOCAL_PREFERENCES_KEY = "localPreferences";
@@ -32,8 +32,8 @@ export type LocalPreferences = {
     /** Preferred language for UI labels. */
     language?: LanguagePreference;
   };
-  /** Preferences for quiz sessions. */
-  quiz?: QuizPreferences;
+  /** Preferences for test sessions. */
+  test?: TestPreferences;
 };
 
 /** Convert a language preference to its lowercase locale code. */
@@ -98,17 +98,26 @@ export function setStoredLanguage(next: LanguagePreference) {
   }));
 }
 
-/** Loads stored quiz preferences from local preferences. */
-export function getStoredQuizPreferences(): QuizPreferences | null {
-  return loadLocalPreferences().quiz ?? null;
+/** Loads stored test preferences from local preferences. */
+export function getStoredTestPreferences(): TestPreferences | null {
+  const stored = loadLocalPreferences() as LocalPreferences & {
+    quiz?: TestPreferences;
+  };
+  return stored.test ?? stored.quiz ?? null;
 }
 
-/** Persists quiz preferences in local preferences. */
-export function setStoredQuizPreferences(next: QuizPreferences) {
-  updateLocalPreferences((current) => ({
-    ...current,
-    quiz: next,
-  }));
+/** Persists test preferences in local preferences. */
+export function setStoredTestPreferences(next: TestPreferences) {
+  updateLocalPreferences((current) => {
+    const currentWithLegacy = current as LocalPreferences & {
+      quiz?: TestPreferences;
+    };
+    return {
+      ...currentWithLegacy,
+      test: next,
+      quiz: undefined,
+    };
+  });
 }
 
 /** Loads the stored home page expanded group id, if available. */
