@@ -40,6 +40,8 @@ export interface SpeciesImageCarouselProps {
   emptyMessage?: string;
   /** Callback when the active index changes. */
   onIndexChange?: (index: number) => void;
+  /** Controlled active slide index for external navigation. */
+  activeIndex?: number;
   /** Callback when an image is clicked. */
   onImageClick?: (index: number) => void;
   /** Whether to enable the full-viewport modal on image click. */
@@ -76,6 +78,7 @@ export function SpeciesImageCarousel({
   showPagination = true,
   emptyMessage = "No image available",
   onIndexChange,
+  activeIndex,
   onImageClick,
   enableModal = true,
   onModalOpenChange,
@@ -133,7 +136,10 @@ export function SpeciesImageCarousel({
       : createDefaultCarouselState(lightboxKey);
   const currentImageIndex =
     slides.length > 0
-      ? Math.min(normalizedCarouselState.currentImageIndex, slides.length - 1)
+      ? Math.min(
+          Math.max(activeIndex ?? normalizedCarouselState.currentImageIndex, 0),
+          slides.length - 1,
+        )
       : 0;
   const isLightboxOpen = normalizedCarouselState.isLightboxOpen;
 
@@ -317,6 +323,7 @@ export function SpeciesImageCarousel({
         <Lightbox
           key={lightboxKey}
           slides={slides}
+          index={currentImageIndex}
           on={{ view: handleView, click: handleClick }}
           inline={{ className: "h-full w-full" }}
           controller={{ focus: true, ref: inlineControllerRef }}

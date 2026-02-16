@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -57,7 +56,7 @@ type InfoTab = "identification" | "pinkka";
 interface ResolvedIdentificationHint {
   id: string;
   text: string;
-  imageUrl?: string;
+  imageIndex?: number;
 }
 
 /** Interactive learning view with image navigation and side info pane controls. */
@@ -75,6 +74,13 @@ export function SpeciesCard({
   const preferredLanguage = toLanguageCode(language);
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
   const [isCarouselModalOpen, setIsCarouselModalOpen] = useState(false);
+  const [carouselState, setCarouselState] = useState<{
+    speciesId: string;
+    activeIndex: number;
+  }>({
+    speciesId: species.id,
+    activeIndex: 0,
+  });
   const [activeInfoTab, setActiveInfoTab] = useState<InfoTab>("pinkka");
   const [pinkkaDetail, setPinkkaDetail] = useState<PinkkaSpeciesDetail | null>(
     null,
@@ -95,6 +101,22 @@ export function SpeciesCard({
     preferredLanguage,
   );
   const description = getSpeciesDescription(species.data, preferredLanguage);
+  const carouselImageIds = useMemo(
+    () =>
+      images
+        .filter((image) => Boolean(getSpeciesImageUrl(image)))
+        .map((image) => image.id),
+    [images],
+  );
+  const normalizedCarouselState =
+    carouselState.speciesId === species.id
+      ? carouselState
+      : {
+          speciesId: species.id,
+          activeIndex: 0,
+        };
+  const activeCarouselIndex = normalizedCarouselState.activeIndex;
+
   const identificationHints = useMemo<ResolvedIdentificationHint[]>(() => {
     const rawHints = (species.data.identificationHints ?? []) as Array<
       SpeciesIdentificationHint | LocalizedText
@@ -106,16 +128,12 @@ export function SpeciesCard({
         if (!text) return null;
 
         const imageId = "imageId" in hint ? hint.imageId : undefined;
-        const image = imageId
-          ? images.find((candidate) => candidate.id === imageId)
-          : undefined;
+        const imageIndex = imageId ? carouselImageIds.indexOf(imageId) : -1;
 
         return {
           id: "id" in hint ? hint.id : `legacy-hint-${index}`,
           text,
-          ...(image
-            ? { imageUrl: getSpeciesImageUrl(image) || "/placeholder.svg" }
-            : {}),
+          ...(imageIndex >= 0 ? { imageIndex } : {}),
         };
       })
       .filter((hint): hint is ResolvedIdentificationHint => hint !== null);
@@ -132,7 +150,7 @@ export function SpeciesCard({
         text: hint,
       }));
   }, [
-    images,
+    carouselImageIds,
     preferredLanguage,
     species.data.identificationHints,
     species.data.identificationTips,
@@ -200,6 +218,25 @@ export function SpeciesCard({
       isCancelled = true;
     };
   }, [activeInfoTab, isInfoPanelOpen, pinkkaSpeciesId]);
+
+  const handleCarouselIndexChange = (index: number) => {
+    setCarouselState((prev) => {
+      if (prev.speciesId === species.id && prev.activeIndex === index) {
+        return prev;
+      }
+      return {
+        speciesId: species.id,
+        activeIndex: index,
+      };
+    });
+  };
+
+  const handleHintClick = (hint: ResolvedIdentificationHint) => {
+    if (hint.imageIndex === undefined) {
+      return;
+    }
+    handleCarouselIndexChange(hint.imageIndex);
+  };
 
   const shortcutContent = useMemo(
     () => [
@@ -299,6 +336,8 @@ export function SpeciesCard({
                 images={images}
                 alt={species.data.scientificName}
                 resetKey={species.id}
+                activeIndex={activeCarouselIndex}
+                onIndexChange={handleCarouselIndexChange}
                 onModalOpenChange={setIsCarouselModalOpen}
                 heightClassName="h-full"
                 fullScreenLightboxProps={{
@@ -365,19 +404,17 @@ export function SpeciesCard({
                             key={hint.id}
                             className="rounded-md border border-border bg-muted/30 px-3 py-2 text-sm"
                           >
-                            {hint.imageUrl ? (
-                              <div className="relative mb-2 aspect-square w-full max-w-56 overflow-hidden rounded-md border border-border/70 bg-muted/20">
-                                <Image
-                                  src={hint.imageUrl}
-                                  alt={t(
-                                    "learn.cards.info.identificationImageAlt",
-                                  )}
-                                  fill
-                                  className="object-contain"
-                                />
-                              </div>
-                            ) : null}
-                            {hint.text}
+                            {hint.imageIndex !== undefined ? (
+                              <button
+                                type="button"
+                                className="w-full text-left hover:text-foreground/90"
+                                onClick={() => handleHintClick(hint)}
+                              >
+                                {hint.text}
+                              </button>
+                            ) : (
+                              hint.text
+                            )}
                           </li>
                         ))}
                       </ul>
