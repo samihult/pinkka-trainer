@@ -245,7 +245,7 @@ export function HomePageClient() {
                           <Button asChild className="sm:w-auto">
                             <Link href={`/learn/cards/${stack.id}`}>
                               <RectangleHorizontal className="mr-1 h-4 w-4" />
-                              Learning Mode
+                              Learn
                             </Link>
                           </Button>
                           <Button

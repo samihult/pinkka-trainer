@@ -100,7 +100,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=
 
 - Navigate to **Learn** page
 - Choose a group and stack
-  - Select **Learning Mode** or **Take Test**
+  - Select **Learn** or **Take Test**
 - Use arrow keys or buttons to navigate
 
 ### Content Management (Editors)

@@ -1,7 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SpeciesCard } from "@/components/species-card";
 import { LearningSessionShell } from "@/components/learning-session-shell";
@@ -122,7 +127,7 @@ export default function CardsPage() {
     return (
       <LearningSessionShell
         groupName="Loading"
-        stackName="Learning Mode"
+        stackName="Learn"
         progressValue={0}
         exitHref="/"
       >
@@ -136,8 +141,14 @@ export default function CardsPage() {
   if (!stack || species.length === 0) {
     return (
       <LearningSessionShell
-        groupName={group ? getLocalizedText(group.data.name, preferredLanguage) : "Study Group"}
-        stackName={stack ? getLocalizedText(stack.data.name, preferredLanguage) : "Learning Mode"}
+        groupName={
+          group
+            ? getLocalizedText(group.data.name, preferredLanguage)
+            : "Study Group"
+        }
+        stackName={
+          stack ? getLocalizedText(stack.data.name, preferredLanguage) : "Learn"
+        }
         progressValue={0}
         exitHref="/"
       >
