@@ -5,6 +5,10 @@ import Link from "next/link";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import {
+  SegmentedLearningProgress,
+  type LearningProgressSegment,
+} from "@/components/learning/segmented-learning-progress";
 
 /** Props for the learning session shell layout. */
 export interface LearningSessionShellProps {
@@ -14,6 +18,12 @@ export interface LearningSessionShellProps {
   stackName: string;
   /** Progress value in the 0-100 range. */
   progressValue: number;
+  /** Optional species segments for segmented progress rendering. */
+  progressSegments?: LearningProgressSegment[];
+  /** Active segment index for segmented progress rendering. */
+  activeProgressSegmentIndex?: number;
+  /** Optional callback for segment click navigation. */
+  onSelectProgressSegment?: (index: number) => void;
   /** Optional progress label shown in the header. */
   progressLabel?: string;
   /** Optional extra action rendered in the header. */
@@ -29,14 +39,21 @@ export function LearningSessionShell({
   groupName,
   stackName,
   progressValue,
+  progressSegments,
+  activeProgressSegmentIndex = 0,
+  onSelectProgressSegment,
   progressLabel,
   headerAction,
   exitHref,
   children,
 }: LearningSessionShellProps) {
+  const hasSegmentedProgress = Boolean(
+    progressSegments && progressSegments.length > 0,
+  );
+
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-gradient-to-b from-background to-secondary/20">
-      <div className="absolute inset-x-4 top-4 flex items-start justify-between gap-4 sm:inset-x-6 sm:top-6">
+    <div className="flex h-screen w-screen flex-col overflow-hidden bg-gradient-to-b from-background to-secondary/20">
+      <div className="flex items-start justify-between gap-4 px-4 pt-4 sm:px-6 sm:pt-6">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             {groupName || "Study Group"}
@@ -60,11 +77,19 @@ export function LearningSessionShell({
         </div>
       </div>
 
-      <div className="absolute inset-x-4 top-16 sm:inset-x-6 sm:top-20">
-        <Progress value={progressValue} className="h-2" />
+      <div className="px-4 pt-4 sm:px-6 sm:pt-4">
+        {hasSegmentedProgress ? (
+          <SegmentedLearningProgress
+            segments={progressSegments ?? []}
+            activeIndex={activeProgressSegmentIndex}
+            onSelectIndex={onSelectProgressSegment}
+          />
+        ) : (
+          <Progress value={progressValue} className="h-2" />
+        )}
       </div>
 
-      <div className="absolute inset-x-4 top-24 bottom-4 sm:inset-x-6 sm:top-28 sm:bottom-6">
+      <div className="relative min-h-0 flex-1 px-4 pt-4 pb-4 sm:px-6 sm:pb-6">
         {children}
       </div>
     </div>

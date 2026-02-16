@@ -865,6 +865,18 @@ export default function TestPage() {
     return vernacularName ? { either: update } : { scientific: update };
   };
 
+  const resetActiveQuestionUiState = () => {
+    setSelectedAnswer(null);
+    setEliminatedOptionIds(new Set());
+    setAnswered(false);
+    setTextAnswer("");
+    setTextAnswerCorrect(null);
+    setTextAnswerFeedback(null);
+    setTextAnswerRetryUsed(false);
+    setLearningMetric(null);
+    setCurrentLearningProgress(null);
+  };
+
   const handleTextAnswerSubmit = () => {
     if (answered || !currentQuestion || !testPreferences) return;
 
@@ -911,14 +923,7 @@ export default function TestPage() {
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedAnswer(null);
-      setEliminatedOptionIds(new Set());
-      setAnswered(false);
-      setTextAnswer("");
-      setTextAnswerCorrect(null);
-      setTextAnswerFeedback(null);
-      setTextAnswerRetryUsed(false);
-      setLearningMetric(null);
+      resetActiveQuestionUiState();
     } else {
       setTestComplete(true);
       void updateStackHistogram();
@@ -978,17 +983,19 @@ export default function TestPage() {
 
     generateQuestions(species, clampedCount, familiarityBySpeciesId);
     setCurrentQuestionIndex(0);
-    setSelectedAnswer(null);
-    setEliminatedOptionIds(new Set());
-    setAnswered(false);
+    resetActiveQuestionUiState();
     setCorrectAnswers(0);
     setTestComplete(false);
-    setTextAnswer("");
-    setTextAnswerCorrect(null);
-    setTextAnswerFeedback(null);
-    setTextAnswerRetryUsed(false);
-    setLearningMetric(null);
     setShowSettings(false);
+    questionStartRef.current = Date.now();
+  };
+
+  const handleSelectQuestionFromProgress = (index: number) => {
+    if (index < 0 || index >= questions.length) return;
+    if (index === currentQuestionIndex) return;
+
+    setCurrentQuestionIndex(index);
+    resetActiveQuestionUiState();
     questionStartRef.current = Date.now();
   };
 
@@ -1238,6 +1245,15 @@ export default function TestPage() {
     currentQuestion.species,
     testPreferences.answerMode,
   );
+  const progressSegments = questions.map((question) => ({
+    id: question.species.id,
+    scientificName: question.species.data.scientificName,
+    vernacularName:
+      getLocalizedText(
+        question.species.data.vernacularName,
+        preferredLanguage,
+      ) ?? null,
+  }));
 
   if (testComplete) {
     const percentage = Math.round((correctAnswers / questions.length) * 100);
@@ -1271,6 +1287,9 @@ export default function TestPage() {
       groupName={groupName}
       stackName={stackName}
       progressValue={progress}
+      progressSegments={progressSegments}
+      activeProgressSegmentIndex={currentQuestionIndex}
+      onSelectProgressSegment={handleSelectQuestionFromProgress}
       progressLabel={`Question ${currentQuestionIndex + 1} of ${questions.length}`}
       exitHref="/"
     >

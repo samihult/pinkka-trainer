@@ -7,4 +7,5 @@ Reusable UI building blocks for app pages.
   management cards.
 - Feature-specific UI for learning, tests, and Pinkka content workflows, including `species-card.tsx` for side-by-side
   learning media and info tabs, and `species-image-carousel.tsx` for keyboard-driven image navigation/zoom (with
-  learning view support up to 200% full-screen zoom and modal-state callbacks).
+  learning view support up to 200% full-screen zoom and modal-state callbacks), plus `learning-session-shell.tsx` for
+  shared learning headers with segmented species progress integration.

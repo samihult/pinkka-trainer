@@ -128,6 +128,14 @@ export default function CardsPage() {
     }
   };
 
+  const handleSelectSpeciesFromProgress = useCallback(
+    (index: number) => {
+      if (index < 0 || index >= species.length) return;
+      setCurrentIndex(index);
+    },
+    [species.length],
+  );
+
   if (loading) {
     return (
       <LearningSessionShell
@@ -173,12 +181,21 @@ export default function CardsPage() {
   const groupName = group
     ? getLocalizedText(group.data.name, preferredLanguage)
     : "";
+  const progressSegments = species.map((item) => ({
+    id: item.id,
+    scientificName: item.data.scientificName,
+    vernacularName:
+      getLocalizedText(item.data.vernacularName, preferredLanguage) ?? null,
+  }));
 
   return (
     <LearningSessionShell
       groupName={groupName}
       stackName={getLocalizedText(stack.data.name, preferredLanguage)}
       progressValue={progressValue}
+      progressSegments={progressSegments}
+      activeProgressSegmentIndex={currentIndex}
+      onSelectProgressSegment={handleSelectSpeciesFromProgress}
       progressLabel={t("learn.cards.progressLabel", {
         current: currentIndex + 1,
         total: species.length,
