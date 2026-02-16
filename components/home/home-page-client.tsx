@@ -137,9 +137,7 @@ export function HomePageClient() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{t("home.title")}</h1>
-          <p className="text-muted-foreground">
-            {t("home.subtitle")}
-          </p>
+          <p className="text-muted-foreground">{t("home.subtitle")}</p>
         </div>
 
         <div className="space-y-8">
@@ -199,54 +197,56 @@ export function HomePageClient() {
                 {isExpanded && (
                   <div
                     id={`group-${group.id}-stacks`}
-                    className="mt-4 space-y-4 pl-10"
+                    className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(min(100%,480px),1fr))] gap-4 pl-10"
                   >
                     {(stacksByGroup[group.id] || []).map((stack) => (
                       <div
                         key={stack.id}
-                        className="rounded-lg border border-border bg-card px-4 py-3"
+                        className="flex h-full flex-col gap-6 rounded-lg border border-border bg-card px-4 py-3 sm:flex-row sm:justify-between"
                       >
-                        <div className="flex items-center gap-2">
-                          <BookOpen className="h-4 w-4 text-primary" />
-                          <h3 className="text-base font-semibold">
-                            {getLocalizedText(
-                              stack.data.name,
-                              preferredLanguage,
-                            )}
-                          </h3>
-                        </div>
-                        {getLocalizedText(
-                          stack.data.description,
-                          preferredLanguage,
-                        ) && (
-                          <p className="text-sm text-muted-foreground mt-1">
-                            {getLocalizedText(
-                              stack.data.description,
-                              preferredLanguage,
-                            )}
-                          </p>
-                        )}
-                        {user && (
-                          <div className="mt-3 mb-4">
-                            {stackHistograms.get(stack.id) ? (
-                              <StackLearningHistogramBars
-                                scientific={
-                                  stackHistograms.get(stack.id)!.scientific
-                                }
-                                vernacular={
-                                  stackHistograms.get(stack.id)!.vernacular
-                                }
-                                either={stackHistograms.get(stack.id)!.either}
-                              />
-                            ) : (
-                              <p className="text-xs text-muted-foreground">
-                                {t("home.noLearningDataYet")}
-                              </p>
-                            )}
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <BookOpen className="h-4 w-4 text-primary" />
+                            <h3 className="text-base font-semibold">
+                              {getLocalizedText(
+                                stack.data.name,
+                                preferredLanguage,
+                              )}
+                            </h3>
                           </div>
-                        )}
-                        <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                          <Button asChild className="sm:w-auto">
+                          {getLocalizedText(
+                            stack.data.description,
+                            preferredLanguage,
+                          ) && (
+                            <p className="mt-1 text-sm text-muted-foreground">
+                              {getLocalizedText(
+                                stack.data.description,
+                                preferredLanguage,
+                              )}
+                            </p>
+                          )}
+                          {user && (
+                            <div className="mt-3">
+                              {stackHistograms.get(stack.id) ? (
+                                <StackLearningHistogramBars
+                                  scientific={
+                                    stackHistograms.get(stack.id)!.scientific
+                                  }
+                                  vernacular={
+                                    stackHistograms.get(stack.id)!.vernacular
+                                  }
+                                  either={stackHistograms.get(stack.id)!.either}
+                                />
+                              ) : (
+                                <p className="text-xs text-muted-foreground">
+                                  {t("home.noLearningDataYet")}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex shrink-0 flex-col gap-2 sm:w-40">
+                          <Button asChild className="w-full">
                             <Link href={`/learn/cards/${stack.id}`}>
                               <RectangleHorizontal className="mr-1 h-4 w-4" />
                               {t("home.learn")}
@@ -255,7 +255,7 @@ export function HomePageClient() {
                           <Button
                             asChild
                             variant="outline"
-                            className="bg-transparent sm:w-auto"
+                            className="w-full bg-transparent"
                           >
                             <Link href={`/learn/tests/${stack.id}`}>
                               <Brain className="mr-1 h-4 w-4" />
@@ -284,9 +284,7 @@ export function HomePageClient() {
               <CardContent className="py-12 text-center text-muted-foreground">
                 <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p className="mb-4">{t("home.noMaterialsTitle")}</p>
-                <p className="text-sm">
-                  {t("home.noMaterialsSubtitle")}
-                </p>
+                <p className="text-sm">{t("home.noMaterialsSubtitle")}</p>
               </CardContent>
             </Card>
           )}
