@@ -83,8 +83,8 @@ This is non-negotiable.
 To help future developers and agents to understand the code better and speed up their work, make the following
 improvements when touching the codebase:
 
-- Add README.md files to each directory that summarizes what the directory contains
-- Add file-level comments that summarize what the file contains
-- Add block comments to code where design decisions are made
-- Add concise, helpful JSDoc comments for components, exported functions, and types
+- Add or update README.md files to each directory that summarizes what the directory contains
+- Add or update file-level comments that summarize what the file contains
+- Add or update block comments to code where design decisions are made
+- Add or update concise, helpful JSDoc comments for components, exported functions, and types
 - Document all fields in types and interfaces with JSDoc
