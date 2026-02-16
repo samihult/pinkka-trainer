@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { KeyboardHint } from "@/components/ui/keyboard-hint";
 import type { Species } from "@/lib/types";
 import {
   getLocalizedText,
@@ -283,16 +284,7 @@ export function SpeciesCard({
                         className="flex items-center justify-between gap-2"
                       >
                         <span>{shortcut.label}</span>
-                        <span className="flex items-center gap-1">
-                          {shortcut.keys.map((key) => (
-                            <kbd
-                              key={key}
-                              className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.7rem] text-muted-foreground"
-                            >
-                              {key}
-                            </kbd>
-                          ))}
-                        </span>
+                        <KeyboardHint keys={shortcut.keys} />
                       </div>
                     ))}
                   </div>
