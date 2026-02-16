@@ -82,7 +82,7 @@ const EN_MESSAGES = {
   "learn.cards.info.tab.identification": "Identification",
   "learn.cards.info.tab.pinkka": "Pinkka info",
   "learn.cards.info.identificationPlaceholder":
-    "Identification hints will be shown here soon.",
+    "No identification hints available.",
   "learn.cards.info.noDescription": "No description available.",
 
   "test.settings.title": "Test Settings",
@@ -218,7 +218,7 @@ const FI_MESSAGES: TranslationTable = {
   "learn.cards.info.tab.identification": "Tunnistus",
   "learn.cards.info.tab.pinkka": "Pinkka-tiedot",
   "learn.cards.info.identificationPlaceholder":
-    "Tunnistusvihjeet näytetään täällä myöhemmin.",
+    "Tunnistusvihjeitä ei ole saatavilla.",
   "learn.cards.info.noDescription": "Kuvausta ei saatavilla.",
 
   "test.settings.title": "Testin asetukset",
@@ -346,7 +346,7 @@ const SV_MESSAGES: TranslationTable = {
   "learn.cards.info.tab.identification": "Identifiering",
   "learn.cards.info.tab.pinkka": "Pinkka-info",
   "learn.cards.info.identificationPlaceholder":
-    "Identifieringshintar kommer att visas här snart.",
+    "Inga identifieringsledtrådar tillgängliga.",
   "learn.cards.info.noDescription": "Ingen beskrivning tillgänglig.",
 
   "test.settings.title": "Testinställningar",
