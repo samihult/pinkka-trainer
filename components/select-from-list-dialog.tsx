@@ -63,7 +63,7 @@ export function SelectFromListDialog({
   const resolvedSelectedId =
     selectedId && options.some((option) => option.id === selectedId)
       ? selectedId
-      : options[0]?.id ?? null;
+      : (options[0]?.id ?? null);
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) {
@@ -126,7 +126,11 @@ export function SelectFromListDialog({
         )}
 
         <div className="flex justify-end gap-2">
-          <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => handleOpenChange(false)}
+          >
             {cancelLabel}
           </Button>
           <Button

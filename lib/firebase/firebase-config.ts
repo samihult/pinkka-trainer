@@ -7,7 +7,9 @@ const isStorybook = process.env.STORYBOOK === "true";
 
 /** Firebase configuration with Storybook fallbacks. */
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? (isStorybook ? "storybook" : undefined),
+  apiKey:
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY ??
+    (isStorybook ? "storybook" : undefined),
   authDomain:
     process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ??
     (isStorybook ? "localhost" : undefined),
@@ -20,7 +22,9 @@ const firebaseConfig = {
   messagingSenderId:
     process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ??
     (isStorybook ? "storybook" : undefined),
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID ?? (isStorybook ? "storybook" : undefined),
+  appId:
+    process.env.NEXT_PUBLIC_FIREBASE_APP_ID ??
+    (isStorybook ? "storybook" : undefined),
 };
 
 // Validate configuration

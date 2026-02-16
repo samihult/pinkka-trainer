@@ -86,7 +86,8 @@ async function createOrGetUserDocument(
         createdAt: newUser.createdAt,
       };
       if (newUser.email) userDocumentData.email = newUser.email;
-      if (newUser.displayName) userDocumentData.displayName = newUser.displayName;
+      if (newUser.displayName)
+        userDocumentData.displayName = newUser.displayName;
       await setDoc(doc(db, "users", firebaseUser.uid), userDocumentData);
       return newUser;
     }

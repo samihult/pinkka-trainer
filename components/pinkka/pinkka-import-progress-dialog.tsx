@@ -58,7 +58,10 @@ export function PinkkaImportProgressDialog({
               </span>
             </div>
             <Progress
-              value={toPercent(progress.groups.completed, progress.groups.total)}
+              value={toPercent(
+                progress.groups.completed,
+                progress.groups.total,
+              )}
             />
             <p className="text-muted-foreground text-xs">
               {progress.groups.currentEntityName || "Waiting..."}
@@ -73,7 +76,10 @@ export function PinkkaImportProgressDialog({
               </span>
             </div>
             <Progress
-              value={toPercent(progress.stacks.completed, progress.stacks.total)}
+              value={toPercent(
+                progress.stacks.completed,
+                progress.stacks.total,
+              )}
             />
             <p className="text-muted-foreground text-xs">
               {progress.stacks.currentEntityName || "Waiting..."}
@@ -93,7 +99,10 @@ export function PinkkaImportProgressDialog({
               </span>
             </div>
             <Progress
-              value={toPercent(progress.species.completed, progress.species.total)}
+              value={toPercent(
+                progress.species.completed,
+                progress.species.total,
+              )}
             />
             <p className="text-muted-foreground text-xs">
               {progress.species.currentEntityName || "Waiting..."}

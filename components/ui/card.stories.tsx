@@ -26,7 +26,9 @@ export const Default: Story = {
       <CardHeader>
         <div>
           <CardTitle>Species overview</CardTitle>
-          <CardDescription>Quick stats for the selected species.</CardDescription>
+          <CardDescription>
+            Quick stats for the selected species.
+          </CardDescription>
         </div>
         <CardAction>
           <Button size="sm" variant="outline">

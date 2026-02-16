@@ -52,8 +52,6 @@ export function getSpeciesImagesWithUrls(
 }
 
 /** Pick the primary image URL for a species detail. */
-export function getSpeciesPrimaryImageUrl(
-  detail: PinkkaSpeciesDetail,
-): string {
+export function getSpeciesPrimaryImageUrl(detail: PinkkaSpeciesDetail): string {
   return getSpeciesImageUrl(detail.images?.[0]);
 }

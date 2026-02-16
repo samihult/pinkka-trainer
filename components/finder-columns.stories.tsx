@@ -44,9 +44,7 @@ const speciesByStack: Record<number, FinderItem<DemoPayload>[]> = {
   201: [
     { id: 2001, type: "species", payload: { name: "Abietinella abietina" } },
   ],
-  301: [
-    { id: 3001, type: "species", payload: { name: "Chroococcus" } },
-  ],
+  301: [{ id: 3001, type: "species", payload: { name: "Chroococcus" } }],
 };
 
 const meta: Meta<typeof FinderColumns> = {

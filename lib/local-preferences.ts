@@ -60,10 +60,7 @@ export function loadLocalPreferences(): LocalPreferences {
 /** Saves local preferences to localStorage. */
 export function saveLocalPreferences(next: LocalPreferences) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(
-    LOCAL_PREFERENCES_KEY,
-    JSON.stringify(next),
-  );
+  window.localStorage.setItem(LOCAL_PREFERENCES_KEY, JSON.stringify(next));
   window.dispatchEvent(new Event(LOCAL_PREFERENCES_UPDATED_EVENT));
 }
 

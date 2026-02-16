@@ -108,7 +108,9 @@ export default function SignUpPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">{t("auth.confirmPassword")}</Label>
+              <Label htmlFor="confirmPassword">
+                {t("auth.confirmPassword")}
+              </Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -120,7 +122,9 @@ export default function SignUpPage() {
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? t("auth.signUp.submitLoading") : t("auth.signUp.submit")}
+              {loading
+                ? t("auth.signUp.submitLoading")
+                : t("auth.signUp.submit")}
             </Button>
 
             <p className="text-sm text-center text-muted-foreground">

@@ -83,7 +83,10 @@ export function Navbar() {
           </Link>
 
           <div className="flex items-center gap-4">
-            <LanguageSelector value={language} onChange={handleLanguageChange} />
+            <LanguageSelector
+              value={language}
+              onChange={handleLanguageChange}
+            />
             {isFullySignedIn && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

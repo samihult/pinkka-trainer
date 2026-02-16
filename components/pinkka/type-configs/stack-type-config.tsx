@@ -1,7 +1,4 @@
-import type {
-  FinderItem,
-  FinderTypeConfig,
-} from "@/components/finder-columns";
+import type { FinderItem, FinderTypeConfig } from "@/components/finder-columns";
 import { PinkkaStackItem } from "@/components/pinkka/pinkka-stack-item";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 import type { PinkkaSubStack } from "@/lib/pinkka/pinkka-api";

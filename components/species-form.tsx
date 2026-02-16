@@ -318,8 +318,8 @@ export function SpeciesForm({
           <div className="space-y-2">
             <Label>Test Images</Label>
             <p className="text-sm text-muted-foreground">
-              Select which images can appear in tests. Cards always show
-              all images.
+              Select which images can appear in tests. Cards always show all
+              images.
             </p>
             {images.length === 0 ? (
               <p className="text-sm text-muted-foreground">

@@ -32,9 +32,8 @@ export function usePinkkaGroupStacks(
         throw new Error("Failed to load stacks for the selected group.");
       }
       const subStacks =
-        groupDetail.subPinkkas
-          ?.slice()
-          .sort((a, b) => a.orderNo - b.orderNo) ?? [];
+        groupDetail.subPinkkas?.slice().sort((a, b) => a.orderNo - b.orderNo) ??
+        [];
       subStacksByGroupRef.current[groupId] = subStacks;
       return subStacks.map((stack) => ({
         id: stack.id,

@@ -22,24 +22,36 @@ Project conventions for Codex agents working in this repo.
 
 - Keep changes minimal and localized to the requested feature
 - Always, after making changes into React code, make the following checks and fix the potential issues:
-    - External **always** requests are run as batch calls, if possible, to maintain good performance
-    - There are no state or effect loops
+  - External **always** requests are run as batch calls, if possible, to maintain good performance
+  - There are no state or effect loops
 - Always, after making changes to any code, make the following checks and fix the potential issues:
-    - Files, functions, etc. should be compact, if possible, and split so that the logic is easy to read
-    - Directory structure and file naming is logical, so that it is easy to understand what can be found and where
-    - If blocks or loops and compact, and larger functionalities are extracted into functions or components
-    - Documentation is up-to-date and improved in the process, as described in this document
+  - Files, functions, etc. should be compact, if possible, and split so that the logic is easy to read
+  - Directory structure and file naming is logical, so that it is easy to understand what can be found and where
+  - If blocks or loops and compact, and larger functionalities are extracted into functions or components
+  - Documentation is up-to-date and improved in the process, as described in this document
 - Database structures must be sound:
-    - Relational databases:
-        - Foreign keys with cascading must be used where the tables form an atomic structure
-        - Foreign keys must not be used where the entities may not be atomic, e.g. because of asynchronicity
-    - Proper indexes must be kept for performance, but their number must be kept minimal
+  - Relational databases:
+    - Foreign keys with cascading must be used where the tables form an atomic structure
+    - Foreign keys must not be used where the entities may not be atomic, e.g. because of asynchronicity
+  - Proper indexes must be kept for performance, but their number must be kept minimal
 - Internationalization:
-    - All strings have translations
-    - Dates, numbers, percentages etc. follow the locale conventions
+  - All strings have translations
+  - Dates, numbers, percentages etc. follow the locale conventions
 
 After finishing a task, state briefly the state of these aspects on the top-level, and if they have been made fixes to.
 This is non-negotiable.
+
+## Code formatting (must follow repo settings)
+
+## Prettier is authoritative
+
+- Always use the repo’s local Prettier
+- After modifying JS/TS/MD/JSON/CSS files:
+  - Run `pnpm format`
+- Before finishing:
+  - Run `pnpm format:check`
+- If formatting differs, apply Prettier output
+- Never manually fight Prettier formatting
 
 ## UI code style
 

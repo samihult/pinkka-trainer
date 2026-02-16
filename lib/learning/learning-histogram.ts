@@ -46,9 +46,7 @@ function toHistogramPercentages(
   }));
   const used = floored.reduce((sum, entry) => sum + entry.value, 0);
   let remaining = 100 - used;
-  const byRemainder = [...floored].sort(
-    (a, b) => b.remainder - a.remainder,
-  );
+  const byRemainder = [...floored].sort((a, b) => b.remainder - a.remainder);
 
   for (let i = 0; i < byRemainder.length && remaining > 0; i += 1) {
     byRemainder[i].value += 1;
@@ -95,9 +93,7 @@ export function buildStackLearningHistogram(
     const speed = progress
       ? estimateRetention(progress, now, horizonDays, "speed")
       : null;
-    const score = progress
-      ? combineRetention(accuracy, speed)
-      : null;
+    const score = progress ? combineRetention(accuracy, speed) : null;
     const category = getCategory(score);
     counts[category] += 1;
   });

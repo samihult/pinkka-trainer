@@ -112,11 +112,19 @@ export function PinkkaExplorer({
   const selectedPath = useMemo(
     () =>
       isControlledSelection
-        ? [selectedGroupId ?? null, selectedStackId ?? null, selectedSpeciesId ?? null]
+        ? [
+            selectedGroupId ?? null,
+            selectedStackId ?? null,
+            selectedSpeciesId ?? null,
+          ]
         : undefined,
-    [isControlledSelection, selectedGroupId, selectedSpeciesId, selectedStackId],
+    [
+      isControlledSelection,
+      selectedGroupId,
+      selectedSpeciesId,
+      selectedStackId,
+    ],
   );
-
 
   const rootTypeConfig = useMemo(
     () =>
@@ -205,7 +213,10 @@ export function PinkkaExplorer({
       if (state.activeColumnIndex === null) return;
       const selectedInColumn =
         state.selectedItemsByColumn[state.activeColumnIndex] ?? [];
-      if (state.activeItem?.type === "species" && selectedInColumn.length === 1) {
+      if (
+        state.activeItem?.type === "species" &&
+        selectedInColumn.length === 1
+      ) {
         const species = state.activeItem.payload as PinkkaSpeciesCard;
         onSelectSpecies?.(species);
       }

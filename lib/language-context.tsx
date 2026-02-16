@@ -2,7 +2,13 @@
 
 import type React from "react";
 
-import { createContext, useCallback, useContext, useMemo, useSyncExternalStore } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useSyncExternalStore,
+} from "react";
 import {
   getStoredLanguage,
   LOCAL_PREFERENCES_KEY,
@@ -35,10 +41,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     };
 
     window.addEventListener("storage", handleStorage);
-    window.addEventListener(
-      LOCAL_PREFERENCES_UPDATED_EVENT,
-      handleLocalUpdate,
-    );
+    window.addEventListener(LOCAL_PREFERENCES_UPDATED_EVENT, handleLocalUpdate);
     return () => {
       window.removeEventListener("storage", handleStorage);
       window.removeEventListener(

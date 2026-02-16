@@ -138,7 +138,13 @@ export function SpeciesCard({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isCarouselModalOpen, isInfoPanelOpen, onNext, onPrevious, onToggleInfoPanel]);
+  }, [
+    isCarouselModalOpen,
+    isInfoPanelOpen,
+    onNext,
+    onPrevious,
+    onToggleInfoPanel,
+  ]);
 
   return (
     <div className="relative h-full w-full">
@@ -151,7 +157,13 @@ export function SpeciesCard({
                 : ""
             }`}
           >
-            <div className={isInfoPanelOpen ? "min-h-0 border-b md:border-b-0 md:border-r" : "h-full"}>
+            <div
+              className={
+                isInfoPanelOpen
+                  ? "min-h-0 border-b md:border-b-0 md:border-r"
+                  : "h-full"
+              }
+            >
               <SpeciesImageCarousel
                 images={images}
                 alt={species.data.scientificName}

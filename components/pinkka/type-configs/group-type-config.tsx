@@ -1,7 +1,4 @@
-import type {
-  FinderItem,
-  FinderTypeConfig,
-} from "@/components/finder-columns";
+import type { FinderItem, FinderTypeConfig } from "@/components/finder-columns";
 import { PinkkaGroupItem } from "@/components/pinkka/pinkka-group-item";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 import type { PinkkaGroup } from "@/lib/pinkka/pinkka-api";

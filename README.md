@@ -1,6 +1,7 @@
 # Pinkka Species Learning Application
 
-A comprehensive biology education platform for learning animal, plant, algae, microbe, and other species through interactive cards and tests.
+A comprehensive biology education platform for learning animal, plant, algae, microbe, and other species through
+interactive cards and tests.
 
 ## Features
 
@@ -77,14 +78,8 @@ A comprehensive biology education platform for learning animal, plant, algae, mi
 
 Add these to your Vercel project (Vars section in sidebar):
 
-\`\`\`
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
-\`\`\`
+\`\`\` NEXT_PUBLIC_FIREBASE_API_KEY= NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN= NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET= NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID= NEXT_PUBLIC_FIREBASE_APP_ID= \`\`\`
 
 ### Creating Your First Admin User
 

@@ -120,23 +120,20 @@ export default function ManagePage() {
     null,
   );
 
-  const loadImportedPinkkaGroupEntries = useCallback(
-    async () => {
-      if (!user) {
-        setImportedPinkkaGroups([]);
-        return;
-      }
+  const loadImportedPinkkaGroupEntries = useCallback(async () => {
+    if (!user) {
+      setImportedPinkkaGroups([]);
+      return;
+    }
 
-      try {
-        const importedPinkkaGroupsData = await getImportedPinkkaGroups();
-        setImportedPinkkaGroups(importedPinkkaGroupsData);
-      } catch (error) {
-        logFirestoreError("Failed to load imported Pinkka groups", error);
-        setImportedPinkkaGroups([]);
-      }
-    },
-    [user],
-  );
+    try {
+      const importedPinkkaGroupsData = await getImportedPinkkaGroups();
+      setImportedPinkkaGroups(importedPinkkaGroupsData);
+    } catch (error) {
+      logFirestoreError("Failed to load imported Pinkka groups", error);
+      setImportedPinkkaGroups([]);
+    }
+  }, [user]);
 
   const loadData = useCallback(async () => {
     if (!user) return;
@@ -711,9 +708,7 @@ export default function ManagePage() {
                 <DropdownMenuItem onSelect={() => handleGroupDialogOpen()}>
                   Blank
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onSelect={handleOpenPinkkaGroupSelector}
-                >
+                <DropdownMenuItem onSelect={handleOpenPinkkaGroupSelector}>
                   From Pinkka
                 </DropdownMenuItem>
               </DropdownMenuContent>

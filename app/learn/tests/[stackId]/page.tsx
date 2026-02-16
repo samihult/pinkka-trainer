@@ -153,9 +153,7 @@ export default function TestPage() {
   const [textAnswerRetryUsed, setTextAnswerRetryUsed] = useState(false);
   const textAnswerRef = useRef<HTMLInputElement>(null);
   const questionStartRef = useRef<number>(0);
-  const progressCacheRef = useRef(
-    new Map<string, LearningProgressState>(),
-  );
+  const progressCacheRef = useRef(new Map<string, LearningProgressState>());
   const pendingProgressRef = useRef(
     new Map<string, Omit<LearningProgress, "id">>(),
   );
@@ -241,10 +239,7 @@ export default function TestPage() {
 
   const pickTestImageUrl = (targetSpecies: Species) => {
     const enabledIds = targetSpecies.testImageIds;
-    const candidates = getSpeciesImagesWithUrls(
-      targetSpecies.data,
-      enabledIds,
-    );
+    const candidates = getSpeciesImagesWithUrls(targetSpecies.data, enabledIds);
     if (!candidates || candidates.length === 0) return null;
     const selected = candidates[Math.floor(Math.random() * candidates.length)];
     return getSpeciesImageUrl(selected) || null;
@@ -352,10 +347,15 @@ export default function TestPage() {
       0,
       total - selectedWell.length - selectedMiddle.length,
     );
-    const selectedLow = shuffleSpecies(byBand.low).slice(0, remainingAfterPrimary);
+    const selectedLow = shuffleSpecies(byBand.low).slice(
+      0,
+      remainingAfterPrimary,
+    );
 
     const selectedById = new Set(
-      [...selectedWell, ...selectedMiddle, ...selectedLow].map((item) => item.id),
+      [...selectedWell, ...selectedMiddle, ...selectedLow].map(
+        (item) => item.id,
+      ),
     );
     const fallbackPool = [
       ...shuffleSpecies(byBand.middle),
@@ -574,10 +574,7 @@ export default function TestPage() {
     const combinedScore = combineRetention(accuracyScore, speedScore);
 
     setLearningMetric({
-      label: getLearningStatusLabel(
-        combinedScore,
-        LEARNING_STATUS_THRESHOLDS,
-      ),
+      label: getLearningStatusLabel(combinedScore, LEARNING_STATUS_THRESHOLDS),
       combinedScore,
       accuracyScore,
       speedScore,
@@ -694,9 +691,7 @@ export default function TestPage() {
 
   const recordLearningProgress = async (
     targetSpecies: Species,
-    scoresByType: Partial<
-      Record<LearningNameType, LearningScoreUpdate>
-    >,
+    scoresByType: Partial<Record<LearningNameType, LearningScoreUpdate>>,
   ) => {
     if (!user) return;
     if (!scoresByType || Object.keys(scoresByType).length === 0) return;
@@ -864,14 +859,10 @@ export default function TestPage() {
     }
 
     if (answerMode === "vernacular") {
-      return vernacularName
-        ? { vernacular: update }
-        : { scientific: update };
+      return vernacularName ? { vernacular: update } : { scientific: update };
     }
 
-    return vernacularName
-      ? { either: update }
-      : { scientific: update };
+    return vernacularName ? { either: update } : { scientific: update };
   };
 
   const handleTextAnswerSubmit = () => {

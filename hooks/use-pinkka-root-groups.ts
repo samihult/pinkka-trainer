@@ -10,9 +10,7 @@ export type LoadRootGroups = (
 ) => Promise<FinderItem<PinkkaGroup>[] | FinderItem | null>;
 
 /** Hook for fetching and caching Pinkka root groups. */
-export function usePinkkaRootGroups(
-  fetchGroups: () => Promise<PinkkaGroup[]>,
-) {
+export function usePinkkaRootGroups(fetchGroups: () => Promise<PinkkaGroup[]>) {
   const groupsRef = useRef<PinkkaGroup[] | null>(null);
 
   const loadRootGroups = useCallback<LoadRootGroups>(

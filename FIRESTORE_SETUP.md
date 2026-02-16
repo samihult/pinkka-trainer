@@ -2,7 +2,8 @@
 
 ## Required Steps to Make the App Work
 
-Your application is experiencing "Missing or insufficient permissions" errors because Firestore security rules need to be configured.
+Your application is experiencing "Missing or insufficient permissions" errors because Firestore security rules need to
+be configured.
 
 ### Step 1: Create Firestore Database
 

@@ -34,7 +34,9 @@ type SelectFromListDialogStoryProps = Omit<
   "open" | "onOpenChange" | "onConfirm"
 >;
 
-function SelectFromListDialogStoryPreview(args: SelectFromListDialogStoryProps) {
+function SelectFromListDialogStoryPreview(
+  args: SelectFromListDialogStoryProps,
+) {
   const [open, setOpen] = useState(false);
   const [lastSelection, setLastSelection] = useState<string | null>(null);
 

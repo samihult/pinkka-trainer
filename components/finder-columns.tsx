@@ -304,7 +304,9 @@ export function FinderColumns({
           break;
         }
 
-        const children = await typeConfig.loadChildren(item as FinderItem<unknown>);
+        const children = await typeConfig.loadChildren(
+          item as FinderItem<unknown>,
+        );
         if (loadTokenRef.current !== token) {
           return;
         }
@@ -614,8 +616,8 @@ export function FinderColumns({
         const shouldFillSpace = isLastColumn && column.mode === "details";
         const title =
           column.mode === "details"
-            ? config?.detailsTitle ?? "Details"
-            : config?.columnTitle ?? "Items";
+            ? (config?.detailsTitle ?? "Details")
+            : (config?.columnTitle ?? "Items");
 
         return (
           <div

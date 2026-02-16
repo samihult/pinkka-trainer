@@ -45,8 +45,7 @@ export default function SignInPage() {
     } catch (error: any) {
       toast({
         title: t("auth.errorTitle"),
-        description:
-          error.message || t("auth.signIn.failureDescription"),
+        description: error.message || t("auth.signIn.failureDescription"),
         variant: "destructive",
       });
       setLoading(false);
@@ -86,9 +85,7 @@ export default function SignInPage() {
             <HatGlasses className="h-12 w-12 text-primary" />
           </div>
           <CardTitle className="text-2xl">{t("auth.signIn.title")}</CardTitle>
-          <CardDescription>
-            {t("auth.signIn.description")}
-          </CardDescription>
+          <CardDescription>{t("auth.signIn.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -166,7 +163,9 @@ export default function SignInPage() {
               className="w-full"
               disabled={loading || googleLoading}
             >
-              {loading ? t("auth.signIn.submitLoading") : t("auth.signIn.submit")}
+              {loading
+                ? t("auth.signIn.submitLoading")
+                : t("auth.signIn.submit")}
             </Button>
 
             <p className="text-sm text-center text-muted-foreground">

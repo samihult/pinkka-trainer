@@ -1,7 +1,4 @@
-import type {
-  FinderItem,
-  FinderTypeConfig,
-} from "@/components/finder-columns";
+import type { FinderItem, FinderTypeConfig } from "@/components/finder-columns";
 
 /** Options for building the root column type config. */
 export interface CreateRootTypeConfigOptions {

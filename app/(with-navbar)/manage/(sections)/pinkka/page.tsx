@@ -209,7 +209,8 @@ function PinkkaContentPageContent() {
     ? selectedTargetIds.length
     : reimportableSelectedIds.length;
   const showImportButton = hasSelection && !hasImportedSelection;
-  const showReimportButton = hasReimportableSelection && !hasIncompleteSelection;
+  const showReimportButton =
+    hasReimportableSelection && !hasIncompleteSelection;
 
   const importLabels = useMemo(() => {
     if (importTarget === "species") {
@@ -419,26 +420,16 @@ function PinkkaContentPageContent() {
           },
         );
       } else if (importTarget === "stack") {
-        results = await importPinkkaStacks(
-          reimportIds,
-          user.uid,
-          undefined,
-          {
-            groupId: selectedGroupId ?? undefined,
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
+        results = await importPinkkaStacks(reimportIds, user.uid, undefined, {
+          groupId: selectedGroupId ?? undefined,
+          onProgress: handleImportProgress,
+          shouldInterrupt: () => interruptRequestedRef.current,
+        });
       } else {
-        results = await importPinkkaGroups(
-          reimportIds,
-          user.uid,
-          undefined,
-          {
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
+        results = await importPinkkaGroups(reimportIds, user.uid, undefined, {
+          onProgress: handleImportProgress,
+          shouldInterrupt: () => interruptRequestedRef.current,
+        });
       }
       toast({
         title: hasMixedSelection

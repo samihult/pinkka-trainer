@@ -19,7 +19,10 @@ export function createSpeciesDetailTypeConfig({
     columnClassName: "bg-background",
     renderItem: () => null,
     renderDetails: (item) => (
-      <PinkkaSpeciesDetail detail={item.payload} preferredLang={preferredLang} />
+      <PinkkaSpeciesDetail
+        detail={item.payload}
+        preferredLang={preferredLang}
+      />
     ),
   };
 }

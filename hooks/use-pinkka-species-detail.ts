@@ -16,9 +16,9 @@ export type LoadSpeciesDetail = (
 export function usePinkkaSpeciesDetail(
   fetchSpecies: (speciesId: number) => Promise<PinkkaSpeciesDetail | null>,
 ) {
-  const speciesDetailsRef = useRef<
-    Record<number, PinkkaSpeciesDetail | null>
-  >({});
+  const speciesDetailsRef = useRef<Record<number, PinkkaSpeciesDetail | null>>(
+    {},
+  );
 
   const loadSpeciesDetail = useCallback<LoadSpeciesDetail>(
     async (item) => {
