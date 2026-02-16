@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n, type Translate } from "@/lib/i18n";
 import type { LearningStatusHistogram } from "@/lib/types";
 
 const CATEGORY_COLORS: Record<keyof LearningStatusHistogram, string> = {
@@ -11,10 +12,17 @@ const CATEGORY_COLORS: Record<keyof LearningStatusHistogram, string> = {
 };
 
 function buildBarTitle(
+  t: Translate,
   label: string,
   histogram: LearningStatusHistogram,
 ): string {
-  return `${label}: New ${histogram.new.percent}%, Learning ${histogram.learning.percent}%, Strengthening ${histogram.strengthening.percent}%, Mastered ${histogram.mastered.percent}%`;
+  return t("learning.histogram.barTitle", {
+    label,
+    newPercent: histogram.new.percent,
+    learningPercent: histogram.learning.percent,
+    strengtheningPercent: histogram.strengthening.percent,
+    masteredPercent: histogram.mastered.percent,
+  });
 }
 
 /** Props for the StackLearningHistogram component. */
@@ -33,6 +41,8 @@ export function StackLearningHistogram({
   vernacular,
   either,
 }: StackLearningHistogramProps) {
+  const { t } = useI18n();
+
   const renderBar = (label: string, histogram: LearningStatusHistogram) => (
     <div className="flex items-center gap-3">
       <span className="w-40 text-xs font-medium text-muted-foreground">
@@ -41,8 +51,8 @@ export function StackLearningHistogram({
       <div
         className="flex h-2 w-full overflow-hidden rounded-full bg-muted/40"
         role="img"
-        aria-label={buildBarTitle(label, histogram)}
-        title={buildBarTitle(label, histogram)}
+        aria-label={buildBarTitle(t, label, histogram)}
+        title={buildBarTitle(t, label, histogram)}
       >
         {histogram.mastered.percent > 0 && (
           <span
@@ -77,25 +87,25 @@ export function StackLearningHistogram({
       <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-emerald-600" />
-          Mastered
+          {t("learning.histogram.mastered")}
         </span>
         <span className="inline-flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-amber-500" />
-          Strengthening
+          {t("learning.histogram.strengthening")}
         </span>
         <span className="inline-flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-sky-500" />
-          Learning
+          {t("learning.histogram.learning")}
         </span>
         <span className="inline-flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-muted" />
-          New
+          {t("learning.histogram.new")}
         </span>
       </div>
       <div>
-        {renderBar("Scientific", scientific)}
-        {renderBar("Vernacular", vernacular)}
-        {renderBar("Scientific or vernacular", either)}
+        {renderBar(t("learning.histogram.label.scientific"), scientific)}
+        {renderBar(t("learning.histogram.label.vernacular"), vernacular)}
+        {renderBar(t("learning.histogram.label.either"), either)}
       </div>
     </div>
   );

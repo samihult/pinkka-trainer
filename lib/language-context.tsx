@@ -2,10 +2,11 @@
 
 import type React from "react";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useSyncExternalStore } from "react";
 import {
   getStoredLanguage,
   LOCAL_PREFERENCES_KEY,
+  LOCAL_PREFERENCES_UPDATED_EVENT,
   setStoredLanguage,
   type LanguagePreference,
 } from "@/lib/local-preferences";
@@ -24,33 +25,50 @@ const LanguageContext = createContext<LanguageContextValue | undefined>(
 
 /** Provides the UI language preference to the application tree. */
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<LanguagePreference>("EN");
-
-  useEffect(() => {
-    setLanguageState(getStoredLanguage());
-  }, []);
-
-  useEffect(() => {
+  const subscribe = useCallback((onStoreChange: () => void) => {
     const handleStorage = (event: StorageEvent) => {
-      if (event.key !== LOCAL_PREFERENCES_KEY) return;
-      setLanguageState(getStoredLanguage());
+      if (event.key && event.key !== LOCAL_PREFERENCES_KEY) return;
+      onStoreChange();
+    };
+    const handleLocalUpdate = () => {
+      onStoreChange();
     };
 
     window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+    window.addEventListener(
+      LOCAL_PREFERENCES_UPDATED_EVENT,
+      handleLocalUpdate,
+    );
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener(
+        LOCAL_PREFERENCES_UPDATED_EVENT,
+        handleLocalUpdate,
+      );
+    };
   }, []);
 
-  const setLanguage = (next: LanguagePreference) => {
-    setLanguageState(next);
+  const getSnapshot = useCallback(() => getStoredLanguage(), []);
+  const getServerSnapshot = useCallback<() => LanguagePreference>(
+    () => "EN",
+    [],
+  );
+  const language = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
+
+  const setLanguage = useCallback((next: LanguagePreference) => {
     setStoredLanguage(next);
-  };
+  }, []);
 
   const value = useMemo(
     () => ({
       language,
       setLanguage,
     }),
-    [language],
+    [language, setLanguage],
   );
 
   return (

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StackLearningHistogram } from "@/components/learning/stack-learning-histogram";
+import { useI18n } from "@/lib/i18n";
 import type { StackLearningHistogram as StackLearningHistogramData } from "@/lib/types";
 import { RotateCw } from "lucide-react";
 import Link from "next/link";
@@ -32,10 +33,14 @@ export function TestCompletedCard({
   learningHistogram,
   onRestart,
 }: TestCompletedCardProps) {
+  const { t } = useI18n();
+
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-center text-3xl">Test Complete!</CardTitle>
+        <CardTitle className="text-center text-3xl">
+          {t("test.completed.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="text-center">
@@ -43,14 +48,17 @@ export function TestCompletedCard({
             {percentage}%
           </div>
           <p className="text-xl text-muted-foreground">
-            You got {correctAnswers} out of {totalQuestions} correct
+            {t("test.completed.scoreLine", {
+              correctAnswers,
+              totalQuestions,
+            })}
           </p>
         </div>
 
         {learningHistogram && (
           <div className="space-y-2">
             <p className="text-sm font-semibold text-muted-foreground">
-              Stack learning status
+              {t("test.completed.stackStatus")}
             </p>
             <StackLearningHistogram
               scientific={learningHistogram.scientific}
@@ -63,7 +71,7 @@ export function TestCompletedCard({
         <div className="pt-3 space-y-2">
           <Button onClick={onRestart} className="w-full" size="lg">
             <RotateCw className="mr-2 h-4 w-4" />
-            Take Test Again
+            {t("test.completed.takeAgain")}
           </Button>
           <Button
             asChild
@@ -71,10 +79,12 @@ export function TestCompletedCard({
             className="w-full bg-transparent"
             size="lg"
           >
-            <Link href={`/learn/cards/${stackId}`}>Study Cards</Link>
+            <Link href={`/learn/cards/${stackId}`}>
+              {t("test.completed.studyCards")}
+            </Link>
           </Button>
           <Button asChild variant="ghost" className="w-full">
-            <Link href="/">Back to All Stacks</Link>
+            <Link href="/">{t("test.completed.backToStacks")}</Link>
           </Button>
         </div>
       </CardContent>

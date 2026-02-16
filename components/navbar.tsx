@@ -7,6 +7,7 @@ import {
   type LanguagePreference,
 } from "@/lib/local-preferences";
 import { useLanguagePreference } from "@/lib/language-context";
+import { useI18n } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -62,6 +63,7 @@ function LanguageSelector({
 export function Navbar() {
   const { user, signOut } = useAuth();
   const { language, setLanguage } = useLanguagePreference();
+  const { t } = useI18n();
   const isFullySignedIn = Boolean(user && !user.isAnonymous);
 
   const handleLanguageChange = (next: LanguagePreference) => {
@@ -92,9 +94,11 @@ export function Navbar() {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium">{user.email ?? "Guest user"}</p>
+                      <p className="text-sm font-medium">
+                        {user.email ?? t("navbar.guestUser")}
+                      </p>
                       <p className="text-xs text-muted-foreground">
-                        Role: {user.role}
+                        {t("navbar.role", { role: user.role })}
                       </p>
                     </div>
                   </DropdownMenuLabel>
@@ -103,7 +107,7 @@ export function Navbar() {
                     <DropdownMenuItem asChild>
                       <Link href="/admin" className="cursor-pointer">
                         <Settings className="mr-2 h-4 w-4" />
-                        Admin Panel
+                        {t("navbar.adminPanel")}
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -111,7 +115,7 @@ export function Navbar() {
                     <DropdownMenuItem asChild>
                       <Link href="/manage/content" className="cursor-pointer">
                         <Library className="mr-2 h-4 w-4" />
-                        Manage Content
+                        {t("navbar.manageContent")}
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -120,13 +124,13 @@ export function Navbar() {
                     className="cursor-pointer"
                   >
                     <LogOut className="mr-2 h-4 w-4" />
-                    Sign Out
+                    {t("navbar.signOut")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <Button asChild variant="outline">
-                <Link href="/auth/signin">Sign In</Link>
+                <Link href="/auth/signin">{t("navbar.signIn")}</Link>
               </Button>
             )}
           </div>

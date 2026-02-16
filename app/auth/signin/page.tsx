@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useI18n } from "@/lib/i18n";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 
@@ -28,6 +29,7 @@ export default function SignInPage() {
   const { signIn, signInWithGoogle } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const { t } = useI18n();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,15 +38,15 @@ export default function SignInPage() {
     try {
       await signIn(email, password);
       toast({
-        title: "Welcome back!",
-        description: "You have successfully signed in.",
+        title: t("auth.signIn.welcomeBackTitle"),
+        description: t("auth.signIn.welcomeBackDescription"),
       });
       router.push("/");
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: t("auth.errorTitle"),
         description:
-          error.message || "Failed to sign in. Please check your credentials.",
+          error.message || t("auth.signIn.failureDescription"),
         variant: "destructive",
       });
       setLoading(false);
@@ -56,8 +58,8 @@ export default function SignInPage() {
     try {
       await signInWithGoogle();
       toast({
-        title: "Welcome!",
-        description: "You have successfully signed in with Google.",
+        title: t("auth.signIn.googleWelcomeTitle"),
+        description: t("auth.signIn.googleWelcomeDescription"),
       });
       router.push("/");
     } catch (error: any) {
@@ -66,8 +68,8 @@ export default function SignInPage() {
         error.code !== "auth/cancelled-popup-request"
       ) {
         toast({
-          title: "Signing in...",
-          description: "Redirecting to Google sign-in page.",
+          title: t("auth.signIn.redirectingTitle"),
+          description: t("auth.signIn.redirectingDescription"),
         });
         // Don't reset loading state - redirect is in progress
       } else {
@@ -83,9 +85,9 @@ export default function SignInPage() {
           <div className="flex justify-center mb-4">
             <BookOpen className="h-12 w-12 text-primary" />
           </div>
-          <CardTitle className="text-2xl">Sign In to Pinkka</CardTitle>
+          <CardTitle className="text-2xl">{t("auth.signIn.title")}</CardTitle>
           <CardDescription>
-            Enter your credentials to access your account
+            {t("auth.signIn.description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -98,7 +100,7 @@ export default function SignInPage() {
               className="w-full bg-transparent"
             >
               {googleLoading ? (
-                "Signing in..."
+                t("auth.signIn.signingIn")
               ) : (
                 <>
                   <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
@@ -119,7 +121,7 @@ export default function SignInPage() {
                       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                     />
                   </svg>
-                  Continue with Google
+                  {t("auth.signIn.googleContinue")}
                 </>
               )}
             </Button>
@@ -130,13 +132,13 @@ export default function SignInPage() {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  Or sign in with email
+                  {t("auth.signIn.orEmail")}
                 </span>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("auth.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -148,7 +150,7 @@ export default function SignInPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t("auth.password")}</Label>
               <Input
                 id="password"
                 type="password"
@@ -164,16 +166,16 @@ export default function SignInPage() {
               className="w-full"
               disabled={loading || googleLoading}
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? t("auth.signIn.submitLoading") : t("auth.signIn.submit")}
             </Button>
 
             <p className="text-sm text-center text-muted-foreground">
-              {"Don't have an account? "}
+              {`${t("auth.signIn.noAccount")} `}
               <Link
                 href="/auth/signup"
                 className="text-primary hover:underline"
               >
-                Sign Up
+                {t("auth.signUp.link")}
               </Link>
             </p>
           </form>

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { useI18n } from "@/lib/i18n";
 import type { TestPreferences } from "@/lib/types";
 import { ListChecks, PenLine } from "lucide-react";
 
@@ -31,17 +32,19 @@ export function TestSettingsCard({
   onPreferencesChange,
   onStartTest,
 }: TestSettingsCardProps) {
+  const { t } = useI18n();
+
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl">Test Settings</CardTitle>
+        <CardTitle className="text-2xl">{t("test.settings.title")}</CardTitle>
         <p className="text-sm text-muted-foreground">
-          Customize how this test will run.
+          {t("test.settings.description")}
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
-          <Label>Number of species</Label>
+          <Label>{t("test.settings.numberOfSpecies")}</Label>
           <div className="flex flex-wrap gap-2">
             {questionOptions.map((option) => {
               const isSelected = testPreferences.questionCount === option;
@@ -52,7 +55,7 @@ export function TestSettingsCard({
                   variant={isSelected ? "default" : "outline"}
                   onClick={() => onPreferencesChange({ questionCount: option })}
                 >
-                  {option === 0 ? "All" : option}
+                  {option === 0 ? t("test.settings.all") : option}
                 </Button>
               );
             })}
@@ -60,19 +63,19 @@ export function TestSettingsCard({
           {testPreferences.questionCount > 0 &&
             testPreferences.questionCount < speciesCount && (
               <p className="text-sm text-muted-foreground">
-                Randomly selected from {speciesCount} species.
+                {t("test.settings.randomlySelected", { speciesCount })}
               </p>
             )}
           {(testPreferences.questionCount >= speciesCount ||
             testPreferences.questionCount === 0) && (
             <p className="text-sm text-muted-foreground">
-              All {speciesCount} species.
+              {t("test.settings.allSpecies", { speciesCount })}
             </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <Label>Test mode</Label>
+          <Label>{t("test.settings.mode")}</Label>
           <div className="flex flex-wrap gap-3">
             <Button
               type="button"
@@ -92,7 +95,7 @@ export function TestSettingsCard({
                 aria-hidden="true"
               />
               <span className="text-sm font-semibold">
-                Pick from four options
+                {t("test.settings.mode.multipleChoice")}
               </span>
             </Button>
             <Button
@@ -111,17 +114,17 @@ export function TestSettingsCard({
                 aria-hidden="true"
               />
               <span className="text-sm font-semibold">
-                Write the species name
+                {t("test.settings.mode.writeName")}
               </span>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
-            Pick a multiple-choice answer or type the name yourself.
+            {t("test.settings.mode.description")}
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label>Accepted answer</Label>
+          <Label>{t("test.settings.acceptedAnswer")}</Label>
           <div className="flex flex-wrap gap-2">
             <Button
               type="button"
@@ -132,7 +135,7 @@ export function TestSettingsCard({
               }
               onClick={() => onPreferencesChange({ answerMode: "scientific" })}
             >
-              Scientific name only
+              {t("test.settings.answer.scientific")}
             </Button>
             <Button
               type="button"
@@ -143,7 +146,7 @@ export function TestSettingsCard({
               }
               onClick={() => onPreferencesChange({ answerMode: "vernacular" })}
             >
-              Vernacular name only
+              {t("test.settings.answer.vernacular")}
             </Button>
             <Button
               type="button"
@@ -152,11 +155,11 @@ export function TestSettingsCard({
               }
               onClick={() => onPreferencesChange({ answerMode: "either" })}
             >
-              Scientific or vernacular
+              {t("test.settings.answer.either")}
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
-            Applies to both test modes; answers ignore case and extra spaces.
+            {t("test.settings.answer.description")}
           </p>
         </div>
 
@@ -166,7 +169,7 @@ export function TestSettingsCard({
           size="lg"
           disabled={!canStartTest}
         >
-          Start ⏎
+          {t("test.settings.start")}
         </Button>
       </CardContent>
     </Card>

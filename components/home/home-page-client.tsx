@@ -13,6 +13,7 @@ import type { Group, Stack, StackLearningHistogram } from "@/lib/types";
 import { getLocalizedText } from "@/lib/content/content-display";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
+import { useI18n } from "@/lib/i18n";
 import {
   getStoredHomeExpandedGroupId,
   setStoredHomeExpandedGroupId,
@@ -32,6 +33,7 @@ import { StackLearningHistogram as StackLearningHistogramBars } from "@/componen
 /** Home page client component for selecting groups and stacks to learn. */
 export function HomePageClient() {
   const { language } = useLanguagePreference();
+  const { t } = useI18n();
   const preferredLanguage = toLanguageCode(language);
   const router = useRouter();
   const pathname = usePathname();
@@ -134,9 +136,9 @@ export function HomePageClient() {
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Learn Species</h1>
+          <h1 className="text-3xl font-bold mb-2">{t("home.title")}</h1>
           <p className="text-muted-foreground">
-            Choose a stack to study with cards or take a test
+            {t("home.subtitle")}
           </p>
         </div>
 
@@ -238,7 +240,7 @@ export function HomePageClient() {
                               />
                             ) : (
                               <p className="text-xs text-muted-foreground">
-                                No learning data yet
+                                {t("home.noLearningDataYet")}
                               </p>
                             )}
                           </div>
@@ -247,7 +249,7 @@ export function HomePageClient() {
                           <Button asChild className="sm:w-auto">
                             <Link href={`/learn/cards/${stack.id}`}>
                               <RectangleHorizontal className="mr-1 h-4 w-4" />
-                              Learn
+                              {t("home.learn")}
                             </Link>
                           </Button>
                           <Button
@@ -257,7 +259,7 @@ export function HomePageClient() {
                           >
                             <Link href={`/learn/tests/${stack.id}`}>
                               <Brain className="mr-1 h-4 w-4" />
-                              Take Test
+                              {t("home.takeTest")}
                             </Link>
                           </Button>
                         </div>
@@ -267,7 +269,7 @@ export function HomePageClient() {
                     {(stacksByGroup[group.id] || []).length === 0 && (
                       <Card>
                         <CardContent className="py-6 text-center text-muted-foreground">
-                          No stacks available in this group yet
+                          {t("home.noStacksInGroup")}
                         </CardContent>
                       </Card>
                     )}
@@ -281,9 +283,9 @@ export function HomePageClient() {
             <Card>
               <CardContent className="py-12 text-center text-muted-foreground">
                 <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p className="mb-4">No learning materials available yet</p>
+                <p className="mb-4">{t("home.noMaterialsTitle")}</p>
                 <p className="text-sm">
-                  Check back later or contact an editor to add content
+                  {t("home.noMaterialsSubtitle")}
                 </p>
               </CardContent>
             </Card>

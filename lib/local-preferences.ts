@@ -2,6 +2,8 @@ import type { TestPreferences } from "@/lib/types";
 
 /** Local storage key used for persisted UI preferences. */
 export const LOCAL_PREFERENCES_KEY = "localPreferences";
+/** Window event emitted after local preferences are updated in the same tab. */
+export const LOCAL_PREFERENCES_UPDATED_EVENT = "localPreferencesUpdated";
 
 /** Supported language choices for the UI. */
 export const AVAILABLE_LANGUAGES = ["FI", "SV", "EN"] as const;
@@ -62,6 +64,7 @@ export function saveLocalPreferences(next: LocalPreferences) {
     LOCAL_PREFERENCES_KEY,
     JSON.stringify(next),
   );
+  window.dispatchEvent(new Event(LOCAL_PREFERENCES_UPDATED_EVENT));
 }
 
 /** Updates local preferences with a functional updater. */
@@ -81,10 +84,27 @@ export function isLanguagePreference(
   return AVAILABLE_LANGUAGES.includes(value as LanguagePreference);
 }
 
+/** Resolve browser language preferences to one of the supported UI languages. */
+function getBrowserDefaultLanguage(): LanguagePreference {
+  if (typeof navigator === "undefined") return "EN";
+
+  const browserLocales = [...(navigator.languages ?? []), navigator.language]
+    .filter(Boolean)
+    .map((locale) => locale.toLowerCase());
+
+  for (const locale of browserLocales) {
+    if (locale.startsWith("fi")) return "FI";
+    if (locale.startsWith("sv")) return "SV";
+    if (locale.startsWith("en")) return "EN";
+  }
+
+  return "EN";
+}
+
 /** Loads the stored language preference or returns the default. */
 export function getStoredLanguage(): LanguagePreference {
   const stored = loadLocalPreferences().ui?.language;
-  return isLanguagePreference(stored) ? stored : "EN";
+  return isLanguagePreference(stored) ? stored : getBrowserDefaultLanguage();
 }
 
 /** Persists the provided language preference in local preferences. */

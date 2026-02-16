@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useI18n } from "@/lib/i18n";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 
@@ -27,14 +28,15 @@ export default function SignUpPage() {
   const { signUp } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const { t } = useI18n();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       toast({
-        title: "Error",
-        description: "Passwords do not match",
+        title: t("auth.errorTitle"),
+        description: t("auth.signUp.passwordMismatch"),
         variant: "destructive",
       });
       return;
@@ -42,8 +44,8 @@ export default function SignUpPage() {
 
     if (password.length < 6) {
       toast({
-        title: "Error",
-        description: "Password must be at least 6 characters",
+        title: t("auth.errorTitle"),
+        description: t("auth.signUp.passwordTooShort"),
         variant: "destructive",
       });
       return;
@@ -54,14 +56,14 @@ export default function SignUpPage() {
     try {
       await signUp(email, password);
       toast({
-        title: "Account created!",
-        description: "Welcome to Pinkka. Start learning now!",
+        title: t("auth.signUp.createdTitle"),
+        description: t("auth.signUp.createdDescription"),
       });
       router.push("/");
     } catch (error: any) {
       toast({
-        title: "Error",
-        description: error.message || "Failed to create account",
+        title: t("auth.errorTitle"),
+        description: error.message || t("auth.signUp.failureDescription"),
         variant: "destructive",
       });
     } finally {
@@ -76,13 +78,13 @@ export default function SignUpPage() {
           <div className="flex justify-center mb-4">
             <BookOpen className="h-12 w-12 text-primary" />
           </div>
-          <CardTitle className="text-2xl">Create Your Account</CardTitle>
-          <CardDescription>Sign up to start learning species</CardDescription>
+          <CardTitle className="text-2xl">{t("auth.signUp.title")}</CardTitle>
+          <CardDescription>{t("auth.signUp.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("auth.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -94,7 +96,7 @@ export default function SignUpPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t("auth.password")}</Label>
               <Input
                 id="password"
                 type="password"
@@ -106,7 +108,7 @@ export default function SignUpPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">{t("auth.confirmPassword")}</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -118,16 +120,16 @@ export default function SignUpPage() {
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creating Account..." : "Sign Up"}
+              {loading ? t("auth.signUp.submitLoading") : t("auth.signUp.submit")}
             </Button>
 
             <p className="text-sm text-center text-muted-foreground">
-              Already have an account?{" "}
+              {`${t("auth.signUp.hasAccount")} `}
               <Link
                 href="/auth/signin"
                 className="text-primary hover:underline"
               >
-                Sign In
+                {t("auth.signIn.link")}
               </Link>
             </p>
           </form>
