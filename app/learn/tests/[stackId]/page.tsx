@@ -400,35 +400,43 @@ export default function TestPage() {
 
   const loadLearningProgressForSpecies = async (speciesId: string) => {
     if (!user) return;
+    try {
+      const [scientific, vernacular] = await Promise.all([
+        getLearningProgress(user.uid, speciesId, "scientific"),
+        getLearningProgress(user.uid, speciesId, "vernacular"),
+      ]);
 
-    const [scientific, vernacular] = await Promise.all([
-      getLearningProgress(user.uid, speciesId, "scientific"),
-      getLearningProgress(user.uid, speciesId, "vernacular"),
-    ]);
+      const nextProgress = {
+        scientific: scientific ?? null,
+        vernacular: vernacular ?? null,
+      };
 
-    const nextProgress = {
-      scientific: scientific ?? null,
-      vernacular: vernacular ?? null,
-    };
+      if (scientific) {
+        progressCacheRef.current.set(
+          buildProgressKey(speciesId, "scientific"),
+          scientific,
+        );
+      }
+      if (vernacular) {
+        progressCacheRef.current.set(
+          buildProgressKey(speciesId, "vernacular"),
+          vernacular,
+        );
+      }
 
-    if (scientific) {
-      progressCacheRef.current.set(
-        buildProgressKey(speciesId, "scientific"),
-        scientific,
+      setCurrentLearningProgress(nextProgress);
+      setLearningMetricFromProgress(
+        nextProgress.scientific,
+        nextProgress.vernacular,
       );
+    } catch (error) {
+      logFirestoreError("Failed to load learning progress", error);
+      setCurrentLearningProgress({
+        scientific: null,
+        vernacular: null,
+      });
+      setLearningMetric(null);
     }
-    if (vernacular) {
-      progressCacheRef.current.set(
-        buildProgressKey(speciesId, "vernacular"),
-        vernacular,
-      );
-    }
-
-    setCurrentLearningProgress(nextProgress);
-    setLearningMetricFromProgress(
-      nextProgress.scientific,
-      nextProgress.vernacular,
-    );
   };
 
   const flushPendingProgressUpdates = async () => {
@@ -490,81 +498,84 @@ export default function TestPage() {
   ) => {
     if (!user) return;
     if (!scoresByType || Object.keys(scoresByType).length === 0) return;
+    try {
+      const now = new Date();
+      const nextProgress = {
+        scientific:
+          currentLearningProgress?.scientific ??
+          progressCacheRef.current.get(
+            buildProgressKey(targetSpecies.id, "scientific"),
+          ) ??
+          null,
+        vernacular:
+          currentLearningProgress?.vernacular ??
+          progressCacheRef.current.get(
+            buildProgressKey(targetSpecies.id, "vernacular"),
+          ) ??
+          null,
+      };
 
-    const now = new Date();
-    const nextProgress = {
-      scientific:
-        currentLearningProgress?.scientific ??
-        progressCacheRef.current.get(
-          buildProgressKey(targetSpecies.id, "scientific"),
-        ) ??
-        null,
-      vernacular:
-        currentLearningProgress?.vernacular ??
-        progressCacheRef.current.get(
-          buildProgressKey(targetSpecies.id, "vernacular"),
-        ) ??
-        null,
-    };
+      for (const [nameType, score] of Object.entries(scoresByType) as [
+        LearningNameType,
+        LearningScoreUpdate,
+      ][]) {
+        const key = buildProgressKey(targetSpecies.id, nameType);
+        let previous = progressCacheRef.current.get(key) ?? null;
 
-    for (const [nameType, score] of Object.entries(scoresByType) as [
-      LearningNameType,
-      LearningScoreUpdate,
-    ][]) {
-      const key = buildProgressKey(targetSpecies.id, nameType);
-      let previous = progressCacheRef.current.get(key) ?? null;
+        if (!previous) {
+          const stored = await getLearningProgress(
+            user.uid,
+            targetSpecies.id,
+            nameType,
+          );
+          if (stored) {
+            previous = stored;
+            progressCacheRef.current.set(key, stored);
+          }
+        }
 
-      if (!previous) {
-        const stored = await getLearningProgress(
-          user.uid,
-          targetSpecies.id,
-          nameType,
+        // Use the prior response average when available; fall back to defaults.
+        const expectedBaseline =
+          previous?.averageResponseMs && previous.averageResponseMs > 0
+            ? previous.averageResponseMs
+            : score.expectedMs;
+        const speedScore = getSpeedScore(
+          score.responseMs,
+          expectedBaseline,
+          score.accuracyScore,
         );
-        if (stored) {
-          previous = stored;
-          progressCacheRef.current.set(key, stored);
+        const updated = updateLearningProgressState(
+          previous,
+          score.accuracyScore,
+          speedScore,
+          score.responseMs,
+          now,
+        );
+        progressCacheRef.current.set(key, updated);
+
+        pendingProgressRef.current.set(key, {
+          userId: user.uid,
+          speciesId: targetSpecies.id,
+          nameType,
+          ...updated,
+        });
+
+        if (nameType === "scientific") {
+          nextProgress.scientific = updated;
+        } else {
+          nextProgress.vernacular = updated;
         }
       }
 
-      // Use the prior response average when available; fall back to defaults.
-      const expectedBaseline =
-        previous?.averageResponseMs && previous.averageResponseMs > 0
-          ? previous.averageResponseMs
-          : score.expectedMs;
-      const speedScore = getSpeedScore(
-        score.responseMs,
-        expectedBaseline,
-        score.accuracyScore,
-      );
-      const updated = updateLearningProgressState(
-        previous,
-        score.accuracyScore,
-        speedScore,
-        score.responseMs,
+      setCurrentLearningProgress(nextProgress);
+      setLearningMetricFromProgress(
+        nextProgress.scientific,
+        nextProgress.vernacular,
         now,
       );
-      progressCacheRef.current.set(key, updated);
-
-      pendingProgressRef.current.set(key, {
-        userId: user.uid,
-        speciesId: targetSpecies.id,
-        nameType,
-        ...updated,
-      });
-
-      if (nameType === "scientific") {
-        nextProgress.scientific = updated;
-      } else {
-        nextProgress.vernacular = updated;
-      }
+    } catch (error) {
+      logFirestoreError("Failed to record learning progress", error);
     }
-
-    setCurrentLearningProgress(nextProgress);
-    setLearningMetricFromProgress(
-      nextProgress.scientific,
-      nextProgress.vernacular,
-      now,
-    );
   };
 
   const getLearningScoresForTextAnswer = (

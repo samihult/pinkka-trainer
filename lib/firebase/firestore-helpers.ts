@@ -2334,21 +2334,30 @@ export async function getLearningProgress(
   nameType: LearningNameType,
 ): Promise<LearningProgress | null> {
   const docId = buildLearningProgressDocId(userId, speciesId, nameType);
-  const progressDoc = await getDoc(doc(db, "learningProgress", docId));
-  if (!progressDoc.exists()) return null;
+  try {
+    const progressDoc = await getDoc(doc(db, "learningProgress", docId));
+    if (!progressDoc.exists()) return null;
 
-  const data = progressDoc.data();
-  return {
-    id: progressDoc.id,
-    userId: data.userId,
-    speciesId: data.speciesId,
-    nameType: data.nameType as LearningNameType,
-    accuracyStabilityDays: data.accuracyStabilityDays ?? 0.5,
-    speedStabilityDays: data.speedStabilityDays ?? 0.5,
-    lastReviewedAt: data.lastReviewedAt?.toDate() ?? new Date(0),
-    reviewCount: data.reviewCount ?? 0,
-    averageResponseMs: data.averageResponseMs ?? 0,
-  } as LearningProgress;
+    const data = progressDoc.data();
+    return {
+      id: progressDoc.id,
+      userId: data.userId,
+      speciesId: data.speciesId,
+      nameType: data.nameType as LearningNameType,
+      accuracyStabilityDays: data.accuracyStabilityDays ?? 0.5,
+      speedStabilityDays: data.speedStabilityDays ?? 0.5,
+      lastReviewedAt: data.lastReviewedAt?.toDate() ?? new Date(0),
+      reviewCount: data.reviewCount ?? 0,
+      averageResponseMs: data.averageResponseMs ?? 0,
+    } as LearningProgress;
+  } catch (error) {
+    const code = (error as { code?: string } | null)?.code;
+    if (code === "permission-denied" || code === "firestore/permission-denied") {
+      // Treat permission-denied as "no readable progress" to keep learning mode usable.
+      return null;
+    }
+    throw error;
+  }
 }
 
 /** Fetch learning progress records for a set of species ids. */
