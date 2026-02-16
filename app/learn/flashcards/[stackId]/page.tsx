@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Flashcard } from "@/components/flashcard";
 import { LearningSessionShell } from "@/components/learning-session-shell";
@@ -23,9 +23,18 @@ import { toLanguageCode } from "@/lib/local-preferences";
 import { Shuffle } from "lucide-react";
 import Link from "next/link";
 
+const BACKSIDE_PANEL_QUERY_PARAM = "back";
+
+function parseBacksidePanelVisibility(value: string | null): boolean {
+  return value === "1" || value === "true" || value === "open";
+}
+
 export default function FlashcardsPage() {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const params = useParams();
   const stackId = decodeURIComponent(params.stackId as string);
 
@@ -34,10 +43,32 @@ export default function FlashcardsPage() {
   const [species, setSpecies] = useState<Species[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const isBacksidePanelOpen = useMemo(
+    () =>
+      parseBacksidePanelVisibility(
+        searchParams.get(BACKSIDE_PANEL_QUERY_PARAM),
+      ),
+    [searchParams],
+  );
 
   useEffect(() => {
     void loadData();
   }, [stackId]);
+
+  const updateBacksidePanelVisibility = useCallback(
+    (nextOpen: boolean) => {
+      const nextParams = new URLSearchParams(searchParams.toString());
+      nextParams.set(BACKSIDE_PANEL_QUERY_PARAM, nextOpen ? "1" : "0");
+      const nextQuery = nextParams.toString();
+      const nextUrl = nextQuery ? `${pathname}?${nextQuery}` : pathname;
+      router.replace(nextUrl, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
+
+  const toggleBacksidePanel = useCallback(() => {
+    updateBacksidePanelVisibility(!isBacksidePanelOpen);
+  }, [isBacksidePanelOpen, updateBacksidePanelVisibility]);
 
   const loadData = async () => {
     try {
@@ -144,6 +175,8 @@ export default function FlashcardsPage() {
         onPrevious={handlePrevious}
         currentIndex={currentIndex}
         total={species.length}
+        isBacksidePanelOpen={isBacksidePanelOpen}
+        onToggleBacksidePanel={toggleBacksidePanel}
       />
     </LearningSessionShell>
   );

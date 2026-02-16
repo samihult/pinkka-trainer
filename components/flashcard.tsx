@@ -15,7 +15,7 @@ import {
   getLocalizedText,
   getSpeciesDescription,
 } from "@/lib/content/content-display";
-import { ChevronLeft, ChevronRight, Keyboard, RotateCw } from "lucide-react";
+import { ChevronLeft, ChevronRight, Keyboard, RotateCw, X } from "lucide-react";
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
@@ -32,32 +32,25 @@ interface FlashcardProps {
   currentIndex: number;
   /** Total number of cards in the session. */
   total: number;
+  /** Whether the backside panel is currently visible. */
+  isBacksidePanelOpen: boolean;
+  /** Toggle the backside panel visibility. */
+  onToggleBacksidePanel: () => void;
 }
 
-/** Interactive flashcard with flip and image navigation controls. */
+/** Interactive flashcard with image navigation and backside panel controls. */
 export function Flashcard({
   species,
   onNext,
   onPrevious,
   currentIndex,
   total,
+  isBacksidePanelOpen,
+  onToggleBacksidePanel,
 }: FlashcardProps) {
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
-  const [flipped, setFlipped] = useState(false);
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
-
-  const handleFlip = () => setFlipped(!flipped);
-
-  const handleNext = () => {
-    setFlipped(false);
-    onNext();
-  };
-
-  const handlePrevious = () => {
-    setFlipped(false);
-    onPrevious();
-  };
 
   const images = species.data.images ?? [];
   const vernacularName = getLocalizedText(
@@ -72,7 +65,7 @@ export function Flashcard({
 
   const shortcutContent = useMemo(
     () => [
-      { label: "Flip card", keys: ["Space"] },
+      { label: "Toggle backside panel", keys: ["Space"] },
       { label: "Open larger / zoom in", keys: ["↑"] },
       { label: "Zoom out / close at fit", keys: ["↓"] },
       { label: "Previous image", keys: ["←"] },
@@ -100,83 +93,89 @@ export function Flashcard({
 
       if (event.key === " " || event.code === "Space") {
         event.preventDefault();
-        handleFlip();
+        onToggleBacksidePanel();
         return;
       }
 
       if (event.metaKey || event.ctrlKey) {
         if (event.key === "ArrowLeft") {
           event.preventDefault();
-          handlePrevious();
+          onPrevious();
           return;
         }
 
         if (event.key === "ArrowRight") {
           event.preventDefault();
-          handleNext();
+          onNext();
         }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleFlip, handleNext, handlePrevious]);
+  }, [onNext, onPrevious, onToggleBacksidePanel]);
 
   return (
     <div className="relative h-full w-full">
       <Card className="absolute inset-x-4 top-0 bottom-24 overflow-hidden p-0 sm:inset-x-8">
         <CardContent className="h-full p-0">
-          <div
-            className={`h-full transition-all duration-500 ${
-              flipped ? "opacity-0" : "opacity-100"
-            }`}
-          >
-            {/* Front - Image */}
-            <SpeciesImageCarousel
-              images={images}
-              alt={species.data.scientificName}
-              resetKey={species.id}
-              heightClassName="h-full"
-              fullScreenLightboxProps={{
-                captions: { hidden: true, showToggle: false },
-              }}
-            />
-          </div>
+          <SpeciesImageCarousel
+            images={images}
+            alt={species.data.scientificName}
+            resetKey={species.id}
+            heightClassName="h-full"
+            fullScreenLightboxProps={{
+              captions: { hidden: true, showToggle: false },
+            }}
+          />
 
-          <div
-            className={`absolute inset-0 flex h-full flex-col justify-center bg-card p-8 transition-all duration-500 ${
-              flipped ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
-          >
-            {/* Back - Information */}
-            <div className="space-y-6">
-              <div>
-                <h2 className="text-3xl font-bold mb-2">
-                  {species.data.scientificName}
-                </h2>
-                <div className="space-y-1">
-                  {vernacularName && (
-                    <p className="text-xl text-primary">{vernacularName}</p>
+          {isBacksidePanelOpen ? (
+            <div className="absolute top-4 right-4 bottom-4 z-10 flex w-[min(30rem,calc(100%-2rem))]">
+              <div className="flex h-full w-full flex-col rounded-lg border border-border/80 bg-card/95 shadow-lg backdrop-blur-sm">
+                <div className="flex items-start justify-between gap-3 border-b px-4 py-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Backside
+                    </p>
+                    <h2 className="line-clamp-2 text-lg font-semibold">
+                      {species.data.scientificName}
+                    </h2>
+                    {vernacularName ? (
+                      <p className="text-sm text-primary">{vernacularName}</p>
+                    ) : null}
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={onToggleBacksidePanel}
+                    aria-label="Hide backside panel"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                <div className="min-h-0 flex-1 overflow-y-auto p-4">
+                  {description ? (
+                    <div
+                      className="text-sm text-muted-foreground leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0"
+                      dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+                    />
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      No description available.
+                    </p>
                   )}
                 </div>
               </div>
-
-              {description && (
-                <div className="pt-4 border-t">
-                  <div
-                    className="text-muted-foreground leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
-                  />
-                </div>
-              )}
             </div>
-          </div>
+          ) : null}
         </CardContent>
       </Card>
 
       <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 sm:inset-x-8">
         <Button
-          onClick={handlePrevious}
+          onClick={onPrevious}
           disabled={currentIndex === 0}
           variant="outline"
           size="lg"
@@ -186,9 +185,9 @@ export function Flashcard({
         </Button>
 
         <div className="flex items-center gap-2">
-          <Button onClick={handleFlip} variant="outline" size="lg">
+          <Button onClick={onToggleBacksidePanel} variant="outline" size="lg">
             <RotateCw className="mr-1 h-4 w-4" />
-            Flip Card
+            {isBacksidePanelOpen ? "Hide Backside" : "Show Backside"}
           </Button>
           <TooltipProvider>
             <Tooltip
@@ -235,7 +234,7 @@ export function Flashcard({
         </div>
 
         <Button
-          onClick={handleNext}
+          onClick={onNext}
           disabled={currentIndex === total - 1}
           size="lg"
         >
