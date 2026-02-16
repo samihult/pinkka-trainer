@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { useI18n, type Translate } from "@/lib/i18n";
 import type { LearningStatusHistogram } from "@/lib/types";
 
@@ -42,45 +43,23 @@ export function StackLearningHistogram({
   either,
 }: StackLearningHistogramProps) {
   const { t } = useI18n();
-
-  const renderBar = (label: string, histogram: LearningStatusHistogram) => (
-    <div className="flex items-center gap-3">
-      <span className="w-40 text-xs font-medium text-muted-foreground">
-        {label}
-      </span>
-      <div
-        className="flex h-2 w-full overflow-hidden rounded-full bg-muted/40"
-        role="img"
-        aria-label={buildBarTitle(t, label, histogram)}
-        title={buildBarTitle(t, label, histogram)}
-      >
-        {histogram.mastered.percent > 0 && (
-          <span
-            className={CATEGORY_COLORS.mastered}
-            style={{ width: `${histogram.mastered.percent}%` }}
-          />
-        )}
-        {histogram.strengthening.percent > 0 && (
-          <span
-            className={CATEGORY_COLORS.strengthening}
-            style={{ width: `${histogram.strengthening.percent}%` }}
-          />
-        )}
-        {histogram.learning.percent > 0 && (
-          <span
-            className={CATEGORY_COLORS.learning}
-            style={{ width: `${histogram.learning.percent}%` }}
-          />
-        )}
-        {histogram.new.percent > 0 && (
-          <span
-            className={CATEGORY_COLORS.new}
-            style={{ width: `${histogram.new.percent}%` }}
-          />
-        )}
-      </div>
-    </div>
-  );
+  const rows = [
+    {
+      key: "scientific",
+      label: t("learning.histogram.label.scientific"),
+      histogram: scientific,
+    },
+    {
+      key: "vernacular",
+      label: t("learning.histogram.label.vernacular"),
+      histogram: vernacular,
+    },
+    {
+      key: "either",
+      label: t("learning.histogram.label.either"),
+      histogram: either,
+    },
+  ] as const;
 
   return (
     <div className="space-y-1">
@@ -102,10 +81,45 @@ export function StackLearningHistogram({
           {t("learning.histogram.new")}
         </span>
       </div>
-      <div>
-        {renderBar(t("learning.histogram.label.scientific"), scientific)}
-        {renderBar(t("learning.histogram.label.vernacular"), vernacular)}
-        {renderBar(t("learning.histogram.label.either"), either)}
+      <div className="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-3 gap-y-2">
+        {rows.map((row) => (
+          <Fragment key={row.key}>
+            <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
+              {row.label}
+            </span>
+            <div
+              className="flex h-2 w-full overflow-hidden rounded-full bg-muted/40"
+              role="img"
+              aria-label={buildBarTitle(t, row.label, row.histogram)}
+              title={buildBarTitle(t, row.label, row.histogram)}
+            >
+              {row.histogram.mastered.percent > 0 && (
+                <span
+                  className={CATEGORY_COLORS.mastered}
+                  style={{ width: `${row.histogram.mastered.percent}%` }}
+                />
+              )}
+              {row.histogram.strengthening.percent > 0 && (
+                <span
+                  className={CATEGORY_COLORS.strengthening}
+                  style={{ width: `${row.histogram.strengthening.percent}%` }}
+                />
+              )}
+              {row.histogram.learning.percent > 0 && (
+                <span
+                  className={CATEGORY_COLORS.learning}
+                  style={{ width: `${row.histogram.learning.percent}%` }}
+                />
+              )}
+              {row.histogram.new.percent > 0 && (
+                <span
+                  className={CATEGORY_COLORS.new}
+                  style={{ width: `${row.histogram.new.percent}%` }}
+                />
+              )}
+            </div>
+          </Fragment>
+        ))}
       </div>
     </div>
   );
