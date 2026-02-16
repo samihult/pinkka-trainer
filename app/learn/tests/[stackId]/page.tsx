@@ -990,15 +990,6 @@ export default function TestPage() {
     questionStartRef.current = Date.now();
   };
 
-  const handleSelectQuestionFromProgress = (index: number) => {
-    if (index < 0 || index >= questions.length) return;
-    if (index === currentQuestionIndex) return;
-
-    setCurrentQuestionIndex(index);
-    resetActiveQuestionUiState();
-    questionStartRef.current = Date.now();
-  };
-
   useEffect(() => {
     if (!user) {
       setCurrentLearningProgress(null);
@@ -1245,16 +1236,6 @@ export default function TestPage() {
     currentQuestion.species,
     testPreferences.answerMode,
   );
-  const progressSegments = questions.map((question) => ({
-    id: question.species.id,
-    scientificName: question.species.data.scientificName,
-    vernacularName:
-      getLocalizedText(
-        question.species.data.vernacularName,
-        preferredLanguage,
-      ) ?? null,
-  }));
-
   if (testComplete) {
     const percentage = Math.round((correctAnswers / questions.length) * 100);
 
@@ -1287,9 +1268,6 @@ export default function TestPage() {
       groupName={groupName}
       stackName={stackName}
       progressValue={progress}
-      progressSegments={progressSegments}
-      activeProgressSegmentIndex={currentQuestionIndex}
-      onSelectProgressSegment={handleSelectQuestionFromProgress}
       progressLabel={`Question ${currentQuestionIndex + 1} of ${questions.length}`}
       exitHref="/"
     >
