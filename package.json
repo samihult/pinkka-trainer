@@ -50,6 +50,7 @@
     "cmdk": "1.0.4",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
+    "fabric": "^7.1.0",
     "firebase": "12.6.0",
     "input-otp": "1.4.1",
     "lucide-react": "^0.564.0",

@@ -2,6 +2,8 @@
 
 Reusable UI building blocks for app pages.
 
+- `fabric-json-canvas.tsx`: Minimal uncontrolled Fabric.js canvas that initializes from JSON (`loadFromJSON`), keeps an
+  internal serialized model (`toJSON`), and optionally fits a background image to the center of a dark-grey viewport.
 - `ui/`: Shared shadcn/ui primitives and micro-components (for example keyboard shortcut hints).
 - Route-level reusable pieces such as navigation (Varjopinkka brand icon via Lucide), protected route wrapper, and
   management cards.
