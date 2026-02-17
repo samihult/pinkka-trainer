@@ -46,6 +46,8 @@ export interface LeaderTextWithArrowOptions {
   fontSize?: number;
   /** Label font family. */
   fontFamily?: string;
+  /** Label text alignment. */
+  textAlign?: LeaderTextAlignment;
   /** Rotation angle in degrees. */
   angle?: number;
 }
@@ -68,7 +70,19 @@ export interface SerializedLeaderTextWithArrow extends SerializedGroupProps {
   fontSize: number;
   /** Label font family. */
   fontFamily: string;
+  /** Label text alignment. */
+  textAlign: LeaderTextAlignment;
 }
+
+/** Supported text alignment values for the leader label. */
+export type LeaderTextAlignment =
+  | "left"
+  | "center"
+  | "right"
+  | "justify"
+  | "justify-left"
+  | "justify-center"
+  | "justify-right";
 
 const DEFAULT_TEXT = "Text";
 const DEFAULT_TEXT_FILL = "#f8fafc";
@@ -76,6 +90,10 @@ const DEFAULT_LEADER_STROKE = "#ffffff";
 const DEFAULT_LEADER_STROKE_WIDTH = 5;
 const DEFAULT_FONT_SIZE = 24;
 const DEFAULT_FONT_FAMILY = "Arial";
+const DEFAULT_TEXT_ALIGN: LeaderTextAlignment = "center";
+const LEADER_TEXT_CLIP_EXTRA_PADDING = 4;
+const EMPTY_TEXT_PLACEHOLDER = "Add text";
+const TEXT_BORDER_PADDING = 4;
 const LEADER_END_CONTROL_KEY = "leaderEnd";
 const HIDDEN_TRANSFORM_CONTROLS = {
   bl: false,
@@ -116,6 +134,29 @@ function calculateLeaderStartOutsideTextBox(
     x: dx * clampedT,
     y: dy * clampedT,
   };
+}
+
+function distancePointToSegment(point: Point, start: Point, end: Point) {
+  const segmentVector = end.subtract(start);
+  const segmentLengthSquared =
+    segmentVector.x * segmentVector.x + segmentVector.y * segmentVector.y;
+  if (segmentLengthSquared < 0.0001) {
+    return point.distanceFrom(start);
+  }
+
+  const pointVector = point.subtract(start);
+  const projectionFactor = Math.min(
+    1,
+    Math.max(
+      0,
+      (pointVector.x * segmentVector.x + pointVector.y * segmentVector.y) /
+        segmentLengthSquared,
+    ),
+  );
+  const projectedPoint = start.add(
+    segmentVector.scalarMultiply(projectionFactor),
+  );
+  return point.distanceFrom(projectedPoint);
 }
 
 function getLeaderEndpointInObjectPlane(object: LeaderTextWithArrow) {
@@ -170,6 +211,7 @@ export class LeaderTextWithArrow extends Group {
     "leaderStrokeWidth",
     "fontSize",
     "fontFamily",
+    "textAlign",
   ];
 
   /** Current label text content. */
@@ -186,6 +228,8 @@ export class LeaderTextWithArrow extends Group {
   declare fontSize: number;
   /** Current label font family. */
   declare fontFamily: string;
+  /** Current label text alignment. */
+  declare textAlign: LeaderTextAlignment;
 
   private readonly textObject: FabricText;
   private editingTextObject: IText | null = null;
@@ -204,6 +248,7 @@ export class LeaderTextWithArrow extends Group {
       options.leaderStrokeWidth ?? DEFAULT_LEADER_STROKE_WIDTH;
     const fontSize = options.fontSize ?? DEFAULT_FONT_SIZE;
     const fontFamily = options.fontFamily ?? DEFAULT_FONT_FAMILY;
+    const textAlign = options.textAlign ?? DEFAULT_TEXT_ALIGN;
 
     const textObject = new FabricText(text, {
       left: 0,
@@ -213,6 +258,7 @@ export class LeaderTextWithArrow extends Group {
       fill: textFill,
       fontSize,
       fontFamily,
+      textAlign,
       selectable: false,
       evented: false,
       strokeUniform: true,
@@ -235,6 +281,7 @@ export class LeaderTextWithArrow extends Group {
     this.leaderStrokeWidth = leaderStrokeWidth;
     this.fontSize = fontSize;
     this.fontFamily = fontFamily;
+    this.textAlign = textAlign;
     this.controls = {
       ...this.controls,
       [LEADER_END_CONTROL_KEY]: createLeaderEndControl(),
@@ -266,6 +313,12 @@ export class LeaderTextWithArrow extends Group {
     this.refreshVisuals();
   }
 
+  /** Update label text alignment. */
+  setTextAlign(nextTextAlign: LeaderTextAlignment) {
+    this.textAlign = nextTextAlign;
+    this.refreshVisuals();
+  }
+
   /** Scale custom internal geometry directly (for scale-to-geometry baking). */
   scaleInternalGeometry(scaleX: number, scaleY: number) {
     const uniformScale = (Math.abs(scaleX) + Math.abs(scaleY)) / 2;
@@ -274,6 +327,11 @@ export class LeaderTextWithArrow extends Group {
 
   /** Recompute arrow geometry using current text position and absolute endpoint. */
   syncLeaderToAbsoluteEndpoint() {
+    this.refreshVisuals();
+  }
+
+  /** Recompute selection-dependent visuals (placeholder text + border). */
+  syncSelectionVisuals() {
     this.refreshVisuals();
   }
 
@@ -307,10 +365,14 @@ export class LeaderTextWithArrow extends Group {
       angle: this.getTotalAngle(),
       fontSize: this.fontSize,
       fontFamily: this.fontFamily,
+      textAlign: this.textAlign,
       fill: this.textFill,
       editable: true,
       hasControls: false,
-      hasBorders: false,
+      hasBorders: true,
+      borderColor: this.getSelectionBorderColor(),
+      borderScaleFactor: this.borderScaleFactor,
+      padding: TEXT_BORDER_PADDING,
       lockMovementX: true,
       lockMovementY: true,
       lockRotation: true,
@@ -368,11 +430,13 @@ export class LeaderTextWithArrow extends Group {
     const endpoint = endpointOverride ?? getLeaderEndpointInObjectPlane(this);
     const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
     const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
+    const leaderClipPadding =
+      this.leaderStrokeWidth * 0.75 + LEADER_TEXT_CLIP_EXTRA_PADDING;
     const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
       endpoint,
       textBoxHalfWidth,
       textBoxHalfHeight,
-      DEFAULT_LEADER_STROKE_WIDTH * 0.75,
+      leaderClipPadding,
     );
 
     return {
@@ -463,6 +527,92 @@ export class LeaderTextWithArrow extends Group {
     return controlSize > 0 ? controlSize : this.cornerSize;
   }
 
+  private getDisplayText() {
+    if (this.shouldShowEmptyTextPlaceholder()) {
+      return EMPTY_TEXT_PLACEHOLDER;
+    }
+    return this.text;
+  }
+
+  private shouldShowEmptyTextPlaceholder() {
+    return this.isSelectedOnCanvas() && this.text.trim().length === 0;
+  }
+
+  private shouldShowTextBorder() {
+    return this.isSelectedOnCanvas();
+  }
+
+  private isSelectedOnCanvas() {
+    return this.canvas?.getActiveObject() === this;
+  }
+
+  private getSelectionBorderColor() {
+    if (typeof this.cornerStrokeColor === "string") {
+      return this.cornerStrokeColor;
+    }
+    if (typeof this.borderColor === "string") {
+      return this.borderColor;
+    }
+    return "#253ed3";
+  }
+
+  private isPointNearLeaderLine(pointOnScenePlane: Point) {
+    const { endpoint, visibleLeaderStart } =
+      this.getLeaderGeometryInObjectPlane();
+    const objectToSceneMatrix = this.calcTransformMatrix();
+    const startOnScenePlane = visibleLeaderStart.transform(objectToSceneMatrix);
+    const endOnScenePlane = endpoint.transform(objectToSceneMatrix);
+    const angle = Math.atan2(
+      endOnScenePlane.y - startOnScenePlane.y,
+      endOnScenePlane.x - startOnScenePlane.x,
+    );
+    const headLength = 12;
+    const leftHeadOnScenePlane = new Point(
+      endOnScenePlane.x - headLength * Math.cos(angle - Math.PI / 6),
+      endOnScenePlane.y - headLength * Math.sin(angle - Math.PI / 6),
+    );
+    const rightHeadOnScenePlane = new Point(
+      endOnScenePlane.x - headLength * Math.cos(angle + Math.PI / 6),
+      endOnScenePlane.y - headLength * Math.sin(angle + Math.PI / 6),
+    );
+    const hitToleranceOnScenePlane =
+      (this.leaderStrokeWidth / 2 + 6) / this.getViewportScale();
+
+    const shaftDistance = distancePointToSegment(
+      pointOnScenePlane,
+      startOnScenePlane,
+      endOnScenePlane,
+    );
+    if (shaftDistance <= hitToleranceOnScenePlane) {
+      return true;
+    }
+
+    const leftHeadDistance = distancePointToSegment(
+      pointOnScenePlane,
+      leftHeadOnScenePlane,
+      endOnScenePlane,
+    );
+    if (leftHeadDistance <= hitToleranceOnScenePlane) {
+      return true;
+    }
+
+    const rightHeadDistance = distancePointToSegment(
+      pointOnScenePlane,
+      endOnScenePlane,
+      rightHeadOnScenePlane,
+    );
+    return rightHeadDistance <= hitToleranceOnScenePlane;
+  }
+
+  /** Returns true when a scene-space point hits the visible leader arrow line/head. */
+  isPointOnLeaderArrow(pointOnScenePlane: Point) {
+    return this.isPointNearLeaderLine(pointOnScenePlane);
+  }
+
+  containsPoint(point: Point) {
+    return super.containsPoint(point) || this.isPointNearLeaderLine(point);
+  }
+
   drawObject(
     ctx: CanvasRenderingContext2D,
     forClipping: boolean | undefined,
@@ -504,15 +654,33 @@ export class LeaderTextWithArrow extends Group {
     ctx.lineTo(endpoint.x, endpoint.y);
     ctx.lineTo(rightHeadX, rightHeadY);
     ctx.stroke();
+
+    if (this.shouldShowTextBorder()) {
+      const textWidth = Math.max(1, this.textObject.getScaledWidth());
+      const textHeight = Math.max(1, this.textObject.getScaledHeight());
+      const borderLineWidth = 1 / this.getViewportScale();
+
+      ctx.strokeStyle = this.getSelectionBorderColor();
+      ctx.lineWidth = borderLineWidth;
+      ctx.strokeRect(
+        -textWidth / 2 - TEXT_BORDER_PADDING,
+        -textHeight / 2 - TEXT_BORDER_PADDING,
+        textWidth + TEXT_BORDER_PADDING * 2,
+        textHeight + TEXT_BORDER_PADDING * 2,
+      );
+    }
+
     ctx.restore();
   }
 
   private refreshVisuals() {
+    const displayText = this.getDisplayText();
     this.textObject.set({
-      text: this.text,
+      text: displayText,
       fill: this.textFill,
       fontSize: this.fontSize,
       fontFamily: this.fontFamily,
+      textAlign: this.textAlign,
     });
 
     this.setCoords();
@@ -537,6 +705,7 @@ export class LeaderTextWithArrow extends Group {
         leaderStrokeWidth: object.leaderStrokeWidth,
         fontSize: object.fontSize,
         fontFamily: object.fontFamily,
+        textAlign: object.textAlign ?? DEFAULT_TEXT_ALIGN,
       }),
     );
   }

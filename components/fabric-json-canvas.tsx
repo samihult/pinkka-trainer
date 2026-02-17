@@ -19,6 +19,7 @@ import {
   FabricImage,
   FabricObject,
   InteractiveFabricObject,
+  Point,
 } from "fabric";
 import { LeaderTextWithArrow } from "@/components/fabric-leader-text-with-arrow";
 
@@ -220,6 +221,15 @@ export const FabricJsonCanvas = forwardRef<
 
     fabricCanvasRef.current = canvas;
 
+    const refreshLeaderSelectionVisuals = () => {
+      for (const object of canvas.getObjects()) {
+        if (object instanceof LeaderTextWithArrow) {
+          object.syncSelectionVisuals();
+        }
+      }
+      canvas.requestRenderAll();
+    };
+
     const handleObjectMoving = (event: { target?: FabricObject }) => {
       const target = event.target;
       if (!target) {
@@ -262,6 +272,9 @@ export const FabricJsonCanvas = forwardRef<
       }
 
       applyObjectBehaviorRules(target);
+      if (target instanceof LeaderTextWithArrow) {
+        target.syncSelectionVisuals();
+      }
     };
 
     const handleMouseDoubleClick = (event: { target?: FabricObject }) => {
@@ -271,7 +284,33 @@ export const FabricJsonCanvas = forwardRef<
       }
 
       target.startTextEditing();
-      canvas.requestRenderAll();
+      refreshLeaderSelectionVisuals();
+    };
+
+    const handleMouseDown = (event: {
+      target?: FabricObject;
+      scenePoint?: Point;
+    }) => {
+      if (event.target || !event.scenePoint) {
+        return;
+      }
+
+      const objects = canvas.getObjects();
+      for (let index = objects.length - 1; index >= 0; index -= 1) {
+        const object = objects[index];
+        if (!(object instanceof LeaderTextWithArrow)) {
+          continue;
+        }
+
+        if (!object.isPointOnLeaderArrow(event.scenePoint)) {
+          continue;
+        }
+
+        canvas.setActiveObject(object);
+        object.syncSelectionVisuals();
+        canvas.requestRenderAll();
+        return;
+      }
     };
 
     canvas.on("object:moving", handleObjectMoving);
@@ -279,6 +318,10 @@ export const FabricJsonCanvas = forwardRef<
     canvas.on("object:modified", handleObjectModified);
     canvas.on("object:added", handleObjectAdded);
     canvas.on("mouse:dblclick", handleMouseDoubleClick);
+    canvas.on("mouse:down", handleMouseDown);
+    canvas.on("selection:created", refreshLeaderSelectionVisuals);
+    canvas.on("selection:updated", refreshLeaderSelectionVisuals);
+    canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
 
     return () => {
       canvas.off("object:moving", handleObjectMoving);
@@ -286,6 +329,10 @@ export const FabricJsonCanvas = forwardRef<
       canvas.off("object:modified", handleObjectModified);
       canvas.off("object:added", handleObjectAdded);
       canvas.off("mouse:dblclick", handleMouseDoubleClick);
+      canvas.off("mouse:down", handleMouseDown);
+      canvas.off("selection:created", refreshLeaderSelectionVisuals);
+      canvas.off("selection:updated", refreshLeaderSelectionVisuals);
+      canvas.off("selection:cleared", refreshLeaderSelectionVisuals);
       void canvas.dispose();
       fabricCanvasRef.current = null;
     };

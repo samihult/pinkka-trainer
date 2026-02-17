@@ -5,7 +5,8 @@ Reusable UI building blocks for app pages.
 - `fabric-json-canvas.tsx`: Minimal uncontrolled Fabric.js canvas that initializes from JSON (`loadFromJSON`), keeps an
   internal serialized model (`toJSON`), and optionally fits a background image to the center of a dark-grey viewport.
 - `fabric-leader-text-with-arrow.ts`: Custom Fabric.js element that combines a text label with a leader arrow whose
-  start stays fixed at the text midpoint and whose endpoint is modeled as a single point with a dedicated drag handle.
+  start stays fixed at the text midpoint and whose endpoint is modeled as a single point with a dedicated drag handle,
+  plus inline editing and configurable text alignment.
 - `ui/`: Shared shadcn/ui primitives and micro-components (for example keyboard shortcut hints).
 - Route-level reusable pieces such as navigation (Varjopinkka brand icon via Lucide), protected route wrapper, and
   management cards.
