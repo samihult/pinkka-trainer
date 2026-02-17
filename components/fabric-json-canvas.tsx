@@ -10,8 +10,18 @@ import {
   useEffect,
   useImperativeHandle,
   useRef,
+  useState,
+  type ReactNode,
   type CSSProperties,
 } from "react";
+import {
+  ArrowRight,
+  Circle as CircleIcon,
+  Hand,
+  MousePointer2,
+  Square as SquareIcon,
+  Type,
+} from "lucide-react";
 import {
   Canvas,
   Circle,
@@ -20,6 +30,7 @@ import {
   FabricObject,
   InteractiveFabricObject,
   Point,
+  Rect,
 } from "fabric";
 import { LeaderTextWithArrow } from "@/components/fabric-leader-text-with-arrow";
 
@@ -28,6 +39,20 @@ import { cn } from "@/lib/utils";
 const DARK_VIEWPORT_COLOR = "#2f2f2f";
 const BORDER_COLOR = "#253ed3";
 const GEOMETRY_EPSILON = 0.0001;
+const DEFAULT_STROKE_COLOR = "#ffffff";
+const DEFAULT_STROKE_WIDTH = 5;
+const MIN_GEOMETRY_SIZE = 0.5;
+
+type CanvasTool =
+  | "pointer"
+  | "hand"
+  | "text"
+  | "arrow"
+  | "circle"
+  | "ellipse"
+  | "rectangle";
+
+type ShapeTool = Exclude<CanvasTool, "pointer" | "hand" | "text">;
 
 /** Ref API for `FabricJsonCanvas`. */
 export interface FabricJsonCanvasHandle {}
@@ -49,6 +74,32 @@ export interface FabricJsonCanvasProps {
 type TransformableFabricObject = FabricObject & {
   transformMatrix?: number[];
 };
+
+function EllipseToolIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <ellipse cx="12" cy="12" rx="8" ry="5" />
+    </svg>
+  );
+}
+
+function isShapeTool(tool: CanvasTool): tool is ShapeTool {
+  return (
+    tool === "arrow" ||
+    tool === "circle" ||
+    tool === "ellipse" ||
+    tool === "rectangle"
+  );
+}
 
 function applyObjectBehaviorRules(object: FabricObject) {
   object.set({
@@ -86,14 +137,14 @@ function bakeGeometryIntoObject(object: FabricObject) {
     object.scaleInternalGeometry(nextScaleX, nextScaleY);
   } else if (object instanceof Ellipse) {
     object.set({
-      rx: Math.max(0.5, object.rx * nextScaleX),
-      ry: Math.max(0.5, object.ry * nextScaleY),
+      rx: Math.max(MIN_GEOMETRY_SIZE, object.rx * nextScaleX),
+      ry: Math.max(MIN_GEOMETRY_SIZE, object.ry * nextScaleY),
     });
   } else if (object instanceof Circle) {
     // Circle supports one radius, so we preserve circle geometry with average scale.
     const uniformScale = (nextScaleX + nextScaleY) / 2;
     object.set({
-      radius: Math.max(0.5, object.radius * uniformScale),
+      radius: Math.max(MIN_GEOMETRY_SIZE, object.radius * uniformScale),
     });
   } else if (
     "fontSize" in object &&
@@ -169,6 +220,161 @@ function fitBackgroundImageToViewport(canvas: Canvas, image: FabricImage) {
   canvas.setViewportTransform([zoom, 0, 0, zoom, translateX, translateY]);
 }
 
+function createTextLeaderAt(point: Point) {
+  return new LeaderTextWithArrow({
+    left: point.x,
+    top: point.y,
+    text: "Text",
+    leaderEnds: [],
+    textFill: DEFAULT_STROKE_COLOR,
+    leaderStroke: DEFAULT_STROKE_COLOR,
+    leaderStrokeWidth: DEFAULT_STROKE_WIDTH,
+  });
+}
+
+function createObjectFromTool(
+  tool: ShapeTool,
+  startPoint: Point,
+  endPoint: Point,
+): FabricObject | null {
+  if (tool === "arrow") {
+    if (startPoint.distanceFrom(endPoint) < MIN_GEOMETRY_SIZE) {
+      return null;
+    }
+
+    return new LeaderTextWithArrow({
+      left: startPoint.x,
+      top: startPoint.y,
+      text: "",
+      leaderEnds: [{ x: endPoint.x, y: endPoint.y }],
+      textFill: DEFAULT_STROKE_COLOR,
+      leaderStroke: DEFAULT_STROKE_COLOR,
+      leaderStrokeWidth: DEFAULT_STROKE_WIDTH,
+    });
+  }
+
+  if (tool === "circle") {
+    const radius = startPoint.distanceFrom(endPoint);
+    if (radius < MIN_GEOMETRY_SIZE) {
+      return null;
+    }
+
+    return new Circle({
+      left: startPoint.x,
+      top: startPoint.y,
+      originX: "center",
+      originY: "center",
+      radius,
+      fill: "transparent",
+      stroke: DEFAULT_STROKE_COLOR,
+      strokeWidth: DEFAULT_STROKE_WIDTH,
+      strokeUniform: true,
+    });
+  }
+
+  const left = Math.min(startPoint.x, endPoint.x);
+  const top = Math.min(startPoint.y, endPoint.y);
+  const width = Math.abs(endPoint.x - startPoint.x);
+  const height = Math.abs(endPoint.y - startPoint.y);
+
+  if (width < MIN_GEOMETRY_SIZE || height < MIN_GEOMETRY_SIZE) {
+    return null;
+  }
+
+  if (tool === "ellipse") {
+    return new Ellipse({
+      left: left + width / 2,
+      top: top + height / 2,
+      originX: "center",
+      originY: "center",
+      rx: width / 2,
+      ry: height / 2,
+      fill: "transparent",
+      stroke: DEFAULT_STROKE_COLOR,
+      strokeWidth: DEFAULT_STROKE_WIDTH,
+      strokeUniform: true,
+    });
+  }
+
+  return new Rect({
+    left,
+    top,
+    width,
+    height,
+    originX: "left",
+    originY: "top",
+    fill: "transparent",
+    stroke: DEFAULT_STROKE_COLOR,
+    strokeWidth: DEFAULT_STROKE_WIDTH,
+    strokeUniform: true,
+  });
+}
+
+function updatePreviewObjectFromTool(
+  tool: ShapeTool,
+  previewObject: FabricObject,
+  startPoint: Point,
+  endPoint: Point,
+) {
+  if (tool === "arrow" && previewObject instanceof LeaderTextWithArrow) {
+    previewObject.set({
+      left: startPoint.x,
+      top: startPoint.y,
+    });
+    previewObject.setTextContent("");
+    previewObject.setLeaderEnds([{ x: endPoint.x, y: endPoint.y }]);
+    return;
+  }
+
+  if (tool === "circle" && previewObject instanceof Circle) {
+    previewObject.set({
+      left: startPoint.x,
+      top: startPoint.y,
+      originX: "center",
+      originY: "center",
+      radius: Math.max(MIN_GEOMETRY_SIZE, startPoint.distanceFrom(endPoint)),
+    });
+    previewObject.setCoords();
+    return;
+  }
+
+  const left = Math.min(startPoint.x, endPoint.x);
+  const top = Math.min(startPoint.y, endPoint.y);
+  const width = Math.max(
+    MIN_GEOMETRY_SIZE,
+    Math.abs(endPoint.x - startPoint.x),
+  );
+  const height = Math.max(
+    MIN_GEOMETRY_SIZE,
+    Math.abs(endPoint.y - startPoint.y),
+  );
+
+  if (tool === "ellipse" && previewObject instanceof Ellipse) {
+    previewObject.set({
+      left: left + width / 2,
+      top: top + height / 2,
+      originX: "center",
+      originY: "center",
+      rx: width / 2,
+      ry: height / 2,
+    });
+    previewObject.setCoords();
+    return;
+  }
+
+  if (tool === "rectangle" && previewObject instanceof Rect) {
+    previewObject.set({
+      left,
+      top,
+      originX: "left",
+      originY: "top",
+      width,
+      height,
+    });
+    previewObject.setCoords();
+  }
+}
+
 /**
  * Uncontrolled Fabric.js canvas initialized from JSON and exposing a ref API
  * shell for future methods/getters.
@@ -188,9 +394,61 @@ export const FabricJsonCanvas = forwardRef<
 ) {
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const fabricCanvasRef = useRef<Canvas | null>(null);
-  // const serializedModelRef = useRef<unknown>(null);
+  const applyInteractionModeRef = useRef<(() => void) | null>(null);
+  const activeToolRef = useRef<CanvasTool>("pointer");
+  const isSpacePanActiveRef = useRef(false);
+  const isPointerOverCanvasRef = useRef(false);
+
+  const [activeTool, setActiveTool] = useState<CanvasTool>("pointer");
+  const [isSpacePanActive, setIsSpacePanActive] = useState(false);
 
   useImperativeHandle(ref, () => ({}), []);
+
+  useEffect(() => {
+    activeToolRef.current = activeTool;
+    applyInteractionModeRef.current?.();
+  }, [activeTool]);
+
+  useEffect(() => {
+    isSpacePanActiveRef.current = isSpacePanActive;
+    applyInteractionModeRef.current?.();
+  }, [isSpacePanActive]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.code !== "Space" ||
+        event.repeat ||
+        !isPointerOverCanvasRef.current
+      ) {
+        return;
+      }
+
+      const canvas = fabricCanvasRef.current;
+      if (!canvas || canvas.getActiveObject()?.type === "i-text") {
+        return;
+      }
+
+      event.preventDefault();
+      setIsSpacePanActive(true);
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.code !== "Space") {
+        return;
+      }
+
+      setIsSpacePanActive(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
   useEffect(() => {
     const element = canvasElementRef.current;
@@ -220,39 +478,121 @@ export const FabricJsonCanvas = forwardRef<
     };
 
     fabricCanvasRef.current = canvas;
+
+    const resolveEffectiveTool = () =>
+      isSpacePanActiveRef.current ? "hand" : activeToolRef.current;
+
+    let previousActiveTool = activeToolRef.current;
+
     let placingLeaderTarget: LeaderTextWithArrow | null = null;
-    const defaultMarqueeSelectionEnabled = canvas.selection;
     let isPlacementPointerDown = false;
     let didDragDuringPlacementPointerDown = false;
     let placementPointerDownStart: Point | null = null;
     let previousPlacementLockMovementX: boolean | undefined;
     let previousPlacementLockMovementY: boolean | undefined;
 
-    const setLeaderPlacementMode = (isPlacing: boolean) => {
-      canvas.selection = isPlacing ? false : defaultMarqueeSelectionEnabled;
-    };
+    let isPanningViewport = false;
+    let panClientPoint: { x: number; y: number } | null = null;
 
-    const updateCreateHandleCursor = (scenePoint?: Point) => {
-      let isOverCreateHandle = false;
+    let isShapePointerDown = false;
+    let shapeDidDrag = false;
+    let shapePointerDownStart: Point | null = null;
+    let shapeToolAtPointerDown: ShapeTool | null = null;
+    let shapePreviewObject: FabricObject | null = null;
+    let pendingShapeStart: { tool: ShapeTool; point: Point } | null = null;
 
-      if (scenePoint && !placingLeaderTarget) {
-        const objects = canvas.getObjects();
-        for (let index = objects.length - 1; index >= 0; index -= 1) {
-          const object = objects[index];
-          if (
-            object instanceof LeaderTextWithArrow &&
-            object.isPointOnCreateLeaderHandle(scenePoint)
-          ) {
-            isOverCreateHandle = true;
-            break;
-          }
+    const updateLeaderHoverStates = (scenePoint?: Point) => {
+      let didUpdate = false;
+
+      for (const object of canvas.getObjects()) {
+        if (!(object instanceof LeaderTextWithArrow)) {
+          continue;
         }
+
+        const isHovered = scenePoint
+          ? object.isPointOnTextBox(scenePoint) ||
+            object.isPointOnCreateLeaderHandle(scenePoint, false)
+          : false;
+        didUpdate = object.setTextBoxHoverState(isHovered) || didUpdate;
       }
 
-      const nextCursor = isOverCreateHandle ? "crosshair" : "";
+      if (didUpdate) {
+        canvas.requestRenderAll();
+      }
+    };
+
+    const refreshLeaderSelectionVisuals = () => {
+      for (const object of canvas.getObjects()) {
+        if (object instanceof LeaderTextWithArrow) {
+          object.syncSelectionVisuals();
+        }
+      }
+      canvas.requestRenderAll();
+    };
+
+    const updateCanvasCursor = (scenePoint?: Point) => {
+      const effectiveTool = resolveEffectiveTool();
+      let nextCursor = "default";
+
+      if (effectiveTool === "hand") {
+        nextCursor = isPanningViewport ? "grabbing" : "grab";
+      } else if (effectiveTool === "pointer") {
+        let isOverCreateHandle = false;
+
+        if (scenePoint && !placingLeaderTarget) {
+          const objects = canvas.getObjects();
+          for (let index = objects.length - 1; index >= 0; index -= 1) {
+            const object = objects[index];
+            if (
+              object instanceof LeaderTextWithArrow &&
+              object.isPointOnCreateLeaderHandle(scenePoint)
+            ) {
+              isOverCreateHandle = true;
+              break;
+            }
+          }
+        }
+
+        nextCursor = isOverCreateHandle ? "crosshair" : "default";
+      } else {
+        nextCursor = "crosshair";
+      }
+
       if (canvas.upperCanvasEl.style.cursor !== nextCursor) {
         canvas.upperCanvasEl.style.cursor = nextCursor;
       }
+      canvas.defaultCursor = nextCursor;
+      canvas.hoverCursor = nextCursor;
+    };
+
+    const clearShapePreviewObject = () => {
+      if (!shapePreviewObject) {
+        return;
+      }
+
+      canvas.remove(shapePreviewObject);
+      shapePreviewObject = null;
+    };
+
+    const clearShapePointerDownState = () => {
+      isShapePointerDown = false;
+      shapeDidDrag = false;
+      shapePointerDownStart = null;
+      shapeToolAtPointerDown = null;
+    };
+
+    const clearPendingShapeStart = () => {
+      pendingShapeStart = null;
+    };
+
+    const stopViewportPanning = () => {
+      isPanningViewport = false;
+      panClientPoint = null;
+    };
+
+    const setLeaderPlacementMode = () => {
+      const isPointerMode = resolveEffectiveTool() === "pointer";
+      canvas.selection = isPointerMode && !placingLeaderTarget;
     };
 
     const beginLeaderPlacement = (
@@ -271,10 +611,10 @@ export const FabricJsonCanvas = forwardRef<
       isPlacementPointerDown = true;
       didDragDuringPlacementPointerDown = false;
       placementPointerDownStart = startPoint.clone();
-      setLeaderPlacementMode(true);
-      updateCreateHandleCursor();
+      setLeaderPlacementMode();
       updateLeaderHoverStates();
       refreshLeaderSelectionVisuals();
+      updateCanvasCursor(startPoint);
     };
 
     const endLeaderPlacement = (
@@ -303,44 +643,140 @@ export const FabricJsonCanvas = forwardRef<
       isPlacementPointerDown = false;
       didDragDuringPlacementPointerDown = false;
       placementPointerDownStart = null;
-      setLeaderPlacementMode(false);
+      setLeaderPlacementMode();
       if (options.commit) {
         canvas.setActiveObject(target);
         target.syncSelectionVisuals();
       }
-      updateCreateHandleCursor(options.scenePoint);
       updateLeaderHoverStates(options.scenePoint);
+      updateCanvasCursor(options.scenePoint);
       canvas.requestRenderAll();
     };
 
-    const refreshLeaderSelectionVisuals = () => {
-      for (const object of canvas.getObjects()) {
-        if (object instanceof LeaderTextWithArrow) {
-          object.syncSelectionVisuals();
-        }
+    const createPreviewObjectForTool = (tool: ShapeTool, startPoint: Point) => {
+      let previewObject: FabricObject;
+
+      if (tool === "arrow") {
+        previewObject = new LeaderTextWithArrow({
+          left: startPoint.x,
+          top: startPoint.y,
+          text: "",
+          leaderEnds: [
+            { x: startPoint.x + MIN_GEOMETRY_SIZE, y: startPoint.y },
+          ],
+          textFill: DEFAULT_STROKE_COLOR,
+          leaderStroke: DEFAULT_STROKE_COLOR,
+          leaderStrokeWidth: DEFAULT_STROKE_WIDTH,
+        });
+      } else if (tool === "circle") {
+        previewObject = new Circle({
+          left: startPoint.x,
+          top: startPoint.y,
+          originX: "center",
+          originY: "center",
+          radius: MIN_GEOMETRY_SIZE,
+          fill: "transparent",
+          stroke: DEFAULT_STROKE_COLOR,
+          strokeWidth: DEFAULT_STROKE_WIDTH,
+          strokeUniform: true,
+        });
+      } else if (tool === "ellipse") {
+        previewObject = new Ellipse({
+          left: startPoint.x,
+          top: startPoint.y,
+          originX: "center",
+          originY: "center",
+          rx: MIN_GEOMETRY_SIZE,
+          ry: MIN_GEOMETRY_SIZE,
+          fill: "transparent",
+          stroke: DEFAULT_STROKE_COLOR,
+          strokeWidth: DEFAULT_STROKE_WIDTH,
+          strokeUniform: true,
+        });
+      } else {
+        previewObject = new Rect({
+          left: startPoint.x,
+          top: startPoint.y,
+          originX: "left",
+          originY: "top",
+          width: MIN_GEOMETRY_SIZE,
+          height: MIN_GEOMETRY_SIZE,
+          fill: "transparent",
+          stroke: DEFAULT_STROKE_COLOR,
+          strokeWidth: DEFAULT_STROKE_WIDTH,
+          strokeUniform: true,
+        });
       }
+
+      previewObject.set({
+        selectable: false,
+        evented: false,
+      });
+      applyObjectBehaviorRules(previewObject);
+      canvas.add(previewObject);
+      return previewObject;
+    };
+
+    const addCommittedObject = (object: FabricObject) => {
+      object.set({
+        selectable: true,
+        evented: true,
+      });
+      applyObjectBehaviorRules(object);
+      canvas.add(object);
       canvas.requestRenderAll();
     };
 
-    const updateLeaderHoverStates = (scenePoint?: Point) => {
-      let didUpdate = false;
-
-      for (const object of canvas.getObjects()) {
-        if (!(object instanceof LeaderTextWithArrow)) {
-          continue;
-        }
-
-        const isHovered = scenePoint
-          ? object.isPointOnTextBox(scenePoint) ||
-            object.isPointOnCreateLeaderHandle(scenePoint, false)
-          : false;
-        didUpdate = object.setTextBoxHoverState(isHovered) || didUpdate;
+    const commitShapeDragPreview = (
+      tool: ShapeTool,
+      startPoint: Point,
+      endPoint: Point,
+    ) => {
+      const createdObject = createObjectFromTool(tool, startPoint, endPoint);
+      clearShapePreviewObject();
+      if (!createdObject) {
+        return;
       }
 
-      if (didUpdate) {
-        canvas.requestRenderAll();
-      }
+      addCommittedObject(createdObject);
+      canvas.setActiveObject(createdObject);
+      canvas.requestRenderAll();
     };
+
+    const applyInteractionMode = () => {
+      const effectiveTool = resolveEffectiveTool();
+      const activeToolFromToolbar = activeToolRef.current;
+
+      if (activeToolFromToolbar !== previousActiveTool) {
+        previousActiveTool = activeToolFromToolbar;
+        clearShapePreviewObject();
+        clearShapePointerDownState();
+        clearPendingShapeStart();
+      }
+
+      if (effectiveTool !== "pointer" && placingLeaderTarget) {
+        endLeaderPlacement();
+      }
+
+      if (effectiveTool !== "hand") {
+        stopViewportPanning();
+      }
+
+      const isPointerMode = effectiveTool === "pointer";
+      canvas.skipTargetFind = !isPointerMode;
+      canvas.selection = isPointerMode && !placingLeaderTarget;
+
+      if (!isPointerMode) {
+        canvas.discardActiveObject();
+        updateLeaderHoverStates();
+      }
+
+      updateCanvasCursor();
+      canvas.requestRenderAll();
+    };
+
+    applyInteractionModeRef.current = applyInteractionMode;
+    applyInteractionMode();
 
     const handleObjectMoving = (event: { target?: FabricObject }) => {
       const target = event.target;
@@ -390,6 +826,10 @@ export const FabricJsonCanvas = forwardRef<
     };
 
     const handleMouseDoubleClick = (event: { target?: FabricObject }) => {
+      if (resolveEffectiveTool() !== "pointer") {
+        return;
+      }
+
       const target = event.target;
       if (!(target instanceof LeaderTextWithArrow)) {
         return;
@@ -402,15 +842,76 @@ export const FabricJsonCanvas = forwardRef<
     const handleMouseDown = (event: {
       target?: FabricObject;
       scenePoint?: Point;
+      e?: Event;
     }) => {
-      if (!event.scenePoint) {
+      const scenePoint = event.scenePoint;
+      if (!scenePoint) {
         return;
       }
 
+      const effectiveTool = resolveEffectiveTool();
+
+      if (effectiveTool === "hand") {
+        const pointerEvent = event.e;
+        if (pointerEvent instanceof MouseEvent) {
+          isPanningViewport = true;
+          panClientPoint = {
+            x: pointerEvent.clientX,
+            y: pointerEvent.clientY,
+          };
+          updateCanvasCursor(scenePoint);
+        }
+        return;
+      }
+
+      if (effectiveTool === "text") {
+        const leader = createTextLeaderAt(scenePoint);
+        addCommittedObject(leader);
+        canvas.setActiveObject(leader);
+        leader.startTextEditing();
+        refreshLeaderSelectionVisuals();
+        updateCanvasCursor(scenePoint);
+        return;
+      }
+
+      if (isShapeTool(effectiveTool)) {
+        isShapePointerDown = true;
+        shapeDidDrag = false;
+        shapePointerDownStart = scenePoint.clone();
+        shapeToolAtPointerDown = effectiveTool;
+        const pendingStart =
+          pendingShapeStart?.tool === effectiveTool ? pendingShapeStart : null;
+        if (pendingStart) {
+          if (!shapePreviewObject) {
+            shapePreviewObject = createPreviewObjectForTool(
+              effectiveTool,
+              pendingStart.point,
+            );
+          }
+          if (shapePreviewObject) {
+            updatePreviewObjectFromTool(
+              effectiveTool,
+              shapePreviewObject,
+              pendingStart.point,
+              scenePoint,
+            );
+          }
+        } else {
+          clearShapePreviewObject();
+          shapePreviewObject = createPreviewObjectForTool(
+            effectiveTool,
+            scenePoint,
+          );
+        }
+        updateCanvasCursor(scenePoint);
+        return;
+      }
+
+      // Pointer mode
       if (placingLeaderTarget) {
         endLeaderPlacement({
           commit: true,
-          scenePoint: event.scenePoint,
+          scenePoint,
         });
         return;
       }
@@ -422,22 +923,24 @@ export const FabricJsonCanvas = forwardRef<
           continue;
         }
 
-        if (object.isPointOnEditTextHandle(event.scenePoint, false)) {
+        if (object.isPointOnEditTextHandle(scenePoint, false)) {
           canvas.setActiveObject(object);
           object.startTextEditing();
           refreshLeaderSelectionVisuals();
+          updateCanvasCursor(scenePoint);
           return;
         }
 
-        if (!object.isPointOnCreateLeaderHandle(event.scenePoint, false)) {
+        if (!object.isPointOnCreateLeaderHandle(scenePoint, false)) {
           continue;
         }
 
-        beginLeaderPlacement(object, event.scenePoint);
+        beginLeaderPlacement(object, scenePoint);
         return;
       }
 
       if (event.target) {
+        updateCanvasCursor(scenePoint);
         return;
       }
 
@@ -447,19 +950,117 @@ export const FabricJsonCanvas = forwardRef<
           continue;
         }
 
-        if (!object.isPointOnLeaderArrow(event.scenePoint)) {
+        if (!object.isPointOnLeaderArrow(scenePoint)) {
           continue;
         }
 
         canvas.setActiveObject(object);
         object.syncSelectionVisuals();
         canvas.requestRenderAll();
+        updateCanvasCursor(scenePoint);
         return;
       }
+
+      updateCanvasCursor(scenePoint);
     };
 
     const handleMouseMove = (event: { scenePoint?: Point; e?: Event }) => {
-      if (placingLeaderTarget && event.scenePoint) {
+      const scenePoint = event.scenePoint;
+      const effectiveTool = resolveEffectiveTool();
+
+      if (effectiveTool === "hand") {
+        if (
+          !isPanningViewport ||
+          !panClientPoint ||
+          !(event.e instanceof MouseEvent)
+        ) {
+          updateCanvasCursor(scenePoint);
+          return;
+        }
+
+        const deltaX = event.e.clientX - panClientPoint.x;
+        const deltaY = event.e.clientY - panClientPoint.y;
+        const viewportTransform = canvas.viewportTransform;
+        if (viewportTransform) {
+          viewportTransform[4] += deltaX;
+          viewportTransform[5] += deltaY;
+        }
+
+        panClientPoint = {
+          x: event.e.clientX,
+          y: event.e.clientY,
+        };
+        updateCanvasCursor(scenePoint);
+        canvas.requestRenderAll();
+        return;
+      }
+
+      if (isShapeTool(effectiveTool)) {
+        if (
+          isShapePointerDown &&
+          shapeToolAtPointerDown === effectiveTool &&
+          scenePoint &&
+          shapePointerDownStart &&
+          shapePreviewObject
+        ) {
+          const pendingStart =
+            pendingShapeStart?.tool === effectiveTool
+              ? pendingShapeStart
+              : null;
+          const previewStartPoint = pendingStart
+            ? pendingStart.point
+            : shapePointerDownStart;
+          const pointerButtons =
+            event.e &&
+            "buttons" in event.e &&
+            typeof event.e.buttons === "number"
+              ? event.e.buttons
+              : 0;
+          if (
+            scenePoint.distanceFrom(shapePointerDownStart) > GEOMETRY_EPSILON &&
+            pointerButtons > 0
+          ) {
+            shapeDidDrag = true;
+          }
+
+          updatePreviewObjectFromTool(
+            effectiveTool,
+            shapePreviewObject,
+            previewStartPoint,
+            scenePoint,
+          );
+          canvas.requestRenderAll();
+        }
+
+        if (
+          !isShapePointerDown &&
+          pendingShapeStart &&
+          pendingShapeStart.tool === effectiveTool &&
+          scenePoint
+        ) {
+          if (!shapePreviewObject) {
+            shapePreviewObject = createPreviewObjectForTool(
+              effectiveTool,
+              pendingShapeStart.point,
+            );
+          }
+          if (shapePreviewObject) {
+            updatePreviewObjectFromTool(
+              effectiveTool,
+              shapePreviewObject,
+              pendingShapeStart.point,
+              scenePoint,
+            );
+            canvas.requestRenderAll();
+          }
+        }
+
+        updateCanvasCursor(scenePoint);
+        return;
+      }
+
+      // Pointer mode
+      if (placingLeaderTarget && scenePoint) {
         const pointerButtons =
           event.e && "buttons" in event.e && typeof event.e.buttons === "number"
             ? event.e.buttons
@@ -467,33 +1068,99 @@ export const FabricJsonCanvas = forwardRef<
         if (
           isPlacementPointerDown &&
           placementPointerDownStart &&
-          event.scenePoint.distanceFrom(placementPointerDownStart) > 0.0001 &&
+          scenePoint.distanceFrom(placementPointerDownStart) >
+            GEOMETRY_EPSILON &&
           pointerButtons > 0
         ) {
           didDragDuringPlacementPointerDown = true;
         }
-        placingLeaderTarget.updateLeaderEndpointPlacement(event.scenePoint);
-        updateCreateHandleCursor();
+        placingLeaderTarget.updateLeaderEndpointPlacement(scenePoint);
+        updateCanvasCursor(scenePoint);
         canvas.requestRenderAll();
         return;
       }
 
-      updateCreateHandleCursor(event.scenePoint);
-      updateLeaderHoverStates(event.scenePoint);
+      updateLeaderHoverStates(scenePoint);
+      updateCanvasCursor(scenePoint);
     };
 
-    const handleMouseUp = (event: { scenePoint?: Point }) => {
+    const handleMouseUp = (event: { scenePoint?: Point; e?: Event }) => {
+      const scenePoint = event.scenePoint;
+      const effectiveTool = resolveEffectiveTool();
+
+      if (effectiveTool === "hand") {
+        stopViewportPanning();
+        updateCanvasCursor(scenePoint);
+        return;
+      }
+
+      if (isShapeTool(effectiveTool)) {
+        if (
+          !isShapePointerDown ||
+          !shapeToolAtPointerDown ||
+          !shapePointerDownStart
+        ) {
+          updateCanvasCursor(scenePoint);
+          return;
+        }
+
+        const toolAtPointerDown = shapeToolAtPointerDown;
+        const startPoint = shapePointerDownStart;
+        const endPoint = scenePoint ?? startPoint;
+        const pendingStart =
+          pendingShapeStart?.tool === toolAtPointerDown
+            ? pendingShapeStart
+            : null;
+
+        clearShapePointerDownState();
+
+        if (pendingStart) {
+          clearShapePreviewObject();
+          const createdObject = createObjectFromTool(
+            toolAtPointerDown,
+            pendingStart.point,
+            endPoint,
+          );
+          clearPendingShapeStart();
+          if (createdObject) {
+            addCommittedObject(createdObject);
+          }
+          updateCanvasCursor(scenePoint);
+          return;
+        }
+
+        if (shapeDidDrag) {
+          clearPendingShapeStart();
+          commitShapeDragPreview(toolAtPointerDown, startPoint, endPoint);
+          updateCanvasCursor(scenePoint);
+          return;
+        }
+
+        clearShapePreviewObject();
+
+        pendingShapeStart = {
+          tool: toolAtPointerDown,
+          point: startPoint.clone(),
+        };
+
+        updateCanvasCursor(scenePoint);
+        return;
+      }
+
       if (
         placingLeaderTarget &&
         isPlacementPointerDown &&
         didDragDuringPlacementPointerDown &&
-        event.scenePoint
+        scenePoint
       ) {
         endLeaderPlacement({
           commit: true,
-          scenePoint: event.scenePoint,
+          scenePoint,
         });
+        return;
       }
+
+      updateCanvasCursor(scenePoint);
     };
 
     canvas.on("object:moving", handleObjectMoving);
@@ -509,7 +1176,11 @@ export const FabricJsonCanvas = forwardRef<
     canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
 
     return () => {
+      applyInteractionModeRef.current = null;
+      clearShapePreviewObject();
+      stopViewportPanning();
       endLeaderPlacement();
+
       canvas.off("object:moving", handleObjectMoving);
       canvas.off("object:scaling", handleObjectScaling);
       canvas.off("object:modified", handleObjectModified);
@@ -575,6 +1246,7 @@ export const FabricJsonCanvas = forwardRef<
         canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
       }
 
+      applyInteractionModeRef.current?.();
       canvas.requestRenderAll();
     };
 
@@ -585,20 +1257,96 @@ export const FabricJsonCanvas = forwardRef<
     };
   }, [backgroundImageUrl, initialModel, viewportHeight, viewportWidth]);
 
-  const style: CSSProperties = {
+  const toolbarItems: Array<{
+    tool: CanvasTool;
+    label: string;
+    icon: ReactNode;
+  }> = [
+    {
+      tool: "pointer",
+      label: "Pointer",
+      icon: <MousePointer2 className="h-4 w-4" />,
+    },
+    {
+      tool: "hand",
+      label: "Hand",
+      icon: <Hand className="h-4 w-4" />,
+    },
+    {
+      tool: "text",
+      label: "Text",
+      icon: <Type className="h-4 w-4" />,
+    },
+    {
+      tool: "arrow",
+      label: "Arrow",
+      icon: <ArrowRight className="h-4 w-4" />,
+    },
+    {
+      tool: "circle",
+      label: "Circle",
+      icon: <CircleIcon className="h-4 w-4" />,
+    },
+    {
+      tool: "ellipse",
+      label: "Ellipse",
+      icon: <EllipseToolIcon className="h-4 w-4" />,
+    },
+    {
+      tool: "rectangle",
+      label: "Rectangle",
+      icon: <SquareIcon className="h-4 w-4" />,
+    },
+  ];
+
+  const effectiveTool = isSpacePanActive ? "hand" : activeTool;
+
+  const canvasStyle: CSSProperties = {
     width: viewportWidth,
     height: viewportHeight,
   };
 
   return (
     <div
-      className={cn(
-        "overflow-hidden rounded-md border border-border bg-[#2f2f2f]",
-        className,
-      )}
-      style={style}
+      className={cn("inline-flex items-stretch gap-2", className)}
+      style={{ height: viewportHeight }}
     >
-      <canvas ref={canvasElementRef} className="block h-full w-full" />
+      <div className="flex w-10 flex-col items-center gap-1 rounded-md border border-border bg-[#262626] p-1">
+        {toolbarItems.map((item) => {
+          const isActive = item.tool === effectiveTool;
+          return (
+            <button
+              key={item.tool}
+              type="button"
+              title={item.label}
+              aria-label={item.label}
+              onClick={() => setActiveTool(item.tool)}
+              className={cn(
+                "flex h-8 w-8 items-center justify-center rounded-sm border text-white transition-colors",
+                isActive
+                  ? "border-[#8aa0ff] bg-[#3a3a3a]"
+                  : "border-transparent bg-transparent hover:bg-[#343434]",
+              )}
+            >
+              {item.icon}
+            </button>
+          );
+        })}
+      </div>
+
+      <div
+        className="overflow-hidden rounded-md border border-border bg-[#2f2f2f]"
+        style={canvasStyle}
+        onMouseEnter={() => {
+          isPointerOverCanvasRef.current = true;
+        }}
+        onMouseLeave={() => {
+          isPointerOverCanvasRef.current = false;
+          setIsSpacePanActive(false);
+        }}
+      >
+        <canvas ref={canvasElementRef} className="block h-full w-full" />
+      </div>
     </div>
   );
 });

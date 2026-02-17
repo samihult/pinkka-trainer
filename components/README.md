@@ -2,8 +2,10 @@
 
 Reusable UI building blocks for app pages.
 
-- `fabric-json-canvas.tsx`: Minimal uncontrolled Fabric.js canvas that initializes from JSON (`loadFromJSON`), keeps an
-  internal serialized model (`toJSON`), and optionally fits a background image to the center of a dark-grey viewport.
+- `fabric-json-canvas.tsx`: Uncontrolled Fabric.js canvas that initializes from JSON (`loadFromJSON`) and optionally
+  fits a background image to the center of a dark-grey viewport. Includes a left-side tool toolbar (pointer, hand, text,
+  arrow, circle, ellipse, rectangle), temporary pan via spacebar while hovering, and draw interactions that support both
+  drag/drop and two-click placement for geometry/leader creation.
 - `fabric-leader-text-with-arrow.ts`: Custom Fabric.js element that combines a text label with a leader arrow whose
   start stays fixed at the text midpoint and whose endpoints are modeled as dedicated drag handles. Supports inline
   editing, configurable text alignment, multiple arrows per text box, arrow deletion by dragging an endpoint back to
