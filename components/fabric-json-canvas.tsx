@@ -221,6 +221,11 @@ export const FabricJsonCanvas = forwardRef<
 
     fabricCanvasRef.current = canvas;
     let placingLeaderTarget: LeaderTextWithArrow | null = null;
+    const defaultMarqueeSelectionEnabled = canvas.selection;
+
+    const setLeaderPlacementMode = (isPlacing: boolean) => {
+      canvas.selection = isPlacing ? false : defaultMarqueeSelectionEnabled;
+    };
 
     const refreshLeaderSelectionVisuals = () => {
       for (const object of canvas.getObjects()) {
@@ -319,6 +324,7 @@ export const FabricJsonCanvas = forwardRef<
       if (placingLeaderTarget) {
         placingLeaderTarget.commitLeaderEndpointPlacement(event.scenePoint);
         placingLeaderTarget = null;
+        setLeaderPlacementMode(false);
         updateLeaderHoverStates(event.scenePoint);
         canvas.requestRenderAll();
         return;
@@ -338,6 +344,7 @@ export const FabricJsonCanvas = forwardRef<
         canvas.setActiveObject(object);
         object.beginLeaderEndpointPlacement(event.scenePoint);
         placingLeaderTarget = object;
+        setLeaderPlacementMode(true);
         updateLeaderHoverStates();
         refreshLeaderSelectionVisuals();
         return;
@@ -386,6 +393,7 @@ export const FabricJsonCanvas = forwardRef<
     canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
 
     return () => {
+      setLeaderPlacementMode(false);
       canvas.off("object:moving", handleObjectMoving);
       canvas.off("object:scaling", handleObjectScaling);
       canvas.off("object:modified", handleObjectModified);
