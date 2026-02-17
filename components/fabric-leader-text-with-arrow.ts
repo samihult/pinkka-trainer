@@ -96,18 +96,22 @@ const DEFAULT_LEADER_STROKE_WIDTH = 5;
 const DEFAULT_FONT_SIZE = 24;
 const DEFAULT_FONT_FAMILY = "Arial";
 const DEFAULT_TEXT_ALIGN: LeaderTextAlignment = "center";
+const EDITING_TEXT_BACKGROUND_COLOR = "#2f2f2f";
 const LEADER_TEXT_CLIP_EXTRA_PADDING = 4;
 const TEXT_BORDER_PADDING_X = 8;
 const TEXT_BORDER_PADDING_Y = 4;
-const CREATE_LEADER_HANDLE_RADIUS = 5;
+const CREATE_LEADER_HANDLE_RADIUS = 7;
 const CREATE_LEADER_HANDLE_GAP = 8;
 const CREATE_LEADER_HANDLE_HIT_TOLERANCE = 4;
-const EDIT_TEXT_HANDLE_WIDTH = 18;
+const EDIT_TEXT_HANDLE_WIDTH = 14;
 const EDIT_TEXT_HANDLE_HEIGHT = 14;
 const EDIT_TEXT_HANDLE_GAP = 8;
 const EDIT_TEXT_HANDLE_HIT_TOLERANCE = 4;
 const NO_TEXT_START_HANDLE_HIT_TOLERANCE = 4;
 const LEADER_END_CONTROL_KEY_PREFIX = "leaderEnd-";
+const LEADER_DELETE_CONTROL_KEY_PREFIX = "leaderDelete-";
+const LEADER_DELETE_CONTROL_SIZE = 10;
+const LEADER_DELETE_CONTROL_GAP = 4;
 const HIDDEN_TRANSFORM_CONTROLS = {
   bl: false,
   br: false,
@@ -137,6 +141,21 @@ function normalizeLeaderEndpoints(
         Number.isFinite(endpoint?.x) && Number.isFinite(endpoint?.y),
     )
     .map((endpoint) => cloneEndpoint(endpoint));
+}
+
+function normalizeLeaderText(value: string | null | undefined) {
+  const lines = (value ?? "").split(/\r?\n/).map((line) => line.trim());
+  let startIndex = 0;
+  let endIndex = lines.length;
+
+  while (startIndex < endIndex && lines[startIndex].length === 0) {
+    startIndex += 1;
+  }
+  while (endIndex > startIndex && lines[endIndex - 1].length === 0) {
+    endIndex -= 1;
+  }
+
+  return lines.slice(startIndex, endIndex).join("\n");
 }
 
 function calculateLeaderStartOutsideTextBox(
@@ -268,6 +287,85 @@ function createLeaderEndControl(endpointIndex: number) {
   return control;
 }
 
+function createLeaderDeleteControl(endpointIndex: number) {
+  const control = new Control({
+    actionName: `deleteLeaderEnd:${endpointIndex}`,
+    cursorStyle: "pointer",
+    sizeX: LEADER_DELETE_CONTROL_SIZE,
+    sizeY: LEADER_DELETE_CONTROL_SIZE,
+    mouseDownHandler: function (_eventData, transform) {
+      if (!(transform.target instanceof LeaderTextWithArrow)) {
+        return false;
+      }
+
+      return transform.target.deleteLeaderArrowByIndex(endpointIndex);
+    },
+    positionHandler: function (_dim, _finalMatrix, fabricObject) {
+      if (!(fabricObject instanceof LeaderTextWithArrow)) {
+        return new Point(0, 0);
+      }
+
+      return fabricObject.getLeaderDeleteHandleCenterInViewportPlane(
+        endpointIndex,
+        this as Control,
+      );
+    },
+    render: function (
+      ctx: CanvasRenderingContext2D,
+      left: number,
+      top: number,
+      _styleOverride,
+      fabricObject,
+    ) {
+      if (!(fabricObject instanceof LeaderTextWithArrow)) {
+        return;
+      }
+
+      const size = Math.max(this.sizeX ?? 0, this.sizeY ?? 0);
+      const halfSize = size / 2;
+      const glyphInset = size * 0.25;
+      const strokeColor = fabricObject.getControlAccentColor();
+      const lineWidth = Math.max(1, size * 0.12);
+
+      ctx.save();
+      ctx.translate(left, top);
+      ctx.fillStyle = "white";
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = lineWidth;
+      ctx.lineJoin = "miter";
+      ctx.lineCap = "square";
+      ctx.beginPath();
+      ctx.rect(-halfSize, -halfSize, size, size);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(-halfSize + glyphInset, -halfSize + glyphInset);
+      ctx.lineTo(halfSize - glyphInset, halfSize - glyphInset);
+      ctx.moveTo(halfSize - glyphInset, -halfSize + glyphInset);
+      ctx.lineTo(-halfSize + glyphInset, halfSize - glyphInset);
+      ctx.stroke();
+      ctx.restore();
+    },
+  });
+
+  const defaultGetVisibility = control.getVisibility.bind(control);
+  control.getVisibility = function (
+    fabricObject: InteractiveFabricObject,
+    controlKey: string,
+  ) {
+    if (!(fabricObject instanceof LeaderTextWithArrow)) {
+      return defaultGetVisibility(fabricObject, controlKey);
+    }
+
+    return (
+      fabricObject.isLeaderDeleteHandleVisible(endpointIndex) &&
+      defaultGetVisibility(fabricObject, controlKey)
+    );
+  };
+
+  return control;
+}
+
 /**
  * Fabric custom class that combines a text label and one or more leader arrows
  * with fixed start at text midpoint.
@@ -324,7 +422,7 @@ export class LeaderTextWithArrow extends Group {
       x: (options.left ?? 0) + 110,
       y: (options.top ?? 0) - 60,
     };
-    const text = options.text ?? DEFAULT_TEXT;
+    const text = normalizeLeaderText(options.text ?? DEFAULT_TEXT);
     const textFill = options.textFill ?? DEFAULT_TEXT_FILL;
     const leaderStroke = options.leaderStroke ?? DEFAULT_LEADER_STROKE;
     const leaderStrokeWidth =
@@ -385,7 +483,7 @@ export class LeaderTextWithArrow extends Group {
 
   /** Update text content while keeping leader starts anchored to text midpoint. */
   setTextContent(nextText: string) {
-    this.text = nextText;
+    this.text = normalizeLeaderText(nextText);
     this.isLeaderDeletionHoverActive = false;
     this.leaderDeletionHoverScenePoint = null;
     this.refreshVisuals();
@@ -529,8 +627,8 @@ export class LeaderTextWithArrow extends Group {
   }
 
   /** Returns true when scene-space point is over the empty-text edit handle. */
-  isPointOnEditTextHandle(pointOnScenePlane: Point) {
-    if (!this.isEditTextHandleVisible()) {
+  isPointOnEditTextHandle(pointOnScenePlane: Point, requireVisible = true) {
+    if (requireVisible && !this.isEditTextHandleVisible()) {
       return false;
     }
 
@@ -656,6 +754,7 @@ export class LeaderTextWithArrow extends Group {
       fontFamily: this.fontFamily,
       textAlign: this.textAlign,
       fill: this.textFill,
+      backgroundColor: EDITING_TEXT_BACKGROUND_COLOR,
       editable: true,
       hasControls: false,
       hasBorders: true,
@@ -750,6 +849,20 @@ export class LeaderTextWithArrow extends Group {
     return handleCenterOnScenePlane.transform(sceneToViewportMatrix);
   }
 
+  /** Compute delete-handle center in viewport space next to endpoint handle. */
+  getLeaderDeleteHandleCenterInViewportPlane(
+    endpointIndex: number,
+    control?: Control,
+  ) {
+    const endpointHandleCenter =
+      this.getLeaderHandleCenterInViewportPlane(endpointIndex);
+    const endpointHandleSize = this.getControlSize();
+    const deleteHandleSize = this.getControlSize(control);
+    const offsetX =
+      (endpointHandleSize + deleteHandleSize) / 2 + LEADER_DELETE_CONTROL_GAP;
+    return endpointHandleCenter.add(new Point(offsetX, 0));
+  }
+
   /** Resolve absolute endpoint from dragged handle center in scene coordinates. */
   resolveEndpointFromHandleCenter(
     endpointIndex: number,
@@ -809,6 +922,40 @@ export class LeaderTextWithArrow extends Group {
   /** Returns whether endpoint-handle drag interaction is currently active. */
   isLeaderHandleDragInProgress() {
     return this.isDraggingLeaderHandle;
+  }
+
+  /** Returns control accent color used for custom handle rendering. */
+  getControlAccentColor() {
+    return this.getSelectionBorderColor();
+  }
+
+  /** Returns true when endpoint delete control should be visible. */
+  isLeaderDeleteHandleVisible(endpointIndex: number) {
+    return (
+      this.isSelectedOnCanvas() &&
+      this.canDeleteLeaderArrow(endpointIndex) &&
+      !this.isPlacingLeaderEndpoint &&
+      !this.editingTextObject &&
+      !this.isLeaderHandleDragInProgress()
+    );
+  }
+
+  /** Delete one leader arrow endpoint if allowed. */
+  deleteLeaderArrowByIndex(endpointIndex: number) {
+    if (!this.canDeleteLeaderArrow(endpointIndex)) {
+      return false;
+    }
+
+    const nextLeaderEnds = [...this.leaderEnds];
+    nextLeaderEnds.splice(endpointIndex, 1);
+    this.leaderEnds = nextLeaderEnds;
+    this.syncLegacyLeaderEnd();
+    this.refreshVisuals();
+    this.setCoords();
+    this.dirty = true;
+    this.canvas?.setActiveObject(this);
+    this.canvas?.requestRenderAll();
+    return true;
   }
 
   containsPoint(point: Point) {
@@ -929,7 +1076,7 @@ export class LeaderTextWithArrow extends Group {
   }
 
   private hasTextContent() {
-    return this.text.trim().length > 0;
+    return this.getNormalizedText().length > 0;
   }
 
   private syncLegacyLeaderEnd() {
@@ -1019,7 +1166,7 @@ export class LeaderTextWithArrow extends Group {
   }
 
   private getDisplayText() {
-    return this.text;
+    return this.getNormalizedText();
   }
 
   private shouldShowTextBorder() {
@@ -1041,7 +1188,38 @@ export class LeaderTextWithArrow extends Group {
   }
 
   private canDeleteLeaderArrow(endpointIndex: number) {
-    return this.isValidLeaderIndex(endpointIndex) && this.leaderEnds.length > 1;
+    return (
+      this.isValidLeaderIndex(endpointIndex) &&
+      (this.leaderEnds.length > 1 || this.hasTextContent())
+    );
+  }
+
+  private getNormalizedText() {
+    return normalizeLeaderText(this.text);
+  }
+
+  private shouldDeleteIfEmpty() {
+    return this.leaderEnds.length === 0 && !this.hasTextContent();
+  }
+
+  private removeFromCanvasIfEmpty() {
+    if (!this.shouldDeleteIfEmpty()) {
+      return false;
+    }
+
+    const canvas = this.canvas;
+    if (!canvas) {
+      return false;
+    }
+
+    if (canvas.getActiveObject() === this) {
+      canvas.discardActiveObject();
+    }
+
+    canvas.remove(this);
+    this.dirty = true;
+    canvas.requestRenderAll();
+    return true;
   }
 
   private isCreateLeaderHandleVisible() {
@@ -1215,7 +1393,7 @@ export class LeaderTextWithArrow extends Group {
     const handleCenter = this.getCreateLeaderHandleCenterOnObjectPlane();
     const handleRadius = CREATE_LEADER_HANDLE_RADIUS / viewportScale;
     const lineWidth = 1 / viewportScale;
-    const plusSize = handleRadius * 0.9;
+    const plusSize = handleRadius * 1.1;
 
     ctx.save();
     ctx.fillStyle = "white";
@@ -1265,8 +1443,15 @@ export class LeaderTextWithArrow extends Group {
     const handleGeometry = this.getEditTextHandleGeometryOnObjectPlane();
     const halfWidth = handleGeometry.width / 2;
     const halfHeight = handleGeometry.height / 2;
-    const tHeight = handleGeometry.height * 0.46;
-    const tTopWidth = handleGeometry.width * 0.46;
+    const tWidth = handleGeometry.width * 0.64;
+    const tTopY = handleGeometry.center.y - handleGeometry.height * 0.28;
+    const tTopBarHeight = Math.max(
+      lineWidth * 1.5,
+      handleGeometry.height * 0.13,
+    );
+    const tStemWidth = Math.max(lineWidth * 1.5, handleGeometry.width * 0.14);
+    const tSerifDrop = handleGeometry.height * 0.16;
+    const tStemBottom = handleGeometry.center.y + handleGeometry.height * 0.32;
 
     ctx.save();
     ctx.strokeStyle = this.getSelectionBorderColor();
@@ -1284,18 +1469,31 @@ export class LeaderTextWithArrow extends Group {
     ctx.fill();
     ctx.stroke();
 
-    ctx.beginPath();
-    ctx.moveTo(
-      handleGeometry.center.x - tTopWidth / 2,
-      handleGeometry.center.y - tHeight / 2,
+    ctx.fillStyle = this.getSelectionBorderColor();
+    ctx.fillRect(
+      handleGeometry.center.x - tWidth / 2,
+      tTopY,
+      tWidth,
+      tTopBarHeight,
     );
-    ctx.lineTo(
-      handleGeometry.center.x + tTopWidth / 2,
-      handleGeometry.center.y - tHeight / 2,
+    ctx.fillRect(
+      handleGeometry.center.x - tWidth / 2,
+      tTopY,
+      tTopBarHeight,
+      tSerifDrop,
     );
-    ctx.moveTo(handleGeometry.center.x, handleGeometry.center.y - tHeight / 2);
-    ctx.lineTo(handleGeometry.center.x, handleGeometry.center.y + tHeight / 2);
-    ctx.stroke();
+    ctx.fillRect(
+      handleGeometry.center.x + tWidth / 2 - tTopBarHeight,
+      tTopY,
+      tTopBarHeight,
+      tSerifDrop,
+    );
+    ctx.fillRect(
+      handleGeometry.center.x - tStemWidth / 2,
+      tTopY + tTopBarHeight,
+      tStemWidth,
+      tStemBottom - (tTopY + tTopBarHeight),
+    );
     ctx.restore();
   }
 
@@ -1374,6 +1572,8 @@ export class LeaderTextWithArrow extends Group {
     for (let index = 0; index < this.leaderEnds.length; index += 1) {
       nextControls[`${LEADER_END_CONTROL_KEY_PREFIX}${index}`] =
         createLeaderEndControl(index);
+      nextControls[`${LEADER_DELETE_CONTROL_KEY_PREFIX}${index}`] =
+        createLeaderDeleteControl(index);
     }
 
     this.controls = nextControls;
@@ -1382,6 +1582,10 @@ export class LeaderTextWithArrow extends Group {
 
   private refreshVisuals() {
     const displayText = this.getDisplayText();
+    this.text = displayText;
+    if (this.removeFromCanvasIfEmpty()) {
+      return;
+    }
     this.textObject.set({
       text: displayText,
       fill: this.textFill,

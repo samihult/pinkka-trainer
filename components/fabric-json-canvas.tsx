@@ -232,6 +232,29 @@ export const FabricJsonCanvas = forwardRef<
       canvas.selection = isPlacing ? false : defaultMarqueeSelectionEnabled;
     };
 
+    const updateCreateHandleCursor = (scenePoint?: Point) => {
+      let isOverCreateHandle = false;
+
+      if (scenePoint && !placingLeaderTarget) {
+        const objects = canvas.getObjects();
+        for (let index = objects.length - 1; index >= 0; index -= 1) {
+          const object = objects[index];
+          if (
+            object instanceof LeaderTextWithArrow &&
+            object.isPointOnCreateLeaderHandle(scenePoint)
+          ) {
+            isOverCreateHandle = true;
+            break;
+          }
+        }
+      }
+
+      const nextCursor = isOverCreateHandle ? "crosshair" : "";
+      if (canvas.upperCanvasEl.style.cursor !== nextCursor) {
+        canvas.upperCanvasEl.style.cursor = nextCursor;
+      }
+    };
+
     const beginLeaderPlacement = (
       object: LeaderTextWithArrow,
       startPoint: Point,
@@ -249,6 +272,7 @@ export const FabricJsonCanvas = forwardRef<
       didDragDuringPlacementPointerDown = false;
       placementPointerDownStart = startPoint.clone();
       setLeaderPlacementMode(true);
+      updateCreateHandleCursor();
       updateLeaderHoverStates();
       refreshLeaderSelectionVisuals();
     };
@@ -284,6 +308,7 @@ export const FabricJsonCanvas = forwardRef<
         canvas.setActiveObject(target);
         target.syncSelectionVisuals();
       }
+      updateCreateHandleCursor(options.scenePoint);
       updateLeaderHoverStates(options.scenePoint);
       canvas.requestRenderAll();
     };
@@ -397,14 +422,14 @@ export const FabricJsonCanvas = forwardRef<
           continue;
         }
 
-        if (object.isPointOnEditTextHandle(event.scenePoint)) {
+        if (object.isPointOnEditTextHandle(event.scenePoint, false)) {
           canvas.setActiveObject(object);
           object.startTextEditing();
           refreshLeaderSelectionVisuals();
           return;
         }
 
-        if (!object.isPointOnCreateLeaderHandle(event.scenePoint)) {
+        if (!object.isPointOnCreateLeaderHandle(event.scenePoint, false)) {
           continue;
         }
 
@@ -448,10 +473,12 @@ export const FabricJsonCanvas = forwardRef<
           didDragDuringPlacementPointerDown = true;
         }
         placingLeaderTarget.updateLeaderEndpointPlacement(event.scenePoint);
+        updateCreateHandleCursor();
         canvas.requestRenderAll();
         return;
       }
 
+      updateCreateHandleCursor(event.scenePoint);
       updateLeaderHoverStates(event.scenePoint);
     };
 
