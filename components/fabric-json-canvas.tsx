@@ -20,6 +20,7 @@ import {
   FabricObject,
   InteractiveFabricObject,
 } from "fabric";
+import { LeaderTextWithArrow } from "@/components/fabric-leader-text-with-arrow";
 
 import { cn } from "@/lib/utils";
 
@@ -80,7 +81,9 @@ function bakeGeometryIntoObject(object: FabricObject) {
   const nextScaleX = Math.abs(scaleX);
   const nextScaleY = Math.abs(scaleY);
 
-  if (object instanceof Ellipse) {
+  if (object instanceof LeaderTextWithArrow) {
+    object.scaleInternalGeometry(nextScaleX, nextScaleY);
+  } else if (object instanceof Ellipse) {
     object.set({
       rx: Math.max(0.5, object.rx * nextScaleX),
       ry: Math.max(0.5, object.ry * nextScaleY),
@@ -224,6 +227,10 @@ export const FabricJsonCanvas = forwardRef<
       }
 
       (target as TransformableFabricObject).transformMatrix = undefined;
+      if (target instanceof LeaderTextWithArrow) {
+        target.syncLeaderToAbsoluteEndpoint();
+        canvas.requestRenderAll();
+      }
     };
 
     const handleObjectModified = (event: { target?: FabricObject }) => {

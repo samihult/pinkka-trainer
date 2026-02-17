@@ -38,6 +38,18 @@ const sampleModel: unknown = {
       stroke: "#bae6fd",
       strokeWidth: 2,
     },
+    {
+      type: "leaderTextWithArrow",
+      left: 290,
+      top: 370,
+      text: "Leader text",
+      leaderEnd: { x: 470, y: 230 },
+      textFill: "#f8fafc",
+      leaderStroke: "#f8fafc",
+      leaderStrokeWidth: 2,
+      fontSize: 28,
+      fontFamily: "Arial",
+    },
   ],
 };
 
