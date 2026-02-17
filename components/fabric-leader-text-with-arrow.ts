@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * Custom Fabric.js element composed of a text label and a leader arrow.
- * The arrow start is fixed to the text midpoint and only the endpoint is modeled.
+ * Custom Fabric.js element composed of a text label and one or more leader arrows.
+ * Each arrow start is fixed to the text midpoint and only endpoints are modeled.
  */
 
 import {
@@ -34,8 +34,10 @@ export interface LeaderTextWithArrowOptions {
   top?: number;
   /** Label text content. */
   text?: string;
-  /** Leader endpoint modeled as one absolute point in canvas coordinates. */
+  /** Legacy single leader endpoint in absolute canvas coordinates. */
   leaderEnd?: LeaderArrowEndpoint | null;
+  /** Leader endpoints in absolute canvas coordinates. */
+  leaderEnds?: LeaderArrowEndpoint[];
   /** Label fill color. */
   textFill?: string;
   /** Arrow stroke color. */
@@ -58,8 +60,10 @@ export interface SerializedLeaderTextWithArrow extends SerializedGroupProps {
   type: "leaderTextWithArrow";
   /** Label text content. */
   text: string;
-  /** Leader endpoint modeled as one absolute point in canvas coordinates. */
-  leaderEnd: LeaderArrowEndpoint | null;
+  /** Legacy single leader endpoint in absolute canvas coordinates. */
+  leaderEnd?: LeaderArrowEndpoint | null;
+  /** Leader endpoints in absolute canvas coordinates. */
+  leaderEnds?: LeaderArrowEndpoint[];
   /** Label fill color. */
   textFill: string;
   /** Arrow stroke color. */
@@ -97,7 +101,7 @@ const TEXT_BORDER_PADDING = 4;
 const CREATE_LEADER_HANDLE_RADIUS = 5;
 const CREATE_LEADER_HANDLE_GAP = 8;
 const CREATE_LEADER_HANDLE_HIT_TOLERANCE = 4;
-const LEADER_END_CONTROL_KEY = "leaderEnd";
+const LEADER_END_CONTROL_KEY_PREFIX = "leaderEnd-";
 const HIDDEN_TRANSFORM_CONTROLS = {
   bl: false,
   br: false,
@@ -110,19 +114,38 @@ const HIDDEN_TRANSFORM_CONTROLS = {
   tr: false,
 } as const;
 
+function cloneEndpoint(endpoint: LeaderArrowEndpoint): LeaderArrowEndpoint {
+  return { x: endpoint.x, y: endpoint.y };
+}
+
+function normalizeLeaderEndpoints(
+  endpoints: LeaderArrowEndpoint[] | null | undefined,
+) {
+  if (!endpoints?.length) {
+    return [] as LeaderArrowEndpoint[];
+  }
+
+  return endpoints
+    .filter(
+      (endpoint) =>
+        Number.isFinite(endpoint?.x) && Number.isFinite(endpoint?.y),
+    )
+    .map((endpoint) => cloneEndpoint(endpoint));
+}
+
 function calculateLeaderStartOutsideTextBox(
-  endpoint: LeaderArrowEndpoint,
+  endpoint: Point,
   textBoxHalfWidth: number,
   textBoxHalfHeight: number,
   padding: number,
-): LeaderArrowEndpoint {
+) {
   const dx = endpoint.x;
   const dy = endpoint.y;
   const absDx = Math.abs(dx);
   const absDy = Math.abs(dy);
 
   if (absDx < 0.0001 && absDy < 0.0001) {
-    return { x: 0, y: 0 };
+    return new Point(0, 0);
   }
 
   const halfWidth = Math.max(0, textBoxHalfWidth + padding);
@@ -133,10 +156,7 @@ function calculateLeaderStartOutsideTextBox(
     : halfHeight / Math.max(absDy, 0.0001);
   const clampedT = Math.min(1, Math.max(0, t));
 
-  return {
-    x: dx * clampedT,
-    y: dy * clampedT,
-  };
+  return new Point(dx * clampedT, dy * clampedT);
 }
 
 function distancePointToSegment(point: Point, start: Point, end: Point) {
@@ -162,28 +182,16 @@ function distancePointToSegment(point: Point, start: Point, end: Point) {
   return point.distanceFrom(projectedPoint);
 }
 
-function getLeaderEndpointInObjectPlane(object: LeaderTextWithArrow) {
-  if (!object.leaderEnd) {
-    return null;
-  }
-
-  return util.sendPointToPlane(
-    new Point(object.leaderEnd.x, object.leaderEnd.y),
-    undefined,
-    object.calcTransformMatrix(),
-  );
-}
-
-function createLeaderEndControl() {
+function createLeaderEndControl(endpointIndex: number) {
   return new Control({
-    actionName: "modifyLeaderEnd",
+    actionName: `modifyLeaderEnd:${endpointIndex}`,
     cursorStyle: "crosshair",
     mouseDownHandler: function (_eventData, transform) {
       if (!(transform.target instanceof LeaderTextWithArrow)) {
         return false;
       }
 
-      transform.target.beginLeaderHandleDrag();
+      transform.target.beginLeaderHandleDrag(endpointIndex);
       return true;
     },
     positionHandler: function (_dim, finalMatrix, fabricObject) {
@@ -191,7 +199,10 @@ function createLeaderEndControl() {
         return new Point(0, 0).transform(finalMatrix);
       }
 
-      return fabricObject.getLeaderHandleCenterInViewportPlane(this as Control);
+      return fabricObject.getLeaderHandleCenterInViewportPlane(
+        endpointIndex,
+        this as Control,
+      );
     },
     actionHandler: function (_eventData, transform, x, y) {
       if (!(transform.target instanceof LeaderTextWithArrow)) {
@@ -199,10 +210,11 @@ function createLeaderEndControl() {
       }
 
       const resolvedEndpoint = transform.target.resolveEndpointFromHandleCenter(
+        endpointIndex,
         new Point(x, y),
         this as Control,
       );
-      transform.target.updateLeaderHandleDrag(resolvedEndpoint);
+      transform.target.updateLeaderHandleDrag(endpointIndex, resolvedEndpoint);
       transform.target.setCoords();
       transform.target.dirty = true;
       return true;
@@ -213,19 +225,20 @@ function createLeaderEndControl() {
       }
 
       const resolvedEndpoint = transform.target.resolveEndpointFromHandleCenter(
+        endpointIndex,
         new Point(x, y),
         this as Control,
       );
-      transform.target.updateLeaderHandleDrag(resolvedEndpoint);
-      transform.target.commitLeaderHandleDrag();
+      transform.target.updateLeaderHandleDrag(endpointIndex, resolvedEndpoint);
+      transform.target.commitLeaderHandleDrag(endpointIndex);
       return true;
     },
   });
 }
 
 /**
- * Fabric custom class that combines a text label and a leader arrow with fixed
- * start at text midpoint.
+ * Fabric custom class that combines a text label and one or more leader arrows
+ * with fixed start at text midpoint.
  */
 export class LeaderTextWithArrow extends Group {
   /** Registered Fabric type name used by JSON deserialization. */
@@ -234,6 +247,7 @@ export class LeaderTextWithArrow extends Group {
   static customProperties = [
     "text",
     "leaderEnd",
+    "leaderEnds",
     "textFill",
     "leaderStroke",
     "leaderStrokeWidth",
@@ -244,8 +258,10 @@ export class LeaderTextWithArrow extends Group {
 
   /** Current label text content. */
   declare text: string;
-  /** Current leader endpoint in absolute canvas coordinates. */
+  /** Legacy single leader endpoint alias (maps to first item in `leaderEnds`). */
   declare leaderEnd: LeaderArrowEndpoint | null;
+  /** Current leader endpoints in absolute canvas coordinates. */
+  declare leaderEnds: LeaderArrowEndpoint[];
   /** Current label fill color. */
   declare textFill: string;
   /** Current leader stroke color. */
@@ -260,9 +276,11 @@ export class LeaderTextWithArrow extends Group {
   declare textAlign: LeaderTextAlignment;
 
   private readonly textObject: FabricText;
+  private readonly baseControls: Record<string, Control>;
   private editingTextObject: IText | null = null;
   private disposeEditingListeners: (() => void) | null = null;
   private isDraggingLeaderHandle = false;
+  private draggingLeaderHandleIndex: number | null = null;
   private isLeaderDeletionHoverActive = false;
   private isHoveringTextBox = false;
   private isPlacingLeaderEndpoint = false;
@@ -273,10 +291,6 @@ export class LeaderTextWithArrow extends Group {
       x: (options.left ?? 0) + 110,
       y: (options.top ?? 0) - 60,
     };
-    const endpoint =
-      options.leaderEnd === undefined
-        ? defaultAbsoluteEndpoint
-        : options.leaderEnd;
     const text = options.text ?? DEFAULT_TEXT;
     const textFill = options.textFill ?? DEFAULT_TEXT_FILL;
     const leaderStroke = options.leaderStroke ?? DEFAULT_LEADER_STROKE;
@@ -309,68 +323,114 @@ export class LeaderTextWithArrow extends Group {
       objectCaching: false,
     });
 
+    const hasExplicitLeaderEnds = Array.isArray(options.leaderEnds);
+    const hasExplicitLeaderEnd = options.leaderEnd !== undefined;
+    const initialLeaderEnds = hasExplicitLeaderEnds
+      ? normalizeLeaderEndpoints(options.leaderEnds)
+      : hasExplicitLeaderEnd
+        ? options.leaderEnd
+          ? [cloneEndpoint(options.leaderEnd)]
+          : []
+        : [cloneEndpoint(defaultAbsoluteEndpoint)];
+
     this.textObject = textObject;
     this.text = text;
-    this.leaderEnd = endpoint ? { ...endpoint } : null;
+    this.leaderEnds = initialLeaderEnds;
+    this.leaderEnd = this.leaderEnds[0] ?? null;
     this.textFill = textFill;
     this.leaderStroke = leaderStroke;
     this.leaderStrokeWidth = leaderStrokeWidth;
     this.fontSize = fontSize;
     this.fontFamily = fontFamily;
     this.textAlign = textAlign;
-    this.controls = {
-      ...this.controls,
-      [LEADER_END_CONTROL_KEY]: createLeaderEndControl(),
-    };
+    this.baseControls = { ...this.controls };
     this.setControlsVisibility(HIDDEN_TRANSFORM_CONTROLS);
     this.hasBorders = false;
 
+    if (!this.hasTextContent()) {
+      this.clearAllLeaderArrows();
+    }
     this.refreshVisuals();
   }
 
-  /** Update text content while keeping leader start anchored to text midpoint. */
+  /** Update text content while keeping leader starts anchored to text midpoint. */
   setTextContent(nextText: string) {
     this.text = nextText;
+    if (!this.hasTextContent()) {
+      this.clearAllLeaderArrows();
+    }
     this.refreshVisuals();
   }
 
-  /** Update the leader endpoint point while keeping arrow start fixed. */
+  /** Backward-compatible setter for a single leader endpoint. */
   setLeaderEnd(nextEndpoint: LeaderArrowEndpoint | null) {
-    if (!nextEndpoint) {
-      this.leaderEnd = null;
+    this.setLeaderEnds(nextEndpoint ? [nextEndpoint] : []);
+  }
+
+  /** Set full endpoint list for all leader arrows. */
+  setLeaderEnds(nextEndpoints: LeaderArrowEndpoint[]) {
+    if (!this.hasTextContent()) {
+      this.clearAllLeaderArrows();
       this.refreshVisuals();
       return;
     }
 
-    this.leaderEnd = {
-      x: nextEndpoint.x,
-      y: nextEndpoint.y,
-    };
+    this.leaderEnds = normalizeLeaderEndpoints(nextEndpoints);
+    this.syncLegacyLeaderEnd();
     this.refreshVisuals();
   }
 
-  /** Mark start of leader endpoint drag so hover delete affordance can be rendered. */
-  beginLeaderHandleDrag() {
+  /** Mark start of one endpoint handle drag for delete-hover rendering. */
+  beginLeaderHandleDrag(endpointIndex: number) {
+    if (!this.isValidLeaderIndex(endpointIndex)) {
+      return;
+    }
+
     this.isDraggingLeaderHandle = true;
+    this.draggingLeaderHandleIndex = endpointIndex;
     this.isLeaderDeletionHoverActive = false;
     this.dirty = true;
   }
 
-  /** Update drag endpoint and whether it is currently over the text delete target. */
-  updateLeaderHandleDrag(nextEndpoint: LeaderArrowEndpoint) {
-    this.setLeaderEnd(nextEndpoint);
+  /** Update dragged endpoint and whether it currently hovers the text delete target. */
+  updateLeaderHandleDrag(
+    endpointIndex: number,
+    nextEndpoint: LeaderArrowEndpoint,
+  ) {
+    if (
+      !this.isValidLeaderIndex(endpointIndex) ||
+      this.draggingLeaderHandleIndex !== endpointIndex
+    ) {
+      return;
+    }
+
+    const nextLeaderEnds = [...this.leaderEnds];
+    nextLeaderEnds[endpointIndex] = cloneEndpoint(nextEndpoint);
+    this.leaderEnds = nextLeaderEnds;
+    this.syncLegacyLeaderEnd();
+    this.refreshVisuals();
     this.isLeaderDeletionHoverActive =
-      this.canDeleteLeaderArrow() &&
+      this.canDeleteLeaderArrow(endpointIndex) &&
       this.isScenePointInsideTextBounds(nextEndpoint);
     this.dirty = true;
   }
 
-  /** Finalize drag and delete the arrow when dropped onto text while text exists. */
-  commitLeaderHandleDrag() {
-    if (this.isDraggingLeaderHandle && this.isLeaderDeletionHoverActive) {
-      this.setLeaderEnd(null);
+  /** Finalize drag and delete that arrow when dropped onto text while text exists. */
+  commitLeaderHandleDrag(endpointIndex: number) {
+    if (
+      this.isDraggingLeaderHandle &&
+      this.draggingLeaderHandleIndex === endpointIndex &&
+      this.isLeaderDeletionHoverActive
+    ) {
+      const nextLeaderEnds = [...this.leaderEnds];
+      nextLeaderEnds.splice(endpointIndex, 1);
+      this.leaderEnds = nextLeaderEnds;
+      this.syncLegacyLeaderEnd();
+      this.refreshVisuals();
     }
+
     this.isDraggingLeaderHandle = false;
+    this.draggingLeaderHandleIndex = null;
     this.isLeaderDeletionHoverActive = false;
     this.setCoords();
     this.dirty = true;
@@ -395,7 +455,7 @@ export class LeaderTextWithArrow extends Group {
     this.setFontSize(Math.max(1, this.fontSize * uniformScale));
   }
 
-  /** Recompute arrow geometry using current text position and absolute endpoint. */
+  /** Recompute arrow geometry using current text position and absolute endpoints. */
   syncLeaderToAbsoluteEndpoint() {
     this.refreshVisuals();
   }
@@ -407,11 +467,12 @@ export class LeaderTextWithArrow extends Group {
 
   /** Update hover state for showing the create-arrow handle above text. */
   setTextBoxHoverState(isHovered: boolean) {
-    if (this.isHoveringTextBox === isHovered) {
+    const nextHoverState = this.hasTextContent() ? isHovered : false;
+    if (this.isHoveringTextBox === nextHoverState) {
       return false;
     }
 
-    this.isHoveringTextBox = isHovered;
+    this.isHoveringTextBox = nextHoverState;
     this.dirty = true;
     return true;
   }
@@ -423,7 +484,7 @@ export class LeaderTextWithArrow extends Group {
 
   /** Returns true when scene-space point is over the create-arrow handle. */
   isPointOnCreateLeaderHandle(pointOnScenePlane: Point, requireVisible = true) {
-    if (this.isPlacingLeaderEndpoint) {
+    if (!this.hasTextContent() || this.isPlacingLeaderEndpoint) {
       return false;
     }
 
@@ -438,12 +499,17 @@ export class LeaderTextWithArrow extends Group {
     return pointOnScenePlane.distanceFrom(handleCenter) <= hitRadius;
   }
 
-  /** Enter endpoint-placement mode for creating/replacing the leader arrow. */
+  /** Enter endpoint-placement mode for creating one additional leader arrow. */
   beginLeaderEndpointPlacement(startPointOnScenePlane: Point) {
+    if (!this.hasTextContent()) {
+      return;
+    }
+
     this.isPlacingLeaderEndpoint = true;
     this.isHoveringTextBox = false;
     this.pendingLeaderEndpoint = startPointOnScenePlane.clone();
-    this.setLeaderEnd(null);
+    this.dirty = true;
+    this.canvas?.requestRenderAll();
   }
 
   /** Update temporary endpoint while user is placing a new leader endpoint. */
@@ -456,7 +522,7 @@ export class LeaderTextWithArrow extends Group {
     this.dirty = true;
   }
 
-  /** Finalize endpoint placement and materialize the leader arrow. */
+  /** Finalize endpoint placement and add the new leader arrow. */
   commitLeaderEndpointPlacement(finalPointOnScenePlane: Point) {
     if (!this.isPlacingLeaderEndpoint) {
       return;
@@ -464,10 +530,23 @@ export class LeaderTextWithArrow extends Group {
 
     this.isPlacingLeaderEndpoint = false;
     this.pendingLeaderEndpoint = null;
-    this.setLeaderEnd({
-      x: finalPointOnScenePlane.x,
-      y: finalPointOnScenePlane.y,
-    });
+
+    if (this.hasTextContent()) {
+      const nextLeaderEnds = [
+        ...this.leaderEnds,
+        {
+          x: finalPointOnScenePlane.x,
+          y: finalPointOnScenePlane.y,
+        },
+      ];
+      this.leaderEnds = normalizeLeaderEndpoints(nextLeaderEnds);
+      this.syncLegacyLeaderEnd();
+      this.refreshVisuals();
+    } else {
+      this.clearAllLeaderArrows();
+      this.refreshVisuals();
+    }
+
     this.setCoords();
     this.dirty = true;
   }
@@ -562,32 +641,12 @@ export class LeaderTextWithArrow extends Group {
     canvas.requestRenderAll();
   }
 
-  /** Compute leader geometry in object space using optional endpoint override. */
-  getLeaderGeometryInObjectPlane(endpointOverride?: Point) {
-    const endpoint = endpointOverride ?? getLeaderEndpointInObjectPlane(this);
-    if (!endpoint) {
-      return null;
-    }
-    const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
-    const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
-    const leaderClipPadding =
-      this.leaderStrokeWidth * 0.75 + LEADER_TEXT_CLIP_EXTRA_PADDING;
-    const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
-      endpoint,
-      textBoxHalfWidth,
-      textBoxHalfHeight,
-      leaderClipPadding,
-    );
-
-    return {
-      endpoint,
-      visibleLeaderStart: new Point(visibleLeaderStart.x, visibleLeaderStart.y),
-    };
-  }
-
   /** Compute leader handle center in viewport space so its edge touches arrow head. */
-  getLeaderHandleCenterInViewportPlane(control?: Control) {
-    const geometry = this.getLeaderGeometryInObjectPlane();
+  getLeaderHandleCenterInViewportPlane(
+    endpointIndex: number,
+    control?: Control,
+  ) {
+    const geometry = this.getLeaderGeometryInObjectPlaneForIndex(endpointIndex);
     const sceneToViewportMatrix = this.getViewportTransform();
     if (!geometry) {
       return new Point(0, 0)
@@ -620,9 +679,17 @@ export class LeaderTextWithArrow extends Group {
 
   /** Resolve absolute endpoint from dragged handle center in scene coordinates. */
   resolveEndpointFromHandleCenter(
+    endpointIndex: number,
     handleCenterOnScenePlane: Point,
     control?: Control,
   ): LeaderArrowEndpoint {
+    if (!this.isValidLeaderIndex(endpointIndex)) {
+      return {
+        x: handleCenterOnScenePlane.x,
+        y: handleCenterOnScenePlane.y,
+      };
+    }
+
     const handleHalfSizeOnScenePlane =
       this.getControlSize(control) / (2 * this.getViewportScale());
     let endpointOnScenePlane = handleCenterOnScenePlane.clone();
@@ -633,14 +700,10 @@ export class LeaderTextWithArrow extends Group {
         undefined,
         this.calcTransformMatrix(),
       );
-      const geometry = this.getLeaderGeometryInObjectPlane(
+      const geometry = this.getLeaderGeometryFromObjectEndpoint(
         endpointOnObjectPlane,
       );
-      if (!geometry) {
-        break;
-      }
-      const { visibleLeaderStart } = geometry;
-      const startOnScenePlane = visibleLeaderStart.transform(
+      const startOnScenePlane = geometry.visibleLeaderStart.transform(
         this.calcTransformMatrix(),
       );
       const directionOnScenePlane =
@@ -663,6 +726,189 @@ export class LeaderTextWithArrow extends Group {
       x: endpointOnScenePlane.x,
       y: endpointOnScenePlane.y,
     };
+  }
+
+  /** Returns true when a scene-space point hits any visible leader arrow line/head. */
+  isPointOnLeaderArrow(pointOnScenePlane: Point) {
+    return this.isPointNearLeaderLine(pointOnScenePlane);
+  }
+
+  containsPoint(point: Point) {
+    return super.containsPoint(point) || this.isPointNearLeaderLine(point);
+  }
+
+  drawObject(
+    ctx: CanvasRenderingContext2D,
+    forClipping: boolean | undefined,
+    context: unknown,
+  ) {
+    super.drawObject(
+      ctx,
+      forClipping,
+      context as Parameters<Group["drawObject"]>[2],
+    );
+
+    if (forClipping) {
+      return;
+    }
+
+    const endpointsToRender = this.getRenderEndpointsInObjectPlane();
+    ctx.save();
+
+    for (const endpoint of endpointsToRender) {
+      const { endpoint: leaderEnd, visibleLeaderStart } =
+        this.getLeaderGeometryFromObjectEndpoint(endpoint);
+      const deltaX = leaderEnd.x - visibleLeaderStart.x;
+      const deltaY = leaderEnd.y - visibleLeaderStart.y;
+      const angle = Math.atan2(deltaY, deltaX);
+      const headLength = 12;
+      const leftHeadX =
+        leaderEnd.x - headLength * Math.cos(angle - Math.PI / 6);
+      const leftHeadY =
+        leaderEnd.y - headLength * Math.sin(angle - Math.PI / 6);
+      const rightHeadX =
+        leaderEnd.x - headLength * Math.cos(angle + Math.PI / 6);
+      const rightHeadY =
+        leaderEnd.y - headLength * Math.sin(angle + Math.PI / 6);
+
+      ctx.strokeStyle = this.leaderStroke;
+      ctx.lineWidth = this.leaderStrokeWidth;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(visibleLeaderStart.x, visibleLeaderStart.y);
+      ctx.lineTo(leaderEnd.x, leaderEnd.y);
+      ctx.moveTo(leftHeadX, leftHeadY);
+      ctx.lineTo(leaderEnd.x, leaderEnd.y);
+      ctx.lineTo(rightHeadX, rightHeadY);
+      ctx.stroke();
+    }
+
+    if (this.shouldShowTextBorder()) {
+      const textWidth = Math.max(1, this.textObject.getScaledWidth());
+      const textHeight = Math.max(1, this.textObject.getScaledHeight());
+      const borderLineWidth = 1 / this.getViewportScale();
+
+      ctx.strokeStyle = this.getSelectionBorderColor();
+      ctx.lineWidth = borderLineWidth;
+      ctx.strokeRect(
+        -textWidth / 2 - TEXT_BORDER_PADDING,
+        -textHeight / 2 - TEXT_BORDER_PADDING,
+        textWidth + TEXT_BORDER_PADDING * 2,
+        textHeight + TEXT_BORDER_PADDING * 2,
+      );
+    }
+
+    if (this.isCreateLeaderHandleVisible()) {
+      this.drawCreateLeaderHandle(ctx);
+    }
+
+    if (this.isDraggingLeaderHandle && this.isLeaderDeletionHoverActive) {
+      this.drawDeleteIndicator(ctx);
+    }
+
+    ctx.restore();
+  }
+
+  /** Deserialize one custom text + leader arrow element from JSON. */
+  static fromObject<T extends TOptions<SerializedGroupProps>>(
+    { type, objects, layoutManager, ...options }: T,
+    _abortable?: Abortable,
+  ): Promise<Group> {
+    const object = options as unknown as SerializedLeaderTextWithArrow;
+    return Promise.resolve(
+      new LeaderTextWithArrow({
+        left: object.left,
+        top: object.top,
+        angle: object.angle,
+        text: object.text,
+        leaderEnd: object.leaderEnd ?? null,
+        leaderEnds: object.leaderEnds,
+        textFill: object.textFill,
+        leaderStroke: object.leaderStroke,
+        leaderStrokeWidth: object.leaderStrokeWidth,
+        fontSize: object.fontSize,
+        fontFamily: object.fontFamily,
+        textAlign: object.textAlign ?? DEFAULT_TEXT_ALIGN,
+      }),
+    );
+  }
+
+  private hasTextContent() {
+    return this.text.trim().length > 0;
+  }
+
+  private syncLegacyLeaderEnd() {
+    this.leaderEnd = this.leaderEnds[0] ?? null;
+  }
+
+  private isValidLeaderIndex(endpointIndex: number) {
+    return endpointIndex >= 0 && endpointIndex < this.leaderEnds.length;
+  }
+
+  private clearAllLeaderArrows() {
+    this.leaderEnds = [];
+    this.syncLegacyLeaderEnd();
+    this.isDraggingLeaderHandle = false;
+    this.draggingLeaderHandleIndex = null;
+    this.isLeaderDeletionHoverActive = false;
+    this.isPlacingLeaderEndpoint = false;
+    this.pendingLeaderEndpoint = null;
+  }
+
+  private getLeaderGeometryFromObjectEndpoint(endpoint: Point) {
+    const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
+    const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
+    const leaderClipPadding =
+      this.leaderStrokeWidth * 0.75 + LEADER_TEXT_CLIP_EXTRA_PADDING;
+    const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
+      endpoint,
+      textBoxHalfWidth,
+      textBoxHalfHeight,
+      leaderClipPadding,
+    );
+
+    return {
+      endpoint,
+      visibleLeaderStart,
+    };
+  }
+
+  private getLeaderGeometryInObjectPlaneForIndex(endpointIndex: number) {
+    if (!this.isValidLeaderIndex(endpointIndex)) {
+      return null;
+    }
+
+    const endpoint = this.leaderEnds[endpointIndex];
+    const endpointOnObjectPlane = util.sendPointToPlane(
+      new Point(endpoint.x, endpoint.y),
+      undefined,
+      this.calcTransformMatrix(),
+    );
+    return this.getLeaderGeometryFromObjectEndpoint(endpointOnObjectPlane);
+  }
+
+  private getRenderEndpointsInObjectPlane() {
+    const renderEndpoints: Point[] = [];
+    for (const endpoint of this.leaderEnds) {
+      renderEndpoints.push(
+        util.sendPointToPlane(
+          new Point(endpoint.x, endpoint.y),
+          undefined,
+          this.calcTransformMatrix(),
+        ),
+      );
+    }
+    if (this.pendingLeaderEndpoint && this.hasTextContent()) {
+      renderEndpoints.push(
+        util.sendPointToPlane(
+          this.pendingLeaderEndpoint,
+          undefined,
+          this.calcTransformMatrix(),
+        ),
+      );
+    }
+    return renderEndpoints;
   }
 
   private getViewportScale() {
@@ -706,12 +952,16 @@ export class LeaderTextWithArrow extends Group {
     return "#253ed3";
   }
 
-  private canDeleteLeaderArrow() {
-    return this.leaderEnd !== null && this.text.trim().length > 0;
+  private canDeleteLeaderArrow(endpointIndex: number) {
+    return this.hasTextContent() && this.isValidLeaderIndex(endpointIndex);
   }
 
   private isCreateLeaderHandleVisible() {
-    return this.isHoveringTextBox && !this.isPlacingLeaderEndpoint;
+    return (
+      this.hasTextContent() &&
+      this.isHoveringTextBox &&
+      !this.isPlacingLeaderEndpoint
+    );
   }
 
   private getCreateLeaderHandleCenterOnObjectPlane() {
@@ -820,146 +1070,80 @@ export class LeaderTextWithArrow extends Group {
   }
 
   private isPointNearLeaderLine(pointOnScenePlane: Point) {
-    const geometry = this.getLeaderGeometryInObjectPlane();
-    if (!geometry) {
-      return false;
-    }
-
-    const { endpoint, visibleLeaderStart } = geometry;
-    const objectToSceneMatrix = this.calcTransformMatrix();
-    const startOnScenePlane = visibleLeaderStart.transform(objectToSceneMatrix);
-    const endOnScenePlane = endpoint.transform(objectToSceneMatrix);
-    const angle = Math.atan2(
-      endOnScenePlane.y - startOnScenePlane.y,
-      endOnScenePlane.x - startOnScenePlane.x,
-    );
-    const headLength = 12;
-    const leftHeadOnScenePlane = new Point(
-      endOnScenePlane.x - headLength * Math.cos(angle - Math.PI / 6),
-      endOnScenePlane.y - headLength * Math.sin(angle - Math.PI / 6),
-    );
-    const rightHeadOnScenePlane = new Point(
-      endOnScenePlane.x - headLength * Math.cos(angle + Math.PI / 6),
-      endOnScenePlane.y - headLength * Math.sin(angle + Math.PI / 6),
-    );
-    const hitToleranceOnScenePlane =
-      (this.leaderStrokeWidth / 2 + 6) / this.getViewportScale();
-
-    const shaftDistance = distancePointToSegment(
-      pointOnScenePlane,
-      startOnScenePlane,
-      endOnScenePlane,
-    );
-    if (shaftDistance <= hitToleranceOnScenePlane) {
-      return true;
-    }
-
-    const leftHeadDistance = distancePointToSegment(
-      pointOnScenePlane,
-      leftHeadOnScenePlane,
-      endOnScenePlane,
-    );
-    if (leftHeadDistance <= hitToleranceOnScenePlane) {
-      return true;
-    }
-
-    const rightHeadDistance = distancePointToSegment(
-      pointOnScenePlane,
-      endOnScenePlane,
-      rightHeadOnScenePlane,
-    );
-    return rightHeadDistance <= hitToleranceOnScenePlane;
-  }
-
-  /** Returns true when a scene-space point hits the visible leader arrow line/head. */
-  isPointOnLeaderArrow(pointOnScenePlane: Point) {
-    return this.isPointNearLeaderLine(pointOnScenePlane);
-  }
-
-  containsPoint(point: Point) {
-    return super.containsPoint(point) || this.isPointNearLeaderLine(point);
-  }
-
-  drawObject(
-    ctx: CanvasRenderingContext2D,
-    forClipping: boolean | undefined,
-    context: unknown,
-  ) {
-    super.drawObject(
-      ctx,
-      forClipping,
-      context as Parameters<Group["drawObject"]>[2],
-    );
-
-    if (forClipping) {
-      return;
-    }
-
-    let geometry = this.getLeaderGeometryInObjectPlane();
-    if (!geometry && this.pendingLeaderEndpoint) {
-      const pendingEndpointOnObjectPlane = util.sendPointToPlane(
-        this.pendingLeaderEndpoint,
+    for (const endpoint of this.leaderEnds) {
+      const endpointOnObjectPlane = util.sendPointToPlane(
+        new Point(endpoint.x, endpoint.y),
         undefined,
         this.calcTransformMatrix(),
       );
-      geometry = this.getLeaderGeometryInObjectPlane(
-        pendingEndpointOnObjectPlane,
+      const geometry = this.getLeaderGeometryFromObjectEndpoint(
+        endpointOnObjectPlane,
       );
-    }
-    ctx.save();
-
-    if (geometry) {
-      const { endpoint, visibleLeaderStart } = geometry;
-      const leaderStroke = DEFAULT_LEADER_STROKE;
-      const leaderStrokeWidth = DEFAULT_LEADER_STROKE_WIDTH;
-      const deltaX = endpoint.x - visibleLeaderStart.x;
-      const deltaY = endpoint.y - visibleLeaderStart.y;
-      const angle = Math.atan2(deltaY, deltaX);
+      const objectToSceneMatrix = this.calcTransformMatrix();
+      const startOnScenePlane =
+        geometry.visibleLeaderStart.transform(objectToSceneMatrix);
+      const endOnScenePlane = geometry.endpoint.transform(objectToSceneMatrix);
+      const angle = Math.atan2(
+        endOnScenePlane.y - startOnScenePlane.y,
+        endOnScenePlane.x - startOnScenePlane.x,
+      );
       const headLength = 12;
-      const leftHeadX = endpoint.x - headLength * Math.cos(angle - Math.PI / 6);
-      const leftHeadY = endpoint.y - headLength * Math.sin(angle - Math.PI / 6);
-      const rightHeadX =
-        endpoint.x - headLength * Math.cos(angle + Math.PI / 6);
-      const rightHeadY =
-        endpoint.y - headLength * Math.sin(angle + Math.PI / 6);
-
-      ctx.strokeStyle = leaderStroke;
-      ctx.lineWidth = leaderStrokeWidth;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.beginPath();
-      ctx.moveTo(visibleLeaderStart.x, visibleLeaderStart.y);
-      ctx.lineTo(endpoint.x, endpoint.y);
-      ctx.moveTo(leftHeadX, leftHeadY);
-      ctx.lineTo(endpoint.x, endpoint.y);
-      ctx.lineTo(rightHeadX, rightHeadY);
-      ctx.stroke();
-    }
-
-    if (this.shouldShowTextBorder()) {
-      const textWidth = Math.max(1, this.textObject.getScaledWidth());
-      const textHeight = Math.max(1, this.textObject.getScaledHeight());
-      const borderLineWidth = 1 / this.getViewportScale();
-
-      ctx.strokeStyle = this.getSelectionBorderColor();
-      ctx.lineWidth = borderLineWidth;
-      ctx.strokeRect(
-        -textWidth / 2 - TEXT_BORDER_PADDING,
-        -textHeight / 2 - TEXT_BORDER_PADDING,
-        textWidth + TEXT_BORDER_PADDING * 2,
-        textHeight + TEXT_BORDER_PADDING * 2,
+      const leftHeadOnScenePlane = new Point(
+        endOnScenePlane.x - headLength * Math.cos(angle - Math.PI / 6),
+        endOnScenePlane.y - headLength * Math.sin(angle - Math.PI / 6),
       );
+      const rightHeadOnScenePlane = new Point(
+        endOnScenePlane.x - headLength * Math.cos(angle + Math.PI / 6),
+        endOnScenePlane.y - headLength * Math.sin(angle + Math.PI / 6),
+      );
+      const hitToleranceOnScenePlane =
+        (this.leaderStrokeWidth / 2 + 6) / this.getViewportScale();
+
+      const shaftDistance = distancePointToSegment(
+        pointOnScenePlane,
+        startOnScenePlane,
+        endOnScenePlane,
+      );
+      if (shaftDistance <= hitToleranceOnScenePlane) {
+        return true;
+      }
+
+      const leftHeadDistance = distancePointToSegment(
+        pointOnScenePlane,
+        leftHeadOnScenePlane,
+        endOnScenePlane,
+      );
+      if (leftHeadDistance <= hitToleranceOnScenePlane) {
+        return true;
+      }
+
+      const rightHeadDistance = distancePointToSegment(
+        pointOnScenePlane,
+        endOnScenePlane,
+        rightHeadOnScenePlane,
+      );
+      if (rightHeadDistance <= hitToleranceOnScenePlane) {
+        return true;
+      }
     }
 
-    if (this.isCreateLeaderHandleVisible()) {
-      this.drawCreateLeaderHandle(ctx);
+    return false;
+  }
+
+  private rebuildLeaderEndControls() {
+    const nextControls: Record<string, Control> = {
+      ...this.baseControls,
+    };
+
+    if (this.hasTextContent()) {
+      for (let index = 0; index < this.leaderEnds.length; index += 1) {
+        nextControls[`${LEADER_END_CONTROL_KEY_PREFIX}${index}`] =
+          createLeaderEndControl(index);
+      }
     }
 
-    if (this.isDraggingLeaderHandle && this.isLeaderDeletionHoverActive) {
-      this.drawDeleteIndicator(ctx);
-    }
-
-    ctx.restore();
+    this.controls = nextControls;
+    this.setControlsVisibility(HIDDEN_TRANSFORM_CONTROLS);
   }
 
   private refreshVisuals() {
@@ -971,33 +1155,10 @@ export class LeaderTextWithArrow extends Group {
       fontFamily: this.fontFamily,
       textAlign: this.textAlign,
     });
-    this.setControlVisible(LEADER_END_CONTROL_KEY, this.leaderEnd !== null);
 
+    this.rebuildLeaderEndControls();
     this.setCoords();
     this.dirty = true;
-  }
-
-  /** Deserialize one custom text + leader arrow element from JSON. */
-  static fromObject<T extends TOptions<SerializedGroupProps>>(
-    { type, objects, layoutManager, ...options }: T,
-    _abortable?: Abortable,
-  ): Promise<Group> {
-    const object = options as unknown as SerializedLeaderTextWithArrow;
-    return Promise.resolve(
-      new LeaderTextWithArrow({
-        left: object.left,
-        top: object.top,
-        angle: object.angle,
-        text: object.text,
-        leaderEnd: object.leaderEnd,
-        textFill: object.textFill,
-        leaderStroke: object.leaderStroke,
-        leaderStrokeWidth: object.leaderStrokeWidth,
-        fontSize: object.fontSize,
-        fontFamily: object.fontFamily,
-        textAlign: object.textAlign ?? DEFAULT_TEXT_ALIGN,
-      }),
-    );
   }
 }
 

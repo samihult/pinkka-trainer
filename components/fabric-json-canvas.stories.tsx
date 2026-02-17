@@ -43,7 +43,10 @@ const sampleModel: unknown = {
       left: 290,
       top: 370,
       text: "Leader text",
-      leaderEnd: { x: 470, y: 230 },
+      leaderEnds: [
+        { x: 470, y: 230 },
+        { x: 760, y: 170 },
+      ],
       textFill: "white",
       leaderStroke: "white",
       leaderStrokeWidth: 5,
