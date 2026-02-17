@@ -19,6 +19,25 @@ const sampleModel: unknown = {
       stroke: "#f8fafc",
       strokeWidth: 2,
     },
+    {
+      type: "ellipse",
+      left: 430,
+      top: 180,
+      rx: 95,
+      ry: 58,
+      fill: "rgba(148, 163, 184, 0.2)",
+      stroke: "#cbd5e1",
+      strokeWidth: 2,
+    },
+    {
+      type: "circle",
+      left: 700,
+      top: 170,
+      radius: 62,
+      fill: "rgba(186, 230, 253, 0.2)",
+      stroke: "#bae6fd",
+      strokeWidth: 2,
+    },
   ],
 };
 

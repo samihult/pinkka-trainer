@@ -48,6 +48,15 @@ type TransformableFabricObject = FabricObject & {
   transformMatrix?: number[];
 };
 
+function applyObjectBehaviorRules(object: FabricObject) {
+  if (object instanceof Circle) {
+    object.setControlVisible("mtr", false);
+    object.set({
+      centeredScaling: true,
+    });
+  }
+}
+
 function bakeGeometryIntoObject(object: FabricObject) {
   const scaleX = object.scaleX ?? 1;
   const scaleY = object.scaleY ?? 1;
@@ -185,6 +194,7 @@ export const FabricJsonCanvas = forwardRef<
       height: viewportHeight,
       backgroundColor: DARK_VIEWPORT_COLOR,
       preserveObjectStacking: true,
+      uniformScaling: false,
     });
 
     InteractiveFabricObject.ownDefaults = {
@@ -217,16 +227,28 @@ export const FabricJsonCanvas = forwardRef<
         return;
       }
 
+      applyObjectBehaviorRules(target);
       bakeGeometryIntoObject(target);
       canvas.requestRenderAll();
     };
 
+    const handleObjectAdded = (event: { target?: FabricObject }) => {
+      const target = event.target;
+      if (!target) {
+        return;
+      }
+
+      applyObjectBehaviorRules(target);
+    };
+
     canvas.on("object:moving", handleObjectMoving);
     canvas.on("object:modified", handleObjectModified);
+    canvas.on("object:added", handleObjectAdded);
 
     return () => {
       canvas.off("object:moving", handleObjectMoving);
       canvas.off("object:modified", handleObjectModified);
+      canvas.off("object:added", handleObjectAdded);
       void canvas.dispose();
       fabricCanvasRef.current = null;
     };
@@ -244,6 +266,7 @@ export const FabricJsonCanvas = forwardRef<
       canvas.setDimensions({ width: viewportWidth, height: viewportHeight });
       canvas.clear();
       canvas.backgroundColor = DARK_VIEWPORT_COLOR;
+      canvas.uniformScaling = false;
       canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
 
       if (initialModel !== undefined) {
@@ -251,6 +274,7 @@ export const FabricJsonCanvas = forwardRef<
           initialModel as Parameters<Canvas["loadFromJSON"]>[0],
         );
         for (const object of canvas.getObjects()) {
+          applyObjectBehaviorRules(object);
           bakeGeometryIntoObject(object);
         }
       }
