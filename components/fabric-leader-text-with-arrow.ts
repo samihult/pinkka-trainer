@@ -112,6 +112,7 @@ const LEADER_END_CONTROL_KEY_PREFIX = "leaderEnd-";
 const LEADER_DELETE_CONTROL_KEY_PREFIX = "leaderDelete-";
 const LEADER_DELETE_CONTROL_SIZE = 10;
 const LEADER_DELETE_CONTROL_GAP = 4;
+const LEADER_HEAD_LENGTH = 12;
 const HIDDEN_TRANSFORM_CONTROLS = {
   bl: false,
   br: false,
@@ -206,6 +207,122 @@ function distancePointToSegment(point: Point, start: Point, end: Point) {
     segmentVector.scalarMultiply(projectionFactor),
   );
   return point.distanceFrom(projectedPoint);
+}
+
+function getNormalizedRect(tl: Point, br: Point) {
+  return {
+    left: Math.min(tl.x, br.x),
+    right: Math.max(tl.x, br.x),
+    top: Math.min(tl.y, br.y),
+    bottom: Math.max(tl.y, br.y),
+  };
+}
+
+function isPointInsideRect(point: Point, tl: Point, br: Point) {
+  const rect = getNormalizedRect(tl, br);
+  return (
+    point.x >= rect.left &&
+    point.x <= rect.right &&
+    point.y >= rect.top &&
+    point.y <= rect.bottom
+  );
+}
+
+function isPointOnSegment(point: Point, start: Point, end: Point) {
+  const epsilon = 0.0001;
+  return (
+    point.x >= Math.min(start.x, end.x) - epsilon &&
+    point.x <= Math.max(start.x, end.x) + epsilon &&
+    point.y >= Math.min(start.y, end.y) - epsilon &&
+    point.y <= Math.max(start.y, end.y) + epsilon
+  );
+}
+
+function getOrientation(a: Point, b: Point, c: Point) {
+  const crossProduct = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
+  const epsilon = 0.0001;
+  if (Math.abs(crossProduct) < epsilon) {
+    return 0;
+  }
+  return crossProduct > 0 ? 1 : 2;
+}
+
+function doLineSegmentsIntersect(
+  firstStart: Point,
+  firstEnd: Point,
+  secondStart: Point,
+  secondEnd: Point,
+) {
+  const firstOrientation = getOrientation(firstStart, firstEnd, secondStart);
+  const secondOrientation = getOrientation(firstStart, firstEnd, secondEnd);
+  const thirdOrientation = getOrientation(secondStart, secondEnd, firstStart);
+  const fourthOrientation = getOrientation(secondStart, secondEnd, firstEnd);
+
+  if (
+    firstOrientation !== secondOrientation &&
+    thirdOrientation !== fourthOrientation
+  ) {
+    return true;
+  }
+
+  if (
+    firstOrientation === 0 &&
+    isPointOnSegment(secondStart, firstStart, firstEnd)
+  ) {
+    return true;
+  }
+  if (
+    secondOrientation === 0 &&
+    isPointOnSegment(secondEnd, firstStart, firstEnd)
+  ) {
+    return true;
+  }
+  if (
+    thirdOrientation === 0 &&
+    isPointOnSegment(firstStart, secondStart, secondEnd)
+  ) {
+    return true;
+  }
+  if (
+    fourthOrientation === 0 &&
+    isPointOnSegment(firstEnd, secondStart, secondEnd)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function doesLineSegmentIntersectRect(
+  segmentStart: Point,
+  segmentEnd: Point,
+  rectTl: Point,
+  rectBr: Point,
+) {
+  if (
+    isPointInsideRect(segmentStart, rectTl, rectBr) ||
+    isPointInsideRect(segmentEnd, rectTl, rectBr)
+  ) {
+    return true;
+  }
+
+  const rect = getNormalizedRect(rectTl, rectBr);
+  const topLeft = new Point(rect.left, rect.top);
+  const topRight = new Point(rect.right, rect.top);
+  const bottomRight = new Point(rect.right, rect.bottom);
+  const bottomLeft = new Point(rect.left, rect.bottom);
+
+  return (
+    doLineSegmentsIntersect(segmentStart, segmentEnd, topLeft, topRight) ||
+    doLineSegmentsIntersect(segmentStart, segmentEnd, topRight, bottomRight) ||
+    doLineSegmentsIntersect(
+      segmentStart,
+      segmentEnd,
+      bottomRight,
+      bottomLeft,
+    ) ||
+    doLineSegmentsIntersect(segmentStart, segmentEnd, bottomLeft, topLeft)
+  );
 }
 
 function createLeaderEndControl(endpointIndex: number) {
@@ -968,6 +1085,33 @@ export class LeaderTextWithArrow extends Group {
     );
   }
 
+  intersectsWithRect(tl: Point, br: Point): boolean {
+    if (super.intersectsWithRect(tl, br)) {
+      return true;
+    }
+
+    const leaderSegments = this.getLeaderSegmentsInScenePlane();
+    return leaderSegments.some(({ start, end }) =>
+      doesLineSegmentIntersectRect(start, end, tl, br),
+    );
+  }
+
+  isContainedWithinRect(tl: Point, br: Point): boolean {
+    if (super.isContainedWithinRect(tl, br)) {
+      return true;
+    }
+
+    const leaderSegments = this.getLeaderSegmentsInScenePlane();
+    if (leaderSegments.length === 0) {
+      return false;
+    }
+
+    return leaderSegments.every(
+      ({ start, end }) =>
+        isPointInsideRect(start, tl, br) && isPointInsideRect(end, tl, br),
+    );
+  }
+
   drawObject(
     ctx: CanvasRenderingContext2D,
     forClipping: boolean | undefined,
@@ -992,15 +1136,14 @@ export class LeaderTextWithArrow extends Group {
       const deltaX = leaderEnd.x - visibleLeaderStart.x;
       const deltaY = leaderEnd.y - visibleLeaderStart.y;
       const angle = Math.atan2(deltaY, deltaX);
-      const headLength = 12;
       const leftHeadX =
-        leaderEnd.x - headLength * Math.cos(angle - Math.PI / 6);
+        leaderEnd.x - LEADER_HEAD_LENGTH * Math.cos(angle - Math.PI / 6);
       const leftHeadY =
-        leaderEnd.y - headLength * Math.sin(angle - Math.PI / 6);
+        leaderEnd.y - LEADER_HEAD_LENGTH * Math.sin(angle - Math.PI / 6);
       const rightHeadX =
-        leaderEnd.x - headLength * Math.cos(angle + Math.PI / 6);
+        leaderEnd.x - LEADER_HEAD_LENGTH * Math.cos(angle + Math.PI / 6);
       const rightHeadY =
-        leaderEnd.y - headLength * Math.sin(angle + Math.PI / 6);
+        leaderEnd.y - LEADER_HEAD_LENGTH * Math.sin(angle + Math.PI / 6);
 
       ctx.strokeStyle = this.leaderStroke;
       ctx.lineWidth = this.leaderStrokeWidth;
@@ -1498,16 +1641,35 @@ export class LeaderTextWithArrow extends Group {
   }
 
   private isPointNearLeaderLine(pointOnScenePlane: Point) {
+    const hitToleranceOnScenePlane =
+      (this.leaderStrokeWidth / 2 + 6) / this.getViewportScale();
+    for (const segment of this.getLeaderSegmentsInScenePlane()) {
+      const segmentDistance = distancePointToSegment(
+        pointOnScenePlane,
+        segment.start,
+        segment.end,
+      );
+      if (segmentDistance <= hitToleranceOnScenePlane) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private getLeaderSegmentsInScenePlane() {
+    const objectToSceneMatrix = this.calcTransformMatrix();
+    const segments: Array<{ start: Point; end: Point }> = [];
+
     for (const endpoint of this.leaderEnds) {
       const endpointOnObjectPlane = util.sendPointToPlane(
         new Point(endpoint.x, endpoint.y),
         undefined,
-        this.calcTransformMatrix(),
+        objectToSceneMatrix,
       );
       const geometry = this.getLeaderGeometryFromObjectEndpoint(
         endpointOnObjectPlane,
       );
-      const objectToSceneMatrix = this.calcTransformMatrix();
       const startOnScenePlane =
         geometry.visibleLeaderStart.transform(objectToSceneMatrix);
       const endOnScenePlane = geometry.endpoint.transform(objectToSceneMatrix);
@@ -1515,47 +1677,23 @@ export class LeaderTextWithArrow extends Group {
         endOnScenePlane.y - startOnScenePlane.y,
         endOnScenePlane.x - startOnScenePlane.x,
       );
-      const headLength = 12;
       const leftHeadOnScenePlane = new Point(
-        endOnScenePlane.x - headLength * Math.cos(angle - Math.PI / 6),
-        endOnScenePlane.y - headLength * Math.sin(angle - Math.PI / 6),
+        endOnScenePlane.x - LEADER_HEAD_LENGTH * Math.cos(angle - Math.PI / 6),
+        endOnScenePlane.y - LEADER_HEAD_LENGTH * Math.sin(angle - Math.PI / 6),
       );
       const rightHeadOnScenePlane = new Point(
-        endOnScenePlane.x - headLength * Math.cos(angle + Math.PI / 6),
-        endOnScenePlane.y - headLength * Math.sin(angle + Math.PI / 6),
+        endOnScenePlane.x - LEADER_HEAD_LENGTH * Math.cos(angle + Math.PI / 6),
+        endOnScenePlane.y - LEADER_HEAD_LENGTH * Math.sin(angle + Math.PI / 6),
       );
-      const hitToleranceOnScenePlane =
-        (this.leaderStrokeWidth / 2 + 6) / this.getViewportScale();
 
-      const shaftDistance = distancePointToSegment(
-        pointOnScenePlane,
-        startOnScenePlane,
-        endOnScenePlane,
+      segments.push(
+        { start: startOnScenePlane, end: endOnScenePlane },
+        { start: leftHeadOnScenePlane, end: endOnScenePlane },
+        { start: endOnScenePlane, end: rightHeadOnScenePlane },
       );
-      if (shaftDistance <= hitToleranceOnScenePlane) {
-        return true;
-      }
-
-      const leftHeadDistance = distancePointToSegment(
-        pointOnScenePlane,
-        leftHeadOnScenePlane,
-        endOnScenePlane,
-      );
-      if (leftHeadDistance <= hitToleranceOnScenePlane) {
-        return true;
-      }
-
-      const rightHeadDistance = distancePointToSegment(
-        pointOnScenePlane,
-        endOnScenePlane,
-        rightHeadOnScenePlane,
-      );
-      if (rightHeadDistance <= hitToleranceOnScenePlane) {
-        return true;
-      }
     }
 
-    return false;
+    return segments;
   }
 
   private rebuildLeaderEndControls() {
