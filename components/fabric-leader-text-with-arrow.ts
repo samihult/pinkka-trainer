@@ -76,9 +76,6 @@ const DEFAULT_LEADER_STROKE_WIDTH = 5;
 const DEFAULT_FONT_SIZE = 24;
 const DEFAULT_FONT_FAMILY = "Arial";
 const LEADER_END_CONTROL_KEY = "leaderEnd";
-const LEADER_END_HANDLE_RADIUS = 6;
-const LEADER_END_HANDLE_STROKE = "#ffffff";
-const LEADER_END_HANDLE_FILL = "#111827";
 const HIDDEN_TRANSFORM_CONTROLS = {
   bl: false,
   br: false,
@@ -132,47 +129,26 @@ function createLeaderEndControl() {
   return new Control({
     actionName: "modifyLeaderEnd",
     cursorStyle: "crosshair",
-    sizeX: LEADER_END_HANDLE_RADIUS * 2,
-    sizeY: LEADER_END_HANDLE_RADIUS * 2,
-    touchSizeX: LEADER_END_HANDLE_RADIUS * 4,
-    touchSizeY: LEADER_END_HANDLE_RADIUS * 4,
-    positionHandler: (_dim, finalMatrix, fabricObject) => {
+    positionHandler: function (_dim, finalMatrix, fabricObject) {
       if (!(fabricObject instanceof LeaderTextWithArrow)) {
         return new Point(0, 0).transform(finalMatrix);
       }
 
-      const endpointInObjectPlane =
-        getLeaderEndpointInObjectPlane(fabricObject);
-      const objectToViewportMatrix = util.multiplyTransformMatrices(
-        fabricObject.getViewportTransform(),
-        fabricObject.calcTransformMatrix(),
-      );
-
-      return endpointInObjectPlane.transform(objectToViewportMatrix);
+      return fabricObject.getLeaderHandleCenterInViewportPlane(this as Control);
     },
-    actionHandler: (_eventData, transform, x, y) => {
+    actionHandler: function (_eventData, transform, x, y) {
       if (!(transform.target instanceof LeaderTextWithArrow)) {
         return false;
       }
 
-      transform.target.setLeaderEnd({
-        x,
-        y,
-      });
+      const resolvedEndpoint = transform.target.resolveEndpointFromHandleCenter(
+        new Point(x, y),
+        this as Control,
+      );
+      transform.target.setLeaderEnd(resolvedEndpoint);
       transform.target.setCoords();
       transform.target.dirty = true;
       return true;
-    },
-    render: (ctx, left, top) => {
-      ctx.save();
-      ctx.fillStyle = LEADER_END_HANDLE_FILL;
-      ctx.strokeStyle = LEADER_END_HANDLE_STROKE;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(left, top, LEADER_END_HANDLE_RADIUS, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-      ctx.restore();
     },
   });
 }
@@ -298,6 +274,106 @@ export class LeaderTextWithArrow extends Group {
     this.refreshVisuals();
   }
 
+  /** Compute leader geometry in object space using optional endpoint override. */
+  getLeaderGeometryInObjectPlane(endpointOverride?: Point) {
+    const endpoint = endpointOverride ?? getLeaderEndpointInObjectPlane(this);
+    const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
+    const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
+    const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
+      endpoint,
+      textBoxHalfWidth,
+      textBoxHalfHeight,
+      DEFAULT_LEADER_STROKE_WIDTH * 0.75,
+    );
+
+    return {
+      endpoint,
+      visibleLeaderStart: new Point(visibleLeaderStart.x, visibleLeaderStart.y),
+    };
+  }
+
+  /** Compute leader handle center in viewport space so its edge touches arrow head. */
+  getLeaderHandleCenterInViewportPlane(control?: Control) {
+    const { endpoint, visibleLeaderStart } =
+      this.getLeaderGeometryInObjectPlane();
+    const objectToSceneMatrix = this.calcTransformMatrix();
+    const sceneToViewportMatrix = this.getViewportTransform();
+    const endpointOnScenePlane = endpoint.transform(objectToSceneMatrix);
+    const directionOnScenePlane = endpoint
+      .subtract(visibleLeaderStart)
+      .transform(objectToSceneMatrix, true);
+    const directionLength = Math.hypot(
+      directionOnScenePlane.x,
+      directionOnScenePlane.y,
+    );
+    const normalizedDirection =
+      directionLength > 0.0001
+        ? directionOnScenePlane.scalarDivide(directionLength)
+        : new Point(1, 0);
+    const handleHalfSizeOnScenePlane =
+      this.getControlSize(control) / (2 * this.getViewportScale());
+    const handleCenterOnScenePlane = endpointOnScenePlane.add(
+      normalizedDirection.scalarMultiply(handleHalfSizeOnScenePlane),
+    );
+
+    return handleCenterOnScenePlane.transform(sceneToViewportMatrix);
+  }
+
+  /** Resolve absolute endpoint from dragged handle center in scene coordinates. */
+  resolveEndpointFromHandleCenter(
+    handleCenterOnScenePlane: Point,
+    control?: Control,
+  ): LeaderArrowEndpoint {
+    const handleHalfSizeOnScenePlane =
+      this.getControlSize(control) / (2 * this.getViewportScale());
+    let endpointOnScenePlane = handleCenterOnScenePlane.clone();
+
+    for (let iteration = 0; iteration < 2; iteration += 1) {
+      const endpointOnObjectPlane = util.sendPointToPlane(
+        endpointOnScenePlane,
+        undefined,
+        this.calcTransformMatrix(),
+      );
+      const { visibleLeaderStart } = this.getLeaderGeometryInObjectPlane(
+        endpointOnObjectPlane,
+      );
+      const startOnScenePlane = visibleLeaderStart.transform(
+        this.calcTransformMatrix(),
+      );
+      const directionOnScenePlane =
+        endpointOnScenePlane.subtract(startOnScenePlane);
+      const directionLength = Math.hypot(
+        directionOnScenePlane.x,
+        directionOnScenePlane.y,
+      );
+      const normalizedDirection =
+        directionLength > 0.0001
+          ? directionOnScenePlane.scalarDivide(directionLength)
+          : new Point(1, 0);
+
+      endpointOnScenePlane = handleCenterOnScenePlane.subtract(
+        normalizedDirection.scalarMultiply(handleHalfSizeOnScenePlane),
+      );
+    }
+
+    return {
+      x: endpointOnScenePlane.x,
+      y: endpointOnScenePlane.y,
+    };
+  }
+
+  private getViewportScale() {
+    const viewportTransform = this.getViewportTransform();
+    const scaleX = Math.abs(viewportTransform[0]) || 1;
+    const scaleY = Math.abs(viewportTransform[3]) || 1;
+    return (scaleX + scaleY) / 2;
+  }
+
+  private getControlSize(control?: Control) {
+    const controlSize = Math.max(control?.sizeX ?? 0, control?.sizeY ?? 0);
+    return controlSize > 0 ? controlSize : this.cornerSize;
+  }
+
   drawObject(
     ctx: CanvasRenderingContext2D,
     forClipping: boolean | undefined,
@@ -313,19 +389,8 @@ export class LeaderTextWithArrow extends Group {
       return;
     }
 
-    const endpointOnGroupPlane = getLeaderEndpointInObjectPlane(this);
-    const endpoint = {
-      x: endpointOnGroupPlane.x,
-      y: endpointOnGroupPlane.y,
-    };
-    const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
-    const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
-    const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
-      endpoint,
-      textBoxHalfWidth,
-      textBoxHalfHeight,
-      DEFAULT_LEADER_STROKE_WIDTH * 0.75,
-    );
+    const { endpoint, visibleLeaderStart } =
+      this.getLeaderGeometryInObjectPlane();
 
     const leaderStroke = DEFAULT_LEADER_STROKE;
     const leaderStrokeWidth = DEFAULT_LEADER_STROKE_WIDTH;
