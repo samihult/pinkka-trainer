@@ -225,9 +225,67 @@ export const FabricJsonCanvas = forwardRef<
     let isPlacementPointerDown = false;
     let didDragDuringPlacementPointerDown = false;
     let placementPointerDownStart: Point | null = null;
+    let previousPlacementLockMovementX: boolean | undefined;
+    let previousPlacementLockMovementY: boolean | undefined;
 
     const setLeaderPlacementMode = (isPlacing: boolean) => {
       canvas.selection = isPlacing ? false : defaultMarqueeSelectionEnabled;
+    };
+
+    const beginLeaderPlacement = (
+      object: LeaderTextWithArrow,
+      startPoint: Point,
+    ) => {
+      canvas.setActiveObject(object);
+      previousPlacementLockMovementX = object.lockMovementX;
+      previousPlacementLockMovementY = object.lockMovementY;
+      object.set({
+        lockMovementX: true,
+        lockMovementY: true,
+      });
+      object.beginLeaderEndpointPlacement(startPoint);
+      placingLeaderTarget = object;
+      isPlacementPointerDown = true;
+      didDragDuringPlacementPointerDown = false;
+      placementPointerDownStart = startPoint.clone();
+      setLeaderPlacementMode(true);
+      updateLeaderHoverStates();
+      refreshLeaderSelectionVisuals();
+    };
+
+    const endLeaderPlacement = (
+      options: {
+        commit?: boolean;
+        scenePoint?: Point;
+      } = {},
+    ) => {
+      const target = placingLeaderTarget;
+      if (!target) {
+        return;
+      }
+
+      if (options.commit && options.scenePoint) {
+        target.commitLeaderEndpointPlacement(options.scenePoint);
+      }
+
+      target.set({
+        lockMovementX: previousPlacementLockMovementX ?? false,
+        lockMovementY: previousPlacementLockMovementY ?? false,
+      });
+
+      placingLeaderTarget = null;
+      previousPlacementLockMovementX = undefined;
+      previousPlacementLockMovementY = undefined;
+      isPlacementPointerDown = false;
+      didDragDuringPlacementPointerDown = false;
+      placementPointerDownStart = null;
+      setLeaderPlacementMode(false);
+      if (options.commit) {
+        canvas.setActiveObject(target);
+        target.syncSelectionVisuals();
+      }
+      updateLeaderHoverStates(options.scenePoint);
+      canvas.requestRenderAll();
     };
 
     const refreshLeaderSelectionVisuals = () => {
@@ -325,14 +383,10 @@ export const FabricJsonCanvas = forwardRef<
       }
 
       if (placingLeaderTarget) {
-        placingLeaderTarget.commitLeaderEndpointPlacement(event.scenePoint);
-        placingLeaderTarget = null;
-        isPlacementPointerDown = false;
-        didDragDuringPlacementPointerDown = false;
-        placementPointerDownStart = null;
-        setLeaderPlacementMode(false);
-        updateLeaderHoverStates(event.scenePoint);
-        canvas.requestRenderAll();
+        endLeaderPlacement({
+          commit: true,
+          scenePoint: event.scenePoint,
+        });
         return;
       }
 
@@ -343,19 +397,18 @@ export const FabricJsonCanvas = forwardRef<
           continue;
         }
 
+        if (object.isPointOnEditTextHandle(event.scenePoint)) {
+          canvas.setActiveObject(object);
+          object.startTextEditing();
+          refreshLeaderSelectionVisuals();
+          return;
+        }
+
         if (!object.isPointOnCreateLeaderHandle(event.scenePoint)) {
           continue;
         }
 
-        canvas.setActiveObject(object);
-        object.beginLeaderEndpointPlacement(event.scenePoint);
-        placingLeaderTarget = object;
-        isPlacementPointerDown = true;
-        didDragDuringPlacementPointerDown = false;
-        placementPointerDownStart = event.scenePoint.clone();
-        setLeaderPlacementMode(true);
-        updateLeaderHoverStates();
-        refreshLeaderSelectionVisuals();
+        beginLeaderPlacement(object, event.scenePoint);
         return;
       }
 
@@ -409,16 +462,11 @@ export const FabricJsonCanvas = forwardRef<
         didDragDuringPlacementPointerDown &&
         event.scenePoint
       ) {
-        placingLeaderTarget.commitLeaderEndpointPlacement(event.scenePoint);
-        placingLeaderTarget = null;
-        setLeaderPlacementMode(false);
-        updateLeaderHoverStates(event.scenePoint);
-        canvas.requestRenderAll();
+        endLeaderPlacement({
+          commit: true,
+          scenePoint: event.scenePoint,
+        });
       }
-
-      isPlacementPointerDown = false;
-      didDragDuringPlacementPointerDown = false;
-      placementPointerDownStart = null;
     };
 
     canvas.on("object:moving", handleObjectMoving);
@@ -434,7 +482,7 @@ export const FabricJsonCanvas = forwardRef<
     canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
 
     return () => {
-      setLeaderPlacementMode(false);
+      endLeaderPlacement();
       canvas.off("object:moving", handleObjectMoving);
       canvas.off("object:scaling", handleObjectScaling);
       canvas.off("object:modified", handleObjectModified);

@@ -14,6 +14,7 @@ import {
   classRegistry,
   util,
   type Abortable,
+  type InteractiveFabricObject,
   type SerializedGroupProps,
   type TOptions,
 } from "fabric";
@@ -96,12 +97,16 @@ const DEFAULT_FONT_SIZE = 24;
 const DEFAULT_FONT_FAMILY = "Arial";
 const DEFAULT_TEXT_ALIGN: LeaderTextAlignment = "center";
 const LEADER_TEXT_CLIP_EXTRA_PADDING = 4;
-const EMPTY_TEXT_PLACEHOLDER = "Add text";
 const TEXT_BORDER_PADDING_X = 8;
 const TEXT_BORDER_PADDING_Y = 4;
 const CREATE_LEADER_HANDLE_RADIUS = 5;
 const CREATE_LEADER_HANDLE_GAP = 8;
 const CREATE_LEADER_HANDLE_HIT_TOLERANCE = 4;
+const EDIT_TEXT_HANDLE_WIDTH = 18;
+const EDIT_TEXT_HANDLE_HEIGHT = 14;
+const EDIT_TEXT_HANDLE_GAP = 8;
+const EDIT_TEXT_HANDLE_HIT_TOLERANCE = 4;
+const NO_TEXT_START_HANDLE_HIT_TOLERANCE = 4;
 const LEADER_END_CONTROL_KEY_PREFIX = "leaderEnd-";
 const HIDDEN_TRANSFORM_CONTROLS = {
   bl: false,
@@ -185,9 +190,17 @@ function distancePointToSegment(point: Point, start: Point, end: Point) {
 }
 
 function createLeaderEndControl(endpointIndex: number) {
-  return new Control({
+  const control = new Control({
     actionName: `modifyLeaderEnd:${endpointIndex}`,
-    cursorStyle: "crosshair",
+    cursorStyleHandler: function (_eventData, _control, fabricObject) {
+      if (
+        fabricObject instanceof LeaderTextWithArrow &&
+        fabricObject.isLeaderHandleDragInProgress()
+      ) {
+        return "none";
+      }
+      return "crosshair";
+    },
     mouseDownHandler: function (_eventData, transform) {
       if (!(transform.target instanceof LeaderTextWithArrow)) {
         return false;
@@ -236,6 +249,23 @@ function createLeaderEndControl(endpointIndex: number) {
       return true;
     },
   });
+
+  const defaultGetVisibility = control.getVisibility.bind(control);
+  control.getVisibility = function (
+    fabricObject: InteractiveFabricObject,
+    controlKey: string,
+  ) {
+    if (
+      fabricObject instanceof LeaderTextWithArrow &&
+      fabricObject.isLeaderHandleDragInProgress()
+    ) {
+      return false;
+    }
+
+    return defaultGetVisibility(fabricObject, controlKey);
+  };
+
+  return control;
 }
 
 /**
@@ -284,6 +314,7 @@ export class LeaderTextWithArrow extends Group {
   private isDraggingLeaderHandle = false;
   private draggingLeaderHandleIndex: number | null = null;
   private isLeaderDeletionHoverActive = false;
+  private leaderDeletionHoverScenePoint: Point | null = null;
   private isHoveringTextBox = false;
   private isPlacingLeaderEndpoint = false;
   private pendingLeaderEndpoint: Point | null = null;
@@ -349,18 +380,14 @@ export class LeaderTextWithArrow extends Group {
     this.setControlsVisibility(HIDDEN_TRANSFORM_CONTROLS);
     this.hasBorders = false;
 
-    if (!this.hasTextContent()) {
-      this.clearAllLeaderArrows();
-    }
     this.refreshVisuals();
   }
 
   /** Update text content while keeping leader starts anchored to text midpoint. */
   setTextContent(nextText: string) {
     this.text = nextText;
-    if (!this.hasTextContent()) {
-      this.clearAllLeaderArrows();
-    }
+    this.isLeaderDeletionHoverActive = false;
+    this.leaderDeletionHoverScenePoint = null;
     this.refreshVisuals();
   }
 
@@ -371,12 +398,6 @@ export class LeaderTextWithArrow extends Group {
 
   /** Set full endpoint list for all leader arrows. */
   setLeaderEnds(nextEndpoints: LeaderArrowEndpoint[]) {
-    if (!this.hasTextContent()) {
-      this.clearAllLeaderArrows();
-      this.refreshVisuals();
-      return;
-    }
-
     this.leaderEnds = normalizeLeaderEndpoints(nextEndpoints);
     this.syncLegacyLeaderEnd();
     this.refreshVisuals();
@@ -391,6 +412,8 @@ export class LeaderTextWithArrow extends Group {
     this.isDraggingLeaderHandle = true;
     this.draggingLeaderHandleIndex = endpointIndex;
     this.isLeaderDeletionHoverActive = false;
+    this.leaderDeletionHoverScenePoint = null;
+    this.refreshVisuals();
     this.dirty = true;
   }
 
@@ -414,10 +437,13 @@ export class LeaderTextWithArrow extends Group {
     this.isLeaderDeletionHoverActive =
       this.canDeleteLeaderArrow(endpointIndex) &&
       this.isScenePointInsideTextBounds(nextEndpoint);
+    this.leaderDeletionHoverScenePoint = this.isLeaderDeletionHoverActive
+      ? new Point(nextEndpoint.x, nextEndpoint.y)
+      : null;
     this.dirty = true;
   }
 
-  /** Finalize drag and delete that arrow when dropped onto text while text exists. */
+  /** Finalize drag and delete that arrow when dropped onto text, if not the last arrow. */
   commitLeaderHandleDrag(endpointIndex: number) {
     if (
       this.isDraggingLeaderHandle &&
@@ -428,12 +454,13 @@ export class LeaderTextWithArrow extends Group {
       nextLeaderEnds.splice(endpointIndex, 1);
       this.leaderEnds = nextLeaderEnds;
       this.syncLegacyLeaderEnd();
-      this.refreshVisuals();
     }
 
     this.isDraggingLeaderHandle = false;
     this.draggingLeaderHandleIndex = null;
     this.isLeaderDeletionHoverActive = false;
+    this.leaderDeletionHoverScenePoint = null;
+    this.refreshVisuals();
     this.setCoords();
     this.dirty = true;
     this.canvas?.requestRenderAll();
@@ -486,7 +513,7 @@ export class LeaderTextWithArrow extends Group {
 
   /** Returns true when scene-space point is over the create-arrow handle. */
   isPointOnCreateLeaderHandle(pointOnScenePlane: Point, requireVisible = true) {
-    if (!this.hasTextContent() || this.isPlacingLeaderEndpoint) {
+    if (this.isPlacingLeaderEndpoint) {
       return false;
     }
 
@@ -501,12 +528,61 @@ export class LeaderTextWithArrow extends Group {
     return pointOnScenePlane.distanceFrom(handleCenter) <= hitRadius;
   }
 
-  /** Enter endpoint-placement mode for creating one additional leader arrow. */
-  beginLeaderEndpointPlacement(startPointOnScenePlane: Point) {
-    if (!this.hasTextContent()) {
-      return;
+  /** Returns true when scene-space point is over the empty-text edit handle. */
+  isPointOnEditTextHandle(pointOnScenePlane: Point) {
+    if (!this.isEditTextHandleVisible()) {
+      return false;
     }
 
+    const pointOnObjectPlane = util.sendPointToPlane(
+      pointOnScenePlane,
+      undefined,
+      this.calcTransformMatrix(),
+    );
+    const handleGeometry = this.getEditTextHandleGeometryOnObjectPlane();
+    const hitTolerance =
+      EDIT_TEXT_HANDLE_HIT_TOLERANCE / this.getViewportScale();
+    const halfWidth = handleGeometry.width / 2;
+    const halfHeight = handleGeometry.height / 2;
+
+    return (
+      pointOnObjectPlane.x >=
+        handleGeometry.center.x - halfWidth - hitTolerance &&
+      pointOnObjectPlane.x <=
+        handleGeometry.center.x + halfWidth + hitTolerance &&
+      pointOnObjectPlane.y >=
+        handleGeometry.center.y - halfHeight - hitTolerance &&
+      pointOnObjectPlane.y <=
+        handleGeometry.center.y + halfHeight + hitTolerance
+    );
+  }
+
+  /** Returns true when scene-space point is over the empty-text start square handle. */
+  isPointOnNoTextStartHandle(pointOnScenePlane: Point) {
+    if (!this.isNoTextStartHandleVisible()) {
+      return false;
+    }
+
+    const pointOnObjectPlane = util.sendPointToPlane(
+      pointOnScenePlane,
+      undefined,
+      this.calcTransformMatrix(),
+    );
+    const handleCenter = this.getNoTextStartHandleCenterOnObjectPlane();
+    const halfSize = this.getNoTextStartHandleSizeOnObjectPlane() / 2;
+    const hitTolerance =
+      NO_TEXT_START_HANDLE_HIT_TOLERANCE / this.getViewportScale();
+
+    return (
+      pointOnObjectPlane.x >= handleCenter.x - halfSize - hitTolerance &&
+      pointOnObjectPlane.x <= handleCenter.x + halfSize + hitTolerance &&
+      pointOnObjectPlane.y >= handleCenter.y - halfSize - hitTolerance &&
+      pointOnObjectPlane.y <= handleCenter.y + halfSize + hitTolerance
+    );
+  }
+
+  /** Enter endpoint-placement mode for creating one additional leader arrow. */
+  beginLeaderEndpointPlacement(startPointOnScenePlane: Point) {
     this.isPlacingLeaderEndpoint = true;
     this.isHoveringTextBox = false;
     this.pendingLeaderEndpoint = startPointOnScenePlane.clone();
@@ -533,21 +609,16 @@ export class LeaderTextWithArrow extends Group {
     this.isPlacingLeaderEndpoint = false;
     this.pendingLeaderEndpoint = null;
 
-    if (this.hasTextContent()) {
-      const nextLeaderEnds = [
-        ...this.leaderEnds,
-        {
-          x: finalPointOnScenePlane.x,
-          y: finalPointOnScenePlane.y,
-        },
-      ];
-      this.leaderEnds = normalizeLeaderEndpoints(nextLeaderEnds);
-      this.syncLegacyLeaderEnd();
-      this.refreshVisuals();
-    } else {
-      this.clearAllLeaderArrows();
-      this.refreshVisuals();
-    }
+    const nextLeaderEnds = [
+      ...this.leaderEnds,
+      {
+        x: finalPointOnScenePlane.x,
+        y: finalPointOnScenePlane.y,
+      },
+    ];
+    this.leaderEnds = normalizeLeaderEndpoints(nextLeaderEnds);
+    this.syncLegacyLeaderEnd();
+    this.refreshVisuals();
 
     this.setCoords();
     this.dirty = true;
@@ -735,8 +806,19 @@ export class LeaderTextWithArrow extends Group {
     return this.isPointNearLeaderLine(pointOnScenePlane);
   }
 
+  /** Returns whether endpoint-handle drag interaction is currently active. */
+  isLeaderHandleDragInProgress() {
+    return this.isDraggingLeaderHandle;
+  }
+
   containsPoint(point: Point) {
-    return super.containsPoint(point) || this.isPointNearLeaderLine(point);
+    return (
+      super.containsPoint(point) ||
+      this.isPointNearLeaderLine(point) ||
+      this.isPointOnCreateLeaderHandle(point) ||
+      this.isPointOnEditTextHandle(point) ||
+      this.isPointOnNoTextStartHandle(point)
+    );
   }
 
   drawObject(
@@ -802,11 +884,21 @@ export class LeaderTextWithArrow extends Group {
     }
 
     if (this.isCreateLeaderHandleVisible()) {
+      if (this.isNoTextStartHandleVisible()) {
+        this.drawNoTextStartHandle(ctx);
+      }
       this.drawCreateLeaderHandle(ctx);
     }
+    if (this.isEditTextHandleVisible()) {
+      this.drawEditTextHandle(ctx);
+    }
 
-    if (this.isDraggingLeaderHandle && this.isLeaderDeletionHoverActive) {
-      this.drawDeleteIndicator(ctx);
+    if (
+      this.isDraggingLeaderHandle &&
+      this.isLeaderDeletionHoverActive &&
+      this.leaderDeletionHoverScenePoint
+    ) {
+      this.drawDeleteIndicator(ctx, this.leaderDeletionHoverScenePoint);
     }
 
     ctx.restore();
@@ -848,17 +940,14 @@ export class LeaderTextWithArrow extends Group {
     return endpointIndex >= 0 && endpointIndex < this.leaderEnds.length;
   }
 
-  private clearAllLeaderArrows() {
-    this.leaderEnds = [];
-    this.syncLegacyLeaderEnd();
-    this.isDraggingLeaderHandle = false;
-    this.draggingLeaderHandleIndex = null;
-    this.isLeaderDeletionHoverActive = false;
-    this.isPlacingLeaderEndpoint = false;
-    this.pendingLeaderEndpoint = null;
-  }
-
   private getLeaderGeometryFromObjectEndpoint(endpoint: Point) {
+    if (!this.hasTextContent()) {
+      return {
+        endpoint,
+        visibleLeaderStart: new Point(0, 0),
+      };
+    }
+
     const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
     const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
     const baseLeaderClipPadding =
@@ -905,7 +994,7 @@ export class LeaderTextWithArrow extends Group {
         ),
       );
     }
-    if (this.pendingLeaderEndpoint && this.hasTextContent()) {
+    if (this.pendingLeaderEndpoint) {
       renderEndpoints.push(
         util.sendPointToPlane(
           this.pendingLeaderEndpoint,
@@ -930,18 +1019,11 @@ export class LeaderTextWithArrow extends Group {
   }
 
   private getDisplayText() {
-    if (this.shouldShowEmptyTextPlaceholder()) {
-      return EMPTY_TEXT_PLACEHOLDER;
-    }
     return this.text;
   }
 
-  private shouldShowEmptyTextPlaceholder() {
-    return this.isSelectedOnCanvas() && this.text.trim().length === 0;
-  }
-
   private shouldShowTextBorder() {
-    return this.isSelectedOnCanvas();
+    return this.isSelectedOnCanvas() && this.hasTextContent();
   }
 
   private isSelectedOnCanvas() {
@@ -959,25 +1041,86 @@ export class LeaderTextWithArrow extends Group {
   }
 
   private canDeleteLeaderArrow(endpointIndex: number) {
-    return this.hasTextContent() && this.isValidLeaderIndex(endpointIndex);
+    return this.isValidLeaderIndex(endpointIndex) && this.leaderEnds.length > 1;
   }
 
   private isCreateLeaderHandleVisible() {
+    if (
+      this.isPlacingLeaderEndpoint ||
+      this.editingTextObject ||
+      this.isLeaderHandleDragInProgress()
+    ) {
+      return false;
+    }
+
+    return this.isSelectedOnCanvas();
+  }
+
+  private isEditTextHandleVisible() {
     return (
-      this.hasTextContent() &&
-      this.isHoveringTextBox &&
-      !this.isPlacingLeaderEndpoint
+      this.isSelectedOnCanvas() &&
+      !this.hasTextContent() &&
+      !this.isPlacingLeaderEndpoint &&
+      !this.editingTextObject &&
+      !this.isLeaderHandleDragInProgress()
     );
   }
 
+  private isNoTextStartHandleVisible() {
+    return (
+      this.isSelectedOnCanvas() &&
+      !this.hasTextContent() &&
+      !this.isPlacingLeaderEndpoint &&
+      !this.editingTextObject &&
+      !this.isLeaderHandleDragInProgress()
+    );
+  }
+
+  private getNoTextStartHandleCenterOnObjectPlane() {
+    return new Point(0, 0);
+  }
+
+  private getNoTextStartHandleSizeOnObjectPlane() {
+    return this.getControlSize() / this.getViewportScale();
+  }
+
   private getCreateLeaderHandleCenterOnObjectPlane() {
-    const textHalfHeight = Math.max(1, this.textObject.getScaledHeight()) / 2;
+    if (!this.hasTextContent()) {
+      const viewportScale = this.getViewportScale();
+      const startHandleHalfSize =
+        this.getNoTextStartHandleSizeOnObjectPlane() / 2;
+      const handleRadius = CREATE_LEADER_HANDLE_RADIUS / viewportScale;
+      const handleGap = CREATE_LEADER_HANDLE_GAP / viewportScale;
+      return new Point(startHandleHalfSize + handleGap + handleRadius, 0);
+    }
+
+    const textHalfHeight = this.hasTextContent()
+      ? Math.max(1, this.textObject.getScaledHeight()) / 2
+      : 0;
+    const borderPaddingY = this.hasTextContent() ? TEXT_BORDER_PADDING_Y : 0;
     const offset =
       textHalfHeight +
-      TEXT_BORDER_PADDING_Y +
+      borderPaddingY +
       CREATE_LEADER_HANDLE_GAP +
       CREATE_LEADER_HANDLE_RADIUS;
     return new Point(0, -offset);
+  }
+
+  private getEditTextHandleGeometryOnObjectPlane() {
+    const viewportScale = this.getViewportScale();
+    const width = EDIT_TEXT_HANDLE_WIDTH / viewportScale;
+    const height = EDIT_TEXT_HANDLE_HEIGHT / viewportScale;
+    const createHandleCenter = this.getCreateLeaderHandleCenterOnObjectPlane();
+    const createHandleRadius = CREATE_LEADER_HANDLE_RADIUS / viewportScale;
+    const handleGap = EDIT_TEXT_HANDLE_GAP / viewportScale;
+    const centerX =
+      createHandleCenter.x + createHandleRadius + handleGap + width / 2;
+
+    return {
+      center: new Point(centerX, createHandleCenter.y),
+      width,
+      height,
+    };
   }
 
   private getCreateLeaderHandleCenterInScenePlane() {
@@ -989,6 +1132,10 @@ export class LeaderTextWithArrow extends Group {
   private isScenePointInsideTextBounds(
     scenePoint: LeaderArrowEndpoint | Point,
   ) {
+    if (!this.hasTextContent()) {
+      return false;
+    }
+
     const pointOnScenePlane =
       scenePoint instanceof Point
         ? scenePoint
@@ -1008,21 +1155,28 @@ export class LeaderTextWithArrow extends Group {
     );
   }
 
-  private drawDeleteIndicator(ctx: CanvasRenderingContext2D) {
+  private drawDeleteIndicator(
+    ctx: CanvasRenderingContext2D,
+    anchorOnScenePlane: Point,
+  ) {
     const viewportScale = this.getViewportScale();
     const iconSize = 14 / viewportScale;
     const iconHalfSize = iconSize / 2;
-    const iconMargin = 8 / viewportScale;
-    const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
-    const iconCenterX =
-      textBoxHalfWidth + TEXT_BORDER_PADDING_X + iconMargin + iconHalfSize;
-    const iconCenterY = 0;
+    const iconOffsetOnScenePlane = new Point(
+      (iconHalfSize + 10 / viewportScale) * 1,
+      (-iconHalfSize - 10 / viewportScale) * 1,
+    );
+    const iconCenterOnObjectPlane = util.sendPointToPlane(
+      anchorOnScenePlane.add(iconOffsetOnScenePlane),
+      undefined,
+      this.calcTransformMatrix(),
+    );
     const borderWidth = 1 / viewportScale;
     const glyphWidth = iconSize * 0.52;
     const glyphHeight = iconSize * 0.5;
 
     ctx.save();
-    ctx.translate(iconCenterX, iconCenterY);
+    ctx.translate(iconCenterOnObjectPlane.x, iconCenterOnObjectPlane.y);
     ctx.fillStyle = "white";
     ctx.strokeStyle = this.getSelectionBorderColor();
     ctx.lineWidth = borderWidth;
@@ -1061,6 +1215,7 @@ export class LeaderTextWithArrow extends Group {
     const handleCenter = this.getCreateLeaderHandleCenterOnObjectPlane();
     const handleRadius = CREATE_LEADER_HANDLE_RADIUS / viewportScale;
     const lineWidth = 1 / viewportScale;
+    const plusSize = handleRadius * 0.9;
 
     ctx.save();
     ctx.fillStyle = "white";
@@ -1069,6 +1224,77 @@ export class LeaderTextWithArrow extends Group {
     ctx.beginPath();
     ctx.arc(handleCenter.x, handleCenter.y, handleRadius, 0, Math.PI * 2);
     ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(handleCenter.x - plusSize / 2, handleCenter.y);
+    ctx.lineTo(handleCenter.x + plusSize / 2, handleCenter.y);
+    ctx.moveTo(handleCenter.x, handleCenter.y - plusSize / 2);
+    ctx.lineTo(handleCenter.x, handleCenter.y + plusSize / 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  private drawNoTextStartHandle(ctx: CanvasRenderingContext2D) {
+    const viewportScale = this.getViewportScale();
+    const lineWidth = 1 / viewportScale;
+    const handleCenter = this.getNoTextStartHandleCenterOnObjectPlane();
+    const handleSize = this.getNoTextStartHandleSizeOnObjectPlane();
+    const handleHalfSize = handleSize / 2;
+
+    ctx.save();
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = this.getSelectionBorderColor();
+    ctx.lineWidth = lineWidth;
+    ctx.lineJoin = "miter";
+    ctx.lineCap = "square";
+    ctx.beginPath();
+    ctx.rect(
+      handleCenter.x - handleHalfSize,
+      handleCenter.y - handleHalfSize,
+      handleSize,
+      handleSize,
+    );
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  private drawEditTextHandle(ctx: CanvasRenderingContext2D) {
+    const viewportScale = this.getViewportScale();
+    const lineWidth = 1 / viewportScale;
+    const handleGeometry = this.getEditTextHandleGeometryOnObjectPlane();
+    const halfWidth = handleGeometry.width / 2;
+    const halfHeight = handleGeometry.height / 2;
+    const tHeight = handleGeometry.height * 0.46;
+    const tTopWidth = handleGeometry.width * 0.46;
+
+    ctx.save();
+    ctx.strokeStyle = this.getSelectionBorderColor();
+    ctx.fillStyle = "white";
+    ctx.lineWidth = lineWidth;
+    ctx.lineJoin = "miter";
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.rect(
+      handleGeometry.center.x - halfWidth,
+      handleGeometry.center.y - halfHeight,
+      handleGeometry.width,
+      handleGeometry.height,
+    );
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(
+      handleGeometry.center.x - tTopWidth / 2,
+      handleGeometry.center.y - tHeight / 2,
+    );
+    ctx.lineTo(
+      handleGeometry.center.x + tTopWidth / 2,
+      handleGeometry.center.y - tHeight / 2,
+    );
+    ctx.moveTo(handleGeometry.center.x, handleGeometry.center.y - tHeight / 2);
+    ctx.lineTo(handleGeometry.center.x, handleGeometry.center.y + tHeight / 2);
     ctx.stroke();
     ctx.restore();
   }
@@ -1139,11 +1365,15 @@ export class LeaderTextWithArrow extends Group {
       ...this.baseControls,
     };
 
-    if (this.hasTextContent()) {
-      for (let index = 0; index < this.leaderEnds.length; index += 1) {
-        nextControls[`${LEADER_END_CONTROL_KEY_PREFIX}${index}`] =
-          createLeaderEndControl(index);
-      }
+    if (this.isPlacingLeaderEndpoint) {
+      this.controls = nextControls;
+      this.setControlsVisibility(HIDDEN_TRANSFORM_CONTROLS);
+      return;
+    }
+
+    for (let index = 0; index < this.leaderEnds.length; index += 1) {
+      nextControls[`${LEADER_END_CONTROL_KEY_PREFIX}${index}`] =
+        createLeaderEndControl(index);
     }
 
     this.controls = nextControls;
