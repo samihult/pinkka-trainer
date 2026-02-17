@@ -12,12 +12,20 @@ import {
   useRef,
   type CSSProperties,
 } from "react";
-import { Canvas, FabricImage, InteractiveFabricObject } from "fabric";
+import {
+  Canvas,
+  Circle,
+  Ellipse,
+  FabricImage,
+  FabricObject,
+  InteractiveFabricObject,
+} from "fabric";
 
 import { cn } from "@/lib/utils";
 
 const DARK_VIEWPORT_COLOR = "#2f2f2f";
 const BORDER_COLOR = "#253ed3";
+const GEOMETRY_EPSILON = 0.0001;
 
 /** Ref API for `FabricJsonCanvas`. */
 export interface FabricJsonCanvasHandle {}
@@ -34,6 +42,93 @@ export interface FabricJsonCanvasProps {
   viewportHeight?: number;
   /** Optional wrapper class name. */
   className?: string;
+}
+
+type TransformableFabricObject = FabricObject & {
+  transformMatrix?: number[];
+};
+
+function bakeGeometryIntoObject(object: FabricObject) {
+  const scaleX = object.scaleX ?? 1;
+  const scaleY = object.scaleY ?? 1;
+  const usesScaleTransform =
+    Math.abs(scaleX - 1) > GEOMETRY_EPSILON ||
+    Math.abs(scaleY - 1) > GEOMETRY_EPSILON;
+  const usesMatrixTransform = Boolean(
+    (object as TransformableFabricObject).transformMatrix,
+  );
+
+  if (!usesScaleTransform && !usesMatrixTransform) {
+    return;
+  }
+
+  const center = object.getCenterPoint();
+  const nextScaleX = Math.abs(scaleX);
+  const nextScaleY = Math.abs(scaleY);
+
+  if (object instanceof Ellipse) {
+    object.set({
+      rx: Math.max(0.5, object.rx * nextScaleX),
+      ry: Math.max(0.5, object.ry * nextScaleY),
+    });
+  } else if (object instanceof Circle) {
+    // Circle supports one radius, so we preserve circle geometry with average scale.
+    const uniformScale = (nextScaleX + nextScaleY) / 2;
+    object.set({
+      radius: Math.max(0.5, object.radius * uniformScale),
+    });
+  } else if (
+    "fontSize" in object &&
+    typeof object.fontSize === "number" &&
+    Number.isFinite(object.fontSize)
+  ) {
+    const fontScale = (nextScaleX + nextScaleY) / 2;
+    object.set({
+      fontSize: Math.max(1, object.fontSize * fontScale),
+    });
+  }
+
+  if (
+    typeof object.width === "number" &&
+    Number.isFinite(object.width) &&
+    !(object instanceof Ellipse) &&
+    !(object instanceof Circle)
+  ) {
+    object.set({
+      width: Math.max(1, object.width * nextScaleX),
+    });
+  }
+
+  if (
+    typeof object.height === "number" &&
+    Number.isFinite(object.height) &&
+    !(object instanceof Ellipse) &&
+    !(object instanceof Circle)
+  ) {
+    object.set({
+      height: Math.max(1, object.height * nextScaleY),
+    });
+  }
+
+  if (scaleX < 0) {
+    object.set({
+      flipX: !object.flipX,
+    });
+  }
+
+  if (scaleY < 0) {
+    object.set({
+      flipY: !object.flipY,
+    });
+  }
+
+  object.set({
+    scaleX: 1,
+    scaleY: 1,
+  });
+  (object as TransformableFabricObject).transformMatrix = undefined;
+  object.setPositionByOrigin(center, "center", "center");
+  object.setCoords();
 }
 
 function fitBackgroundImageToViewport(canvas: Canvas, image: FabricImage) {
@@ -107,7 +202,31 @@ export const FabricJsonCanvas = forwardRef<
 
     fabricCanvasRef.current = canvas;
 
+    const handleObjectMoving = (event: { target?: FabricObject }) => {
+      const target = event.target;
+      if (!target) {
+        return;
+      }
+
+      (target as TransformableFabricObject).transformMatrix = undefined;
+    };
+
+    const handleObjectModified = (event: { target?: FabricObject }) => {
+      const target = event.target;
+      if (!target) {
+        return;
+      }
+
+      bakeGeometryIntoObject(target);
+      canvas.requestRenderAll();
+    };
+
+    canvas.on("object:moving", handleObjectMoving);
+    canvas.on("object:modified", handleObjectModified);
+
     return () => {
+      canvas.off("object:moving", handleObjectMoving);
+      canvas.off("object:modified", handleObjectModified);
       void canvas.dispose();
       fabricCanvasRef.current = null;
     };
@@ -131,6 +250,9 @@ export const FabricJsonCanvas = forwardRef<
         await canvas.loadFromJSON(
           initialModel as Parameters<Canvas["loadFromJSON"]>[0],
         );
+        for (const object of canvas.getObjects()) {
+          bakeGeometryIntoObject(object);
+        }
       }
 
       if (backgroundImageUrl) {
