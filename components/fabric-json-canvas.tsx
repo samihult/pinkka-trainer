@@ -1107,6 +1107,8 @@ export const FabricJsonCanvas = forwardRef<
         const toolAtPointerDown = shapeToolAtPointerDown;
         const startPoint = shapePointerDownStart;
         const endPoint = scenePoint ?? startPoint;
+        const didDragFromDistance =
+          endPoint.distanceFrom(startPoint) >= MIN_GEOMETRY_SIZE;
         const pendingStart =
           pendingShapeStart?.tool === toolAtPointerDown
             ? pendingShapeStart
@@ -1129,7 +1131,7 @@ export const FabricJsonCanvas = forwardRef<
           return;
         }
 
-        if (shapeDidDrag) {
+        if (shapeDidDrag || didDragFromDistance) {
           clearPendingShapeStart();
           commitShapeDragPreview(toolAtPointerDown, startPoint, endPoint);
           updateCanvasCursor(scenePoint);

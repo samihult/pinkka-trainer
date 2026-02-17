@@ -93,7 +93,7 @@ const DEFAULT_TEXT = "Text";
 const DEFAULT_TEXT_FILL = "#f8fafc";
 const DEFAULT_LEADER_STROKE = "#ffffff";
 const DEFAULT_LEADER_STROKE_WIDTH = 5;
-const DEFAULT_FONT_SIZE = 24;
+const DEFAULT_FONT_SIZE = 28;
 const DEFAULT_FONT_FAMILY = "Arial";
 const DEFAULT_TEXT_ALIGN: LeaderTextAlignment = "center";
 const EDITING_TEXT_BACKGROUND_COLOR = "#2f2f2f";
@@ -1732,6 +1732,8 @@ export class LeaderTextWithArrow extends Group {
       textAlign: this.textAlign,
     });
 
+    // Keep group bounds in sync when text transitions between empty/non-empty.
+    this.triggerLayout();
     this.rebuildLeaderEndControls();
     this.setCoords();
     this.dirty = true;
