@@ -9,7 +9,6 @@ import {
   FabricText,
   Group,
   Point,
-  Path,
   classRegistry,
   util,
   type Abortable,
@@ -72,31 +71,9 @@ export interface SerializedLeaderTextWithArrow extends SerializedGroupProps {
 const DEFAULT_TEXT = "Text";
 const DEFAULT_TEXT_FILL = "#f8fafc";
 const DEFAULT_LEADER_STROKE = "#ffffff";
-const DEFAULT_LEADER_STROKE_WIDTH = 2;
+const DEFAULT_LEADER_STROKE_WIDTH = 5;
 const DEFAULT_FONT_SIZE = 24;
 const DEFAULT_FONT_FAMILY = "Arial";
-
-function createLeaderArrowPathString(
-  start: LeaderArrowEndpoint,
-  endpoint: LeaderArrowEndpoint,
-) {
-  const deltaX = endpoint.x - start.x;
-  const deltaY = endpoint.y - start.y;
-  const angle = Math.atan2(deltaY, deltaX);
-  const headLength = 12;
-  const leftHeadX = endpoint.x - headLength * Math.cos(angle - Math.PI / 6);
-  const leftHeadY = endpoint.y - headLength * Math.sin(angle - Math.PI / 6);
-  const rightHeadX = endpoint.x - headLength * Math.cos(angle + Math.PI / 6);
-  const rightHeadY = endpoint.y - headLength * Math.sin(angle + Math.PI / 6);
-
-  return [
-    `M ${start.x} ${start.y}`,
-    `L ${endpoint.x} ${endpoint.y}`,
-    `M ${leftHeadX} ${leftHeadY}`,
-    `L ${endpoint.x} ${endpoint.y}`,
-    `L ${rightHeadX} ${rightHeadY}`,
-  ].join(" ");
-}
 
 function calculateLeaderStartOutsideTextBox(
   endpoint: LeaderArrowEndpoint,
@@ -161,7 +138,6 @@ export class LeaderTextWithArrow extends Group {
   declare fontFamily: string;
 
   private readonly textObject: FabricText;
-  private readonly leaderPathObject: Path;
 
   constructor(options: LeaderTextWithArrowOptions = {}) {
     const defaultAbsoluteEndpoint = {
@@ -190,25 +166,7 @@ export class LeaderTextWithArrow extends Group {
       strokeUniform: true,
     });
 
-    const leaderPathObject = new Path(
-      createLeaderArrowPathString({ x: 0, y: 0 }, { x: 0, y: 0 }),
-      {
-        left: 0,
-        top: 0,
-        originX: "left",
-        originY: "top",
-        fill: "",
-        stroke: leaderStroke,
-        strokeWidth: leaderStrokeWidth,
-        strokeLineCap: "round",
-        strokeLineJoin: "round",
-        selectable: false,
-        evented: false,
-        strokeUniform: true,
-      },
-    );
-
-    super([leaderPathObject, textObject], {
+    super([textObject], {
       left: options.left,
       top: options.top,
       angle: options.angle,
@@ -218,7 +176,6 @@ export class LeaderTextWithArrow extends Group {
     });
 
     this.textObject = textObject;
-    this.leaderPathObject = leaderPathObject;
     this.text = text;
     this.leaderEnd = { ...endpoint };
     this.textFill = textFill;
@@ -262,6 +219,66 @@ export class LeaderTextWithArrow extends Group {
     this.refreshVisuals();
   }
 
+  drawObject(
+    ctx: CanvasRenderingContext2D,
+    forClipping: boolean | undefined,
+    context: unknown,
+  ) {
+    super.drawObject(
+      ctx,
+      forClipping,
+      context as Parameters<Group["drawObject"]>[2],
+    );
+
+    if (forClipping) {
+      return;
+    }
+
+    const groupTransform = this.calcTransformMatrix();
+    const endpointOnGroupPlane = util.sendPointToPlane(
+      new Point(this.leaderEnd.x, this.leaderEnd.y),
+      undefined,
+      groupTransform,
+    );
+    const endpoint = {
+      x: endpointOnGroupPlane.x,
+      y: endpointOnGroupPlane.y,
+    };
+    const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
+    const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
+    const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
+      endpoint,
+      textBoxHalfWidth,
+      textBoxHalfHeight,
+      DEFAULT_LEADER_STROKE_WIDTH * 0.75,
+    );
+
+    const leaderStroke = DEFAULT_LEADER_STROKE;
+    const leaderStrokeWidth = DEFAULT_LEADER_STROKE_WIDTH;
+    const deltaX = endpoint.x - visibleLeaderStart.x;
+    const deltaY = endpoint.y - visibleLeaderStart.y;
+    const angle = Math.atan2(deltaY, deltaX);
+    const headLength = 12;
+    const leftHeadX = endpoint.x - headLength * Math.cos(angle - Math.PI / 6);
+    const leftHeadY = endpoint.y - headLength * Math.sin(angle - Math.PI / 6);
+    const rightHeadX = endpoint.x - headLength * Math.cos(angle + Math.PI / 6);
+    const rightHeadY = endpoint.y - headLength * Math.sin(angle + Math.PI / 6);
+
+    ctx.save();
+    ctx.strokeStyle = leaderStroke;
+    ctx.lineWidth = leaderStrokeWidth;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    ctx.moveTo(visibleLeaderStart.x, visibleLeaderStart.y);
+    ctx.lineTo(endpoint.x, endpoint.y);
+    ctx.moveTo(leftHeadX, leftHeadY);
+    ctx.lineTo(endpoint.x, endpoint.y);
+    ctx.lineTo(rightHeadX, rightHeadY);
+    ctx.stroke();
+    ctx.restore();
+  }
+
   private refreshVisuals() {
     this.textObject.set({
       text: this.text,
@@ -269,40 +286,6 @@ export class LeaderTextWithArrow extends Group {
       fontSize: this.fontSize,
       fontFamily: this.fontFamily,
     });
-
-    const inverseTransform = util.invertTransform(this.calcTransformMatrix());
-    const localEndpointPoint = util.transformPoint(
-      new Point(this.leaderEnd.x, this.leaderEnd.y),
-      inverseTransform,
-    );
-    const localEndpoint = {
-      x: localEndpointPoint.x,
-      y: localEndpointPoint.y,
-    };
-    const textBoxHalfWidth = (this.textObject.width ?? 0) / 2;
-    const textBoxHalfHeight = (this.textObject.height ?? 0) / 2;
-    const leaderStroke = DEFAULT_LEADER_STROKE;
-    const leaderStrokeWidth = DEFAULT_LEADER_STROKE_WIDTH;
-    const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
-      localEndpoint,
-      textBoxHalfWidth,
-      textBoxHalfHeight,
-      leaderStrokeWidth * 0.75,
-    );
-
-    const nextLeaderPath = createLeaderArrowPathString(
-      visibleLeaderStart,
-      localEndpoint,
-    );
-
-    this.leaderPathObject._setPath(nextLeaderPath, false);
-    this.leaderPathObject.set({
-      stroke: leaderStroke,
-      strokeWidth: leaderStrokeWidth,
-      strokeUniform: true,
-      visible: true,
-    });
-    this.leaderPathObject.setCoords();
 
     this.setCoords();
     this.dirty = true;
