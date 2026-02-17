@@ -49,6 +49,11 @@ type TransformableFabricObject = FabricObject & {
 };
 
 function applyObjectBehaviorRules(object: FabricObject) {
+  object.set({
+    strokeUniform: true,
+    noScaleCache: false,
+  });
+
   if (object instanceof Circle) {
     object.setControlVisible("mtr", false);
     object.set({
@@ -232,6 +237,17 @@ export const FabricJsonCanvas = forwardRef<
       canvas.requestRenderAll();
     };
 
+    const handleObjectScaling = (event: { target?: FabricObject }) => {
+      const target = event.target;
+      if (!target) {
+        return;
+      }
+
+      applyObjectBehaviorRules(target);
+      bakeGeometryIntoObject(target);
+      canvas.requestRenderAll();
+    };
+
     const handleObjectAdded = (event: { target?: FabricObject }) => {
       const target = event.target;
       if (!target) {
@@ -242,11 +258,13 @@ export const FabricJsonCanvas = forwardRef<
     };
 
     canvas.on("object:moving", handleObjectMoving);
+    canvas.on("object:scaling", handleObjectScaling);
     canvas.on("object:modified", handleObjectModified);
     canvas.on("object:added", handleObjectAdded);
 
     return () => {
       canvas.off("object:moving", handleObjectMoving);
+      canvas.off("object:scaling", handleObjectScaling);
       canvas.off("object:modified", handleObjectModified);
       canvas.off("object:added", handleObjectAdded);
       void canvas.dispose();
