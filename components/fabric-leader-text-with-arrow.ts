@@ -97,7 +97,8 @@ const DEFAULT_FONT_FAMILY = "Arial";
 const DEFAULT_TEXT_ALIGN: LeaderTextAlignment = "center";
 const LEADER_TEXT_CLIP_EXTRA_PADDING = 4;
 const EMPTY_TEXT_PLACEHOLDER = "Add text";
-const TEXT_BORDER_PADDING = 4;
+const TEXT_BORDER_PADDING_X = 8;
+const TEXT_BORDER_PADDING_Y = 4;
 const CREATE_LEADER_HANDLE_RADIUS = 5;
 const CREATE_LEADER_HANDLE_GAP = 8;
 const CREATE_LEADER_HANDLE_HIT_TOLERANCE = 4;
@@ -137,7 +138,8 @@ function calculateLeaderStartOutsideTextBox(
   endpoint: Point,
   textBoxHalfWidth: number,
   textBoxHalfHeight: number,
-  padding: number,
+  paddingX: number,
+  paddingY: number,
 ) {
   const dx = endpoint.x;
   const dy = endpoint.y;
@@ -148,8 +150,8 @@ function calculateLeaderStartOutsideTextBox(
     return new Point(0, 0);
   }
 
-  const halfWidth = Math.max(0, textBoxHalfWidth + padding);
-  const halfHeight = Math.max(0, textBoxHalfHeight + padding);
+  const halfWidth = Math.max(0, textBoxHalfWidth + paddingX);
+  const halfHeight = Math.max(0, textBoxHalfHeight + paddingY);
   const hitVerticalEdge = absDx * halfHeight >= absDy * halfWidth;
   const t = hitVerticalEdge
     ? halfWidth / Math.max(absDx, 0.0001)
@@ -588,7 +590,7 @@ export class LeaderTextWithArrow extends Group {
       hasBorders: true,
       borderColor: this.getSelectionBorderColor(),
       borderScaleFactor: this.borderScaleFactor,
-      padding: TEXT_BORDER_PADDING,
+      padding: TEXT_BORDER_PADDING_Y,
       lockMovementX: true,
       lockMovementY: true,
       lockRotation: true,
@@ -792,10 +794,10 @@ export class LeaderTextWithArrow extends Group {
       ctx.strokeStyle = this.getSelectionBorderColor();
       ctx.lineWidth = borderLineWidth;
       ctx.strokeRect(
-        -textWidth / 2 - TEXT_BORDER_PADDING,
-        -textHeight / 2 - TEXT_BORDER_PADDING,
-        textWidth + TEXT_BORDER_PADDING * 2,
-        textHeight + TEXT_BORDER_PADDING * 2,
+        -textWidth / 2 - TEXT_BORDER_PADDING_X,
+        -textHeight / 2 - TEXT_BORDER_PADDING_Y,
+        textWidth + TEXT_BORDER_PADDING_X * 2,
+        textHeight + TEXT_BORDER_PADDING_Y * 2,
       );
     }
 
@@ -859,13 +861,17 @@ export class LeaderTextWithArrow extends Group {
   private getLeaderGeometryFromObjectEndpoint(endpoint: Point) {
     const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
     const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
-    const leaderClipPadding =
+    const baseLeaderClipPadding =
       this.leaderStrokeWidth * 0.75 + LEADER_TEXT_CLIP_EXTRA_PADDING;
+    const leaderClipPaddingX =
+      baseLeaderClipPadding + (TEXT_BORDER_PADDING_X - TEXT_BORDER_PADDING_Y);
+    const leaderClipPaddingY = baseLeaderClipPadding;
     const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
       endpoint,
       textBoxHalfWidth,
       textBoxHalfHeight,
-      leaderClipPadding,
+      leaderClipPaddingX,
+      leaderClipPaddingY,
     );
 
     return {
@@ -968,7 +974,7 @@ export class LeaderTextWithArrow extends Group {
     const textHalfHeight = Math.max(1, this.textObject.getScaledHeight()) / 2;
     const offset =
       textHalfHeight +
-      TEXT_BORDER_PADDING +
+      TEXT_BORDER_PADDING_Y +
       CREATE_LEADER_HANDLE_GAP +
       CREATE_LEADER_HANDLE_RADIUS;
     return new Point(0, -offset);
@@ -994,13 +1000,11 @@ export class LeaderTextWithArrow extends Group {
     );
     const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
     const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
-    const detectionPadding = TEXT_BORDER_PADDING;
-
     return (
-      pointOnObjectPlane.x >= -textBoxHalfWidth - detectionPadding &&
-      pointOnObjectPlane.x <= textBoxHalfWidth + detectionPadding &&
-      pointOnObjectPlane.y >= -textBoxHalfHeight - detectionPadding &&
-      pointOnObjectPlane.y <= textBoxHalfHeight + detectionPadding
+      pointOnObjectPlane.x >= -textBoxHalfWidth - TEXT_BORDER_PADDING_X &&
+      pointOnObjectPlane.x <= textBoxHalfWidth + TEXT_BORDER_PADDING_X &&
+      pointOnObjectPlane.y >= -textBoxHalfHeight - TEXT_BORDER_PADDING_Y &&
+      pointOnObjectPlane.y <= textBoxHalfHeight + TEXT_BORDER_PADDING_Y
     );
   }
 
@@ -1011,7 +1015,7 @@ export class LeaderTextWithArrow extends Group {
     const iconMargin = 8 / viewportScale;
     const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
     const iconCenterX =
-      textBoxHalfWidth + TEXT_BORDER_PADDING + iconMargin + iconHalfSize;
+      textBoxHalfWidth + TEXT_BORDER_PADDING_X + iconMargin + iconHalfSize;
     const iconCenterY = 0;
     const borderWidth = 1 / viewportScale;
     const glyphWidth = iconSize * 0.52;

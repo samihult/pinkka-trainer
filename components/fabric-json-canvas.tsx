@@ -222,6 +222,9 @@ export const FabricJsonCanvas = forwardRef<
     fabricCanvasRef.current = canvas;
     let placingLeaderTarget: LeaderTextWithArrow | null = null;
     const defaultMarqueeSelectionEnabled = canvas.selection;
+    let isPlacementPointerDown = false;
+    let didDragDuringPlacementPointerDown = false;
+    let placementPointerDownStart: Point | null = null;
 
     const setLeaderPlacementMode = (isPlacing: boolean) => {
       canvas.selection = isPlacing ? false : defaultMarqueeSelectionEnabled;
@@ -324,6 +327,9 @@ export const FabricJsonCanvas = forwardRef<
       if (placingLeaderTarget) {
         placingLeaderTarget.commitLeaderEndpointPlacement(event.scenePoint);
         placingLeaderTarget = null;
+        isPlacementPointerDown = false;
+        didDragDuringPlacementPointerDown = false;
+        placementPointerDownStart = null;
         setLeaderPlacementMode(false);
         updateLeaderHoverStates(event.scenePoint);
         canvas.requestRenderAll();
@@ -344,6 +350,9 @@ export const FabricJsonCanvas = forwardRef<
         canvas.setActiveObject(object);
         object.beginLeaderEndpointPlacement(event.scenePoint);
         placingLeaderTarget = object;
+        isPlacementPointerDown = true;
+        didDragDuringPlacementPointerDown = false;
+        placementPointerDownStart = event.scenePoint.clone();
         setLeaderPlacementMode(true);
         updateLeaderHoverStates();
         refreshLeaderSelectionVisuals();
@@ -371,14 +380,45 @@ export const FabricJsonCanvas = forwardRef<
       }
     };
 
-    const handleMouseMove = (event: { scenePoint?: Point }) => {
+    const handleMouseMove = (event: { scenePoint?: Point; e?: Event }) => {
       if (placingLeaderTarget && event.scenePoint) {
+        const pointerButtons =
+          event.e && "buttons" in event.e && typeof event.e.buttons === "number"
+            ? event.e.buttons
+            : 0;
+        if (
+          isPlacementPointerDown &&
+          placementPointerDownStart &&
+          event.scenePoint.distanceFrom(placementPointerDownStart) > 0.0001 &&
+          pointerButtons > 0
+        ) {
+          didDragDuringPlacementPointerDown = true;
+        }
         placingLeaderTarget.updateLeaderEndpointPlacement(event.scenePoint);
         canvas.requestRenderAll();
         return;
       }
 
       updateLeaderHoverStates(event.scenePoint);
+    };
+
+    const handleMouseUp = (event: { scenePoint?: Point }) => {
+      if (
+        placingLeaderTarget &&
+        isPlacementPointerDown &&
+        didDragDuringPlacementPointerDown &&
+        event.scenePoint
+      ) {
+        placingLeaderTarget.commitLeaderEndpointPlacement(event.scenePoint);
+        placingLeaderTarget = null;
+        setLeaderPlacementMode(false);
+        updateLeaderHoverStates(event.scenePoint);
+        canvas.requestRenderAll();
+      }
+
+      isPlacementPointerDown = false;
+      didDragDuringPlacementPointerDown = false;
+      placementPointerDownStart = null;
     };
 
     canvas.on("object:moving", handleObjectMoving);
@@ -388,6 +428,7 @@ export const FabricJsonCanvas = forwardRef<
     canvas.on("mouse:dblclick", handleMouseDoubleClick);
     canvas.on("mouse:down", handleMouseDown);
     canvas.on("mouse:move", handleMouseMove);
+    canvas.on("mouse:up", handleMouseUp);
     canvas.on("selection:created", refreshLeaderSelectionVisuals);
     canvas.on("selection:updated", refreshLeaderSelectionVisuals);
     canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
@@ -401,6 +442,7 @@ export const FabricJsonCanvas = forwardRef<
       canvas.off("mouse:dblclick", handleMouseDoubleClick);
       canvas.off("mouse:down", handleMouseDown);
       canvas.off("mouse:move", handleMouseMove);
+      canvas.off("mouse:up", handleMouseUp);
       canvas.off("selection:created", refreshLeaderSelectionVisuals);
       canvas.off("selection:updated", refreshLeaderSelectionVisuals);
       canvas.off("selection:cleared", refreshLeaderSelectionVisuals);
