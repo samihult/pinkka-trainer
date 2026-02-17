@@ -6,6 +6,7 @@
  */
 
 import {
+  Control,
   FabricText,
   Group,
   Point,
@@ -74,6 +75,21 @@ const DEFAULT_LEADER_STROKE = "#ffffff";
 const DEFAULT_LEADER_STROKE_WIDTH = 5;
 const DEFAULT_FONT_SIZE = 24;
 const DEFAULT_FONT_FAMILY = "Arial";
+const LEADER_END_CONTROL_KEY = "leaderEnd";
+const LEADER_END_HANDLE_RADIUS = 6;
+const LEADER_END_HANDLE_STROKE = "#ffffff";
+const LEADER_END_HANDLE_FILL = "#111827";
+const HIDDEN_TRANSFORM_CONTROLS = {
+  bl: false,
+  br: false,
+  mb: false,
+  ml: false,
+  mr: false,
+  mt: false,
+  mtr: false,
+  tl: false,
+  tr: false,
+} as const;
 
 function calculateLeaderStartOutsideTextBox(
   endpoint: LeaderArrowEndpoint,
@@ -102,6 +118,63 @@ function calculateLeaderStartOutsideTextBox(
     x: dx * clampedT,
     y: dy * clampedT,
   };
+}
+
+function getLeaderEndpointInObjectPlane(object: LeaderTextWithArrow) {
+  return util.sendPointToPlane(
+    new Point(object.leaderEnd.x, object.leaderEnd.y),
+    undefined,
+    object.calcTransformMatrix(),
+  );
+}
+
+function createLeaderEndControl() {
+  return new Control({
+    actionName: "modifyLeaderEnd",
+    cursorStyle: "crosshair",
+    sizeX: LEADER_END_HANDLE_RADIUS * 2,
+    sizeY: LEADER_END_HANDLE_RADIUS * 2,
+    touchSizeX: LEADER_END_HANDLE_RADIUS * 4,
+    touchSizeY: LEADER_END_HANDLE_RADIUS * 4,
+    positionHandler: (_dim, finalMatrix, fabricObject) => {
+      if (!(fabricObject instanceof LeaderTextWithArrow)) {
+        return new Point(0, 0).transform(finalMatrix);
+      }
+
+      const endpointInObjectPlane =
+        getLeaderEndpointInObjectPlane(fabricObject);
+      const objectToViewportMatrix = util.multiplyTransformMatrices(
+        fabricObject.getViewportTransform(),
+        fabricObject.calcTransformMatrix(),
+      );
+
+      return endpointInObjectPlane.transform(objectToViewportMatrix);
+    },
+    actionHandler: (_eventData, transform, x, y) => {
+      if (!(transform.target instanceof LeaderTextWithArrow)) {
+        return false;
+      }
+
+      transform.target.setLeaderEnd({
+        x,
+        y,
+      });
+      transform.target.setCoords();
+      transform.target.dirty = true;
+      return true;
+    },
+    render: (ctx, left, top) => {
+      ctx.save();
+      ctx.fillStyle = LEADER_END_HANDLE_FILL;
+      ctx.strokeStyle = LEADER_END_HANDLE_STROKE;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(left, top, LEADER_END_HANDLE_RADIUS, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    },
+  });
 }
 
 /**
@@ -183,6 +256,12 @@ export class LeaderTextWithArrow extends Group {
     this.leaderStrokeWidth = leaderStrokeWidth;
     this.fontSize = fontSize;
     this.fontFamily = fontFamily;
+    this.controls = {
+      ...this.controls,
+      [LEADER_END_CONTROL_KEY]: createLeaderEndControl(),
+    };
+    this.setControlsVisibility(HIDDEN_TRANSFORM_CONTROLS);
+    this.hasBorders = false;
 
     this.refreshVisuals();
   }
@@ -234,12 +313,7 @@ export class LeaderTextWithArrow extends Group {
       return;
     }
 
-    const groupTransform = this.calcTransformMatrix();
-    const endpointOnGroupPlane = util.sendPointToPlane(
-      new Point(this.leaderEnd.x, this.leaderEnd.y),
-      undefined,
-      groupTransform,
-    );
+    const endpointOnGroupPlane = getLeaderEndpointInObjectPlane(this);
     const endpoint = {
       x: endpointOnGroupPlane.x,
       y: endpointOnGroupPlane.y,
