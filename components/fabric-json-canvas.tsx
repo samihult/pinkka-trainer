@@ -264,16 +264,28 @@ export const FabricJsonCanvas = forwardRef<
       applyObjectBehaviorRules(target);
     };
 
+    const handleMouseDoubleClick = (event: { target?: FabricObject }) => {
+      const target = event.target;
+      if (!(target instanceof LeaderTextWithArrow)) {
+        return;
+      }
+
+      target.startTextEditing();
+      canvas.requestRenderAll();
+    };
+
     canvas.on("object:moving", handleObjectMoving);
     canvas.on("object:scaling", handleObjectScaling);
     canvas.on("object:modified", handleObjectModified);
     canvas.on("object:added", handleObjectAdded);
+    canvas.on("mouse:dblclick", handleMouseDoubleClick);
 
     return () => {
       canvas.off("object:moving", handleObjectMoving);
       canvas.off("object:scaling", handleObjectScaling);
       canvas.off("object:modified", handleObjectModified);
       canvas.off("object:added", handleObjectAdded);
+      canvas.off("mouse:dblclick", handleMouseDoubleClick);
       void canvas.dispose();
       fabricCanvasRef.current = null;
     };

@@ -9,6 +9,7 @@ import {
   Control,
   FabricText,
   Group,
+  IText,
   Point,
   classRegistry,
   util,
@@ -187,6 +188,8 @@ export class LeaderTextWithArrow extends Group {
   declare fontFamily: string;
 
   private readonly textObject: FabricText;
+  private editingTextObject: IText | null = null;
+  private disposeEditingListeners: (() => void) | null = null;
 
   constructor(options: LeaderTextWithArrowOptions = {}) {
     const defaultAbsoluteEndpoint = {
@@ -272,6 +275,92 @@ export class LeaderTextWithArrow extends Group {
   /** Recompute arrow geometry using current text position and absolute endpoint. */
   syncLeaderToAbsoluteEndpoint() {
     this.refreshVisuals();
+  }
+
+  /** Start inline text editing for the leader label. */
+  startTextEditing() {
+    const canvas = this.canvas;
+    if (!canvas) {
+      return;
+    }
+
+    if (this.editingTextObject) {
+      if (!this.editingTextObject.isEditing) {
+        this.editingTextObject.enterEditing();
+      }
+      this.editingTextObject.selectAll();
+      canvas.setActiveObject(this.editingTextObject);
+      canvas.requestRenderAll();
+      return;
+    }
+
+    const textCenterOnScenePlane = util.sendPointToPlane(
+      new Point(0, 0),
+      this.calcTransformMatrix(),
+      undefined,
+    );
+    const editingText = new IText(this.text, {
+      left: textCenterOnScenePlane.x,
+      top: textCenterOnScenePlane.y,
+      originX: "center",
+      originY: "center",
+      angle: this.getTotalAngle(),
+      fontSize: this.fontSize,
+      fontFamily: this.fontFamily,
+      fill: this.textFill,
+      editable: true,
+      hasControls: false,
+      hasBorders: false,
+      lockMovementX: true,
+      lockMovementY: true,
+      lockRotation: true,
+      lockScalingX: true,
+      lockScalingY: true,
+      hoverCursor: "text",
+      strokeUniform: true,
+    });
+
+    const finishEditing = (applyChanges: boolean) => {
+      const currentEditor = this.editingTextObject;
+      if (!currentEditor) {
+        return;
+      }
+
+      if (this.disposeEditingListeners) {
+        this.disposeEditingListeners();
+        this.disposeEditingListeners = null;
+      }
+
+      this.editingTextObject = null;
+      if (applyChanges) {
+        this.setTextContent(currentEditor.text ?? "");
+      }
+
+      this.textObject.set({ visible: true });
+      currentEditor.canvas?.discardActiveObject();
+      currentEditor.canvas?.remove(currentEditor);
+      this.setCoords();
+      this.dirty = true;
+      canvas.requestRenderAll();
+    };
+
+    const handleEditingExited = () => {
+      finishEditing(true);
+    };
+
+    editingText.on("editing:exited", handleEditingExited);
+    this.disposeEditingListeners = () => {
+      editingText.off("editing:exited", handleEditingExited);
+    };
+    this.editingTextObject = editingText;
+
+    this.textObject.set({ visible: false });
+    this.dirty = true;
+    canvas.add(editingText);
+    canvas.setActiveObject(editingText);
+    editingText.enterEditing();
+    editingText.selectAll();
+    canvas.requestRenderAll();
   }
 
   /** Compute leader geometry in object space using optional endpoint override. */
