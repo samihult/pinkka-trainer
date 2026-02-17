@@ -94,6 +94,9 @@ const DEFAULT_TEXT_ALIGN: LeaderTextAlignment = "center";
 const LEADER_TEXT_CLIP_EXTRA_PADDING = 4;
 const EMPTY_TEXT_PLACEHOLDER = "Add text";
 const TEXT_BORDER_PADDING = 4;
+const CREATE_LEADER_HANDLE_RADIUS = 5;
+const CREATE_LEADER_HANDLE_GAP = 8;
+const CREATE_LEADER_HANDLE_HIT_TOLERANCE = 4;
 const LEADER_END_CONTROL_KEY = "leaderEnd";
 const HIDDEN_TRANSFORM_CONTROLS = {
   bl: false,
@@ -261,6 +264,9 @@ export class LeaderTextWithArrow extends Group {
   private disposeEditingListeners: (() => void) | null = null;
   private isDraggingLeaderHandle = false;
   private isLeaderDeletionHoverActive = false;
+  private isHoveringTextBox = false;
+  private isPlacingLeaderEndpoint = false;
+  private pendingLeaderEndpoint: Point | null = null;
 
   constructor(options: LeaderTextWithArrowOptions = {}) {
     const defaultAbsoluteEndpoint = {
@@ -397,6 +403,73 @@ export class LeaderTextWithArrow extends Group {
   /** Recompute selection-dependent visuals (placeholder text + border). */
   syncSelectionVisuals() {
     this.refreshVisuals();
+  }
+
+  /** Update hover state for showing the create-arrow handle above text. */
+  setTextBoxHoverState(isHovered: boolean) {
+    if (this.isHoveringTextBox === isHovered) {
+      return false;
+    }
+
+    this.isHoveringTextBox = isHovered;
+    this.dirty = true;
+    return true;
+  }
+
+  /** Returns true when scene-space point is inside the leader text box. */
+  isPointOnTextBox(pointOnScenePlane: Point) {
+    return this.isScenePointInsideTextBounds(pointOnScenePlane);
+  }
+
+  /** Returns true when scene-space point is over the create-arrow handle. */
+  isPointOnCreateLeaderHandle(pointOnScenePlane: Point, requireVisible = true) {
+    if (this.isPlacingLeaderEndpoint) {
+      return false;
+    }
+
+    if (requireVisible && !this.isCreateLeaderHandleVisible()) {
+      return false;
+    }
+
+    const handleCenter = this.getCreateLeaderHandleCenterInScenePlane();
+    const hitRadius =
+      (CREATE_LEADER_HANDLE_RADIUS + CREATE_LEADER_HANDLE_HIT_TOLERANCE) /
+      this.getViewportScale();
+    return pointOnScenePlane.distanceFrom(handleCenter) <= hitRadius;
+  }
+
+  /** Enter endpoint-placement mode for creating/replacing the leader arrow. */
+  beginLeaderEndpointPlacement(startPointOnScenePlane: Point) {
+    this.isPlacingLeaderEndpoint = true;
+    this.isHoveringTextBox = false;
+    this.pendingLeaderEndpoint = startPointOnScenePlane.clone();
+    this.setLeaderEnd(null);
+  }
+
+  /** Update temporary endpoint while user is placing a new leader endpoint. */
+  updateLeaderEndpointPlacement(nextPointOnScenePlane: Point) {
+    if (!this.isPlacingLeaderEndpoint) {
+      return;
+    }
+
+    this.pendingLeaderEndpoint = nextPointOnScenePlane.clone();
+    this.dirty = true;
+  }
+
+  /** Finalize endpoint placement and materialize the leader arrow. */
+  commitLeaderEndpointPlacement(finalPointOnScenePlane: Point) {
+    if (!this.isPlacingLeaderEndpoint) {
+      return;
+    }
+
+    this.isPlacingLeaderEndpoint = false;
+    this.pendingLeaderEndpoint = null;
+    this.setLeaderEnd({
+      x: finalPointOnScenePlane.x,
+      y: finalPointOnScenePlane.y,
+    });
+    this.setCoords();
+    this.dirty = true;
   }
 
   /** Start inline text editing for the leader label. */
@@ -637,6 +710,26 @@ export class LeaderTextWithArrow extends Group {
     return this.leaderEnd !== null && this.text.trim().length > 0;
   }
 
+  private isCreateLeaderHandleVisible() {
+    return this.isHoveringTextBox && !this.isPlacingLeaderEndpoint;
+  }
+
+  private getCreateLeaderHandleCenterOnObjectPlane() {
+    const textHalfHeight = Math.max(1, this.textObject.getScaledHeight()) / 2;
+    const offset =
+      textHalfHeight +
+      TEXT_BORDER_PADDING +
+      CREATE_LEADER_HANDLE_GAP +
+      CREATE_LEADER_HANDLE_RADIUS;
+    return new Point(0, -offset);
+  }
+
+  private getCreateLeaderHandleCenterInScenePlane() {
+    return this.getCreateLeaderHandleCenterOnObjectPlane().transform(
+      this.calcTransformMatrix(),
+    );
+  }
+
   private isScenePointInsideTextBounds(
     scenePoint: LeaderArrowEndpoint | Point,
   ) {
@@ -705,6 +798,23 @@ export class LeaderTextWithArrow extends Group {
     ctx.beginPath();
     ctx.moveTo(0, lidY - iconSize * 0.08);
     ctx.lineTo(0, lidY);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  private drawCreateLeaderHandle(ctx: CanvasRenderingContext2D) {
+    const viewportScale = this.getViewportScale();
+    const handleCenter = this.getCreateLeaderHandleCenterOnObjectPlane();
+    const handleRadius = CREATE_LEADER_HANDLE_RADIUS / viewportScale;
+    const lineWidth = 1 / viewportScale;
+
+    ctx.save();
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = this.getSelectionBorderColor();
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.arc(handleCenter.x, handleCenter.y, handleRadius, 0, Math.PI * 2);
+    ctx.fill();
     ctx.stroke();
     ctx.restore();
   }
@@ -785,7 +895,17 @@ export class LeaderTextWithArrow extends Group {
       return;
     }
 
-    const geometry = this.getLeaderGeometryInObjectPlane();
+    let geometry = this.getLeaderGeometryInObjectPlane();
+    if (!geometry && this.pendingLeaderEndpoint) {
+      const pendingEndpointOnObjectPlane = util.sendPointToPlane(
+        this.pendingLeaderEndpoint,
+        undefined,
+        this.calcTransformMatrix(),
+      );
+      geometry = this.getLeaderGeometryInObjectPlane(
+        pendingEndpointOnObjectPlane,
+      );
+    }
     ctx.save();
 
     if (geometry) {
@@ -829,6 +949,10 @@ export class LeaderTextWithArrow extends Group {
         textWidth + TEXT_BORDER_PADDING * 2,
         textHeight + TEXT_BORDER_PADDING * 2,
       );
+    }
+
+    if (this.isCreateLeaderHandleVisible()) {
+      this.drawCreateLeaderHandle(ctx);
     }
 
     if (this.isDraggingLeaderHandle && this.isLeaderDeletionHoverActive) {

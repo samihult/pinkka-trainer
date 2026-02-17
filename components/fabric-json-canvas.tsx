@@ -220,6 +220,7 @@ export const FabricJsonCanvas = forwardRef<
     };
 
     fabricCanvasRef.current = canvas;
+    let placingLeaderTarget: LeaderTextWithArrow | null = null;
 
     const refreshLeaderSelectionVisuals = () => {
       for (const object of canvas.getObjects()) {
@@ -228,6 +229,26 @@ export const FabricJsonCanvas = forwardRef<
         }
       }
       canvas.requestRenderAll();
+    };
+
+    const updateLeaderHoverStates = (scenePoint?: Point) => {
+      let didUpdate = false;
+
+      for (const object of canvas.getObjects()) {
+        if (!(object instanceof LeaderTextWithArrow)) {
+          continue;
+        }
+
+        const isHovered = scenePoint
+          ? object.isPointOnTextBox(scenePoint) ||
+            object.isPointOnCreateLeaderHandle(scenePoint, false)
+          : false;
+        didUpdate = object.setTextBoxHoverState(isHovered) || didUpdate;
+      }
+
+      if (didUpdate) {
+        canvas.requestRenderAll();
+      }
     };
 
     const handleObjectMoving = (event: { target?: FabricObject }) => {
@@ -291,11 +312,41 @@ export const FabricJsonCanvas = forwardRef<
       target?: FabricObject;
       scenePoint?: Point;
     }) => {
-      if (event.target || !event.scenePoint) {
+      if (!event.scenePoint) {
+        return;
+      }
+
+      if (placingLeaderTarget) {
+        placingLeaderTarget.commitLeaderEndpointPlacement(event.scenePoint);
+        placingLeaderTarget = null;
+        updateLeaderHoverStates(event.scenePoint);
+        canvas.requestRenderAll();
         return;
       }
 
       const objects = canvas.getObjects();
+      for (let index = objects.length - 1; index >= 0; index -= 1) {
+        const object = objects[index];
+        if (!(object instanceof LeaderTextWithArrow)) {
+          continue;
+        }
+
+        if (!object.isPointOnCreateLeaderHandle(event.scenePoint)) {
+          continue;
+        }
+
+        canvas.setActiveObject(object);
+        object.beginLeaderEndpointPlacement(event.scenePoint);
+        placingLeaderTarget = object;
+        updateLeaderHoverStates();
+        refreshLeaderSelectionVisuals();
+        return;
+      }
+
+      if (event.target) {
+        return;
+      }
+
       for (let index = objects.length - 1; index >= 0; index -= 1) {
         const object = objects[index];
         if (!(object instanceof LeaderTextWithArrow)) {
@@ -313,12 +364,23 @@ export const FabricJsonCanvas = forwardRef<
       }
     };
 
+    const handleMouseMove = (event: { scenePoint?: Point }) => {
+      if (placingLeaderTarget && event.scenePoint) {
+        placingLeaderTarget.updateLeaderEndpointPlacement(event.scenePoint);
+        canvas.requestRenderAll();
+        return;
+      }
+
+      updateLeaderHoverStates(event.scenePoint);
+    };
+
     canvas.on("object:moving", handleObjectMoving);
     canvas.on("object:scaling", handleObjectScaling);
     canvas.on("object:modified", handleObjectModified);
     canvas.on("object:added", handleObjectAdded);
     canvas.on("mouse:dblclick", handleMouseDoubleClick);
     canvas.on("mouse:down", handleMouseDown);
+    canvas.on("mouse:move", handleMouseMove);
     canvas.on("selection:created", refreshLeaderSelectionVisuals);
     canvas.on("selection:updated", refreshLeaderSelectionVisuals);
     canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
@@ -330,6 +392,7 @@ export const FabricJsonCanvas = forwardRef<
       canvas.off("object:added", handleObjectAdded);
       canvas.off("mouse:dblclick", handleMouseDoubleClick);
       canvas.off("mouse:down", handleMouseDown);
+      canvas.off("mouse:move", handleMouseMove);
       canvas.off("selection:created", refreshLeaderSelectionVisuals);
       canvas.off("selection:updated", refreshLeaderSelectionVisuals);
       canvas.off("selection:cleared", refreshLeaderSelectionVisuals);
