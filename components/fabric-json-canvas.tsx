@@ -6,6 +6,7 @@
  */
 
 import {
+  useCallback,
   forwardRef,
   useEffect,
   useImperativeHandle,
@@ -19,6 +20,7 @@ import {
   Circle as CircleIcon,
   Hand,
   MousePointer2,
+  RotateCcw,
   Square as SquareIcon,
   Type,
 } from "lucide-react";
@@ -31,6 +33,7 @@ import {
   InteractiveFabricObject,
   Point,
   Rect,
+  type TMat2D,
 } from "fabric";
 import { LeaderTextWithArrow } from "@/components/fabric-leader-text-with-arrow";
 
@@ -42,6 +45,9 @@ const GEOMETRY_EPSILON = 0.0001;
 const DEFAULT_STROKE_COLOR = "#ffffff";
 const DEFAULT_STROKE_WIDTH = 5;
 const MIN_GEOMETRY_SIZE = 0.5;
+const MIN_VIEWPORT_ZOOM = 0.1;
+const MAX_VIEWPORT_ZOOM = 8;
+const RESET_VIEWPORT_SHORTCUT = "z";
 
 type CanvasTool =
   | "pointer"
@@ -53,6 +59,16 @@ type CanvasTool =
   | "rectangle";
 
 type ShapeTool = Exclude<CanvasTool, "pointer" | "hand" | "text">;
+
+const TOOL_SHORTCUTS: Record<CanvasTool, string> = {
+  pointer: "v",
+  hand: "h",
+  text: "t",
+  arrow: "a",
+  circle: "c",
+  ellipse: "e",
+  rectangle: "r",
+};
 
 /** Ref API for `FabricJsonCanvas`. */
 export interface FabricJsonCanvasHandle {}
@@ -218,6 +234,24 @@ function fitBackgroundImageToViewport(canvas: Canvas, image: FabricImage) {
   const translateY = (viewportHeight - imageHeight * zoom) / 2;
 
   canvas.setViewportTransform([zoom, 0, 0, zoom, translateX, translateY]);
+}
+
+function clampViewportZoom(value: number) {
+  return Math.min(MAX_VIEWPORT_ZOOM, Math.max(MIN_VIEWPORT_ZOOM, value));
+}
+
+function isTypingTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  const tagName = target.tagName.toLowerCase();
+  return (
+    target.isContentEditable ||
+    tagName === "input" ||
+    tagName === "textarea" ||
+    tagName === "select"
+  );
 }
 
 function createTextLeaderAt(point: Point) {
@@ -395,60 +429,69 @@ export const FabricJsonCanvas = forwardRef<
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const fabricCanvasRef = useRef<Canvas | null>(null);
   const applyInteractionModeRef = useRef<(() => void) | null>(null);
+  const defaultViewportTransformRef = useRef<TMat2D>([1, 0, 0, 1, 0, 0]);
   const activeToolRef = useRef<CanvasTool>("pointer");
-  const isSpacePanActiveRef = useRef(false);
   const isPointerOverCanvasRef = useRef(false);
 
   const [activeTool, setActiveTool] = useState<CanvasTool>("pointer");
-  const [isSpacePanActive, setIsSpacePanActive] = useState(false);
 
   useImperativeHandle(ref, () => ({}), []);
+
+  const resetViewport = useCallback(() => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) {
+      return;
+    }
+
+    const [a, b, c, d, e, f] = defaultViewportTransformRef.current;
+    canvas.setViewportTransform([a, b, c, d, e, f]);
+    canvas.requestRenderAll();
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+      }
+
+      if (isTypingTarget(event.target)) {
+        return;
+      }
+
+      const canvas = fabricCanvasRef.current;
+      if (canvas?.getActiveObject()?.type === "i-text") {
+        return;
+      }
+
+      const pressedKey = event.key.toLowerCase();
+      if (pressedKey === RESET_VIEWPORT_SHORTCUT) {
+        event.preventDefault();
+        resetViewport();
+        return;
+      }
+
+      for (const [tool, shortcut] of Object.entries(TOOL_SHORTCUTS)) {
+        if (pressedKey !== shortcut) {
+          continue;
+        }
+
+        event.preventDefault();
+        setActiveTool(tool as CanvasTool);
+        break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [resetViewport]);
 
   useEffect(() => {
     activeToolRef.current = activeTool;
     applyInteractionModeRef.current?.();
   }, [activeTool]);
-
-  useEffect(() => {
-    isSpacePanActiveRef.current = isSpacePanActive;
-    applyInteractionModeRef.current?.();
-  }, [isSpacePanActive]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.code !== "Space" ||
-        event.repeat ||
-        !isPointerOverCanvasRef.current
-      ) {
-        return;
-      }
-
-      const canvas = fabricCanvasRef.current;
-      if (!canvas || canvas.getActiveObject()?.type === "i-text") {
-        return;
-      }
-
-      event.preventDefault();
-      setIsSpacePanActive(true);
-    };
-
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.code !== "Space") {
-        return;
-      }
-
-      setIsSpacePanActive(false);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
 
   useEffect(() => {
     const element = canvasElementRef.current;
@@ -479,8 +522,7 @@ export const FabricJsonCanvas = forwardRef<
 
     fabricCanvasRef.current = canvas;
 
-    const resolveEffectiveTool = () =>
-      isSpacePanActiveRef.current ? "hand" : activeToolRef.current;
+    const resolveEffectiveTool = () => activeToolRef.current;
 
     let previousActiveTool = activeToolRef.current;
 
@@ -500,6 +542,7 @@ export const FabricJsonCanvas = forwardRef<
     let shapeToolAtPointerDown: ShapeTool | null = null;
     let shapePreviewObject: FabricObject | null = null;
     let pendingShapeStart: { tool: ShapeTool; point: Point } | null = null;
+    let pinchGestureLastScale: number | null = null;
 
     const updateLeaderHoverStates = (scenePoint?: Point) => {
       let didUpdate = false;
@@ -588,6 +631,14 @@ export const FabricJsonCanvas = forwardRef<
     const stopViewportPanning = () => {
       isPanningViewport = false;
       panClientPoint = null;
+    };
+
+    const zoomViewportToPoint = (
+      pointOnViewportPlane: Point,
+      nextZoom: number,
+    ) => {
+      canvas.zoomToPoint(pointOnViewportPlane, clampViewportZoom(nextZoom));
+      canvas.requestRenderAll();
     };
 
     const setLeaderPlacementMode = () => {
@@ -1084,9 +1135,62 @@ export const FabricJsonCanvas = forwardRef<
       updateCanvasCursor(scenePoint);
     };
 
+    const handleMouseWheel = (event: {
+      e?: WheelEvent;
+      viewportPoint?: Point;
+      scenePoint?: Point;
+    }) => {
+      const wheelEvent = event.e;
+      if (!(wheelEvent instanceof WheelEvent)) {
+        return;
+      }
+
+      wheelEvent.preventDefault();
+      wheelEvent.stopPropagation();
+      const zoomFactor = Math.pow(0.999, wheelEvent.deltaY);
+      const nextZoom = canvas.getZoom() * zoomFactor;
+      const zoomPoint =
+        event.viewportPoint ??
+        new Point(
+          wheelEvent.offsetX ?? canvas.getWidth() / 2,
+          wheelEvent.offsetY ?? canvas.getHeight() / 2,
+        );
+      zoomViewportToPoint(zoomPoint, nextZoom);
+      updateCanvasCursor(event.scenePoint);
+    };
+
+    const handlePinch = (event: {
+      e?: Event;
+      scale?: number;
+      viewportPoint?: Point;
+      scenePoint?: Point;
+    }) => {
+      const scale = event.scale;
+      if (
+        typeof scale !== "number" ||
+        !Number.isFinite(scale) ||
+        scale <= GEOMETRY_EPSILON
+      ) {
+        return;
+      }
+
+      const relativeScale = pinchGestureLastScale
+        ? scale / pinchGestureLastScale
+        : 1;
+      pinchGestureLastScale = scale;
+
+      const zoomPoint =
+        event.viewportPoint ??
+        new Point(canvas.getWidth() / 2, canvas.getHeight() / 2);
+      zoomViewportToPoint(zoomPoint, canvas.getZoom() * relativeScale);
+      event.e?.preventDefault();
+      updateCanvasCursor(event.scenePoint);
+    };
+
     const handleMouseUp = (event: { scenePoint?: Point; e?: Event }) => {
       const scenePoint = event.scenePoint;
       const effectiveTool = resolveEffectiveTool();
+      pinchGestureLastScale = null;
 
       if (effectiveTool === "hand") {
         stopViewportPanning();
@@ -1173,6 +1277,8 @@ export const FabricJsonCanvas = forwardRef<
     canvas.on("mouse:down", handleMouseDown);
     canvas.on("mouse:move", handleMouseMove);
     canvas.on("mouse:up", handleMouseUp);
+    canvas.on("mouse:wheel", handleMouseWheel);
+    canvas.on("pinch", handlePinch);
     canvas.on("selection:created", refreshLeaderSelectionVisuals);
     canvas.on("selection:updated", refreshLeaderSelectionVisuals);
     canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
@@ -1191,6 +1297,8 @@ export const FabricJsonCanvas = forwardRef<
       canvas.off("mouse:down", handleMouseDown);
       canvas.off("mouse:move", handleMouseMove);
       canvas.off("mouse:up", handleMouseUp);
+      canvas.off("mouse:wheel", handleMouseWheel);
+      canvas.off("pinch", handlePinch);
       canvas.off("selection:created", refreshLeaderSelectionVisuals);
       canvas.off("selection:updated", refreshLeaderSelectionVisuals);
       canvas.off("selection:cleared", refreshLeaderSelectionVisuals);
@@ -1248,6 +1356,9 @@ export const FabricJsonCanvas = forwardRef<
         canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
       }
 
+      const [a, b, c, d, e, f] = canvas.viewportTransform;
+      defaultViewportTransformRef.current = [a, b, c, d, e, f];
+
       applyInteractionModeRef.current?.();
       canvas.requestRenderAll();
     };
@@ -1262,46 +1373,54 @@ export const FabricJsonCanvas = forwardRef<
   const toolbarItems: Array<{
     tool: CanvasTool;
     label: string;
+    shortcut: string;
     icon: ReactNode;
   }> = [
     {
       tool: "pointer",
       label: "Pointer",
+      shortcut: TOOL_SHORTCUTS.pointer,
       icon: <MousePointer2 className="h-4 w-4" />,
     },
     {
       tool: "hand",
       label: "Hand",
+      shortcut: TOOL_SHORTCUTS.hand,
       icon: <Hand className="h-4 w-4" />,
     },
     {
       tool: "text",
       label: "Text",
+      shortcut: TOOL_SHORTCUTS.text,
       icon: <Type className="h-4 w-4" />,
     },
     {
       tool: "arrow",
       label: "Arrow",
+      shortcut: TOOL_SHORTCUTS.arrow,
       icon: <ArrowRight className="h-4 w-4" />,
     },
     {
       tool: "circle",
       label: "Circle",
+      shortcut: TOOL_SHORTCUTS.circle,
       icon: <CircleIcon className="h-4 w-4" />,
     },
     {
       tool: "ellipse",
       label: "Ellipse",
+      shortcut: TOOL_SHORTCUTS.ellipse,
       icon: <EllipseToolIcon className="h-4 w-4" />,
     },
     {
       tool: "rectangle",
       label: "Rectangle",
+      shortcut: TOOL_SHORTCUTS.rectangle,
       icon: <SquareIcon className="h-4 w-4" />,
     },
   ];
 
-  const effectiveTool = isSpacePanActive ? "hand" : activeTool;
+  const effectiveTool = activeTool;
 
   const canvasStyle: CSSProperties = {
     width: viewportWidth,
@@ -1316,12 +1435,13 @@ export const FabricJsonCanvas = forwardRef<
       <div className="flex w-10 flex-col items-center gap-1 rounded-md border border-border bg-[#262626] p-1">
         {toolbarItems.map((item) => {
           const isActive = item.tool === effectiveTool;
+          const tooltipLabel = `${item.label} (${item.shortcut.toUpperCase()})`;
           return (
             <button
               key={item.tool}
               type="button"
-              title={item.label}
-              aria-label={item.label}
+              title={tooltipLabel}
+              aria-label={tooltipLabel}
               onClick={() => setActiveTool(item.tool)}
               className={cn(
                 "flex h-8 w-8 items-center justify-center rounded-sm border text-white transition-colors",
@@ -1334,6 +1454,16 @@ export const FabricJsonCanvas = forwardRef<
             </button>
           );
         })}
+        <div className="my-1 h-px w-full bg-[#3a3a3a]" />
+        <button
+          type="button"
+          title={`Reset Viewport (${RESET_VIEWPORT_SHORTCUT.toUpperCase()})`}
+          aria-label={`Reset Viewport (${RESET_VIEWPORT_SHORTCUT.toUpperCase()})`}
+          onClick={resetViewport}
+          className="flex h-8 w-8 items-center justify-center rounded-sm border border-transparent bg-transparent text-white transition-colors hover:bg-[#343434]"
+        >
+          <RotateCcw className="h-4 w-4" />
+        </button>
       </div>
 
       <div
@@ -1344,7 +1474,6 @@ export const FabricJsonCanvas = forwardRef<
         }}
         onMouseLeave={() => {
           isPointerOverCanvasRef.current = false;
-          setIsSpacePanActive(false);
         }}
       >
         <canvas ref={canvasElementRef} className="block h-full w-full" />
