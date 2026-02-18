@@ -48,6 +48,8 @@ const DEFAULT_STROKE_WIDTH = 5;
 const MIN_GEOMETRY_SIZE = 0.5;
 const MIN_VIEWPORT_ZOOM = 0.1;
 const MAX_VIEWPORT_ZOOM = 8;
+const MIN_SCREEN_STROKE_WIDTH = 0.1;
+const MIN_SCREEN_FONT_SIZE = 1;
 const RESET_VIEWPORT_SHORTCUT = "z";
 
 type CanvasTool =
@@ -80,6 +82,11 @@ export interface FabricJsonCanvasProps {
   initialModel?: unknown;
   /** Optional background image URL shown behind canvas objects. */
   backgroundImageUrl?: string;
+  /**
+   * Keep stroke widths and text sizes constant on screen regardless of viewport zoom.
+   * Defaults to `true`.
+   */
+  constantScreenSize?: boolean;
   /** Viewport width in pixels. */
   viewportWidth?: number;
   /** Viewport height in pixels. */
@@ -90,6 +97,13 @@ export interface FabricJsonCanvasProps {
 
 type TransformableFabricObject = FabricObject & {
   transformMatrix?: number[];
+};
+
+type ScreenInvariantFabricObject = FabricObject & {
+  __baseScreenStrokeWidth?: number;
+  __baseScreenFontSize?: number;
+  __baseScreenLeaderStrokeWidth?: number;
+  __baseScreenLeaderFontSize?: number;
 };
 
 function EllipseToolIcon({ className }: { className?: string }) {
@@ -253,6 +267,199 @@ function isTypingTarget(target: EventTarget | null) {
     tagName === "textarea" ||
     tagName === "select"
   );
+}
+
+function getObjectFontSize(object: FabricObject) {
+  if (!("fontSize" in object)) {
+    return null;
+  }
+
+  const fontSize = object.fontSize;
+  return typeof fontSize === "number" && Number.isFinite(fontSize)
+    ? fontSize
+    : null;
+}
+
+function captureObjectScreenInvariantBaseMetrics(
+  object: FabricObject,
+  currentZoom: number,
+  forceFromCurrent = false,
+) {
+  const zoom = Math.max(currentZoom, GEOMETRY_EPSILON);
+  const screenInvariantObject = object as ScreenInvariantFabricObject;
+
+  if (object instanceof LeaderTextWithArrow) {
+    if (
+      typeof object.leaderStrokeWidth === "number" &&
+      Number.isFinite(object.leaderStrokeWidth) &&
+      (forceFromCurrent ||
+        screenInvariantObject.__baseScreenLeaderStrokeWidth === undefined)
+    ) {
+      screenInvariantObject.__baseScreenLeaderStrokeWidth = forceFromCurrent
+        ? object.leaderStrokeWidth * zoom
+        : object.leaderStrokeWidth;
+    }
+
+    if (
+      typeof object.fontSize === "number" &&
+      Number.isFinite(object.fontSize) &&
+      (forceFromCurrent ||
+        screenInvariantObject.__baseScreenLeaderFontSize === undefined)
+    ) {
+      screenInvariantObject.__baseScreenLeaderFontSize = forceFromCurrent
+        ? object.fontSize * zoom
+        : object.fontSize;
+    }
+
+    return;
+  }
+
+  if (
+    typeof object.strokeWidth === "number" &&
+    Number.isFinite(object.strokeWidth) &&
+    (forceFromCurrent ||
+      screenInvariantObject.__baseScreenStrokeWidth === undefined)
+  ) {
+    screenInvariantObject.__baseScreenStrokeWidth = forceFromCurrent
+      ? object.strokeWidth * zoom
+      : object.strokeWidth;
+  }
+
+  const fontSize = getObjectFontSize(object);
+  if (
+    fontSize !== null &&
+    (forceFromCurrent ||
+      screenInvariantObject.__baseScreenFontSize === undefined)
+  ) {
+    screenInvariantObject.__baseScreenFontSize = forceFromCurrent
+      ? fontSize * zoom
+      : fontSize;
+  }
+}
+
+function applyObjectScreenInvariantMetrics(
+  object: FabricObject,
+  currentZoom: number,
+) {
+  const zoom = Math.max(currentZoom, GEOMETRY_EPSILON);
+  const screenInvariantObject = object as ScreenInvariantFabricObject;
+
+  if (object instanceof LeaderTextWithArrow) {
+    if (
+      typeof screenInvariantObject.__baseScreenLeaderStrokeWidth === "number"
+    ) {
+      object.setLeaderStrokeWidth(
+        Math.max(
+          MIN_SCREEN_STROKE_WIDTH,
+          screenInvariantObject.__baseScreenLeaderStrokeWidth / zoom,
+        ),
+      );
+    }
+
+    if (typeof screenInvariantObject.__baseScreenLeaderFontSize === "number") {
+      object.setFontSize(
+        Math.max(
+          MIN_SCREEN_FONT_SIZE,
+          screenInvariantObject.__baseScreenLeaderFontSize / zoom,
+        ),
+      );
+    }
+
+    object.setCoords();
+    return;
+  }
+
+  if (typeof screenInvariantObject.__baseScreenStrokeWidth === "number") {
+    object.set({
+      strokeWidth: Math.max(
+        MIN_SCREEN_STROKE_WIDTH,
+        screenInvariantObject.__baseScreenStrokeWidth / zoom,
+      ),
+    });
+  }
+
+  if (
+    typeof screenInvariantObject.__baseScreenFontSize === "number" &&
+    "fontSize" in object
+  ) {
+    object.set({
+      fontSize: Math.max(
+        MIN_SCREEN_FONT_SIZE,
+        screenInvariantObject.__baseScreenFontSize / zoom,
+      ),
+    });
+  }
+
+  object.setCoords();
+}
+
+function restoreObjectScreenInvariantBaseMetrics(object: FabricObject) {
+  const screenInvariantObject = object as ScreenInvariantFabricObject;
+
+  if (object instanceof LeaderTextWithArrow) {
+    if (
+      typeof screenInvariantObject.__baseScreenLeaderStrokeWidth === "number"
+    ) {
+      object.setLeaderStrokeWidth(
+        Math.max(
+          MIN_SCREEN_STROKE_WIDTH,
+          screenInvariantObject.__baseScreenLeaderStrokeWidth,
+        ),
+      );
+    }
+
+    if (typeof screenInvariantObject.__baseScreenLeaderFontSize === "number") {
+      object.setFontSize(
+        Math.max(
+          MIN_SCREEN_FONT_SIZE,
+          screenInvariantObject.__baseScreenLeaderFontSize,
+        ),
+      );
+    }
+
+    object.setCoords();
+    return;
+  }
+
+  if (typeof screenInvariantObject.__baseScreenStrokeWidth === "number") {
+    object.set({
+      strokeWidth: Math.max(
+        MIN_SCREEN_STROKE_WIDTH,
+        screenInvariantObject.__baseScreenStrokeWidth,
+      ),
+    });
+  }
+
+  if (
+    typeof screenInvariantObject.__baseScreenFontSize === "number" &&
+    "fontSize" in object
+  ) {
+    object.set({
+      fontSize: Math.max(
+        MIN_SCREEN_FONT_SIZE,
+        screenInvariantObject.__baseScreenFontSize,
+      ),
+    });
+  }
+
+  object.setCoords();
+}
+
+function applyScreenInvariantMetricsToCanvas(
+  canvas: Canvas,
+  forceBaseFromCurrent = false,
+) {
+  const zoom = canvas.getZoom();
+  for (const object of canvas.getObjects()) {
+    captureObjectScreenInvariantBaseMetrics(object, zoom, forceBaseFromCurrent);
+    applyObjectScreenInvariantMetrics(object, zoom);
+  }
+}
+
+function restoreScreenInvariantMetricsOnCanvas(canvas: Canvas) {
+  for (const object of canvas.getObjects()) {
+    restoreObjectScreenInvariantBaseMetrics(object);
+  }
 }
 
 function createTextLeaderAt(point: Point) {
@@ -421,6 +628,7 @@ export const FabricJsonCanvas = forwardRef<
   {
     initialModel,
     backgroundImageUrl,
+    constantScreenSize = true,
     viewportWidth = 960,
     viewportHeight = 540,
     className,
@@ -431,6 +639,7 @@ export const FabricJsonCanvas = forwardRef<
   const fabricCanvasRef = useRef<Canvas | null>(null);
   const applyInteractionModeRef = useRef<(() => void) | null>(null);
   const defaultViewportTransformRef = useRef<TMat2D>([1, 0, 0, 1, 0, 0]);
+  const constantScreenSizeRef = useRef(constantScreenSize);
   const activeToolRef = useRef<CanvasTool>("pointer");
   const isPointerOverCanvasRef = useRef(false);
 
@@ -446,8 +655,28 @@ export const FabricJsonCanvas = forwardRef<
 
     const [a, b, c, d, e, f] = defaultViewportTransformRef.current;
     canvas.setViewportTransform([a, b, c, d, e, f]);
+    if (constantScreenSizeRef.current) {
+      applyScreenInvariantMetricsToCanvas(canvas);
+    }
     canvas.requestRenderAll();
   }, []);
+
+  useEffect(() => {
+    const previouslyEnabled = constantScreenSizeRef.current;
+    constantScreenSizeRef.current = constantScreenSize;
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) {
+      return;
+    }
+
+    if (constantScreenSize) {
+      applyScreenInvariantMetricsToCanvas(canvas, !previouslyEnabled);
+    } else if (previouslyEnabled) {
+      restoreScreenInvariantMetricsOnCanvas(canvas);
+    }
+
+    canvas.requestRenderAll();
+  }, [constantScreenSize]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -639,6 +868,9 @@ export const FabricJsonCanvas = forwardRef<
       nextZoom: number,
     ) => {
       canvas.zoomToPoint(pointOnViewportPlane, clampViewportZoom(nextZoom));
+      if (constantScreenSizeRef.current) {
+        applyScreenInvariantMetricsToCanvas(canvas);
+      }
       canvas.requestRenderAll();
     };
 
@@ -851,6 +1083,10 @@ export const FabricJsonCanvas = forwardRef<
 
       applyObjectBehaviorRules(target);
       bakeGeometryIntoObject(target);
+      if (constantScreenSizeRef.current) {
+        captureObjectScreenInvariantBaseMetrics(target, canvas.getZoom(), true);
+        applyObjectScreenInvariantMetrics(target, canvas.getZoom());
+      }
       canvas.requestRenderAll();
     };
 
@@ -862,6 +1098,10 @@ export const FabricJsonCanvas = forwardRef<
 
       applyObjectBehaviorRules(target);
       bakeGeometryIntoObject(target);
+      if (constantScreenSizeRef.current) {
+        captureObjectScreenInvariantBaseMetrics(target, canvas.getZoom(), true);
+        applyObjectScreenInvariantMetrics(target, canvas.getZoom());
+      }
       canvas.requestRenderAll();
     };
 
@@ -872,6 +1112,14 @@ export const FabricJsonCanvas = forwardRef<
       }
 
       applyObjectBehaviorRules(target);
+      if (constantScreenSizeRef.current) {
+        captureObjectScreenInvariantBaseMetrics(
+          target,
+          canvas.getZoom(),
+          target instanceof IText,
+        );
+        applyObjectScreenInvariantMetrics(target, canvas.getZoom());
+      }
       if (target instanceof LeaderTextWithArrow) {
         target.syncSelectionVisuals();
       }
@@ -1387,6 +1635,9 @@ export const FabricJsonCanvas = forwardRef<
 
       const [a, b, c, d, e, f] = canvas.viewportTransform;
       defaultViewportTransformRef.current = [a, b, c, d, e, f];
+      if (constantScreenSizeRef.current) {
+        applyScreenInvariantMetricsToCanvas(canvas);
+      }
 
       applyInteractionModeRef.current?.();
       canvas.requestRenderAll();

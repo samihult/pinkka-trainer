@@ -17,7 +17,7 @@ const sampleModel: unknown = {
       height: 130,
       fill: "transparent",
       stroke: "white",
-      strokeWidth: 5,
+      strokeWidth: 2,
     },
     {
       type: "ellipse",
@@ -27,7 +27,7 @@ const sampleModel: unknown = {
       ry: 58,
       fill: "transparent",
       stroke: "white",
-      strokeWidth: 5,
+      strokeWidth: 2,
     },
     {
       type: "circle",
@@ -36,7 +36,7 @@ const sampleModel: unknown = {
       radius: 62,
       fill: "transparent",
       stroke: "white",
-      strokeWidth: 5,
+      strokeWidth: 2,
     },
     {
       type: "leaderTextWithArrow",
@@ -49,8 +49,8 @@ const sampleModel: unknown = {
       ],
       textFill: "white",
       leaderStroke: "white",
-      leaderStrokeWidth: 5,
-      fontSize: 28,
+      leaderStrokeWidth: 2,
+      fontSize: 14,
       fontFamily: "Arial",
     },
   ],

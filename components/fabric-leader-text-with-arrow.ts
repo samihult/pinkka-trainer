@@ -687,6 +687,14 @@ export class LeaderTextWithArrow extends Group {
     this.refreshVisuals();
   }
 
+  /** Update leader arrow stroke width. */
+  setLeaderStrokeWidth(nextStrokeWidth: number) {
+    this.leaderStrokeWidth = nextStrokeWidth;
+    this.syncLegacyLeaderEnd();
+    this.setCoords();
+    this.dirty = true;
+  }
+
   /** Update label text alignment. */
   setTextAlign(nextTextAlign: LeaderTextAlignment) {
     this.textAlign = nextTextAlign;
