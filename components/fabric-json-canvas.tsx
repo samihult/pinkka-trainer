@@ -26,6 +26,7 @@ import {
   Type,
 } from "lucide-react";
 import {
+  ActiveSelection,
   Canvas,
   Circle,
   Ellipse,
@@ -1125,6 +1126,24 @@ export const FabricJsonCanvas = forwardRef<
         return;
       }
 
+      if (target instanceof ActiveSelection) {
+        for (const object of target.getObjects()) {
+          applyObjectBehaviorRules(object);
+          bakeGeometryIntoObject(object);
+          if (constantScreenSizeRef.current) {
+            captureObjectScreenInvariantBaseMetrics(
+              object,
+              canvas.getZoom(),
+              true,
+            );
+            applyObjectScreenInvariantMetrics(object, canvas.getZoom());
+          }
+        }
+        target.setCoords();
+        canvas.requestRenderAll();
+        return;
+      }
+
       applyObjectBehaviorRules(target);
       bakeGeometryIntoObject(target);
       if (constantScreenSizeRef.current) {
@@ -1137,6 +1156,10 @@ export const FabricJsonCanvas = forwardRef<
     const handleObjectScaling = (event: { target?: FabricObject }) => {
       const target = event.target;
       if (!target) {
+        return;
+      }
+
+      if (target instanceof ActiveSelection) {
         return;
       }
 
