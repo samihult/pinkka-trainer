@@ -97,7 +97,8 @@ const DEFAULT_FONT_SIZE = 14;
 const DEFAULT_FONT_FAMILY = "Arial";
 const DEFAULT_TEXT_ALIGN: LeaderTextAlignment = "center";
 const EDITING_TEXT_BACKGROUND_COLOR = "#2f2f2f";
-const LEADER_TEXT_CLIP_EXTRA_PADDING = 4;
+const LEADER_TEXT_ENVELOPE_PADDING_X = 12;
+const LEADER_TEXT_ENVELOPE_PADDING_Y = 6;
 const TEXT_BORDER_PADDING_X = 8;
 const TEXT_BORDER_PADDING_Y = 4;
 const CREATE_LEADER_HANDLE_RADIUS = 7;
@@ -159,31 +160,168 @@ function normalizeLeaderText(value: string | null | undefined) {
   return lines.slice(startIndex, endIndex).join("\n");
 }
 
-function calculateLeaderStartOutsideTextBox(
-  endpoint: Point,
-  textBoxHalfWidth: number,
-  textBoxHalfHeight: number,
-  paddingX: number,
-  paddingY: number,
-) {
-  const dx = endpoint.x;
-  const dy = endpoint.y;
-  const absDx = Math.abs(dx);
-  const absDy = Math.abs(dy);
+type EnvelopeRect = {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
 
-  if (absDx < 0.0001 && absDy < 0.0001) {
-    return new Point(0, 0);
+type SegmentIntersection = {
+  t: number;
+  point: Point;
+};
+
+function normalizeEnvelopeRect(rect: EnvelopeRect) {
+  const left = Math.min(rect.left, rect.right);
+  const right = Math.max(rect.left, rect.right);
+  const top = Math.min(rect.top, rect.bottom);
+  const bottom = Math.max(rect.top, rect.bottom);
+
+  return {
+    left,
+    right,
+    top,
+    bottom,
+  };
+}
+
+function getAngleFromUpInRadians(centerPoint: Point, targetPoint: Point) {
+  const deltaX = targetPoint.x - centerPoint.x;
+  const deltaY = targetPoint.y - centerPoint.y;
+  const angleFromUp = Math.atan2(deltaX, -deltaY);
+  return angleFromUp >= 0 ? angleFromUp : angleFromUp + Math.PI * 2;
+}
+
+function getInterpolatedCoordinateInRect(
+  rectMin: number,
+  rectMax: number,
+  normalizedRatio: number,
+) {
+  return rectMin + (rectMax - rectMin) * normalizedRatio;
+}
+
+function getClosestCoordinateToCenter(
+  candidates: number[],
+  centerCoordinate = 0,
+) {
+  if (candidates.length === 0) {
+    return centerCoordinate;
   }
 
-  const halfWidth = Math.max(0, textBoxHalfWidth + paddingX);
-  const halfHeight = Math.max(0, textBoxHalfHeight + paddingY);
-  const hitVerticalEdge = absDx * halfHeight >= absDy * halfWidth;
-  const t = hitVerticalEdge
-    ? halfWidth / Math.max(absDx, 0.0001)
-    : halfHeight / Math.max(absDy, 0.0001);
-  const clampedT = Math.min(1, Math.max(0, t));
+  let closestCoordinate = candidates[0];
+  for (let index = 1; index < candidates.length; index += 1) {
+    const candidate = candidates[index];
+    if (
+      Math.abs(candidate - centerCoordinate) <
+      Math.abs(closestCoordinate - centerCoordinate)
+    ) {
+      closestCoordinate = candidate;
+    }
+  }
 
-  return new Point(dx * clampedT, dy * clampedT);
+  return closestCoordinate;
+}
+
+function getSegmentRectIntersections(
+  segmentStart: Point,
+  segmentEnd: Point,
+  rect: EnvelopeRect,
+) {
+  const epsilon = 0.0001;
+  const normalizedRect = normalizeEnvelopeRect(rect);
+  const deltaX = segmentEnd.x - segmentStart.x;
+  const deltaY = segmentEnd.y - segmentStart.y;
+  const intersections: SegmentIntersection[] = [];
+
+  const pushIntersection = (t: number, x: number, y: number) => {
+    if (t < -epsilon || t > 1 + epsilon) {
+      return;
+    }
+
+    const clampedT = Math.min(1, Math.max(0, t));
+    if (
+      x < normalizedRect.left - epsilon ||
+      x > normalizedRect.right + epsilon ||
+      y < normalizedRect.top - epsilon ||
+      y > normalizedRect.bottom + epsilon
+    ) {
+      return;
+    }
+
+    if (
+      intersections.some(
+        (intersection) => Math.abs(intersection.t - clampedT) < 0.001,
+      )
+    ) {
+      return;
+    }
+
+    intersections.push({
+      t: clampedT,
+      point: new Point(x, y),
+    });
+  };
+
+  if (Math.abs(deltaX) > epsilon) {
+    const leftT = (normalizedRect.left - segmentStart.x) / deltaX;
+    pushIntersection(
+      leftT,
+      normalizedRect.left,
+      segmentStart.y + leftT * deltaY,
+    );
+    const rightT = (normalizedRect.right - segmentStart.x) / deltaX;
+    pushIntersection(
+      rightT,
+      normalizedRect.right,
+      segmentStart.y + rightT * deltaY,
+    );
+  }
+
+  if (Math.abs(deltaY) > epsilon) {
+    const topT = (normalizedRect.top - segmentStart.y) / deltaY;
+    pushIntersection(topT, segmentStart.x + topT * deltaX, normalizedRect.top);
+    const bottomT = (normalizedRect.bottom - segmentStart.y) / deltaY;
+    pushIntersection(
+      bottomT,
+      segmentStart.x + bottomT * deltaX,
+      normalizedRect.bottom,
+    );
+  }
+
+  return intersections;
+}
+
+function clipLineFromCandidateByEnvelopeRects(
+  candidateStart: Point,
+  endpoint: Point,
+  rects: EnvelopeRect[],
+) {
+  const epsilon = 0.0001;
+  let shortestVisibleStart: SegmentIntersection | null = null;
+
+  for (const rect of rects) {
+    const intersections = getSegmentRectIntersections(
+      candidateStart,
+      endpoint,
+      rect,
+    );
+    for (const intersection of intersections) {
+      if (intersection.t <= epsilon || intersection.t >= 1 - epsilon) {
+        continue;
+      }
+
+      if (!shortestVisibleStart || intersection.t > shortestVisibleStart.t) {
+        shortestVisibleStart = intersection;
+      }
+    }
+  }
+
+  if (shortestVisibleStart) {
+    return shortestVisibleStart.point;
+  }
+
+  return candidateStart;
 }
 
 function distancePointToSegment(point: Point, start: Point, end: Point) {
@@ -1246,19 +1384,37 @@ export class LeaderTextWithArrow extends Group {
       };
     }
 
-    const textBoxHalfWidth = this.textObject.getScaledWidth() / 2;
-    const textBoxHalfHeight = this.textObject.getScaledHeight() / 2;
-    const baseLeaderClipPadding =
-      this.leaderStrokeWidth * 0.75 + LEADER_TEXT_CLIP_EXTRA_PADDING;
-    const leaderClipPaddingX =
-      baseLeaderClipPadding + (TEXT_BORDER_PADDING_X - TEXT_BORDER_PADDING_Y);
-    const leaderClipPaddingY = baseLeaderClipPadding;
-    const visibleLeaderStart = calculateLeaderStartOutsideTextBox(
+    const lineEnvelopeRects = this.getTextLineEnvelopeRectsOnObjectPlane();
+    const centerPoint = new Point(0, 0);
+    const angleFromCenterToEndpoint = getAngleFromUpInRadians(
+      centerPoint,
       endpoint,
-      textBoxHalfWidth,
-      textBoxHalfHeight,
-      leaderClipPaddingX,
-      leaderClipPaddingY,
+    );
+    const yInterpolationRatio =
+      (Math.sin(angleFromCenterToEndpoint - Math.PI / 2) + 1) / 2;
+    const xInterpolationRatio = (Math.sin(angleFromCenterToEndpoint) + 1) / 2;
+    const candidateXCoordinates = lineEnvelopeRects.map((rect) =>
+      getInterpolatedCoordinateInRect(
+        Math.min(rect.left, rect.right),
+        Math.max(rect.left, rect.right),
+        xInterpolationRatio,
+      ),
+    );
+    const candidateYCoordinates = lineEnvelopeRects.map((rect) =>
+      getInterpolatedCoordinateInRect(
+        Math.min(rect.top, rect.bottom),
+        Math.max(rect.top, rect.bottom),
+        yInterpolationRatio,
+      ),
+    );
+    const candidateStartPoint = new Point(
+      getClosestCoordinateToCenter(candidateXCoordinates, centerPoint.x),
+      getClosestCoordinateToCenter(candidateYCoordinates, centerPoint.y),
+    );
+    const visibleLeaderStart = clipLineFromCandidateByEnvelopeRects(
+      candidateStartPoint,
+      endpoint,
+      lineEnvelopeRects,
     );
 
     return {
@@ -1302,6 +1458,48 @@ export class LeaderTextWithArrow extends Group {
       );
     }
     return renderEndpoints;
+  }
+
+  private getTextLineEnvelopeRectsOnObjectPlane() {
+    const textLines = this.textObject.textLines;
+    const lineCount = textLines.length;
+    const textWidth = Math.max(1, this.textObject.width ?? 0);
+    const textHeight = Math.max(1, this.textObject.height ?? 0);
+    const textLeft = -textWidth / 2;
+    const textTop = -textHeight / 2;
+    const lineRects: EnvelopeRect[] = [];
+
+    let lineTop = textTop;
+    for (let lineIndex = 0; lineIndex < lineCount; lineIndex += 1) {
+      const lineHeight = Math.max(
+        1,
+        this.textObject.getHeightOfLine(lineIndex),
+      );
+      const lineWidth = Math.max(0, this.textObject.getLineWidth(lineIndex));
+      const lineLeftOffset = this.textObject._getLineLeftOffset(lineIndex) ?? 0;
+      const lineLeft = textLeft + lineLeftOffset;
+
+      lineRects.push({
+        left: lineLeft - LEADER_TEXT_ENVELOPE_PADDING_X,
+        right: lineLeft + lineWidth + LEADER_TEXT_ENVELOPE_PADDING_X,
+        top: lineTop - LEADER_TEXT_ENVELOPE_PADDING_Y,
+        bottom: lineTop + lineHeight + LEADER_TEXT_ENVELOPE_PADDING_Y,
+      });
+      lineTop += lineHeight;
+    }
+
+    if (lineRects.length > 0) {
+      return lineRects;
+    }
+
+    return [
+      {
+        left: textLeft - LEADER_TEXT_ENVELOPE_PADDING_X,
+        right: textLeft + textWidth + LEADER_TEXT_ENVELOPE_PADDING_X,
+        top: textTop - LEADER_TEXT_ENVELOPE_PADDING_Y,
+        bottom: textTop + textHeight + LEADER_TEXT_ENVELOPE_PADDING_Y,
+      },
+    ];
   }
 
   private getViewportScale() {
