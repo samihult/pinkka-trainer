@@ -54,6 +54,7 @@ const MIN_SCREEN_STROKE_WIDTH = 0.1;
 const MIN_SCREEN_FONT_SIZE = 1;
 const RESET_VIEWPORT_SHORTCUT = "z";
 const DELETE_SHORTCUT_DISPLAY = "⌫";
+const PINCH_ZOOM_SPEED_MULTIPLIER = 5;
 
 type CanvasTool =
   | "pointer"
@@ -1479,15 +1480,35 @@ export const FabricJsonCanvas = forwardRef<
 
       wheelEvent.preventDefault();
       wheelEvent.stopPropagation();
-      const zoomFactor = Math.pow(0.999, wheelEvent.deltaY);
-      const nextZoom = canvas.getZoom() * zoomFactor;
-      const zoomPoint =
-        event.viewportPoint ??
-        new Point(
-          wheelEvent.offsetX ?? canvas.getWidth() / 2,
-          wheelEvent.offsetY ?? canvas.getHeight() / 2,
+      if (wheelEvent.ctrlKey) {
+        // Trackpad pinch: zoom around current pointer.
+        const zoomFactor = Math.pow(
+          0.999,
+          wheelEvent.deltaY * PINCH_ZOOM_SPEED_MULTIPLIER,
         );
-      zoomViewportToPoint(zoomPoint, nextZoom);
+        const nextZoom = canvas.getZoom() * zoomFactor;
+        const zoomPoint =
+          event.viewportPoint ??
+          new Point(
+            wheelEvent.offsetX ?? canvas.getWidth() / 2,
+            wheelEvent.offsetY ?? canvas.getHeight() / 2,
+          );
+        zoomViewportToPoint(zoomPoint, nextZoom);
+      } else {
+        // Two-finger trackpad drag: pan viewport.
+        const viewportTransform = canvas.viewportTransform;
+        if (viewportTransform) {
+          const modeScale =
+            wheelEvent.deltaMode === 1
+              ? 16
+              : wheelEvent.deltaMode === 2
+                ? canvas.getHeight()
+                : 1;
+          viewportTransform[4] -= wheelEvent.deltaX * modeScale;
+          viewportTransform[5] -= wheelEvent.deltaY * modeScale;
+          canvas.requestRenderAll();
+        }
+      }
       updateCanvasCursor(event.scenePoint);
     };
 
@@ -1510,11 +1531,18 @@ export const FabricJsonCanvas = forwardRef<
         ? scale / pinchGestureLastScale
         : 1;
       pinchGestureLastScale = scale;
+      const acceleratedRelativeScale = Math.pow(
+        relativeScale,
+        PINCH_ZOOM_SPEED_MULTIPLIER,
+      );
 
       const zoomPoint =
         event.viewportPoint ??
         new Point(canvas.getWidth() / 2, canvas.getHeight() / 2);
-      zoomViewportToPoint(zoomPoint, canvas.getZoom() * relativeScale);
+      zoomViewportToPoint(
+        zoomPoint,
+        canvas.getZoom() * acceleratedRelativeScale,
+      );
       event.e?.preventDefault();
       updateCanvasCursor(event.scenePoint);
     };
