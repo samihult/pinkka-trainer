@@ -18,6 +18,7 @@ import {
 import {
   ArrowRight,
   Circle as CircleIcon,
+  Eraser,
   Hand,
   MousePointer2,
   RotateCcw,
@@ -51,6 +52,7 @@ const MAX_VIEWPORT_ZOOM = 8;
 const MIN_SCREEN_STROKE_WIDTH = 0.1;
 const MIN_SCREEN_FONT_SIZE = 1;
 const RESET_VIEWPORT_SHORTCUT = "z";
+const DELETE_SHORTCUT_DISPLAY = "⌫";
 
 type CanvasTool =
   | "pointer"
@@ -644,6 +646,7 @@ export const FabricJsonCanvas = forwardRef<
   const isPointerOverCanvasRef = useRef(false);
 
   const [activeTool, setActiveTool] = useState<CanvasTool>("pointer");
+  const [canDeleteSelection, setCanDeleteSelection] = useState(false);
 
   useImperativeHandle(ref, () => ({}), []);
 
@@ -658,6 +661,30 @@ export const FabricJsonCanvas = forwardRef<
     if (constantScreenSizeRef.current) {
       applyScreenInvariantMetricsToCanvas(canvas);
     }
+    canvas.requestRenderAll();
+  }, []);
+
+  const deleteSelection = useCallback(() => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) {
+      return;
+    }
+
+    const activeObject = canvas.getActiveObject();
+    if (activeObject instanceof IText && activeObject.isEditing) {
+      return;
+    }
+
+    const selectedObjects = canvas.getActiveObjects();
+    if (selectedObjects.length === 0) {
+      return;
+    }
+
+    canvas.discardActiveObject();
+    for (const object of selectedObjects) {
+      canvas.remove(object);
+    }
+    setCanDeleteSelection(false);
     canvas.requestRenderAll();
   }, []);
 
@@ -694,6 +721,14 @@ export const FabricJsonCanvas = forwardRef<
       }
 
       const pressedKey = event.key.toLowerCase();
+      if (event.key === "Backspace" || event.key === "Delete") {
+        if (canvas?.getActiveObjects().length) {
+          event.preventDefault();
+          deleteSelection();
+        }
+        return;
+      }
+
       if (pressedKey === RESET_VIEWPORT_SHORTCUT) {
         event.preventDefault();
         resetViewport();
@@ -716,7 +751,7 @@ export const FabricJsonCanvas = forwardRef<
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [resetViewport]);
+  }, [deleteSelection, resetViewport]);
 
   useEffect(() => {
     activeToolRef.current = activeTool;
@@ -773,6 +808,15 @@ export const FabricJsonCanvas = forwardRef<
     let shapePreviewObject: FabricObject | null = null;
     let pendingShapeStart: { tool: ShapeTool; point: Point } | null = null;
     let pinchGestureLastScale: number | null = null;
+
+    const syncSelectionState = () => {
+      const activeObject = canvas.getActiveObject();
+      const isEditingText =
+        activeObject instanceof IText && activeObject.isEditing;
+      setCanDeleteSelection(
+        canvas.getActiveObjects().length > 0 && !isEditingText,
+      );
+    };
 
     const updateLeaderHoverStates = (scenePoint?: Point) => {
       let didUpdate = false;
@@ -1123,6 +1167,22 @@ export const FabricJsonCanvas = forwardRef<
       if (target instanceof LeaderTextWithArrow) {
         target.syncSelectionVisuals();
       }
+      syncSelectionState();
+    };
+
+    const handleSelectionCreated = () => {
+      refreshLeaderSelectionVisuals();
+      syncSelectionState();
+    };
+
+    const handleSelectionUpdated = () => {
+      refreshLeaderSelectionVisuals();
+      syncSelectionState();
+    };
+
+    const handleSelectionCleared = () => {
+      refreshLeaderSelectionVisuals();
+      syncSelectionState();
     };
 
     const handleMouseDoubleClick = (event: { target?: FabricObject }) => {
@@ -1528,9 +1588,10 @@ export const FabricJsonCanvas = forwardRef<
     canvas.on("mouse:up", handleMouseUp);
     canvas.on("mouse:wheel", handleMouseWheel);
     canvas.on("pinch", handlePinch);
-    canvas.on("selection:created", refreshLeaderSelectionVisuals);
-    canvas.on("selection:updated", refreshLeaderSelectionVisuals);
-    canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
+    canvas.on("selection:created", handleSelectionCreated);
+    canvas.on("selection:updated", handleSelectionUpdated);
+    canvas.on("selection:cleared", handleSelectionCleared);
+    syncSelectionState();
 
     const handleUpperCanvasMouseDownCapture = (event: MouseEvent) => {
       const activeObject = canvas.getActiveObject();
@@ -1544,6 +1605,7 @@ export const FabricJsonCanvas = forwardRef<
       }
 
       activeObject.exitEditing();
+      syncSelectionState();
       event.preventDefault();
       event.stopPropagation();
       event.stopImmediatePropagation();
@@ -1571,9 +1633,9 @@ export const FabricJsonCanvas = forwardRef<
       canvas.off("mouse:up", handleMouseUp);
       canvas.off("mouse:wheel", handleMouseWheel);
       canvas.off("pinch", handlePinch);
-      canvas.off("selection:created", refreshLeaderSelectionVisuals);
-      canvas.off("selection:updated", refreshLeaderSelectionVisuals);
-      canvas.off("selection:cleared", refreshLeaderSelectionVisuals);
+      canvas.off("selection:created", handleSelectionCreated);
+      canvas.off("selection:updated", handleSelectionUpdated);
+      canvas.off("selection:cleared", handleSelectionCleared);
       canvas.upperCanvasEl.removeEventListener(
         "mousedown",
         handleUpperCanvasMouseDownCapture,
@@ -1640,6 +1702,7 @@ export const FabricJsonCanvas = forwardRef<
       }
 
       applyInteractionModeRef.current?.();
+      setCanDeleteSelection(false);
       canvas.requestRenderAll();
     };
 
@@ -1743,6 +1806,21 @@ export const FabricJsonCanvas = forwardRef<
           className="flex h-8 w-8 items-center justify-center rounded-sm border border-transparent bg-transparent text-white transition-colors hover:bg-[#343434]"
         >
           <RotateCcw className="h-4 w-4" />
+        </button>
+        <button
+          type="button"
+          title={`Delete (${DELETE_SHORTCUT_DISPLAY})`}
+          aria-label={`Delete (${DELETE_SHORTCUT_DISPLAY})`}
+          onClick={deleteSelection}
+          disabled={!canDeleteSelection}
+          className={cn(
+            "flex h-8 w-8 items-center justify-center rounded-sm border text-white transition-colors",
+            canDeleteSelection
+              ? "border-transparent bg-transparent hover:bg-[#343434]"
+              : "cursor-not-allowed border-transparent bg-transparent text-white/35",
+          )}
+        >
+          <Eraser className="h-4 w-4" />
         </button>
       </div>
 
