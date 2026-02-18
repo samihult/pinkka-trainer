@@ -1307,7 +1307,7 @@ export const FabricJsonCanvas = forwardRef<
           continue;
         }
 
-        if (object.isPointOnEditTextHandle(scenePoint, false)) {
+        if (object.isPointOnEditTextHandle(scenePoint)) {
           canvas.setActiveObject(object);
           object.startTextEditing();
           refreshLeaderSelectionVisuals();
@@ -1315,7 +1315,7 @@ export const FabricJsonCanvas = forwardRef<
           return;
         }
 
-        if (!object.isPointOnCreateLeaderHandle(scenePoint, false)) {
+        if (!object.isPointOnCreateLeaderHandle(scenePoint)) {
           continue;
         }
 
