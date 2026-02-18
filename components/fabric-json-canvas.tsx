@@ -920,6 +920,24 @@ export const FabricJsonCanvas = forwardRef<
       canvas.requestRenderAll();
     };
 
+    const panViewportBy = (deltaX: number, deltaY: number) => {
+      const viewportTransform = canvas.viewportTransform;
+      if (!viewportTransform) {
+        return;
+      }
+
+      const nextViewportTransform: TMat2D = [
+        viewportTransform[0],
+        viewportTransform[1],
+        viewportTransform[2],
+        viewportTransform[3],
+        viewportTransform[4] + deltaX,
+        viewportTransform[5] + deltaY,
+      ];
+      canvas.setViewportTransform(nextViewportTransform);
+      canvas.requestRenderAll();
+    };
+
     const setLeaderPlacementMode = () => {
       const isPointerMode = resolveEffectiveTool() === "pointer";
       canvas.selection = isPointerMode && !placingLeaderTarget;
@@ -1364,18 +1382,13 @@ export const FabricJsonCanvas = forwardRef<
 
         const deltaX = event.e.clientX - panClientPoint.x;
         const deltaY = event.e.clientY - panClientPoint.y;
-        const viewportTransform = canvas.viewportTransform;
-        if (viewportTransform) {
-          viewportTransform[4] += deltaX;
-          viewportTransform[5] += deltaY;
-        }
+        panViewportBy(deltaX, deltaY);
 
         panClientPoint = {
           x: event.e.clientX,
           y: event.e.clientY,
         };
         updateCanvasCursor(scenePoint);
-        canvas.requestRenderAll();
         return;
       }
 
@@ -1504,9 +1517,10 @@ export const FabricJsonCanvas = forwardRef<
               : wheelEvent.deltaMode === 2
                 ? canvas.getHeight()
                 : 1;
-          viewportTransform[4] -= wheelEvent.deltaX * modeScale;
-          viewportTransform[5] -= wheelEvent.deltaY * modeScale;
-          canvas.requestRenderAll();
+          panViewportBy(
+            -wheelEvent.deltaX * modeScale,
+            -wheelEvent.deltaY * modeScale,
+          );
         }
       }
       updateCanvasCursor(event.scenePoint);
