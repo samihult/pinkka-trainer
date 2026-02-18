@@ -30,6 +30,7 @@ import {
   Ellipse,
   FabricImage,
   FabricObject,
+  IText,
   InteractiveFabricObject,
   Point,
   Rect,
@@ -1283,6 +1284,29 @@ export const FabricJsonCanvas = forwardRef<
     canvas.on("selection:updated", refreshLeaderSelectionVisuals);
     canvas.on("selection:cleared", refreshLeaderSelectionVisuals);
 
+    const handleUpperCanvasMouseDownCapture = (event: MouseEvent) => {
+      const activeObject = canvas.getActiveObject();
+      if (!(activeObject instanceof IText) || !activeObject.isEditing) {
+        return;
+      }
+
+      const scenePoint = canvas.getScenePoint(event);
+      if (activeObject.containsPoint(scenePoint)) {
+        return;
+      }
+
+      activeObject.exitEditing();
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+    };
+
+    canvas.upperCanvasEl.addEventListener(
+      "mousedown",
+      handleUpperCanvasMouseDownCapture,
+      true,
+    );
+
     return () => {
       applyInteractionModeRef.current = null;
       clearShapePreviewObject();
@@ -1302,6 +1326,11 @@ export const FabricJsonCanvas = forwardRef<
       canvas.off("selection:created", refreshLeaderSelectionVisuals);
       canvas.off("selection:updated", refreshLeaderSelectionVisuals);
       canvas.off("selection:cleared", refreshLeaderSelectionVisuals);
+      canvas.upperCanvasEl.removeEventListener(
+        "mousedown",
+        handleUpperCanvasMouseDownCapture,
+        true,
+      );
       void canvas.dispose();
       fabricCanvasRef.current = null;
     };
