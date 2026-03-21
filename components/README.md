@@ -22,7 +22,8 @@ Reusable UI building blocks for app pages.
   anchor point, and shows a square anchor handle plus add-arrow and "T" edit handles.
 - `ui/`: Shared shadcn/ui primitives and micro-components (for example keyboard shortcut hints).
 - Route-level reusable pieces such as navigation (Varjopinkka brand icon via Lucide), protected route wrapper, and
-  management cards.
+  management cards. This also includes `select-from-list-dialog.tsx`, a generic single-select dialog whose confirm
+  action now supports async handlers and shows a pending state while long-running actions complete.
 - Feature-specific UI for learning, tests, and Pinkka content workflows, including `species-card.tsx` for side-by-side
   learning media and info tabs (including author-managed multilingual identification hint rendering and Pinkka textual
   detail rendering in the Pinkka tab without duplicate images, plus hint-linked carousel navigation from the

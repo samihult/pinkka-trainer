@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
+/** Reusable dialog for choosing one option from a list and confirming it. */
 /** Selectable option in a scrollable list dialog. */
 export interface SelectFromListOption {
   /** Stable identifier returned when the option is confirmed. */
@@ -33,8 +35,8 @@ export interface SelectFromListDialogProps {
   description?: string;
   /** Options rendered in the scrollable list. */
   options: SelectFromListOption[];
-  /** Called when the user confirms a selected option. */
-  onConfirm: (selectedId: string) => void;
+  /** Called when the user confirms a selected option. Supports async actions. */
+  onConfirm: (selectedId: string) => void | Promise<void>;
   /** Primary action label. */
   confirmLabel?: string;
   /** Secondary action label. */
@@ -59,6 +61,14 @@ export function SelectFromListDialog({
   listAriaLabel = "Selectable options",
 }: SelectFromListDialogProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!open) {
+      setSelectedId(null);
+      setIsSubmitting(false);
+    }
+  }, [open]);
 
   const resolvedSelectedId =
     selectedId && options.some((option) => option.id === selectedId)
@@ -66,15 +76,22 @@ export function SelectFromListDialog({
       : (options[0]?.id ?? null);
 
   const handleOpenChange = (nextOpen: boolean) => {
-    if (!nextOpen) {
-      setSelectedId(null);
+    if (isSubmitting && !nextOpen) {
+      return;
     }
     onOpenChange(nextOpen);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!resolvedSelectedId) return;
-    onConfirm(resolvedSelectedId);
+    setIsSubmitting(true);
+    try {
+      await onConfirm(resolvedSelectedId);
+    } catch (error) {
+      console.error("Failed to confirm selected option", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -91,6 +108,7 @@ export function SelectFromListDialog({
           <div
             role="listbox"
             aria-label={listAriaLabel}
+            aria-busy={isSubmitting}
             className="max-h-72 space-y-2 overflow-y-auto pr-1"
           >
             {options.map((option) => {
@@ -101,9 +119,10 @@ export function SelectFromListDialog({
                   type="button"
                   role="option"
                   aria-selected={isSelected}
+                  disabled={isSubmitting}
                   onClick={() => setSelectedId(option.id)}
                   className={cn(
-                    "w-full rounded-md border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    "w-full rounded-md border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
                     isSelected
                       ? "border-primary bg-primary/5"
                       : "border-border hover:bg-accent",
@@ -130,14 +149,23 @@ export function SelectFromListDialog({
             type="button"
             variant="outline"
             onClick={() => handleOpenChange(false)}
+            disabled={isSubmitting}
           >
             {cancelLabel}
           </Button>
           <Button
             type="button"
-            onClick={handleConfirm}
-            disabled={!resolvedSelectedId || options.length === 0}
+            onClick={() => void handleConfirm()}
+            disabled={
+              !resolvedSelectedId || options.length === 0 || isSubmitting
+            }
           >
+            {isSubmitting ? (
+              <Loader2
+                className="mr-2 h-4 w-4 animate-spin"
+                aria-hidden="true"
+              />
+            ) : null}
             {confirmLabel}
           </Button>
         </div>

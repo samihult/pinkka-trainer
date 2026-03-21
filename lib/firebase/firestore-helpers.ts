@@ -286,22 +286,67 @@ function chunkArray<T>(items: T[], size: number): T[][] {
   return chunks;
 }
 
-const FIRESTORE_BATCH_WRITE_MAX = 450;
+const FIRESTORE_BATCH_WRITE_MAX = 100;
+const FIRESTORE_COMMIT_PAYLOAD_TARGET_BYTES = 6 * 1024 * 1024;
+const FIRESTORE_BATCH_COMMIT_COOLDOWN_MS = 25;
+const firestorePayloadSizeEncoder = new TextEncoder();
 
 type BatchSetOperation = {
   ref: DocumentReference;
   data: Record<string, unknown>;
 };
 
+function estimateBatchSetOperationSize(operation: BatchSetOperation): number {
+  return firestorePayloadSizeEncoder.encode(
+    JSON.stringify({
+      path: operation.ref.path,
+      data: operation.data,
+    }),
+  ).length;
+}
+
 async function commitSetOperationsInBatches(
   operations: BatchSetOperation[],
 ): Promise<void> {
-  for (const chunk of chunkArray(operations, FIRESTORE_BATCH_WRITE_MAX)) {
+  const batches: BatchSetOperation[][] = [];
+  let currentBatch: BatchSetOperation[] = [];
+  let currentBatchSize = 0;
+
+  for (const operation of operations) {
+    const operationSize = estimateBatchSetOperationSize(operation);
+
+    // Keep commits comfortably below Firestore's request payload limit.
+    if (
+      currentBatch.length > 0 &&
+      (currentBatch.length >= FIRESTORE_BATCH_WRITE_MAX ||
+        currentBatchSize + operationSize >
+          FIRESTORE_COMMIT_PAYLOAD_TARGET_BYTES)
+    ) {
+      batches.push(currentBatch);
+      currentBatch = [];
+      currentBatchSize = 0;
+    }
+
+    currentBatch.push(operation);
+    currentBatchSize += operationSize;
+  }
+
+  if (currentBatch.length > 0) {
+    batches.push(currentBatch);
+  }
+
+  for (let batchIndex = 0; batchIndex < batches.length; batchIndex += 1) {
+    const chunk = batches[batchIndex];
     const batch = writeBatch(db);
     for (const operation of chunk) {
       batch.set(operation.ref, operation.data);
     }
     await batch.commit();
+    if (batchIndex < batches.length - 1) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, FIRESTORE_BATCH_COMMIT_COOLDOWN_MS),
+      );
+    }
   }
 }
 
@@ -1057,7 +1102,9 @@ async function getStoredPinkkaImageDownloadUrl(params: {
 async function mapPinkkaImageAssetsToEntityImages(params: {
   assets: PinkkaImageAsset[];
   fallbackIdPrefix: string;
+  resolveStoredUrls?: boolean;
 }): Promise<EntityImage[]> {
+  const resolveStoredUrls = params.resolveStoredUrls ?? true;
   const mappedImages: EntityImage[] = [];
   for (let index = 0; index < params.assets.length; index += 1) {
     const asset = params.assets[index];
@@ -1070,12 +1117,16 @@ async function mapPinkkaImageAssetsToEntityImages(params: {
     const filename =
       getImageFilenameFromUrl(sourceUrl) ?? `${pinkkaImageId}.jpg`;
 
-    let storedUrl = await getStoredPinkkaImageDownloadUrl({
-      pinkkaImageId,
-      filename,
-    });
+    let storedUrl = sourceUrl;
 
-    if (!storedUrl) {
+    if (resolveStoredUrls) {
+      storedUrl = await getStoredPinkkaImageDownloadUrl({
+        pinkkaImageId,
+        filename,
+      });
+    }
+
+    if (resolveStoredUrls && !storedUrl) {
       storedUrl = await uploadPinkkaImageFromSource({
         pinkkaImageId,
         filename,
@@ -1171,12 +1222,13 @@ function mergeImportedAndGroupStacks(params: {
     .sort((left, right) => (left.orderNo ?? 0) - (right.orderNo ?? 0));
 }
 
-/** Convert Pinkka species detail payload to app species data with storage URLs. */
+/** Convert Pinkka species detail payload to app species data with resolved image URLs. */
 export async function mapPinkkaSpeciesDetailToContentData(
   detail: PinkkaSpeciesDetail,
-  options?: { includeImages?: boolean },
+  options?: { includeImages?: boolean; resolveStoredImageUrls?: boolean },
 ): Promise<Species["data"]> {
   const includeImages = options?.includeImages ?? true;
+  const resolveStoredImageUrls = options?.resolveStoredImageUrls ?? true;
   if (!includeImages) {
     return {
       taxonId: detail.taxonId,
@@ -1197,7 +1249,7 @@ export async function mapPinkkaSpeciesDetailToContentData(
     const sourceUrl = getPreferredPinkkaImageUrl(sourceImage);
     let finalUrl = sourceUrl ?? null;
 
-    if (sourceUrl) {
+    if (sourceUrl && resolveStoredImageUrls) {
       const pinkkaImageId =
         sourceImage.id ||
         `${detail.taxonId || detail.scientificName}-${index + 1}`;
@@ -1256,9 +1308,13 @@ export async function createEditableGroupFromImportedPinkka(params: {
   const includeImages = params.includeImages ?? false;
   const groupId = buildUrnId("group");
   const now = Timestamp.now();
+  // Imported Pinkka entities already carry usable remote image URLs, so reuse
+  // them here instead of re-querying Firebase Storage for every asset during
+  // editable-group creation.
   const groupImages = await mapPinkkaImageAssetsToEntityImages({
     assets: getPinkkaGroupImageAssets(params.sourceGroup.entity),
     fallbackIdPrefix: `group-${params.sourceGroup.groupId}`,
+    resolveStoredUrls: false,
   });
 
   const operations: BatchSetOperation[] = [];
@@ -1310,6 +1366,7 @@ export async function createEditableGroupFromImportedPinkka(params: {
     const stackImages = await mapPinkkaImageAssetsToEntityImages({
       assets: getPinkkaStackImageAssets(sourceStack),
       fallbackIdPrefix: sourceStack.imageId || `stack-${sourceStack.id}`,
+      resolveStoredUrls: false,
     });
     operations.push({
       ref: doc(db, "groups", groupId, "stacks", stackId),
@@ -1344,7 +1401,10 @@ export async function createEditableGroupFromImportedPinkka(params: {
       const speciesId = buildUrnId("species");
       const mappedData = await mapPinkkaSpeciesDetailToContentData(
         importedSpeciesEntry.entity,
-        { includeImages },
+        {
+          includeImages,
+          resolveStoredImageUrls: false,
+        },
       );
       operations.push({
         ref: doc(
