@@ -27,7 +27,7 @@ Project conventions for Codex agents working in this repo.
 - Always, after making changes to any code, make the following checks and fix the potential issues:
   - Files, functions, etc. should be compact, if possible, and split so that the logic is easy to read
   - Directory structure and file naming is logical, so that it is easy to understand what can be found and where
-  - If blocks or loops and compact, and larger functionalities are extracted into functions or components
+  - If blocks or loops are compact, and larger functionalities are extracted into functions or components
   - Documentation is up-to-date and improved in the process, as described in this document
 - Database structures must be sound:
   - Relational databases:
