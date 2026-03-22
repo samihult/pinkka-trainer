@@ -272,7 +272,7 @@ const FI_MESSAGES: TranslationTable = {
   "auth.signUp.failureDescription": "Tilin luonti epäonnistui",
 
   "home.title": "Kokoelmat",
-  "home.subtitle": "Valitse pinkka kortteihin tai testiin",
+  "home.subtitle": "Valitse kokoelma harjoitellaksesi",
   "home.filterPlaceholder": "Suodata...",
   "home.favorite": "Suosikkikokoelma",
   "home.mastery": "Hallinta",

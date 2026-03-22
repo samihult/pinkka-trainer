@@ -17,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { HatGlasses, User, LogOut, Settings, Library } from "lucide-react";
+import { User, LogOut, Settings, Library } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -71,15 +71,16 @@ export function Navbar() {
   };
 
   return (
-    <nav className="border-b bg-card">
+    <nav>
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <Link
             href="/"
             className="flex items-center gap-2 text-xl font-semibold"
           >
-            <HatGlasses className="h-6 w-6 text-primary" />
-            <span>Varjopinkka</span>
+            <span className="text-foreground text-2xl font-bold">
+              Varjopinkka
+            </span>
           </Link>
 
           <div className="flex items-center gap-4">

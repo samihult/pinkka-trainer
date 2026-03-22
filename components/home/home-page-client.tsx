@@ -206,10 +206,10 @@ export function HomePageClient() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="mx-auto max-w-[96rem] px-4 py-10 sm:px-8 lg:px-14 lg:py-12">
+      <main className="container mx-auto px-4 py-10 lg:py-12">
         <div className="mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-3">
-            <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl">
+            <h1 className="text-5xl font-bold tracking-tight text-primary sm:text-6xl">
               {t("home.title")}
             </h1>
             <p className="max-w-2xl text-xl text-muted-foreground">

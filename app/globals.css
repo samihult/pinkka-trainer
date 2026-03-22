@@ -9,16 +9,17 @@
 
 /* Global app theme tokens aligned to the Verdant Scholar palette and typography. */
 :root {
-  --background: #fcf9f8;
-  --foreground: #1c1b1b;
-  --card: #ffffff;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --card: #f6f3f2;
   --card-foreground: #1c1b1b;
   --popover: #f6f3f2;
   --popover-foreground: #1c1b1b;
-  --primary: #3f6a00;
+  --primary: #8cc24d;
   --primary-foreground: #ffffff;
   --secondary: #caecbc;
-  --secondary-foreground: #4f6c45;
+  --secondary-foreground: #4a6741;
+  --tertiary: #c2b24d;
   --muted: #f0eded;
   --muted-foreground: #434939;
   --accent: #c4b44f;

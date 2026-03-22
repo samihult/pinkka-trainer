@@ -42,7 +42,7 @@ export function HomeGroupCard({
   const { t } = useI18n();
 
   const imagePanel = (
-    <div className="aspect-[1.45/1] overflow-hidden rounded-[2rem] bg-muted">
+    <div className="relative h-[15.5rem] overflow-hidden rounded-t-lg rounded-b-none bg-muted sm:h-[18.5rem]">
       {imageUrl ? (
         <Image
           src={imageUrl}
@@ -58,55 +58,55 @@ export function HomeGroupCard({
   );
 
   const content = (
-    <div className="space-y-4 px-4 pb-4">
-      <div className="flex items-start justify-between gap-4">
-        <h2 className="text-2xl font-bold leading-[1.05] tracking-tight text-foreground">
+    <div className="flex min-h-[11.5rem] flex-col justify-between px-6 pt-5 pb-6 sm:px-7 sm:pt-6 sm:pb-7">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-5 gap-y-4">
+        <h2 className="max-w-[14rem] text-[clamp(1.25rem,3.2vw,1.75rem)] font-bold leading-[1.02] tracking-[0.005em] text-foreground sm:max-w-[16rem]">
           {name}
         </h2>
-        <div className="shrink-0 pt-1 text-right">
-          <p className="text-[2.125rem] leading-none font-bold text-primary">
-            {masteryPercent}%
-          </p>
-          <p className="mt-1 text-xs font-medium tracking-[0.08em] text-muted-foreground uppercase">
-            {t("home.mastery")}
-          </p>
-        </div>
+        {/*<div className="shrink-0 pt-1 text-right">*/}
+        {/*  <p className="text-[clamp(2rem,2.6vw,3.4rem)] leading-none font-bold text-primary">*/}
+        {/*    {masteryPercent}%*/}
+        {/*  </p>*/}
+        {/*  <p className="mt-2 text-[0.65rem] font-medium tracking-[0.12em] text-muted-foreground uppercase sm:text-[0.75rem]">*/}
+        {/*    {t("home.mastery")}*/}
+        {/*  </p>*/}
+        {/*</div>*/}
       </div>
-      <p className="text-[1.05rem] text-foreground">
-        {t("home.speciesCount", { count: speciesCount })}
-      </p>
-      <Progress
-        value={masteryPercent}
-        aria-label={t("home.mastery")}
-        className="h-2 rounded-full bg-muted [&_[data-slot=progress-indicator]]:bg-primary"
-      />
+      <div className="space-y-3">
+        <p className="text-[1rem] text-foreground sm:text-[1.05rem]">
+          {t("home.speciesCount", { count: speciesCount })}
+        </p>
+        <Progress
+          value={masteryPercent}
+          aria-label={t("home.mastery")}
+          className="h-2.5 rounded-full bg-[rgba(0,0,0,0.08)] [&_[data-slot=progress-indicator]]:bg-[linear-gradient(90deg,#4b7f0f_0%,#8ac84a_100%)]"
+        />
+      </div>
     </div>
   );
 
   return (
-    <article className="relative rounded-[2.25rem] bg-card p-4 shadow-[0_18px_40px_rgba(28,27,27,0.08)]">
+    <article className="relative overflow-hidden rounded-lg bg-card shadow-[0_18px_38px_rgba(28,27,27,0.06)]">
       <button
         type="button"
         aria-label={t("home.favorite")}
         aria-pressed={isFavorite}
         onClick={onToggleFavorite}
         className={cn(
-          "absolute top-8 right-8 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/30 text-white backdrop-blur-md transition hover:bg-white/40",
+          "absolute top-5 right-5 z-10 flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-[rgba(215,231,244,0.45)] text-white backdrop-blur-md transition hover:bg-[rgba(215,231,244,0.6)] sm:top-6 sm:right-6 sm:h-13 sm:w-13",
           isFavorite ? "text-white" : "text-white/90",
         )}
       >
         <Heart
-          className="h-6 w-6"
+          className="h-7 w-7 sm:h-8 sm:w-8"
           fill={isFavorite ? "currentColor" : "none"}
         />
       </button>
-      <div className="space-y-5">
+      <div>
         {href ? (
-          <Link href={href} className="group block space-y-5">
+          <Link href={href} className="group block">
             {imagePanel}
-            <div className="transition-transform duration-200 group-hover:translate-x-0.5">
-              {content}
-            </div>
+            {content}
           </Link>
         ) : (
           <>
