@@ -1,12 +1,14 @@
 import type { Preview } from "@storybook/nextjs-vite";
+import type { CSSProperties } from "react";
 import { initialize, mswDecorator } from "msw-storybook-addon";
-import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/toaster";
 import "../app/globals.css";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
+const storybookFontVariables = {
+  "--font-sans": '"Inter", "Helvetica Neue", Arial, sans-serif',
+  "--font-mono": '"SFMono-Regular", "Menlo", "Monaco", monospace',
+} as CSSProperties;
 
 initialize({
   onUnhandledRequest: "bypass",
@@ -37,7 +39,8 @@ const preview: Preview = {
     (Story) => (
       <AuthProvider>
         <div
-          className={`${geist.variable} ${geistMono.variable} min-h-screen bg-background text-foreground font-sans antialiased`}
+          className="min-h-screen bg-background text-foreground font-sans antialiased"
+          style={storybookFontVariables}
         >
           <Story />
           <Toaster />

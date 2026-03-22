@@ -1,0 +1,543 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Living Archive - Varjopinkka</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#f6e479",
+              secondary: "#496640",
+              "on-surface": "#1c1b1b",
+              "surface-variant": "#e5e2e1",
+              surface: "#fcf9f8",
+              primary: "#3f6a00",
+              "on-secondary-fixed-variant": "#324e2a",
+              error: "#ba1a1a",
+              "on-secondary-fixed": "#062104",
+              "on-primary": "#ffffff",
+              "primary-fixed-dim": "#9fd75f",
+              tertiary: "#6b5f00",
+              "surface-bright": "#fcf9f8",
+              "secondary-fixed-dim": "#afd0a1",
+              "secondary-fixed": "#caecbc",
+              "surface-container-highest": "#e5e2e1",
+              outline: "#737968",
+              "error-container": "#ffdad6",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#d8c860",
+              "surface-tint": "#3f6a00",
+              "surface-dim": "#dcd9d9",
+              "on-primary-container": "#2d4d00",
+              "on-primary-fixed": "#0f2000",
+              "on-tertiary-fixed": "#201c00",
+              background: "#fcf9f8",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#313030",
+              "on-tertiary-container": "#4e4500",
+              "primary-fixed": "#baf478",
+              "on-background": "#1c1b1b",
+              "primary-container": "#8cc24d",
+              "inverse-on-surface": "#f3f0ef",
+              "on-primary-fixed-variant": "#2e4f00",
+              "surface-container-high": "#eae7e7",
+              "surface-container": "#f0eded",
+              "on-error": "#ffffff",
+              "on-error-container": "#93000a",
+              "outline-variant": "#c2c9b4",
+              "secondary-container": "#caecbc",
+              "on-surface-variant": "#434939",
+              "tertiary-container": "#c4b44f",
+              "on-secondary-container": "#4f6c45",
+              "inverse-primary": "#9fd75f",
+              "surface-container-low": "#f6f3f2",
+              "on-tertiary-fixed-variant": "#504700",
+              "surface-container-lowest": "#ffffff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(24px);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container"
+  >
+    <!-- TopNavBar -->
+    <header
+      class="fixed top-0 w-full z-50 bg-[#fcf9f8]/60 dark:bg-[#1c1b1b]/60 backdrop-blur-xl"
+    >
+      <nav
+        class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto"
+      >
+        <div
+          class="text-2xl font-bold tracking-tight text-[#3f6a00] dark:text-[#8cc24d] font-manrope"
+        >
+          The Living Archive
+        </div>
+        <div
+          class="hidden md:flex items-center gap-8 font-manrope text-sm tracking-wide font-semibold"
+        >
+          <a
+            class="text-[#3f6a00] dark:text-[#8cc24d] border-b-2 border-[#3f6a00] pb-1 hover:opacity-100 transition-all duration-300 active:scale-95 transition-transform"
+            href="#"
+            >Explore</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300 active:scale-95 transition-transform"
+            href="#"
+            >Taxonomy</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300 active:scale-95 transition-transform"
+            href="#"
+            >Conservation</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300 active:scale-95 transition-transform"
+            href="#"
+            >About</a
+          >
+        </div>
+        <div class="flex items-center gap-4">
+          <button
+            class="p-2 text-[#3f6a00] dark:text-[#8cc24d] active:scale-95 transition-transform"
+          >
+            <span class="material-symbols-outlined" data-icon="account_circle"
+              >account_circle</span
+            >
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main class="pt-24">
+      <!-- Hero Section: Intentional Asymmetry -->
+      <section
+        class="relative px-8 py-20 md:py-32 max-w-screen-2xl mx-auto overflow-hidden"
+      >
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-7 z-10">
+            <h1
+              class="font-headline text-5xl md:text-7xl font-extrabold tracking-tight text-on-surface mb-6 leading-tight"
+            >
+              Witness the <span class="text-primary italic">Complexity</span> of
+              Life.
+            </h1>
+            <p
+              class="text-lg md:text-xl text-on-surface-variant max-w-xl mb-10 leading-relaxed"
+            >
+              Varjopinkka is a premium digital herbarium and zoological archive
+              designed for researchers, educators, and the curious. Explore the
+              biological heritage of Earth through high-fidelity data and
+              editorial specimen galleries.
+            </p>
+            <!-- Search Bar: Pill Shape -->
+            <div class="relative max-w-2xl group">
+              <div
+                class="absolute inset-y-0 left-6 flex items-center pointer-events-none text-on-surface-variant"
+              >
+                <span class="material-symbols-outlined" data-icon="search"
+                  >search</span
+                >
+              </div>
+              <input
+                class="w-full pl-16 pr-8 py-5 bg-surface-container-highest border-none rounded-full text-lg focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all duration-300 placeholder:text-on-surface-variant/50"
+                placeholder="Search species, genus, or family..."
+                type="text"
+              />
+              <button
+                class="absolute right-3 top-2.5 bottom-2.5 px-8 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-full transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          <div class="lg:col-span-5 relative">
+            <div
+              class="relative aspect-[4/5] rounded-xl overflow-hidden bg-surface-container shadow-2xl rotate-3 transform transition-transform hover:rotate-0 duration-700"
+            >
+              <img
+                alt="Botanical detail"
+                class="w-full h-full object-cover"
+                data-alt="Macro photo of a detailed green leaf with visible veins"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv8N5A86OPbUjLrNRBdeNzBW7KaZIuGD2bs6urUv1FUlDIjE6wODizHv3MxmoHXxyD2MLVLj61j5GUdYSgySY60R-Yij-HbftFE5qeDK4gGGJojihHyhWYHxkqJjf3m8LpS_gK15RlwuQw6OqQgYAo5CeCENY9QndstU758wA9EgRJWZT9Bd9_yO7Jb_2ssxh3HuL30IRJD6MUb8X98D0M3UYN7-9l37zPDnad5hTk1s682srAqCKSW1ydYdKlfUvkl_92jbAzbe8"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"
+              ></div>
+              <div class="absolute bottom-6 left-6 text-on-primary">
+                <span
+                  class="font-label text-xs tracking-widest uppercase mb-1 block"
+                  >Specimen #0492</span
+                >
+                <p class="font-headline font-bold text-xl">
+                  Monstera deliciosa
+                </p>
+              </div>
+            </div>
+            <!-- Asymmetric Floating Element -->
+            <div
+              class="absolute -bottom-10 -left-10 w-48 h-48 bg-tertiary-fixed rounded-xl -rotate-6 flex items-center justify-center p-6 shadow-lg hidden md:flex"
+            >
+              <p
+                class="font-headline text-on-tertiary-fixed font-bold text-center leading-tight"
+              >
+                Over 12,000 Verified Entries
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Featured Groups: Bento Grid -->
+      <section class="px-8 py-24 bg-surface-container-low">
+        <div class="max-w-screen-2xl mx-auto">
+          <div
+            class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6"
+          >
+            <div>
+              <span
+                class="font-label text-sm tracking-widest text-primary font-bold uppercase"
+                >Taxonomic Exploration</span
+              >
+              <h2 class="font-headline text-4xl font-bold text-on-surface mt-2">
+                Featured Specimens
+              </h2>
+            </div>
+            <a
+              class="text-primary font-semibold underline underline-offset-8 hover:opacity-70 transition-opacity"
+              href="#"
+              >View Complete Taxonomy</a
+            >
+          </div>
+          <div
+            class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-auto md:h-[600px]"
+          >
+            <!-- Plants Card -->
+            <div
+              class="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-xl bg-surface-container"
+            >
+              <img
+                alt="Plants"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="Close up of lush forest ferns and moss"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpMS0KDxV8nZZIeWCXxlm94luTwXUXbahJ8rWk-fo7Lrxm7jrKsiwp9X-od_s5KfPXl9RobpRNDOJU6IYi-5igO0CBAq3mddkV9j6KyvudYlBdW2BklD4pWU3eO7qEp2lzZ140ykMW14Aa6-r5csvFHoGSnQb6aVGPNkzblicldn095OnuGoJga5DyHQEPu6kVihcViHVhjo1r-pvfAYoryT7idOfTe6HcU0DVyYrR8_y-0ISZ6Ln6cKmn_giWvxOjyighg3qpkb8"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-on-surface/20 to-transparent"
+              ></div>
+              <div class="absolute bottom-8 left-8 text-on-primary">
+                <h3 class="font-headline text-3xl font-bold mb-2">Flora</h3>
+                <p class="text-on-primary/80 max-w-xs">
+                  From ancient bryophytes to complex angiosperms, explore the
+                  foundation of ecosystems.
+                </p>
+                <span
+                  class="mt-4 inline-flex items-center gap-2 font-label text-sm font-bold uppercase tracking-wider group-hover:gap-4 transition-all"
+                  >Explore Plants
+                  <span class="material-symbols-outlined"
+                    >arrow_forward</span
+                  ></span
+                >
+              </div>
+            </div>
+            <!-- Birds Card -->
+            <div
+              class="md:col-span-2 md:row-span-1 group relative overflow-hidden rounded-xl bg-surface-container"
+            >
+              <img
+                alt="Birds"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="Vibrant colorful bird perched on a branch"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBscaALS9nivWU_Fp5CMHlpTQdMcx4mXlxtT5tDAhmzyEjZ9iTTpXEIAv2hEwvWgkQIuAbvk8UMcuvf2g9o1-_7v2NbNtHXTqFbB9i3jNhBKI3-JNevJGzL0oVc2viwdIXpK5xlMDSTIncE2Kg9YiLBahGvrhaLPpLcANI89UAoKpeuOxNjuNf4o8YazYZnzh9hK2kI9VT-MCNAEVQq50tYm3vwjrq_-yrPOzMu64SH8Xa0lim5c9MJaY-Nl-HgvfuszzFN9toVNqA"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-on-surface/20 to-transparent"
+              ></div>
+              <div class="absolute bottom-6 left-6 text-on-primary">
+                <h3 class="font-headline text-2xl font-bold">Aves</h3>
+                <span
+                  class="mt-2 inline-flex items-center gap-2 font-label text-xs font-bold uppercase tracking-wider"
+                  >Catalogue Birds
+                  <span class="material-symbols-outlined"
+                    >arrow_forward</span
+                  ></span
+                >
+              </div>
+            </div>
+            <!-- Fungi Card -->
+            <div
+              class="md:col-span-1 md:row-span-1 group relative overflow-hidden rounded-xl bg-surface-container"
+            >
+              <img
+                alt="Fungi"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="Wild mushrooms growing on a dark forest floor"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIXwC5VKjQY80W9QTqs7R8OudOR1RApwxYR02SWsRYQCXv9TKOSrfnEEOUS9MxMo1VzrE0-nTa0WSNgKwrNUG-ODsB1NFdD1Q7tUgjC7Ji6M2HSNO4R7VuOHkOmBz_6YxhJpLNPdczOC3WaEojkYIJynY7eV6KarUHV4XWN-Q8Ir-U_7CBoC9_fblf0_V0RmZIQC20D5skXFhfMup5asriJAYBP4UvJe8lQtXQyBEHBKddDPtDdi4-gX9-dEl4H6D6UJbk1lj4900"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-on-surface/20 to-transparent"
+              ></div>
+              <div class="absolute bottom-6 left-6 text-on-primary">
+                <h3 class="font-headline text-xl font-bold">Fungi</h3>
+                <span
+                  class="mt-1 inline-flex items-center gap-2 font-label text-[10px] font-bold uppercase tracking-wider"
+                  >Discover
+                  <span class="material-symbols-outlined"
+                    >arrow_forward</span
+                  ></span
+                >
+              </div>
+            </div>
+            <!-- Invertebrates Card -->
+            <div
+              class="md:col-span-1 md:row-span-1 group relative overflow-hidden rounded-xl bg-surface-container"
+            >
+              <img
+                alt="Invertebrates"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                data-alt="Close up of a butterfly wing with detailed patterns"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfW5_2ceWT1avsc46HhsP4crFvhTfFJULvxa3s_YeGXVm4ZwtOoCyqFJVTMgujPS8YRl1D0u6jKqbM3TqakS7WrMWc1u1Vh78idz3iWAJscRIEm6u_CRcpoE-LjWJYXZoAszpCri_dKQdR59GxoWfBt5k7UqA1W94fViiKV1daSi6mPcZj_PgnrkQHjUtDLYWTBy7WX7wlEfkvdH5F0jP9dozA56twfPPnF3yZg5E-m13QrNg24zoTawApWXFuRcW4_1VdJEl6gOc"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-on-surface/20 to-transparent"
+              ></div>
+              <div class="absolute bottom-6 left-6 text-on-primary">
+                <h3 class="font-headline text-xl font-bold">Insects</h3>
+                <span
+                  class="mt-1 inline-flex items-center gap-2 font-label text-[10px] font-bold uppercase tracking-wider"
+                  >Discover
+                  <span class="material-symbols-outlined"
+                    >arrow_forward</span
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Mission Statement: Tonal Layering -->
+      <section class="px-8 py-32 max-w-screen-2xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+          <div class="order-2 md:order-1">
+            <div
+              class="inline-block px-4 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-label text-xs font-bold uppercase tracking-widest mb-6"
+            >
+              The Biological Editorial
+            </div>
+            <h2
+              class="font-headline text-4xl md:text-5xl font-bold text-on-surface mb-8 leading-tight"
+            >
+              Fostering a deeper connection with the biological world.
+            </h2>
+            <div
+              class="space-y-6 text-on-surface-variant text-lg leading-relaxed"
+            >
+              <p>
+                The Living Archive isn't just a database. It's an educational
+                platform built on the belief that precision leads to
+                appreciation. By documenting the minute details of the species
+                around us, we create a record that is both scientifically
+                accurate and aesthetically profound.
+              </p>
+              <p>
+                Our mission is to provide institutional-grade resources to
+                students, researchers, and citizen scientists, ensuring that
+                knowledge of our planet’s biodiversity remains accessible,
+                curated, and beautiful.
+              </p>
+            </div>
+            <div class="mt-12 flex flex-wrap gap-4">
+              <button
+                class="px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-primary/20"
+              >
+                Our Educational Mission
+              </button>
+              <button
+                class="px-8 py-4 bg-surface-container-highest text-on-surface font-bold rounded-xl transition-all duration-300 hover:bg-surface-container-high active:scale-95"
+              >
+                Institutional Access
+              </button>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 grid grid-cols-2 gap-4">
+            <div class="space-y-4">
+              <div class="h-64 rounded-xl bg-surface-container overflow-hidden">
+                <img
+                  alt="Lab Research"
+                  class="w-full h-full object-cover"
+                  data-alt="Microscope in a bright modern laboratory setting"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwASrZeBYkA3SKKbtk35mEBCErsDIITxtMCNMpKvPt0gKJfyGYSpC5MH0QjojXaSxfVbHxYi0aAJSlZ610T-ZEtCgdu6DAUsqmIK-yaXF0S-lXK1zu5hZ6iWVmq8FlnfHjkKBgORn-LxfutDPI4xo9kQVvOs2nTMR7UUXg2igCmRI8oU-Kc3xHX_pvSaynKfYPPay4HudzGY7__J4F8nhruOztfpavsKMRem-7SdJBPF8qen5TE_KEPyZVlzxpSfNPckMxMoZVPXI"
+                />
+              </div>
+              <div
+                class="h-40 rounded-xl bg-primary-container/20 flex flex-col items-center justify-center p-6 text-center"
+              >
+                <span
+                  class="material-symbols-outlined text-primary text-4xl mb-2"
+                  data-icon="school"
+                  >school</span
+                >
+                <p class="font-headline font-bold text-on-primary-container">
+                  Student Resources
+                </p>
+              </div>
+            </div>
+            <div class="space-y-4 pt-12">
+              <div
+                class="h-40 rounded-xl bg-secondary-container/30 flex flex-col items-center justify-center p-6 text-center"
+              >
+                <span
+                  class="material-symbols-outlined text-secondary text-4xl mb-2"
+                  data-icon="biotech"
+                  >biotech</span
+                >
+                <p class="font-headline font-bold text-on-secondary-container">
+                  Research Tools
+                </p>
+              </div>
+              <div class="h-64 rounded-xl bg-surface-container overflow-hidden">
+                <img
+                  alt="Field work"
+                  class="w-full h-full object-cover"
+                  data-alt="Researcher taking notes in a green forest"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNWxvlcVdxRjR_pqcq3CXd-s4K7kEcgB1zjZ13d8AKt06rUlSHqPAjW2LuHlL3HnJZSbhUpLwaEkqqWHeoCi8mlIp6VfTXnwECYiTCoLHLL5L4k12mShD7xX0Y6BuBKNH8q7Ghv-EaOu9feiwUzvNUivlFBk9p_6ratgfIczxHOK3Etjq6GPWL4da2tfvFxkjCtT40Hzj9rDpTqHlEwtwWk8VneGkeoxeSikyQ8JCXX50yKEKc7uvZCus0rZnTXNAEhKm4LR4xqlQ"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Quick Stats: Tonal Shift -->
+      <section class="bg-[#f6f3f2] dark:bg-[#252423] py-20">
+        <div
+          class="max-w-screen-2xl mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-12"
+        >
+          <div class="text-center">
+            <p class="text-5xl font-headline font-extrabold text-primary mb-2">
+              45k+
+            </p>
+            <p
+              class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold"
+            >
+              Total Species
+            </p>
+          </div>
+          <div class="text-center">
+            <p class="text-5xl font-headline font-extrabold text-primary mb-2">
+              120
+            </p>
+            <p
+              class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold"
+            >
+              Collaborators
+            </p>
+          </div>
+          <div class="text-center">
+            <p class="text-5xl font-headline font-extrabold text-primary mb-2">
+              850k
+            </p>
+            <p
+              class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold"
+            >
+              Archive Images
+            </p>
+          </div>
+          <div class="text-center">
+            <p class="text-5xl font-headline font-extrabold text-primary mb-2">
+              24/7
+            </p>
+            <p
+              class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold"
+            >
+              Open Access
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full mt-24 bg-[#f6f3f2] dark:bg-[#1c1b1b]">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-screen-2xl mx-auto"
+      >
+        <div class="mb-8 md:mb-0">
+          <div
+            class="font-manrope font-bold text-2xl text-[#1c1b1b] dark:text-[#fcf9f8] mb-2"
+          >
+            The Biological Editorial
+          </div>
+          <p
+            class="font-inter text-xs uppercase tracking-widest text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60"
+          >
+            © 2024 The Biological Editorial. Dedicated to the Living Archive of
+            Earth.
+          </p>
+        </div>
+        <div
+          class="flex flex-wrap justify-center gap-8 font-inter text-xs uppercase tracking-widest"
+        >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Institutional Access</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Research Grants</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Ethical Guidelines</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Privacy Policy</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

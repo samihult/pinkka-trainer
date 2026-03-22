@@ -1,0 +1,496 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Biological Editorial | Learning Mode: Sanikkaiset</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary": "#ffffff",
+              "on-background": "#1c1b1b",
+              "surface-container-highest": "#e5e2e1",
+              "inverse-primary": "#9fd75f",
+              tertiary: "#6b5f00",
+              "on-tertiary-fixed": "#201c00",
+              "surface-variant": "#e5e2e1",
+              "secondary-fixed-dim": "#afd0a1",
+              "on-primary-container": "#2d4d00",
+              "on-primary-fixed-variant": "#2e4f00",
+              "surface-container-low": "#f6f3f2",
+              "on-secondary-fixed": "#062104",
+              "surface-bright": "#fcf9f8",
+              "on-secondary-fixed-variant": "#324e2a",
+              "on-primary": "#ffffff",
+              "outline-variant": "#c2c9b4",
+              surface: "#fcf9f8",
+              "primary-container": "#8cc24d",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#d8c860",
+              "secondary-fixed": "#caecbc",
+              "secondary-container": "#caecbc",
+              "on-error": "#ffffff",
+              "on-secondary-container": "#4f6c45",
+              "tertiary-container": "#c4b44f",
+              "surface-tint": "#3f6a00",
+              "on-primary-fixed": "#0f2000",
+              "error-container": "#ffdad6",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#f0eded",
+              "on-tertiary-fixed-variant": "#504700",
+              "tertiary-fixed": "#f6e479",
+              "primary-fixed": "#baf478",
+              "on-surface": "#1c1b1b",
+              "inverse-on-surface": "#f3f0ef",
+              error: "#ba1a1a",
+              "inverse-surface": "#313030",
+              outline: "#737968",
+              "surface-dim": "#dcd9d9",
+              "on-surface-variant": "#434939",
+              "on-error-container": "#93000a",
+              "primary-fixed-dim": "#9fd75f",
+              primary: "#3f6a00",
+              background: "#fcf9f8",
+              secondary: "#496640",
+              "surface-container-high": "#eae7e7",
+              "on-tertiary-container": "#4e4500",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        vertical-align: middle;
+      }
+      .glass-effect {
+        background: rgba(229, 226, 225, 0.6);
+        backdrop-filter: blur(24px);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #c2c9b4;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container overflow-hidden h-screen flex flex-col"
+  >
+    <!-- Top Navigation Shell -->
+    <nav
+      class="bg-[#fcf9f8] dark:bg-[#1c1b1b] flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto z-50"
+    >
+      <div
+        class="text-2xl font-extrabold text-[#3f6a00] dark:text-[#8cc24d] tracking-tighter font-headline"
+      >
+        The Biological Editorial
+      </div>
+      <div class="hidden md:flex gap-8 items-center">
+        <a
+          class="font-headline font-bold tracking-tight text-[#3f6a00] dark:text-[#8cc24d] border-b-2 border-[#3f6a00] dark:border-[#8cc24d] pb-1 transition-colors duration-200"
+          href="#"
+          >My Progress</a
+        >
+        <a
+          class="font-headline font-bold tracking-tight text-[#1c1b1b] dark:text-[#e5e2e1] opacity-70 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors duration-200"
+          href="#"
+          >Groups</a
+        >
+        <a
+          class="font-headline font-bold tracking-tight text-[#1c1b1b] dark:text-[#e5e2e1] opacity-70 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors duration-200"
+          href="#"
+          >Resources</a
+        >
+        <button
+          class="material-symbols-outlined text-[#1c1b1b] dark:text-[#e5e2e1] opacity-70 hover:text-[#3f6a00] active:scale-95 duration-150"
+          data-icon="account_circle"
+        >
+          account_circle
+        </button>
+      </div>
+    </nav>
+    <!-- Main Learning Interface -->
+    <main class="flex-grow flex relative overflow-hidden">
+      <!-- Left Side: Control Panel (Floating Overlay Style) -->
+      <div
+        class="absolute left-8 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4"
+      >
+        <div
+          class="glass-effect p-2 rounded-xl flex flex-col gap-2 shadow-sm border border-outline-variant/10"
+        >
+          <button
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary text-on-primary shadow-lg transition-all hover:scale-105 active:scale-95"
+          >
+            <span
+              class="material-symbols-outlined"
+              data-icon="image"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+              >image</span
+            >
+          </button>
+          <button
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-surface-container-highest text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all"
+          >
+            <span class="material-symbols-outlined" data-icon="info">info</span>
+          </button>
+          <button
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-surface-container-highest text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all"
+          >
+            <span class="material-symbols-outlined" data-icon="lightbulb"
+              >lightbulb</span
+            >
+          </button>
+        </div>
+        <button
+          class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container text-on-surface shadow-sm border border-outline-variant/10 hover:bg-surface-container-high transition-all"
+        >
+          <span class="material-symbols-outlined" data-icon="fullscreen"
+            >fullscreen</span
+          >
+        </button>
+      </div>
+      <!-- Center: Specimen Canvas -->
+      <div class="flex-grow flex items-center justify-center p-8 bg-surface">
+        <div class="relative w-full h-full max-w-5xl group">
+          <!-- Main Specimen Image Card -->
+          <div
+            class="w-full h-full rounded-xl overflow-hidden bg-surface-container-low shadow-[0_48px_48px_-12px_rgba(28,27,27,0.04)] transition-all duration-500"
+          >
+            <img
+              alt="Pteridium aquilinum specimen"
+              class="w-full h-full object-cover"
+              data-alt="Detailed macro shot of a green fern leaf"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvI_YxShXsu7KYjJpViYLk54xr0q3I2HbIXZwdvmYQQy8jMj1o_YD36Tv2cXzkttV5eWKwtEt7kB1rLm02g9phoassEamGkOPSx3lNhC3rD-iSpYdEGtywyGx4VI4quySRw3FTv_QYWSQ1GxnyX3X3C3q4yxk6kZDB5-7-9HTcHASzvOsmm4XKIAofb_gH6S9S31u1VTKW-5D5YfV6OQKC2MHomd5PeUnhJF_Fp2NU7NwdZaZJOvtQHT62PSVazr8-q6z8kqqOptA"
+            />
+            <!-- Hints Overlay (Simulated) -->
+            <div class="absolute inset-0 bg-black/5 pointer-events-none"></div>
+            <!-- Specimen Annotation (Hint Example) -->
+            <div
+              class="absolute top-1/4 right-1/3 group-hover:opacity-100 opacity-0 transition-opacity duration-300"
+            >
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-3 h-3 rounded-full bg-primary-container border-2 border-white animate-pulse"
+                ></div>
+                <div
+                  class="glass-effect px-3 py-1.5 rounded-lg border border-white/40"
+                >
+                  <span
+                    class="text-xs font-label uppercase tracking-widest text-on-surface"
+                    >Sorus Pattern</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Species Title Editorial Floating -->
+          <div class="absolute -bottom-6 -left-6 z-10 max-w-md">
+            <div
+              class="bg-surface-container-lowest p-8 shadow-2xl rounded-xl border-l-4 border-primary"
+            >
+              <span
+                class="text-xs font-label uppercase tracking-[0.2em] text-primary font-semibold mb-2 block"
+                >Specimen 042 // Sanikkaiset</span
+              >
+              <h1
+                class="text-4xl font-headline font-extrabold text-on-surface tracking-tighter leading-none mb-2"
+              >
+                Pteridium aquilinum
+              </h1>
+              <p
+                class="text-on-surface-variant font-body leading-relaxed text-sm italic opacity-80"
+              >
+                Commonly known as Eagle Fern or Bracken.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right Side: Scientific Details Panel -->
+      <aside
+        class="w-96 bg-surface-container-low border-l border-outline-variant/15 flex flex-col z-30 transform transition-transform duration-300"
+      >
+        <div class="p-8 h-full overflow-y-auto custom-scrollbar">
+          <div class="flex justify-between items-center mb-10">
+            <h2
+              class="text-sm font-label uppercase tracking-widest font-bold text-on-surface-variant"
+            >
+              Taxonomy &amp; Data
+            </h2>
+            <button
+              class="material-symbols-outlined text-outline hover:text-primary transition-colors"
+              data-icon="dock_to_right"
+            >
+              dock_to_right
+            </button>
+          </div>
+          <div class="space-y-10">
+            <!-- Classification Section -->
+            <section>
+              <h3
+                class="text-xs font-label uppercase tracking-[0.1em] text-primary font-bold mb-4"
+              >
+                Morphology
+              </h3>
+              <div class="space-y-4">
+                <div
+                  class="p-4 rounded-xl bg-surface-container border border-outline-variant/10"
+                >
+                  <span
+                    class="text-[10px] font-label uppercase text-on-surface-variant/60 block mb-1"
+                    >Frond Structure</span
+                  >
+                  <p class="text-sm text-on-surface leading-snug">
+                    Large, highly divided fronds, often reaching 1-3 meters in
+                    length. Tripinnate architecture.
+                  </p>
+                </div>
+                <div
+                  class="p-4 rounded-xl bg-surface-container border border-outline-variant/10"
+                >
+                  <span
+                    class="text-[10px] font-label uppercase text-on-surface-variant/60 block mb-1"
+                    >Reproduction</span
+                  >
+                  <p class="text-sm text-on-surface leading-snug">
+                    Spores produced in marginal sori, protected by a continuous
+                    false indusium.
+                  </p>
+                </div>
+              </div>
+            </section>
+            <!-- Scientific Accuracy / Habitat Section -->
+            <section>
+              <h3
+                class="text-xs font-label uppercase tracking-[0.1em] text-primary font-bold mb-4"
+              >
+                Ecological Niche
+              </h3>
+              <div class="grid grid-cols-2 gap-3">
+                <div
+                  class="flex flex-col items-center p-4 rounded-xl bg-secondary-container/30 border border-secondary-container/50"
+                >
+                  <span
+                    class="material-symbols-outlined text-secondary mb-2"
+                    data-icon="light_mode"
+                    >light_mode</span
+                  >
+                  <span
+                    class="text-[10px] font-label uppercase text-secondary font-bold"
+                    >Full Sun</span
+                  >
+                </div>
+                <div
+                  class="flex flex-col items-center p-4 rounded-xl bg-secondary-container/30 border border-secondary-container/50"
+                >
+                  <span
+                    class="material-symbols-outlined text-secondary mb-2"
+                    data-icon="water_drop"
+                    >water_drop</span
+                  >
+                  <span
+                    class="text-[10px] font-label uppercase text-secondary font-bold"
+                    >Well Drained</span
+                  >
+                </div>
+              </div>
+              <p class="mt-4 text-sm text-on-surface-variant leading-relaxed">
+                A cosmopolitan species occurring in temperate and subtropical
+                regions of both hemispheres. Often colonizes disturbed sites and
+                woodland edges.
+              </p>
+            </section>
+            <!-- Progress/Memory Hook -->
+            <section
+              class="bg-primary/5 p-6 rounded-2xl border border-primary/10"
+            >
+              <div class="flex items-center gap-3 mb-3">
+                <span
+                  class="material-symbols-outlined text-primary"
+                  data-icon="psychology"
+                  >psychology</span
+                >
+                <span
+                  class="text-xs font-bold font-headline text-primary uppercase tracking-tight"
+                  >Memory Anchor</span
+                >
+              </div>
+              <p class="text-sm text-on-primary-container italic">
+                "Bracken has 'wings' - look for the eagle-like shape of its
+                fronds when viewed from above."
+              </p>
+            </section>
+          </div>
+        </div>
+      </aside>
+    </main>
+    <!-- Bottom Navigation Shell -->
+    <footer
+      class="bg-surface-container-low w-full py-6 px-8 z-40 border-t border-outline-variant/10"
+    >
+      <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8"
+      >
+        <!-- Navigation Controls -->
+        <div class="flex items-center gap-3">
+          <button
+            class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-all"
+          >
+            <span class="material-symbols-outlined" data-icon="arrow_back"
+              >arrow_back</span
+            >
+          </button>
+          <div
+            class="px-6 py-2 rounded-full bg-surface-container-highest text-sm font-label font-bold text-on-surface"
+          >
+            14 / 288
+          </div>
+          <button
+            class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-on-primary shadow-md hover:scale-105 transition-all"
+          >
+            <span class="material-symbols-outlined" data-icon="arrow_forward"
+              >arrow_forward</span
+            >
+          </button>
+        </div>
+        <!-- Thumbnail Reel (Jump To) -->
+        <div
+          class="flex-grow flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 mask-linear-gradient"
+        >
+          <div
+            class="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden border-2 border-primary-container ring-2 ring-primary ring-offset-2 ring-offset-surface-container-low transition-all"
+          >
+            <img
+              alt="Specimen thumbnail"
+              class="w-full h-full object-cover"
+              data-alt="Small thumbnail of fern frond"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZrHG6hec5YLivU5wgoj6V7siG5tfnIAlY1gWjHCBAF9lTD-gzgx_HLea2qEznI8fZI8Xkz7V-gKj3he0sxiMfZUWVrJ67pu1pZKngRBEWChjLvwniVtvtF_DfGiONQAlge3cdKZdgbeJ3Y1hhiRCN_v44shOOKzBky4mRTb9RiaqGsB0h6VlWcqos6oejRj-kaqqeUGVnpvPuc8PBbBLiRHCI2okGBecfcAmEimIEhUC4SY4EFqYLN4qbORSMldk5IQjaldDu6nQ"
+            />
+          </div>
+          <!-- Repeat Thumbnails -->
+          <div
+            class="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-outline-variant/30 opacity-60 hover:opacity-100 transition-all cursor-pointer"
+          >
+            <img
+              alt="Specimen thumbnail"
+              class="w-full h-full object-cover"
+              data-alt="Mountain flora closeup"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvXxdCy9lGdoGqxRhWrHy1q6Dt4M5Pbwt5ku930B6Vpxe6SBcJbKnBgBYGPjdgMpZJZvMi4GubTAXdnElALQeIBtU030gPnC8iW6BmRlnUsKJqMW0r3E8D5Fya0doKMgSa5RsfP0W4GMCYKo-1CRrxXF0ZqodNhTSNENslfzlUJHerriW43G-19QuDJQ9aM8D9ucZLdCpFnpbIoKeRBSL5TNeI8N0R2_EDejEG8vnLTB2IXHBzTwoJJG5cYDt5Z9gvBxAlrlQrIUA"
+            />
+          </div>
+          <div
+            class="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-outline-variant/30 opacity-60 hover:opacity-100 transition-all cursor-pointer"
+          >
+            <img
+              alt="Specimen thumbnail"
+              class="w-full h-full object-cover"
+              data-alt="Green forest moss"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1eVtG9svmRBBR0f2aOhCBaE33Szv8RSJcuZafCgloZY0vd4ZD6nLv7UgFysswDGNmyW-c1dPVaeuvjgYrvL96M1RtJ6TF3s1sd4WPiVJHSrvNE48Q_ixWIsZRRXxZA5NtL0P0UJzkN4Ioha4B-kKW0vBPDYV78CHBZTaM2Zau7cG01RZEnBLZhEatihiYbz8HeINr0iUDMoQnd9pcnWx3DHG18zvFgzRPnpD-9L591075ZGCpChOBVhuMQhRfQJTm7TBhR_FWbt0"
+            />
+          </div>
+          <div
+            class="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-outline-variant/30 opacity-60 hover:opacity-100 transition-all cursor-pointer"
+          >
+            <img
+              alt="Specimen thumbnail"
+              class="w-full h-full object-cover"
+              data-alt="Tree leaves silhouette"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa0eNK6Pe_98sFweSyaK14o1IlirgGQbjK7xYfyMB0ihL5Ct5VydO3DJz6qhWp6p6WI7ouqrr36tWiB-FjTYW1djaztK2h_LoiZnSm_F2uTHRn70Hvd-KmwMprLPSfwDhuEcjTNhv55wxjY4toGJgXJ6pVStWpzN_lnw66w1PxP3zTGgLgTRwb2RP9SjR9p_4zTNUEXk_f4Mcr_OPqOxIFRxmqwSKi1Hf0Woa8UuI0dYYJ6-aiTPeOWzwgYzW75THsPfs5qvedEug"
+            />
+          </div>
+          <div
+            class="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-outline-variant/30 opacity-60 hover:opacity-100 transition-all cursor-pointer"
+          >
+            <img
+              alt="Specimen thumbnail"
+              class="w-full h-full object-cover"
+              data-alt="Nature macro texture"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHxXdL7YeQS23HDtjVTah7pKRJ_F40VyzABSmb8g2jZFfPZwRXQxYKmIirPvmdSi56ewW6t36quqKtPSbMfuixi7nwHt6o304IcaK8tX32uTywVL0hv9p4Zu2BBkIl6VMTz4GXP0xBLANKCoHAnJwhF9kLa6tI81ZGDKmnXdkNxoF8OZlugzb3uFjATwxk5YdTFXso_BlFXNzJwBjc__rWtxD3lIZmd-WokWad44dN027UrvCJeiSnPAgCXXCD6uG30NCcfPox_4c"
+            />
+          </div>
+          <div
+            class="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-outline-variant/30 opacity-60 hover:opacity-100 transition-all cursor-pointer"
+          >
+            <img
+              alt="Specimen thumbnail"
+              class="w-full h-full object-cover"
+              data-alt="Dark forest canopy"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRxhIzT1YHI6HnSUpRkoulThiM0sdaxKajkE5if28oI8hPaIX2HyOpPibBKb4JmzuzvtZzLKwj1kEHvwOic9FUt7HXVlE4EOIieS0-pkUXhEJf-tNrFc4V3E249Evsweivy4g_vGq4jEvFtCvKAimXH6wFPBhrOm3UclbGRFjfzAia8SzIEwZ3dkh8vffoGJrgqbPe-J_WIOxJt-Blx6S_GNAKfZtPciaABPR2-dvyu0gkOQOwtw651ByiXo4fQaOQYgQxSuhVtjc"
+            />
+          </div>
+          <div
+            class="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden border border-outline-variant/30 opacity-60 hover:opacity-100 transition-all cursor-pointer"
+          >
+            <img
+              alt="Specimen thumbnail"
+              class="w-full h-full object-cover"
+              data-alt="Pine forest floor"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHMEh1nRGJczadfTY6SH5WjUXLzxZ93moS8p96ca791oXgRuDnOxOplLrpit60sovJCf8Kw2EWlVfMACJ6SJbBNNaXAbrNzsW4mdA5npMHXpceX0rsyD-zWG7mHIOflujlitOM_yt5Wt2BaLnDIfDIFtcZ8uBC3uLxwjqgc_sZ2d-IIA5VXQoKDg6iznpHU9f0GMcgGQ3fVLxWDhjlOnG__uuUBM2ndkfF63oeS0bYrsnQm4rQdD6AUGJaZaaJVWX2ab-oKeEyoBA"
+            />
+          </div>
+        </div>
+        <!-- Stack Options -->
+        <div class="flex items-center gap-4">
+          <button
+            class="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container text-on-surface-variant hover:text-primary transition-all"
+          >
+            <span class="material-symbols-outlined" data-icon="settings"
+              >settings</span
+            >
+            <span class="text-xs font-bold font-headline uppercase"
+              >Stack Options</span
+            >
+          </button>
+          <div class="h-8 w-[1px] bg-outline-variant/30"></div>
+          <div class="text-right">
+            <div
+              class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant opacity-60"
+            >
+              Session Progress
+            </div>
+            <div
+              class="w-32 h-1.5 bg-surface-container-highest rounded-full mt-1 overflow-hidden"
+            >
+              <div class="h-full bg-primary-container w-[45%]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

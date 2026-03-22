@@ -1,0 +1,532 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Living Archive | Species Profile</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#f6e479",
+              secondary: "#496640",
+              "on-surface": "#1c1b1b",
+              "surface-variant": "#e5e2e1",
+              surface: "#fcf9f8",
+              primary: "#3f6a00",
+              "on-secondary-fixed-variant": "#324e2a",
+              error: "#ba1a1a",
+              "on-secondary-fixed": "#062104",
+              "on-primary": "#ffffff",
+              "primary-fixed-dim": "#9fd75f",
+              tertiary: "#6b5f00",
+              "surface-bright": "#fcf9f8",
+              "secondary-fixed-dim": "#afd0a1",
+              "secondary-fixed": "#caecbc",
+              "surface-container-highest": "#e5e2e1",
+              outline: "#737968",
+              "error-container": "#ffdad6",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#d8c860",
+              "surface-tint": "#3f6a00",
+              "surface-dim": "#dcd9d9",
+              "on-primary-container": "#2d4d00",
+              "on-primary-fixed": "#0f2000",
+              "on-tertiary-fixed": "#201c00",
+              background: "#fcf9f8",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#313030",
+              "on-tertiary-container": "#4e4500",
+              "primary-fixed": "#baf478",
+              "on-background": "#1c1b1b",
+              "primary-container": "#8cc24d",
+              "inverse-on-surface": "#f3f0ef",
+              "on-primary-fixed-variant": "#2e4f00",
+              "surface-container-high": "#eae7e7",
+              "surface-container": "#f0eded",
+              "on-error": "#ffffff",
+              "on-error-container": "#93000a",
+              "outline-variant": "#c2c9b4",
+              "secondary-container": "#caecbc",
+              "on-surface-variant": "#434939",
+              "tertiary-container": "#c4b44f",
+              "on-secondary-container": "#4f6c45",
+              "inverse-primary": "#9fd75f",
+              "surface-container-low": "#f6f3f2",
+              "on-tertiary-fixed-variant": "#504700",
+              "surface-container-lowest": "#ffffff",
+            },
+            fontFamily: {
+              headline: ["Manrope", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+              label: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .editorial-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-surface text-on-surface font-body selection:bg-primary-container"
+  >
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#fcf9f8]/60 backdrop-blur-xl">
+      <div
+        class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto"
+      >
+        <div
+          class="text-2xl font-bold tracking-tight text-[#3f6a00] font-manrope"
+        >
+          The Living Archive
+        </div>
+        <div
+          class="hidden md:flex items-center gap-8 font-manrope text-sm tracking-wide font-semibold"
+        >
+          <a class="text-[#3f6a00] border-b-2 border-[#3f6a00] pb-1" href="#"
+            >Explore</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300"
+            href="#"
+            >Taxonomy</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300"
+            href="#"
+            >Conservation</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300"
+            href="#"
+            >About</a
+          >
+        </div>
+        <div class="flex items-center gap-4">
+          <button class="active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-[#3f6a00]">search</span>
+          </button>
+          <button class="active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-[#3f6a00]"
+              >account_circle</span
+            >
+          </button>
+        </div>
+      </div>
+    </nav>
+    <main class="pt-24 pb-12">
+      <!-- Hero Section: Asymmetric Editorial Layout -->
+      <section class="max-w-screen-2xl mx-auto px-8 mb-20">
+        <div class="editorial-grid">
+          <div class="col-span-12 lg:col-span-7 relative">
+            <div
+              class="rounded-xl overflow-hidden aspect-[16/10] bg-surface-container-low shadow-sm"
+            >
+              <img
+                alt="Majestic African Lion"
+                class="w-full h-full object-cover"
+                data-alt="Close up portrait of a majestic African Lion"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGXKKFz-3ww0h1OnVuRXxdeuEBTKX7K1zbcmISTG676lc53_tYm3J9dHnwGJrJBqmLlj2xUqPUie8UJK35uF0OzZMUog6cNjiyi-aEVKEB4Tuxpn0He0esoSb45ofl9bBwdf5KCMkZNrCZ9SNJy0OC1ZW2CCoshP_3pAUKgWmkL_sQjDqzpy63Ck2wLFT6WFRseQ_RzXM4GsDX_Kg5XK7oRCqN0tz5XUJ6vZFTSS-eKhzzTBJ_K8_p1rM4iiTSWXPpbKrHwFWJ3kY"
+              />
+            </div>
+            <!-- Specimen Floating Badge -->
+            <div
+              class="absolute -bottom-6 -right-6 bg-surface-container-highest p-6 rounded-xl shadow-xl backdrop-blur-md border-white/20 border hidden md:block"
+            >
+              <div
+                class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1"
+              >
+                Status
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                <span class="font-headline font-bold text-lg text-on-surface"
+                  >Vulnerable</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 lg:col-span-5 flex flex-col justify-end pb-8">
+            <span
+              class="text-xs font-label uppercase tracking-[0.2em] text-primary font-bold mb-4"
+              >Mammalia • Felidae • Panthera</span
+            >
+            <h1
+              class="text-6xl md:text-8xl font-headline font-extrabold text-on-surface leading-[0.9] tracking-tighter mb-6"
+            >
+              Panthera leo
+            </h1>
+            <p
+              class="text-2xl font-headline font-medium text-on-surface-variant italic mb-8"
+            >
+              African Lion
+            </p>
+            <div class="flex gap-4">
+              <button
+                class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl font-headline font-bold text-sm tracking-wide transition-all hover:scale-[1.02]"
+              >
+                Cite Specimen
+              </button>
+              <button
+                class="bg-surface-container-highest text-on-surface px-8 py-4 rounded-xl font-headline font-bold text-sm tracking-wide transition-all hover:bg-surface-dim"
+              >
+                Add to Archive
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Taxonomy & Stats Grid (Bento Style) -->
+      <section class="bg-surface-container-low py-20">
+        <div class="max-w-screen-2xl mx-auto px-8">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div
+              class="md:col-span-2 bg-surface-container-lowest p-10 rounded-xl"
+            >
+              <h2
+                class="font-headline text-2xl font-bold mb-6 flex items-center gap-3"
+              >
+                <span class="material-symbols-outlined text-primary"
+                  >analytics</span
+                >
+                Morphology
+              </h2>
+              <div class="grid grid-cols-2 gap-8">
+                <div>
+                  <div
+                    class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1"
+                  >
+                    Adult Weight
+                  </div>
+                  <div class="text-3xl font-headline font-bold">
+                    150 - 250
+                    <span class="text-sm font-normal text-on-surface-variant"
+                      >kg</span
+                    >
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1"
+                  >
+                    Body Length
+                  </div>
+                  <div class="text-3xl font-headline font-bold">
+                    1.7 - 2.5
+                    <span class="text-sm font-normal text-on-surface-variant"
+                      >m</span
+                    >
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1"
+                  >
+                    Life Expectancy
+                  </div>
+                  <div class="text-3xl font-headline font-bold">
+                    10 - 14
+                    <span class="text-sm font-normal text-on-surface-variant"
+                      >years</span
+                    >
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1"
+                  >
+                    Speed
+                  </div>
+                  <div class="text-3xl font-headline font-bold">
+                    80
+                    <span class="text-sm font-normal text-on-surface-variant"
+                      >km/h</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-surface-container-lowest p-10 rounded-xl">
+              <h2
+                class="font-headline text-2xl font-bold mb-6 flex items-center gap-3"
+              >
+                <span class="material-symbols-outlined text-primary"
+                  >account_tree</span
+                >
+                Phylogeny
+              </h2>
+              <ul class="space-y-4">
+                <li class="flex flex-col">
+                  <span
+                    class="text-[10px] font-label uppercase text-on-surface-variant"
+                    >Class</span
+                  >
+                  <span class="font-medium">Mammalia</span>
+                </li>
+                <li class="flex flex-col">
+                  <span
+                    class="text-[10px] font-label uppercase text-on-surface-variant"
+                    >Order</span
+                  >
+                  <span class="font-medium">Carnivora</span>
+                </li>
+                <li class="flex flex-col">
+                  <span
+                    class="text-[10px] font-label uppercase text-on-surface-variant"
+                    >Family</span
+                  >
+                  <span class="font-medium">Felidae</span>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="bg-primary text-on-primary p-10 rounded-xl flex flex-col justify-between"
+            >
+              <div>
+                <span class="material-symbols-outlined text-4xl mb-4">eco</span>
+                <h3 class="font-headline text-xl font-bold leading-tight">
+                  Key Habitat: Sub-Saharan Savanna
+                </h3>
+              </div>
+              <p class="text-sm opacity-90 leading-relaxed mt-4">
+                Predominantly found in grasslands and savannas, avoiding dense
+                forests. They are the only truly social felids.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Description & Distribution Map -->
+      <section class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="editorial-grid">
+          <div class="col-span-12 lg:col-span-6">
+            <h2
+              class="text-4xl font-headline font-extrabold mb-10 tracking-tight"
+            >
+              Biological Narrative
+            </h2>
+            <div class="prose prose-on-surface max-w-none">
+              <p
+                class="text-xl font-body leading-relaxed text-on-surface-variant mb-8"
+              >
+                The lion (Panthera leo) is a large cat of the genus Panthera
+                native to Africa and India. It has a muscular, deep-chested
+                body, short, rounded head, round ears, and a hairy tuft at the
+                end of its tail. It is sexually dimorphic; adult male lions are
+                larger than females and have a prominent mane.
+              </p>
+              <p
+                class="text-lg font-body leading-relaxed text-on-surface-variant"
+              >
+                It is a social species, forming groups called prides. A lion
+                pride consists of a few adult males, related females, and cubs.
+                Groups of female lions usually hunt together, preying mostly on
+                large ungulates. The lion is an apex and keystone predator;
+                although some lions scavenge when opportunities occur and have
+                been known to hunt humans, the species typically does not.
+              </p>
+            </div>
+          </div>
+          <div
+            class="col-span-12 lg:col-span-6 bg-surface-container p-8 rounded-xl"
+          >
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="font-headline text-xl font-bold">
+                Distribution Range
+              </h3>
+              <span
+                class="text-xs font-label bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full uppercase tracking-tighter"
+                >Live Data</span
+              >
+            </div>
+            <div
+              class="aspect-square w-full rounded-lg overflow-hidden relative bg-surface-dim"
+            >
+              <img
+                alt="Map Distribution"
+                class="w-full h-full object-cover opacity-80 mix-blend-multiply"
+                data-alt="Stylized map showing lion distribution in Africa"
+                data-location="Africa"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn53C5__KzIlN4qQezzzNBq1Xts-_cZscafBMN2mRrDyHoaDZqsVyJ1-aNmkzZgnCZm977TDXQSVWidpsTbNPO6odVy9LNdfDcPHvKa69XWgkPaZn_48L2z3PKHVamLpF1TrsCxfun1T4y_QAjH8jPy99-EPsx6lCbHBBtqIRFAr_WG1b8fNAl6FMszSXLg49WgNNv8sFYKZ7unKuyaVccjjpPKpvd0mhdouvxT9uM-XacynpTjyqJkGf-V2Sb5R4ivpJFf5KjhMc"
+              />
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div
+                  class="p-6 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 text-center"
+                >
+                  <span
+                    class="material-symbols-outlined text-4xl text-on-surface mb-2"
+                    >map</span
+                  >
+                  <p class="text-sm font-headline font-bold">
+                    Spatial Database View
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Identification Gallery -->
+      <section class="max-w-screen-2xl mx-auto px-8 mb-24">
+        <div class="flex justify-between items-end mb-12">
+          <div>
+            <h2 class="text-4xl font-headline font-extrabold tracking-tight">
+              Field Identification
+            </h2>
+            <p class="text-on-surface-variant mt-2">
+              Visual indicators for subspecies and regional variations.
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <button
+              class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors"
+            >
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button
+              class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors"
+            >
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="group">
+            <div
+              class="aspect-[4/5] rounded-xl overflow-hidden mb-6 bg-surface-container-low transition-transform duration-500 group-hover:scale-[0.98]"
+            >
+              <img
+                alt="Male Lion Profile"
+                class="w-full h-full object-cover"
+                data-alt="Portrait of a male lion with dark mane"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSjOAGTiGyM14l1CGiSF6XanAnY3vj034Lnyysd0OVRG9oScTgOEvNcDgZf1yKUPuoJP7Mi02A6nRyJQa-Gwl_k2l-oLxOAHbpKcotc1fAaXDjwYSERCvgQLYMQLS1enaF_ByPfH6qUOr1iShvNWQQewTsB0F1KReJPIaG2UD6r6bHH_6T4ZB5W2KTVrRzrBMwE7oxFfNmVbW1trEBCO6Txw5hTRJg4vxt9AqFVoskEIkTAyCOI2zkYMRnQU8bKfKXI5qVxq6q4uo"
+              />
+            </div>
+            <h4 class="font-headline font-bold text-lg">
+              Southern African Variant
+            </h4>
+            <p class="text-sm text-on-surface-variant">
+              Characterized by a larger build and darker manes extending across
+              the chest.
+            </p>
+          </div>
+          <div class="group">
+            <div
+              class="aspect-[4/5] rounded-xl overflow-hidden mb-6 bg-surface-container-low transition-transform duration-500 group-hover:scale-[0.98]"
+            >
+              <img
+                alt="Lioness Hunting"
+                class="w-full h-full object-cover"
+                data-alt="Lioness in motion across the grass"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKAKkrVtci4pb4M6UIVhakpZUgON2Z2L2eMqVwVir3likM87fpkVkU2fqdyKeesGgkxK2IHYS5qyE4BxHgVgEF_mNaxHKBq1C3yvB0IQLqk-qdFSTzLixyLZBarQRAsq9D_BOXam6xPDXJq2nW5S588Li4-CAYKTcMMmVhNXs3YqWgB9A7C4bRGabws-eqsURs_zFVJwsk9LToziIui2wf8JOUpfSqk7Q52SdndhCYN0OU4-mpXeGmsN0HSRc04zJhZz3gX1XVFP4"
+              />
+            </div>
+            <h4 class="font-headline font-bold text-lg">
+              East African Specimen
+            </h4>
+            <p class="text-sm text-on-surface-variant">
+              Leaner physiology adapted for the vast plains of the
+              Serengeti-Mara ecosystem.
+            </p>
+          </div>
+          <div class="group">
+            <div
+              class="aspect-[4/5] rounded-xl overflow-hidden mb-6 bg-surface-container-low transition-transform duration-500 group-hover:scale-[0.98]"
+            >
+              <img
+                alt="Lion Cubs"
+                class="w-full h-full object-cover"
+                data-alt="Lion cubs playing in the shade"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIYWHeOO-s8CjlUNFE6cv7fvXTym8-flOzPSx44lRXV3LeylQtHUEh9AAF2c8cogrTAaPYvL3JOpaUcS6GyLrM03GjizdTfmY8EgG3MqlWX8piTWUrLfYcAuzZZcR_K8BZT7KsaS23JTUkVPkVhcusKHwGeMsHqfVJXUxfMHLwIbzYPafZ4zuFL2L0AHtPbbgfHRNB5gJdTEPtpb7b0Gp-VG9qoE13wQwU6lz3uwq5eZGIdZov-j09cgmTLAFP3Xs_clwP7vCjVOo"
+              />
+            </div>
+            <h4 class="font-headline font-bold text-lg">Juvenile Morphology</h4>
+            <p class="text-sm text-on-surface-variant">
+              Cubs feature rosette-like spots on their tawny coats for
+              camouflage.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full mt-24 bg-[#f6f3f2] dark:bg-[#1c1b1b]">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-screen-2xl mx-auto"
+      >
+        <div class="mb-8 md:mb-0">
+          <div
+            class="font-manrope font-bold text-[#1c1b1b] dark:text-[#fcf9f8] text-xl mb-4"
+          >
+            The Biological Editorial
+          </div>
+          <p
+            class="font-inter text-xs uppercase tracking-widest text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60"
+          >
+            © 2024 The Biological Editorial. Dedicated to the Living Archive of
+            Earth.
+          </p>
+        </div>
+        <div
+          class="flex flex-wrap justify-center gap-8 font-inter text-xs uppercase tracking-widest"
+        >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Institutional Access</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Research Grants</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Ethical Guidelines</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Privacy Policy</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

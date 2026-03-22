@@ -21,6 +21,10 @@ Reusable UI building blocks for app pages.
   line before empty/non-empty checks. Empty-text mode hides the text box/placeholder, keeps arrow starts at the exact
   anchor point, and shows a square anchor handle plus add-arrow and "T" edit handles.
 - `ui/`: Shared shadcn/ui primitives and micro-components (for example keyboard shortcut hints).
+- `verdant-scholar/`: Storybook-first design system draft modeled from the Stitch export for "The Living Archive". It
+  contains scoped editorial tokens plus atom/molecule/organism components for all designed layouts and is intentionally
+  not wired into the production app yet. The backlog of currently used but undesigned production components remains
+  documented in `verdant-scholar/README.md`.
 - Route-level reusable pieces such as navigation (Varjopinkka brand icon via Lucide), protected route wrapper, and
   management cards. This also includes `select-from-list-dialog.tsx`, a generic single-select dialog whose confirm
   action now supports async handlers and shows a pending state while long-running actions complete.

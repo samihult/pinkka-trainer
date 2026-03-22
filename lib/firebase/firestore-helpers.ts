@@ -1117,7 +1117,7 @@ async function mapPinkkaImageAssetsToEntityImages(params: {
     const filename =
       getImageFilenameFromUrl(sourceUrl) ?? `${pinkkaImageId}.jpg`;
 
-    let storedUrl = sourceUrl;
+    let storedUrl: string | null = sourceUrl;
 
     if (resolveStoredUrls) {
       storedUrl = await getStoredPinkkaImageDownloadUrl({

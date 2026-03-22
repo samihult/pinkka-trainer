@@ -1,0 +1,642 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#f6e479",
+              secondary: "#496640",
+              "on-surface": "#1c1b1b",
+              "surface-variant": "#e5e2e1",
+              surface: "#fcf9f8",
+              primary: "#3f6a00",
+              "on-secondary-fixed-variant": "#324e2a",
+              error: "#ba1a1a",
+              "on-secondary-fixed": "#062104",
+              "on-primary": "#ffffff",
+              "primary-fixed-dim": "#9fd75f",
+              tertiary: "#6b5f00",
+              "surface-bright": "#fcf9f8",
+              "secondary-fixed-dim": "#afd0a1",
+              "secondary-fixed": "#caecbc",
+              "surface-container-highest": "#e5e2e1",
+              outline: "#737968",
+              "error-container": "#ffdad6",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#d8c860",
+              "surface-tint": "#3f6a00",
+              "surface-dim": "#dcd9d9",
+              "on-primary-container": "#2d4d00",
+              "on-primary-fixed": "#0f2000",
+              "on-tertiary-fixed": "#201c00",
+              background: "#fcf9f8",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#313030",
+              "on-tertiary-container": "#4e4500",
+              "primary-fixed": "#baf478",
+              "on-background": "#1c1b1b",
+              "primary-container": "#8cc24d",
+              "inverse-on-surface": "#f3f0ef",
+              "on-primary-fixed-variant": "#2e4f00",
+              "surface-container-high": "#eae7e7",
+              "surface-container": "#f0eded",
+              "on-error": "#ffffff",
+              "on-error-container": "#93000a",
+              "outline-variant": "#c2c9b4",
+              "secondary-container": "#caecbc",
+              "on-surface-variant": "#434939",
+              "tertiary-container": "#c4b44f",
+              "on-secondary-container": "#4f6c45",
+              "inverse-primary": "#9fd75f",
+              "surface-container-low": "#f6f3f2",
+              "on-tertiary-fixed-variant": "#504700",
+              "surface-container-lowest": "#ffffff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .specimen-card:hover .specimen-image {
+        transform: scale(1.05);
+      }
+      .premium-gradient {
+        background: linear-gradient(135deg, #3f6a00 0%, #8cc24d 100%);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-surface text-on-surface font-body selection:bg-primary-container"
+  >
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#fcf9f8]/60 backdrop-blur-xl">
+      <div
+        class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto"
+      >
+        <div
+          class="text-2xl font-bold tracking-tight text-[#3f6a00] font-manrope"
+        >
+          The Living Archive
+        </div>
+        <div
+          class="hidden md:flex items-center space-x-8 font-manrope text-sm tracking-wide font-semibold"
+        >
+          <a
+            class="text-[#3f6a00] border-b-2 border-[#3f6a00] pb-1 transition-all duration-300"
+            href="#"
+            >Explore</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300"
+            href="#"
+            >Taxonomy</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300"
+            href="#"
+            >Conservation</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300"
+            href="#"
+            >About</a
+          >
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="relative hidden lg:block">
+            <input
+              class="bg-surface-container-highest border-none rounded-full py-2 px-6 w-64 text-sm focus:ring-2 focus:ring-primary/40 transition-all"
+              placeholder="Search the archive..."
+              type="text"
+            />
+            <span
+              class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm"
+              data-icon="search"
+              >search</span
+            >
+          </div>
+          <button class="active:scale-95 transition-transform">
+            <span
+              class="material-symbols-outlined text-primary text-3xl"
+              data-icon="account_circle"
+              >account_circle</span
+            >
+          </button>
+        </div>
+      </div>
+    </nav>
+    <main class="pt-32 pb-24 px-8 max-w-screen-2xl mx-auto">
+      <div class="flex flex-col lg:flex-row gap-12">
+        <!-- Filters Sidebar -->
+        <aside class="w-full lg:w-72 flex-shrink-0">
+          <div class="sticky top-32 space-y-10">
+            <div>
+              <h3 class="font-headline font-bold text-lg mb-6 tracking-tight">
+                Refine Results
+              </h3>
+              <!-- Taxonomy Filter -->
+              <div class="mb-8">
+                <h4
+                  class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4"
+                >
+                  Taxonomy
+                </h4>
+                <div class="space-y-2">
+                  <label class="flex items-center group cursor-pointer">
+                    <input
+                      class="rounded border-outline-variant text-primary focus:ring-primary mr-3 h-4 w-4"
+                      type="checkbox"
+                    />
+                    <span
+                      class="text-sm font-medium group-hover:text-primary transition-colors"
+                      >Mammalia</span
+                    >
+                  </label>
+                  <label class="flex items-center group cursor-pointer">
+                    <input
+                      checked=""
+                      class="rounded border-outline-variant text-primary focus:ring-primary mr-3 h-4 w-4"
+                      type="checkbox"
+                    />
+                    <span
+                      class="text-sm font-medium group-hover:text-primary transition-colors"
+                      >Aves</span
+                    >
+                  </label>
+                  <label class="flex items-center group cursor-pointer">
+                    <input
+                      class="rounded border-outline-variant text-primary focus:ring-primary mr-3 h-4 w-4"
+                      type="checkbox"
+                    />
+                    <span
+                      class="text-sm font-medium group-hover:text-primary transition-colors"
+                      >Reptilia</span
+                    >
+                  </label>
+                  <label class="flex items-center group cursor-pointer">
+                    <input
+                      class="rounded border-outline-variant text-primary focus:ring-primary mr-3 h-4 w-4"
+                      type="checkbox"
+                    />
+                    <span
+                      class="text-sm font-medium group-hover:text-primary transition-colors"
+                      >Amphibia</span
+                    >
+                  </label>
+                </div>
+              </div>
+              <!-- Habitat Filter -->
+              <div class="mb-8">
+                <h4
+                  class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4"
+                >
+                  Habitat
+                </h4>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    class="px-3 py-1.5 rounded-sm bg-secondary-container text-on-secondary-container text-xs font-semibold"
+                  >
+                    Tropical Forest
+                  </button>
+                  <button
+                    class="px-3 py-1.5 rounded-sm bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface text-xs font-semibold"
+                  >
+                    Alpine
+                  </button>
+                  <button
+                    class="px-3 py-1.5 rounded-sm bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface text-xs font-semibold"
+                  >
+                    Coastal
+                  </button>
+                  <button
+                    class="px-3 py-1.5 rounded-sm bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface text-xs font-semibold"
+                  >
+                    Arid
+                  </button>
+                  <button
+                    class="px-3 py-1.5 rounded-sm bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface text-xs font-semibold"
+                  >
+                    Marine
+                  </button>
+                </div>
+              </div>
+              <!-- Conservation Filter -->
+              <div class="mb-8">
+                <h4
+                  class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4"
+                >
+                  Conservation Status
+                </h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center text-sm">
+                    <span class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-error"></span>
+                      Critically Endangered
+                    </span>
+                    <span class="text-on-surface-variant font-mono text-xs"
+                      >12</span
+                    >
+                  </div>
+                  <div class="flex justify-between items-center text-sm">
+                    <span class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                      Vulnerable
+                    </span>
+                    <span class="text-on-surface-variant font-mono text-xs"
+                      >48</span
+                    >
+                  </div>
+                  <div class="flex justify-between items-center text-sm">
+                    <span class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-primary"></span>
+                      Least Concern
+                    </span>
+                    <span class="text-on-surface-variant font-mono text-xs"
+                      >154</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              class="w-full premium-gradient text-white py-3 rounded-xl font-headline font-bold text-sm tracking-wide shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform"
+            >
+              Apply Filter View
+            </button>
+          </div>
+        </aside>
+        <!-- Results Grid -->
+        <div class="flex-1">
+          <header
+            class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6"
+          >
+            <div>
+              <p
+                class="font-label text-xs uppercase tracking-[0.2em] text-primary mb-2"
+              >
+                Showing 1,240 Specimens
+              </p>
+              <h1 class="font-headline font-extrabold text-5xl tracking-tight">
+                The Avian Registry
+              </h1>
+            </div>
+            <div
+              class="flex items-center gap-4 bg-surface-container-low p-1 rounded-lg"
+            >
+              <button class="p-2 rounded bg-surface shadow-sm">
+                <span
+                  class="material-symbols-outlined block text-primary"
+                  data-icon="grid_view"
+                  >grid_view</span
+                >
+              </button>
+              <button
+                class="p-2 rounded hover:bg-surface-container transition-colors"
+              >
+                <span
+                  class="material-symbols-outlined block text-on-surface-variant"
+                  data-icon="list"
+                  >list</span
+                >
+              </button>
+            </div>
+          </header>
+          <!-- Bento-ish Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+            <!-- Specimen Card 1 -->
+            <div class="specimen-card group">
+              <div
+                class="relative overflow-hidden rounded-xl bg-surface-container-low mb-6 aspect-[4/5]"
+              >
+                <img
+                  alt="Exotic bird with vibrant plumage"
+                  class="specimen-image w-full h-full object-cover transition-transform duration-700"
+                  data-alt="Exotic bird with bright green and red feathers"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBdYg6ph7VBO_IXe0jMfCC2cJssf-Y0q62_ibR87RY9bQ06vvvLXfMCpvFlAWwrd_hg4IVMC-t0G1JGevKCUQLKYynTCU6jI3f0vai0MDW7bskjLayE_8YSlETT9NeHMj2vi380_F4A4M8Zjpo5h3Xg-VkFTWCUG02SEIflSrR90xD97HXBjwB9npRZ01AdYv2Oi2NfJWMXGad3bTumbF5Hdkloy8qOZkyR49gVO1Z-kqNwDq7MrGXpcpmfMysFcPWX_ScQGE1VnQ"
+                />
+                <div
+                  class="absolute top-4 right-4 px-3 py-1 bg-surface/80 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-on-surface"
+                >
+                  LC - Least Concern
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div
+                  class="font-label text-[10px] uppercase tracking-widest text-primary font-bold"
+                >
+                  Psittaciformes
+                </div>
+                <h2
+                  class="font-headline font-bold text-2xl group-hover:text-primary transition-colors"
+                >
+                  Scarlet Macaw
+                </h2>
+                <p class="italic text-on-surface-variant font-body text-sm">
+                  Ara macao
+                </p>
+              </div>
+            </div>
+            <!-- Specimen Card 2 -->
+            <div class="specimen-card group">
+              <div
+                class="relative overflow-hidden rounded-xl bg-surface-container-low mb-6 aspect-[4/5]"
+              >
+                <img
+                  alt="Kingfisher on a branch"
+                  class="specimen-image w-full h-full object-cover transition-transform duration-700"
+                  data-alt="Small colorful kingfisher perched on a willow branch"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3HDI4wzkWwZiRwL_H1H_itXWSXcXRxhowa3Okk8nnzjYGC5c3-4m_KhgOIWnqD4qg11NsGAvzEDpqW5jEnPeFr3hHPtxsQ98mqtUF5j0_pgcknP8rPRDCPyKXyYpr6hKC0GwipYwTCewTF7BKvstPbgCJRGEi21GJZ1Rk3a6GmPEsci-Wub5cS2osWh6KPB7OFJJyhKfFHOQitSN_bxPB8ItXJWiPXgdo73B8TrhHKZvRx7kuuMK3JMcmbBAidX4VWfBR3lj-w-Q"
+                />
+                <div
+                  class="absolute top-4 right-4 px-3 py-1 bg-surface/80 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-on-surface"
+                >
+                  LC - Least Concern
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div
+                  class="font-label text-[10px] uppercase tracking-widest text-primary font-bold"
+                >
+                  Coraciiformes
+                </div>
+                <h2
+                  class="font-headline font-bold text-2xl group-hover:text-primary transition-colors"
+                >
+                  Common Kingfisher
+                </h2>
+                <p class="italic text-on-surface-variant font-body text-sm">
+                  Alcedo atthis
+                </p>
+              </div>
+            </div>
+            <!-- Featured/Large Card (Asymmetric) -->
+            <div class="specimen-card group md:col-span-2 xl:col-span-1">
+              <div
+                class="relative overflow-hidden rounded-xl bg-surface-container-low mb-6 aspect-[4/5] xl:aspect-[4/5]"
+              >
+                <img
+                  alt="Harpy eagle close up"
+                  class="specimen-image w-full h-full object-cover transition-transform duration-700"
+                  data-alt="Intense close up of a harpy eagle head"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRK5WTlSAOtO4yBPMvrd8xUSF0YNPc0bVVzXxqYM1sYP4rxxaU3JKHAqpzrmRKCIP-w5w9mN0hqwad3TLZtPfR7XWmrgRFnG5BpkoAIpZr3WebL2xM8YZ0YHCA9UzUq0EnGnk6aPXW05wFgERs7TKcAPS2rIH7A6o4_igJnfxfOi9QAjLdvKIgrXhz0-9KubnzDMNGuHudX2l9FJGP89RoCaEsu9Qe_6qoP3Cf6LVEzjOCTDTDefDP_bIA1lx1w1lBNVatogwDS1M"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8"
+                >
+                  <span
+                    class="text-white text-sm font-medium underline underline-offset-4"
+                    >View Taxonomic Details</span
+                  >
+                </div>
+                <div
+                  class="absolute top-4 right-4 px-3 py-1 bg-error/90 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-white"
+                >
+                  VU - Vulnerable
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div
+                  class="font-label text-[10px] uppercase tracking-widest text-primary font-bold"
+                >
+                  Accipitriformes
+                </div>
+                <h2
+                  class="font-headline font-bold text-2xl group-hover:text-primary transition-colors"
+                >
+                  Harpy Eagle
+                </h2>
+                <p class="italic text-on-surface-variant font-body text-sm">
+                  Harpia harpyja
+                </p>
+              </div>
+            </div>
+            <!-- Specimen Card 4 -->
+            <div class="specimen-card group">
+              <div
+                class="relative overflow-hidden rounded-xl bg-surface-container-low mb-6 aspect-[4/5]"
+              >
+                <img
+                  alt="Blue Tit bird"
+                  class="specimen-image w-full h-full object-cover transition-transform duration-700"
+                  data-alt="A blue tit bird on a mossy branch"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuARgoS5FCItaHyH-hY9nUnPFTp0I89wx8E_NOnM-Jot-ZMxGLMsKiPST1jraZi6BqYqc971X31dYxnnupfEWmRIJbz-v3HiFd5ms5b1dF6EXGx3T5mgnrWfMaChUxwj0_VefZz7fsn3nC5n0CEIEMW55bgZJZ7_nRPctdxleRFbCcbPRBw0owYiCdltcLYYhgIpq6M4pp2dx-5kwGZY4QWOH--wiQcEg9I7MPiRTjUB-S6VsKdLiibPTGgrWg-ragEmofoHJor3cJI"
+                />
+                <div
+                  class="absolute top-4 right-4 px-3 py-1 bg-surface/80 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-on-surface"
+                >
+                  LC - Least Concern
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div
+                  class="font-label text-[10px] uppercase tracking-widest text-primary font-bold"
+                >
+                  Passeriformes
+                </div>
+                <h2
+                  class="font-headline font-bold text-2xl group-hover:text-primary transition-colors"
+                >
+                  Eurasian Blue Tit
+                </h2>
+                <p class="italic text-on-surface-variant font-body text-sm">
+                  Cyanistes caeruleus
+                </p>
+              </div>
+            </div>
+            <!-- Specimen Card 5 -->
+            <div class="specimen-card group">
+              <div
+                class="relative overflow-hidden rounded-xl bg-surface-container-low mb-6 aspect-[4/5]"
+              >
+                <img
+                  alt="Great Horned Owl"
+                  class="specimen-image w-full h-full object-cover transition-transform duration-700"
+                  data-alt="Great horned owl staring into the camera"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKg4-q7hcXFHZ9EsG2i0tuhB6i4MhI5ueXj1LGIaEyRT8DVUR9axgyEZzoATj2t_fvy-b47xq_Yni8kgKcabuvfVapgT4daD8GFgkxUy86Ku6pZJM29LBDTbDthjtRaouq8S-UnvnahF5sv-h2LUwF1ogs7_OjoixBflJc-c8ouegX5fYYR-_1QzthmxPEd1DESQ_CjFZzg4oKztezFZ_5RarvI4rlndWr2d70cNbm2HrXPYWvZcUQaJYyeG_LERN999H3Ccg9h78"
+                />
+                <div
+                  class="absolute top-4 right-4 px-3 py-1 bg-surface/80 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-on-surface"
+                >
+                  LC - Least Concern
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div
+                  class="font-label text-[10px] uppercase tracking-widest text-primary font-bold"
+                >
+                  Strigiformes
+                </div>
+                <h2
+                  class="font-headline font-bold text-2xl group-hover:text-primary transition-colors"
+                >
+                  Great Horned Owl
+                </h2>
+                <p class="italic text-on-surface-variant font-body text-sm">
+                  Bubo virginianus
+                </p>
+              </div>
+            </div>
+            <!-- Specimen Card 6 -->
+            <div class="specimen-card group">
+              <div
+                class="relative overflow-hidden rounded-xl bg-surface-container-low mb-6 aspect-[4/5]"
+              >
+                <img
+                  alt="Flamingo"
+                  class="specimen-image w-full h-full object-cover transition-transform duration-700"
+                  data-alt="Pink flamingo standing in shallow water"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfnXsDvoqaVkRsU7VUbE1uf6EEiD5RRBzoPLr26SqNxx9UzWStGsYVu-ShilIgRKO3Cs0MGDdB3f9pYnhFFiRa5ly7tTHCts1IlIIGL5RqYBw7P1A5yrfljmo_kJ2QDfIy2mRQtFj700N0p_OPNem3VAMCXyYe5En5fUgWY4_ichZxfwcyusLr8wojlkNKgYJt_cU5iS7Hqp1l98UoKv1gS94ww5INOHW5RoAkozCdAJAumEuQNSNdO7qCEHSXj2NEUxXxpKfPEbo"
+                />
+                <div
+                  class="absolute top-4 right-4 px-3 py-1 bg-surface/80 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase text-on-surface"
+                >
+                  LC - Least Concern
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div
+                  class="font-label text-[10px] uppercase tracking-widest text-primary font-bold"
+                >
+                  Phoenicopteriformes
+                </div>
+                <h2
+                  class="font-headline font-bold text-2xl group-hover:text-primary transition-colors"
+                >
+                  American Flamingo
+                </h2>
+                <p class="italic text-on-surface-variant font-body text-sm">
+                  Phoenicopterus ruber
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Pagination -->
+          <div class="mt-24 flex justify-center">
+            <div
+              class="flex items-center gap-2 p-1.5 bg-surface-container rounded-full"
+            >
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface transition-colors"
+              >
+                <span
+                  class="material-symbols-outlined text-sm"
+                  data-icon="chevron_left"
+                  >chevron_left</span
+                >
+              </button>
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white font-bold text-sm"
+              >
+                1
+              </button>
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface transition-colors font-medium text-sm"
+              >
+                2
+              </button>
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface transition-colors font-medium text-sm"
+              >
+                3
+              </button>
+              <span class="px-2 text-on-surface-variant">...</span>
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface transition-colors font-medium text-sm"
+              >
+                12
+              </button>
+              <button
+                class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface transition-colors"
+              >
+                <span
+                  class="material-symbols-outlined text-sm"
+                  data-icon="chevron_right"
+                  >chevron_right</span
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full mt-24 bg-[#f6f3f2]">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-screen-2xl mx-auto"
+      >
+        <div class="mb-8 md:mb-0">
+          <div class="font-manrope font-bold text-[#1c1b1b] text-xl mb-4">
+            The Biological Editorial
+          </div>
+          <p
+            class="font-inter text-xs uppercase tracking-widest text-[#1c1b1b] opacity-60"
+          >
+            © 2024 The Biological Editorial. Dedicated to the Living Archive of
+            Earth.
+          </p>
+        </div>
+        <div
+          class="flex flex-wrap justify-center gap-8 font-inter text-xs uppercase tracking-widest"
+        >
+          <a
+            class="text-[#1c1b1b] opacity-60 hover:text-[#3f6a00] transition-colors"
+            href="#"
+            >Institutional Access</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-60 hover:text-[#3f6a00] transition-colors"
+            href="#"
+            >Research Grants</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-60 hover:text-[#3f6a00] transition-colors"
+            href="#"
+            >Ethical Guidelines</a
+          >
+          <a
+            class="text-[#1c1b1b] opacity-60 hover:text-[#3f6a00] transition-colors"
+            href="#"
+            >Privacy Policy</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

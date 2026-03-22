@@ -1,0 +1,590 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Identification Keys | The Living Archive</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#f6e479",
+              secondary: "#496640",
+              "on-surface": "#1c1b1b",
+              "surface-variant": "#e5e2e1",
+              surface: "#fcf9f8",
+              primary: "#3f6a00",
+              "on-secondary-fixed-variant": "#324e2a",
+              error: "#ba1a1a",
+              "on-secondary-fixed": "#062104",
+              "on-primary": "#ffffff",
+              "primary-fixed-dim": "#9fd75f",
+              tertiary: "#6b5f00",
+              "surface-bright": "#fcf9f8",
+              "secondary-fixed-dim": "#afd0a1",
+              "secondary-fixed": "#caecbc",
+              "surface-container-highest": "#e5e2e1",
+              outline: "#737968",
+              "error-container": "#ffdad6",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#d8c860",
+              "surface-tint": "#3f6a00",
+              "surface-dim": "#dcd9d9",
+              "on-primary-container": "#2d4d00",
+              "on-primary-fixed": "#0f2000",
+              "on-tertiary-fixed": "#201c00",
+              background: "#fcf9f8",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#313030",
+              "on-tertiary-container": "#4e4500",
+              "primary-fixed": "#baf478",
+              "on-background": "#1c1b1b",
+              "primary-container": "#8cc24d",
+              "inverse-on-surface": "#f3f0ef",
+              "on-primary-fixed-variant": "#2e4f00",
+              "surface-container-high": "#eae7e7",
+              "surface-container": "#f0eded",
+              "on-error": "#ffffff",
+              "on-error-container": "#93000a",
+              "outline-variant": "#c2c9b4",
+              "secondary-container": "#caecbc",
+              "on-surface-variant": "#434939",
+              "tertiary-container": "#c4b44f",
+              "on-secondary-container": "#4f6c45",
+              "inverse-primary": "#9fd75f",
+              "surface-container-low": "#f6f3f2",
+              "on-tertiary-fixed-variant": "#504700",
+              "surface-container-lowest": "#ffffff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .glass-panel {
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface font-body antialiased">
+    <!-- Top Navigation Bar -->
+    <nav
+      class="fixed top-0 w-full z-50 bg-[#fcf9f8]/60 dark:bg-[#1c1b1b]/60 backdrop-blur-xl"
+    >
+      <div
+        class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto"
+      >
+        <div
+          class="text-2xl font-bold tracking-tight text-[#3f6a00] dark:text-[#8cc24d] font-manrope"
+        >
+          The Living Archive
+        </div>
+        <div
+          class="hidden md:flex items-center space-x-8 font-manrope text-sm tracking-wide font-semibold"
+        >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300 active:scale-95 transition-transform"
+            href="#"
+            >Explore</a
+          >
+          <a
+            class="text-[#3f6a00] dark:text-[#8cc24d] border-b-2 border-[#3f6a00] pb-1 hover:opacity-100 transition-all duration-300 active:scale-95 transition-transform"
+            href="#"
+            >Taxonomy</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300 active:scale-95 transition-transform"
+            href="#"
+            >Conservation</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-70 hover:opacity-100 hover:text-[#3f6a00] transition-all duration-300 active:scale-95 transition-transform"
+            href="#"
+            >About</a
+          >
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="hidden lg:block relative">
+            <input
+              class="bg-surface-container-highest border-none rounded-full py-2 px-6 w-64 focus:ring-2 focus:ring-primary/40 text-sm"
+              placeholder="Search archive..."
+              type="text"
+            />
+          </div>
+          <button
+            class="material-symbols-outlined text-[#3f6a00] text-2xl"
+            data-icon="account_circle"
+          >
+            account_circle
+          </button>
+        </div>
+      </div>
+    </nav>
+    <main class="pt-32 pb-24 px-8 max-w-screen-2xl mx-auto">
+      <!-- Hero Editorial Header -->
+      <header
+        class="mb-24 flex flex-col md:flex-row items-end justify-between gap-8"
+      >
+        <div class="max-w-3xl">
+          <span
+            class="font-label text-xs uppercase tracking-widest text-primary font-bold mb-4 block"
+            >Scientific Resources / Methodology</span
+          >
+          <h1
+            class="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter text-on-surface mb-6"
+          >
+            Identification Keys.
+          </h1>
+          <p class="text-xl text-on-surface-variant leading-relaxed max-w-2xl">
+            Utilize our dichotomous keys and diagnostic modules to categorize
+            specimens. A rigorous digital framework designed for both field
+            researchers and university cohorts.
+          </p>
+        </div>
+        <div class="flex gap-4 mb-2">
+          <button
+            class="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform"
+          >
+            Start Matrix Key
+          </button>
+          <button
+            class="bg-surface-container-highest text-on-surface px-8 py-4 rounded-xl font-bold hover:bg-surface-container-high transition-colors"
+          >
+            Documentation
+          </button>
+        </div>
+      </header>
+      <!-- Identification Matrix (Asymmetric Grid) -->
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-32">
+        <!-- Dichotomous Path Logic -->
+        <div
+          class="md:col-span-8 bg-surface-container-low p-12 rounded-xl relative overflow-hidden"
+        >
+          <div class="relative z-10">
+            <h2 class="font-headline text-3xl font-bold mb-8">
+              Active Dichotomous Path
+            </h2>
+            <div class="space-y-12">
+              <!-- Step 1 -->
+              <div class="flex gap-8 group">
+                <div class="flex flex-col items-center">
+                  <div
+                    class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm"
+                  >
+                    01
+                  </div>
+                  <div
+                    class="w-0.5 h-full bg-outline-variant opacity-20 group-hover:opacity-100 transition-opacity mt-2"
+                  ></div>
+                </div>
+                <div class="pb-8">
+                  <h3
+                    class="font-label text-sm uppercase tracking-widest text-on-surface-variant font-bold mb-2"
+                  >
+                    Primary Morphology
+                  </h3>
+                  <p class="text-2xl font-semibold mb-6">
+                    Does the specimen exhibit woody tissue development or
+                    herbaceous characteristics?
+                  </p>
+                  <div class="flex flex-wrap gap-4">
+                    <button
+                      class="px-6 py-3 bg-surface-container-lowest rounded-lg border border-transparent hover:border-primary/40 text-primary font-bold transition-all"
+                    >
+                      Woody Tissue Present
+                    </button>
+                    <button
+                      class="px-6 py-3 bg-surface-container-lowest rounded-lg border border-transparent hover:border-primary/40 text-primary font-bold transition-all"
+                    >
+                      Herbaceous (Non-Woody)
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Step 2 (Pending) -->
+              <div class="flex gap-8 opacity-40 grayscale pointer-events-none">
+                <div class="flex flex-col items-center">
+                  <div
+                    class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-sm border border-outline-variant"
+                  >
+                    02
+                  </div>
+                  <div
+                    class="w-0.5 h-full bg-outline-variant opacity-20 mt-2"
+                  ></div>
+                </div>
+                <div class="pb-8">
+                  <h3
+                    class="font-label text-sm uppercase tracking-widest font-bold mb-2"
+                  >
+                    Phyllotaxy Arrangement
+                  </h3>
+                  <p class="text-2xl font-semibold">
+                    Observation of leaf positioning along the apical meristem.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Abstract Graphic -->
+          <div
+            class="absolute -right-20 -bottom-20 w-80 h-80 bg-primary opacity-5 rounded-full blur-3xl"
+          ></div>
+        </div>
+        <!-- Learning Modules Sidebar -->
+        <div class="md:col-span-4 space-y-8">
+          <div class="bg-primary-container/10 p-8 rounded-xl">
+            <h3 class="font-headline text-xl font-bold text-primary mb-4">
+              Methodology Guide
+            </h3>
+            <p class="text-sm text-on-primary-container leading-relaxed mb-6">
+              Learn how to differentiate between convergent evolution and
+              homologous traits before using the keys.
+            </p>
+            <a
+              class="inline-flex items-center gap-2 text-primary font-bold text-sm group"
+              href="#"
+            >
+              Watch Introduction
+              <span
+                class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform"
+                data-icon="arrow_forward"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+          <div class="bg-surface-container p-8 rounded-xl">
+            <h3 class="font-headline text-xl font-bold mb-4">
+              Saved Specimens
+            </h3>
+            <div class="space-y-4">
+              <div
+                class="flex items-center gap-4 bg-surface-container-lowest p-3 rounded-lg"
+              >
+                <div
+                  class="w-12 h-12 bg-surface-variant rounded-md overflow-hidden"
+                >
+                  <img
+                    class="w-full h-full object-cover"
+                    data-alt="Microscopic view of plant cells with visible walls"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt5NIHt5LYe2Oq8vUp6Yh91c91V6xS_mHao-IrNAyFm79jgQEpDlHxSrSvnr_GMdRFAvlT6XOiPN0Zh3AXdNPZgx1o5S86tSvUtpBKB96OFeu2DYgWhdSzwdA_6b3oX8tC0qfh77orrbURwdlY-N5z_tJWqyvCbMRZcDuKeOm-A1VKIMm8QENK4ZEsmXLI87J6W5own0DpDZgly7F0lbpENwBwpqu1U7W1lXFD_MCScr0MTbcU5HGP1KFWqzrcdJENAIdTl7OeycE"
+                  />
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-primary uppercase">
+                    QUERCUS ALBA
+                  </p>
+                  <p class="text-sm font-semibold opacity-70">
+                    White Oak Specimen
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-4 bg-surface-container-lowest p-3 rounded-lg opacity-60"
+              >
+                <div
+                  class="w-12 h-12 bg-surface-variant rounded-md overflow-hidden"
+                >
+                  <img
+                    class="w-full h-full object-cover"
+                    data-alt="Close up of a green leaf texture"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAO-zaxukGuTL2g3oLZYpn9HS5_yJfjgDNqS-wzSqjmFjN2xFoV0EJemWQbBJGLHfgRrp6fSWmzx-HlOaxXqZEljQIAT4J8L6bGOHCN7ApbYniaD-bzFgD1-7_-ZpVwintmLHj8itH4bFX0mYcBT0jXYJFwmSvVQ5PCX00FZRG1GYQCOKf44vrS5TypQ8c-FNB-1-YmXEonRPKFPeJmvEZCE0-lp5m7z3Uhuf0lMBl7Cp8iwkajeZ7nKPa296fIpqzuwUGgpwmOow"
+                  />
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-primary uppercase">
+                    ACER RUBRUM
+                  </p>
+                  <p class="text-sm font-semibold opacity-70">
+                    Red Maple Specimen
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Learning Modules Bento Grid -->
+      <section class="mb-32">
+        <div class="flex justify-between items-end mb-12">
+          <h2 class="font-headline text-4xl font-extrabold tracking-tight">
+            Curated Learning Modules.
+          </h2>
+          <button
+            class="text-primary font-bold border-b-2 border-primary/20 hover:border-primary transition-all pb-1"
+          >
+            View Archive
+          </button>
+        </div>
+        <div
+          class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-auto md:h-[600px]"
+        >
+          <div
+            class="md:col-span-2 md:row-span-2 bg-surface-container-low rounded-xl overflow-hidden group relative"
+          >
+            <img
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80"
+              data-alt="High resolution botanical illustration of a fern"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1KTiARqBSh_2SeMz5houBXBm_rQwzmi4YJ5E2Lxal8OWN2AZrvCEjJ1fcWphD1PhFkuPK2NrNVs2YEbPQK1YGxn-WTAfpeNv8l2Wgv_umsussgC8VWzCPR69YBZxHrUZNI-RxdVJ_41NqXFZCaGTOPegf6ocCBEnSjWX-LWhuK6dggImQ8ALVEuYULkg5Og8ORyUgJu8enkvDpkemX2iIIBYSX47i0EyU2XrGjRpqzQU-2Co5D_QjtZMlIAt8J2qMs8uFYhk6gEo"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-12 flex flex-col justify-end"
+            >
+              <span
+                class="bg-tertiary text-on-tertiary px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-widest w-fit mb-4"
+                >Specialization</span
+              >
+              <h3 class="text-3xl font-headline font-bold text-white mb-4">
+                Pteridology: The Study of Ferns and Allies
+              </h3>
+              <p class="text-white/80 text-lg max-w-md">
+                Master the complex spore patterns and frond structures of
+                ancient vascular plants.
+              </p>
+            </div>
+          </div>
+          <div
+            class="md:col-span-2 bg-surface-container rounded-xl flex items-center p-8 group"
+          >
+            <div class="flex-1">
+              <h3 class="font-headline text-2xl font-bold mb-3">
+                Linnaean Foundations
+              </h3>
+              <p class="text-on-surface-variant mb-6 leading-relaxed">
+                A refresher on binomial nomenclature and hierarchy of biological
+                classification.
+              </p>
+              <button
+                class="bg-on-surface text-surface px-6 py-2 rounded-full text-sm font-bold active:scale-95 transition-all"
+              >
+                Start Module
+              </button>
+            </div>
+            <div
+              class="w-32 h-32 rounded-full border-4 border-primary/10 flex items-center justify-center p-4"
+            >
+              <span
+                class="material-symbols-outlined text-5xl text-primary"
+                data-icon="menu_book"
+                >menu_book</span
+              >
+            </div>
+          </div>
+          <div
+            class="bg-secondary-container rounded-xl p-8 flex flex-col justify-between"
+          >
+            <span
+              class="material-symbols-outlined text-3xl text-on-secondary-container"
+              data-icon="biotech"
+              >biotech</span
+            >
+            <div>
+              <h3
+                class="font-headline text-lg font-bold text-on-secondary-container mb-2"
+              >
+                Genetic Barcoding
+              </h3>
+              <p
+                class="text-xs font-bold text-on-secondary-container/70 uppercase tracking-widest"
+              >
+                Level: Advanced
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-tertiary-fixed rounded-xl p-8 flex flex-col justify-between"
+          >
+            <span
+              class="material-symbols-outlined text-3xl text-on-tertiary-fixed"
+              data-icon="travel_explore"
+              >travel_explore</span
+            >
+            <div>
+              <h3
+                class="font-headline text-lg font-bold text-on-tertiary-fixed mb-2"
+              >
+                Field Observation
+              </h3>
+              <p
+                class="text-xs font-bold text-on-tertiary-fixed/70 uppercase tracking-widest"
+              >
+                Level: Entry
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Resource Directory -->
+      <section class="mb-32">
+        <div
+          class="bg-on-surface rounded-3xl p-16 text-surface relative overflow-hidden"
+        >
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div>
+              <h2
+                class="font-headline text-4xl font-extrabold mb-8 tracking-tight"
+              >
+                Researcher Directory.
+              </h2>
+              <p class="text-surface/70 text-lg mb-12">
+                Access peer-reviewed datasets, high-resolution specimen scans,
+                and collaboration tools for verified institutional accounts.
+              </p>
+              <div class="space-y-8">
+                <div class="group cursor-pointer">
+                  <div
+                    class="flex justify-between items-center border-b border-surface/10 pb-4 group-hover:border-primary-container transition-colors"
+                  >
+                    <span class="text-xl font-semibold"
+                      >Microbiome Data Repositories</span
+                    >
+                    <span
+                      class="material-symbols-outlined text-primary-container"
+                      data-icon="open_in_new"
+                      >open_in_new</span
+                    >
+                  </div>
+                </div>
+                <div class="group cursor-pointer">
+                  <div
+                    class="flex justify-between items-center border-b border-surface/10 pb-4 group-hover:border-primary-container transition-colors"
+                  >
+                    <span class="text-xl font-semibold"
+                      >Institutional Access Portal</span
+                    >
+                    <span
+                      class="material-symbols-outlined text-primary-container"
+                      data-icon="lock_open"
+                      >lock_open</span
+                    >
+                  </div>
+                </div>
+                <div class="group cursor-pointer">
+                  <div
+                    class="flex justify-between items-center border-b border-surface/10 pb-4 group-hover:border-primary-container transition-colors"
+                  >
+                    <span class="text-xl font-semibold"
+                      >Ethical Fieldwork Protocols</span
+                    >
+                    <span
+                      class="material-symbols-outlined text-primary-container"
+                      data-icon="gavel"
+                      >gavel</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hidden lg:block">
+              <div class="grid grid-cols-2 gap-4">
+                <img
+                  class="rounded-xl h-64 w-full object-cover"
+                  data-alt="Scientist looking into a professional microscope"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV3c62gBXianjC1Qg3ygOoFR8pn-0kCB0srO9c32YKKuI2hp7gTE56Z_Tb73mDHE9yyhI2ukEx7GCDXEulczk00wtfYKmrclLeTfNNL5XvL855C_MBOtMdS5kV86VmDD0skjCdcIDSXR2S_bBDoU-FUIbWrvZUcQsVsue53FnQcylckCT0X6wLgFaKTKH39iMlDyB-lFwRQ3cgaA-ExbGpyyN_nIN15VXO0hyppyBvcZuf0UwE5fD6Jxq_u9QuEJikwsYyogIUUl0"
+                />
+                <img
+                  class="rounded-xl h-64 w-full object-cover translate-y-8"
+                  data-alt="Laboratory samples in test tubes"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-_SWFmkfvkHFynPlKWyUz50ufaqPSv_64tLaJNCJ-thEMbWo_YBR1DsnyWckWset3KCb4us3ICXseEUMmKVnwzzdGbJjrAZ4NU7tjzB8BdWhMxihZLd8LmXbWOk17rxBQBAopFcIRuYxBz0amHl54Ddn5U8OwT3_B1j_b8Rnk0nuwFpBot8F2fHD8HN1SyO6sDgdcICR9EYb_7Ik5j8CL1_TvqnwKeuYd4JTXS2Cl8wOU0z6h_tWFMhLHPL5hwh0hB0OPUzXSUvs"
+                />
+                <img
+                  class="rounded-xl h-64 w-full object-cover"
+                  data-alt="Greenhouse with diverse tropical plants"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-GKodTpZyxicKaZQSraWZjf3cSP4eX8WLLrSqXriPZY08lE8rkTZWQSse49IDYQnikeDIJVySj4yCsJ_4qDr4CRwyaIq3kb5Ohkk4m0J4anCrU7Vkz467WgVBp6f0z9bizngImPuQp7odsd4Yb1ECaMf361sq8ZpnG7scDGQ3emvDsyKbMkPsIqsj3YKFW7S4E1VKkqDgn_tJCqmacqnzl_7Te3E5eSLVnLosVVEizh6ewQbwGFVnzJRvqJ9nQLy5EsBGCKof8E8"
+                />
+                <img
+                  class="rounded-xl h-64 w-full object-cover translate-y-8"
+                  data-alt="Dense forest canopy seen from below"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSRiSYCfLbsMTEQdGSSGtxdP_TKqWPwmO8Xqz7loRaVVuGFZFm_PMBqkGkQXu4qcFR7Zme533H6HefPSBmbU5ZQ_fJQTc33kySKdK9n_BbewJ3yv22-sMShs7k7pZS3Rvf3c1oRtiDhFwrz-PJbeaJMWNyTjaCPbfDJWPGYdkGM8MHTVYunBV9y9bUqN1mEqmJj0t65XSGP6S3MGIE0-dHireXURxEIhlPbG17SSz1t8O9I7JBvAt4A8_AviDkXlUpOhjhwcIv06c"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- Graphic Elements -->
+          <div
+            class="absolute top-0 right-0 w-1/2 h-full bg-primary/10 blur-[120px]"
+          ></div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full mt-24 bg-[#f6f3f2] dark:bg-[#1c1b1b]">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-screen-2xl mx-auto"
+      >
+        <div class="mb-8 md:mb-0">
+          <div
+            class="font-manrope font-bold text-[#1c1b1b] dark:text-[#fcf9f8] text-xl mb-4"
+          >
+            The Biological Editorial
+          </div>
+          <p
+            class="font-inter text-xs uppercase tracking-widest text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60"
+          >
+            © 2024 The Biological Editorial. Dedicated to the Living Archive of
+            Earth.
+          </p>
+        </div>
+        <div
+          class="flex flex-wrap justify-center gap-8 font-inter text-xs uppercase tracking-widest"
+        >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Institutional Access</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Research Grants</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Ethical Guidelines</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#fcf9f8] opacity-60 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors"
+            href="#"
+            >Privacy Policy</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

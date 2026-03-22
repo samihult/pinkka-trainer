@@ -1,0 +1,563 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Biological Editorial | Learning Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary": "#ffffff",
+              "on-background": "#1c1b1b",
+              "surface-container-highest": "#e5e2e1",
+              "inverse-primary": "#9fd75f",
+              tertiary: "#6b5f00",
+              "on-tertiary-fixed": "#201c00",
+              "surface-variant": "#e5e2e1",
+              "secondary-fixed-dim": "#afd0a1",
+              "on-primary-container": "#2d4d00",
+              "on-primary-fixed-variant": "#2e4f00",
+              "surface-container-low": "#f6f3f2",
+              "on-secondary-fixed": "#062104",
+              "surface-bright": "#fcf9f8",
+              "on-secondary-fixed-variant": "#324e2a",
+              "on-primary": "#ffffff",
+              "outline-variant": "#c2c9b4",
+              surface: "#fcf9f8",
+              "primary-container": "#8cc24d",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#d8c860",
+              "secondary-fixed": "#caecbc",
+              "secondary-container": "#caecbc",
+              "on-error": "#ffffff",
+              "on-secondary-container": "#4f6c45",
+              "tertiary-container": "#c4b44f",
+              "surface-tint": "#3f6a00",
+              "on-primary-fixed": "#0f2000",
+              "error-container": "#ffdad6",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#f0eded",
+              "on-tertiary-fixed-variant": "#504700",
+              "tertiary-fixed": "#f6e479",
+              "primary-fixed": "#baf478",
+              "on-surface": "#1c1b1b",
+              "inverse-on-surface": "#f3f0ef",
+              error: "#ba1a1a",
+              "inverse-surface": "#313030",
+              outline: "#737968",
+              "surface-dim": "#dcd9d9",
+              "on-surface-variant": "#434939",
+              "on-error-container": "#93000a",
+              "primary-fixed-dim": "#9fd75f",
+              primary: "#3f6a00",
+              background: "#fcf9f8",
+              secondary: "#496640",
+              "surface-container-high": "#eae7e7",
+              "on-tertiary-container": "#4e4500",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        vertical-align: middle;
+      }
+      .glass-panel {
+        background: rgba(229, 226, 225, 0.6);
+        backdrop-filter: blur(24px);
+      }
+      .primary-gradient {
+        background: linear-gradient(135deg, #3f6a00 0%, #8cc24d 100%);
+      }
+    </style>
+  </head>
+  <body class="bg-surface font-body text-on-surface">
+    <!-- Top Navigation Bar -->
+    <header class="bg-[#fcf9f8] dark:bg-[#1c1b1b] sticky top-0 z-50">
+      <nav
+        class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto"
+      >
+        <div
+          class="text-2xl font-extrabold text-[#3f6a00] dark:text-[#8cc24d] tracking-tighter font-headline"
+        >
+          The Biological Editorial
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a
+            class="text-[#3f6a00] dark:text-[#8cc24d] border-b-2 border-[#3f6a00] dark:border-[#8cc24d] pb-1 font-headline font-bold tracking-tight"
+            href="#"
+            >My Progress</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#e5e2e1] opacity-70 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors duration-200 font-headline font-bold tracking-tight"
+            href="#"
+            >Groups</a
+          >
+          <a
+            class="text-[#1c1b1b] dark:text-[#e5e2e1] opacity-70 hover:text-[#3f6a00] dark:hover:text-[#8cc24d] transition-colors duration-200 font-headline font-bold tracking-tight"
+            href="#"
+            >Resources</a
+          >
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="relative hidden lg:block">
+            <input
+              class="bg-surface-container-highest border-none rounded-full px-6 py-2 w-64 text-sm focus:ring-2 focus:ring-primary/40 focus:bg-surface-container-lowest transition-all"
+              placeholder="Search the archive..."
+              type="text"
+            />
+            <span
+              class="material-symbols-outlined absolute right-4 top-2 text-on-surface-variant"
+              >search</span
+            >
+          </div>
+          <button class="active:scale-95 duration-150">
+            <span
+              class="material-symbols-outlined text-2xl"
+              data-icon="account_circle"
+              >account_circle</span
+            >
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main class="max-w-7xl mx-auto px-8 py-12">
+      <!-- Welcome Section -->
+      <section class="mb-16">
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between gap-8"
+        >
+          <div>
+            <span
+              class="font-label text-xs tracking-[0.1em] uppercase text-primary font-bold mb-2 block"
+              >Verdant Scholar Dashboard</span
+            >
+            <h1
+              class="font-headline text-5xl font-extrabold tracking-tight mb-4"
+            >
+              Welcome back, Curator.
+            </h1>
+            <p class="text-on-surface-variant max-w-xl text-lg">
+              Your taxonomic journey through the biosphere continues. You have
+              mastered 14 new specimens this week across 3 ecological zones.
+            </p>
+          </div>
+          <!-- Progress Summary Card -->
+          <div
+            class="bg-surface-container-low p-8 rounded-xl min-w-[320px] flex flex-col gap-4"
+          >
+            <div class="flex justify-between items-center">
+              <span
+                class="font-label text-xs font-semibold uppercase tracking-wider text-on-surface-variant"
+                >Global Mastery</span
+              >
+              <span class="text-primary font-bold text-xl">68%</span>
+            </div>
+            <div
+              class="h-2 w-full bg-surface-container rounded-full overflow-hidden"
+            >
+              <div class="h-full primary-gradient" style="width: 68%"></div>
+            </div>
+            <div class="flex gap-6 mt-2">
+              <div>
+                <span class="block text-2xl font-bold">1,240</span>
+                <span
+                  class="text-xs text-on-surface-variant uppercase font-medium"
+                  >XP Earned</span
+                >
+              </div>
+              <div>
+                <span class="block text-2xl font-bold">42</span>
+                <span
+                  class="text-xs text-on-surface-variant uppercase font-medium"
+                  >Specimens</span
+                >
+              </div>
+              <div>
+                <span class="block text-2xl font-bold">Rank 8</span>
+                <span
+                  class="text-xs text-on-surface-variant uppercase font-medium"
+                  >Naturalist</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Taxonomic Groups -->
+      <div class="space-y-16">
+        <!-- Group 1: Kingdom Plantae -->
+        <section>
+          <div
+            class="flex items-center justify-between mb-8 border-l-4 border-primary pl-6"
+          >
+            <div>
+              <h2 class="font-headline text-3xl font-bold">Kingdom Plantae</h2>
+              <p
+                class="text-on-surface-variant font-label text-sm uppercase tracking-wide"
+              >
+                Flora &amp; Botanical Structures
+              </p>
+            </div>
+            <button class="text-primary font-bold text-sm hover:underline">
+              View All Collections
+            </button>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Featured Group Card (Asymmetric Layout) -->
+            <div
+              class="lg:col-span-2 bg-surface-container-low rounded-xl overflow-hidden flex flex-col md:flex-row group"
+            >
+              <div class="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+                <img
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  data-alt="Close up of lush green tropical fern leaves"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuASW2ujmNVJgidU23pWDRcYiTBsDfRf3IKWEqnyWpSPCve5Yw2cz0izFqRS9SnR45mZMDgLt8LwlWj0mIlC3c3uEovnN1nF2Hrqq02Wmc6A8pnbGcHbF70_mXx6iGg9f05rkMdFncZHsglb_Fq9_JDFMAqCsF8eyTKznL-MJXTO90RBGmZ2L14GRyaOVYp5HRrSpV1aH_wczBe2ru3r1zGFWBg1e1kDC-ssbfBra-JWXo6gDthDaPu4BpxnOVIdeMeJ4cu9V_vzUdk"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent md:hidden"
+                ></div>
+                <div class="absolute bottom-6 left-6 text-white md:hidden">
+                  <span
+                    class="bg-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
+                    >High Focus</span
+                  >
+                </div>
+              </div>
+              <div class="md:w-1/2 p-10 flex flex-col justify-between">
+                <div>
+                  <div class="hidden md:block mb-4">
+                    <span
+                      class="bg-primary/10 text-primary px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider"
+                      >Priority Path</span
+                    >
+                  </div>
+                  <h3 class="font-headline text-2xl font-bold mb-4">
+                    Coniferous Forest Stacks
+                  </h3>
+                  <p class="text-on-surface-variant mb-8 leading-relaxed">
+                    Study the resilient gymnosperms of the northern hemispheres.
+                    Focus on needle morphology and reproductive cone structures.
+                  </p>
+                </div>
+                <div class="space-y-6">
+                  <div class="flex justify-between text-sm font-medium">
+                    <span>Mastery Level 4</span>
+                    <span>750 / 1000 XP</span>
+                  </div>
+                  <div
+                    class="h-1 w-full bg-surface-container-high rounded-full"
+                  >
+                    <div class="h-full bg-primary" style="width: 75%"></div>
+                  </div>
+                  <div class="flex gap-4">
+                    <button
+                      class="flex-1 primary-gradient text-white py-3 rounded-xl font-bold text-sm hover:scale-105 transition-transform"
+                    >
+                      Start Study
+                    </button>
+                    <button
+                      class="px-4 py-3 bg-surface-container-highest text-on-surface rounded-xl hover:bg-surface-container-high transition-colors"
+                    >
+                      <span class="material-symbols-outlined">analytics</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Side Stack -->
+            <div
+              class="bg-surface-container p-8 rounded-xl flex flex-col justify-between"
+            >
+              <div>
+                <div
+                  class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center mb-6"
+                >
+                  <span
+                    class="material-symbols-outlined text-on-tertiary-fixed"
+                    data-icon="forest"
+                    >forest</span
+                  >
+                </div>
+                <h3 class="font-headline text-xl font-bold mb-2">
+                  Subarctic Habitats
+                </h3>
+                <p class="text-sm text-on-surface-variant mb-6">
+                  Lichen, mosses, and dwarf shrubs adapted to permafrost
+                  environments.
+                </p>
+              </div>
+              <div class="space-y-4">
+                <div
+                  class="flex justify-between items-center text-xs font-bold uppercase tracking-tighter text-on-surface-variant"
+                >
+                  <span>12 specimens</span>
+                  <span>30% Complete</span>
+                </div>
+                <button
+                  class="w-full py-3 bg-white text-on-surface border border-outline-variant/20 rounded-xl text-sm font-bold hover:bg-surface-bright transition-colors"
+                >
+                  Resume Stack
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Group 2: Kingdom Animalia -->
+        <section>
+          <div
+            class="flex items-center justify-between mb-8 border-l-4 border-secondary pl-6"
+          >
+            <div>
+              <h2 class="font-headline text-3xl font-bold">Kingdom Animalia</h2>
+              <p
+                class="text-on-surface-variant font-label text-sm uppercase tracking-wide"
+              >
+                Fauna &amp; Behavioral Ecology
+              </p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Stack Card: Avian Morphology -->
+            <div
+              class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-container transition-colors cursor-pointer group"
+            >
+              <div class="h-40 rounded-lg overflow-hidden mb-6">
+                <img
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  data-alt="Colorful bird perched on a branch"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuALFIoRPsFPRlo3reNlxymGUPJsoiBEY9sKC7OhgP5AsuH70xqJ4kghERiIHIqLtxJW1O4j-cxXlytbDZA-6jyntxoU6uHPFPQeuxilzVSPFpeJOGwjAfV1sCs2BbGNW7sSsbqVsyWbBse6pN40ijvc7CJnc5sD1ahT8JCEBR_fSQcE9ztrI4Nqila3y7_x-5ZNMe6kuRCKYggPAjerXHHwUR35l10ergVoYUrVYePj6173aPhfjAfZZsglDa7Lhv8sVdqyD7tUlRY"
+                />
+              </div>
+              <div class="flex items-center gap-2 mb-3">
+                <span
+                  class="inline-block w-2 h-2 rounded-full bg-primary-container"
+                ></span>
+                <span
+                  class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant"
+                  >Level 12 Mastery</span
+                >
+              </div>
+              <h4 class="font-headline text-lg font-bold mb-2">
+                Avian Morphology
+              </h4>
+              <div class="flex items-center justify-between mt-6">
+                <div class="flex -space-x-2">
+                  <div
+                    class="w-6 h-6 rounded-full border-2 border-surface-container-low bg-secondary-container"
+                  ></div>
+                  <div
+                    class="w-6 h-6 rounded-full border-2 border-surface-container-low bg-primary-container"
+                  ></div>
+                  <div
+                    class="w-6 h-6 rounded-full border-2 border-surface-container-low bg-tertiary-container"
+                  ></div>
+                </div>
+                <button
+                  class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors"
+                >
+                  <span class="material-symbols-outlined">play_circle</span>
+                </button>
+              </div>
+            </div>
+            <!-- Stack Card: Marine Invertebrates -->
+            <div
+              class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-container transition-colors cursor-pointer group"
+            >
+              <div class="h-40 rounded-lg overflow-hidden mb-6">
+                <img
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  data-alt="Deep sea jellyfish glowing in dark water"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCllVyVzIz0tyaVpr1VgpU1AHXIheu6O8YDGVKbsYIttUG8F6f9BV_T9zX5PfVutMaWDgomH7Y_qGl2ZT0KgqxZVYcVZDi2Kq-Zm0O5haO5Vd4fWADI3L09niwdHUBAjnfqytXbB1A_UHzDPuUOq-yF-smTnTLYwxZTe54nXjGa47Ho2cpLK7eD0AH7ooW7su23XAQU8exK4zzvp0bTKohK8OAs-ga-If8lV5NkHsH5yUSSmQzRUdsAsO3EoNJQp9-ScNrk6afdyHM"
+                />
+              </div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="inline-block w-2 h-2 rounded-full bg-error"></span>
+                <span
+                  class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant"
+                  >Test Ready</span
+                >
+              </div>
+              <h4 class="font-headline text-lg font-bold mb-2">
+                Marine Invertebrates
+              </h4>
+              <div class="flex items-center justify-between mt-6">
+                <span class="text-xs font-medium text-on-surface-variant italic"
+                  >92% Precision</span
+                >
+                <button
+                  class="px-4 py-2 bg-on-surface text-surface rounded-lg text-xs font-bold hover:bg-on-surface-variant transition-colors"
+                >
+                  Take Test
+                </button>
+              </div>
+            </div>
+            <!-- Stack Card: Mammalian Sociality -->
+            <div
+              class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-container transition-colors cursor-pointer group"
+            >
+              <div class="h-40 rounded-lg overflow-hidden mb-6">
+                <img
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  data-alt="Lion pride resting in the savannah"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuwEisYE4hwXAxk3s0s4CdisIo-P3pX_RE8Zq1QjRvCJU8o9mKx5E7ae7mQEhPkFrbeVwZR5zeS7JHxCnjKhMXX_RmmixN3ry6lzR5de6icvPrNCKPdODi6K90qWRtJiCYO4l_lPgME_QzUErT8-E0Kclmv0y23U3IuhrDagKGekwYrUwukKHe1-UUaQk5YKl3QQM_84zB00inFmdVfrEFN3zldJ57luUBdRRX8dCfrVC9CYK8D5-0n4X-nVqNlBx7giJe3u5PKmM"
+                />
+              </div>
+              <div class="flex items-center gap-2 mb-3">
+                <span
+                  class="inline-block w-2 h-2 rounded-full bg-outline-variant"
+                ></span>
+                <span
+                  class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant"
+                  >New Stack</span
+                >
+              </div>
+              <h4 class="font-headline text-lg font-bold mb-2">
+                Mammalian Sociality
+              </h4>
+              <div class="flex items-center justify-between mt-6">
+                <span class="text-xs font-medium text-on-surface-variant italic"
+                  >Locked</span
+                >
+                <span
+                  class="material-symbols-outlined text-sm text-on-surface-variant"
+                  >lock</span
+                >
+              </div>
+            </div>
+            <!-- Add New Stack (Ghost State) -->
+            <div
+              class="border-2 border-dashed border-outline-variant/30 rounded-xl flex flex-col items-center justify-center p-6 hover:border-primary/40 transition-colors group cursor-pointer"
+            >
+              <div
+                class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:bg-primary-container/20 transition-colors"
+              >
+                <span
+                  class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors"
+                  >add</span
+                >
+              </div>
+              <p class="font-bold text-sm text-on-surface-variant">
+                Import Catalog
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- Taxonomic Bento Grid / Quick Actions -->
+      <section class="mt-20">
+        <h2 class="font-headline text-2xl font-bold mb-8">
+          Researcher Toolset
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div
+            class="md:col-span-2 bg-primary-container p-8 rounded-xl flex flex-col justify-between min-h-[200px]"
+          >
+            <h3
+              class="text-on-primary-container font-headline text-2xl font-bold"
+            >
+              Specimen Comparison Engine
+            </h3>
+            <div class="flex justify-between items-end">
+              <p class="text-on-primary-container/80 text-sm max-w-[200px]">
+                Side-by-side morphological analysis for complex identification.
+              </p>
+              <span
+                class="material-symbols-outlined text-4xl text-on-primary-container opacity-40"
+                >compare_arrows</span
+              >
+            </div>
+          </div>
+          <div
+            class="bg-surface-container-high p-8 rounded-xl flex flex-col justify-between"
+          >
+            <span class="material-symbols-outlined text-3xl text-primary"
+              >magnification_small</span
+            >
+            <h4 class="font-bold">Virtual Lab</h4>
+          </div>
+          <div
+            class="bg-tertiary-container p-8 rounded-xl flex flex-col justify-between"
+          >
+            <span
+              class="material-symbols-outlined text-3xl text-on-tertiary-container"
+              >public</span
+            >
+            <h4 class="font-bold text-on-tertiary-container">Global Map</h4>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-[#f6f3f2] dark:bg-[#151413] py-12 mt-20">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto"
+      >
+        <div class="mb-8 md:mb-0">
+          <div
+            class="text-lg font-bold text-[#3f6a00] dark:text-[#8cc24d] font-headline mb-2"
+          >
+            The Biological Editorial
+          </div>
+          <p
+            class="text-[#1c1b1b] dark:text-[#e5e2e1] opacity-60 text-sm font-body"
+          >
+            © 2024 The Biological Editorial. A Living Archive.
+          </p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-8">
+          <a
+            class="font-label text-xs tracking-wide uppercase text-[#1c1b1b] dark:text-[#e5e2e1] opacity-60 hover:opacity-100 hover:text-[#3f6a00] transition-all"
+            href="#"
+            >Scientific Accuracy</a
+          >
+          <a
+            class="font-label text-xs tracking-wide uppercase text-[#1c1b1b] dark:text-[#e5e2e1] opacity-60 hover:opacity-100 hover:text-[#3f6a00] transition-all"
+            href="#"
+            >Terms of Specimen</a
+          >
+          <a
+            class="font-label text-xs tracking-wide uppercase text-[#1c1b1b] dark:text-[#e5e2e1] opacity-60 hover:opacity-100 hover:text-[#3f6a00] transition-all"
+            href="#"
+            >Privacy Policy</a
+          >
+          <a
+            class="font-label text-xs tracking-wide uppercase text-[#1c1b1b] dark:text-[#e5e2e1] opacity-60 hover:opacity-100 hover:text-[#3f6a00] transition-all"
+            href="#"
+            >Contact Archive</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
