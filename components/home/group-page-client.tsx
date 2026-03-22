@@ -7,7 +7,6 @@ import { ArrowLeft, Search } from "lucide-react";
 
 import { getEntityImageUrl } from "@/components/home/home-card-utils";
 import { HomeStackCard } from "@/components/home/home-stack-card";
-import { getMockHomeGroupStats } from "@/components/home/mock-home-group-stats";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,6 +16,7 @@ import { getLocalizedText } from "@/lib/content/content-display";
 import {
   getGroup,
   getSpecies,
+  getStackScientificProgressSummaries,
   getStacks,
   getUserHomePreferences,
   updateUserHomePreferences,
@@ -33,7 +33,7 @@ import { logFirestoreError } from "@/lib/utils";
  * @property id Stack id.
  * @property imageUrl Hero image shown on the card.
  * @property learnHref Link to the learn-cards flow.
- * @property masteryPercent Mock mastery percentage shown in the footer.
+ * @property masteryPercent Mastered scientific-name percentage shown in the footer.
  * @property name Localized stack name.
  * @property originalIndex Stable source ordering used after favorites are grouped first.
  * @property speciesCount Total number of species in the stack.
@@ -75,6 +75,9 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
     {},
   );
   const [favoriteStackIds, setFavoriteStackIds] = useState<string[]>([]);
+  const [stackMasteryPercents, setStackMasteryPercents] = useState<
+    Map<string, number>
+  >(new Map());
   const [filterValue, setFilterValue] = useState("");
   const [loading, setLoading] = useState(true);
   const [pendingScrollFavoriteId, setPendingScrollFavoriteId] = useState<
@@ -126,6 +129,18 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
         }, {}),
       );
       setFavoriteStackIds(persistedFavoriteStackIds);
+      const progressMap = await getStackScientificProgressSummaries(
+        user.uid,
+        visibleStacks.map((stack) => stack.id),
+      );
+      setStackMasteryPercents(
+        new Map(
+          [...progressMap.entries()].map(([stackId, progress]) => [
+            stackId,
+            progress.masteredScientificPercent,
+          ]),
+        ),
+      );
     } catch (error) {
       logFirestoreError("Failed to load collection page data", error);
     } finally {
@@ -140,7 +155,6 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
 
   const stackCards = useMemo<GroupStackCardViewModel[]>(() => {
     return stacks.map((stack, index) => {
-      const mockStats = getMockHomeGroupStats(index);
       return {
         description: getLocalizedText(
           stack.data.description,
@@ -152,7 +166,7 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
           getEntityImageUrl(stack.data.images) ??
           null,
         learnHref: `/learn/cards/${stack.id}`,
-        masteryPercent: mockStats.masteryPercent,
+        masteryPercent: stackMasteryPercents.get(stack.id) ?? 0,
         name: getLocalizedText(stack.data.name, preferredLanguage),
         originalIndex: index,
         speciesCount:
@@ -160,7 +174,7 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
         testHref: `/learn/tests/${stack.id}`,
       };
     });
-  }, [preferredLanguage, stackSpeciesCounts, stacks]);
+  }, [preferredLanguage, stackMasteryPercents, stackSpeciesCounts, stacks]);
 
   const sortedStackCards = useMemo(() => {
     return [...stackCards].sort((left, right) => {

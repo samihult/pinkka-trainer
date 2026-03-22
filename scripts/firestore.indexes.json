@@ -1,0 +1,37 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "learningProgress",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "speciesId", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "stackLearningHistograms",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "stackId", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "stackScientificProgress",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "stackId", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "groupScientificProgress",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "groupId", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

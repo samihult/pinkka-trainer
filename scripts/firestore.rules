@@ -102,5 +102,39 @@ service cloud.firestore {
       allow update, delete: if request.auth != null &&
         resource.data.userId == request.auth.uid;
     }
+
+    // Stack scientific progress - users can read their own cached summaries
+    match /stackScientificProgress/{progressId} {
+      allow read: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+
+    // Group scientific progress - users can read their own cached summaries
+    match /groupScientificProgress/{progressId} {
+      allow read: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+
+    // Global scientific progress - users can read their own cached summary
+    match /globalScientificProgress/{progressId} {
+      allow read: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+
+    // Scope totals are server-maintained and not exposed to clients directly.
+    match /stackScientificScopeTotals/{scopeId} {
+      allow read, write: if false;
+    }
+
+    match /groupScientificScopeTotals/{scopeId} {
+      allow read, write: if false;
+    }
+
+    match /globalScientificScopeTotals/{scopeId} {
+      allow read, write: if false;
+    }
   }
 }

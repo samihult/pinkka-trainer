@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import {
+  getGroupScientificProgressSummaries,
   getGroups,
   getSpecies,
   getStacks,
@@ -22,7 +23,6 @@ import { Input } from "@/components/ui/input";
 
 import { getEntityImageUrl } from "@/components/home/home-card-utils";
 import { HomeGroupCard } from "@/components/home/home-group-card";
-import { getMockHomeGroupStats } from "@/components/home/mock-home-group-stats";
 
 /**
  * Home page card view model for a group collection.
@@ -30,7 +30,7 @@ import { getMockHomeGroupStats } from "@/components/home/mock-home-group-stats";
  * @property href Optional fallback navigation target for opening the group.
  * @property id Group id.
  * @property imageUrl Hero image shown on the card.
- * @property masteryPercent Mock mastery percentage used until a real design exists.
+ * @property masteryPercent Mastered scientific-name percentage for the group.
  * @property name Localized group name.
  * @property originalIndex Stable source ordering used after favorites are grouped first.
  * @property speciesCount Total species count across the group's stacks.
@@ -60,6 +60,9 @@ export function HomePageClient() {
   const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>(
     {},
   );
+  const [groupMasteryPercents, setGroupMasteryPercents] = useState<
+    Map<string, number>
+  >(new Map());
   const [filterValue, setFilterValue] = useState("");
   const [loading, setLoading] = useState(true);
   const [pendingScrollFavoriteId, setPendingScrollFavoriteId] = useState<
@@ -109,6 +112,18 @@ export function HomePageClient() {
           return accumulator;
         }, {}),
       );
+      const progressMap = await getGroupScientificProgressSummaries(
+        user.uid,
+        visibleGroups.map((group) => group.id),
+      );
+      setGroupMasteryPercents(
+        new Map(
+          [...progressMap.entries()].map(([groupId, progress]) => [
+            groupId,
+            progress.masteredScientificPercent,
+          ]),
+        ),
+      );
     } catch (error) {
       logFirestoreError("Failed to load learn page data", error);
     } finally {
@@ -156,8 +171,6 @@ export function HomePageClient() {
           )
           .find(Boolean) ??
         null;
-      const mockStats = getMockHomeGroupStats(index);
-
       return {
         description: getLocalizedText(
           group.data.description,
@@ -166,13 +179,19 @@ export function HomePageClient() {
         href: groupStacks.length > 0 ? `/groups/${group.id}` : undefined,
         id: group.id,
         imageUrl: groupImageUrl,
-        masteryPercent: mockStats.masteryPercent,
+        masteryPercent: groupMasteryPercents.get(group.id) ?? 0,
         name: getLocalizedText(group.data.name, preferredLanguage),
         originalIndex: index,
         speciesCount,
       };
     });
-  }, [groups, preferredLanguage, stackSpeciesCounts, stacksByGroup]);
+  }, [
+    groupMasteryPercents,
+    groups,
+    preferredLanguage,
+    stackSpeciesCounts,
+    stacksByGroup,
+  ]);
 
   const sortedGroupCards = useMemo(() => {
     return [...groupCards].sort((left, right) => {

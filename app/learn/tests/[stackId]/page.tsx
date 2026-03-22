@@ -759,6 +759,8 @@ export default function TestPage() {
         pendingProgressRef.current.set(key, {
           userId: user.uid,
           speciesId: targetSpecies.id,
+          parentStackId: targetSpecies.parentStackId,
+          parentGroupId: targetSpecies.parentGroupId,
           nameType,
           ...updated,
         });

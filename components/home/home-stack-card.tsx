@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
  * @property imageUrl Optional stack hero image.
  * @property isFavorite Whether the favorite indicator is active.
  * @property learnHref Link target for opening the learn cards flow.
- * @property masteryPercent Mock mastery percentage shown in the card footer.
+ * @property masteryPercent Mastered scientific-name percentage shown in the card footer.
  * @property name Stack display name.
  * @property onToggleFavorite Callback fired when the favorite button is pressed.
  * @property speciesCount Total number of species across the stack.

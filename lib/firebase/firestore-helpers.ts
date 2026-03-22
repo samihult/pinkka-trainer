@@ -25,10 +25,14 @@ import {
 } from "firebase/storage";
 import { db, storage } from "./firebase-config";
 import type {
+  GlobalScientificProgress,
+  GroupScientificProgress,
   HomePreferences,
+  LearningStatusHistogram,
   LearningNameType,
   LearningProgress,
   LearningProgressState,
+  StackScientificProgress,
   StackLearningHistogram,
   TestPreferences,
   Species,
@@ -39,6 +43,7 @@ import type {
   User,
 } from "../types";
 import { normalizeTestPreferences } from "../tests/test-preferences";
+import { buildStackLearningHistogram } from "../learning/learning-histogram";
 import {
   fetchPinkkaGroupWithStacks,
   fetchPinkkaGroups,
@@ -2513,6 +2518,10 @@ export async function getLearningProgress(
       id: progressDoc.id,
       userId: data.userId,
       speciesId: data.speciesId,
+      parentStackId:
+        typeof data.parentStackId === "string" ? data.parentStackId : undefined,
+      parentGroupId:
+        typeof data.parentGroupId === "string" ? data.parentGroupId : undefined,
       nameType: data.nameType as LearningNameType,
       accuracyStabilityDays: data.accuracyStabilityDays ?? 0.5,
       speedStabilityDays: data.speedStabilityDays ?? 0.5,
@@ -2608,6 +2617,240 @@ function createEmptyLearningStatusHistogram(
   };
 }
 
+function createScientificProgressSummaryPercent(
+  histogram: LearningStatusHistogram,
+): number {
+  return histogram.mastered.percent;
+}
+
+function createStackScientificProgressSummary(
+  userId: string,
+  stackId: string,
+  groupId: string | undefined,
+  histogram: LearningStatusHistogram,
+  updatedAt: Date,
+): StackScientificProgress {
+  return {
+    id: `${userId}_${stackId}`,
+    userId,
+    stackId,
+    groupId,
+    masteredScientificCount: histogram.mastered.count,
+    totalSpeciesCount: histogram.total,
+    masteredScientificPercent:
+      createScientificProgressSummaryPercent(histogram),
+    updatedAt,
+  };
+}
+
+function createGroupScientificProgressSummary(
+  userId: string,
+  groupId: string,
+  masteredScientificCount: number,
+  totalSpeciesCount: number,
+  updatedAt: Date,
+): GroupScientificProgress {
+  return {
+    id: `${userId}_${groupId}`,
+    userId,
+    groupId,
+    masteredScientificCount,
+    totalSpeciesCount,
+    masteredScientificPercent:
+      totalSpeciesCount > 0
+        ? Math.round((masteredScientificCount / totalSpeciesCount) * 100)
+        : 0,
+    updatedAt,
+  };
+}
+
+function createGlobalScientificProgressSummary(
+  userId: string,
+  masteredScientificCount: number,
+  totalSpeciesCount: number,
+  updatedAt: Date,
+): GlobalScientificProgress {
+  return {
+    id: userId,
+    userId,
+    masteredScientificCount,
+    totalSpeciesCount,
+    masteredScientificPercent:
+      totalSpeciesCount > 0
+        ? Math.round((masteredScientificCount / totalSpeciesCount) * 100)
+        : 0,
+    updatedAt,
+  };
+}
+
+function toStackScientificProgressFromDoc(
+  docId: string,
+  data: DocumentData,
+): StackScientificProgress {
+  return {
+    id: docId,
+    userId: data.userId as string,
+    stackId: data.stackId as string,
+    groupId: typeof data.groupId === "string" ? data.groupId : undefined,
+    masteredScientificCount: data.masteredScientificCount ?? 0,
+    totalSpeciesCount: data.totalSpeciesCount ?? 0,
+    masteredScientificPercent: data.masteredScientificPercent ?? 0,
+    updatedAt: data.updatedAt?.toDate() ?? new Date(0),
+  };
+}
+
+function toGroupScientificProgressFromDoc(
+  docId: string,
+  data: DocumentData,
+): GroupScientificProgress {
+  return {
+    id: docId,
+    userId: data.userId as string,
+    groupId: data.groupId as string,
+    masteredScientificCount: data.masteredScientificCount ?? 0,
+    totalSpeciesCount: data.totalSpeciesCount ?? 0,
+    masteredScientificPercent: data.masteredScientificPercent ?? 0,
+    updatedAt: data.updatedAt?.toDate() ?? new Date(0),
+  };
+}
+
+function toGlobalScientificProgressFromDoc(
+  docId: string,
+  data: DocumentData,
+): GlobalScientificProgress {
+  return {
+    id: docId,
+    userId: data.userId as string,
+    masteredScientificCount: data.masteredScientificCount ?? 0,
+    totalSpeciesCount: data.totalSpeciesCount ?? 0,
+    masteredScientificPercent: data.masteredScientificPercent ?? 0,
+    updatedAt: data.updatedAt?.toDate() ?? new Date(0),
+  };
+}
+
+async function computeStackScientificProgressFallback(
+  userId: string,
+  stackIds: string[],
+): Promise<Map<string, StackScientificProgress>> {
+  const stacks = await Promise.all(
+    stackIds.map((stackId) => getStack(stackId)),
+  );
+  const stackSpeciesEntries = await Promise.all(
+    stackIds.map(
+      async (stackId) => [stackId, await getSpecies(stackId)] as const,
+    ),
+  );
+  const uniqueSpeciesIds = [
+    ...new Set(
+      stackSpeciesEntries.flatMap(([, species]) =>
+        species.map((item) => item.id),
+      ),
+    ),
+  ];
+  const progressMap = await getLearningProgressForSpeciesIds(
+    userId,
+    uniqueSpeciesIds,
+  );
+  const now = new Date();
+  const summaryMap = new Map<string, StackScientificProgress>();
+
+  stackSpeciesEntries.forEach(([stackId, species], index) => {
+    const histogram = buildStackLearningHistogram(
+      species.map((item) => item.id),
+      progressMap,
+      "scientific",
+      now,
+    );
+    summaryMap.set(
+      stackId,
+      createStackScientificProgressSummary(
+        userId,
+        stackId,
+        stacks[index]?.parentGroupId,
+        histogram,
+        now,
+      ),
+    );
+  });
+
+  return summaryMap;
+}
+
+async function computeGroupScientificProgressFallback(
+  userId: string,
+  groupIds: string[],
+): Promise<Map<string, GroupScientificProgress>> {
+  const groupStacksEntries = await Promise.all(
+    groupIds.map(
+      async (groupId) => [groupId, await getStacks(groupId)] as const,
+    ),
+  );
+  const uniqueStackIds = [
+    ...new Set(
+      groupStacksEntries.flatMap(([, stacks]) =>
+        stacks.map((stack) => stack.id),
+      ),
+    ),
+  ];
+  const stackProgressMap = await computeStackScientificProgressFallback(
+    userId,
+    uniqueStackIds,
+  );
+  const now = new Date();
+  const summaryMap = new Map<string, GroupScientificProgress>();
+
+  groupStacksEntries.forEach(([groupId, stacks]) => {
+    const masteredScientificCount = stacks.reduce(
+      (total, stack) =>
+        total + (stackProgressMap.get(stack.id)?.masteredScientificCount ?? 0),
+      0,
+    );
+    const totalSpeciesCount = stacks.reduce(
+      (total, stack) =>
+        total + (stackProgressMap.get(stack.id)?.totalSpeciesCount ?? 0),
+      0,
+    );
+    summaryMap.set(
+      groupId,
+      createGroupScientificProgressSummary(
+        userId,
+        groupId,
+        masteredScientificCount,
+        totalSpeciesCount,
+        now,
+      ),
+    );
+  });
+
+  return summaryMap;
+}
+
+async function computeGlobalScientificProgressFallback(
+  userId: string,
+): Promise<GlobalScientificProgress> {
+  const stacks = await getStacks();
+  const stackProgressMap = await computeStackScientificProgressFallback(
+    userId,
+    stacks.map((stack) => stack.id),
+  );
+  const now = new Date();
+  const masteredScientificCount = [...stackProgressMap.values()].reduce(
+    (total, progress) => total + progress.masteredScientificCount,
+    0,
+  );
+  const totalSpeciesCount = [...stackProgressMap.values()].reduce(
+    (total, progress) => total + progress.totalSpeciesCount,
+    0,
+  );
+
+  return createGlobalScientificProgressSummary(
+    userId,
+    masteredScientificCount,
+    totalSpeciesCount,
+    now,
+  );
+}
+
 /** Fetch stack learning histograms for a user. */
 export async function getStackLearningHistograms(
   userId: string,
@@ -2652,6 +2895,109 @@ export async function getStackLearningHistograms(
   }
 
   return histogramMap;
+}
+
+/** Fetch stack mastered-scientific-name progress summaries for a user. */
+export async function getStackScientificProgressSummaries(
+  userId: string,
+  stackIds: string[],
+): Promise<Map<string, StackScientificProgress>> {
+  const summaryMap = new Map<string, StackScientificProgress>();
+  if (stackIds.length === 0) return summaryMap;
+
+  const uniqueStackIds = [...new Set(stackIds)];
+  const chunks = chunkArray(uniqueStackIds, 10);
+  for (const chunk of chunks) {
+    const snapshot = await getDocs(
+      query(
+        collection(db, "stackScientificProgress"),
+        where("userId", "==", userId),
+        where("stackId", "in", chunk),
+      ),
+    );
+
+    snapshot.docs.forEach((docSnapshot) => {
+      const summary = toStackScientificProgressFromDoc(
+        docSnapshot.id,
+        docSnapshot.data(),
+      );
+      summaryMap.set(summary.stackId, summary);
+    });
+  }
+
+  const missingStackIds = uniqueStackIds.filter(
+    (stackId) => !summaryMap.has(stackId),
+  );
+  if (missingStackIds.length > 0) {
+    const fallbackMap = await computeStackScientificProgressFallback(
+      userId,
+      missingStackIds,
+    );
+    fallbackMap.forEach((summary, stackId) => {
+      summaryMap.set(stackId, summary);
+    });
+  }
+
+  return summaryMap;
+}
+
+/** Fetch group mastered-scientific-name progress summaries for a user. */
+export async function getGroupScientificProgressSummaries(
+  userId: string,
+  groupIds: string[],
+): Promise<Map<string, GroupScientificProgress>> {
+  const summaryMap = new Map<string, GroupScientificProgress>();
+  if (groupIds.length === 0) return summaryMap;
+
+  const uniqueGroupIds = [...new Set(groupIds)];
+  const chunks = chunkArray(uniqueGroupIds, 10);
+  for (const chunk of chunks) {
+    const snapshot = await getDocs(
+      query(
+        collection(db, "groupScientificProgress"),
+        where("userId", "==", userId),
+        where("groupId", "in", chunk),
+      ),
+    );
+
+    snapshot.docs.forEach((docSnapshot) => {
+      const summary = toGroupScientificProgressFromDoc(
+        docSnapshot.id,
+        docSnapshot.data(),
+      );
+      summaryMap.set(summary.groupId, summary);
+    });
+  }
+
+  const missingGroupIds = uniqueGroupIds.filter(
+    (groupId) => !summaryMap.has(groupId),
+  );
+  if (missingGroupIds.length > 0) {
+    const fallbackMap = await computeGroupScientificProgressFallback(
+      userId,
+      missingGroupIds,
+    );
+    fallbackMap.forEach((summary, groupId) => {
+      summaryMap.set(groupId, summary);
+    });
+  }
+
+  return summaryMap;
+}
+
+/** Fetch the global mastered-scientific-name progress summary for a user. */
+export async function getGlobalScientificProgressSummary(
+  userId: string,
+): Promise<GlobalScientificProgress> {
+  const docSnapshot = await getDoc(doc(db, "globalScientificProgress", userId));
+  if (docSnapshot.exists()) {
+    return toGlobalScientificProgressFromDoc(
+      docSnapshot.id,
+      docSnapshot.data(),
+    );
+  }
+
+  return computeGlobalScientificProgressFallback(userId);
 }
 
 /** Upsert a stack learning histogram record. */

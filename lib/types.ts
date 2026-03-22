@@ -70,9 +70,46 @@ export interface LearningProgress extends LearningProgressState {
   userId: string;
   /** Species document id. */
   speciesId: string;
+  /** Parent stack id used for aggregate progress updates. */
+  parentStackId?: string;
+  /** Parent group id used for aggregate progress updates. */
+  parentGroupId?: string;
   /** Name variant that is being tracked. */
   nameType: LearningNameType;
 }
+
+/** Base progress summary for mastered scientific names at one scope. */
+export interface ScientificProgressSummary {
+  /** Firestore document id. */
+  id: string;
+  /** UID of the learner. */
+  userId: string;
+  /** Count of mastered scientific names in the scope. */
+  masteredScientificCount: number;
+  /** Total visible species count in the scope. */
+  totalSpeciesCount: number;
+  /** Mastered scientific-name percentage in the scope. */
+  masteredScientificPercent: number;
+  /** Last aggregate update timestamp. */
+  updatedAt: Date;
+}
+
+/** User progress summary cached per stack. */
+export interface StackScientificProgress extends ScientificProgressSummary {
+  /** Stack document id. */
+  stackId: string;
+  /** Parent group id when available. */
+  groupId?: string;
+}
+
+/** User progress summary cached per group. */
+export interface GroupScientificProgress extends ScientificProgressSummary {
+  /** Group document id. */
+  groupId: string;
+}
+
+/** User progress summary cached globally across visible species. */
+export interface GlobalScientificProgress extends ScientificProgressSummary {}
 
 /** Histogram summary stored per user and stack. */
 export interface StackLearningHistogram {

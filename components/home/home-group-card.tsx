@@ -15,7 +15,7 @@ import { useI18n } from "@/lib/i18n";
  * @property href Optional link target for opening the group.
  * @property imageUrl Optional group hero image.
  * @property isFavorite Whether the favorite indicator is active.
- * @property masteryPercent Mock mastery percentage shown in the card footer.
+ * @property masteryPercent Mastered scientific-name percentage shown in the card footer.
  * @property name Group display name.
  * @property onToggleFavorite Callback fired when the favorite button is pressed.
  * @property speciesCount Total number of species across the group's stacks.
