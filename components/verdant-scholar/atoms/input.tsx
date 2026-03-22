@@ -10,10 +10,12 @@ import { VerdantScholarButton } from "./button";
  * Props for Verdant Scholar inputs.
  * @property actionLabel Optional embedded action button label.
  * @property icon Optional icon shown at the start of the field.
+ * @property onActionClick Optional handler for the embedded action button.
  */
 export interface VerdantScholarInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   actionLabel?: string;
   icon?: React.ReactNode;
+  onActionClick?: () => void;
 }
 
 /** Pill-shaped search field used in navigation and hero sections. */
@@ -21,7 +23,7 @@ export const VerdantScholarInput = React.forwardRef<
   HTMLInputElement,
   VerdantScholarInputProps
 >(function VerdantScholarInput(
-  { actionLabel, className, icon, type = "text", ...props },
+  { actionLabel, className, icon, onActionClick, type = "text", ...props },
   ref,
 ) {
   return (
@@ -42,6 +44,7 @@ export const VerdantScholarInput = React.forwardRef<
       {actionLabel ? (
         <VerdantScholarButton
           className="absolute right-3 top-1/2 -translate-y-1/2"
+          onClick={onActionClick}
           size="sm"
           type="button"
         >

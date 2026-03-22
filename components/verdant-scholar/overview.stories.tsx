@@ -84,7 +84,7 @@ export const Gallery: Story = {
         <VerdantScholarSectionHeading
           eyebrow="Verdant Scholar"
           title="Storybook gallery for the Stitch-derived design system"
-          description="Every organism story maps to one of the attached Stitch screens while the atoms and molecules keep the patterns reusable for later adoption in the app."
+          description="Every organism story maps to one of the attached Stitch screens, and the atoms and molecules now also have individual component entries for focused review, controls, and interactive demos."
         />
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {storyCards.map((card) => (

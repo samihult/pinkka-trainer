@@ -9,7 +9,8 @@ import { VerdantScholarProgressBar } from "./atoms/progress-bar";
 import { VerdantScholarTheme } from "./verdant-scholar-theme";
 
 const meta: Meta = {
-  title: "Verdant Scholar/Atoms",
+  title: "Verdant Scholar/Atoms/Overview",
+  tags: ["autodocs"],
   parameters: {
     layout: "padded",
   },
@@ -20,6 +21,7 @@ export default meta;
 type Story = StoryObj;
 
 export const Gallery: Story = {
+  name: "Gallery",
   render: () => (
     <VerdantScholarTheme className="space-y-8">
       <div className="space-y-2">

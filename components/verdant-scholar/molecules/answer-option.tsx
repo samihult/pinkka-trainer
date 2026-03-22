@@ -1,4 +1,5 @@
 /** Verdant Scholar answer options model the multiple-choice states from the assessment screen. */
+import type { MouseEventHandler } from "react";
 import { CheckCircle2, XCircle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -7,6 +8,7 @@ import { cn } from "@/lib/utils";
  * Props for Verdant Scholar answer options.
  * @property className Optional wrapper classes.
  * @property label Primary answer text.
+ * @property onSelect Optional click handler that makes the row interactive.
  * @property optionKey Letter or short key shown at the start.
  * @property state Visual state for the answer.
  * @property suffix Optional trailing helper label.
@@ -14,6 +16,7 @@ import { cn } from "@/lib/utils";
 export interface VerdantScholarAnswerOptionProps {
   className?: string;
   label: string;
+  onSelect?: MouseEventHandler<HTMLButtonElement>;
   optionKey: string;
   state?: "default" | "correct" | "incorrect";
   suffix?: string;
@@ -35,18 +38,14 @@ const stateClasses: Record<
 export function VerdantScholarAnswerOption({
   className,
   label,
+  onSelect,
   optionKey,
   state = "default",
   suffix,
 }: VerdantScholarAnswerOptionProps) {
-  return (
-    <article
-      className={cn(
-        "flex items-center gap-4 rounded-[var(--vs-radius-md)] px-5 py-5",
-        stateClasses[state],
-        className,
-      )}
-    >
+  const isInteractive = Boolean(onSelect);
+  const content = (
+    <>
       <div
         className={cn(
           "flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-bold",
@@ -73,6 +72,25 @@ export function VerdantScholarAnswerOption({
       {state === "incorrect" ? (
         <XCircle className="size-4 text-[var(--vs-color-error)]" />
       ) : null}
-    </article>
+    </>
   );
+
+  const classNames = cn(
+    "flex items-center gap-4 rounded-[var(--vs-radius-md)] px-5 py-5",
+    isInteractive
+      ? "w-full text-left transition-transform duration-200 outline-none hover:-translate-y-px focus-visible:shadow-[var(--vs-shadow-focus)]"
+      : "",
+    stateClasses[state],
+    className,
+  );
+
+  if (isInteractive) {
+    return (
+      <button className={classNames} onClick={onSelect} type="button">
+        {content}
+      </button>
+    );
+  }
+
+  return <article className={classNames}>{content}</article>;
 }

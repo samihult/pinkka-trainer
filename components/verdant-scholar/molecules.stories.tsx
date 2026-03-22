@@ -11,7 +11,8 @@ import { VerdantScholarStackCard } from "./molecules/stack-card";
 import { VerdantScholarTheme } from "./verdant-scholar-theme";
 
 const meta: Meta = {
-  title: "Verdant Scholar/Molecules",
+  title: "Verdant Scholar/Molecules/Overview",
+  tags: ["autodocs"],
   parameters: {
     layout: "padded",
   },
@@ -22,6 +23,7 @@ export default meta;
 type Story = StoryObj;
 
 export const Gallery: Story = {
+  name: "Gallery",
   render: () => (
     <VerdantScholarTheme className="space-y-10">
       <VerdantScholarSectionHeading
