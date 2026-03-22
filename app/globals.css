@@ -7,65 +7,66 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* <CHANGE> Updated theme to match educational design with sage green and warm tones */
+/* Global app theme tokens aligned to the Verdant Scholar palette and typography. */
 :root {
-  --background: oklch(0.99 0.005 120);
-  --foreground: oklch(0.25 0.02 140);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.02 140);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.02 140);
-  --primary: oklch(0.52 0.12 150);
-  --primary-foreground: oklch(0.99 0.005 120);
-  --secondary: oklch(0.88 0.03 140);
-  --secondary-foreground: oklch(0.25 0.02 140);
-  --muted: oklch(0.95 0.01 140);
-  --muted-foreground: oklch(0.5 0.02 140);
-  --accent: oklch(0.75 0.15 85);
-  --accent-foreground: oklch(0.99 0.005 120);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.99 0.005 120);
-  --border: oklch(0.9 0.01 140);
-  --input: oklch(0.9 0.01 140);
-  --ring: oklch(0.52 0.12 150);
-  --chart-1: oklch(0.52 0.12 150);
-  --chart-2: oklch(0.75 0.15 85);
-  --chart-3: oklch(0.65 0.18 200);
-  --chart-4: oklch(0.7 0.12 50);
-  --chart-5: oklch(0.6 0.1 280);
+  --background: #fcf9f8;
+  --foreground: #1c1b1b;
+  --card: #ffffff;
+  --card-foreground: #1c1b1b;
+  --popover: #f6f3f2;
+  --popover-foreground: #1c1b1b;
+  --primary: #3f6a00;
+  --primary-foreground: #ffffff;
+  --secondary: #caecbc;
+  --secondary-foreground: #4f6c45;
+  --muted: #f0eded;
+  --muted-foreground: #434939;
+  --accent: #c4b44f;
+  --accent-foreground: #4e4500;
+  --destructive: #ba1a1a;
+  --destructive-foreground: #ffffff;
+  --border: #c2c9b4;
+  --input: #c2c9b4;
+  --ring: #3f6a00;
+  --chart-1: #3f6a00;
+  --chart-2: #496640;
+  --chart-3: #6b5f00;
+  --chart-4: #8cc24d;
+  --chart-5: #d8c860;
   --radius: 0.75rem;
 }
 
 .dark {
-  --background: oklch(0.18 0.02 140);
-  --foreground: oklch(0.95 0.01 120);
-  --card: oklch(0.2 0.02 140);
-  --card-foreground: oklch(0.95 0.01 120);
-  --popover: oklch(0.2 0.02 140);
-  --popover-foreground: oklch(0.95 0.01 120);
-  --primary: oklch(0.65 0.12 150);
-  --primary-foreground: oklch(0.18 0.02 140);
-  --secondary: oklch(0.3 0.03 140);
-  --secondary-foreground: oklch(0.95 0.01 120);
-  --muted: oklch(0.28 0.02 140);
-  --muted-foreground: oklch(0.65 0.02 140);
-  --accent: oklch(0.75 0.15 85);
-  --accent-foreground: oklch(0.18 0.02 140);
-  --destructive: oklch(0.55 0.2 27);
-  --destructive-foreground: oklch(0.95 0.01 120);
-  --border: oklch(0.3 0.02 140);
-  --input: oklch(0.3 0.02 140);
-  --ring: oklch(0.65 0.12 150);
-  --chart-1: oklch(0.65 0.12 150);
-  --chart-2: oklch(0.75 0.15 85);
-  --chart-3: oklch(0.65 0.18 200);
-  --chart-4: oklch(0.7 0.12 50);
-  --chart-5: oklch(0.6 0.1 280);
+  --background: #313030;
+  --foreground: #f3f0ef;
+  --card: #3a3838;
+  --card-foreground: #f3f0ef;
+  --popover: #3a3838;
+  --popover-foreground: #f3f0ef;
+  --primary: #9fd75f;
+  --primary-foreground: #1c1b1b;
+  --secondary: #496640;
+  --secondary-foreground: #f3f0ef;
+  --muted: #434141;
+  --muted-foreground: #dcd9d9;
+  --accent: #d8c860;
+  --accent-foreground: #1c1b1b;
+  --destructive: #ffb4ab;
+  --destructive-foreground: #690005;
+  --border: #737968;
+  --input: #737968;
+  --ring: #9fd75f;
+  --chart-1: #9fd75f;
+  --chart-2: #caecbc;
+  --chart-3: #f6e479;
+  --chart-4: #8cc24d;
+  --chart-5: #d8c860;
 }
 
 @theme inline {
-  --font-sans: "Geist", "Geist Fallback";
-  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --font-sans: var(--font-inter);
+  --font-mono:
+    "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -100,7 +101,53 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    color-scheme: light;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-manrope), "Arial Narrow", "Avenir Next", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--foreground);
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 4vw, 4rem);
+  }
+
+  h2 {
+    font-size: clamp(1.9rem, 3vw, 3rem);
+  }
+
+  h3 {
+    font-size: clamp(1.4rem, 2.3vw, 2rem);
+  }
+
+  label,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  }
+
+  label {
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
   }
 }
