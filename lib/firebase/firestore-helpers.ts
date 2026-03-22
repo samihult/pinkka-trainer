@@ -25,6 +25,7 @@ import {
 } from "firebase/storage";
 import { db, storage } from "./firebase-config";
 import type {
+  HomePreferences,
   LearningNameType,
   LearningProgress,
   LearningProgressState,
@@ -117,6 +118,16 @@ export interface ImportedPinkkaSpeciesEntry {
   speciesId: number;
   /** Original Pinkka species payload. */
   entity: PinkkaSpeciesDetail;
+}
+
+/** Normalize stored favorite group ids into a unique string array. */
+function normalizeFavoriteGroupIds(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return [
+    ...new Set(
+      value.filter((entry): entry is string => typeof entry === "string"),
+    ),
+  ];
 }
 
 /** Imported Pinkka stack entry available for creating editable stacks. */
@@ -2438,6 +2449,34 @@ export async function updateUserTestPreferences(
   await updateDoc(doc(db, "users", userId), {
     "preferences.test": preferences,
     "preferences.quiz": deleteField(),
+  });
+}
+
+/** Fetch home preferences for a user by uid. */
+export async function getUserHomePreferences(
+  userId: string,
+): Promise<HomePreferences | null> {
+  const userDoc = await getDoc(doc(db, "users", userId));
+  if (!userDoc.exists()) return null;
+
+  const favoriteGroupIds = normalizeFavoriteGroupIds(
+    userDoc.data().preferences?.home?.favoriteGroupIds,
+  );
+
+  return {
+    favoriteGroupIds,
+  };
+}
+
+/** Update home preferences for a user by uid. */
+export async function updateUserHomePreferences(
+  userId: string,
+  preferences: HomePreferences,
+): Promise<void> {
+  await updateDoc(doc(db, "users", userId), {
+    "preferences.home.favoriteGroupIds": normalizeFavoriteGroupIds(
+      preferences.favoriteGroupIds,
+    ),
   });
 }
 

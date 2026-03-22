@@ -102,10 +102,18 @@ export interface TestPreferences {
   answerMode: TestAnswerMode;
 }
 
+/** Home-page collection preferences stored in the user profile. */
+export interface HomePreferences {
+  /** Group ids marked as favorites by the current user. */
+  favoriteGroupIds: string[];
+}
+
 /** User-specific preferences stored with the profile. */
 export interface UserPreferences {
   /** Test settings used when starting a new test. */
-  test: TestPreferences;
+  test?: TestPreferences;
+  /** Home-page collection preferences. */
+  home?: HomePreferences;
 }
 
 /** Authenticated user profile. */

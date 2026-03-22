@@ -11,15 +11,17 @@ import { useI18n } from "@/lib/i18n";
 
 /**
  * Props for the HomeGroupCard component.
+ * @property cardRef Optional ref for the card article element.
  * @property href Optional link target for opening the group.
  * @property imageUrl Optional group hero image.
- * @property isFavorite Whether the mock favorite indicator is active.
+ * @property isFavorite Whether the favorite indicator is active.
  * @property masteryPercent Mock mastery percentage shown in the card footer.
  * @property name Group display name.
  * @property onToggleFavorite Callback fired when the favorite button is pressed.
  * @property speciesCount Total number of species across the group's stacks.
  */
 export interface HomeGroupCardProps {
+  cardRef?: (node: HTMLElement | null) => void;
   href?: string;
   imageUrl?: string | null;
   isFavorite: boolean;
@@ -31,6 +33,7 @@ export interface HomeGroupCardProps {
 
 /** Collection card used on the redesigned home page group grid. */
 export function HomeGroupCard({
+  cardRef,
   href,
   imageUrl,
   isFavorite,
@@ -86,7 +89,10 @@ export function HomeGroupCard({
   );
 
   return (
-    <article className="relative overflow-hidden rounded-lg bg-card shadow-[0_18px_38px_rgba(28,27,27,0.06)]">
+    <article
+      ref={cardRef}
+      className="relative overflow-hidden rounded-lg bg-card shadow-[0_18px_38px_rgba(28,27,27,0.06)]"
+    >
       <button
         type="button"
         aria-label={t("home.favorite")}

@@ -21,6 +21,16 @@ import { auth, db } from "./firebase/firebase-config";
 import type { User, UserRole } from "./types";
 import { normalizeTestPreferences } from "./tests/test-preferences";
 
+/** Normalize stored favorite group ids into a unique string array. */
+function normalizeFavoriteGroupIds(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return [
+    ...new Set(
+      value.filter((entry): entry is string => typeof entry === "string"),
+    ),
+  ];
+}
+
 /** Provides app-wide auth state and actions for Firebase providers. */
 /** Context shape for authentication state and actions. */
 interface AuthContextType {
@@ -58,9 +68,18 @@ async function createOrGetUserDocument(
       const storedTestPreferences = rawStoredPreferences
         ? normalizeTestPreferences(rawStoredPreferences)
         : undefined;
-      const storedPreferences = storedTestPreferences
-        ? { test: storedTestPreferences }
-        : undefined;
+      const favoriteGroupIds = normalizeFavoriteGroupIds(
+        userData.preferences?.home?.favoriteGroupIds,
+      );
+      const storedPreferences =
+        storedTestPreferences || favoriteGroupIds.length > 0
+          ? {
+              ...(storedTestPreferences ? { test: storedTestPreferences } : {}),
+              ...(favoriteGroupIds.length > 0
+                ? { home: { favoriteGroupIds } }
+                : {}),
+            }
+          : undefined;
       return {
         uid: firebaseUser.uid,
         email: firebaseUser.email ?? undefined,

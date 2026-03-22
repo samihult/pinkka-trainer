@@ -1,12 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import {
   getGroups,
   getSpecies,
   getStacks,
+  getUserHomePreferences,
+  updateUserHomePreferences,
 } from "@/lib/firebase/firestore-helpers";
 import type { EntityImage, Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/content/content-display";
@@ -27,9 +29,9 @@ import { getMockHomeGroupStats } from "@/components/home/mock-home-group-stats";
  * @property href Optional fallback navigation target for opening the group.
  * @property id Group id.
  * @property imageUrl Hero image shown on the card.
- * @property initialFavorite Mock favorite state used until a real design exists.
  * @property masteryPercent Mock mastery percentage used until a real design exists.
  * @property name Localized group name.
+ * @property originalIndex Stable source ordering used after favorites are grouped first.
  * @property speciesCount Total species count across the group's stacks.
  */
 interface HomeGroupCardViewModel {
@@ -37,9 +39,9 @@ interface HomeGroupCardViewModel {
   href?: string;
   id: string;
   imageUrl: string | null;
-  initialFavorite: boolean;
   masteryPercent: number;
   name: string;
+  originalIndex: number;
   speciesCount: number;
 }
 
@@ -76,12 +78,19 @@ export function HomePageClient() {
   );
   const [filterValue, setFilterValue] = useState("");
   const [loading, setLoading] = useState(true);
+  const [pendingScrollFavoriteId, setPendingScrollFavoriteId] = useState<
+    string | null
+  >(null);
+  const cardRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const loadData = useCallback(async () => {
     try {
-      const [groupsData, stacksData] = await Promise.all([
+      if (!user) return;
+
+      const [groupsData, stacksData, homePreferences] = await Promise.all([
         getGroups(),
         getStacks(),
+        getUserHomePreferences(user.uid),
       ]);
 
       const visibleGroups = [...groupsData]
@@ -109,22 +118,19 @@ export function HomePageClient() {
           return accumulator;
         }, new Map()),
       );
+      const favoriteGroupIds = new Set(homePreferences?.favoriteGroupIds ?? []);
       setFavoriteStates(
-        visibleGroups.reduce<Record<string, boolean>>(
-          (accumulator, group, index) => {
-            accumulator[group.id] =
-              getMockHomeGroupStats(index).initialFavorite;
-            return accumulator;
-          },
-          {},
-        ),
+        visibleGroups.reduce<Record<string, boolean>>((accumulator, group) => {
+          accumulator[group.id] = favoriteGroupIds.has(group.id);
+          return accumulator;
+        }, {}),
       );
     } catch (error) {
       logFirestoreError("Failed to load learn page data", error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -177,24 +183,99 @@ export function HomePageClient() {
         href: firstStackId ? `/learn/cards/${firstStackId}` : undefined,
         id: group.id,
         imageUrl: groupImageUrl,
-        initialFavorite: mockStats.initialFavorite,
         masteryPercent: mockStats.masteryPercent,
         name: getLocalizedText(group.data.name, preferredLanguage),
+        originalIndex: index,
         speciesCount,
       };
     });
   }, [groups, preferredLanguage, stackSpeciesCounts, stacksByGroup]);
 
+  const sortedGroupCards = useMemo(() => {
+    return [...groupCards].sort((left, right) => {
+      const leftFavorite = favoriteStates[left.id] ? 1 : 0;
+      const rightFavorite = favoriteStates[right.id] ? 1 : 0;
+      if (leftFavorite !== rightFavorite) return rightFavorite - leftFavorite;
+      return left.originalIndex - right.originalIndex;
+    });
+  }, [favoriteStates, groupCards]);
+
   const filteredGroupCards = useMemo(() => {
     const normalizedFilter = filterValue.trim().toLocaleLowerCase();
-    if (!normalizedFilter) return groupCards;
+    if (!normalizedFilter) return sortedGroupCards;
 
-    return groupCards.filter((group) =>
+    return sortedGroupCards.filter((group) =>
       [group.name, group.description].some((value) =>
         value.toLocaleLowerCase().includes(normalizedFilter),
       ),
     );
-  }, [filterValue, groupCards]);
+  }, [filterValue, sortedGroupCards]);
+
+  const persistFavoriteState = useCallback(
+    async (nextFavoriteStates: Record<string, boolean>) => {
+      if (!user) return;
+
+      const favoriteGroupIds = groups
+        .filter((group) => nextFavoriteStates[group.id])
+        .map((group) => group.id);
+
+      await updateUserHomePreferences(user.uid, {
+        favoriteGroupIds,
+      });
+    },
+    [groups, user],
+  );
+
+  useEffect(() => {
+    if (!pendingScrollFavoriteId || !favoriteStates[pendingScrollFavoriteId]) {
+      return;
+    }
+
+    const frameId = window.requestAnimationFrame(() => {
+      const cardElement = cardRefs.current[pendingScrollFavoriteId];
+      if (!cardElement) {
+        setPendingScrollFavoriteId(null);
+        return;
+      }
+
+      const { top, bottom } = cardElement.getBoundingClientRect();
+      const isVisible = top >= 0 && bottom <= window.innerHeight;
+
+      if (!isVisible) {
+        cardElement.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+
+      setPendingScrollFavoriteId(null);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [favoriteStates, filteredGroupCards, pendingScrollFavoriteId]);
+
+  const handleFavoriteToggle = useCallback(
+    async (groupId: string) => {
+      const currentValue = favoriteStates[groupId] ?? false;
+      const nextValue = !currentValue;
+      const nextFavoriteStates = {
+        ...favoriteStates,
+        [groupId]: nextValue,
+      };
+
+      setFavoriteStates(nextFavoriteStates);
+      setPendingScrollFavoriteId(nextValue ? groupId : null);
+
+      try {
+        await persistFavoriteState(nextFavoriteStates);
+      } catch (error) {
+        logFirestoreError("Failed to update favorite groups", error);
+        setFavoriteStates(favoriteStates);
+        setPendingScrollFavoriteId(null);
+      }
+    },
+    [favoriteStates, persistFavoriteState],
+  );
 
   if (loading) {
     return (
@@ -233,18 +314,16 @@ export function HomePageClient() {
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
             {filteredGroupCards.map((group) => (
               <HomeGroupCard
+                cardRef={(node) => {
+                  cardRefs.current[group.id] = node;
+                }}
                 key={group.id}
                 href={group.href}
                 imageUrl={group.imageUrl}
-                isFavorite={favoriteStates[group.id] ?? group.initialFavorite}
+                isFavorite={favoriteStates[group.id] ?? false}
                 masteryPercent={group.masteryPercent}
                 name={group.name}
-                onToggleFavorite={() =>
-                  setFavoriteStates((current) => ({
-                    ...current,
-                    [group.id]: !(current[group.id] ?? group.initialFavorite),
-                  }))
-                }
+                onToggleFavorite={() => void handleFavoriteToggle(group.id)}
                 speciesCount={group.speciesCount}
               />
             ))}
