@@ -48,8 +48,12 @@ const EN_MESSAGES = {
   "auth.signUp.createdDescription": "Welcome to Pinkka. Start learning now!",
   "auth.signUp.failureDescription": "Failed to create account",
 
-  "home.title": "Learn Species",
+  "home.title": "Collections",
   "home.subtitle": "Choose a stack to study with cards or take a test",
+  "home.filterPlaceholder": "Filter...",
+  "home.favorite": "Favorite collection",
+  "home.mastery": "Mastery",
+  "home.noCollectionsMatchFilter": "No collections match the current filter",
   "home.noLearningDataYet": "No learning data yet",
   "home.speciesCount": "{count} species",
   "home.learn": "Learn",
@@ -267,8 +271,13 @@ const FI_MESSAGES: TranslationTable = {
   "auth.signUp.createdDescription": "Tervetuloa Pinkkaan. Aloita oppiminen!",
   "auth.signUp.failureDescription": "Tilin luonti epäonnistui",
 
-  "home.title": "Opiskele lajeja",
+  "home.title": "Kokoelmat",
   "home.subtitle": "Valitse pinkka kortteihin tai testiin",
+  "home.filterPlaceholder": "Suodata...",
+  "home.favorite": "Suosikkikokoelma",
+  "home.mastery": "Hallinta",
+  "home.noCollectionsMatchFilter":
+    "Nykyisellä suodatuksella ei löytynyt kokoelmia",
   "home.noLearningDataYet": "Ei vielä oppimisdataa",
   "home.speciesCount": "{count} lajia",
   "home.learn": "Opiskele",
@@ -479,8 +488,13 @@ const SV_MESSAGES: TranslationTable = {
   "auth.signUp.createdDescription": "Välkommen till Pinkka. Börja lära nu!",
   "auth.signUp.failureDescription": "Kunde inte skapa konto",
 
-  "home.title": "Lär dig arter",
+  "home.title": "Samlingar",
   "home.subtitle": "Välj en stack för kortstudier eller test",
+  "home.filterPlaceholder": "Filtrera...",
+  "home.favorite": "Favoritsamling",
+  "home.mastery": "Behärskning",
+  "home.noCollectionsMatchFilter":
+    "Inga samlingar matchar det aktuella filtret",
   "home.noLearningDataYet": "Ingen lärdata ännu",
   "home.speciesCount": "{count} arter",
   "home.learn": "Lär",
