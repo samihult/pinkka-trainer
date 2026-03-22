@@ -10,7 +10,7 @@ import {
   getUserHomePreferences,
   updateUserHomePreferences,
 } from "@/lib/firebase/firestore-helpers";
-import type { EntityImage, Group, Stack } from "@/lib/types";
+import type { Group, Stack } from "@/lib/types";
 import { getLocalizedText } from "@/lib/content/content-display";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
@@ -20,6 +20,7 @@ import { useAuth } from "@/lib/auth-context";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
+import { getEntityImageUrl } from "@/components/home/home-card-utils";
 import { HomeGroupCard } from "@/components/home/home-group-card";
 import { getMockHomeGroupStats } from "@/components/home/mock-home-group-stats";
 
@@ -43,23 +44,6 @@ interface HomeGroupCardViewModel {
   name: string;
   originalIndex: number;
   speciesCount: number;
-}
-
-/** Resolve the best available entity image URL for group and stack hero cards. */
-function getEntityImageUrl(images?: EntityImage[]): string | null {
-  if (!images?.length) return null;
-
-  for (const image of images) {
-    const url =
-      image.urls?.large ||
-      image.urls?.full ||
-      image.urls?.square ||
-      image.urls?.thumbnail ||
-      image.urls?.original;
-    if (url) return url;
-  }
-
-  return null;
 }
 
 /** Home page client component for selecting groups and stacks to learn. */
@@ -172,7 +156,6 @@ export function HomePageClient() {
           )
           .find(Boolean) ??
         null;
-      const firstStackId = groupStacks[0]?.id;
       const mockStats = getMockHomeGroupStats(index);
 
       return {
@@ -180,7 +163,7 @@ export function HomePageClient() {
           group.data.description,
           preferredLanguage,
         ),
-        href: firstStackId ? `/learn/cards/${firstStackId}` : undefined,
+        href: groupStacks.length > 0 ? `/groups/${group.id}` : undefined,
         id: group.id,
         imageUrl: groupImageUrl,
         masteryPercent: mockStats.masteryPercent,

@@ -120,8 +120,8 @@ export interface ImportedPinkkaSpeciesEntry {
   entity: PinkkaSpeciesDetail;
 }
 
-/** Normalize stored favorite group ids into a unique string array. */
-function normalizeFavoriteGroupIds(value: unknown): string[] {
+/** Normalize stored preference ids into a unique string array. */
+function normalizePreferenceIds(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
   return [
     ...new Set(
@@ -2459,25 +2459,41 @@ export async function getUserHomePreferences(
   const userDoc = await getDoc(doc(db, "users", userId));
   if (!userDoc.exists()) return null;
 
-  const favoriteGroupIds = normalizeFavoriteGroupIds(
+  const favoriteGroupIds = normalizePreferenceIds(
     userDoc.data().preferences?.home?.favoriteGroupIds,
+  );
+  const favoriteStackIds = normalizePreferenceIds(
+    userDoc.data().preferences?.home?.favoriteStackIds,
   );
 
   return {
     favoriteGroupIds,
+    favoriteStackIds,
   };
 }
 
 /** Update home preferences for a user by uid. */
 export async function updateUserHomePreferences(
   userId: string,
-  preferences: HomePreferences,
+  preferences: Partial<HomePreferences>,
 ): Promise<void> {
-  await updateDoc(doc(db, "users", userId), {
-    "preferences.home.favoriteGroupIds": normalizeFavoriteGroupIds(
+  const updates: Record<string, string[]> = {};
+
+  if ("favoriteGroupIds" in preferences) {
+    updates["preferences.home.favoriteGroupIds"] = normalizePreferenceIds(
       preferences.favoriteGroupIds,
-    ),
-  });
+    );
+  }
+
+  if ("favoriteStackIds" in preferences) {
+    updates["preferences.home.favoriteStackIds"] = normalizePreferenceIds(
+      preferences.favoriteStackIds,
+    );
+  }
+
+  if (Object.keys(updates).length === 0) return;
+
+  await updateDoc(doc(db, "users", userId), updates);
 }
 
 // Learning progress operations

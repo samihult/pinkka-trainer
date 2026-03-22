@@ -62,6 +62,11 @@ const EN_MESSAGES = {
   "home.noMaterialsTitle": "No learning materials available yet",
   "home.noMaterialsSubtitle":
     "Check back later or contact an editor to add content",
+  "group.backToHome": "Back to collections",
+  "group.favoriteStack": "Favorite stack",
+  "group.noStacksMatchFilter": "No stacks match the current filter",
+  "group.notFoundTitle": "Collection not found",
+  "group.notFoundDescription": "The requested collection could not be loaded.",
   "learn.cards.progressLabel": "Species {current} of {total}",
   "learn.cards.shuffle": "Shuffle",
   "learn.cards.noSpeciesWithImages":
@@ -286,6 +291,11 @@ const FI_MESSAGES: TranslationTable = {
   "home.noMaterialsTitle": "Oppimateriaalia ei ole vielä saatavilla",
   "home.noMaterialsSubtitle":
     "Tarkista myöhemmin tai pyydä toimittajaa lisäämään sisältöä",
+  "group.backToHome": "Takaisin kokoelmiin",
+  "group.favoriteStack": "Suosikkipinkka",
+  "group.noStacksMatchFilter": "Yksikään pinkka ei vastaa nykyistä suodatinta",
+  "group.notFoundTitle": "Kokoelmaa ei löytynyt",
+  "group.notFoundDescription": "Pyydettyä kokoelmaa ei voitu ladata.",
   "learn.cards.progressLabel": "Laji {current} / {total}",
   "learn.cards.shuffle": "Sekoita",
   "learn.cards.noSpeciesWithImages":
@@ -503,6 +513,11 @@ const SV_MESSAGES: TranslationTable = {
   "home.noMaterialsTitle": "Inget läromaterial tillgängligt ännu",
   "home.noMaterialsSubtitle":
     "Kom tillbaka senare eller kontakta en redaktör för att lägga till innehåll",
+  "group.backToHome": "Tillbaka till samlingar",
+  "group.favoriteStack": "Favoritstack",
+  "group.noStacksMatchFilter": "Inga stackar matchar det aktuella filtret",
+  "group.notFoundTitle": "Samlingen hittades inte",
+  "group.notFoundDescription": "Den begärda samlingen kunde inte laddas.",
   "learn.cards.progressLabel": "Art {current} av {total}",
   "learn.cards.shuffle": "Blanda",
   "learn.cards.noSpeciesWithImages":

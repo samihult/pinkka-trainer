@@ -21,8 +21,8 @@ import { auth, db } from "./firebase/firebase-config";
 import type { User, UserRole } from "./types";
 import { normalizeTestPreferences } from "./tests/test-preferences";
 
-/** Normalize stored favorite group ids into a unique string array. */
-function normalizeFavoriteGroupIds(value: unknown): string[] {
+/** Normalize stored preference ids into a unique string array. */
+function normalizePreferenceIds(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
   return [
     ...new Set(
@@ -68,15 +68,25 @@ async function createOrGetUserDocument(
       const storedTestPreferences = rawStoredPreferences
         ? normalizeTestPreferences(rawStoredPreferences)
         : undefined;
-      const favoriteGroupIds = normalizeFavoriteGroupIds(
+      const favoriteGroupIds = normalizePreferenceIds(
         userData.preferences?.home?.favoriteGroupIds,
       );
+      const favoriteStackIds = normalizePreferenceIds(
+        userData.preferences?.home?.favoriteStackIds,
+      );
       const storedPreferences =
-        storedTestPreferences || favoriteGroupIds.length > 0
+        storedTestPreferences ||
+        favoriteGroupIds.length > 0 ||
+        favoriteStackIds.length > 0
           ? {
               ...(storedTestPreferences ? { test: storedTestPreferences } : {}),
-              ...(favoriteGroupIds.length > 0
-                ? { home: { favoriteGroupIds } }
+              ...(favoriteGroupIds.length > 0 || favoriteStackIds.length > 0
+                ? {
+                    home: {
+                      favoriteGroupIds,
+                      favoriteStackIds,
+                    },
+                  }
                 : {}),
             }
           : undefined;

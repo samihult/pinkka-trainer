@@ -106,6 +106,8 @@ export interface TestPreferences {
 export interface HomePreferences {
   /** Group ids marked as favorites by the current user. */
   favoriteGroupIds: string[];
+  /** Stack ids marked as favorites by the current user. */
+  favoriteStackIds: string[];
 }
 
 /** User-specific preferences stored with the profile. */
