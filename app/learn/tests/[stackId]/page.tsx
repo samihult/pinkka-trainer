@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -114,6 +114,8 @@ export default function TestPage() {
   const preferredLanguage = toLanguageCode(language);
   const params = useParams();
   const stackId = decodeURIComponent(params.stackId as string);
+  const searchParams = useSearchParams();
+  const requestedGroupId = searchParams.get("groupId");
   const { user } = useAuth();
 
   const [stack, setStack] = useState<Stack | null>(null);
@@ -1123,6 +1125,8 @@ export default function TestPage() {
   const groupName = group
     ? getLocalizedText(group.data.name, preferredLanguage)
     : "";
+  const exitGroupId = group?.id ?? requestedGroupId;
+  const exitHref = exitGroupId ? `/groups/${exitGroupId}` : "/";
 
   if (loading) {
     return (
@@ -1130,7 +1134,7 @@ export default function TestPage() {
         groupName={groupName || "Loading"}
         stackName={stackName}
         progressValue={0}
-        exitHref="/"
+        exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <LoadingSpinner />
@@ -1145,14 +1149,14 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
-        exitHref="/"
+        exitHref={exitHref}
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
           <p className="text-muted-foreground">
             This stack needs at least 2 species with images to create a test.
           </p>
           <Button asChild>
-            <Link href="/">Browse Other Stacks</Link>
+            <Link href={exitHref}>Browse Other Stacks</Link>
           </Button>
         </div>
       </LearningSessionShell>
@@ -1165,7 +1169,7 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
-        exitHref="/"
+        exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <LoadingSpinner />
@@ -1195,7 +1199,7 @@ export default function TestPage() {
         stackName={stackName}
         progressValue={0}
         progressLabel="Test settings"
-        exitHref="/"
+        exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-full max-w-3xl">
@@ -1219,7 +1223,7 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
-        exitHref="/"
+        exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <LoadingSpinner />
@@ -1247,7 +1251,7 @@ export default function TestPage() {
         stackName={stackName}
         progressValue={100}
         progressLabel="Completed"
-        exitHref="/"
+        exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-full max-w-3xl">
@@ -1256,6 +1260,12 @@ export default function TestPage() {
               correctAnswers={correctAnswers}
               totalQuestions={questions.length}
               stackId={stackId}
+              studyHref={
+                exitGroupId
+                  ? `/learn/cards/${stackId}?groupId=${encodeURIComponent(exitGroupId)}`
+                  : `/learn/cards/${stackId}`
+              }
+              backHref={exitHref}
               learningHistogram={stackHistogram}
               onRestart={handleRestart}
             />
@@ -1271,7 +1281,7 @@ export default function TestPage() {
       stackName={stackName}
       progressValue={progress}
       progressLabel={`Question ${currentQuestionIndex + 1} of ${questions.length}`}
-      exitHref="/"
+      exitHref={exitHref}
     >
       <div className="relative h-full w-full">
         <div className="absolute inset-x-0 top-0 bottom-16">

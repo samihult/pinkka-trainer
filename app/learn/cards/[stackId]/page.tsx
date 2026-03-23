@@ -46,6 +46,7 @@ export default function CardsPage() {
   const searchParams = useSearchParams();
   const params = useParams();
   const stackId = decodeURIComponent(params.stackId as string);
+  const requestedGroupId = searchParams.get("groupId");
   const { user, loading: authLoading } = useAuth();
 
   const [stack, setStack] = useState<Stack | null>(null);
@@ -136,13 +137,16 @@ export default function CardsPage() {
     [species.length],
   );
 
+  const exitGroupId = group?.id ?? requestedGroupId;
+  const exitHref = exitGroupId ? `/groups/${exitGroupId}` : "/";
+
   if (loading) {
     return (
       <LearningSessionShell
         groupName="Loading"
         stackName="Learn"
         progressValue={0}
-        exitHref="/"
+        exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <LoadingSpinner />
@@ -163,14 +167,14 @@ export default function CardsPage() {
           stack ? getLocalizedText(stack.data.name, preferredLanguage) : "Learn"
         }
         progressValue={0}
-        exitHref="/"
+        exitHref={exitHref}
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
           <p className="text-muted-foreground">
             {t("learn.cards.noSpeciesWithImages")}
           </p>
           <Button asChild>
-            <Link href="/">{t("learn.cards.browseOtherStacks")}</Link>
+            <Link href={exitHref}>{t("learn.cards.browseOtherStacks")}</Link>
           </Button>
         </div>
       </LearningSessionShell>
@@ -201,7 +205,7 @@ export default function CardsPage() {
         current: currentIndex + 1,
         total: species.length,
       })}
-      exitHref="/"
+      exitHref={exitHref}
       headerAction={
         <Button onClick={handleShuffle} variant="outline" size="sm">
           <Shuffle className="mr-1 h-4 w-4" />

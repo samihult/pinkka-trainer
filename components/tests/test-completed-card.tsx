@@ -18,6 +18,10 @@ export interface TestCompletedCardProps {
   totalQuestions: number;
   /** Stack identifier used for navigation links. */
   stackId: string;
+  /** Href for continuing to stack card study while preserving collection context. */
+  studyHref?: string;
+  /** Href for returning to the relevant collection or fallback browse page. */
+  backHref: string;
   /** Optional learning histogram for the stack. */
   learningHistogram?: StackLearningHistogramData | null;
   /** Handler for restarting the test. */
@@ -30,6 +34,8 @@ export function TestCompletedCard({
   correctAnswers,
   totalQuestions,
   stackId,
+  studyHref,
+  backHref,
   learningHistogram,
   onRestart,
 }: TestCompletedCardProps) {
@@ -79,12 +85,12 @@ export function TestCompletedCard({
             className="w-full bg-transparent"
             size="lg"
           >
-            <Link href={`/learn/cards/${stackId}`}>
+            <Link href={studyHref ?? `/learn/cards/${stackId}`}>
               {t("test.completed.studyCards")}
             </Link>
           </Button>
           <Button asChild variant="ghost" className="w-full">
-            <Link href="/">{t("test.completed.backToStacks")}</Link>
+            <Link href={backHref}>{t("test.completed.backToStacks")}</Link>
           </Button>
         </div>
       </CardContent>

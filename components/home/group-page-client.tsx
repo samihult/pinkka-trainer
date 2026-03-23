@@ -165,16 +165,22 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
           getEntityImageUrl(stack.images) ??
           getEntityImageUrl(stack.data.images) ??
           null,
-        learnHref: `/learn/cards/${stack.id}`,
+        learnHref: `/learn/cards/${stack.id}?groupId=${encodeURIComponent(groupId)}`,
         masteryPercent: stackMasteryPercents.get(stack.id) ?? 0,
         name: getLocalizedText(stack.data.name, preferredLanguage),
         originalIndex: index,
         speciesCount:
           stackSpeciesCounts.get(stack.id) ?? stack.speciesIds?.length ?? 0,
-        testHref: `/learn/tests/${stack.id}`,
+        testHref: `/learn/tests/${stack.id}?groupId=${encodeURIComponent(groupId)}`,
       };
     });
-  }, [preferredLanguage, stackMasteryPercents, stackSpeciesCounts, stacks]);
+  }, [
+    groupId,
+    preferredLanguage,
+    stackMasteryPercents,
+    stackSpeciesCounts,
+    stacks,
+  ]);
 
   const sortedStackCards = useMemo(() => {
     return [...stackCards].sort((left, right) => {
