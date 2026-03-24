@@ -28,6 +28,7 @@ import type {
   LearningNameType,
   LearningProgress,
   LearningProgressState,
+  TestAnswerNameMode,
   TestAnswerScope,
   TestPreferences,
   TestMode,
@@ -123,6 +124,20 @@ const LEARNING_NAME_TYPES_TO_LOAD: LearningNameType[] = [
 
 function normalizeAnswerValue(value: string | null | undefined): string {
   return (value ?? "").trim().toLocaleLowerCase();
+}
+
+function dedupeAnswerValues(
+  values: Array<string | null | undefined>,
+): string[] {
+  const dedupedByNormalized = new Map<string, string>();
+  for (const value of values) {
+    const trimmedValue = value?.trim();
+    if (!trimmedValue) continue;
+    const normalized = normalizeAnswerValue(trimmedValue);
+    if (!normalized || dedupedByNormalized.has(normalized)) continue;
+    dedupedByNormalized.set(normalized, trimmedValue);
+  }
+  return [...dedupedByNormalized.values()];
 }
 
 function createEmptyLearningProgress(): SpeciesLearningProgress {
@@ -300,81 +315,196 @@ export default function TestPage() {
     return combineRetention(accuracy, speed);
   };
 
+  const trimOrNull = (value: string | null | undefined): string | null => {
+    const trimmed = value?.trim();
+    return trimmed ? trimmed : null;
+  };
+
   const getVernacularName = (targetSpecies: Species) =>
     getLocalizedText(targetSpecies.data.vernacularName, preferredLanguage);
 
-  const getGenusFromScientificName = (scientificName: string) =>
-    scientificName.trim().split(/\s+/)[0] ?? scientificName;
-
-  const getTaxonomyScientificName = (
+  const getTaxonomyEntry = (
     targetSpecies: Species,
     rank: "MX.genus" | "MX.family",
-  ): string | null => {
-    const dataWithTaxonomy = targetSpecies.data as Species["data"] & {
-      taxonomy?: Array<{
-        rank?: string;
-        scientificName?: string | null;
-      }>;
-    };
-    const taxonomyEntry = dataWithTaxonomy.taxonomy?.find(
-      (entry) => entry.rank === rank,
-    );
-    const scientificName = taxonomyEntry?.scientificName;
-    return scientificName ? scientificName.trim() : null;
-  };
-
-  const getGenusName = (targetSpecies: Species) => {
-    const directGenus = targetSpecies.data.genusScientificName?.trim();
-    if (directGenus) return directGenus;
+  ) => {
     return (
-      getTaxonomyScientificName(targetSpecies, "MX.genus") ??
-      getGenusFromScientificName(targetSpecies.data.scientificName)
+      targetSpecies.data.taxonomy?.find((entry) => entry.rank === rank) ?? null
     );
   };
 
-  const getFamilyName = (targetSpecies: Species): string | null => {
-    const directFamily = targetSpecies.data.familyScientificName?.trim();
-    if (directFamily) return directFamily;
-    return getTaxonomyScientificName(targetSpecies, "MX.family");
-  };
-
-  const getScopePrimaryAnswerValue = (
+  const getScopeNameVariantValues = (
     targetSpecies: Species,
     answerScope: TestAnswerScope,
-  ): string => {
+  ): {
+    scientific: string | null;
+    vernacular: string | null;
+  } => {
+    if (answerScope === "species") {
+      return {
+        scientific: trimOrNull(targetSpecies.data.scientificName),
+        vernacular: trimOrNull(getVernacularName(targetSpecies)),
+      };
+    }
+
+    const taxonomyEntry = getTaxonomyEntry(
+      targetSpecies,
+      answerScope === "genus" ? "MX.genus" : "MX.family",
+    );
+    const taxonomyScientific = trimOrNull(taxonomyEntry?.scientificName);
+    if (!taxonomyScientific) {
+      return {
+        scientific: null,
+        vernacular: null,
+      };
+    }
+
+    return {
+      scientific: taxonomyScientific,
+      vernacular: trimOrNull(
+        getLocalizedText(
+          taxonomyEntry?.vernacularName ?? undefined,
+          preferredLanguage,
+        ),
+      ),
+    };
+  };
+
+  const getAcceptedAnswers = (
+    targetSpecies: Species,
+    answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
+  ): string[] => {
+    const variants = getScopeNameVariantValues(targetSpecies, answerScope);
+    if (answerNameMode === "scientific") {
+      return dedupeAnswerValues([variants.scientific]);
+    }
+    if (answerNameMode === "vernacular") {
+      return dedupeAnswerValues([variants.vernacular]);
+    }
+    return dedupeAnswerValues([variants.scientific, variants.vernacular]);
+  };
+
+  const getPrimaryAnswerValue = (
+    targetSpecies: Species,
+    answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
+  ): string | null => {
+    const variants = getScopeNameVariantValues(targetSpecies, answerScope);
+    if (answerNameMode === "scientific") {
+      return variants.scientific;
+    }
+    if (answerNameMode === "vernacular") {
+      return variants.vernacular;
+    }
+    return variants.scientific ?? variants.vernacular;
+  };
+
+  const getSecondaryAnswerValue = (
+    targetSpecies: Species,
+    answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
+  ): string | null => {
+    const variants = getScopeNameVariantValues(targetSpecies, answerScope);
+    if (answerNameMode === "scientific") {
+      return variants.vernacular;
+    }
+    if (answerNameMode === "vernacular") {
+      return variants.scientific;
+    }
     if (answerScope === "genus") {
-      return getGenusName(targetSpecies);
+      return variants.vernacular;
     }
+    return variants.scientific && variants.vernacular
+      ? variants.vernacular
+      : null;
+  };
 
-    if (answerScope === "family") {
-      return getFamilyName(targetSpecies) ?? targetSpecies.data.scientificName;
+  const getNormalizedAnswerSet = (
+    targetSpecies: Species,
+    answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
+  ) =>
+    new Set(
+      getAcceptedAnswers(targetSpecies, answerScope, answerNameMode).map(
+        (answer) => normalizeAnswerValue(answer),
+      ),
+    );
+
+  const doAnswerSetsOverlap = (
+    left: Set<string>,
+    right: Set<string>,
+  ): boolean => {
+    for (const answer of left) {
+      if (right.has(answer)) return true;
     }
+    return false;
+  };
 
-    return targetSpecies.data.scientificName;
+  const isSpeciesEligibleForPreferences = (
+    targetSpecies: Species,
+    answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
+  ): boolean =>
+    getAcceptedAnswers(targetSpecies, answerScope, answerNameMode).length > 0;
+
+  const countDistinctDistractorAnswers = (
+    targetSpecies: Species,
+    allSpecies: Species[],
+    answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
+  ): number => {
+    const correctAnswerSet = getNormalizedAnswerSet(
+      targetSpecies,
+      answerScope,
+      answerNameMode,
+    );
+    const distinctDistractors = new Set<string>();
+    for (const candidate of allSpecies) {
+      if (candidate.id === targetSpecies.id) continue;
+      const candidateAnswerSet = getNormalizedAnswerSet(
+        candidate,
+        answerScope,
+        answerNameMode,
+      );
+      if (
+        candidateAnswerSet.size === 0 ||
+        doAnswerSetsOverlap(candidateAnswerSet, correctAnswerSet)
+      ) {
+        continue;
+      }
+      const candidatePrimary = normalizeAnswerValue(
+        getPrimaryAnswerValue(candidate, answerScope, answerNameMode),
+      );
+      if (candidatePrimary) {
+        distinctDistractors.add(candidatePrimary);
+      }
+    }
+    return distinctDistractors.size;
   };
 
   const isCorrectOptionForScope = (
     selectedSpecies: Species,
     correctSpecies: Species,
     answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
   ): boolean => {
-    if (answerScope === "species") {
-      return selectedSpecies.id === correctSpecies.id;
-    }
-
-    const selectedAnswer = normalizeAnswerValue(
-      getScopePrimaryAnswerValue(selectedSpecies, answerScope),
+    const selectedAnswerSet = getNormalizedAnswerSet(
+      selectedSpecies,
+      answerScope,
+      answerNameMode,
     );
-    const correctAnswer = normalizeAnswerValue(
-      getScopePrimaryAnswerValue(correctSpecies, answerScope),
+    const correctAnswerSet = getNormalizedAnswerSet(
+      correctSpecies,
+      answerScope,
+      answerNameMode,
     );
-
-    return selectedAnswer.length > 0 && selectedAnswer === correctAnswer;
+    return doAnswerSetsOverlap(selectedAnswerSet, correctAnswerSet);
   };
 
   const getScopeProgressScore = (
     targetSpecies: Species,
     answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
     progressMap: Map<string, LearningProgressState>,
     now: Date,
   ): number | null => {
@@ -393,13 +523,30 @@ export default function TestPage() {
     }
 
     const speciesScore = getScoreForType("species");
-    if (speciesScore !== null) return speciesScore;
-
     const eitherScore = getScoreForType("either");
-    if (eitherScore !== null) return eitherScore;
-
     const scientificScore = getScoreForType("scientific");
     const vernacularScore = getScoreForType("vernacular");
+
+    if (answerNameMode === "scientific") {
+      return (
+        scientificScore ??
+        speciesScore ??
+        eitherScore ??
+        combineRetention(scientificScore, vernacularScore)
+      );
+    }
+
+    if (answerNameMode === "vernacular") {
+      return (
+        vernacularScore ??
+        speciesScore ??
+        eitherScore ??
+        combineRetention(scientificScore, vernacularScore)
+      );
+    }
+
+    if (speciesScore !== null) return speciesScore;
+    if (eitherScore !== null) return eitherScore;
     if (scientificScore === null && vernacularScore === null) return null;
     return combineRetention(scientificScore, vernacularScore);
   };
@@ -407,10 +554,17 @@ export default function TestPage() {
   const getSpeciesFamiliarityScore = (
     targetSpecies: Species,
     answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
     progressMap: Map<string, LearningProgressState>,
     now: Date,
   ): number | null => {
-    return getScopeProgressScore(targetSpecies, answerScope, progressMap, now);
+    return getScopeProgressScore(
+      targetSpecies,
+      answerScope,
+      answerNameMode,
+      progressMap,
+      now,
+    );
   };
 
   const getSpeciesLearningBand = (
@@ -481,7 +635,9 @@ export default function TestPage() {
     questionCount: number,
     familiarityBySpeciesId: Map<string, number | null>,
     answerScope: TestAnswerScope,
-  ) => {
+    answerNameMode: TestAnswerNameMode,
+    mode: TestMode,
+  ): TestQuestion[] => {
     const testQuestions: TestQuestion[] = [];
     const selectedSpecies = selectSpeciesForTest(
       allSpecies,
@@ -490,62 +646,67 @@ export default function TestPage() {
     );
 
     selectedSpecies.forEach((correctSpecies) => {
-      const shuffledCandidates = allSpecies
-        .filter((item) => item.id !== correctSpecies.id)
-        .sort(() => Math.random() - 0.5);
+      const shuffledCandidates = shuffleSpecies(
+        allSpecies.filter((item) => item.id !== correctSpecies.id),
+      );
+      const correctAnswerSet = getNormalizedAnswerSet(
+        correctSpecies,
+        answerScope,
+        answerNameMode,
+      );
 
-      let wrongOptions: Species[] = [];
-      if (answerScope === "species") {
-        wrongOptions = shuffledCandidates.slice(0, 3);
-      } else {
-        const correctAnswer = normalizeAnswerValue(
-          getScopePrimaryAnswerValue(correctSpecies, answerScope),
-        );
+      if (mode === "multiple-choice") {
         const distinctDistractors = new Map<string, Species>();
         shuffledCandidates.forEach((candidate) => {
-          const candidateAnswer = normalizeAnswerValue(
-            getScopePrimaryAnswerValue(candidate, answerScope),
+          const candidateAnswerSet = getNormalizedAnswerSet(
+            candidate,
+            answerScope,
+            answerNameMode,
           );
           if (
-            !candidateAnswer ||
-            candidateAnswer === correctAnswer ||
-            distinctDistractors.has(candidateAnswer)
+            candidateAnswerSet.size === 0 ||
+            doAnswerSetsOverlap(candidateAnswerSet, correctAnswerSet)
           ) {
             return;
           }
-          distinctDistractors.set(candidateAnswer, candidate);
-        });
-        const uniqueWrongOptions = [...distinctDistractors.values()].slice(
-          0,
-          3,
-        );
-        if (uniqueWrongOptions.length < 3) {
-          const usedOptionIds = new Set(
-            uniqueWrongOptions.map((item) => item.id),
+          const candidatePrimary = normalizeAnswerValue(
+            getPrimaryAnswerValue(candidate, answerScope, answerNameMode),
           );
-          const fallbackWrongOptions = shuffledCandidates
-            .filter((item) => !usedOptionIds.has(item.id))
-            .slice(0, 3 - uniqueWrongOptions.length);
-          wrongOptions = [...uniqueWrongOptions, ...fallbackWrongOptions];
-        } else {
-          wrongOptions = uniqueWrongOptions;
-        }
-      }
+          if (!candidatePrimary || distinctDistractors.has(candidatePrimary)) {
+            return;
+          }
+          distinctDistractors.set(candidatePrimary, candidate);
+        });
 
-      const options = [...wrongOptions, correctSpecies].sort(
-        () => Math.random() - 0.5,
-      );
+        const wrongOptions = [...distinctDistractors.values()].slice(0, 3);
+        if (wrongOptions.length < 3) {
+          return;
+        }
+
+        const options = [...wrongOptions, correctSpecies].sort(
+          () => Math.random() - 0.5,
+        );
+        testQuestions.push({
+          species: correctSpecies,
+          options,
+          correctAnswer: correctSpecies,
+          imageUrl: pickTestImageUrl(correctSpecies),
+          familiarityScore:
+            familiarityBySpeciesId.get(correctSpecies.id) ?? null,
+        });
+        return;
+      }
 
       testQuestions.push({
         species: correctSpecies,
-        options,
+        options: [correctSpecies],
         correctAnswer: correctSpecies,
         imageUrl: pickTestImageUrl(correctSpecies),
         familiarityScore: familiarityBySpeciesId.get(correctSpecies.id) ?? null,
       });
     });
 
-    setQuestions(testQuestions);
+    return testQuestions;
   };
 
   const handleAnswerSelect = (answer: Species) => {
@@ -560,6 +721,7 @@ export default function TestPage() {
       answer,
       currentQuestion.correctAnswer,
       testPreferences.answerScope,
+      testPreferences.answerNameMode,
     );
     if (isCorrect) {
       setCorrectAnswers((previous) => previous + 1);
@@ -569,6 +731,7 @@ export default function TestPage() {
       currentQuestion.species,
       getLearningScoresForChoice(
         testPreferences.answerScope,
+        testPreferences.answerNameMode,
         isCorrect,
         getResponseMs(),
         getExpectedResponseMs("multiple-choice"),
@@ -579,29 +742,22 @@ export default function TestPage() {
   const getDisplayNames = (
     targetSpecies: Species,
     answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
   ) => {
-    const scientificName = targetSpecies.data.scientificName;
-    const vernacularName = getVernacularName(targetSpecies);
-    const genusName = getGenusName(targetSpecies);
-    const familyName = getFamilyName(targetSpecies);
-
-    if (answerScope === "genus") {
-      return {
-        primary: genusName,
-        secondary: scientificName,
-      };
-    }
-
-    if (answerScope === "family") {
-      return {
-        primary: familyName ?? scientificName,
-        secondary: familyName ? scientificName : null,
-      };
-    }
+    const primary = getPrimaryAnswerValue(
+      targetSpecies,
+      answerScope,
+      answerNameMode,
+    );
+    const secondary = getSecondaryAnswerValue(
+      targetSpecies,
+      answerScope,
+      answerNameMode,
+    );
 
     return {
-      primary: scientificName,
-      secondary: vernacularName ?? null,
+      primary: primary ?? "",
+      secondary,
     };
   };
 
@@ -627,29 +783,10 @@ export default function TestPage() {
     setEliminatedOptionIds(new Set(eliminated));
   };
 
-  const getAcceptedAnswers = (
-    targetSpecies: Species,
-    answerScope: TestAnswerScope,
-  ) => {
-    const scientificName = targetSpecies.data.scientificName;
-    const vernacularName = getVernacularName(targetSpecies);
-    const genusName = getGenusName(targetSpecies);
-    const familyName = getFamilyName(targetSpecies);
-
-    if (answerScope === "genus") {
-      return [genusName];
-    }
-
-    if (answerScope === "family") {
-      return familyName ? [familyName] : [scientificName];
-    }
-
-    return vernacularName ? [scientificName, vernacularName] : [scientificName];
-  };
-
   const setLearningMetricFromProgress = (
     progress: SpeciesLearningProgress,
     answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
     now: Date = new Date(),
   ) => {
     const getRetentionScores = (nameType: LearningNameType) => {
@@ -693,25 +830,52 @@ export default function TestPage() {
     } else if (answerScope === "family") {
       accuracyScore = familyScores.accuracy;
       speedScore = familyScores.speed;
-    } else if (
-      speciesScores.accuracy !== null ||
-      speciesScores.speed !== null
-    ) {
-      accuracyScore = speciesScores.accuracy;
-      speedScore = speciesScores.speed;
-    } else if (progress.either) {
-      accuracyScore = eitherScores.accuracy;
-      speedScore = eitherScores.speed;
     } else {
-      // Backward compatibility for records created before species-scope tracking.
-      accuracyScore = combineRetention(
+      const legacyCombinedAccuracy = combineRetention(
         scientificScores.accuracy,
         vernacularScores.accuracy,
       );
-      speedScore = combineRetention(
+      const legacyCombinedSpeed = combineRetention(
         scientificScores.speed,
         vernacularScores.speed,
       );
+
+      if (answerNameMode === "scientific") {
+        accuracyScore =
+          scientificScores.accuracy ??
+          speciesScores.accuracy ??
+          eitherScores.accuracy ??
+          legacyCombinedAccuracy;
+        speedScore =
+          scientificScores.speed ??
+          speciesScores.speed ??
+          eitherScores.speed ??
+          legacyCombinedSpeed;
+      } else if (answerNameMode === "vernacular") {
+        accuracyScore =
+          vernacularScores.accuracy ??
+          speciesScores.accuracy ??
+          eitherScores.accuracy ??
+          legacyCombinedAccuracy;
+        speedScore =
+          vernacularScores.speed ??
+          speciesScores.speed ??
+          eitherScores.speed ??
+          legacyCombinedSpeed;
+      } else if (
+        speciesScores.accuracy !== null ||
+        speciesScores.speed !== null
+      ) {
+        accuracyScore = speciesScores.accuracy;
+        speedScore = speciesScores.speed;
+      } else if (progress.either) {
+        accuracyScore = eitherScores.accuracy;
+        speedScore = eitherScores.speed;
+      } else {
+        // Backward compatibility for records created before species-scope tracking.
+        accuracyScore = legacyCombinedAccuracy;
+        speedScore = legacyCombinedSpeed;
+      }
     }
 
     const combinedScore = combineRetention(accuracyScore, speedScore);
@@ -754,6 +918,7 @@ export default function TestPage() {
       setLearningMetricFromProgress(
         nextProgress,
         testPreferences?.answerScope ?? "species",
+        testPreferences?.answerNameMode ?? "either",
       );
     } catch (error) {
       logFirestoreError("Failed to load learning progress", error);
@@ -903,6 +1068,7 @@ export default function TestPage() {
       setLearningMetricFromProgress(
         nextProgress,
         testPreferences?.answerScope ?? "species",
+        testPreferences?.answerNameMode ?? "either",
         now,
       );
     } catch (error) {
@@ -913,27 +1079,22 @@ export default function TestPage() {
   const getLearningScoresForTextAnswer = (
     targetSpecies: Species,
     answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
     answerText: string,
     responseMs: number,
     expectedMs: number,
   ): Partial<Record<LearningNameType, LearningScoreUpdate>> => {
-    const scientificName = targetSpecies.data.scientificName;
-    const vernacularName = getVernacularName(targetSpecies);
-    const genusName = getGenusName(targetSpecies);
-    const familyName = getFamilyName(targetSpecies);
-    const scientificScore = scoreAnswer(answerText, [scientificName]);
-    const vernacularScore = vernacularName
-      ? scoreAnswer(answerText, [vernacularName])
-      : null;
-    const genusScore = scoreAnswer(answerText, [genusName]);
-    const familyScore = familyName
-      ? scoreAnswer(answerText, [familyName])
-      : scientificScore;
+    const acceptedAnswers = getAcceptedAnswers(
+      targetSpecies,
+      answerScope,
+      answerNameMode,
+    );
+    const scopedScore = scoreAnswer(answerText, acceptedAnswers);
 
     if (answerScope === "genus") {
       return {
         genus: {
-          accuracyScore: genusScore,
+          accuracyScore: scopedScore,
           responseMs,
           expectedMs,
         },
@@ -943,27 +1104,29 @@ export default function TestPage() {
     if (answerScope === "family") {
       return {
         family: {
-          accuracyScore: familyScore,
+          accuracyScore: scopedScore,
           responseMs,
           expectedMs,
         },
       };
     }
-
-    return {
-      species: {
-        accuracyScore:
-          vernacularScore === null
-            ? scientificScore
-            : Math.max(scientificScore, vernacularScore),
-        responseMs,
-        expectedMs,
-      },
+    const speciesUpdate: LearningScoreUpdate = {
+      accuracyScore: scopedScore,
+      responseMs,
+      expectedMs,
     };
+    if (answerNameMode === "scientific") {
+      return { species: speciesUpdate, scientific: speciesUpdate };
+    }
+    if (answerNameMode === "vernacular") {
+      return { species: speciesUpdate, vernacular: speciesUpdate };
+    }
+    return { species: speciesUpdate, either: speciesUpdate };
   };
 
   const getLearningScoresForChoice = (
     answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
     isCorrect: boolean,
     responseMs: number,
     expectedMs: number,
@@ -983,7 +1146,13 @@ export default function TestPage() {
       return { family: update };
     }
 
-    return { species: update };
+    if (answerNameMode === "scientific") {
+      return { species: update, scientific: update };
+    }
+    if (answerNameMode === "vernacular") {
+      return { species: update, vernacular: update };
+    }
+    return { species: update, either: update };
   };
 
   const resetActiveQuestionUiState = () => {
@@ -1004,6 +1173,7 @@ export default function TestPage() {
     const acceptedAnswers = getAcceptedAnswers(
       currentQuestion.species,
       testPreferences.answerScope,
+      testPreferences.answerNameMode,
     );
     const score = scoreAnswer(textAnswer, acceptedAnswers);
     const isCorrect = score >= CORRECT_SCORE_THRESHOLD;
@@ -1012,6 +1182,7 @@ export default function TestPage() {
     const learningScores = getLearningScoresForTextAnswer(
       currentQuestion.species,
       testPreferences.answerScope,
+      testPreferences.answerNameMode,
       textAnswer,
       responseMs,
       expectedMs,
@@ -1028,7 +1199,7 @@ export default function TestPage() {
 
     if (score >= CLOSE_SCORE_THRESHOLD && !textAnswerRetryUsed) {
       setTextAnswerRetryUsed(true);
-      setTextAnswerFeedback("Close! Check the spelling and try again.");
+      setTextAnswerFeedback(t("test.answerInput.closeGuess"));
       setTextAnswerCorrect(null);
       textAnswerRef.current?.focus();
       textAnswerRef.current?.select();
@@ -1074,12 +1245,41 @@ export default function TestPage() {
     }
   };
 
+  const eligibleSpeciesForPreferences = testPreferences
+    ? species.filter((speciesItem) =>
+        isSpeciesEligibleForPreferences(
+          speciesItem,
+          testPreferences.answerScope,
+          testPreferences.answerNameMode,
+        ),
+      )
+    : [];
+
+  const questionEligibleSpecies = !testPreferences
+    ? []
+    : testPreferences.mode === "write-name"
+      ? eligibleSpeciesForPreferences
+      : eligibleSpeciesForPreferences.filter(
+          (speciesItem) =>
+            countDistinctDistractorAnswers(
+              speciesItem,
+              eligibleSpeciesForPreferences,
+              testPreferences.answerScope,
+              testPreferences.answerNameMode,
+            ) >= 3,
+        );
+
   const startTest = async () => {
     if (!testPreferences) return;
+    if (questionEligibleSpecies.length < 2) {
+      setShowSettings(true);
+      return;
+    }
+
     await flushPendingProgressUpdates();
     const clampedCount = getQuestionCount(
       testPreferences.questionCount,
-      species.length,
+      questionEligibleSpecies.length,
     );
 
     const familiarityBySpeciesId = new Map<string, number | null>();
@@ -1087,14 +1287,15 @@ export default function TestPage() {
       const now = new Date();
       const progressMap = await getLearningProgressForSpeciesIds(
         user.uid,
-        species.map((speciesItem) => speciesItem.id),
+        questionEligibleSpecies.map((speciesItem) => speciesItem.id),
       );
-      species.forEach((speciesItem) => {
+      questionEligibleSpecies.forEach((speciesItem) => {
         familiarityBySpeciesId.set(
           speciesItem.id,
           getSpeciesFamiliarityScore(
             speciesItem,
             testPreferences.answerScope,
+            testPreferences.answerNameMode,
             progressMap,
             now,
           ),
@@ -1102,12 +1303,20 @@ export default function TestPage() {
       });
     }
 
-    generateQuestions(
-      species,
+    const generatedQuestions = generateQuestions(
+      questionEligibleSpecies,
       clampedCount,
       familiarityBySpeciesId,
       testPreferences.answerScope,
+      testPreferences.answerNameMode,
+      testPreferences.mode,
     );
+    if (generatedQuestions.length < 2) {
+      setShowSettings(true);
+      return;
+    }
+
+    setQuestions(generatedQuestions);
     setCurrentQuestionIndex(0);
     resetActiveQuestionUiState();
     setCorrectAnswers(0);
@@ -1143,8 +1352,13 @@ export default function TestPage() {
     setLearningMetricFromProgress(
       currentLearningProgress,
       testPreferences?.answerScope ?? "species",
+      testPreferences?.answerNameMode ?? "either",
     );
-  }, [currentLearningProgress, testPreferences?.answerScope]);
+  }, [
+    currentLearningProgress,
+    testPreferences?.answerScope,
+    testPreferences?.answerNameMode,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -1158,7 +1372,7 @@ export default function TestPage() {
 
       if (showSettings) {
         if (event.key === "Enter" && testPreferences) {
-          const maxQuestions = species.length;
+          const maxQuestions = questionEligibleSpecies.length;
           const displayQuestionCount = getQuestionCount(
             testPreferences.questionCount,
             maxQuestions,
@@ -1222,7 +1436,7 @@ export default function TestPage() {
     testPreferences,
     questions,
     showSettings,
-    species.length,
+    questionEligibleSpecies.length,
     startTest,
   ]);
 
@@ -1243,7 +1457,7 @@ export default function TestPage() {
 
   const stackName = stack
     ? getLocalizedText(stack.data.name, preferredLanguage)
-    : "Test";
+    : t("test.fallback.stackName");
   const groupName = group
     ? getLocalizedText(group.data.name, preferredLanguage)
     : "";
@@ -1251,10 +1465,45 @@ export default function TestPage() {
   const exitHref = exitGroupId ? `/groups/${exitGroupId}` : "/";
   const sessionBackgroundVariant = undefined;
 
+  const getScopeLabel = (scope: TestAnswerScope): string => {
+    if (scope === "genus") return t("test.scope.short.genus");
+    if (scope === "family") return t("test.scope.short.family");
+    return t("test.scope.short.species");
+  };
+
+  const getNameModeLabel = (mode: TestAnswerNameMode): string => {
+    if (mode === "scientific") return t("test.nameMode.short.scientific");
+    if (mode === "vernacular") return t("test.nameMode.short.vernacular");
+    return t("test.nameMode.short.either");
+  };
+
+  const getScopeHelpKey = (scope: TestAnswerScope) => {
+    if (scope === "genus") return "test.answerHelp.scope.genus" as const;
+    if (scope === "family") return "test.answerHelp.scope.family" as const;
+    return "test.answerHelp.scope.species" as const;
+  };
+
+  const getNameModeHelpKey = (mode: TestAnswerNameMode) => {
+    if (mode === "scientific")
+      return "test.answerHelp.nameMode.scientific" as const;
+    if (mode === "vernacular")
+      return "test.answerHelp.nameMode.vernacular" as const;
+    return "test.answerHelp.nameMode.either" as const;
+  };
+
+  const getQuestionPrompt = (
+    answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
+  ) =>
+    t("test.species.prompt", {
+      scope: getScopeLabel(answerScope),
+      nameMode: getNameModeLabel(answerNameMode),
+    });
+
   if (loading) {
     return (
       <LearningSessionShell
-        groupName={groupName || "Loading"}
+        groupName={groupName || t("test.fallback.loadingGroup")}
         stackName={stackName}
         progressValue={0}
         backgroundVariant={sessionBackgroundVariant}
@@ -1278,10 +1527,12 @@ export default function TestPage() {
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
           <p className="text-muted-foreground">
-            This stack needs at least 2 species with images to create a test.
+            {t("test.validation.needsTwoSpecies")}
           </p>
           <Button asChild>
-            <Link href={exitHref}>Browse Other Stacks</Link>
+            <Link href={exitHref}>
+              {t("test.validation.browseOtherStacks")}
+            </Link>
           </Button>
         </div>
       </LearningSessionShell>
@@ -1305,7 +1556,7 @@ export default function TestPage() {
   }
 
   if (showSettings) {
-    const maxQuestions = species.length;
+    const maxQuestions = questionEligibleSpecies.length;
     const questionOptions = [10, 25, 50, 0];
     const selectedQuestionCount = questionOptions.includes(
       testPreferences.questionCount,
@@ -1318,13 +1569,19 @@ export default function TestPage() {
     );
 
     const canStartTest = displayQuestionCount >= 2;
+    const unavailableReason = canStartTest
+      ? null
+      : t("test.settings.notEnoughEligible", {
+          scope: getScopeLabel(testPreferences.answerScope),
+          nameMode: getNameModeLabel(testPreferences.answerNameMode),
+        });
 
     return (
       <LearningSessionShell
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
-        progressLabel="Test settings"
+        progressLabel={t("test.progress.settings")}
         backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
@@ -1332,9 +1589,11 @@ export default function TestPage() {
           <div className="w-full max-w-3xl">
             <TestSettingsCard
               questionOptions={questionOptions}
-              speciesCount={species.length}
+              speciesCount={questionEligibleSpecies.length}
+              totalSpeciesCount={species.length}
               testPreferences={testPreferences}
               canStartTest={canStartTest}
+              unavailableReason={unavailableReason}
               onPreferencesChange={handlePreferencesChange}
               onStartTest={startTest}
             />
@@ -1362,10 +1621,10 @@ export default function TestPage() {
 
   const currentQuestion = questions[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-  const currentFamilyName = getFamilyName(currentQuestion.species);
   const currentDisplayNames = getDisplayNames(
     currentQuestion.species,
     testPreferences.answerScope,
+    testPreferences.answerNameMode,
   );
   if (testComplete) {
     const percentage = Math.round((correctAnswers / questions.length) * 100);
@@ -1375,7 +1634,7 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={100}
-        progressLabel="Completed"
+        progressLabel={t("test.progress.completed")}
         backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
@@ -1406,7 +1665,10 @@ export default function TestPage() {
       groupName={groupName}
       stackName={stackName}
       progressValue={progress}
-      progressLabel={`Question ${currentQuestionIndex + 1} of ${questions.length}`}
+      progressLabel={t("test.progress.question", {
+        current: currentQuestionIndex + 1,
+        total: questions.length,
+      })}
       backgroundVariant={sessionBackgroundVariant}
       exitHref={exitHref}
     >
@@ -1417,6 +1679,10 @@ export default function TestPage() {
               <div className="min-h-0">
                 <TestSpeciesCard
                   imageUrl={currentQuestion.imageUrl}
+                  prompt={getQuestionPrompt(
+                    testPreferences.answerScope,
+                    testPreferences.answerNameMode,
+                  )}
                   familiarityPercent={
                     currentQuestion.familiarityScore === null
                       ? null
@@ -1446,10 +1712,15 @@ export default function TestPage() {
                         const displayNames = getDisplayNames(
                           option,
                           testPreferences.answerScope,
+                          testPreferences.answerNameMode,
                         );
                         const isSelected = selectedAnswer?.id === option.id;
-                        const isCorrect =
-                          option.id === currentQuestion.correctAnswer.id;
+                        const isCorrect = isCorrectOptionForScope(
+                          option,
+                          currentQuestion.correctAnswer,
+                          testPreferences.answerScope,
+                          testPreferences.answerNameMode,
+                        );
                         const showResult = answered;
                         const isEliminated =
                           !showResult && eliminatedOptionIds.has(option.id);
@@ -1526,14 +1797,8 @@ export default function TestPage() {
                         spellCheck={false}
                       />
                       <p className="text-sm text-muted-foreground">
-                        {testPreferences.answerScope === "species" &&
-                          t("test.answerHelp.species")}
-                        {testPreferences.answerScope === "genus" &&
-                          t("test.answerHelp.genus")}
-                        {testPreferences.answerScope === "family" &&
-                          (currentFamilyName
-                            ? t("test.answerHelp.family")
-                            : t("test.answerHelp.familyFallback"))}
+                        {t(getScopeHelpKey(testPreferences.answerScope))}{" "}
+                        {t(getNameModeHelpKey(testPreferences.answerNameMode))}
                       </p>
                       {textAnswerFeedback && !answered && (
                         <p className="text-sm text-primary">
@@ -1547,7 +1812,7 @@ export default function TestPage() {
                       disabled={answered}
                       className="mt-auto"
                     >
-                      Submit Answer
+                      {t("test.answerInput.submit")}
                     </Button>
                     {answered && textAnswerCorrect !== null && (
                       <div
@@ -1558,10 +1823,13 @@ export default function TestPage() {
                         }`}
                       >
                         {textAnswerCorrect ? (
-                          <p className="font-semibold">Correct!</p>
+                          <p className="font-semibold">
+                            {t("test.answerInput.correct")}
+                          </p>
                         ) : null}
                         <p className="text-sm text-muted-foreground">
-                          Correct answer: {currentDisplayNames.primary}
+                          {t("test.answerInput.correctAnswerPrefix")}{" "}
+                          {currentDisplayNames.primary}
                           {currentDisplayNames.secondary
                             ? ` (${currentDisplayNames.secondary})`
                             : ""}
@@ -1589,8 +1857,8 @@ export default function TestPage() {
           <div className="absolute inset-x-0 bottom-0 flex justify-center">
             <Button onClick={handleNext} size="lg">
               {currentQuestionIndex < questions.length - 1
-                ? "Next Question"
-                : "Finish Test"}
+                ? t("test.navigation.nextQuestion")
+                : t("test.navigation.finishTest")}
             </Button>
           </div>
         )}

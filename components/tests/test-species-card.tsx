@@ -8,6 +8,8 @@ import Image from "next/image";
 export interface TestSpeciesCardProps {
   /** Image URL chosen for the test prompt. */
   imageUrl: string | null;
+  /** Prompt text shown above the image. */
+  prompt?: string;
   /** Familiarity percentage for the current species under active test settings. */
   familiarityPercent: number | null;
 }
@@ -15,6 +17,7 @@ export interface TestSpeciesCardProps {
 /** Renders the test prompt image card for the current species. */
 export function TestSpeciesCard({
   imageUrl,
+  prompt,
   familiarityPercent,
 }: TestSpeciesCardProps) {
   const { t } = useI18n();
@@ -23,7 +26,7 @@ export function TestSpeciesCard({
     <Card className="h-full">
       <CardContent className="flex h-full flex-col gap-4 p-6">
         <h2 className="text-2xl font-semibold text-center">
-          {t("test.species.prompt")}
+          {prompt ?? t("test.species.prompt")}
         </h2>
 
         <div className="rounded-lg border border-border/60 bg-muted/30 px-3 py-2">

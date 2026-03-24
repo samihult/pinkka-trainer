@@ -1,5 +1,6 @@
 import type {
   LegacyTestAnswerMode,
+  TestAnswerNameMode,
   TestAnswerScope,
   TestMode,
   TestPreferences,
@@ -15,21 +16,16 @@ export const DEFAULT_TEST_PREFERENCES: TestPreferences = {
   questionCount: 10,
   mode: "multiple-choice",
   answerScope: "species",
+  answerNameMode: "either",
 };
 
 const testModes: TestMode[] = ["multiple-choice", "write-name"];
 const answerScopes: TestAnswerScope[] = ["species", "genus", "family"];
-const legacyAnswerModeToScope: Record<LegacyTestAnswerMode, TestAnswerScope> = {
-  scientific: "species",
-  vernacular: "species",
-  either: "species",
-};
-
-function mapLegacyAnswerModeToScope(
-  mode: LegacyTestAnswerMode,
-): TestAnswerScope {
-  return legacyAnswerModeToScope[mode];
-}
+const answerNameModes: TestAnswerNameMode[] = [
+  "scientific",
+  "vernacular",
+  "either",
+];
 
 export const questionCountOptions = [10, 25, 50, 0];
 
@@ -58,13 +54,20 @@ export function normalizeTestPreferences(
   const normalizedAnswerScope =
     requestedAnswerScope && answerScopes.includes(requestedAnswerScope)
       ? requestedAnswerScope
-      : input?.answerMode
-        ? mapLegacyAnswerModeToScope(input.answerMode)
-        : defaults.answerScope;
+      : defaults.answerScope;
+
+  const requestedAnswerNameMode = input?.answerNameMode;
+  const normalizedAnswerNameMode =
+    requestedAnswerNameMode && answerNameModes.includes(requestedAnswerNameMode)
+      ? requestedAnswerNameMode
+      : input?.answerMode && answerNameModes.includes(input.answerMode)
+        ? input.answerMode
+        : defaults.answerNameMode;
 
   return {
     questionCount: normalizedQuestionCount,
     mode: normalizedMode,
     answerScope: normalizedAnswerScope,
+    answerNameMode: normalizedAnswerNameMode,
   };
 }

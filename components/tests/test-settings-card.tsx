@@ -11,12 +11,16 @@ import { ListChecks, PenLine } from "lucide-react";
 export interface TestSettingsCardProps {
   /** Available question count options. */
   questionOptions: number[];
-  /** Total number of species in the stack. */
+  /** Number of species currently eligible for active settings. */
   speciesCount: number;
+  /** Total number of species with test images in this stack. */
+  totalSpeciesCount: number;
   /** Current test preferences. */
   testPreferences: TestPreferences;
   /** Whether the test can be started. */
   canStartTest: boolean;
+  /** Optional message shown when the active settings cannot start a test. */
+  unavailableReason?: string | null;
   /** Updates test preference values. */
   onPreferencesChange: (updates: Partial<TestPreferences>) => void;
   /** Starts the test. */
@@ -27,8 +31,10 @@ export interface TestSettingsCardProps {
 export function TestSettingsCard({
   questionOptions,
   speciesCount,
+  totalSpeciesCount,
   testPreferences,
   canStartTest,
+  unavailableReason,
   onPreferencesChange,
   onStartTest,
 }: TestSettingsCardProps) {
@@ -70,6 +76,14 @@ export function TestSettingsCard({
             testPreferences.questionCount === 0) && (
             <p className="text-sm text-muted-foreground">
               {t("test.settings.allSpecies", { speciesCount })}
+            </p>
+          )}
+          {speciesCount < totalSpeciesCount && (
+            <p className="text-sm text-muted-foreground">
+              {t("test.settings.availableSpecies", {
+                available: speciesCount,
+                total: totalSpeciesCount,
+              })}
             </p>
           )}
         </div>
@@ -160,6 +174,56 @@ export function TestSettingsCard({
             {t("test.settings.scope.description")}
           </p>
         </div>
+
+        <div className="space-y-2">
+          <Label>{t("test.settings.answerNameMode")}</Label>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant={
+                testPreferences.answerNameMode === "scientific"
+                  ? "default"
+                  : "outline"
+              }
+              onClick={() =>
+                onPreferencesChange({ answerNameMode: "scientific" })
+              }
+            >
+              {t("test.settings.nameMode.scientific")}
+            </Button>
+            <Button
+              type="button"
+              variant={
+                testPreferences.answerNameMode === "vernacular"
+                  ? "default"
+                  : "outline"
+              }
+              onClick={() =>
+                onPreferencesChange({ answerNameMode: "vernacular" })
+              }
+            >
+              {t("test.settings.nameMode.vernacular")}
+            </Button>
+            <Button
+              type="button"
+              variant={
+                testPreferences.answerNameMode === "either"
+                  ? "default"
+                  : "outline"
+              }
+              onClick={() => onPreferencesChange({ answerNameMode: "either" })}
+            >
+              {t("test.settings.nameMode.either")}
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            {t("test.settings.nameMode.description")}
+          </p>
+        </div>
+
+        {!canStartTest && unavailableReason ? (
+          <p className="text-sm text-destructive">{unavailableReason}</p>
+        ) : null}
 
         <Button
           onClick={onStartTest}

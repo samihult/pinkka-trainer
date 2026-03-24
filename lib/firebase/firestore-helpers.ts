@@ -1238,18 +1238,36 @@ function mergeImportedAndGroupStacks(params: {
     .sort((left, right) => (left.orderNo ?? 0) - (right.orderNo ?? 0));
 }
 
-function getGenusFromScientificName(
-  scientificName: string,
-): string | undefined {
-  const [genus] = scientificName.trim().split(/\s+/);
-  return genus || undefined;
-}
-
-function getTaxonomyScientificNameByRank(
+function getTaxonomyEntryByRank(
   detail: PinkkaSpeciesDetail,
   rank: "MX.genus" | "MX.family",
-): string | undefined {
-  return detail.taxonomy?.find((entry) => entry.rank === rank)?.scientificName;
+): NonNullable<PinkkaSpeciesDetail["taxonomy"]>[number] | undefined {
+  return detail.taxonomy?.find((entry) => entry.rank === rank);
+}
+
+function mapPinkkaTaxonomyChain(
+  detail: PinkkaSpeciesDetail,
+): NonNullable<Species["data"]["taxonomy"]> | undefined {
+  const mapped: NonNullable<Species["data"]["taxonomy"]> = [];
+  for (const entry of detail.taxonomy ?? []) {
+    const taxonId = entry.taxonId?.trim();
+    const scientificName = entry.scientificName?.trim();
+    if (!taxonId || !scientificName) {
+      continue;
+    }
+
+    mapped.push({
+      taxonId,
+      scientificName,
+      ...(entry.vernacularName !== undefined
+        ? { vernacularName: entry.vernacularName }
+        : {}),
+      ...(entry.rankName ? { rankName: entry.rankName } : {}),
+      ...(entry.rank ? { rank: entry.rank } : {}),
+    });
+  }
+
+  return mapped.length > 0 ? mapped : undefined;
 }
 
 /** Convert Pinkka species detail payload to app species data with resolved image URLs. */
@@ -1259,19 +1277,22 @@ export async function mapPinkkaSpeciesDetailToContentData(
 ): Promise<Species["data"]> {
   const includeImages = options?.includeImages ?? true;
   const resolveStoredImageUrls = options?.resolveStoredImageUrls ?? true;
-  const genusScientificName =
-    getTaxonomyScientificNameByRank(detail, "MX.genus") ??
-    getGenusFromScientificName(detail.scientificName);
-  const familyScientificName = getTaxonomyScientificNameByRank(
-    detail,
-    "MX.family",
-  );
+  const genusTaxonomyEntry = getTaxonomyEntryByRank(detail, "MX.genus");
+  const familyTaxonomyEntry = getTaxonomyEntryByRank(detail, "MX.family");
+  const genusScientificName = genusTaxonomyEntry?.scientificName?.trim();
+  const familyScientificName = familyTaxonomyEntry?.scientificName?.trim();
+  const genusVernacularName = genusTaxonomyEntry?.vernacularName ?? undefined;
+  const familyVernacularName = familyTaxonomyEntry?.vernacularName ?? undefined;
+  const taxonomy = mapPinkkaTaxonomyChain(detail);
   if (!includeImages) {
     return {
       taxonId: detail.taxonId,
       scientificName: detail.scientificName,
       ...(genusScientificName ? { genusScientificName } : {}),
+      ...(genusVernacularName ? { genusVernacularName } : {}),
       ...(familyScientificName ? { familyScientificName } : {}),
+      ...(familyVernacularName ? { familyVernacularName } : {}),
+      ...(taxonomy ? { taxonomy } : {}),
       ...(detail.vernacularName
         ? { vernacularName: detail.vernacularName }
         : {}),
@@ -1329,7 +1350,10 @@ export async function mapPinkkaSpeciesDetailToContentData(
     taxonId: detail.taxonId,
     scientificName: detail.scientificName,
     ...(genusScientificName ? { genusScientificName } : {}),
+    ...(genusVernacularName ? { genusVernacularName } : {}),
     ...(familyScientificName ? { familyScientificName } : {}),
+    ...(familyVernacularName ? { familyVernacularName } : {}),
+    ...(taxonomy ? { taxonomy } : {}),
     ...(detail.vernacularName ? { vernacularName: detail.vernacularName } : {}),
     ...(detail.description ? { description: detail.description } : {}),
     images: mappedImages,
@@ -1715,18 +1739,55 @@ async function buildEditableStackRefreshOperations(params: {
     );
     const speciesId = existingSpecies?.id ?? buildUrnId("species");
     const speciesDocData = existingSpecies?.data ?? {};
+    const existingSpeciesData = (speciesDocData.data ?? {}) as Partial<
+      Species["data"]
+    >;
     const mappedData =
       "detail" in sourceSpecies
         ? await mapPinkkaSpeciesDetailToContentData(sourceSpecies.detail, {
             includeImages: params.includeSpeciesImages,
           })
         : {
-            taxonId: sourceSpecies.card.taxonId ?? "",
-            scientificName: sourceSpecies.card.scientificName ?? "",
+            taxonId:
+              sourceSpecies.card.taxonId ?? existingSpeciesData.taxonId ?? "",
+            scientificName:
+              sourceSpecies.card.scientificName ??
+              existingSpeciesData.scientificName ??
+              "",
             ...(sourceSpecies.card.vernacularName
               ? { vernacularName: sourceSpecies.card.vernacularName }
+              : existingSpeciesData.vernacularName
+                ? { vernacularName: existingSpeciesData.vernacularName }
+                : {}),
+            ...(existingSpeciesData.genusScientificName
+              ? {
+                  genusScientificName: existingSpeciesData.genusScientificName,
+                }
               : {}),
-            images: [],
+            ...(existingSpeciesData.genusVernacularName
+              ? {
+                  genusVernacularName: existingSpeciesData.genusVernacularName,
+                }
+              : {}),
+            ...(existingSpeciesData.familyScientificName
+              ? {
+                  familyScientificName:
+                    existingSpeciesData.familyScientificName,
+                }
+              : {}),
+            ...(existingSpeciesData.familyVernacularName
+              ? {
+                  familyVernacularName:
+                    existingSpeciesData.familyVernacularName,
+                }
+              : {}),
+            ...(existingSpeciesData.taxonomy
+              ? { taxonomy: existingSpeciesData.taxonomy }
+              : {}),
+            ...(existingSpeciesData.description
+              ? { description: existingSpeciesData.description }
+              : {}),
+            images: existingSpeciesData.images ?? [],
           };
     const imageIds = new Set(
       (mappedData.images ?? []).map((image) => image.id),

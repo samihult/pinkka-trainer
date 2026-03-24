@@ -11,11 +11,14 @@ export type LegacyTestAnswerMode = "scientific" | "vernacular" | "either";
 /** Accepted answer scope used by test sessions. */
 export type TestAnswerScope = "species" | "genus" | "family";
 
+/** Accepted answer name variant used by test sessions. */
+export type TestAnswerNameMode = "scientific" | "vernacular" | "either";
+
 /** @deprecated Legacy alias kept for backward-compatible import paths. */
-export type TestAnswerMode = LegacyTestAnswerMode;
+export type TestAnswerMode = TestAnswerNameMode;
 
 /** Name variants tracked for learning progress (including legacy values). */
-export type LearningNameType = TestAnswerScope | LegacyTestAnswerMode;
+export type LearningNameType = TestAnswerScope | TestAnswerNameMode;
 
 /** Learning status buckets for histogram summaries. */
 export type LearningStatusCategory =
@@ -143,6 +146,8 @@ export interface TestPreferences {
   mode: TestMode;
   /** Required answer scope for tests. */
   answerScope: TestAnswerScope;
+  /** Required answer name variant for tests. */
+  answerNameMode: TestAnswerNameMode;
 }
 
 /** Home-page collection preferences stored in the user profile. */
@@ -266,8 +271,25 @@ export interface Species {
     scientificName: string;
     /** Optional scientific genus label used by genus-scope tests. */
     genusScientificName?: string;
+    /** Optional localized genus common names used by genus tests. */
+    genusVernacularName?: LocalizedText;
     /** Optional scientific family label used by family-scope tests. */
     familyScientificName?: string;
+    /** Optional localized family common names used by family tests. */
+    familyVernacularName?: LocalizedText;
+    /** Optional taxonomy chain copied from Pinkka species detail. */
+    taxonomy?: Array<{
+      /** Taxonomy id for this taxonomy node. */
+      taxonId: string;
+      /** Optional localized common names for this taxonomy node. */
+      vernacularName?: LocalizedText | null;
+      /** Scientific name for this taxonomy node. */
+      scientificName: string;
+      /** Optional localized rank display names. */
+      rankName?: LocalizedText;
+      /** Rank identifier (for example `MX.family` or `MX.genus`). */
+      rank?: string;
+    }>;
     /** Optional localized common names. */
     vernacularName?: LocalizedText;
     /** Optional descriptive sections. */
