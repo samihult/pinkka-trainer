@@ -103,6 +103,16 @@ export function SpeciesCard({
     species.data.vernacularName,
     preferredLanguage,
   );
+  const familyName = useMemo(() => {
+    const taxonomyFamily = species.data.taxonomy
+      ?.find((entry) => entry.rank === "MX.family")
+      ?.scientificName?.trim();
+    if (taxonomyFamily) {
+      return taxonomyFamily;
+    }
+    const directFamily = species.data.familyScientificName?.trim();
+    return directFamily || null;
+  }, [species.data.familyScientificName, species.data.taxonomy]);
   const description = getSpeciesDescription(species.data, preferredLanguage);
   const carouselImageIds = useMemo(
     () =>
@@ -397,6 +407,11 @@ export function SpeciesCard({
               <aside className="flex min-h-0 flex-col bg-card">
                 <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
                   <div>
+                    {familyName ? (
+                      <p className="line-clamp-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                        {familyName}
+                      </p>
+                    ) : null}
                     <h2 className="line-clamp-2 text-lg font-semibold">
                       {species.data.scientificName}
                     </h2>
