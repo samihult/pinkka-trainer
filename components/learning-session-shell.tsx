@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import {
   VerdantScholarAtmosphereContainer,
   type VerdantScholarAtmosphereVariant,
 } from "@/components/verdant-scholar/atoms/atmosphere-container";
+import { verdantScholarThemeVariables } from "@/components/verdant-scholar/tokens";
 import {
   SegmentedLearningProgress,
   type LearningProgressSegment,
@@ -16,6 +17,10 @@ import {
 
 /** Props for the learning session shell layout. */
 export interface LearningSessionShellProps {
+  /** Visual theme used for shell-level typography and tokens. */
+  theme?: "default" | "verdant-scholar";
+  /** Layout variant controlling top header/progress vs bottom console. */
+  layout?: "default" | "desktop-console";
   /** Optional group label shown above the stack name. */
   groupName?: string | null;
   /** Stack name shown as the primary header. */
@@ -34,6 +39,12 @@ export interface LearningSessionShellProps {
   progressLabel?: string;
   /** Optional extra action rendered in the header. */
   headerAction?: ReactNode;
+  /** Optional left section rendered in the bottom console toolbar. */
+  consoleLeft?: ReactNode;
+  /** Optional center section rendered in the bottom console toolbar. */
+  consoleCenter?: ReactNode;
+  /** Optional right section rendered in the bottom console toolbar. */
+  consoleRight?: ReactNode;
   /** Optional Verdant Scholar animated atmosphere shown behind the full viewport. */
   backgroundVariant?: VerdantScholarAtmosphereVariant;
   /** Href for the exit button. */
@@ -42,8 +53,16 @@ export interface LearningSessionShellProps {
   children: ReactNode;
 }
 
+const verdantScholarGoogleFontImport = `
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap");
+`;
+
+const verdantScholarStyles = verdantScholarThemeVariables as CSSProperties;
+
 /** Fullscreen shell used by cards and test sessions. */
 export function LearningSessionShell({
+  theme = "default",
+  layout = "default",
   groupName,
   stackName,
   progressValue,
@@ -53,16 +72,31 @@ export function LearningSessionShell({
   onSelectProgressSegment,
   progressLabel,
   headerAction,
+  consoleLeft,
+  consoleCenter,
+  consoleRight,
   backgroundVariant,
   exitHref,
   children,
 }: LearningSessionShellProps) {
+  const isVerdantScholarTheme = theme === "verdant-scholar";
+  const usesDesktopConsole = layout === "desktop-console";
   const hasSegmentedProgress = Boolean(
     progressSegments && progressSegments.length > 0,
   );
 
   return (
-    <div className="relative flex h-screen w-screen flex-col overflow-hidden">
+    <div
+      className={`relative flex h-screen w-screen flex-col overflow-hidden ${
+        isVerdantScholarTheme
+          ? "bg-[var(--vs-color-background)] text-[var(--vs-color-on-background)] [font-family:var(--vs-font-body-family)]"
+          : ""
+      }`}
+      style={isVerdantScholarTheme ? verdantScholarStyles : undefined}
+    >
+      {isVerdantScholarTheme ? (
+        <style>{verdantScholarGoogleFontImport}</style>
+      ) : null}
       {backgroundVariant ? (
         <VerdantScholarAtmosphereContainer
           variant={backgroundVariant}
@@ -71,46 +105,66 @@ export function LearningSessionShell({
       ) : (
         <div className="absolute inset-0 bg-gradient-to-b from-background to-secondary/20" />
       )}
-      <div className="relative z-10 flex items-start justify-between gap-4 px-4 pt-4 sm:px-6 sm:pt-6">
-        <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            {groupName || "Study Group"}
-          </p>
-          <h1 className="truncate text-2xl font-semibold sm:text-3xl">
-            {stackName}
-          </h1>
+      {!usesDesktopConsole ? (
+        <div className="relative z-10 flex items-start justify-between gap-4 px-4 pt-4 sm:px-6 sm:pt-6">
+          <div className="min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              {groupName || "Study Group"}
+            </p>
+            <h1 className="truncate text-2xl font-semibold sm:text-3xl">
+              {stackName}
+            </h1>
+          </div>
+          <div className="flex items-center gap-3">
+            {progressLabel ? (
+              <span className="hidden text-sm text-muted-foreground sm:inline">
+                {progressLabel}
+              </span>
+            ) : null}
+            {headerAction}
+            <Button variant="ghost" size="icon" asChild>
+              <Link href={exitHref} aria-label="Exit session">
+                <X className="h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          {progressLabel ? (
-            <span className="hidden text-sm text-muted-foreground sm:inline">
-              {progressLabel}
-            </span>
-          ) : null}
-          {headerAction}
-          <Button variant="ghost" size="icon" asChild>
-            <Link href={exitHref} aria-label="Exit session">
-              <X className="h-5 w-5" />
-            </Link>
-          </Button>
+      ) : null}
+
+      {!usesDesktopConsole ? (
+        <div className="relative z-10 px-4 pt-4 sm:px-6 sm:pt-4">
+          {hasSegmentedProgress ? (
+            <SegmentedLearningProgress
+              segments={progressSegments ?? []}
+              activeIndex={activeProgressSegmentIndex}
+              showNameOverlay={showProgressSegmentNameOverlay}
+              onSelectIndex={onSelectProgressSegment}
+            />
+          ) : (
+            <Progress value={progressValue} className="h-2" />
+          )}
         </div>
-      </div>
+      ) : null}
 
-      <div className="relative z-10 px-4 pt-4 sm:px-6 sm:pt-4">
-        {hasSegmentedProgress ? (
-          <SegmentedLearningProgress
-            segments={progressSegments ?? []}
-            activeIndex={activeProgressSegmentIndex}
-            showNameOverlay={showProgressSegmentNameOverlay}
-            onSelectIndex={onSelectProgressSegment}
-          />
-        ) : (
-          <Progress value={progressValue} className="h-2" />
-        )}
-      </div>
-
-      <div className="relative z-10 min-h-0 flex-1 px-4 pt-4 pb-4 sm:px-6 sm:pb-6">
+      <div
+        className={`relative z-10 min-h-0 flex-1 ${
+          usesDesktopConsole
+            ? "px-3 pt-3 pb-2 sm:px-4 sm:pt-4"
+            : "px-4 pt-4 pb-4 sm:px-6 sm:pb-6"
+        }`}
+      >
         {children}
       </div>
+
+      {usesDesktopConsole ? (
+        <div className="relative z-20 w-full border-t border-[color:rgba(67,73,57,0.25)] bg-[color:rgba(252,249,248,0.94)] shadow-[0_-8px_24px_rgba(28,27,27,0.08)] backdrop-blur-sm">
+          <div className="grid w-full grid-cols-[minmax(0,1fr)_minmax(220px,520px)_minmax(0,1fr)] items-center gap-4 px-3 py-3 sm:px-4">
+            <div className="min-w-0">{consoleLeft}</div>
+            <div className="w-full">{consoleCenter}</div>
+            <div className="flex min-w-0 justify-end">{consoleRight}</div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

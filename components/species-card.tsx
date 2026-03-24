@@ -50,6 +50,8 @@ interface SpeciesCardProps {
   isInfoPanelOpen: boolean;
   /** Toggle the info pane visibility. */
   onToggleInfoPanel: () => void;
+  /** Whether to render the built-in bottom controls. */
+  showBottomControls?: boolean;
 }
 
 type InfoTab = "identification" | "pinkka";
@@ -69,6 +71,7 @@ export function SpeciesCard({
   total,
   isInfoPanelOpen,
   onToggleInfoPanel,
+  showBottomControls = true,
 }: SpeciesCardProps) {
   const { language } = useLanguagePreference();
   const { t } = useI18n();
@@ -371,7 +374,11 @@ export function SpeciesCard({
 
   return (
     <div className="relative h-full w-full">
-      <Card className="absolute inset-x-4 top-0 bottom-24 overflow-hidden p-0 sm:inset-x-8">
+      <Card
+        className={`absolute inset-x-4 top-0 overflow-hidden p-0 sm:inset-x-8 ${
+          showBottomControls ? "bottom-24" : "bottom-0"
+        }`}
+      >
         <CardContent className="h-full p-0">
           <div
             className={`h-full min-h-0 ${
@@ -543,70 +550,72 @@ export function SpeciesCard({
         </CardContent>
       </Card>
 
-      <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 sm:inset-x-8">
-        <Button
-          onClick={onPrevious}
-          disabled={currentIndex === 0}
-          variant="outline"
-          size="lg"
-        >
-          <KeyboardHint keys={["⌘/Ctrl", "←"]} /> {t("learn.cards.previous")}
-        </Button>
-
-        <div className="flex items-center gap-2">
-          <Button onClick={onToggleInfoPanel} variant="outline" size="lg">
-            <KeyboardHint keys={["Space"]} />
-            {isInfoPanelOpen
-              ? t("learn.cards.info.hide")
-              : t("learn.cards.info.show")}
+      {showBottomControls ? (
+        <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 sm:inset-x-8">
+          <Button
+            onClick={onPrevious}
+            disabled={currentIndex === 0}
+            variant="outline"
+            size="lg"
+          >
+            <KeyboardHint keys={["⌘/Ctrl", "←"]} /> {t("learn.cards.previous")}
           </Button>
-          <TooltipProvider>
-            <Tooltip
-              open={keyboardTooltipOpen}
-              onOpenChange={setKeyboardTooltipOpen}
-            >
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label={t("learn.cards.keyboardAria")}
-                  onClick={() => setKeyboardTooltipOpen(true)}
-                >
-                  <Keyboard className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent className="w-56">
-                <div className="space-y-2 text-xs">
-                  <div className="text-muted-foreground">
-                    {t("learn.cards.shortcutsTitle")}
-                  </div>
-                  <div className="space-y-1">
-                    {shortcutContent.map((shortcut) => (
-                      <div
-                        key={shortcut.label}
-                        className="flex items-center justify-between gap-2"
-                      >
-                        <span>{shortcut.label}</span>
-                        <KeyboardHint keys={shortcut.keys} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
 
-        <Button
-          onClick={onNext}
-          disabled={currentIndex === total - 1}
-          size="lg"
-        >
-          <KeyboardHint keys={["⌘/Ctrl", "→"]} />
-          {t("learn.cards.next")}
-          <ChevronRight className="ml-1 h-4 w-4" />
-        </Button>
-      </div>
+          <div className="flex items-center gap-2">
+            <Button onClick={onToggleInfoPanel} variant="outline" size="lg">
+              <KeyboardHint keys={["Space"]} />
+              {isInfoPanelOpen
+                ? t("learn.cards.info.hide")
+                : t("learn.cards.info.show")}
+            </Button>
+            <TooltipProvider>
+              <Tooltip
+                open={keyboardTooltipOpen}
+                onOpenChange={setKeyboardTooltipOpen}
+              >
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={t("learn.cards.keyboardAria")}
+                    onClick={() => setKeyboardTooltipOpen(true)}
+                  >
+                    <Keyboard className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="w-56">
+                  <div className="space-y-2 text-xs">
+                    <div className="text-muted-foreground">
+                      {t("learn.cards.shortcutsTitle")}
+                    </div>
+                    <div className="space-y-1">
+                      {shortcutContent.map((shortcut) => (
+                        <div
+                          key={shortcut.label}
+                          className="flex items-center justify-between gap-2"
+                        >
+                          <span>{shortcut.label}</span>
+                          <KeyboardHint keys={shortcut.keys} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+
+          <Button
+            onClick={onNext}
+            disabled={currentIndex === total - 1}
+            size="lg"
+          >
+            <KeyboardHint keys={["⌘/Ctrl", "→"]} />
+            {t("learn.cards.next")}
+            <ChevronRight className="ml-1 h-4 w-4" />
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 }

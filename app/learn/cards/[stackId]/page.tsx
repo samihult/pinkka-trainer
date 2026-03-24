@@ -11,6 +11,9 @@ import { Button } from "@/components/ui/button";
 import { SpeciesCard } from "@/components/species-card";
 import { LearningSessionShell } from "@/components/learning-session-shell";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { SegmentedLearningProgress } from "@/components/learning/segmented-learning-progress";
+import { VerdantScholarButton } from "@/components/verdant-scholar/atoms/button";
+import { VerdantScholarIconButton } from "@/components/verdant-scholar/atoms/icon-button";
 import {
   getGroup,
   getGroups,
@@ -27,13 +30,14 @@ import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
 import { useI18n } from "@/lib/i18n";
-import { Shuffle } from "lucide-react";
+import { ArrowLeft, Shuffle, SkipBack, SkipForward } from "lucide-react";
 import Link from "next/link";
 
 const LEGACY_BACKSIDE_PANEL_QUERY_PARAM = "back";
 const LEARNING_INFO_PANEL_QUERY_PARAM = "learningPanel";
 
 function parseInfoPanelVisibility(value: string | null): boolean {
+  if (value === null) return true;
   return value === "1" || value === "true" || value === "open";
 }
 
@@ -139,6 +143,9 @@ export default function CardsPage() {
 
   const exitGroupId = group?.id ?? requestedGroupId;
   const exitHref = exitGroupId ? `/groups/${exitGroupId}` : "/";
+  const stackName = stack
+    ? getLocalizedText(stack.data.name, preferredLanguage)
+    : "Learn";
 
   if (loading) {
     return (
@@ -163,9 +170,7 @@ export default function CardsPage() {
             ? getLocalizedText(group.data.name, preferredLanguage)
             : "Study Group"
         }
-        stackName={
-          stack ? getLocalizedText(stack.data.name, preferredLanguage) : "Learn"
-        }
+        stackName={stackName}
         progressValue={0}
         exitHref={exitHref}
       >
@@ -185,6 +190,10 @@ export default function CardsPage() {
   const groupName = group
     ? getLocalizedText(group.data.name, preferredLanguage)
     : "";
+  const progressLabel = t("learn.cards.progressLabel", {
+    current: currentIndex + 1,
+    total: species.length,
+  });
   const progressSegments = species.map((item) => ({
     id: item.id,
     scientificName: item.data.scientificName,
@@ -194,23 +203,83 @@ export default function CardsPage() {
 
   return (
     <LearningSessionShell
+      theme="verdant-scholar"
+      layout="desktop-console"
       groupName={groupName}
-      stackName={getLocalizedText(stack.data.name, preferredLanguage)}
+      stackName={stackName}
       progressValue={progressValue}
-      progressSegments={progressSegments}
-      activeProgressSegmentIndex={currentIndex}
-      showProgressSegmentNameOverlay={isInfoPanelOpen}
-      onSelectProgressSegment={handleSelectSpeciesFromProgress}
-      progressLabel={t("learn.cards.progressLabel", {
-        current: currentIndex + 1,
-        total: species.length,
-      })}
       exitHref={exitHref}
-      headerAction={
-        <Button onClick={handleShuffle} variant="outline" size="sm">
-          <Shuffle className="mr-1 h-4 w-4" />
-          {t("learn.cards.shuffle")}
-        </Button>
+      consoleLeft={
+        <div className="flex min-w-0 items-center gap-3">
+          <Link href={exitHref} aria-label={t("group.backToHome")}>
+            <VerdantScholarIconButton tone="surface" size="lg">
+              <ArrowLeft className="size-5" />
+            </VerdantScholarIconButton>
+          </Link>
+          <div className="min-w-0">
+            {groupName ? (
+              <p className="truncate text-xs font-semibold uppercase tracking-[0.12em] text-[var(--vs-color-on-surface-variant)]">
+                {groupName}
+              </p>
+            ) : null}
+            <p className="truncate text-base font-semibold [font-family:var(--vs-font-display-family)] text-[var(--vs-color-on-surface)]">
+              {stackName}
+            </p>
+          </div>
+        </div>
+      }
+      consoleCenter={
+        <div className="mx-auto w-full max-w-[28rem]">
+          <SegmentedLearningProgress
+            segments={progressSegments}
+            activeIndex={currentIndex}
+            showNameOverlay={false}
+            onSelectIndex={handleSelectSpeciesFromProgress}
+            className="rounded-[var(--vs-radius-pill)] bg-[color:rgba(246,243,242,0.9)] p-2"
+          />
+          <p className="mt-1 text-center text-xs font-medium text-[var(--vs-color-on-surface-variant)]">
+            {progressLabel}
+          </p>
+        </div>
+      }
+      consoleRight={
+        <div className="flex items-center gap-2">
+          <VerdantScholarIconButton
+            tone="toolbar"
+            size="md"
+            onClick={handlePrevious}
+            disabled={currentIndex === 0}
+            aria-label={t("learn.cards.previous")}
+          >
+            <SkipBack className="size-4" />
+          </VerdantScholarIconButton>
+          <VerdantScholarButton
+            variant={isInfoPanelOpen ? "primary" : "secondary"}
+            size="sm"
+            onClick={toggleInfoPanel}
+          >
+            {isInfoPanelOpen
+              ? t("learn.cards.info.hide")
+              : t("learn.cards.info.show")}
+          </VerdantScholarButton>
+          <VerdantScholarIconButton
+            tone="toolbar"
+            size="md"
+            onClick={handleShuffle}
+            aria-label={t("learn.cards.shuffle")}
+          >
+            <Shuffle className="size-4" />
+          </VerdantScholarIconButton>
+          <VerdantScholarIconButton
+            tone="activeToolbar"
+            size="md"
+            onClick={handleNext}
+            disabled={currentIndex === species.length - 1}
+            aria-label={t("learn.cards.next")}
+          >
+            <SkipForward className="size-4" />
+          </VerdantScholarIconButton>
+        </div>
       }
     >
       <SpeciesCard
@@ -221,6 +290,7 @@ export default function CardsPage() {
         total={species.length}
         isInfoPanelOpen={isInfoPanelOpen}
         onToggleInfoPanel={toggleInfoPanel}
+        showBottomControls={false}
       />
     </LearningSessionShell>
   );
