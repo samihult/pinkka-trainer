@@ -5,6 +5,7 @@ export * from "./atoms/badge";
 export * from "./atoms/button";
 export * from "./atoms/icon-button";
 export * from "./atoms/input";
+export * from "./atoms/atmosphere-container";
 export * from "./atoms/progress-bar";
 export * from "./molecules/answer-option";
 export * from "./molecules/fact-card";

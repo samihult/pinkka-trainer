@@ -5,7 +5,8 @@ Scoped design tokens and a Storybook-first component library modeled from the St
 - `tokens.ts`: Editorial tokens for color, typography, spacing, gradients, radius, and tonal layering.
 - `verdant-scholar-theme.tsx`: Wrapper that scopes the Verdant Scholar variables and loads Manrope + Inter from Google
   Fonts without changing the live app.
-- `atoms/`: Pill search input, gradient CTAs, icon buttons, progress bars, and low-profile badges.
+- `atoms/`: Pill search input, gradient CTAs, icon buttons, progress bars, low-profile badges, and reusable animated
+  atmosphere containers.
 - `molecules/`: Specimen cards, feature tiles, taxonomy filters, answer options, fact cards, section headings, and stack
   cards.
 - `organisms/`: Full-screen and page-section compositions for every available Stitch layout.
