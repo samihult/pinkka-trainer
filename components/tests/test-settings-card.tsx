@@ -124,42 +124,40 @@ export function TestSettingsCard({
         </div>
 
         <div className="space-y-2">
-          <Label>{t("test.settings.acceptedAnswer")}</Label>
+          <Label>{t("test.settings.answerScope")}</Label>
           <div className="flex flex-wrap gap-2">
             <Button
               type="button"
               variant={
-                testPreferences.answerMode === "scientific"
+                testPreferences.answerScope === "species"
                   ? "default"
                   : "outline"
               }
-              onClick={() => onPreferencesChange({ answerMode: "scientific" })}
+              onClick={() => onPreferencesChange({ answerScope: "species" })}
             >
-              {t("test.settings.answer.scientific")}
+              {t("test.settings.scope.species")}
             </Button>
             <Button
               type="button"
               variant={
-                testPreferences.answerMode === "vernacular"
-                  ? "default"
-                  : "outline"
+                testPreferences.answerScope === "genus" ? "default" : "outline"
               }
-              onClick={() => onPreferencesChange({ answerMode: "vernacular" })}
+              onClick={() => onPreferencesChange({ answerScope: "genus" })}
             >
-              {t("test.settings.answer.vernacular")}
+              {t("test.settings.scope.genus")}
             </Button>
             <Button
               type="button"
               variant={
-                testPreferences.answerMode === "either" ? "default" : "outline"
+                testPreferences.answerScope === "family" ? "default" : "outline"
               }
-              onClick={() => onPreferencesChange({ answerMode: "either" })}
+              onClick={() => onPreferencesChange({ answerScope: "family" })}
             >
-              {t("test.settings.answer.either")}
+              {t("test.settings.scope.family")}
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
-            {t("test.settings.answer.description")}
+            {t("test.settings.scope.description")}
           </p>
         </div>
 

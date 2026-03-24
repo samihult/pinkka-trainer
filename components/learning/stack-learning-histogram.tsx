@@ -28,36 +28,36 @@ function buildBarTitle(
 
 /** Props for the StackLearningHistogram component. */
 export interface StackLearningHistogramProps {
-  /** Scientific name histogram. */
-  scientific: LearningStatusHistogram;
-  /** Vernacular name histogram. */
-  vernacular: LearningStatusHistogram;
-  /** Scientific-or-vernacular histogram. */
-  either: LearningStatusHistogram;
+  /** Species-name histogram (scientific/vernacular answers). */
+  species: LearningStatusHistogram;
+  /** Genus-name histogram. */
+  genus: LearningStatusHistogram;
+  /** Family-name histogram. */
+  family: LearningStatusHistogram;
 }
 
-/** Render stacked-bar histograms for scientific, vernacular, and either learning. */
+/** Render stacked-bar histograms for species, genus, and family learning. */
 export function StackLearningHistogram({
-  scientific,
-  vernacular,
-  either,
+  species,
+  genus,
+  family,
 }: StackLearningHistogramProps) {
   const { t } = useI18n();
   const rows = [
     {
-      key: "scientific",
-      label: t("learning.histogram.label.scientific"),
-      histogram: scientific,
+      key: "species",
+      label: t("learning.histogram.label.species"),
+      histogram: species,
     },
     {
-      key: "vernacular",
-      label: t("learning.histogram.label.vernacular"),
-      histogram: vernacular,
+      key: "genus",
+      label: t("learning.histogram.label.genus"),
+      histogram: genus,
     },
     {
-      key: "either",
-      label: t("learning.histogram.label.either"),
-      histogram: either,
+      key: "family",
+      label: t("learning.histogram.label.family"),
+      histogram: family,
     },
   ] as const;
 

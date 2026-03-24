@@ -1,14 +1,35 @@
-import type { TestAnswerMode, TestMode, TestPreferences } from "../types";
+import type {
+  LegacyTestAnswerMode,
+  TestAnswerScope,
+  TestMode,
+  TestPreferences,
+} from "../types";
+
+type TestPreferencesInput = Partial<TestPreferences> & {
+  /** @deprecated Legacy accepted-answer mode from older preference records. */
+  answerMode?: LegacyTestAnswerMode;
+};
 
 /** Default test preferences applied when user settings are missing. */
 export const DEFAULT_TEST_PREFERENCES: TestPreferences = {
   questionCount: 10,
   mode: "multiple-choice",
-  answerMode: "either",
+  answerScope: "species",
 };
 
 const testModes: TestMode[] = ["multiple-choice", "write-name"];
-const answerModes: TestAnswerMode[] = ["scientific", "vernacular", "either"];
+const answerScopes: TestAnswerScope[] = ["species", "genus", "family"];
+const legacyAnswerModeToScope: Record<LegacyTestAnswerMode, TestAnswerScope> = {
+  scientific: "species",
+  vernacular: "species",
+  either: "species",
+};
+
+function mapLegacyAnswerModeToScope(
+  mode: LegacyTestAnswerMode,
+): TestAnswerScope {
+  return legacyAnswerModeToScope[mode];
+}
 
 export const questionCountOptions = [10, 25, 50, 0];
 
@@ -17,7 +38,7 @@ export const questionCountOptions = [10, 25, 50, 0];
  * validating enum values.
  */
 export function normalizeTestPreferences(
-  input?: Partial<TestPreferences> | null,
+  input?: TestPreferencesInput | null,
   defaults: TestPreferences = DEFAULT_TEST_PREFERENCES,
 ): TestPreferences {
   const requestedQuestionCount = input?.questionCount;
@@ -33,15 +54,17 @@ export function normalizeTestPreferences(
       ? requestedMode
       : defaults.mode;
 
-  const requestedAnswerMode = input?.answerMode;
-  const normalizedAnswerMode =
-    requestedAnswerMode && answerModes.includes(requestedAnswerMode)
-      ? requestedAnswerMode
-      : defaults.answerMode;
+  const requestedAnswerScope = input?.answerScope;
+  const normalizedAnswerScope =
+    requestedAnswerScope && answerScopes.includes(requestedAnswerScope)
+      ? requestedAnswerScope
+      : input?.answerMode
+        ? mapLegacyAnswerModeToScope(input.answerMode)
+        : defaults.answerScope;
 
   return {
     questionCount: normalizedQuestionCount,
     mode: normalizedMode,
-    answerMode: normalizedAnswerMode,
+    answerScope: normalizedAnswerScope,
   };
 }

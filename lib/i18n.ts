@@ -189,12 +189,19 @@ const EN_MESSAGES = {
   "test.settings.mode.writeName": "Write the species name",
   "test.settings.mode.description":
     "Pick a multiple-choice answer or type the name yourself.",
-  "test.settings.acceptedAnswer": "Accepted answer",
-  "test.settings.answer.scientific": "Scientific name only",
-  "test.settings.answer.vernacular": "Vernacular name only",
-  "test.settings.answer.either": "Scientific or vernacular name",
-  "test.settings.answer.description":
+  "test.settings.answerScope": "Answer scope",
+  "test.settings.scope.species": "Species name (scientific or vernacular)",
+  "test.settings.scope.genus": "Genus name (scientific)",
+  "test.settings.scope.family": "Family name (scientific)",
+  "test.settings.scope.description":
     "Applies to both test modes; answers ignore case and extra spaces.",
+  "test.answerHelp.species": "Scientific or vernacular species name accepted.",
+  "test.answerHelp.genus": "Scientific genus name required.",
+  "test.answerHelp.family": "Scientific family name required.",
+  "test.answerHelp.familyFallback":
+    "Family data missing; scientific species name accepted.",
+  "test.answerInput.label": "Answer",
+  "test.answerInput.placeholder": "Type your answer",
   "test.settings.start": "Start ⏎",
   "test.multipleChoice.eliminateHalf": "Eliminate 50%",
   "test.multipleChoice.eliminateHalfUsed": "50/50 used",
@@ -210,9 +217,9 @@ const EN_MESSAGES = {
   "learning.histogram.strengthening": "Strengthening",
   "learning.histogram.learning": "Learning",
   "learning.histogram.new": "New",
-  "learning.histogram.label.scientific": "Scientific",
-  "learning.histogram.label.vernacular": "Vernacular",
-  "learning.histogram.label.either": "Either",
+  "learning.histogram.label.species": "Species",
+  "learning.histogram.label.genus": "Genus",
+  "learning.histogram.label.family": "Family",
   "learning.histogram.barTitle":
     "{label}: New {newPercent}%, Learning {learningPercent}%, Strengthening {strengtheningPercent}%, Mastered {masteredPercent}%",
 
@@ -419,12 +426,20 @@ const FI_MESSAGES: TranslationTable = {
   "test.settings.mode.writeName": "Kirjoita lajin nimi",
   "test.settings.mode.description":
     "Valitse oikea vaihtoehto tai kirjoita nimi itse.",
-  "test.settings.acceptedAnswer": "Hyväksytty vastaus",
-  "test.settings.answer.scientific": "Vain tieteellinen nimi",
-  "test.settings.answer.vernacular": "Vain kansankielinen nimi",
-  "test.settings.answer.either": "Tieteellinen tai kansankielinen nimi",
-  "test.settings.answer.description":
+  "test.settings.answerScope": "Vastauksen taso",
+  "test.settings.scope.species": "Lajin nimi (tieteellinen tai kansankielinen)",
+  "test.settings.scope.genus": "Suvun nimi (tieteellinen)",
+  "test.settings.scope.family": "Heimon nimi (tieteellinen)",
+  "test.settings.scope.description":
     "Koskee molempia testitapoja; kirjainkoko ja ylimääräiset välit ohitetaan.",
+  "test.answerHelp.species":
+    "Tieteellinen tai kansankielinen lajinimi hyväksytään.",
+  "test.answerHelp.genus": "Tieteellinen suvun nimi vaaditaan.",
+  "test.answerHelp.family": "Tieteellinen heimon nimi vaaditaan.",
+  "test.answerHelp.familyFallback":
+    "Heimotieto puuttuu; tieteellinen lajinimi hyväksytään.",
+  "test.answerInput.label": "Vastaus",
+  "test.answerInput.placeholder": "Kirjoita vastauksesi",
   "test.settings.start": "Aloita ⏎",
   "test.multipleChoice.eliminateHalf": "Poista 50 %",
   "test.multipleChoice.eliminateHalfUsed": "50/50 käytetty",
@@ -440,9 +455,9 @@ const FI_MESSAGES: TranslationTable = {
   "learning.histogram.strengthening": "Vahvistumassa",
   "learning.histogram.learning": "Opettelussa",
   "learning.histogram.new": "Uusi",
-  "learning.histogram.label.scientific": "Tieteellinen",
-  "learning.histogram.label.vernacular": "Kansankielinen",
-  "learning.histogram.label.either": "Kumpi vain",
+  "learning.histogram.label.species": "Laji",
+  "learning.histogram.label.genus": "Suku",
+  "learning.histogram.label.family": "Heimo",
   "learning.histogram.barTitle":
     "{label}: Uusi {newPercent}%, Opettelussa {learningPercent}%, Vahvistumassa {strengtheningPercent}%, Hallussa {masteredPercent}%",
 
@@ -641,12 +656,20 @@ const SV_MESSAGES: TranslationTable = {
   "test.settings.mode.writeName": "Skriv artens namn",
   "test.settings.mode.description":
     "Välj ett flervalsalternativ eller skriv namnet själv.",
-  "test.settings.acceptedAnswer": "Godkänt svar",
-  "test.settings.answer.scientific": "Endast vetenskapligt namn",
-  "test.settings.answer.vernacular": "Endast vardagligt namn",
-  "test.settings.answer.either": "Vetenskapligt eller vardagligt namn",
-  "test.settings.answer.description":
+  "test.settings.answerScope": "Svarsnivå",
+  "test.settings.scope.species": "Artnamn (vetenskapligt eller vardagligt)",
+  "test.settings.scope.genus": "Släktesnamn (vetenskapligt)",
+  "test.settings.scope.family": "Familjenamn (vetenskapligt)",
+  "test.settings.scope.description":
     "Gäller båda testlägen; svar ignorerar versaler och extra mellanslag.",
+  "test.answerHelp.species":
+    "Vetenskapligt eller vardagligt artnamn accepteras.",
+  "test.answerHelp.genus": "Vetenskapligt släktesnamn krävs.",
+  "test.answerHelp.family": "Vetenskapligt familjenamn krävs.",
+  "test.answerHelp.familyFallback":
+    "Familjedata saknas; vetenskapligt artnamn accepteras.",
+  "test.answerInput.label": "Svar",
+  "test.answerInput.placeholder": "Skriv ditt svar",
   "test.settings.start": "Starta ⏎",
   "test.multipleChoice.eliminateHalf": "Ta bort 50 %",
   "test.multipleChoice.eliminateHalfUsed": "50/50 använd",
@@ -662,9 +685,9 @@ const SV_MESSAGES: TranslationTable = {
   "learning.histogram.strengthening": "Stärks",
   "learning.histogram.learning": "Lärs in",
   "learning.histogram.new": "Ny",
-  "learning.histogram.label.scientific": "Vetenskaplig",
-  "learning.histogram.label.vernacular": "Vardaglig",
-  "learning.histogram.label.either": "Endera",
+  "learning.histogram.label.species": "Art",
+  "learning.histogram.label.genus": "Släkte",
+  "learning.histogram.label.family": "Familj",
   "learning.histogram.barTitle":
     "{label}: Ny {newPercent}%, Lärs in {learningPercent}%, Stärks {strengtheningPercent}%, Behärskad {masteredPercent}%",
 

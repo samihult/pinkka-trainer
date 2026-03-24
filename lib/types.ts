@@ -5,11 +5,17 @@ export type UserRole = "viewer" | "editor" | "admin";
 /** Test presentation mode. */
 export type TestMode = "multiple-choice" | "write-name";
 
-/** Accepted answer rules when typing a species name. */
-export type TestAnswerMode = "scientific" | "vernacular" | "either";
+/** @deprecated Legacy accepted-answer setting kept for preference migration. */
+export type LegacyTestAnswerMode = "scientific" | "vernacular" | "either";
 
-/** Name variants tracked for learning progress. */
-export type LearningNameType = "scientific" | "vernacular" | "either";
+/** Accepted answer scope used by test sessions. */
+export type TestAnswerScope = "species" | "genus" | "family";
+
+/** @deprecated Legacy alias kept for backward-compatible import paths. */
+export type TestAnswerMode = LegacyTestAnswerMode;
+
+/** Name variants tracked for learning progress (including legacy values). */
+export type LearningNameType = TestAnswerScope | LegacyTestAnswerMode;
 
 /** Learning status buckets for histogram summaries. */
 export type LearningStatusCategory =
@@ -119,12 +125,12 @@ export interface StackLearningHistogram {
   userId: string;
   /** Stack document id. */
   stackId: string;
-  /** Scientific-name histogram. */
-  scientific: LearningStatusHistogram;
-  /** Vernacular-name histogram. */
-  vernacular: LearningStatusHistogram;
-  /** Scientific-or-vernacular histogram (used by "either" answer mode). */
-  either: LearningStatusHistogram;
+  /** Species-name histogram (scientific/vernacular answers). */
+  species: LearningStatusHistogram;
+  /** Genus-name histogram. */
+  genus: LearningStatusHistogram;
+  /** Family-name histogram. */
+  family: LearningStatusHistogram;
   /** Last update timestamp. */
   updatedAt: Date;
 }
@@ -135,8 +141,8 @@ export interface TestPreferences {
   questionCount: number;
   /** Test interaction mode. */
   mode: TestMode;
-  /** Required answer type for tests. */
-  answerMode: TestAnswerMode;
+  /** Required answer scope for tests. */
+  answerScope: TestAnswerScope;
 }
 
 /** Home-page collection preferences stored in the user profile. */
@@ -258,6 +264,10 @@ export interface Species {
     taxonId: string;
     /** Scientific species name. */
     scientificName: string;
+    /** Optional scientific genus label used by genus-scope tests. */
+    genusScientificName?: string;
+    /** Optional scientific family label used by family-scope tests. */
+    familyScientificName?: string;
     /** Optional localized common names. */
     vernacularName?: LocalizedText;
     /** Optional descriptive sections. */

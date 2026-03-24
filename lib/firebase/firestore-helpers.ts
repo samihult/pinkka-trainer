@@ -1238,6 +1238,20 @@ function mergeImportedAndGroupStacks(params: {
     .sort((left, right) => (left.orderNo ?? 0) - (right.orderNo ?? 0));
 }
 
+function getGenusFromScientificName(
+  scientificName: string,
+): string | undefined {
+  const [genus] = scientificName.trim().split(/\s+/);
+  return genus || undefined;
+}
+
+function getTaxonomyScientificNameByRank(
+  detail: PinkkaSpeciesDetail,
+  rank: "MX.genus" | "MX.family",
+): string | undefined {
+  return detail.taxonomy?.find((entry) => entry.rank === rank)?.scientificName;
+}
+
 /** Convert Pinkka species detail payload to app species data with resolved image URLs. */
 export async function mapPinkkaSpeciesDetailToContentData(
   detail: PinkkaSpeciesDetail,
@@ -1245,10 +1259,19 @@ export async function mapPinkkaSpeciesDetailToContentData(
 ): Promise<Species["data"]> {
   const includeImages = options?.includeImages ?? true;
   const resolveStoredImageUrls = options?.resolveStoredImageUrls ?? true;
+  const genusScientificName =
+    getTaxonomyScientificNameByRank(detail, "MX.genus") ??
+    getGenusFromScientificName(detail.scientificName);
+  const familyScientificName = getTaxonomyScientificNameByRank(
+    detail,
+    "MX.family",
+  );
   if (!includeImages) {
     return {
       taxonId: detail.taxonId,
       scientificName: detail.scientificName,
+      ...(genusScientificName ? { genusScientificName } : {}),
+      ...(familyScientificName ? { familyScientificName } : {}),
       ...(detail.vernacularName
         ? { vernacularName: detail.vernacularName }
         : {}),
@@ -1305,6 +1328,8 @@ export async function mapPinkkaSpeciesDetailToContentData(
   return {
     taxonId: detail.taxonId,
     scientificName: detail.scientificName,
+    ...(genusScientificName ? { genusScientificName } : {}),
+    ...(familyScientificName ? { familyScientificName } : {}),
     ...(detail.vernacularName ? { vernacularName: detail.vernacularName } : {}),
     ...(detail.description ? { description: detail.description } : {}),
     images: mappedImages,
@@ -2607,7 +2632,7 @@ export async function upsertLearningProgressBatch(
 
 function createEmptyLearningStatusHistogram(
   total: number,
-): StackLearningHistogram["scientific"] {
+): StackLearningHistogram["species"] {
   return {
     total,
     new: { count: total, percent: total > 0 ? 100 : 0 },
@@ -2873,22 +2898,35 @@ export async function getStackLearningHistograms(
       const data = docSnapshot.data();
       const stackId = data.stackId as string;
       const fallbackTotal =
+        data.species?.total ??
+        data.genus?.total ??
+        data.family?.total ??
+        data.either?.total ??
         data.scientific?.total ??
         data.vernacular?.total ??
-        data.either?.total ??
         0;
-      const scientific =
-        data.scientific ?? createEmptyLearningStatusHistogram(fallbackTotal);
-      const vernacular =
-        data.vernacular ?? createEmptyLearningStatusHistogram(fallbackTotal);
+      const species =
+        data.species ??
+        data.either ??
+        data.scientific ??
+        createEmptyLearningStatusHistogram(fallbackTotal);
+      const genus =
+        data.genus ??
+        (typeof data.scientific === "object"
+          ? data.scientific
+          : createEmptyLearningStatusHistogram(fallbackTotal));
+      const family =
+        data.family ??
+        (typeof data.scientific === "object"
+          ? data.scientific
+          : createEmptyLearningStatusHistogram(fallbackTotal));
       histogramMap.set(stackId, {
         id: docSnapshot.id,
         userId: data.userId,
         stackId,
-        scientific,
-        vernacular,
-        either:
-          data.either ?? createEmptyLearningStatusHistogram(fallbackTotal),
+        species,
+        genus,
+        family,
         updatedAt: data.updatedAt?.toDate() ?? new Date(0),
       } as StackLearningHistogram);
     });
@@ -3015,9 +3053,9 @@ export async function upsertStackLearningHistogram(
     {
       userId: record.userId,
       stackId: record.stackId,
-      scientific: record.scientific,
-      vernacular: record.vernacular,
-      either: record.either,
+      species: record.species,
+      genus: record.genus,
+      family: record.family,
       updatedAt: now,
     },
     { merge: true },

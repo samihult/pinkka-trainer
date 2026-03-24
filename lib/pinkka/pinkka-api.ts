@@ -145,6 +145,19 @@ export interface PinkkaSpeciesDetail {
       license?: string;
     };
   }>;
+  /** Optional scientific taxonomy chain for the species. */
+  taxonomy?: Array<{
+    /** Taxonomy id for this taxonomy node. */
+    taxonId: string;
+    /** Optional localized common names. */
+    vernacularName?: MultilingualText | null;
+    /** Scientific name for this taxonomy node. */
+    scientificName: string;
+    /** Localized rank display names. */
+    rankName?: MultilingualText;
+    /** Rank identifier (for example `MX.family` or `MX.genus`). */
+    rank?: string;
+  }>;
 }
 
 /** Resolve localized text with preferred language fallback. */

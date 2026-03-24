@@ -5,5 +5,4 @@ Learning analytics and progress visualization components.
 - `segmented-learning-progress.tsx`: Multi-row, species-aware segmented learning progress bar with expanded hover
   reaction areas, equal-width wrapped segments, one animated top-floating species name box with viewport clamping and
   smooth width transitions, optional overlay visibility gating, and click-to-segment navigation hooks.
-- `stack-learning-histogram.tsx`: Stacked-bar outcome view for scientific, vernacular, and scientific-or-vernacular
-  study tracking.
+- `stack-learning-histogram.tsx`: Stacked-bar outcome view for species-, genus-, and family-scope study tracking.

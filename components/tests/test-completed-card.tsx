@@ -67,9 +67,9 @@ export function TestCompletedCard({
               {t("test.completed.stackStatus")}
             </p>
             <StackLearningHistogram
-              scientific={learningHistogram.scientific}
-              vernacular={learningHistogram.vernacular}
-              either={learningHistogram.either}
+              species={learningHistogram.species}
+              genus={learningHistogram.genus}
+              family={learningHistogram.family}
             />
           </div>
         )}
