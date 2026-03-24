@@ -98,30 +98,20 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
       const visibleStacks = [...stacksData]
         .filter((stack) => !stack.isHidden)
         .sort((left, right) => (left.order ?? 0) - (right.order ?? 0));
-      const resolvedCounts = await Promise.allSettled(
-        visibleStacks.map(async (stack) => {
-          if (Array.isArray(stack.speciesIds) && stack.speciesIds.length > 0) {
-            return [stack.id, stack.speciesIds.length] as const;
-          }
-
-          const species = await getSpecies(stack.id);
-          return [stack.id, species.length] as const;
-        }),
-      );
-
       const persistedFavoriteStackIds = homePreferences?.favoriteStackIds ?? [];
+      const initialStackSpeciesCounts = visibleStacks.reduce<
+        Map<string, number>
+      >((accumulator, stack) => {
+        accumulator.set(
+          stack.id,
+          Array.isArray(stack.speciesIds) ? stack.speciesIds.length : 0,
+        );
+        return accumulator;
+      }, new Map());
 
       setGroup(groupData && !groupData.isHidden ? groupData : null);
       setStacks(visibleStacks);
-      setStackSpeciesCounts(
-        resolvedCounts.reduce<Map<string, number>>((accumulator, entry) => {
-          if (entry.status === "fulfilled") {
-            const [stackId, count] = entry.value;
-            accumulator.set(stackId, count);
-          }
-          return accumulator;
-        }, new Map()),
-      );
+      setStackSpeciesCounts(initialStackSpeciesCounts);
       setFavoriteStates(
         visibleStacks.reduce<Record<string, boolean>>((accumulator, stack) => {
           accumulator[stack.id] = persistedFavoriteStackIds.includes(stack.id);
@@ -129,18 +119,50 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
         }, {}),
       );
       setFavoriteStackIds(persistedFavoriteStackIds);
-      const progressMap = await getStackScientificProgressSummaries(
-        user.uid,
-        visibleStacks.map((stack) => stack.id),
+      setLoading(false);
+
+      const stacksMissingSpeciesCounts = visibleStacks.filter(
+        (stack) =>
+          (initialStackSpeciesCounts.get(stack.id) ??
+            stack.speciesIds?.length ??
+            0) === 0,
       );
-      setStackMasteryPercents(
-        new Map(
-          [...progressMap.entries()].map(([stackId, progress]) => [
-            stackId,
-            progress.masteredScientificPercent,
-          ]),
-        ),
-      );
+      const [progressResult, stackSpeciesCountResult] =
+        await Promise.allSettled([
+          getStackScientificProgressSummaries(
+            user.uid,
+            visibleStacks.map((stack) => stack.id),
+            { allowFallback: false },
+          ),
+          Promise.allSettled(
+            stacksMissingSpeciesCounts.map(async (stack) => {
+              const species = await getSpecies(stack.id);
+              return [stack.id, species.length] as const;
+            }),
+          ),
+        ]);
+      if (progressResult.status === "fulfilled") {
+        setStackMasteryPercents(
+          new Map(
+            [...progressResult.value.entries()].map(([stackId, progress]) => [
+              stackId,
+              progress.masteredScientificPercent,
+            ]),
+          ),
+        );
+      }
+      if (stackSpeciesCountResult.status === "fulfilled") {
+        setStackSpeciesCounts((previous) => {
+          const next = new Map(previous);
+          stackSpeciesCountResult.value.forEach((result) => {
+            if (result.status === "fulfilled") {
+              const [stackId, count] = result.value;
+              next.set(stackId, count);
+            }
+          });
+          return next;
+        });
+      }
     } catch (error) {
       logFirestoreError("Failed to load collection page data", error);
     } finally {

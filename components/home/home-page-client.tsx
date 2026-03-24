@@ -63,6 +63,9 @@ export function HomePageClient() {
   const [groupMasteryPercents, setGroupMasteryPercents] = useState<
     Map<string, number>
   >(new Map());
+  const [groupSpeciesCounts, setGroupSpeciesCounts] = useState<
+    Map<string, number>
+  >(new Map());
   const [filterValue, setFilterValue] = useState("");
   const [loading, setLoading] = useState(true);
   const [pendingScrollFavoriteId, setPendingScrollFavoriteId] = useState<
@@ -83,28 +86,20 @@ export function HomePageClient() {
       const visibleGroups = [...groupsData]
         .filter((group) => !group.isHidden)
         .sort((left, right) => (left.order ?? 0) - (right.order ?? 0));
-      const resolvedCounts = await Promise.allSettled(
-        stacksData.map(async (stack) => {
-          if (Array.isArray(stack.speciesIds) && stack.speciesIds.length > 0) {
-            return [stack.id, stack.speciesIds.length] as const;
-          }
-
-          const species = await getSpecies(stack.id);
-          return [stack.id, species.length] as const;
-        }),
+      const initialStackSpeciesCounts = stacksData.reduce<Map<string, number>>(
+        (accumulator, stack) => {
+          accumulator.set(
+            stack.id,
+            Array.isArray(stack.speciesIds) ? stack.speciesIds.length : 0,
+          );
+          return accumulator;
+        },
+        new Map(),
       );
 
       setGroups(visibleGroups);
       setAllStacks(stacksData);
-      setStackSpeciesCounts(
-        resolvedCounts.reduce<Map<string, number>>((accumulator, entry) => {
-          if (entry.status === "fulfilled") {
-            const [stackId, count] = entry.value;
-            accumulator.set(stackId, count);
-          }
-          return accumulator;
-        }, new Map()),
-      );
+      setStackSpeciesCounts(initialStackSpeciesCounts);
       const favoriteGroupIds = new Set(homePreferences?.favoriteGroupIds ?? []);
       setFavoriteStates(
         visibleGroups.reduce<Record<string, boolean>>((accumulator, group) => {
@@ -112,10 +107,33 @@ export function HomePageClient() {
           return accumulator;
         }, {}),
       );
-      const progressMap = await getGroupScientificProgressSummaries(
-        user.uid,
-        visibleGroups.map((group) => group.id),
+      setLoading(false);
+      const visibleGroupIds = visibleGroups.map((group) => group.id);
+      const stacksMissingSpeciesCounts = stacksData.filter(
+        (stack) =>
+          !stack.isHidden &&
+          (initialStackSpeciesCounts.get(stack.id) ??
+            stack.speciesIds?.length ??
+            0) === 0,
       );
+      const [progressResult, stackSpeciesCountResult] =
+        await Promise.allSettled([
+          getGroupScientificProgressSummaries(user.uid, visibleGroupIds, {
+            allowFallback: false,
+          }),
+          Promise.allSettled(
+            stacksMissingSpeciesCounts.map(async (stack) => {
+              const species = await getSpecies(stack.id);
+              return [stack.id, species.length] as const;
+            }),
+          ),
+        ]);
+
+      const progressMap =
+        progressResult.status === "fulfilled"
+          ? progressResult.value
+          : new Map();
+
       setGroupMasteryPercents(
         new Map(
           [...progressMap.entries()].map(([groupId, progress]) => [
@@ -124,6 +142,26 @@ export function HomePageClient() {
           ]),
         ),
       );
+      setGroupSpeciesCounts(
+        new Map(
+          [...progressMap.entries()].map(([groupId, progress]) => [
+            groupId,
+            progress.totalSpeciesCount,
+          ]),
+        ),
+      );
+      if (stackSpeciesCountResult.status === "fulfilled") {
+        setStackSpeciesCounts((previous) => {
+          const next = new Map(previous);
+          stackSpeciesCountResult.value.forEach((result) => {
+            if (result.status === "fulfilled") {
+              const [stackId, count] = result.value;
+              next.set(stackId, count);
+            }
+          });
+          return next;
+        });
+      }
     } catch (error) {
       logFirestoreError("Failed to load learn page data", error);
     } finally {
@@ -155,12 +193,14 @@ export function HomePageClient() {
   const groupCards = useMemo<HomeGroupCardViewModel[]>(() => {
     return groups.map((group, index) => {
       const groupStacks = stacksByGroup[group.id] ?? [];
-      const speciesCount = groupStacks.reduce(
-        (total, stack) =>
-          total +
-          (stackSpeciesCounts.get(stack.id) ?? stack.speciesIds?.length ?? 0),
-        0,
-      );
+      const speciesCount =
+        groupSpeciesCounts.get(group.id) ??
+        groupStacks.reduce(
+          (total, stack) =>
+            total +
+            (stackSpeciesCounts.get(stack.id) ?? stack.speciesIds?.length ?? 0),
+          0,
+        );
       const groupImageUrl =
         getEntityImageUrl(group.images) ??
         groupStacks
@@ -187,6 +227,7 @@ export function HomePageClient() {
     });
   }, [
     groupMasteryPercents,
+    groupSpeciesCounts,
     groups,
     preferredLanguage,
     stackSpeciesCounts,

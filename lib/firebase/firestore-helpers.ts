@@ -2901,6 +2901,7 @@ export async function getStackLearningHistograms(
 export async function getStackScientificProgressSummaries(
   userId: string,
   stackIds: string[],
+  options?: { allowFallback?: boolean },
 ): Promise<Map<string, StackScientificProgress>> {
   const summaryMap = new Map<string, StackScientificProgress>();
   if (stackIds.length === 0) return summaryMap;
@@ -2925,10 +2926,11 @@ export async function getStackScientificProgressSummaries(
     });
   }
 
+  const allowFallback = options?.allowFallback ?? true;
   const missingStackIds = uniqueStackIds.filter(
     (stackId) => !summaryMap.has(stackId),
   );
-  if (missingStackIds.length > 0) {
+  if (allowFallback && missingStackIds.length > 0) {
     const fallbackMap = await computeStackScientificProgressFallback(
       userId,
       missingStackIds,
@@ -2945,6 +2947,7 @@ export async function getStackScientificProgressSummaries(
 export async function getGroupScientificProgressSummaries(
   userId: string,
   groupIds: string[],
+  options?: { allowFallback?: boolean },
 ): Promise<Map<string, GroupScientificProgress>> {
   const summaryMap = new Map<string, GroupScientificProgress>();
   if (groupIds.length === 0) return summaryMap;
@@ -2969,10 +2972,11 @@ export async function getGroupScientificProgressSummaries(
     });
   }
 
+  const allowFallback = options?.allowFallback ?? true;
   const missingGroupIds = uniqueGroupIds.filter(
     (groupId) => !summaryMap.has(groupId),
   );
-  if (missingGroupIds.length > 0) {
+  if (allowFallback && missingGroupIds.length > 0) {
     const fallbackMap = await computeGroupScientificProgressFallback(
       userId,
       missingGroupIds,
@@ -3386,18 +3390,26 @@ export async function getStacks(
   const groups = await getGroups(ownerId, { includeHidden: includeHidden });
   const mergedById = new Map<string, Stack>();
 
-  for (const group of groups) {
-    try {
-      const groupStacks = await getStacks(group.id, ownerId, {
+  const groupStackResults = await Promise.allSettled(
+    groups.map((group) =>
+      getStacks(group.id, ownerId, {
         includeHidden,
-      });
-      for (const stack of groupStacks) {
+      }),
+    ),
+  );
+  groupStackResults.forEach((result, index) => {
+    if (result.status === "fulfilled") {
+      for (const stack of result.value) {
         mergedById.set(stack.id, stack);
       }
-    } catch (error) {
-      console.error(`Failed to fetch stacks for group ${group.id}`, error);
+      return;
     }
-  }
+
+    console.error(
+      `Failed to fetch stacks for group ${groups[index]?.id ?? "unknown"}`,
+      result.reason,
+    );
+  });
 
   const legacyQuery = ownerId
     ? query(collection(db, "stacks"), where("ownerId", "==", ownerId))
