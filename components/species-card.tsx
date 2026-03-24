@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -33,6 +32,7 @@ import {
   type PinkkaSpeciesDetail,
 } from "@/lib/pinkka/pinkka-api";
 import { PinkkaSpeciesDetail as PinkkaSpeciesDetailPanel } from "@/components/pinkka/pinkka-species-detail";
+import { VerdantScholarButton } from "@/components/verdant-scholar/atoms/button";
 
 /** Props for the species-card viewer. */
 interface SpeciesCardProps {
@@ -374,181 +374,173 @@ export function SpeciesCard({
 
   return (
     <div className="relative h-full w-full">
-      <Card
+      <div
         className={`absolute inset-x-4 top-0 overflow-hidden p-0 sm:inset-x-8 ${
           showBottomControls ? "bottom-24" : "bottom-0"
         }`}
       >
-        <CardContent className="h-full p-0">
+        <div
+          className={`h-full min-h-0 ${
+            isInfoPanelOpen
+              ? "grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]"
+              : ""
+          }`}
+        >
           <div
-            className={`h-full min-h-0 ${
+            className={cn(
+              "min-h-0 overflow-hidden rounded-[var(--vs-radius-lg)] shadow-[0_18px_36px_rgba(28,27,27,0.14)]",
               isInfoPanelOpen
-                ? "grid md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"
-                : ""
-            }`}
+                ? "border border-[color:rgba(67,73,57,0.18)]"
+                : "h-full border border-[color:rgba(67,73,57,0.22)]",
+            )}
           >
-            <div
-              className={
-                isInfoPanelOpen
-                  ? "min-h-0 border-b md:border-b-0 md:border-r"
-                  : "h-full"
-              }
-            >
-              <div data-interactive="true" className="h-full">
-                <SpeciesImageCarousel
-                  images={images}
-                  alt={species.data.scientificName}
-                  resetKey={species.id}
-                  activeIndex={activeCarouselIndex}
-                  onIndexChange={handleCarouselIndexChange}
-                  onModalOpenChange={setIsCarouselModalOpen}
-                  heightClassName="h-full"
-                  fullScreenLightboxProps={{
-                    captions: { hidden: true, showToggle: false },
-                    zoom: { maxZoomPixelRatio: 3 },
-                  }}
-                />
-              </div>
+            <div data-interactive="true" className="h-full bg-black/5">
+              <SpeciesImageCarousel
+                images={images}
+                alt={species.data.scientificName}
+                resetKey={species.id}
+                activeIndex={activeCarouselIndex}
+                onIndexChange={handleCarouselIndexChange}
+                onModalOpenChange={setIsCarouselModalOpen}
+                heightClassName="h-full"
+                fullScreenLightboxProps={{
+                  captions: { hidden: true, showToggle: false },
+                  zoom: { maxZoomPixelRatio: 3 },
+                }}
+              />
             </div>
-            {isInfoPanelOpen ? (
-              <aside className="flex min-h-0 flex-col bg-card">
-                <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
-                  <div>
-                    {familyName ? (
-                      <p className="line-clamp-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                        {familyName}
-                      </p>
-                    ) : null}
-                    <h2 className="line-clamp-2 text-lg font-semibold">
-                      {species.data.scientificName}
-                    </h2>
-                    {vernacularName ? (
-                      <p className="text-sm text-primary">{vernacularName}</p>
-                    ) : null}
-                  </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    onClick={onToggleInfoPanel}
-                    aria-label={t("learn.cards.info.hideAria")}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="border-b px-4 py-2">
-                  <div className="inline-flex gap-1">
-                    <Button
-                      type="button"
-                      variant={
-                        activeInfoTab === "identification"
-                          ? "secondary"
-                          : "ghost"
-                      }
-                      size="sm"
-                      onClick={() => setActiveInfoTab("identification")}
-                    >
-                      <KeyboardHint keys={["1"]} />{" "}
-                      {t("learn.cards.info.tab.identification")}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={
-                        activeInfoTab === "pinkka" ? "secondary" : "ghost"
-                      }
-                      size="sm"
-                      onClick={() => setActiveInfoTab("pinkka")}
-                    >
-                      <KeyboardHint keys={["2"]} />{" "}
-                      {t("learn.cards.info.tab.pinkka")}
-                    </Button>
-                  </div>
-                </div>
-                <div className="min-h-0 flex-1 overflow-y-auto p-4">
-                  {activeInfoTab === "identification" ? (
-                    identificationHints.length > 0 ? (
-                      <ul className="space-y-2">
-                        {identificationHints.map((hint) => {
-                          const isActive = activeHintId === hint.id;
-                          return (
-                            <li key={hint.id}>
-                              <button
-                                type="button"
-                                className={cn(
-                                  "w-full rounded-md border border-border px-3 py-2 text-left text-sm transition-colors duration-200",
-                                  isActive
-                                    ? "bg-primary hover:bg-primary/90 text-background/90"
-                                    : "bg-muted hover:bg-muted/60 hover:text-foreground/90",
-                                )}
-                                onClick={() => handleHintClick(hint)}
-                                aria-pressed={isActive}
-                              >
-                                {hint.text}
-                              </button>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    ) : (
-                      <p className="text-sm text-muted-foreground">
-                        {t("learn.cards.info.identificationPlaceholder")}
-                      </p>
-                    )
-                  ) : (
-                    <div className="space-y-3">
-                      {pinkkaSpeciesId ? (
-                        <Button
-                          type="button"
-                          variant="link"
-                          size="sm"
-                          className="h-auto p-0 text-sm font-medium"
-                          asChild
-                        >
-                          <a
-                            href={`https://pinkka.laji.fi/pinkat/#/speciescards/${pinkkaSpeciesId}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            pinkka
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </a>
-                        </Button>
-                      ) : null}
-                      {pinkkaLoading ? (
-                        <div className="py-3 flex justify-center">
-                          <LoadingSpinner />
-                        </div>
-                      ) : pinkkaDetail ? (
-                        <PinkkaSpeciesDetailPanel
-                          detail={pinkkaDetail}
-                          preferredLang={preferredLanguage}
-                          showSpeciesHeader={false}
-                          showImages={false}
-                        />
-                      ) : description ? (
-                        <div
-                          className="text-sm leading-relaxed text-muted-foreground [&_p]:mb-4 [&_p:last-child]:mb-0"
-                          dangerouslySetInnerHTML={{
-                            __html: sanitizedDescription,
-                          }}
-                        />
-                      ) : pinkkaLoadFailed ? (
-                        <p className="text-sm text-muted-foreground">
-                          {t("learn.cards.info.noDescription")}
-                        </p>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">
-                          {t("learn.cards.info.noDescription")}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </aside>
-            ) : null}
           </div>
-        </CardContent>
-      </Card>
+          {isInfoPanelOpen ? (
+            <aside className="flex min-h-0 flex-col overflow-hidden rounded-[var(--vs-radius-md)] border border-[color:rgba(67,73,57,0.22)] bg-[var(--vs-color-surface-container-lowest)] text-[var(--vs-color-on-surface)] shadow-[0_14px_30px_rgba(28,27,27,0.12)]">
+              <div className="flex items-center justify-between gap-3 border-b border-[color:rgba(67,73,57,0.2)] px-5 py-4">
+                <div className="min-w-0">
+                  {familyName ? (
+                    <p className="line-clamp-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--vs-color-on-surface-variant)]">
+                      {familyName}
+                    </p>
+                  ) : null}
+                  <h2 className="line-clamp-2 text-2xl [font-family:var(--vs-font-display-family)] font-extrabold tracking-tight text-[var(--vs-color-on-surface)]">
+                    {species.data.scientificName}
+                  </h2>
+                  {vernacularName ? (
+                    <p className="text-base font-medium text-[var(--vs-color-primary)]">
+                      {vernacularName}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              <div className="border-b border-[color:rgba(67,73,57,0.2)] px-5 py-3">
+                <div className="inline-flex flex-wrap items-center gap-2">
+                  <VerdantScholarButton
+                    type="button"
+                    variant={
+                      activeInfoTab === "identification"
+                        ? "primary"
+                        : "secondary"
+                    }
+                    size="sm"
+                    onClick={() => setActiveInfoTab("identification")}
+                  >
+                    <KeyboardHint keys={["1"]} />{" "}
+                    {t("learn.cards.info.tab.identification")}
+                  </VerdantScholarButton>
+                  <VerdantScholarButton
+                    type="button"
+                    variant={
+                      activeInfoTab === "pinkka" ? "primary" : "secondary"
+                    }
+                    size="sm"
+                    onClick={() => setActiveInfoTab("pinkka")}
+                  >
+                    <KeyboardHint keys={["2"]} />{" "}
+                    {t("learn.cards.info.tab.pinkka")}
+                  </VerdantScholarButton>
+                </div>
+              </div>
+              <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+                {activeInfoTab === "identification" ? (
+                  identificationHints.length > 0 ? (
+                    <ul className="space-y-2.5">
+                      {identificationHints.map((hint) => {
+                        const isActive = activeHintId === hint.id;
+                        return (
+                          <li key={hint.id}>
+                            <button
+                              type="button"
+                              className={cn(
+                                "w-full rounded-[var(--vs-radius-sm)] border px-3 py-2 text-left text-sm transition-colors duration-200",
+                                isActive
+                                  ? "border-transparent bg-[image:var(--vs-gradient-primary)] text-[var(--vs-color-on-primary)]"
+                                  : "border-[color:rgba(67,73,57,0.24)] bg-[var(--vs-color-surface-container-highest)] text-[var(--vs-color-on-surface)] hover:bg-[var(--vs-color-surface-variant)]",
+                              )}
+                              onClick={() => handleHintClick(hint)}
+                              aria-pressed={isActive}
+                            >
+                              {hint.text}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-[var(--vs-color-on-surface-variant)]">
+                      {t("learn.cards.info.identificationPlaceholder")}
+                    </p>
+                  )
+                ) : (
+                  <div className="space-y-3">
+                    {pinkkaSpeciesId ? (
+                      <Button
+                        type="button"
+                        variant="link"
+                        size="sm"
+                        className="h-auto p-0 text-sm font-medium text-[var(--vs-color-primary)]"
+                        asChild
+                      >
+                        <a
+                          href={`https://pinkka.laji.fi/pinkat/#/speciescards/${pinkkaSpeciesId}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          pinkka
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      </Button>
+                    ) : null}
+                    {pinkkaLoading ? (
+                      <div className="flex justify-center py-3">
+                        <LoadingSpinner />
+                      </div>
+                    ) : pinkkaDetail ? (
+                      <PinkkaSpeciesDetailPanel
+                        detail={pinkkaDetail}
+                        preferredLang={preferredLanguage}
+                        showSpeciesHeader={false}
+                        showImages={false}
+                      />
+                    ) : description ? (
+                      <div
+                        className="text-sm leading-relaxed text-[var(--vs-color-on-surface-variant)] [&_p]:mb-4 [&_p:last-child]:mb-0"
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizedDescription,
+                        }}
+                      />
+                    ) : pinkkaLoadFailed ? (
+                      <p className="text-sm text-[var(--vs-color-on-surface-variant)]">
+                        {t("learn.cards.info.noDescription")}
+                      </p>
+                    ) : (
+                      <p className="text-sm text-[var(--vs-color-on-surface-variant)]">
+                        {t("learn.cards.info.noDescription")}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </aside>
+          ) : null}
+        </div>
+      </div>
 
       {showBottomControls ? (
         <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 sm:inset-x-8">

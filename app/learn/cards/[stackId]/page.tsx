@@ -229,21 +229,10 @@ export default function CardsPage() {
         </div>
       }
       consoleCenter={
-        <div className="mx-auto w-full max-w-[28rem]">
-          <SegmentedLearningProgress
-            segments={progressSegments}
-            activeIndex={currentIndex}
-            showNameOverlay={false}
-            onSelectIndex={handleSelectSpeciesFromProgress}
-            className="rounded-[var(--vs-radius-pill)] bg-[color:rgba(246,243,242,0.9)] p-2"
-          />
+        <div className="mx-auto w-full flex items-center justify-center gap-2">
           <p className="mt-1 text-center text-xs font-medium text-[var(--vs-color-on-surface-variant)]">
             {progressLabel}
           </p>
-        </div>
-      }
-      consoleRight={
-        <div className="flex items-center gap-2">
           <VerdantScholarIconButton
             tone="toolbar"
             size="md"
@@ -253,8 +242,21 @@ export default function CardsPage() {
           >
             <SkipBack className="size-4" />
           </VerdantScholarIconButton>
+          <VerdantScholarIconButton
+            tone="activeToolbar"
+            size="md"
+            onClick={handleNext}
+            disabled={currentIndex === species.length - 1}
+            aria-label={t("learn.cards.next")}
+          >
+            <SkipForward className="size-4" />
+          </VerdantScholarIconButton>
+        </div>
+      }
+      consoleRight={
+        <div className="flex items-center gap-2">
           <VerdantScholarButton
-            variant={isInfoPanelOpen ? "primary" : "secondary"}
+            variant={isInfoPanelOpen ? "secondary" : "primary"}
             size="sm"
             onClick={toggleInfoPanel}
           >
@@ -269,15 +271,6 @@ export default function CardsPage() {
             aria-label={t("learn.cards.shuffle")}
           >
             <Shuffle className="size-4" />
-          </VerdantScholarIconButton>
-          <VerdantScholarIconButton
-            tone="activeToolbar"
-            size="md"
-            onClick={handleNext}
-            disabled={currentIndex === species.length - 1}
-            aria-label={t("learn.cards.next")}
-          >
-            <SkipForward className="size-4" />
           </VerdantScholarIconButton>
         </div>
       }

@@ -160,7 +160,7 @@ export function LearningSessionShell({
         <div className="relative z-20 w-full border-t border-[color:rgba(67,73,57,0.25)] bg-[color:rgba(252,249,248,0.94)] shadow-[0_-8px_24px_rgba(28,27,27,0.08)] backdrop-blur-sm">
           <div className="grid w-full grid-cols-[minmax(0,1fr)_minmax(220px,520px)_minmax(0,1fr)] items-center gap-4 px-3 py-3 sm:px-4">
             <div className="min-w-0">{consoleLeft}</div>
-            <div className="w-full">{consoleCenter}</div>
+            <div className="w-full justify-center">{consoleCenter}</div>
             <div className="flex min-w-0 justify-end">{consoleRight}</div>
           </div>
         </div>

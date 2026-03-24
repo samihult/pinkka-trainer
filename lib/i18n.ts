@@ -67,7 +67,7 @@ const EN_MESSAGES = {
   "group.noStacksMatchFilter": "No stacks match the current filter",
   "group.notFoundTitle": "Collection not found",
   "group.notFoundDescription": "The requested collection could not be loaded.",
-  "learn.cards.progressLabel": "Species {current} of {total}",
+  "learn.cards.progressLabel": "{current} / {total}",
   "learn.cards.shuffle": "Shuffle",
   "learn.cards.noSpeciesWithImages":
     "No species with images available in this stack.",
@@ -335,7 +335,7 @@ const FI_MESSAGES: TranslationTable = {
   "group.noStacksMatchFilter": "Yksikään pinkka ei vastaa nykyistä suodatinta",
   "group.notFoundTitle": "Kokoelmaa ei löytynyt",
   "group.notFoundDescription": "Pyydettyä kokoelmaa ei voitu ladata.",
-  "learn.cards.progressLabel": "Laji {current} / {total}",
+  "learn.cards.progressLabel": "{current} / {total}",
   "learn.cards.shuffle": "Sekoita",
   "learn.cards.noSpeciesWithImages":
     "Tässä pinkassa ei ole lajeja, joilla on kuvia.",
@@ -597,7 +597,7 @@ const SV_MESSAGES: TranslationTable = {
   "group.noStacksMatchFilter": "Inga stackar matchar det aktuella filtret",
   "group.notFoundTitle": "Samlingen hittades inte",
   "group.notFoundDescription": "Den begärda samlingen kunde inte laddas.",
-  "learn.cards.progressLabel": "Art {current} av {total}",
+  "learn.cards.progressLabel": "{current} / {total}",
   "learn.cards.shuffle": "Blanda",
   "learn.cards.noSpeciesWithImages":
     "Inga arter med bilder finns tillgängliga i denna stack.",

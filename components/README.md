@@ -29,10 +29,11 @@ Reusable UI building blocks for app pages.
   management cards. This also includes `select-from-list-dialog.tsx`, a generic single-select dialog whose confirm
   action now supports async handlers and shows a pending state while long-running actions complete.
 - Feature-specific UI for learning, tests, and Pinkka content workflows, including `species-card.tsx` for side-by-side
-  learning media and info tabs (including author-managed multilingual identification hint rendering and Pinkka textual
-  detail rendering in the Pinkka tab without duplicate images, plus hint-linked carousel navigation from the
-  identification tab), `species-form.tsx` for tabbed species editing (information, pictures, identification hints with
-  optional stable image references), `image-grid-selector.tsx` for reusable single/multi image selection grids, and
+  learning media and info tabs with separated surfaces (floating desktop image area + distinct Verdant Scholar-style
+  details card), including author-managed multilingual identification hint rendering and Pinkka textual detail rendering
+  in the Pinkka tab without duplicate images, plus hint-linked carousel navigation from the identification tab,
+  `species-form.tsx` for tabbed species editing (information, pictures, identification hints with optional stable image
+  references), `image-grid-selector.tsx` for reusable single/multi image selection grids, and
   `species-identification-hint-dialog.tsx` for modal editing of individual hints (including framed preview +
   change/delete controls for referenced species images), and `species-image-carousel.tsx` for keyboard-driven image
   navigation/zoom (with learning view support up to 200% full-screen zoom and modal-state callbacks), plus
