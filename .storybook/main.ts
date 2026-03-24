@@ -18,7 +18,13 @@ const config: StorybookConfig = {
     "msw-storybook-addon",
   ],
   framework: "@storybook/nextjs-vite",
-  staticDirs: ["../public"],
+  staticDirs: [
+    "../public",
+    {
+      from: "../test-assets",
+      to: "/test-assets",
+    },
+  ],
   async viteFinal(config) {
     config.resolve = config.resolve ?? {};
     config.resolve.alias = {

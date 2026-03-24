@@ -13,6 +13,8 @@ const verdantScholarIconButtonVariants = cva(
           "rounded-full bg-transparent text-[var(--vs-color-primary)] hover:bg-[color:rgba(63,106,0,0.08)]",
         surface:
           "rounded-full bg-[var(--vs-color-surface-container-highest)] text-[var(--vs-color-on-surface)] hover:bg-[var(--vs-color-surface-variant)]",
+        primaryFixedDim:
+          "rounded-[var(--vs-radius-md)] bg-[var(--vs-color-primary-fixed-dim)] text-[var(--vs-color-on-primary-fixed)]",
         toolbar:
           "rounded-[var(--vs-radius-md)] bg-[var(--vs-color-surface-container-highest)] text-[var(--vs-color-on-surface-variant)] hover:bg-[var(--vs-color-surface-container)]",
         activeToolbar:

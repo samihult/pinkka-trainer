@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { SpeciesImageCarousel } from "@/components/species-image-carousel";
+import { LanguageProvider } from "@/lib/language-context";
 import type { SpeciesImage } from "@/lib/types";
 
 const sampleImages: SpeciesImage[] = [
   {
     id: "img-1",
     urls: {
-      full: "/placeholder.jpg",
-      large: "/placeholder.jpg",
+      full: "/test-assets/species-pictures/Arctium%20nemorosum.jpeg",
+      large: "/test-assets/species-pictures/Arctium%20nemorosum.jpeg",
     },
   },
   {
@@ -28,6 +29,13 @@ const sampleImages: SpeciesImage[] = [
 const meta: Meta<typeof SpeciesImageCarousel> = {
   title: "Components/SpeciesImageCarousel",
   component: SpeciesImageCarousel,
+  decorators: [
+    (Story) => (
+      <LanguageProvider>
+        <Story />
+      </LanguageProvider>
+    ),
+  ],
   args: {
     images: sampleImages,
     alt: "Species image",

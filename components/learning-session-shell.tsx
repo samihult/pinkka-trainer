@@ -103,7 +103,7 @@ export function LearningSessionShell({
           className="absolute inset-0 h-full w-full"
         />
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-b from-background to-secondary/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background to-secondary/20" />
       )}
       {!usesDesktopConsole ? (
         <div className="relative z-10 flex items-start justify-between gap-4 px-4 pt-4 sm:px-6 sm:pt-6">

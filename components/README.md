@@ -35,8 +35,11 @@ Reusable UI building blocks for app pages.
   `species-form.tsx` for tabbed species editing (information, pictures, identification hints with optional stable image
   references), `image-grid-selector.tsx` for reusable single/multi image selection grids, and
   `species-identification-hint-dialog.tsx` for modal editing of individual hints (including framed preview +
-  change/delete controls for referenced species images), and `species-image-carousel.tsx` for keyboard-driven image
-  navigation/zoom (with learning view support up to 200% full-screen zoom and modal-state callbacks), plus
+  change/delete controls for referenced species images), and `species-image-carousel.tsx` for a transparent
+  floating-frame media carousel with keyboard navigation, pickup animation, frame-level zoom, and grab-to-pan behavior;
+  the frame is detached via a portal and floats above the page as a viewport layer during drag and pickup while
+  preserving the existing carousel prop API. Drag is the default interaction at all times, and frames that fit inside
+  the viewport settle back to centered position on release with ease-out motion. This sits alongside
   `learning-session-shell.tsx` for shared learning session chrome with either the original top-header layout or a
   bottom-console layout variant, segmented species progress integration, and optional full-viewport Verdant Scholar
   atmospheric backgrounds.

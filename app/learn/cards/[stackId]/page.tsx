@@ -1,18 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { useParams, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SpeciesCard } from "@/components/species-card";
 import { LearningSessionShell } from "@/components/learning-session-shell";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { SegmentedLearningProgress } from "@/components/learning/segmented-learning-progress";
-import { VerdantScholarButton } from "@/components/verdant-scholar/atoms/button";
 import { VerdantScholarIconButton } from "@/components/verdant-scholar/atoms/icon-button";
 import {
   getGroup,
@@ -33,56 +27,47 @@ import { useI18n } from "@/lib/i18n";
 import { ArrowLeft, Shuffle, SkipBack, SkipForward } from "lucide-react";
 import Link from "next/link";
 
-const LEGACY_BACKSIDE_PANEL_QUERY_PARAM = "back";
-const LEARNING_INFO_PANEL_QUERY_PARAM = "learningPanel";
+function shuffleSpeciesList(
+  items: Species[],
+  currentSpeciesId?: string,
+  targetIndex = 0,
+): Species[] {
+  const speciesPool = [...items];
+  if (!currentSpeciesId) {
+    return speciesPool.sort(() => Math.random() - 0.5);
+  }
 
-function parseInfoPanelVisibility(value: string | null): boolean {
-  if (value === null) return true;
-  return value === "1" || value === "true" || value === "open";
+  const currentIndex = speciesPool.findIndex(
+    (item) => item.id === currentSpeciesId,
+  );
+  if (currentIndex < 0) {
+    return speciesPool.sort(() => Math.random() - 0.5);
+  }
+
+  const [currentSpecies] = speciesPool.splice(currentIndex, 1);
+  const shuffledPool = speciesPool.sort(() => Math.random() - 0.5);
+  const insertIndex = Math.max(0, Math.min(targetIndex, shuffledPool.length));
+  shuffledPool.splice(insertIndex, 0, currentSpecies);
+  return shuffledPool;
 }
 
 export default function CardsPage() {
   const { language } = useLanguagePreference();
   const { t } = useI18n();
   const preferredLanguage = toLanguageCode(language);
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const params = useParams();
   const stackId = decodeURIComponent(params.stackId as string);
+  const searchParams = useSearchParams();
   const requestedGroupId = searchParams.get("groupId");
   const { user, loading: authLoading } = useAuth();
 
   const [stack, setStack] = useState<Stack | null>(null);
   const [group, setGroup] = useState<Group | null>(null);
   const [species, setSpecies] = useState<Species[]>([]);
+  const [baseSpecies, setBaseSpecies] = useState<Species[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isShuffleEnabled, setIsShuffleEnabled] = useState(false);
   const [loading, setLoading] = useState(true);
-  const isInfoPanelOpen = useMemo(
-    () =>
-      parseInfoPanelVisibility(
-        searchParams.get(LEARNING_INFO_PANEL_QUERY_PARAM) ??
-          searchParams.get(LEGACY_BACKSIDE_PANEL_QUERY_PARAM),
-      ),
-    [searchParams],
-  );
-
-  const updateInfoPanelVisibility = useCallback(
-    (nextOpen: boolean) => {
-      const nextParams = new URLSearchParams(searchParams.toString());
-      nextParams.set(LEARNING_INFO_PANEL_QUERY_PARAM, nextOpen ? "1" : "0");
-      nextParams.delete(LEGACY_BACKSIDE_PANEL_QUERY_PARAM);
-      const nextQuery = nextParams.toString();
-      const nextUrl = nextQuery ? `${pathname}?${nextQuery}` : pathname;
-      router.replace(nextUrl, { scroll: false });
-    },
-    [pathname, router, searchParams],
-  );
-
-  const toggleInfoPanel = useCallback(() => {
-    updateInfoPanelVisibility(!isInfoPanelOpen);
-  }, [isInfoPanelOpen, updateInfoPanelVisibility]);
-
   const loadData = useCallback(async () => {
     try {
       const stackData = await getStack(stackId);
@@ -102,6 +87,7 @@ export default function CardsPage() {
       );
       setStack(stackData);
       setGroup(legacyGroupData);
+      setBaseSpecies(speciesWithImages);
       setSpecies(speciesWithImages);
     } catch (error) {
       logFirestoreError("Failed to load cards data", error);
@@ -115,11 +101,30 @@ export default function CardsPage() {
     void loadData();
   }, [authLoading, loadData, user]);
 
-  const handleShuffle = () => {
-    const shuffled = [...species].sort(() => Math.random() - 0.5);
+  const handleShuffleToggle = useCallback(() => {
+    const currentSpeciesId = species[currentIndex]?.id;
+    if (isShuffleEnabled) {
+      setSpecies(baseSpecies);
+      setIsShuffleEnabled(false);
+      if (currentSpeciesId) {
+        const nextIndex = baseSpecies.findIndex(
+          (item) => item.id === currentSpeciesId,
+        );
+        setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
+      } else {
+        setCurrentIndex(0);
+      }
+      return;
+    }
+
+    const shuffled = shuffleSpeciesList(
+      species,
+      currentSpeciesId,
+      currentIndex,
+    );
     setSpecies(shuffled);
-    setCurrentIndex(0);
-  };
+    setIsShuffleEnabled(true);
+  }, [baseSpecies, currentIndex, isShuffleEnabled, species]);
 
   const handleNext = () => {
     if (currentIndex < species.length - 1) {
@@ -234,6 +239,15 @@ export default function CardsPage() {
             {progressLabel}
           </p>
           <VerdantScholarIconButton
+            tone={isShuffleEnabled ? "primaryFixedDim" : "toolbar"}
+            size="md"
+            onClick={handleShuffleToggle}
+            aria-label={t("learn.cards.shuffle")}
+            aria-pressed={isShuffleEnabled}
+          >
+            <Shuffle className="size-4" />
+          </VerdantScholarIconButton>
+          <VerdantScholarIconButton
             tone="toolbar"
             size="md"
             onClick={handlePrevious}
@@ -253,27 +267,7 @@ export default function CardsPage() {
           </VerdantScholarIconButton>
         </div>
       }
-      consoleRight={
-        <div className="flex items-center gap-2">
-          <VerdantScholarButton
-            variant={isInfoPanelOpen ? "secondary" : "primary"}
-            size="sm"
-            onClick={toggleInfoPanel}
-          >
-            {isInfoPanelOpen
-              ? t("learn.cards.info.hide")
-              : t("learn.cards.info.show")}
-          </VerdantScholarButton>
-          <VerdantScholarIconButton
-            tone="toolbar"
-            size="md"
-            onClick={handleShuffle}
-            aria-label={t("learn.cards.shuffle")}
-          >
-            <Shuffle className="size-4" />
-          </VerdantScholarIconButton>
-        </div>
-      }
+      consoleRight={<div className="flex items-center gap-2" />}
     >
       <SpeciesCard
         species={species[currentIndex]}
@@ -281,9 +275,6 @@ export default function CardsPage() {
         onPrevious={handlePrevious}
         currentIndex={currentIndex}
         total={species.length}
-        isInfoPanelOpen={isInfoPanelOpen}
-        onToggleInfoPanel={toggleInfoPanel}
-        showBottomControls={false}
       />
     </LearningSessionShell>
   );

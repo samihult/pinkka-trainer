@@ -46,12 +46,6 @@ interface SpeciesCardProps {
   currentIndex: number;
   /** Total number of items in the session. */
   total: number;
-  /** Whether the info pane is currently visible. */
-  isInfoPanelOpen: boolean;
-  /** Toggle the info pane visibility. */
-  onToggleInfoPanel: () => void;
-  /** Whether to render the built-in bottom controls. */
-  showBottomControls?: boolean;
 }
 
 type InfoTab = "identification" | "pinkka";
@@ -69,15 +63,11 @@ export function SpeciesCard({
   onPrevious,
   currentIndex,
   total,
-  isInfoPanelOpen,
-  onToggleInfoPanel,
-  showBottomControls = true,
 }: SpeciesCardProps) {
   const { language } = useLanguagePreference();
   const { t } = useI18n();
   const preferredLanguage = toLanguageCode(language);
   const [keyboardTooltipOpen, setKeyboardTooltipOpen] = useState(false);
-  const [isCarouselModalOpen, setIsCarouselModalOpen] = useState(false);
   const [activeHintId, setActiveHintId] = useState<string | null>(null);
   const [carouselState, setCarouselState] = useState<{
     speciesId: string;
@@ -96,6 +86,7 @@ export function SpeciesCard({
   const pinkkaDetailCacheRef = useRef<
     Record<number, PinkkaSpeciesDetail | null>
   >({});
+  const carouselViewportRef = useRef<HTMLDivElement | null>(null);
 
   const images = useMemo(
     () => species.data.images ?? [],
@@ -197,7 +188,7 @@ export function SpeciesCard({
   }, [pinkkaSpeciesId]);
 
   useEffect(() => {
-    if (!isInfoPanelOpen || activeInfoTab !== "pinkka" || !pinkkaSpeciesId) {
+    if (activeInfoTab !== "pinkka" || !pinkkaSpeciesId) {
       return;
     }
 
@@ -233,7 +224,7 @@ export function SpeciesCard({
     return () => {
       isCancelled = true;
     };
-  }, [activeInfoTab, isInfoPanelOpen, pinkkaSpeciesId]);
+  }, [activeInfoTab, pinkkaSpeciesId]);
 
   const handleCarouselIndexChange = (index: number) => {
     if (index === activeCarouselIndex) {
@@ -298,7 +289,6 @@ export function SpeciesCard({
 
   const shortcutContent = useMemo(
     () => [
-      { label: t("learn.cards.shortcut.toggleInfoPanel"), keys: ["Space"] },
       { label: t("learn.cards.shortcut.openLarger"), keys: ["Z"] },
       { label: t("learn.cards.shortcut.zoomOut"), keys: ["X"] },
       { label: t("learn.cards.shortcut.previousImage"), keys: ["←"] },
@@ -329,20 +319,13 @@ export function SpeciesCard({
     const handleKeyDown = (event: KeyboardEvent) => {
       if (isEditableTarget(event.target)) return;
 
-      if (event.key === " " || event.code === "Space") {
-        if (isCarouselModalOpen) return;
-        event.preventDefault();
-        onToggleInfoPanel();
-        return;
-      }
-
-      if (isInfoPanelOpen && event.key === "1") {
+      if (event.key === "1") {
         event.preventDefault();
         setActiveInfoTab("identification");
         return;
       }
 
-      if (isInfoPanelOpen && event.key === "2") {
+      if (event.key === "2") {
         event.preventDefault();
         setActiveInfoTab("pinkka");
         return;
@@ -364,45 +347,22 @@ export function SpeciesCard({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [
-    isCarouselModalOpen,
-    isInfoPanelOpen,
-    onNext,
-    onPrevious,
-    onToggleInfoPanel,
-  ]);
+  }, [onNext, onPrevious]);
 
   return (
     <div className="relative h-full w-full">
-      <div
-        className={`absolute inset-x-4 top-0 overflow-hidden p-0 sm:inset-x-8 ${
-          showBottomControls ? "bottom-24" : "bottom-0"
-        }`}
-      >
-        <div
-          className={`h-full min-h-0 ${
-            isInfoPanelOpen
-              ? "grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]"
-              : ""
-          }`}
-        >
-          <div
-            className={cn(
-              "min-h-0 overflow-hidden rounded-[var(--vs-radius-lg)] shadow-[0_18px_36px_rgba(28,27,27,0.14)]",
-              isInfoPanelOpen
-                ? "border border-[color:rgba(67,73,57,0.18)]"
-                : "h-full border border-[color:rgba(67,73,57,0.22)]",
-            )}
-          >
-            <div data-interactive="true" className="h-full bg-black/5">
+      <div className="absolute inset-x-4 top-3 p-0 sm:inset-x-8 bottom-6">
+        <div className="grid h-full min-h-0 gap-4 md:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]">
+          <div ref={carouselViewportRef} className="min-h-0">
+            <div data-interactive="true" className="h-full">
               <SpeciesImageCarousel
                 images={images}
                 alt={species.data.scientificName}
                 resetKey={species.id}
                 activeIndex={activeCarouselIndex}
                 onIndexChange={handleCarouselIndexChange}
-                onModalOpenChange={setIsCarouselModalOpen}
                 heightClassName="h-full"
+                viewportRef={carouselViewportRef}
                 fullScreenLightboxProps={{
                   captions: { hidden: true, showToggle: false },
                   zoom: { maxZoomPixelRatio: 3 },
@@ -410,204 +370,131 @@ export function SpeciesCard({
               />
             </div>
           </div>
-          {isInfoPanelOpen ? (
-            <aside className="flex min-h-0 flex-col overflow-hidden rounded-[var(--vs-radius-md)] border border-[color:rgba(67,73,57,0.22)] bg-[var(--vs-color-surface-container-lowest)] text-[var(--vs-color-on-surface)] shadow-[0_14px_30px_rgba(28,27,27,0.12)]">
-              <div className="flex items-center justify-between gap-3 border-b border-[color:rgba(67,73,57,0.2)] px-5 py-4">
-                <div className="min-w-0">
-                  {familyName ? (
-                    <p className="line-clamp-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--vs-color-on-surface-variant)]">
-                      {familyName}
-                    </p>
-                  ) : null}
-                  <h2 className="line-clamp-2 text-2xl [font-family:var(--vs-font-display-family)] font-extrabold tracking-tight text-[var(--vs-color-on-surface)]">
-                    {species.data.scientificName}
-                  </h2>
-                  {vernacularName ? (
-                    <p className="text-base font-medium text-[var(--vs-color-primary)]">
-                      {vernacularName}
-                    </p>
-                  ) : null}
-                </div>
+          <aside className="z-30 flex min-h-0 flex-col overflow-hidden rounded-[var(--vs-radius-md)] border border-[color:rgba(67,73,57,0.22)] bg-[var(--vs-color-surface-container-lowest)] text-[var(--vs-color-on-surface)] shadow-[0_14px_30px_rgba(28,27,27,0.12)]">
+            <div className="flex items-center justify-between gap-3 border-b border-[color:rgba(67,73,57,0.2)] px-5 py-4">
+              <div className="min-w-0">
+                {familyName ? (
+                  <p className="line-clamp-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--vs-color-on-surface-variant)]">
+                    {familyName}
+                  </p>
+                ) : null}
+                <h2 className="line-clamp-2 text-2xl [font-family:var(--vs-font-display-family)] font-extrabold tracking-tight text-[var(--vs-color-on-surface)]">
+                  {species.data.scientificName}
+                </h2>
+                {vernacularName ? (
+                  <p className="text-base font-medium text-[var(--vs-color-primary)]">
+                    {vernacularName}
+                  </p>
+                ) : null}
               </div>
-              <div className="border-b border-[color:rgba(67,73,57,0.2)] px-5 py-3">
-                <div className="inline-flex flex-wrap items-center gap-2">
-                  <VerdantScholarButton
-                    type="button"
-                    variant={
-                      activeInfoTab === "identification"
-                        ? "primary"
-                        : "secondary"
-                    }
-                    size="sm"
-                    onClick={() => setActiveInfoTab("identification")}
-                  >
-                    <KeyboardHint keys={["1"]} />{" "}
-                    {t("learn.cards.info.tab.identification")}
-                  </VerdantScholarButton>
-                  <VerdantScholarButton
-                    type="button"
-                    variant={
-                      activeInfoTab === "pinkka" ? "primary" : "secondary"
-                    }
-                    size="sm"
-                    onClick={() => setActiveInfoTab("pinkka")}
-                  >
-                    <KeyboardHint keys={["2"]} />{" "}
-                    {t("learn.cards.info.tab.pinkka")}
-                  </VerdantScholarButton>
-                </div>
+            </div>
+            <div className="border-b border-[color:rgba(67,73,57,0.2)] px-5 py-3">
+              <div className="inline-flex flex-wrap items-center gap-2">
+                <VerdantScholarButton
+                  type="button"
+                  variant={
+                    activeInfoTab === "identification" ? "primary" : "secondary"
+                  }
+                  size="sm"
+                  onClick={() => setActiveInfoTab("identification")}
+                >
+                  <KeyboardHint keys={["1"]} />{" "}
+                  {t("learn.cards.info.tab.identification")}
+                </VerdantScholarButton>
+                <VerdantScholarButton
+                  type="button"
+                  variant={activeInfoTab === "pinkka" ? "primary" : "secondary"}
+                  size="sm"
+                  onClick={() => setActiveInfoTab("pinkka")}
+                >
+                  <KeyboardHint keys={["2"]} />{" "}
+                  {t("learn.cards.info.tab.pinkka")}
+                </VerdantScholarButton>
               </div>
-              <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
-                {activeInfoTab === "identification" ? (
-                  identificationHints.length > 0 ? (
-                    <ul className="space-y-2.5">
-                      {identificationHints.map((hint) => {
-                        const isActive = activeHintId === hint.id;
-                        return (
-                          <li key={hint.id}>
-                            <button
-                              type="button"
-                              className={cn(
-                                "w-full rounded-[var(--vs-radius-sm)] border px-3 py-2 text-left text-sm transition-colors duration-200",
-                                isActive
-                                  ? "border-transparent bg-[image:var(--vs-gradient-primary)] text-[var(--vs-color-on-primary)]"
-                                  : "border-[color:rgba(67,73,57,0.24)] bg-[var(--vs-color-surface-container-highest)] text-[var(--vs-color-on-surface)] hover:bg-[var(--vs-color-surface-variant)]",
-                              )}
-                              onClick={() => handleHintClick(hint)}
-                              aria-pressed={isActive}
-                            >
-                              {hint.text}
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
+            </div>
+            <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+              {activeInfoTab === "identification" ? (
+                identificationHints.length > 0 ? (
+                  <ul className="space-y-2.5">
+                    {identificationHints.map((hint) => {
+                      const isActive = activeHintId === hint.id;
+                      return (
+                        <li key={hint.id}>
+                          <button
+                            type="button"
+                            className={cn(
+                              "w-full rounded-[var(--vs-radius-sm)] border px-3 py-2 text-left text-sm transition-colors duration-200",
+                              isActive
+                                ? "border-transparent bg-[image:var(--vs-gradient-primary)] text-[var(--vs-color-on-primary)]"
+                                : "border-[color:rgba(67,73,57,0.24)] bg-[var(--vs-color-surface-container-highest)] text-[var(--vs-color-on-surface)] hover:bg-[var(--vs-color-surface-variant)]",
+                            )}
+                            onClick={() => handleHintClick(hint)}
+                            aria-pressed={isActive}
+                          >
+                            {hint.text}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-[var(--vs-color-on-surface-variant)]">
+                    {t("learn.cards.info.identificationPlaceholder")}
+                  </p>
+                )
+              ) : (
+                <div className="space-y-3">
+                  {pinkkaSpeciesId ? (
+                    <Button
+                      type="button"
+                      variant="link"
+                      size="sm"
+                      className="h-auto p-0 text-sm font-medium text-[var(--vs-color-primary)]"
+                      asChild
+                    >
+                      <a
+                        href={`https://pinkka.laji.fi/pinkat/#/speciescards/${pinkkaSpeciesId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        pinkka
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    </Button>
+                  ) : null}
+                  {pinkkaLoading ? (
+                    <div className="flex justify-center py-3">
+                      <LoadingSpinner />
+                    </div>
+                  ) : pinkkaDetail ? (
+                    <PinkkaSpeciesDetailPanel
+                      detail={pinkkaDetail}
+                      preferredLang={preferredLanguage}
+                      showSpeciesHeader={false}
+                      showImages={false}
+                    />
+                  ) : description ? (
+                    <div
+                      className="text-sm leading-relaxed text-[var(--vs-color-on-surface-variant)] [&_p]:mb-4 [&_p:last-child]:mb-0"
+                      dangerouslySetInnerHTML={{
+                        __html: sanitizedDescription,
+                      }}
+                    />
+                  ) : pinkkaLoadFailed ? (
+                    <p className="text-sm text-[var(--vs-color-on-surface-variant)]">
+                      {t("learn.cards.info.noDescription")}
+                    </p>
                   ) : (
                     <p className="text-sm text-[var(--vs-color-on-surface-variant)]">
-                      {t("learn.cards.info.identificationPlaceholder")}
+                      {t("learn.cards.info.noDescription")}
                     </p>
-                  )
-                ) : (
-                  <div className="space-y-3">
-                    {pinkkaSpeciesId ? (
-                      <Button
-                        type="button"
-                        variant="link"
-                        size="sm"
-                        className="h-auto p-0 text-sm font-medium text-[var(--vs-color-primary)]"
-                        asChild
-                      >
-                        <a
-                          href={`https://pinkka.laji.fi/pinkat/#/speciescards/${pinkkaSpeciesId}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          pinkka
-                          <ExternalLink className="h-3.5 w-3.5" />
-                        </a>
-                      </Button>
-                    ) : null}
-                    {pinkkaLoading ? (
-                      <div className="flex justify-center py-3">
-                        <LoadingSpinner />
-                      </div>
-                    ) : pinkkaDetail ? (
-                      <PinkkaSpeciesDetailPanel
-                        detail={pinkkaDetail}
-                        preferredLang={preferredLanguage}
-                        showSpeciesHeader={false}
-                        showImages={false}
-                      />
-                    ) : description ? (
-                      <div
-                        className="text-sm leading-relaxed text-[var(--vs-color-on-surface-variant)] [&_p]:mb-4 [&_p:last-child]:mb-0"
-                        dangerouslySetInnerHTML={{
-                          __html: sanitizedDescription,
-                        }}
-                      />
-                    ) : pinkkaLoadFailed ? (
-                      <p className="text-sm text-[var(--vs-color-on-surface-variant)]">
-                        {t("learn.cards.info.noDescription")}
-                      </p>
-                    ) : (
-                      <p className="text-sm text-[var(--vs-color-on-surface-variant)]">
-                        {t("learn.cards.info.noDescription")}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-            </aside>
-          ) : null}
+                  )}
+                </div>
+              )}
+            </div>
+          </aside>
         </div>
       </div>
-
-      {showBottomControls ? (
-        <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 sm:inset-x-8">
-          <Button
-            onClick={onPrevious}
-            disabled={currentIndex === 0}
-            variant="outline"
-            size="lg"
-          >
-            <KeyboardHint keys={["⌘/Ctrl", "←"]} /> {t("learn.cards.previous")}
-          </Button>
-
-          <div className="flex items-center gap-2">
-            <Button onClick={onToggleInfoPanel} variant="outline" size="lg">
-              <KeyboardHint keys={["Space"]} />
-              {isInfoPanelOpen
-                ? t("learn.cards.info.hide")
-                : t("learn.cards.info.show")}
-            </Button>
-            <TooltipProvider>
-              <Tooltip
-                open={keyboardTooltipOpen}
-                onOpenChange={setKeyboardTooltipOpen}
-              >
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    aria-label={t("learn.cards.keyboardAria")}
-                    onClick={() => setKeyboardTooltipOpen(true)}
-                  >
-                    <Keyboard className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="w-56">
-                  <div className="space-y-2 text-xs">
-                    <div className="text-muted-foreground">
-                      {t("learn.cards.shortcutsTitle")}
-                    </div>
-                    <div className="space-y-1">
-                      {shortcutContent.map((shortcut) => (
-                        <div
-                          key={shortcut.label}
-                          className="flex items-center justify-between gap-2"
-                        >
-                          <span>{shortcut.label}</span>
-                          <KeyboardHint keys={shortcut.keys} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-
-          <Button
-            onClick={onNext}
-            disabled={currentIndex === total - 1}
-            size="lg"
-          >
-            <KeyboardHint keys={["⌘/Ctrl", "→"]} />
-            {t("learn.cards.next")}
-            <ChevronRight className="ml-1 h-4 w-4" />
-          </Button>
-        </div>
-      ) : null}
     </div>
   );
 }
