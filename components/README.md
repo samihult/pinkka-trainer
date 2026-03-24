@@ -36,4 +36,5 @@ Reusable UI building blocks for app pages.
   `species-identification-hint-dialog.tsx` for modal editing of individual hints (including framed preview +
   change/delete controls for referenced species images), and `species-image-carousel.tsx` for keyboard-driven image
   navigation/zoom (with learning view support up to 200% full-screen zoom and modal-state callbacks), plus
-  `learning-session-shell.tsx` for shared learning headers with segmented species progress integration.
+  `learning-session-shell.tsx` for shared learning headers with segmented species progress integration. The shell now
+  also supports optional full-viewport Verdant Scholar atmospheric backgrounds for mode-specific ambience.

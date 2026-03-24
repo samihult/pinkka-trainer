@@ -6,6 +6,10 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import {
+  VerdantScholarAtmosphereContainer,
+  type VerdantScholarAtmosphereVariant,
+} from "@/components/verdant-scholar/atoms/atmosphere-container";
+import {
   SegmentedLearningProgress,
   type LearningProgressSegment,
 } from "@/components/learning/segmented-learning-progress";
@@ -30,6 +34,8 @@ export interface LearningSessionShellProps {
   progressLabel?: string;
   /** Optional extra action rendered in the header. */
   headerAction?: ReactNode;
+  /** Optional Verdant Scholar animated atmosphere shown behind the full viewport. */
+  backgroundVariant?: VerdantScholarAtmosphereVariant;
   /** Href for the exit button. */
   exitHref: string;
   /** Main content rendered in the play area. */
@@ -47,6 +53,7 @@ export function LearningSessionShell({
   onSelectProgressSegment,
   progressLabel,
   headerAction,
+  backgroundVariant,
   exitHref,
   children,
 }: LearningSessionShellProps) {
@@ -55,8 +62,16 @@ export function LearningSessionShell({
   );
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-gradient-to-b from-background to-secondary/20">
-      <div className="flex items-start justify-between gap-4 px-4 pt-4 sm:px-6 sm:pt-6">
+    <div className="relative flex h-screen w-screen flex-col overflow-hidden">
+      {backgroundVariant ? (
+        <VerdantScholarAtmosphereContainer
+          variant={backgroundVariant}
+          className="absolute inset-0 h-full w-full"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-b from-background to-secondary/20" />
+      )}
+      <div className="relative z-10 flex items-start justify-between gap-4 px-4 pt-4 sm:px-6 sm:pt-6">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             {groupName || "Study Group"}
@@ -80,7 +95,7 @@ export function LearningSessionShell({
         </div>
       </div>
 
-      <div className="px-4 pt-4 sm:px-6 sm:pt-4">
+      <div className="relative z-10 px-4 pt-4 sm:px-6 sm:pt-4">
         {hasSegmentedProgress ? (
           <SegmentedLearningProgress
             segments={progressSegments ?? []}
@@ -93,7 +108,7 @@ export function LearningSessionShell({
         )}
       </div>
 
-      <div className="relative min-h-0 flex-1 px-4 pt-4 pb-4 sm:px-6 sm:pb-6">
+      <div className="relative z-10 min-h-0 flex-1 px-4 pt-4 pb-4 sm:px-6 sm:pb-6">
         {children}
       </div>
     </div>

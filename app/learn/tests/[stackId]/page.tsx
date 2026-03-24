@@ -1249,6 +1249,7 @@ export default function TestPage() {
     : "";
   const exitGroupId = group?.id ?? requestedGroupId;
   const exitHref = exitGroupId ? `/groups/${exitGroupId}` : "/";
+  const sessionBackgroundVariant = undefined;
 
   if (loading) {
     return (
@@ -1256,6 +1257,7 @@ export default function TestPage() {
         groupName={groupName || "Loading"}
         stackName={stackName}
         progressValue={0}
+        backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
@@ -1271,6 +1273,7 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
+        backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
@@ -1291,6 +1294,7 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
+        backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
@@ -1321,6 +1325,7 @@ export default function TestPage() {
         stackName={stackName}
         progressValue={0}
         progressLabel="Test settings"
+        backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
@@ -1345,6 +1350,7 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
+        backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
@@ -1370,6 +1376,7 @@ export default function TestPage() {
         stackName={stackName}
         progressValue={100}
         progressLabel="Completed"
+        backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
         <div className="absolute inset-0 flex items-center justify-center">
@@ -1400,6 +1407,7 @@ export default function TestPage() {
       stackName={stackName}
       progressValue={progress}
       progressLabel={`Question ${currentQuestionIndex + 1} of ${questions.length}`}
+      backgroundVariant={sessionBackgroundVariant}
       exitHref={exitHref}
     >
       <div className="relative h-full w-full">
