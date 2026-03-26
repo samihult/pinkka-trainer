@@ -1086,7 +1086,7 @@ export function SpeciesImageCarousel({
         stepImage(1);
         return;
       }
-      if (lowerKey === "z") {
+      if (event.code === "Space" || event.key === " ") {
         event.preventDefault();
         toggleZoom(undefined, {
           centerOnBreakout: true,
