@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { SpeciesCard } from "@/components/species-card";
 import { LearningSessionShell } from "@/components/learning-session-shell";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { SegmentedLearningProgress } from "@/components/learning/segmented-learning-progress";
 import { VerdantScholarIconButton } from "@/components/verdant-scholar/atoms/icon-button";
 import {
   getGroup,
@@ -27,30 +26,19 @@ import { useI18n } from "@/lib/i18n";
 import { ArrowLeft, Shuffle, SkipBack, SkipForward } from "lucide-react";
 import Link from "next/link";
 
-function shuffleSpeciesList(
-  items: Species[],
-  currentSpeciesId?: string,
-  targetIndex = 0,
-): Species[] {
-  const speciesPool = [...items];
-  if (!currentSpeciesId) {
-    return speciesPool.sort(() => Math.random() - 0.5);
+/** Builds a stable traversal order for shuffle mode without reordering the visible species list. */
+function createShuffleOrder(length: number, currentIndex: number): number[] {
+  const indices = Array.from({ length }, (_, index) => index);
+  if (length <= 1 || currentIndex < 0 || currentIndex >= length) {
+    return indices;
   }
 
-  const currentIndex = speciesPool.findIndex(
-    (item) => item.id === currentSpeciesId,
-  );
-  if (currentIndex < 0) {
-    return speciesPool.sort(() => Math.random() - 0.5);
-  }
-
-  const [currentSpecies] = speciesPool.splice(currentIndex, 1);
-  const shuffledPool = speciesPool.sort(() => Math.random() - 0.5);
-  const insertIndex = Math.max(0, Math.min(targetIndex, shuffledPool.length));
-  shuffledPool.splice(insertIndex, 0, currentSpecies);
-  return shuffledPool;
+  const remainingIndices = indices.filter((index) => index !== currentIndex);
+  remainingIndices.sort(() => Math.random() - 0.5);
+  return [currentIndex, ...remainingIndices];
 }
 
+/** Learning cards page for traversing a stack without leaving the collection context. */
 export default function CardsPage() {
   const { language } = useLanguagePreference();
   const { t } = useI18n();
@@ -64,9 +52,10 @@ export default function CardsPage() {
   const [stack, setStack] = useState<Stack | null>(null);
   const [group, setGroup] = useState<Group | null>(null);
   const [species, setSpecies] = useState<Species[]>([]);
-  const [baseSpecies, setBaseSpecies] = useState<Species[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isShuffleEnabled, setIsShuffleEnabled] = useState(false);
+  const [shuffleOrder, setShuffleOrder] = useState<number[]>([]);
+  const [shufflePosition, setShufflePosition] = useState(0);
   const [loading, setLoading] = useState(true);
   const loadData = useCallback(async () => {
     try {
@@ -87,8 +76,10 @@ export default function CardsPage() {
       );
       setStack(stackData);
       setGroup(legacyGroupData);
-      setBaseSpecies(speciesWithImages);
       setSpecies(speciesWithImages);
+      setIsShuffleEnabled(false);
+      setShuffleOrder([]);
+      setShufflePosition(0);
     } catch (error) {
       logFirestoreError("Failed to load cards data", error);
     } finally {
@@ -102,48 +93,71 @@ export default function CardsPage() {
   }, [authLoading, loadData, user]);
 
   const handleShuffleToggle = useCallback(() => {
-    const currentSpeciesId = species[currentIndex]?.id;
     if (isShuffleEnabled) {
-      setSpecies(baseSpecies);
       setIsShuffleEnabled(false);
-      if (currentSpeciesId) {
-        const nextIndex = baseSpecies.findIndex(
-          (item) => item.id === currentSpeciesId,
-        );
-        setCurrentIndex(nextIndex >= 0 ? nextIndex : 0);
-      } else {
-        setCurrentIndex(0);
-      }
+      setShuffleOrder([]);
+      setShufflePosition(0);
       return;
     }
 
-    const shuffled = shuffleSpeciesList(
-      species,
-      currentSpeciesId,
-      currentIndex,
-    );
-    setSpecies(shuffled);
+    setShuffleOrder(createShuffleOrder(species.length, currentIndex));
+    setShufflePosition(0);
     setIsShuffleEnabled(true);
-  }, [baseSpecies, currentIndex, isShuffleEnabled, species]);
+  }, [currentIndex, isShuffleEnabled, species.length]);
 
-  const handleNext = () => {
-    if (currentIndex < species.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
+  const handleNext = useCallback(() => {
+    if (species.length <= 1) return;
 
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+    if (isShuffleEnabled) {
+      const nextPosition =
+        shufflePosition >= shuffleOrder.length - 1 ? 0 : shufflePosition + 1;
+      const nextIndex = shuffleOrder[nextPosition];
+      if (nextIndex === undefined) return;
+      setShufflePosition(nextPosition);
+      setCurrentIndex(nextIndex);
+      return;
     }
-  };
+
+    setCurrentIndex(currentIndex >= species.length - 1 ? 0 : currentIndex + 1);
+  }, [
+    currentIndex,
+    isShuffleEnabled,
+    shuffleOrder,
+    shufflePosition,
+    species.length,
+  ]);
+
+  const handlePrevious = useCallback(() => {
+    if (species.length <= 1) return;
+
+    if (isShuffleEnabled) {
+      const previousPosition =
+        shufflePosition <= 0 ? shuffleOrder.length - 1 : shufflePosition - 1;
+      const previousIndex = shuffleOrder[previousPosition];
+      if (previousIndex === undefined) return;
+      setShufflePosition(previousPosition);
+      setCurrentIndex(previousIndex);
+      return;
+    }
+
+    setCurrentIndex(currentIndex <= 0 ? species.length - 1 : currentIndex - 1);
+  }, [
+    currentIndex,
+    isShuffleEnabled,
+    shuffleOrder,
+    shufflePosition,
+    species.length,
+  ]);
 
   const handleSelectSpeciesFromProgress = useCallback(
     (index: number) => {
       if (index < 0 || index >= species.length) return;
       setCurrentIndex(index);
+      if (!isShuffleEnabled) return;
+      const mappedPosition = shuffleOrder.indexOf(index);
+      setShufflePosition(mappedPosition >= 0 ? mappedPosition : 0);
     },
-    [species.length],
+    [isShuffleEnabled, shuffleOrder, species.length],
   );
 
   const exitGroupId = group?.id ?? requestedGroupId;
@@ -205,6 +219,7 @@ export default function CardsPage() {
     vernacularName:
       getLocalizedText(item.data.vernacularName, preferredLanguage) ?? null,
   }));
+  const canNavigate = species.length > 1;
 
   return (
     <LearningSessionShell
@@ -251,7 +266,7 @@ export default function CardsPage() {
             tone="toolbar"
             size="md"
             onClick={handlePrevious}
-            disabled={currentIndex === 0}
+            disabled={!canNavigate}
             aria-label={t("learn.cards.previous")}
           >
             <SkipBack className="size-4" />
@@ -260,7 +275,7 @@ export default function CardsPage() {
             tone="activeToolbar"
             size="md"
             onClick={handleNext}
-            disabled={currentIndex === species.length - 1}
+            disabled={!canNavigate}
             aria-label={t("learn.cards.next")}
           >
             <SkipForward className="size-4" />
