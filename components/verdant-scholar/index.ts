@@ -11,6 +11,7 @@ export * from "./molecules/answer-option";
 export * from "./molecules/fact-card";
 export * from "./molecules/feature-tile";
 export * from "./molecules/filter-group";
+export * from "./molecules/popup-menu";
 export * from "./molecules/section-heading";
 export * from "./molecules/specimen-card";
 export * from "./molecules/stack-card";

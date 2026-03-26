@@ -7,6 +7,7 @@ import { SpeciesCard } from "@/components/species-card";
 import { LearningSessionShell } from "@/components/learning-session-shell";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { VerdantScholarIconButton } from "@/components/verdant-scholar/atoms/icon-button";
+import { VerdantScholarPopupMenu } from "@/components/verdant-scholar/molecules/popup-menu";
 import {
   getGroup,
   getGroups,
@@ -160,6 +161,13 @@ export default function CardsPage() {
     [isShuffleEnabled, shuffleOrder, species.length],
   );
 
+  const handleSelectSpeciesFromMenu = useCallback(
+    (index: number) => {
+      handleSelectSpeciesFromProgress(index);
+    },
+    [handleSelectSpeciesFromProgress],
+  );
+
   const exitGroupId = group?.id ?? requestedGroupId;
   const exitHref = exitGroupId ? `/groups/${exitGroupId}` : "/";
   const stackName = stack
@@ -213,11 +221,17 @@ export default function CardsPage() {
     current: currentIndex + 1,
     total: species.length,
   });
-  const progressSegments = species.map((item) => ({
+  const speciesMenuItems = species.map((item, index) => ({
     id: item.id,
-    scientificName: item.data.scientificName,
-    vernacularName:
-      getLocalizedText(item.data.vernacularName, preferredLanguage) ?? null,
+    label: item.data.scientificName,
+    description:
+      getLocalizedText(item.data.vernacularName, preferredLanguage) ??
+      undefined,
+    leading: (
+      <span className="min-w-8 text-xs font-semibold text-inherit">
+        {index + 1}
+      </span>
+    ),
   }));
   const canNavigate = species.length > 1;
 
@@ -250,9 +264,6 @@ export default function CardsPage() {
       }
       consoleCenter={
         <div className="mx-auto w-full flex items-center justify-center gap-2">
-          <p className="mt-1 text-center text-xs font-medium text-[var(--vs-color-on-surface-variant)]">
-            {progressLabel}
-          </p>
           <VerdantScholarIconButton
             tone={isShuffleEnabled ? "primaryFixedDim" : "toolbar"}
             size="md"
@@ -280,6 +291,18 @@ export default function CardsPage() {
           >
             <SkipForward className="size-4" />
           </VerdantScholarIconButton>
+          <VerdantScholarPopupMenu
+            items={speciesMenuItems}
+            label={progressLabel}
+            onSelect={(selectedItem) => {
+              const selectedIndex = species.findIndex(
+                (item) => item.id === selectedItem.id,
+              );
+              handleSelectSpeciesFromMenu(selectedIndex);
+            }}
+            selectedItemId={species[currentIndex]?.id}
+            triggerAriaLabel={t("learn.cards.openSpeciesList")}
+          />
         </div>
       }
       consoleRight={<div className="flex items-center gap-2" />}

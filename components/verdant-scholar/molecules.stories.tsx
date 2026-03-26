@@ -1,3 +1,4 @@
+/** Storybook overview for the Verdant Scholar molecule gallery. */
 import type { Meta, StoryObj } from "@storybook/react";
 import { Leaf, Microscope } from "lucide-react";
 
@@ -5,6 +6,7 @@ import { VerdantScholarAnswerOption } from "./molecules/answer-option";
 import { VerdantScholarFactCard } from "./molecules/fact-card";
 import { VerdantScholarFeatureTile } from "./molecules/feature-tile";
 import { VerdantScholarFilterGroup } from "./molecules/filter-group";
+import { VerdantScholarPopupMenu } from "./molecules/popup-menu";
 import { VerdantScholarSectionHeading } from "./molecules/section-heading";
 import { VerdantScholarSpecimenCard } from "./molecules/specimen-card";
 import { VerdantScholarStackCard } from "./molecules/stack-card";
@@ -77,6 +79,44 @@ export const Gallery: Story = {
           eyebrow="A+"
           meta="12 specimens · 30% complete"
           actionLabel="Resume Stack"
+        />
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)]">
+        <VerdantScholarFactCard
+          title="Selector"
+          summary="Popup menus carry the same warm editorial surfaces while keeping keyboard focus and selected-state clarity."
+          tone="soft"
+        />
+        <VerdantScholarPopupMenu
+          items={[
+            {
+              id: "1",
+              label: "Asplenium viride",
+              description: "viherraunioinen",
+              leading: <span className="text-xs font-semibold">1</span>,
+            },
+            {
+              id: "2",
+              label: "Botrychium boreale",
+              description: "pohjannoidanlukko",
+              leading: <span className="text-xs font-semibold">2</span>,
+            },
+            {
+              id: "3",
+              label: "Dryopteris expansa",
+              description: "isoalvejuuri",
+              leading: <span className="text-xs font-semibold">3</span>,
+            },
+          ]}
+          label="2 / 3"
+          selectedItemId="2"
+          triggerAriaLabel="Open specimen jump menu"
+        />
+        <VerdantScholarSectionHeading
+          eyebrow="Interaction"
+          title="Popup menus"
+          description="Use them for jump lists, archive views, or compact control clusters when the interface needs quick selection without losing the Verdant Scholar mood."
         />
       </div>
 
