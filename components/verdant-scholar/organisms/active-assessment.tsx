@@ -2,6 +2,7 @@
 import { Bookmark, Lightbulb } from "lucide-react";
 
 import { VerdantScholarButton } from "../atoms/button";
+import { VerdantScholarIconButton } from "../atoms/icon-button";
 import { VerdantScholarProgressBar } from "../atoms/progress-bar";
 import {
   VerdantScholarAnswerOption,
@@ -125,9 +126,13 @@ export function VerdantScholarActiveAssessment({
               >
                 Next Question
               </VerdantScholarButton>
-              <button className="flex size-12 items-center justify-center rounded-[var(--vs-radius-md)] bg-[var(--vs-color-surface-container-low)]">
+              <VerdantScholarIconButton
+                aria-label="Bookmark"
+                size="lg"
+                tone="toolbar"
+              >
                 <Bookmark className="size-4 text-[var(--vs-color-on-surface-variant)]" />
-              </button>
+              </VerdantScholarIconButton>
             </div>
           </div>
         </section>

@@ -75,9 +75,10 @@ export const verdantScholarTokens = {
     labelSm: "0.625rem",
   },
   fonts: {
-    display: '"Manrope", "Arial Narrow", "Avenir Next", sans-serif',
-    body: '"Inter", "Helvetica Neue", Arial, sans-serif',
-    label: '"Inter", "Helvetica Neue", Arial, sans-serif',
+    display:
+      'var(--font-manrope, "Manrope"), "Arial Narrow", "Avenir Next", sans-serif',
+    body: 'var(--font-inter, "Inter"), "Helvetica Neue", Arial, sans-serif',
+    label: 'var(--font-inter, "Inter"), "Helvetica Neue", Arial, sans-serif',
   },
   layout: {
     maxWidth: "96rem",
@@ -163,3 +164,27 @@ export const verdantScholarThemeVariables = {
   "--vs-layout-max-width": verdantScholarTokens.layout.maxWidth,
   "--vs-layout-sidebar-width": verdantScholarTokens.layout.sidebarWidth,
 } as const;
+
+/** Serializes Verdant Scholar CSS variables for global or scoped runtime publication. */
+function createCssVariableRule(
+  selector: string,
+  variables: Record<string, string>,
+) {
+  const declarations = Object.entries(variables)
+    .map(([name, value]) => `  ${name}: ${value};`)
+    .join("\n");
+
+  return `${selector} {\n${declarations}\n}`;
+}
+
+/** Global Verdant Scholar token rule for app and Storybook runtime publication. */
+export const verdantScholarRootThemeCss = createCssVariableRule(
+  ":root",
+  verdantScholarThemeVariables,
+);
+
+/** Scoped Verdant Scholar token rule for embedded or isolated surfaces. */
+export const verdantScholarScopedThemeCss = createCssVariableRule(
+  "[data-verdant-scholar]",
+  verdantScholarThemeVariables,
+);

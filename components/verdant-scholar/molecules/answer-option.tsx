@@ -4,6 +4,8 @@ import { CheckCircle2, XCircle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+import { VerdantScholarChoiceCard } from "../atoms/choice-card";
+
 /**
  * Props for Verdant Scholar answer options.
  * @property className Optional wrapper classes.
@@ -43,24 +45,22 @@ export function VerdantScholarAnswerOption({
   state = "default",
   suffix,
 }: VerdantScholarAnswerOptionProps) {
-  const isInteractive = Boolean(onSelect);
-  const content = (
-    <>
-      <div
-        className={cn(
-          "flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-bold",
-          state === "correct"
-            ? "bg-[var(--vs-color-primary)] text-[var(--vs-color-on-primary)]"
-            : state === "incorrect"
-              ? "bg-[color:rgba(186,26,26,0.1)] text-[var(--vs-color-error)]"
-              : "bg-[color:rgba(28,27,27,0.06)] text-[var(--vs-color-on-surface-variant)]",
-        )}
-      >
-        {optionKey}
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className="text-base font-semibold">{label}</p>
-      </div>
+  const leading = (
+    <div
+      className={cn(
+        "flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-bold",
+        state === "correct"
+          ? "bg-[var(--vs-color-primary)] text-[var(--vs-color-on-primary)]"
+          : state === "incorrect"
+            ? "bg-[color:rgba(186,26,26,0.1)] text-[var(--vs-color-error)]"
+            : "bg-[color:rgba(28,27,27,0.06)] text-[var(--vs-color-on-surface-variant)]",
+      )}
+    >
+      {optionKey}
+    </div>
+  );
+  const trailing = (
+    <div className="flex items-center gap-3">
       {suffix ? (
         <span className="text-[length:var(--vs-font-label-md)] font-bold uppercase tracking-[0.16em] text-[var(--vs-color-primary)]">
           {suffix}
@@ -72,25 +72,25 @@ export function VerdantScholarAnswerOption({
       {state === "incorrect" ? (
         <XCircle className="size-4 text-[var(--vs-color-error)]" />
       ) : null}
-    </>
+    </div>
   );
 
-  const classNames = cn(
-    "flex items-center gap-4 rounded-[var(--vs-radius-md)] px-5 py-5",
-    isInteractive
-      ? "w-full text-left transition-transform duration-200 outline-none hover:-translate-y-px focus-visible:shadow-[var(--vs-shadow-focus)]"
-      : "",
-    stateClasses[state],
-    className,
+  return (
+    <VerdantScholarChoiceCard
+      className={cn(
+        "rounded-[var(--vs-radius-md)] px-5 py-5",
+        Boolean(onSelect)
+          ? "transition-transform duration-200 hover:-translate-y-px"
+          : "pointer-events-none",
+        stateClasses[state],
+        className,
+      )}
+      description={undefined}
+      leading={leading}
+      onClick={onSelect}
+      selected={state !== "default"}
+      title={label}
+      trailing={trailing}
+    />
   );
-
-  if (isInteractive) {
-    return (
-      <button className={classNames} onClick={onSelect} type="button">
-        {content}
-      </button>
-    );
-  }
-
-  return <article className={classNames}>{content}</article>;
 }

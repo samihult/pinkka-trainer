@@ -1,4 +1,5 @@
 /** Verdant Scholar progress bars provide quiet session and mastery feedback. */
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
 /**
@@ -28,17 +29,14 @@ export function VerdantScholarProgressBar({
   value,
 }: VerdantScholarProgressBarProps) {
   return (
-    <div
-      aria-hidden
+    <Progress
+      aria-label={`${Math.max(0, Math.min(100, value))}%`}
       className={cn(
-        "h-1.5 w-full overflow-hidden rounded-[var(--vs-radius-pill)] bg-[color:rgba(194,201,180,0.28)]",
+        "h-1.5 rounded-[var(--vs-radius-pill)] bg-[color:rgba(194,201,180,0.28)] [&_[data-slot=progress-indicator]]:rounded-[inherit]",
+        toneClasses[tone],
         className,
       )}
-    >
-      <div
-        className={cn("h-full rounded-[inherit]", toneClasses[tone])}
-        style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-      />
-    </div>
+      value={Math.max(0, Math.min(100, value))}
+    />
   );
 }

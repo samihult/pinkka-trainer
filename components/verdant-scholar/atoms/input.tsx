@@ -2,6 +2,7 @@
 import * as React from "react";
 import { Search } from "lucide-react";
 
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 import { VerdantScholarButton } from "./button";
@@ -31,11 +32,11 @@ export const VerdantScholarInput = React.forwardRef<
       <span className="pointer-events-none absolute left-6 text-[var(--vs-color-on-surface-variant)]">
         {icon ?? <Search className="size-4" />}
       </span>
-      <input
+      <Input
         ref={ref}
         type={type}
         className={cn(
-          "h-14 w-full rounded-[var(--vs-radius-pill)] bg-[var(--vs-color-surface-container-highest)] pl-14 pr-4 text-[length:var(--vs-font-body-lg)] text-[var(--vs-color-on-surface)] shadow-[var(--vs-shadow-ambient)] outline-none placeholder:text-[color:rgba(67,73,57,0.65)] focus-visible:bg-[var(--vs-color-surface-container-lowest)] focus-visible:shadow-[var(--vs-shadow-focus)]",
+          "h-14 rounded-[var(--vs-radius-pill)] border-0 bg-[var(--vs-color-surface-container-highest)] pl-14 pr-4 text-[length:var(--vs-font-body-lg)] text-[var(--vs-color-on-surface)] shadow-[var(--vs-shadow-ambient)] placeholder:text-[color:rgba(67,73,57,0.65)] focus-visible:border-transparent focus-visible:bg-[var(--vs-color-surface-container-lowest)] focus-visible:ring-0 focus-visible:shadow-[var(--vs-shadow-focus)]",
           actionLabel ? "pr-32" : "",
           className,
         )}

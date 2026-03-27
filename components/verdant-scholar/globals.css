@@ -1,0 +1,77 @@
+/* Global Verdant Scholar token publication for app and Storybook runtime parity. */
+
+:root {
+  --vs-color-primary: #3f6a00;
+  --vs-color-on-primary: #ffffff;
+  --vs-color-primary-container: #8cc24d;
+  --vs-color-on-primary-container: #2d4d00;
+  --vs-color-primary-fixed: #baf478;
+  --vs-color-primary-fixed-dim: #9fd75f;
+  --vs-color-secondary: #496640;
+  --vs-color-on-secondary: #ffffff;
+  --vs-color-secondary-container: #caecbc;
+  --vs-color-on-secondary-container: #4f6c45;
+  --vs-color-tertiary: #6b5f00;
+  --vs-color-on-tertiary: #ffffff;
+  --vs-color-tertiary-container: #c4b44f;
+  --vs-color-on-tertiary-container: #4e4500;
+  --vs-color-tertiary-fixed: #f6e479;
+  --vs-color-tertiary-fixed-dim: #d8c860;
+  --vs-color-surface: #fcf9f8;
+  --vs-color-surface-bright: #fcf9f8;
+  --vs-color-surface-dim: #dcd9d9;
+  --vs-color-surface-variant: #e5e2e1;
+  --vs-color-surface-container-lowest: #ffffff;
+  --vs-color-surface-container-low: #f6f3f2;
+  --vs-color-surface-container: #f0eded;
+  --vs-color-surface-container-high: #eae7e7;
+  --vs-color-surface-container-highest: #e5e2e1;
+  --vs-color-on-surface: #1c1b1b;
+  --vs-color-on-surface-variant: #434939;
+  --vs-color-outline: #737968;
+  --vs-color-outline-variant: #c2c9b4;
+  --vs-color-background: #fcf9f8;
+  --vs-color-on-background: #1c1b1b;
+  --vs-color-error: #ba1a1a;
+  --vs-color-error-container: #ffdad6;
+  --vs-color-on-error: #ffffff;
+  --vs-color-on-error-container: #93000a;
+  --vs-color-inverse-surface: #313030;
+  --vs-color-inverse-on-surface: #f3f0ef;
+  --vs-color-inverse-primary: #9fd75f;
+  --vs-color-surface-tint: #3f6a00;
+  --vs-gradient-primary: linear-gradient(135deg, #3f6a00 0%, #8cc24d 100%);
+  --vs-gradient-glass: linear-gradient(
+    180deg,
+    rgba(252, 249, 248, 0.86) 0%,
+    rgba(252, 249, 248, 0.56) 100%
+  );
+  --vs-radius-xs: 0.25rem;
+  --vs-radius-sm: 0.5rem;
+  --vs-radius-md: 0.75rem;
+  --vs-radius-xl: 1.5rem;
+  --vs-radius-pill: 9999px;
+  --vs-shadow-ambient: 0 24px 48px rgba(28, 27, 27, 0.04);
+  --vs-shadow-floating: 0 18px 48px rgba(28, 27, 27, 0.08);
+  --vs-shadow-focus: 0 0 0 2px rgba(63, 106, 0, 0.4);
+  --vs-space-outer: 2rem;
+  --vs-space-section: 3rem;
+  --vs-space-panel: 2rem;
+  --vs-space-compact: 1rem;
+  --vs-font-display-lg: clamp(3.5rem, 8vw, 5.5rem);
+  --vs-font-display-md: clamp(2.4rem, 5vw, 4rem);
+  --vs-font-headline-md: 1.75rem;
+  --vs-font-headline-sm: 1.25rem;
+  --vs-font-body-lg: 1rem;
+  --vs-font-body-md: 0.9375rem;
+  --vs-font-label-md: 0.75rem;
+  --vs-font-label-sm: 0.625rem;
+  --vs-font-display-family:
+    var(--font-manrope, "Manrope"), "Arial Narrow", "Avenir Next", sans-serif;
+  --vs-font-body-family:
+    var(--font-inter, "Inter"), "Helvetica Neue", Arial, sans-serif;
+  --vs-font-label-family:
+    var(--font-inter, "Inter"), "Helvetica Neue", Arial, sans-serif;
+  --vs-layout-max-width: 96rem;
+  --vs-layout-sidebar-width: 18rem;
+}

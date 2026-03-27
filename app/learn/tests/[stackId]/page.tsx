@@ -1576,6 +1576,9 @@ export default function TestPage() {
           nameMode: getNameModeLabel(testPreferences.answerNameMode),
         });
 
+    const exitGroupId = group?.id ?? requestedGroupId;
+    const exitHref = exitGroupId ? `/groups/${exitGroupId}` : "/";
+
     return (
       <LearningSessionShell
         groupName={groupName}
@@ -1596,6 +1599,9 @@ export default function TestPage() {
               unavailableReason={unavailableReason}
               onPreferencesChange={handlePreferencesChange}
               onStartTest={startTest}
+              exitHref={exitHref}
+              groupName={groupName}
+              stackName={stackName}
             />
           </div>
         </div>

@@ -1,11 +1,31 @@
+/** Live test setup panel composed from Verdant Scholar atoms for direct app/runtime parity checks. */
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Circle,
+  Filter,
+  Globe2,
+  Lightbulb,
+  ListChecks,
+  PenLine,
+} from "lucide-react";
+
+import {
+  VerdantScholarButton,
+  VerdantScholarCard,
+  VerdantScholarCardContent,
+  VerdantScholarChoiceCard,
+  VerdantScholarChoiceChip,
+  VerdantScholarHeading,
+  VerdantScholarIconButton,
+  VerdantScholarSectionHeading,
+  VerdantScholarText,
+} from "@/components/verdant-scholar";
 import { useI18n } from "@/lib/i18n";
 import type { TestPreferences } from "@/lib/types";
-import { ListChecks, PenLine } from "lucide-react";
+import Link from "next/link";
 
 /** Props for the TestSettingsCard component. */
 export interface TestSettingsCardProps {
@@ -25,6 +45,12 @@ export interface TestSettingsCardProps {
   onPreferencesChange: (updates: Partial<TestPreferences>) => void;
   /** Starts the test. */
   onStartTest: () => void;
+  /** Where to go back. */
+  exitHref: string;
+  /** Group name. */
+  groupName: string;
+  /** Stack name */
+  stackName: string;
 }
 
 /** Renders the test settings card for selecting test options. */
@@ -37,203 +63,220 @@ export function TestSettingsCard({
   unavailableReason,
   onPreferencesChange,
   onStartTest,
+  exitHref,
+  groupName,
+  stackName,
 }: TestSettingsCardProps) {
   const { t } = useI18n();
 
+  const questionSummary =
+    testPreferences.questionCount > 0 &&
+    testPreferences.questionCount < speciesCount
+      ? t("test.settings.randomlySelected", { speciesCount })
+      : t("test.settings.allSpecies", { speciesCount });
+
   return (
-    <Card className="max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl">{t("test.settings.title")}</CardTitle>
-        <p className="text-sm text-muted-foreground">
-          {t("test.settings.description")}
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-2">
-          <Label>{t("test.settings.numberOfSpecies")}</Label>
-          <div className="flex flex-wrap gap-2">
-            {questionOptions.map((option) => {
-              const isSelected = testPreferences.questionCount === option;
-              return (
-                <Button
+    <section className="mx-auto w-full max-w-3xl space-y-8">
+      <div className="flex min-w-0 items-center gap-3">
+        <Link href={exitHref} aria-label={t("group.backToHome")}>
+          <VerdantScholarIconButton tone="surface" size="lg">
+            <ArrowLeft className="size-5" />
+          </VerdantScholarIconButton>
+        </Link>
+        <div className="min-w-0">
+          {groupName ? (
+            <p className="truncate text-xs font-semibold uppercase tracking-[0.12em] text-[var(--vs-color-on-surface-variant)]">
+              {groupName}
+            </p>
+          ) : null}
+          <p className="truncate text-base font-semibold [font-family:var(--vs-font-display-family)] text-[var(--vs-color-on-surface)]">
+            {stackName}
+          </p>
+        </div>
+      </div>
+
+      <VerdantScholarCard tone="surface">
+        <VerdantScholarCardContent className="space-y-8 pt-8">
+          <div className="space-y-4">
+            <VerdantScholarSectionHeading title={t("test.settings.title")} />
+          </div>
+
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Filter className="size-4 text-[var(--vs-color-primary)]" />
+              <VerdantScholarHeading asChild variant="subheadline">
+                <h2>{t("test.settings.numberOfSpecies")}</h2>
+              </VerdantScholarHeading>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {questionOptions.map((option) => (
+                <VerdantScholarChoiceChip
+                  className="h-auto justify-center px-4 py-4 text-center"
                   key={option}
-                  type="button"
-                  variant={isSelected ? "default" : "outline"}
                   onClick={() => onPreferencesChange({ questionCount: option })}
+                  selected={testPreferences.questionCount === option}
                 >
                   {option === 0 ? t("test.settings.all") : option}
-                </Button>
-              );
-            })}
-          </div>
-          {testPreferences.questionCount > 0 &&
-            testPreferences.questionCount < speciesCount && (
-              <p className="text-sm text-muted-foreground">
-                {t("test.settings.randomlySelected", { speciesCount })}
-              </p>
-            )}
-          {(testPreferences.questionCount >= speciesCount ||
-            testPreferences.questionCount === 0) && (
-            <p className="text-sm text-muted-foreground">
-              {t("test.settings.allSpecies", { speciesCount })}
-            </p>
-          )}
-          {speciesCount < totalSpeciesCount && (
-            <p className="text-sm text-muted-foreground">
-              {t("test.settings.availableSpecies", {
-                available: speciesCount,
-                total: totalSpeciesCount,
-              })}
-            </p>
-          )}
-        </div>
+                </VerdantScholarChoiceChip>
+              ))}
+            </div>
+            <VerdantScholarText tone="muted" variant="meta">
+              {questionSummary}
+            </VerdantScholarText>
+            {speciesCount < totalSpeciesCount ? (
+              <VerdantScholarText tone="muted" variant="meta">
+                {t("test.settings.availableSpecies", {
+                  available: speciesCount,
+                  total: totalSpeciesCount,
+                })}
+              </VerdantScholarText>
+            ) : null}
+          </section>
 
-        <div className="space-y-2">
-          <Label>{t("test.settings.mode")}</Label>
-          <div className="flex flex-wrap gap-3">
-            <Button
-              type="button"
-              variant={
-                testPreferences.mode === "multiple-choice"
-                  ? "default"
-                  : "outline"
-              }
-              onClick={() => onPreferencesChange({ mode: "multiple-choice" })}
-              className="w-40 h-30 flex-col items-center justify-between gap-0 whitespace-normal p-3 text-center"
-            >
-              <ListChecks
-                size={200}
-                strokeWidth={8}
-                absoluteStrokeWidth
-                className="size-12"
-                aria-hidden="true"
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="size-4 text-[var(--vs-color-primary)]" />
+              <VerdantScholarHeading asChild variant="subheadline">
+                <h2>{t("test.settings.mode")}</h2>
+              </VerdantScholarHeading>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <VerdantScholarChoiceCard
+                onClick={() => onPreferencesChange({ mode: "multiple-choice" })}
+                selected={testPreferences.mode === "multiple-choice"}
+                title={t("test.settings.mode.multipleChoice")}
+                trailing={
+                  <div className="rounded-full bg-[color:rgba(63,106,0,0.08)] p-2 text-[var(--vs-color-primary)]">
+                    <ListChecks className="size-4" />
+                  </div>
+                }
               />
-              <span className="text-sm font-semibold">
-                {t("test.settings.mode.multipleChoice")}
-              </span>
-            </Button>
-            <Button
-              type="button"
-              variant={
-                testPreferences.mode === "write-name" ? "default" : "outline"
-              }
-              onClick={() => onPreferencesChange({ mode: "write-name" })}
-              className="w-40 h-30 flex-col items-center justify-between gap-0 whitespace-normal p-3 text-center"
-            >
-              <PenLine
-                size={200}
-                strokeWidth={8}
-                absoluteStrokeWidth
-                className="size-12"
-                aria-hidden="true"
+              <VerdantScholarChoiceCard
+                onClick={() => onPreferencesChange({ mode: "write-name" })}
+                selected={testPreferences.mode === "write-name"}
+                title={t("test.settings.mode.writeName")}
+                trailing={
+                  <div className="rounded-full bg-[color:rgba(63,106,0,0.08)] p-2 text-[var(--vs-color-primary)]">
+                    <PenLine className="size-4" />
+                  </div>
+                }
               />
-              <span className="text-sm font-semibold">
-                {t("test.settings.mode.writeName")}
-              </span>
-            </Button>
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Globe2 className="size-4 text-[var(--vs-color-primary)]" />
+              <VerdantScholarHeading asChild variant="subheadline">
+                <h2>{t("test.settings.answerScope")}</h2>
+              </VerdantScholarHeading>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <VerdantScholarChoiceCard
+                onClick={() => onPreferencesChange({ answerScope: "species" })}
+                selected={testPreferences.answerScope === "species"}
+                title={t("test.settings.scope.species")}
+                trailing={
+                  testPreferences.answerScope === "species" ? (
+                    <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />
+                  ) : (
+                    <Circle className="size-4 text-[var(--vs-color-on-surface-variant)]" />
+                  )
+                }
+              />
+              <VerdantScholarChoiceCard
+                onClick={() => onPreferencesChange({ answerScope: "genus" })}
+                selected={testPreferences.answerScope === "genus"}
+                title={t("test.settings.scope.genus")}
+                trailing={
+                  testPreferences.answerScope === "genus" ? (
+                    <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />
+                  ) : (
+                    <Circle className="size-4 text-[var(--vs-color-on-surface-variant)]" />
+                  )
+                }
+              />
+              <VerdantScholarChoiceCard
+                onClick={() => onPreferencesChange({ answerScope: "family" })}
+                selected={testPreferences.answerScope === "family"}
+                title={t("test.settings.scope.family")}
+                trailing={
+                  testPreferences.answerScope === "family" ? (
+                    <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />
+                  ) : (
+                    <Circle className="size-4 text-[var(--vs-color-on-surface-variant)]" />
+                  )
+                }
+              />
+              <VerdantScholarChoiceCard
+                onClick={() =>
+                  onPreferencesChange({ answerNameMode: "scientific" })
+                }
+                selected={testPreferences.answerNameMode === "scientific"}
+                title={t("test.settings.nameMode.scientific")}
+                trailing={
+                  testPreferences.answerNameMode === "scientific" ? (
+                    <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />
+                  ) : (
+                    <Circle className="size-4 text-[var(--vs-color-on-surface-variant)]" />
+                  )
+                }
+              />
+              <VerdantScholarChoiceCard
+                onClick={() =>
+                  onPreferencesChange({ answerNameMode: "vernacular" })
+                }
+                selected={testPreferences.answerNameMode === "vernacular"}
+                title={t("test.settings.nameMode.vernacular")}
+                trailing={
+                  testPreferences.answerNameMode === "vernacular" ? (
+                    <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />
+                  ) : (
+                    <Circle className="size-4 text-[var(--vs-color-on-surface-variant)]" />
+                  )
+                }
+              />
+              <VerdantScholarChoiceCard
+                onClick={() =>
+                  onPreferencesChange({ answerNameMode: "either" })
+                }
+                selected={testPreferences.answerNameMode === "either"}
+                title={t("test.settings.nameMode.either")}
+                trailing={
+                  testPreferences.answerNameMode === "either" ? (
+                    <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />
+                  ) : (
+                    <Circle className="size-4 text-[var(--vs-color-on-surface-variant)]" />
+                  )
+                }
+              />
+            </div>
+          </section>
+
+          <div className="space-y-4 flex items-center justify-end">
+            <VerdantScholarButton
+              className="justify-center"
+              disabled={!canStartTest}
+              onClick={onStartTest}
+              size="lg"
+              trailingIcon={<span aria-hidden>▶</span>}
+            >
+              {t("test.settings.start")}
+            </VerdantScholarButton>
+
+            {!canStartTest && unavailableReason ? (
+              <VerdantScholarText
+                asChild
+                className="text-center"
+                tone="primary"
+                variant="label"
+              >
+                <p>{unavailableReason}</p>
+              </VerdantScholarText>
+            ) : null}
           </div>
-          <p className="text-sm text-muted-foreground">
-            {t("test.settings.mode.description")}
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <Label>{t("test.settings.answerScope")}</Label>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              type="button"
-              variant={
-                testPreferences.answerScope === "species"
-                  ? "default"
-                  : "outline"
-              }
-              onClick={() => onPreferencesChange({ answerScope: "species" })}
-            >
-              {t("test.settings.scope.species")}
-            </Button>
-            <Button
-              type="button"
-              variant={
-                testPreferences.answerScope === "genus" ? "default" : "outline"
-              }
-              onClick={() => onPreferencesChange({ answerScope: "genus" })}
-            >
-              {t("test.settings.scope.genus")}
-            </Button>
-            <Button
-              type="button"
-              variant={
-                testPreferences.answerScope === "family" ? "default" : "outline"
-              }
-              onClick={() => onPreferencesChange({ answerScope: "family" })}
-            >
-              {t("test.settings.scope.family")}
-            </Button>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            {t("test.settings.scope.description")}
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <Label>{t("test.settings.answerNameMode")}</Label>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              type="button"
-              variant={
-                testPreferences.answerNameMode === "scientific"
-                  ? "default"
-                  : "outline"
-              }
-              onClick={() =>
-                onPreferencesChange({ answerNameMode: "scientific" })
-              }
-            >
-              {t("test.settings.nameMode.scientific")}
-            </Button>
-            <Button
-              type="button"
-              variant={
-                testPreferences.answerNameMode === "vernacular"
-                  ? "default"
-                  : "outline"
-              }
-              onClick={() =>
-                onPreferencesChange({ answerNameMode: "vernacular" })
-              }
-            >
-              {t("test.settings.nameMode.vernacular")}
-            </Button>
-            <Button
-              type="button"
-              variant={
-                testPreferences.answerNameMode === "either"
-                  ? "default"
-                  : "outline"
-              }
-              onClick={() => onPreferencesChange({ answerNameMode: "either" })}
-            >
-              {t("test.settings.nameMode.either")}
-            </Button>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            {t("test.settings.nameMode.description")}
-          </p>
-        </div>
-
-        {!canStartTest && unavailableReason ? (
-          <p className="text-sm text-destructive">{unavailableReason}</p>
-        ) : null}
-
-        <Button
-          onClick={onStartTest}
-          className="w-full"
-          size="lg"
-          disabled={!canStartTest}
-        >
-          {t("test.settings.start")}
-        </Button>
-      </CardContent>
-    </Card>
+        </VerdantScholarCardContent>
+      </VerdantScholarCard>
+    </section>
   );
 }

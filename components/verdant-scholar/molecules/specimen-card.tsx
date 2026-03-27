@@ -2,6 +2,8 @@
 import { cn } from "@/lib/utils";
 
 import { VerdantScholarBadge } from "../atoms/badge";
+import { VerdantScholarCard, VerdantScholarCardContent } from "../atoms/card";
+import { VerdantScholarHeading, VerdantScholarText } from "../atoms/text";
 
 /**
  * Props for Verdant Scholar specimen cards.
@@ -34,7 +36,11 @@ export function VerdantScholarSpecimenCard({
   title,
 }: VerdantScholarSpecimenCardProps) {
   return (
-    <article className={cn("group space-y-5", className)}>
+    <VerdantScholarCard
+      className={cn("group overflow-hidden", className)}
+      interactive
+      tone="surface"
+    >
       <div className="relative overflow-hidden rounded-[var(--vs-radius-md)] bg-[var(--vs-color-surface-container-low)]">
         <img
           alt={imageAlt}
@@ -50,17 +56,17 @@ export function VerdantScholarSpecimenCard({
           </VerdantScholarBadge>
         ) : null}
       </div>
-      <div className="space-y-1.5">
-        <p className="text-[length:var(--vs-font-label-sm)] font-bold uppercase tracking-[0.24em] text-[var(--vs-color-primary)]">
+      <VerdantScholarCardContent className="space-y-1.5 pt-5">
+        <VerdantScholarText tone="primary" variant="eyebrow">
           {taxonomy}
-        </p>
-        <h3 className="text-[length:var(--vs-font-headline-md)] leading-none text-[var(--vs-color-on-surface)] [font-family:var(--vs-font-display-family)] font-bold tracking-tight">
-          {title}
-        </h3>
-        <p className="text-[length:var(--vs-font-body-md)] italic text-[var(--vs-color-on-surface-variant)]">
+        </VerdantScholarText>
+        <VerdantScholarHeading asChild variant="headline">
+          <h3>{title}</h3>
+        </VerdantScholarHeading>
+        <VerdantScholarText tone="muted" variant="italic">
           {scientificName}
-        </p>
-      </div>
-    </article>
+        </VerdantScholarText>
+      </VerdantScholarCardContent>
+    </VerdantScholarCard>
   );
 }

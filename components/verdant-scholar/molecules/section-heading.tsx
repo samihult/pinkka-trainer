@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
+import { VerdantScholarHeading, VerdantScholarText } from "../atoms/text";
+
 /**
  * Props for Verdant Scholar section headings.
  * @property action Optional trailing action.
@@ -36,18 +38,18 @@ export function VerdantScholarSectionHeading({
     >
       <div className="space-y-2">
         {eyebrow ? (
-          <p className="text-[length:var(--vs-font-label-sm)] font-semibold uppercase tracking-[0.24em] text-[var(--vs-color-primary)]">
+          <VerdantScholarText tone="primary" variant="eyebrow">
             {eyebrow}
-          </p>
+          </VerdantScholarText>
         ) : null}
         <div className="space-y-1">
-          <h2 className="text-[length:var(--vs-font-headline-md)] leading-tight text-[var(--vs-color-on-surface)] [font-family:var(--vs-font-display-family)] font-bold tracking-tight">
-            {title}
-          </h2>
+          <VerdantScholarHeading asChild variant="headline">
+            <h2>{title}</h2>
+          </VerdantScholarHeading>
           {description ? (
-            <p className="max-w-2xl text-[length:var(--vs-font-body-md)] leading-6 text-[var(--vs-color-on-surface-variant)]">
+            <VerdantScholarText className="max-w-2xl" tone="muted">
               {description}
-            </p>
+            </VerdantScholarText>
           ) : null}
         </div>
       </div>

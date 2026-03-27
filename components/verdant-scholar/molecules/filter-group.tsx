@@ -1,5 +1,9 @@
 /** Verdant Scholar filter groups model the quiet taxonomy controls from the explore screen. */
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+
+import { VerdantScholarChoiceChip } from "../atoms/choice-chip";
+import { VerdantScholarText } from "../atoms/text";
 
 /**
  * Item metadata for Verdant Scholar filter groups.
@@ -41,19 +45,21 @@ export function VerdantScholarFilterGroup({
 }: VerdantScholarFilterGroupProps) {
   return (
     <section className={cn("space-y-4", className)}>
-      <h3 className="text-[length:var(--vs-font-label-sm)] [font-family:var(--vs-font-label-family)] font-semibold uppercase tracking-[0.22em] text-[var(--vs-color-on-surface-variant)]">
-        {title}
-      </h3>
+      <VerdantScholarText asChild tone="muted" variant="eyebrow">
+        <h3>{title}</h3>
+      </VerdantScholarText>
       {variant === "checkboxes" ? (
         <div className="space-y-2">
           {items.map((item) =>
             onItemSelect ? (
-              <button
+              <Button
                 aria-pressed={item.selected}
-                className="flex w-full items-center gap-3 text-left text-sm"
+                className="h-auto w-full justify-start gap-3 bg-transparent px-0 py-0 text-left text-sm font-normal shadow-none hover:bg-transparent focus-visible:ring-0 focus-visible:shadow-[var(--vs-shadow-focus)]"
                 key={item.label}
                 onClick={() => onItemSelect(item)}
+                size="sm"
                 type="button"
+                variant="ghost"
               >
                 <span
                   className={cn(
@@ -70,7 +76,7 @@ export function VerdantScholarFilterGroup({
                 <span className="text-[var(--vs-color-on-surface)]">
                   {item.label}
                 </span>
-              </button>
+              </Button>
             ) : (
               <div className="flex items-center gap-3 text-sm" key={item.label}>
                 <span
@@ -97,32 +103,20 @@ export function VerdantScholarFilterGroup({
         <div className="flex flex-wrap gap-2">
           {items.map((item) =>
             onItemSelect ? (
-              <button
-                aria-pressed={item.selected}
+              <VerdantScholarChoiceChip
                 key={item.label}
-                className={cn(
-                  "rounded-[var(--vs-radius-xs)] px-3 py-1.5 text-[length:var(--vs-font-label-md)] [font-family:var(--vs-font-label-family)] font-semibold",
-                  item.selected
-                    ? "bg-[var(--vs-color-secondary-container)] text-[var(--vs-color-on-secondary-container)]"
-                    : "bg-[var(--vs-color-surface-container)] text-[var(--vs-color-on-surface)]",
-                )}
                 onClick={() => onItemSelect(item)}
-                type="button"
+                selected={item.selected}
               >
                 {item.label}
-              </button>
+              </VerdantScholarChoiceChip>
             ) : (
-              <div
+              <VerdantScholarChoiceChip
                 key={item.label}
-                className={cn(
-                  "rounded-[var(--vs-radius-xs)] px-3 py-1.5 text-[length:var(--vs-font-label-md)] [font-family:var(--vs-font-label-family)] font-semibold",
-                  item.selected
-                    ? "bg-[var(--vs-color-secondary-container)] text-[var(--vs-color-on-secondary-container)]"
-                    : "bg-[var(--vs-color-surface-container)] text-[var(--vs-color-on-surface)]",
-                )}
+                selected={item.selected}
               >
                 {item.label}
-              </div>
+              </VerdantScholarChoiceChip>
             ),
           )}
         </div>
@@ -131,12 +125,14 @@ export function VerdantScholarFilterGroup({
         <div className="space-y-3">
           {items.map((item) =>
             onItemSelect ? (
-              <button
+              <Button
                 aria-pressed={item.selected}
                 key={item.label}
-                className="flex w-full items-center justify-between gap-4 text-left text-sm"
+                className="h-auto w-full justify-between gap-4 bg-transparent px-0 py-0 text-left text-sm font-normal shadow-none hover:bg-transparent focus-visible:ring-0 focus-visible:shadow-[var(--vs-shadow-focus)]"
                 onClick={() => onItemSelect(item)}
+                size="sm"
                 type="button"
+                variant="ghost"
               >
                 <span className="flex items-center gap-2 text-[var(--vs-color-on-surface)]">
                   {item.swatchClass ? (
@@ -149,7 +145,7 @@ export function VerdantScholarFilterGroup({
                 <span className="text-[length:var(--vs-font-label-md)] [font-family:var(--vs-font-label-family)] text-[var(--vs-color-on-surface-variant)]">
                   {item.count}
                 </span>
-              </button>
+              </Button>
             ) : (
               <div
                 className="flex items-center justify-between gap-4 text-sm"

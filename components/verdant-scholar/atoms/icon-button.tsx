@@ -2,6 +2,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const verdantScholarIconButtonVariants = cva(
@@ -14,7 +15,7 @@ const verdantScholarIconButtonVariants = cva(
         surface:
           "rounded-full bg-[var(--vs-color-surface-container-highest)] text-[var(--vs-color-on-surface)] hover:bg-[var(--vs-color-surface-variant)]",
         primaryFixedDim:
-          "rounded-[var(--vs-radius-md)] bg-[var(--vs-color-primary-fixed-dim)] text-[var(--vs-color-on-primary-fixed)]",
+          "rounded-[var(--vs-radius-md)] bg-[var(--vs-color-primary-fixed-dim)] text-[var(--vs-color-on-primary-container)]",
         toolbar:
           "rounded-[var(--vs-radius-md)] bg-[var(--vs-color-surface-container-highest)] text-[var(--vs-color-on-surface-variant)] hover:bg-[var(--vs-color-surface-container)]",
         activeToolbar:
@@ -40,7 +41,7 @@ const verdantScholarIconButtonVariants = cva(
  */
 export interface VerdantScholarIconButtonProps
   extends
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    Omit<React.ComponentProps<typeof Button>, "size" | "variant">,
     VariantProps<typeof verdantScholarIconButtonVariants> {}
 
 /** Compact icon-only button used throughout the Verdant Scholar library. */
@@ -53,7 +54,7 @@ export function VerdantScholarIconButton({
   ...props
 }: VerdantScholarIconButtonProps) {
   return (
-    <button
+    <Button
       className={cn(
         verdantScholarIconButtonVariants({ className, size, tone }),
       )}
@@ -61,6 +62,6 @@ export function VerdantScholarIconButton({
       {...props}
     >
       {children}
-    </button>
+    </Button>
   );
 }

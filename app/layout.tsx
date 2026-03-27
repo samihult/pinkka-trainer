@@ -1,4 +1,5 @@
 import type React from "react";
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -7,6 +8,7 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 import { LanguageProvider } from "@/lib/language-context";
 import { Toaster } from "@/components/ui/toaster";
+import { verdantScholarThemeVariables } from "@/components/verdant-scholar/tokens";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={verdantScholarThemeVariables as CSSProperties}>
       <body
         className={`${inter.variable} ${manrope.variable} font-sans antialiased`}
       >

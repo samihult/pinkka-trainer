@@ -178,7 +178,7 @@ const EN_MESSAGES = {
   "manage.speciesHintDialog.imageDialog.gridAria": "Species image selector",
   "manage.speciesHintDialog.imageDialog.action.select": "Select Image",
 
-  "test.settings.title": "Test Settings",
+  "test.settings.title": "Test Your Knowledge",
   "test.settings.description": "Customize how this test will run.",
   "test.settings.numberOfSpecies": "Number of species",
   "test.settings.all": "All",
@@ -219,7 +219,7 @@ const EN_MESSAGES = {
   "test.answerInput.correct": "Correct!",
   "test.answerInput.correctAnswerPrefix": "Correct answer:",
   "test.answerInput.closeGuess": "Close! Check the spelling and try again.",
-  "test.settings.start": "Start ⏎",
+  "test.settings.start": "Start",
   "test.multipleChoice.eliminateHalf": "Eliminate 50%",
   "test.multipleChoice.eliminateHalfUsed": "50/50 used",
   "test.multipleChoice.eliminated": "Eliminated",
@@ -448,7 +448,7 @@ const FI_MESSAGES: TranslationTable = {
   "manage.speciesHintDialog.imageDialog.gridAria": "Lajikuvavalitsin",
   "manage.speciesHintDialog.imageDialog.action.select": "Valitse kuva",
 
-  "test.settings.title": "Testin asetukset",
+  "test.settings.title": "Testaa osaamistasi",
   "test.settings.description": "Muokkaa testin toimintaa.",
   "test.settings.numberOfSpecies": "Lajien määrä",
   "test.settings.all": "Kaikki",
@@ -490,7 +490,7 @@ const FI_MESSAGES: TranslationTable = {
   "test.answerInput.correctAnswerPrefix": "Oikea vastaus:",
   "test.answerInput.closeGuess":
     "Lähellä! Tarkista kirjoitusasu ja yritä uudelleen.",
-  "test.settings.start": "Aloita ⏎",
+  "test.settings.start": "Aloita",
   "test.multipleChoice.eliminateHalf": "Poista 50 %",
   "test.multipleChoice.eliminateHalfUsed": "50/50 käytetty",
   "test.multipleChoice.eliminated": "Poistettu",
@@ -711,7 +711,7 @@ const SV_MESSAGES: TranslationTable = {
   "manage.speciesHintDialog.imageDialog.gridAria": "Artbildsväljare",
   "manage.speciesHintDialog.imageDialog.action.select": "Välj bild",
 
-  "test.settings.title": "Testinställningar",
+  "test.settings.title": "Testa dina kunskaper",
   "test.settings.description": "Anpassa hur testet ska köras.",
   "test.settings.numberOfSpecies": "Antal arter",
   "test.settings.all": "Alla",
@@ -753,7 +753,7 @@ const SV_MESSAGES: TranslationTable = {
   "test.answerInput.correctAnswerPrefix": "Rätt svar:",
   "test.answerInput.closeGuess":
     "Nära! Kontrollera stavningen och försök igen.",
-  "test.settings.start": "Starta ⏎",
+  "test.settings.start": "Starta",
   "test.multipleChoice.eliminateHalf": "Ta bort 50 %",
   "test.multipleChoice.eliminateHalfUsed": "50/50 använd",
   "test.multipleChoice.eliminated": "Borttagen",

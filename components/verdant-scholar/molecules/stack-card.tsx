@@ -4,7 +4,9 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 import { VerdantScholarButton } from "../atoms/button";
+import { VerdantScholarCard, VerdantScholarCardContent } from "../atoms/card";
 import { VerdantScholarProgressBar } from "../atoms/progress-bar";
+import { VerdantScholarHeading, VerdantScholarText } from "../atoms/text";
 
 /**
  * Props for Verdant Scholar stack cards.
@@ -34,18 +36,6 @@ export interface VerdantScholarStackCardProps {
   trailing?: ReactNode;
 }
 
-const toneClasses: Record<
-  NonNullable<VerdantScholarStackCardProps["tone"]>,
-  string
-> = {
-  surface:
-    "bg-[var(--vs-color-surface-container-low)] text-[var(--vs-color-on-surface)]",
-  primary:
-    "bg-[var(--vs-color-primary-container)] text-[var(--vs-color-on-primary-container)]",
-  tertiary:
-    "bg-[var(--vs-color-tertiary-container)] text-[var(--vs-color-on-tertiary-container)]",
-};
-
 /** Learning or toolkit card with optional image, CTA, and progress summary. */
 export function VerdantScholarStackCard({
   actionLabel,
@@ -61,13 +51,7 @@ export function VerdantScholarStackCard({
   trailing,
 }: VerdantScholarStackCardProps) {
   return (
-    <article
-      className={cn(
-        "rounded-[var(--vs-radius-md)] p-5",
-        toneClasses[tone],
-        className,
-      )}
-    >
+    <VerdantScholarCard className={className} tone={tone}>
       {imageUrl ? (
         <div className="overflow-hidden rounded-[var(--vs-radius-sm)] bg-[var(--vs-color-surface-container-high)]">
           <img
@@ -77,23 +61,27 @@ export function VerdantScholarStackCard({
           />
         </div>
       ) : null}
-      <div className={cn("space-y-3", imageUrl ? "mt-4" : "")}>
+      <VerdantScholarCardContent
+        className={cn("space-y-3 pt-5", imageUrl ? "mt-4" : "")}
+      >
         {eyebrow ? (
-          <p className="text-[length:var(--vs-font-label-sm)] font-bold uppercase tracking-[0.18em] opacity-70">
+          <VerdantScholarText tone="inherit" variant="eyebrow">
             {eyebrow}
-          </p>
+          </VerdantScholarText>
         ) : null}
-        <h3 className="text-[length:var(--vs-font-headline-sm)] leading-tight [font-family:var(--vs-font-display-family)] font-bold tracking-tight">
-          {title}
-        </h3>
-        <p className="text-sm leading-6 opacity-80">{description}</p>
+        <VerdantScholarHeading asChild tone="inherit" variant="subheadline">
+          <h3>{title}</h3>
+        </VerdantScholarHeading>
+        <VerdantScholarText tone="inherit" variant="meta">
+          {description}
+        </VerdantScholarText>
         {typeof progress === "number" ? (
           <VerdantScholarProgressBar value={progress} />
         ) : null}
         <div className="flex items-center justify-between gap-3">
-          <div className="text-[length:var(--vs-font-label-md)] uppercase tracking-[0.14em] opacity-70">
-            {meta}
-          </div>
+          <VerdantScholarText asChild tone="inherit" variant="label">
+            <div>{meta}</div>
+          </VerdantScholarText>
           {trailing}
         </div>
         {actionLabel ? (
@@ -101,7 +89,7 @@ export function VerdantScholarStackCard({
             {actionLabel}
           </VerdantScholarButton>
         ) : null}
-      </div>
-    </article>
+      </VerdantScholarCardContent>
+    </VerdantScholarCard>
   );
 }

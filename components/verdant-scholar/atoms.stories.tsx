@@ -3,9 +3,13 @@ import { Bookmark, Search, Sparkles } from "lucide-react";
 
 import { VerdantScholarBadge } from "./atoms/badge";
 import { VerdantScholarButton } from "./atoms/button";
+import { VerdantScholarCard, VerdantScholarCardContent } from "./atoms/card";
+import { VerdantScholarChoiceCard } from "./atoms/choice-card";
+import { VerdantScholarChoiceChip } from "./atoms/choice-chip";
 import { VerdantScholarIconButton } from "./atoms/icon-button";
 import { VerdantScholarInput } from "./atoms/input";
 import { VerdantScholarProgressBar } from "./atoms/progress-bar";
+import { VerdantScholarHeading, VerdantScholarText } from "./atoms/text";
 import { VerdantScholarTheme } from "./verdant-scholar-theme";
 
 const meta: Meta = {
@@ -74,6 +78,29 @@ export const Gallery: Story = {
           </div>
           <VerdantScholarProgressBar value={68} />
         </div>
+        <div className="flex flex-wrap gap-2">
+          <VerdantScholarChoiceChip selected>Species</VerdantScholarChoiceChip>
+          <VerdantScholarChoiceChip>Genus</VerdantScholarChoiceChip>
+          <VerdantScholarChoiceChip>Family</VerdantScholarChoiceChip>
+        </div>
+        <VerdantScholarChoiceCard
+          description="Identify the specimen from four distinct options."
+          title="Multiple Choice"
+        />
+        <VerdantScholarCard className="max-w-lg">
+          <VerdantScholarCardContent className="space-y-3 pt-6">
+            <VerdantScholarText tone="primary" variant="eyebrow">
+              Text Styles
+            </VerdantScholarText>
+            <VerdantScholarHeading variant="headline">
+              Editorial hierarchy
+            </VerdantScholarHeading>
+            <VerdantScholarText tone="muted">
+              Shared heading and body atoms keep the Verdant Scholar typography
+              consistent across molecules and organisms.
+            </VerdantScholarText>
+          </VerdantScholarCardContent>
+        </VerdantScholarCard>
       </div>
     </VerdantScholarTheme>
   ),

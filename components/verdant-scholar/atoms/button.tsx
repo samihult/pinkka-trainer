@@ -1,8 +1,8 @@
 /** Verdant Scholar button atoms follow the Stitch editorial CTA treatments. */
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const verdantScholarButtonVariants = cva(
@@ -32,7 +32,6 @@ const verdantScholarButtonVariants = cva(
 
 /**
  * Props for Verdant Scholar buttons.
- * @property asChild Renders the styles onto a child via Radix Slot.
  * @property leadingIcon Optional content shown before the label.
  * @property trailingIcon Optional content shown after the label.
  * @property size Button size.
@@ -40,16 +39,14 @@ const verdantScholarButtonVariants = cva(
  */
 export interface VerdantScholarButtonProps
   extends
-    React.ComponentProps<"button">,
+    Omit<React.ComponentProps<typeof Button>, "size" | "variant">,
     VariantProps<typeof verdantScholarButtonVariants> {
-  asChild?: boolean;
   leadingIcon?: React.ReactNode;
   trailingIcon?: React.ReactNode;
 }
 
 /** Editorial CTA button with gradient, tonal, and ghost treatments. */
 export function VerdantScholarButton({
-  asChild = false,
   children,
   className,
   leadingIcon,
@@ -58,16 +55,14 @@ export function VerdantScholarButton({
   variant,
   ...props
 }: VerdantScholarButtonProps) {
-  const Comp = asChild ? Slot : "button";
-
   return (
-    <Comp
+    <Button
       className={cn(verdantScholarButtonVariants({ className, size, variant }))}
       {...props}
     >
       {leadingIcon}
       {children}
       {trailingIcon}
-    </Comp>
+    </Button>
   );
 }
