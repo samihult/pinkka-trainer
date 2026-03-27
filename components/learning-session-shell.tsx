@@ -20,7 +20,7 @@ export interface LearningSessionShellProps {
   /** Visual theme used for shell-level typography and tokens. */
   theme?: "default" | "verdant-scholar";
   /** Layout variant controlling top header/progress vs bottom console. */
-  layout?: "default" | "desktop-console";
+  layout?: "default" | "desktop-console" | "desktop";
   /** Optional group label shown above the stack name. */
   groupName?: string | null;
   /** Stack name shown as the primary header. */
@@ -81,6 +81,7 @@ export function LearningSessionShell({
 }: LearningSessionShellProps) {
   const isVerdantScholarTheme = theme === "verdant-scholar";
   const usesDesktopConsole = layout === "desktop-console";
+  const usesDesktop = layout === "desktop";
   const hasSegmentedProgress = Boolean(
     progressSegments && progressSegments.length > 0,
   );
@@ -105,7 +106,7 @@ export function LearningSessionShell({
       ) : (
         <div className="absolute inset-0 bg-gradient-to-t from-background to-secondary/20" />
       )}
-      {!usesDesktopConsole ? (
+      {!(usesDesktopConsole || usesDesktop) ? (
         <div className="relative z-10 flex items-start justify-between gap-4 px-4 pt-4 sm:px-6 sm:pt-6">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -131,7 +132,7 @@ export function LearningSessionShell({
         </div>
       ) : null}
 
-      {!usesDesktopConsole ? (
+      {!(usesDesktopConsole || usesDesktop) ? (
         <div className="relative z-10 px-4 pt-4 sm:px-6 sm:pt-4">
           {hasSegmentedProgress ? (
             <SegmentedLearningProgress

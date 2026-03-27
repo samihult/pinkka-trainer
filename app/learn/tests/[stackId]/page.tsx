@@ -1506,6 +1506,8 @@ export default function TestPage() {
         groupName={groupName || t("test.fallback.loadingGroup")}
         stackName={stackName}
         progressValue={0}
+        theme="verdant-scholar"
+        layout="desktop"
         backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
@@ -1522,6 +1524,8 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
+        theme="verdant-scholar"
+        layout="desktop"
         backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
@@ -1545,6 +1549,8 @@ export default function TestPage() {
         groupName={groupName}
         stackName={stackName}
         progressValue={0}
+        theme="verdant-scholar"
+        layout="desktop"
         backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >
@@ -1585,6 +1591,8 @@ export default function TestPage() {
         stackName={stackName}
         progressValue={0}
         progressLabel={t("test.progress.settings")}
+        theme="verdant-scholar"
+        layout="desktop"
         backgroundVariant={sessionBackgroundVariant}
         exitHref={exitHref}
       >

@@ -181,6 +181,8 @@ export default function CardsPage() {
         stackName="Learn"
         progressValue={0}
         exitHref={exitHref}
+        theme="verdant-scholar"
+        layout="desktop"
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <LoadingSpinner />
