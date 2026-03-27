@@ -6,5 +6,5 @@ Dynamic test route for one stack.
   answer name mode (scientific/vernacular/either), and session flow mode (fixed-round/until-correct); genus/family
   prompts read values from Pinkka taxonomy only, skip species that lack required taxonomy data, render multiple-choice
   answers as Verdant Scholar answer rows using the actively tested label only, prefer less-learned species in weighted
-  selection, requeue missed until-correct questions later in the session, and handle scoring + learning-progress writes
-  with legacy fallback reads.
+  selection, requeue missed until-correct questions later in the session, award genus progress when a species answer is
+  correct and genus taxonomy exists, and handle scoring + learning-progress writes with legacy fallback reads.

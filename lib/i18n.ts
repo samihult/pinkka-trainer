@@ -191,7 +191,7 @@ const EN_MESSAGES = {
   "test.settings.mode.writeName": "Write the species name",
   "test.settings.mode.description":
     "Pick a multiple-choice answer or type the name yourself.",
-  "test.settings.sessionMode": "Session goal",
+  "test.settings.sessionMode": "Goal",
   "test.settings.sessionMode.fixedRound": "Fixed-length round",
   "test.settings.sessionMode.fixedRoundDescription":
     "Run through the selected questions once and finish when the round ends.",
@@ -471,7 +471,7 @@ const FI_MESSAGES: TranslationTable = {
   "test.settings.mode.writeName": "Kirjoita lajin nimi",
   "test.settings.mode.description":
     "Valitse oikea vaihtoehto tai kirjoita nimi itse.",
-  "test.settings.sessionMode": "Session tavoite",
+  "test.settings.sessionMode": "Tavoite",
   "test.settings.sessionMode.fixedRound": "Kiinteäpituinen kierros",
   "test.settings.sessionMode.fixedRoundDescription":
     "Käy valitut kysymykset kerran läpi ja päätä testi kierroksen lopussa.",
@@ -744,7 +744,7 @@ const SV_MESSAGES: TranslationTable = {
   "test.settings.mode.writeName": "Skriv artens namn",
   "test.settings.mode.description":
     "Välj ett flervalsalternativ eller skriv namnet själv.",
-  "test.settings.sessionMode": "Sessionsmål",
+  "test.settings.sessionMode": "Målsättning",
   "test.settings.sessionMode.fixedRound": "Runda med fast längd",
   "test.settings.sessionMode.fixedRoundDescription":
     "Gå igenom de valda frågorna en gång och avsluta när rundan är slut.",

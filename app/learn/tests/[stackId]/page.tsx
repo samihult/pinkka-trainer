@@ -700,6 +700,7 @@ export default function TestPage() {
     void recordLearningProgress(
       currentQuestion.species,
       getLearningScoresForChoice(
+        currentQuestion.species,
         testPreferences.answerScope,
         testPreferences.answerNameMode,
         isCorrect,
@@ -1060,6 +1061,11 @@ export default function TestPage() {
       answerNameMode,
     );
     const scopedScore = scoreAnswer(answerText, acceptedAnswers);
+    const genusScientificName = getPrimaryAnswerValue(
+      targetSpecies,
+      "genus",
+      "scientific",
+    );
 
     if (answerScope === "genus") {
       return {
@@ -1085,16 +1091,35 @@ export default function TestPage() {
       responseMs,
       expectedMs,
     };
+    const genusUpdate =
+      scopedScore >= CORRECT_SCORE_THRESHOLD && genusScientificName
+        ? {
+            genus: {
+              accuracyScore: 1,
+              responseMs,
+              expectedMs,
+            } satisfies LearningScoreUpdate,
+          }
+        : {};
     if (answerNameMode === "scientific") {
-      return { species: speciesUpdate, scientific: speciesUpdate };
+      return {
+        species: speciesUpdate,
+        scientific: speciesUpdate,
+        ...genusUpdate,
+      };
     }
     if (answerNameMode === "vernacular") {
-      return { species: speciesUpdate, vernacular: speciesUpdate };
+      return {
+        species: speciesUpdate,
+        vernacular: speciesUpdate,
+        ...genusUpdate,
+      };
     }
-    return { species: speciesUpdate, either: speciesUpdate };
+    return { species: speciesUpdate, either: speciesUpdate, ...genusUpdate };
   };
 
   const getLearningScoresForChoice = (
+    targetSpecies: Species,
     answerScope: TestAnswerScope,
     answerNameMode: TestAnswerNameMode,
     isCorrect: boolean,
@@ -1107,6 +1132,11 @@ export default function TestPage() {
       responseMs,
       expectedMs,
     };
+    const genusScientificName = getPrimaryAnswerValue(
+      targetSpecies,
+      "genus",
+      "scientific",
+    );
 
     if (answerScope === "genus") {
       return { genus: update };
@@ -1116,13 +1146,16 @@ export default function TestPage() {
       return { family: update };
     }
 
+    const genusUpdate =
+      isCorrect && genusScientificName ? { genus: update } : {};
+
     if (answerNameMode === "scientific") {
-      return { species: update, scientific: update };
+      return { species: update, scientific: update, ...genusUpdate };
     }
     if (answerNameMode === "vernacular") {
-      return { species: update, vernacular: update };
+      return { species: update, vernacular: update, ...genusUpdate };
     }
-    return { species: update, either: update };
+    return { species: update, either: update, ...genusUpdate };
   };
 
   const resetActiveQuestionUiState = () => {
