@@ -11,6 +11,7 @@ import { TestCompletedCard } from "@/components/tests/test-completed-card";
 import { LearningStatusCard } from "@/components/tests/learning-status-card";
 import { TestSettingsCard } from "@/components/tests/test-settings-card";
 import { TestSpeciesCard } from "@/components/tests/test-species-card";
+import { VerdantScholarAnswerOption } from "@/components/verdant-scholar";
 import { useAuth } from "@/lib/auth-context";
 import {
   getGroup,
@@ -67,7 +68,6 @@ import {
   LEARNING_STATUS_THRESHOLDS,
 } from "@/lib/learning/learning-thresholds";
 import { buildStackLearningHistogram } from "@/lib/learning/learning-histogram";
-import { CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
 /** Test prompt data for a single question. */
@@ -1721,13 +1721,8 @@ export default function TestPage() {
                           : t("test.multipleChoice.eliminateHalf")}
                       </Button>
                     </div>
-                    <div className="grid h-full min-h-0 auto-rows-fr gap-4 sm:grid-cols-2">
+                    <div className="flex h-full min-h-0 flex-col gap-4">
                       {currentQuestion.options.map((option, optionsIndex) => {
-                        const displayNames = getDisplayNames(
-                          option,
-                          testPreferences.answerScope,
-                          testPreferences.answerNameMode,
-                        );
                         const isSelected = selectedAnswer?.id === option.id;
                         const isCorrect = isCorrectOptionForScope(
                           option,
@@ -1738,56 +1733,37 @@ export default function TestPage() {
                         const showResult = answered;
                         const isEliminated =
                           !showResult && eliminatedOptionIds.has(option.id);
-
-                        let buttonVariant:
-                          | "outline"
-                          | "default"
-                          | "destructive" = "outline";
-                        if (showResult) {
-                          if (isCorrect) {
-                            buttonVariant = "default";
-                          } else if (isSelected && !isCorrect) {
-                            buttonVariant = "destructive";
-                          }
-                        }
+                        const optionLabel =
+                          getPrimaryAnswerValue(
+                            option,
+                            testPreferences.answerScope,
+                            testPreferences.answerNameMode,
+                          ) ?? "";
+                        const optionState =
+                          showResult && isCorrect
+                            ? "correct"
+                            : showResult && isSelected
+                              ? "incorrect"
+                              : "default";
 
                         return (
-                          <Button
+                          <VerdantScholarAnswerOption
                             key={option.id}
-                            onClick={() => handleAnswerSelect(option)}
-                            variant={buttonVariant}
-                            disabled={answered || isEliminated}
-                            className={`h-full text-left justify-start ${
-                              showResult && isCorrect ? "bg-primary" : ""
-                            } ${isEliminated ? "opacity-40" : ""}`}
-                          >
-                            <div className="flex items-center gap-3 w-full">
-                              <p className="mr-2 text-lg font-semibold">
-                                {optionsIndex + 1}
-                              </p>
-                              <div className="flex-1">
-                                <p className="text-lg font-semibold">
-                                  {displayNames.primary}
-                                </p>
-                                {displayNames.secondary && (
-                                  <p className="text-sm opacity-80">
-                                    {displayNames.secondary}
-                                  </p>
-                                )}
-                                {isEliminated && (
-                                  <p className="text-xs uppercase tracking-wide opacity-80">
-                                    {t("test.multipleChoice.eliminated")}
-                                  </p>
-                                )}
-                              </div>
-                              {showResult && isCorrect && (
-                                <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
-                              )}
-                              {showResult && isSelected && !isCorrect && (
-                                <XCircle className="h-5 w-5 flex-shrink-0" />
-                              )}
-                            </div>
-                          </Button>
+                            className={isEliminated ? "opacity-40" : ""}
+                            label={optionLabel}
+                            onSelect={
+                              answered || isEliminated
+                                ? undefined
+                                : () => handleAnswerSelect(option)
+                            }
+                            optionKey={String(optionsIndex + 1)}
+                            state={optionState}
+                            suffix={
+                              isEliminated
+                                ? t("test.multipleChoice.eliminated")
+                                : undefined
+                            }
+                          />
                         );
                       })}
                     </div>
