@@ -5,6 +5,9 @@ export type UserRole = "viewer" | "editor" | "admin";
 /** Test presentation mode. */
 export type TestMode = "multiple-choice" | "write-name";
 
+/** Test session flow mode. */
+export type TestSessionMode = "fixed-round" | "until-correct";
+
 /** @deprecated Legacy accepted-answer setting kept for preference migration. */
 export type LegacyTestAnswerMode = "scientific" | "vernacular" | "either";
 
@@ -144,6 +147,8 @@ export interface TestPreferences {
   questionCount: number;
   /** Test interaction mode. */
   mode: TestMode;
+  /** Session flow mode controlling completion and retries. */
+  sessionMode: TestSessionMode;
   /** Required answer scope for tests. */
   answerScope: TestAnswerScope;
   /** Required answer name variant for tests. */

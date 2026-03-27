@@ -1,9 +1,11 @@
+/** Default and normalized test preferences with backward-compatible migrations. */
 import type {
   LegacyTestAnswerMode,
   TestAnswerNameMode,
   TestAnswerScope,
   TestMode,
   TestPreferences,
+  TestSessionMode,
 } from "../types";
 
 type TestPreferencesInput = Partial<TestPreferences> & {
@@ -15,11 +17,13 @@ type TestPreferencesInput = Partial<TestPreferences> & {
 export const DEFAULT_TEST_PREFERENCES: TestPreferences = {
   questionCount: 10,
   mode: "multiple-choice",
+  sessionMode: "fixed-round",
   answerScope: "species",
   answerNameMode: "either",
 };
 
 const testModes: TestMode[] = ["multiple-choice", "write-name"];
+const testSessionModes: TestSessionMode[] = ["fixed-round", "until-correct"];
 const answerScopes: TestAnswerScope[] = ["species", "genus", "family"];
 const answerNameModes: TestAnswerNameMode[] = [
   "scientific",
@@ -50,6 +54,12 @@ export function normalizeTestPreferences(
       ? requestedMode
       : defaults.mode;
 
+  const requestedSessionMode = input?.sessionMode;
+  const normalizedSessionMode =
+    requestedSessionMode && testSessionModes.includes(requestedSessionMode)
+      ? requestedSessionMode
+      : defaults.sessionMode;
+
   const requestedAnswerScope = input?.answerScope;
   const normalizedAnswerScope =
     requestedAnswerScope && answerScopes.includes(requestedAnswerScope)
@@ -67,6 +77,7 @@ export function normalizeTestPreferences(
   return {
     questionCount: normalizedQuestionCount,
     mode: normalizedMode,
+    sessionMode: normalizedSessionMode,
     answerScope: normalizedAnswerScope,
     answerNameMode: normalizedAnswerNameMode,
   };

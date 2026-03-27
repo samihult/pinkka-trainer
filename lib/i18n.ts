@@ -1,3 +1,4 @@
+/** Client-side translation tables and lookup helpers for supported UI languages. */
 "use client";
 
 import { useCallback, useMemo } from "react";
@@ -190,6 +191,13 @@ const EN_MESSAGES = {
   "test.settings.mode.writeName": "Write the species name",
   "test.settings.mode.description":
     "Pick a multiple-choice answer or type the name yourself.",
+  "test.settings.sessionMode": "Session goal",
+  "test.settings.sessionMode.fixedRound": "Fixed-length round",
+  "test.settings.sessionMode.fixedRoundDescription":
+    "Run through the selected questions once and finish when the round ends.",
+  "test.settings.sessionMode.untilCorrect": "Until correct",
+  "test.settings.sessionMode.untilCorrectDescription":
+    "Keep going until every selected species has been answered correctly once; missed ones return later.",
   "test.settings.answerScope": "Answer scope",
   "test.settings.scope.species": "Species",
   "test.settings.scope.genus": "Genus",
@@ -238,6 +246,7 @@ const EN_MESSAGES = {
   "test.progress.settings": "Test settings",
   "test.progress.completed": "Completed",
   "test.progress.question": "Question {current} of {total}",
+  "test.progress.untilCorrect": "Correct once: {correct} of {total}",
   "test.navigation.nextQuestion": "Next Question",
   "test.navigation.finishTest": "Finish Test",
   "test.validation.needsTwoSpecies":
@@ -259,6 +268,8 @@ const EN_MESSAGES = {
   "test.completed.title": "Test Complete!",
   "test.completed.scoreLine":
     "You got {correctAnswers} out of {totalQuestions} correct",
+  "test.completed.scoreLine.untilCorrect":
+    "You answered all {totalQuestions} selected questions correctly in {attempts} attempts",
   "test.completed.stackStatus": "Stack learning status",
   "test.completed.takeAgain": "Take Test Again",
   "test.completed.studyCards": "Study Cards",
@@ -460,6 +471,13 @@ const FI_MESSAGES: TranslationTable = {
   "test.settings.mode.writeName": "Kirjoita lajin nimi",
   "test.settings.mode.description":
     "Valitse oikea vaihtoehto tai kirjoita nimi itse.",
+  "test.settings.sessionMode": "Session tavoite",
+  "test.settings.sessionMode.fixedRound": "Kiinteäpituinen kierros",
+  "test.settings.sessionMode.fixedRoundDescription":
+    "Käy valitut kysymykset kerran läpi ja päätä testi kierroksen lopussa.",
+  "test.settings.sessionMode.untilCorrect": "Kunnes oikein",
+  "test.settings.sessionMode.untilCorrectDescription":
+    "Jatka, kunnes jokaiseen valittuun lajiin on vastattu kerran oikein; väärät palaavat myöhemmin.",
   "test.settings.answerScope": "Vastauksen taso",
   "test.settings.scope.species": "Laji",
   "test.settings.scope.genus": "Suku",
@@ -509,6 +527,7 @@ const FI_MESSAGES: TranslationTable = {
   "test.progress.settings": "Testin asetukset",
   "test.progress.completed": "Valmis",
   "test.progress.question": "Kysymys {current}/{total}",
+  "test.progress.untilCorrect": "Kerran oikein: {correct}/{total}",
   "test.navigation.nextQuestion": "Seuraava kysymys",
   "test.navigation.finishTest": "Päätä testi",
   "test.validation.needsTwoSpecies":
@@ -529,6 +548,8 @@ const FI_MESSAGES: TranslationTable = {
 
   "test.completed.title": "Testi valmis!",
   "test.completed.scoreLine": "Sait oikein {correctAnswers} / {totalQuestions}",
+  "test.completed.scoreLine.untilCorrect":
+    "Vastasit kaikkiin {totalQuestions} valittuun kysymykseen oikein {attempts} yrityksessä",
   "test.completed.stackStatus": "Pinkan oppimistila",
   "test.completed.takeAgain": "Tee testi uudelleen",
   "test.completed.studyCards": "Opiskele korteilla",
@@ -723,6 +744,13 @@ const SV_MESSAGES: TranslationTable = {
   "test.settings.mode.writeName": "Skriv artens namn",
   "test.settings.mode.description":
     "Välj ett flervalsalternativ eller skriv namnet själv.",
+  "test.settings.sessionMode": "Sessionsmål",
+  "test.settings.sessionMode.fixedRound": "Runda med fast längd",
+  "test.settings.sessionMode.fixedRoundDescription":
+    "Gå igenom de valda frågorna en gång och avsluta när rundan är slut.",
+  "test.settings.sessionMode.untilCorrect": "Tills rätt",
+  "test.settings.sessionMode.untilCorrectDescription":
+    "Fortsätt tills varje vald art har besvarats rätt en gång; felaktiga svar kommer tillbaka senare.",
   "test.settings.answerScope": "Svarsnivå",
   "test.settings.scope.species": "Art",
   "test.settings.scope.genus": "Släkte",
@@ -772,6 +800,7 @@ const SV_MESSAGES: TranslationTable = {
   "test.progress.settings": "Testinställningar",
   "test.progress.completed": "Klart",
   "test.progress.question": "Fråga {current} av {total}",
+  "test.progress.untilCorrect": "Rätt en gång: {correct} av {total}",
   "test.navigation.nextQuestion": "Nästa fråga",
   "test.navigation.finishTest": "Avsluta test",
   "test.validation.needsTwoSpecies":
@@ -793,6 +822,8 @@ const SV_MESSAGES: TranslationTable = {
   "test.completed.title": "Testet är klart!",
   "test.completed.scoreLine":
     "Du fick {correctAnswers} av {totalQuestions} rätt",
+  "test.completed.scoreLine.untilCorrect":
+    "Du svarade rätt på alla {totalQuestions} valda frågor på {attempts} försök",
   "test.completed.stackStatus": "Stackens inlärningsstatus",
   "test.completed.takeAgain": "Gör testet igen",
   "test.completed.studyCards": "Studera kort",

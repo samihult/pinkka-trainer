@@ -1,3 +1,4 @@
+/** Completed-state summary card for stack test sessions. */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,8 @@ import Link from "next/link";
 export interface TestCompletedCardProps {
   /** Final score percentage for the test. */
   percentage: number;
+  /** Optional summary override for session-specific completion copy. */
+  summaryText?: string;
   /** Number of correct answers. */
   correctAnswers: number;
   /** Total number of questions in the test. */
@@ -31,6 +34,7 @@ export interface TestCompletedCardProps {
 /** Renders the completed test summary card and next actions. */
 export function TestCompletedCard({
   percentage,
+  summaryText,
   correctAnswers,
   totalQuestions,
   stackId,
@@ -54,10 +58,11 @@ export function TestCompletedCard({
             {percentage}%
           </div>
           <p className="text-xl text-muted-foreground">
-            {t("test.completed.scoreLine", {
-              correctAnswers,
-              totalQuestions,
-            })}
+            {summaryText ??
+              t("test.completed.scoreLine", {
+                correctAnswers,
+                totalQuestions,
+              })}
           </p>
         </div>
 

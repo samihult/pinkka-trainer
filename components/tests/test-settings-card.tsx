@@ -10,6 +10,7 @@ import {
   Lightbulb,
   ListChecks,
   PenLine,
+  Repeat,
 } from "lucide-react";
 
 import {
@@ -162,6 +163,50 @@ export function TestSettingsCard({
                 }
               />
             </div>
+          </section>
+
+          <section className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Repeat className="size-4 text-[var(--vs-color-primary)]" />
+              <VerdantScholarHeading asChild variant="subheadline">
+                <h2>{t("test.settings.sessionMode")}</h2>
+              </VerdantScholarHeading>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <VerdantScholarChoiceCard
+                onClick={() =>
+                  onPreferencesChange({ sessionMode: "fixed-round" })
+                }
+                selected={testPreferences.sessionMode === "fixed-round"}
+                title={t("test.settings.sessionMode.fixedRound")}
+                trailing={
+                  testPreferences.sessionMode === "fixed-round" ? (
+                    <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />
+                  ) : (
+                    <Circle className="size-4 text-[var(--vs-color-on-surface-variant)]" />
+                  )
+                }
+              />
+              <VerdantScholarChoiceCard
+                onClick={() =>
+                  onPreferencesChange({ sessionMode: "until-correct" })
+                }
+                selected={testPreferences.sessionMode === "until-correct"}
+                title={t("test.settings.sessionMode.untilCorrect")}
+                trailing={
+                  testPreferences.sessionMode === "until-correct" ? (
+                    <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />
+                  ) : (
+                    <Circle className="size-4 text-[var(--vs-color-on-surface-variant)]" />
+                  )
+                }
+              />
+            </div>
+            <VerdantScholarText tone="muted" variant="meta">
+              {testPreferences.sessionMode === "until-correct"
+                ? t("test.settings.sessionMode.untilCorrectDescription")
+                : t("test.settings.sessionMode.fixedRoundDescription")}
+            </VerdantScholarText>
           </section>
 
           <section className="space-y-4">

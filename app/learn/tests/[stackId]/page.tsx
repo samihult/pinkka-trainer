@@ -1,3 +1,4 @@
+/** Stack-scoped test page with adaptive selection, grading, and session flow state. */
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -33,6 +34,7 @@ import type {
   TestAnswerScope,
   TestPreferences,
   TestMode,
+  TestSessionMode,
   Stack,
   Species,
   Group,
@@ -46,8 +48,13 @@ import {
 import {
   DEFAULT_TEST_PREFERENCES,
   normalizeTestPreferences,
+  questionCountOptions,
 } from "@/lib/tests/test-preferences";
 import { scoreAnswer } from "@/lib/tests/scoring";
+import {
+  getDelayedRetryInsertIndex,
+  selectItemsForTest,
+} from "@/lib/tests/test-session";
 import { logFirestoreError } from "@/lib/utils";
 import { useLanguagePreference } from "@/lib/language-context";
 import {
@@ -98,8 +105,6 @@ type SpeciesLearningProgress = Record<
   LearningNameType,
   LearningProgressState | null
 >;
-
-type SpeciesLearningBand = "well" | "middle" | "low";
 
 const CLOSE_SCORE_THRESHOLD = 0.85;
 const CORRECT_SCORE_THRESHOLD = 1.0;
@@ -197,12 +202,21 @@ export default function TestPage() {
     null,
   );
   const [textAnswerRetryUsed, setTextAnswerRetryUsed] = useState(false);
+  const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean | null>(
+    null,
+  );
+  const [sessionQuestionIds, setSessionQuestionIds] = useState<string[]>([]);
+  const [completedQuestionIds, setCompletedQuestionIds] = useState<string[]>(
+    [],
+  );
+  const [attemptCount, setAttemptCount] = useState(0);
   const textAnswerRef = useRef<HTMLInputElement>(null);
   const questionStartRef = useRef<number>(0);
   const progressCacheRef = useRef(new Map<string, LearningProgressState>());
   const pendingProgressRef = useRef(
     new Map<string, Omit<LearningProgress, "id">>(),
   );
+  const sessionFamiliarityRef = useRef(new Map<string, number | null>());
 
   const getQuestionCount = (requested: number, maxQuestions: number) => {
     if (requested === 0) return maxQuestions;
@@ -251,6 +265,10 @@ export default function TestPage() {
       setTextAnswerCorrect(null);
       setTextAnswerFeedback(null);
       setTextAnswerRetryUsed(false);
+      setLastAnswerCorrect(null);
+      setSessionQuestionIds([]);
+      setCompletedQuestionIds([]);
+      setAttemptCount(0);
       setCurrentLearningProgress(null);
       setLearningMetric(null);
       setStackHistogram(null);
@@ -567,146 +585,91 @@ export default function TestPage() {
     );
   };
 
-  const getSpeciesLearningBand = (
-    familiarityScore: number | null,
-  ): SpeciesLearningBand => {
-    if (familiarityScore === null) return "low";
-    if (familiarityScore > LEARNING_STATUS_THRESHOLDS.strengtheningMax) {
-      return "well";
-    }
-    if (familiarityScore >= LEARNING_STATUS_THRESHOLDS.learningMax) {
-      return "middle";
-    }
-    return "low";
-  };
-
-  const selectSpeciesForTest = (
+  const buildQuestion = (
+    correctSpecies: Species,
     allSpecies: Species[],
-    questionCount: number,
     familiarityBySpeciesId: Map<string, number | null>,
-  ): Species[] => {
-    const total = Math.min(questionCount, allSpecies.length);
-    if (total <= 0) return [];
+    answerScope: TestAnswerScope,
+    answerNameMode: TestAnswerNameMode,
+    mode: TestMode,
+  ): TestQuestion | null => {
+    const shuffledCandidates = shuffleSpecies(
+      allSpecies.filter((item) => item.id !== correctSpecies.id),
+    );
+    const correctAnswerSet = getNormalizedAnswerSet(
+      correctSpecies,
+      answerScope,
+      answerNameMode,
+    );
 
-    const byBand: Record<SpeciesLearningBand, Species[]> = {
-      well: [],
-      middle: [],
-      low: [],
+    if (mode === "multiple-choice") {
+      const distinctDistractors = new Map<string, Species>();
+      shuffledCandidates.forEach((candidate) => {
+        const candidateAnswerSet = getNormalizedAnswerSet(
+          candidate,
+          answerScope,
+          answerNameMode,
+        );
+        if (
+          candidateAnswerSet.size === 0 ||
+          doAnswerSetsOverlap(candidateAnswerSet, correctAnswerSet)
+        ) {
+          return;
+        }
+        const candidatePrimary = normalizeAnswerValue(
+          getPrimaryAnswerValue(candidate, answerScope, answerNameMode),
+        );
+        if (!candidatePrimary || distinctDistractors.has(candidatePrimary)) {
+          return;
+        }
+        distinctDistractors.set(candidatePrimary, candidate);
+      });
+
+      const wrongOptions = [...distinctDistractors.values()].slice(0, 3);
+      if (wrongOptions.length < 3) {
+        return null;
+      }
+
+      return {
+        species: correctSpecies,
+        options: [...wrongOptions, correctSpecies].sort(
+          () => Math.random() - 0.5,
+        ),
+        correctAnswer: correctSpecies,
+        imageUrl: pickTestImageUrl(correctSpecies),
+        familiarityScore: familiarityBySpeciesId.get(correctSpecies.id) ?? null,
+      };
+    }
+
+    return {
+      species: correctSpecies,
+      options: [correctSpecies],
+      correctAnswer: correctSpecies,
+      imageUrl: pickTestImageUrl(correctSpecies),
+      familiarityScore: familiarityBySpeciesId.get(correctSpecies.id) ?? null,
     };
-
-    allSpecies.forEach((speciesItem) => {
-      const familiarity = familiarityBySpeciesId.get(speciesItem.id) ?? null;
-      byBand[getSpeciesLearningBand(familiarity)].push(speciesItem);
-    });
-
-    // Intentionally bias selection from well-learned -> middle -> low bands.
-    const targetWell = Math.max(1, Math.floor(total * 0.2));
-    const targetMiddle = Math.max(1, Math.floor(total * 0.3));
-    const selectedWell = shuffleSpecies(byBand.well).slice(0, targetWell);
-    const selectedMiddle = shuffleSpecies(byBand.middle).slice(0, targetMiddle);
-    const remainingAfterPrimary = Math.max(
-      0,
-      total - selectedWell.length - selectedMiddle.length,
-    );
-    const selectedLow = shuffleSpecies(byBand.low).slice(
-      0,
-      remainingAfterPrimary,
-    );
-
-    const selectedById = new Set(
-      [...selectedWell, ...selectedMiddle, ...selectedLow].map(
-        (item) => item.id,
-      ),
-    );
-    const fallbackPool = [
-      ...shuffleSpecies(byBand.middle),
-      ...shuffleSpecies(byBand.low),
-      ...shuffleSpecies(byBand.well),
-    ].filter((item) => !selectedById.has(item.id));
-    const remainingSlots =
-      total - selectedWell.length - selectedMiddle.length - selectedLow.length;
-    const fallback = fallbackPool.slice(0, Math.max(0, remainingSlots));
-
-    return [...selectedWell, ...selectedMiddle, ...selectedLow, ...fallback];
   };
 
   const generateQuestions = (
+    selectedSpecies: Species[],
     allSpecies: Species[],
-    questionCount: number,
     familiarityBySpeciesId: Map<string, number | null>,
     answerScope: TestAnswerScope,
     answerNameMode: TestAnswerNameMode,
     mode: TestMode,
   ): TestQuestion[] => {
-    const testQuestions: TestQuestion[] = [];
-    const selectedSpecies = selectSpeciesForTest(
-      allSpecies,
-      questionCount,
-      familiarityBySpeciesId,
-    );
-
-    selectedSpecies.forEach((correctSpecies) => {
-      const shuffledCandidates = shuffleSpecies(
-        allSpecies.filter((item) => item.id !== correctSpecies.id),
-      );
-      const correctAnswerSet = getNormalizedAnswerSet(
-        correctSpecies,
-        answerScope,
-        answerNameMode,
-      );
-
-      if (mode === "multiple-choice") {
-        const distinctDistractors = new Map<string, Species>();
-        shuffledCandidates.forEach((candidate) => {
-          const candidateAnswerSet = getNormalizedAnswerSet(
-            candidate,
-            answerScope,
-            answerNameMode,
-          );
-          if (
-            candidateAnswerSet.size === 0 ||
-            doAnswerSetsOverlap(candidateAnswerSet, correctAnswerSet)
-          ) {
-            return;
-          }
-          const candidatePrimary = normalizeAnswerValue(
-            getPrimaryAnswerValue(candidate, answerScope, answerNameMode),
-          );
-          if (!candidatePrimary || distinctDistractors.has(candidatePrimary)) {
-            return;
-          }
-          distinctDistractors.set(candidatePrimary, candidate);
-        });
-
-        const wrongOptions = [...distinctDistractors.values()].slice(0, 3);
-        if (wrongOptions.length < 3) {
-          return;
-        }
-
-        const options = [...wrongOptions, correctSpecies].sort(
-          () => Math.random() - 0.5,
-        );
-        testQuestions.push({
-          species: correctSpecies,
-          options,
-          correctAnswer: correctSpecies,
-          imageUrl: pickTestImageUrl(correctSpecies),
-          familiarityScore:
-            familiarityBySpeciesId.get(correctSpecies.id) ?? null,
-        });
-        return;
-      }
-
-      testQuestions.push({
-        species: correctSpecies,
-        options: [correctSpecies],
-        correctAnswer: correctSpecies,
-        imageUrl: pickTestImageUrl(correctSpecies),
-        familiarityScore: familiarityBySpeciesId.get(correctSpecies.id) ?? null,
-      });
-    });
-
-    return testQuestions;
+    return selectedSpecies
+      .map((correctSpecies) =>
+        buildQuestion(
+          correctSpecies,
+          allSpecies,
+          familiarityBySpeciesId,
+          answerScope,
+          answerNameMode,
+          mode,
+        ),
+      )
+      .filter((question): question is TestQuestion => question !== null);
   };
 
   const handleAnswerSelect = (answer: Species) => {
@@ -723,7 +686,14 @@ export default function TestPage() {
       testPreferences.answerScope,
       testPreferences.answerNameMode,
     );
+    setLastAnswerCorrect(isCorrect);
+    setAttemptCount((previous) => previous + 1);
     if (isCorrect) {
+      setCompletedQuestionIds((previous) =>
+        previous.includes(currentQuestion.species.id)
+          ? previous
+          : [...previous, currentQuestion.species.id],
+      );
       setCorrectAnswers((previous) => previous + 1);
     }
 
@@ -1163,6 +1133,7 @@ export default function TestPage() {
     setTextAnswerCorrect(null);
     setTextAnswerFeedback(null);
     setTextAnswerRetryUsed(false);
+    setLastAnswerCorrect(null);
     setLearningMetric(null);
     setCurrentLearningProgress(null);
   };
@@ -1192,6 +1163,13 @@ export default function TestPage() {
       setAnswered(true);
       setTextAnswerCorrect(true);
       setTextAnswerFeedback(null);
+      setLastAnswerCorrect(true);
+      setAttemptCount((previous) => previous + 1);
+      setCompletedQuestionIds((previous) =>
+        previous.includes(currentQuestion.species.id)
+          ? previous
+          : [...previous, currentQuestion.species.id],
+      );
       setCorrectAnswers((previous) => previous + 1);
       void recordLearningProgress(currentQuestion.species, learningScores);
       return;
@@ -1209,17 +1187,79 @@ export default function TestPage() {
     setAnswered(true);
     setTextAnswerCorrect(false);
     setTextAnswerFeedback(null);
+    setLastAnswerCorrect(false);
+    setAttemptCount((previous) => previous + 1);
     void recordLearningProgress(currentQuestion.species, learningScores);
   };
 
   const handleNext = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      resetActiveQuestionUiState();
-    } else {
+    if (!currentQuestion || !testPreferences) return;
+
+    const isUntilCorrectMode = testPreferences.sessionMode === "until-correct";
+    const totalSessionQuestions = sessionQuestionIds.length;
+    const completedQuestionCount = completedQuestionIds.length;
+    const completedOnThisQuestion =
+      isUntilCorrectMode &&
+      lastAnswerCorrect === true &&
+      completedQuestionCount >= totalSessionQuestions;
+
+    if (completedOnThisQuestion) {
       setTestComplete(true);
       void updateStackHistogram();
+      return;
     }
+
+    let nextQuestionCount = questions.length;
+
+    if (isUntilCorrectMode && lastAnswerCorrect === true) {
+      nextQuestionCount =
+        currentQuestionIndex +
+        1 +
+        questions
+          .slice(currentQuestionIndex + 1)
+          .filter(
+            (question) => question.species.id !== currentQuestion.species.id,
+          ).length;
+      setQuestions((previous) =>
+        previous.filter(
+          (question, index) =>
+            index <= currentQuestionIndex ||
+            question.species.id !== currentQuestion.species.id,
+        ),
+      );
+    }
+
+    if (isUntilCorrectMode && lastAnswerCorrect === false) {
+      const repeatedQuestion =
+        buildQuestion(
+          currentQuestion.species,
+          questionEligibleSpecies,
+          sessionFamiliarityRef.current,
+          testPreferences.answerScope,
+          testPreferences.answerNameMode,
+          testPreferences.mode,
+        ) ?? currentQuestion;
+
+      nextQuestionCount += 1;
+      setQuestions((previous) => {
+        const next = [...previous];
+        next.splice(
+          getDelayedRetryInsertIndex(currentQuestionIndex, previous.length),
+          0,
+          repeatedQuestion,
+        );
+        return next;
+      });
+    }
+
+    if (currentQuestionIndex < nextQuestionCount - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      resetActiveQuestionUiState();
+      return;
+    }
+
+    setTestComplete(true);
+    void updateStackHistogram();
   };
 
   const handleRestart = () => {
@@ -1303,9 +1343,17 @@ export default function TestPage() {
       });
     }
 
-    const generatedQuestions = generateQuestions(
+    sessionFamiliarityRef.current = familiarityBySpeciesId;
+
+    const selectedSpecies = selectItemsForTest(
       questionEligibleSpecies,
       clampedCount,
+      familiarityBySpeciesId,
+    );
+
+    const generatedQuestions = generateQuestions(
+      selectedSpecies,
+      questionEligibleSpecies,
       familiarityBySpeciesId,
       testPreferences.answerScope,
       testPreferences.answerNameMode,
@@ -1317,10 +1365,15 @@ export default function TestPage() {
     }
 
     setQuestions(generatedQuestions);
+    setSessionQuestionIds(
+      generatedQuestions.map((question) => question.species.id),
+    );
+    setCompletedQuestionIds([]);
     setCurrentQuestionIndex(0);
     resetActiveQuestionUiState();
     setCorrectAnswers(0);
     setTestComplete(false);
+    setAttemptCount(0);
     setShowSettings(false);
     questionStartRef.current = Date.now();
   };
@@ -1463,6 +1516,14 @@ export default function TestPage() {
     : "";
   const exitGroupId = group?.id ?? requestedGroupId;
   const exitHref = exitGroupId ? `/groups/${exitGroupId}` : "/";
+  const sessionMode: TestSessionMode =
+    testPreferences?.sessionMode ?? DEFAULT_TEST_PREFERENCES.sessionMode;
+  const totalSessionQuestions =
+    sessionQuestionIds.length > 0
+      ? sessionQuestionIds.length
+      : questions.length;
+  const shouldShowUntilCorrectProgress =
+    sessionMode === "until-correct" && totalSessionQuestions > 0;
   const sessionBackgroundVariant = undefined;
 
   const getScopeLabel = (scope: TestAnswerScope): string => {
@@ -1563,8 +1624,7 @@ export default function TestPage() {
 
   if (showSettings) {
     const maxQuestions = questionEligibleSpecies.length;
-    const questionOptions = [10, 25, 50, 0];
-    const selectedQuestionCount = questionOptions.includes(
+    const selectedQuestionCount = questionCountOptions.includes(
       testPreferences.questionCount,
     )
       ? testPreferences.questionCount
@@ -1599,7 +1659,7 @@ export default function TestPage() {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-full max-w-3xl">
             <TestSettingsCard
-              questionOptions={questionOptions}
+              questionOptions={questionCountOptions}
               speciesCount={questionEligibleSpecies.length}
               totalSpeciesCount={species.length}
               testPreferences={testPreferences}
@@ -1634,14 +1694,33 @@ export default function TestPage() {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  const progress = shouldShowUntilCorrectProgress
+    ? (correctAnswers / totalSessionQuestions) * 100
+    : ((currentQuestionIndex + 1) / questions.length) * 100;
+  const progressLabel = shouldShowUntilCorrectProgress
+    ? t("test.progress.untilCorrect", {
+        correct: correctAnswers,
+        total: totalSessionQuestions,
+      })
+    : t("test.progress.question", {
+        current: currentQuestionIndex + 1,
+        total: questions.length,
+      });
   const currentDisplayNames = getDisplayNames(
     currentQuestion.species,
     testPreferences.answerScope,
     testPreferences.answerNameMode,
   );
   if (testComplete) {
-    const percentage = Math.round((correctAnswers / questions.length) * 100);
+    const percentage = shouldShowUntilCorrectProgress
+      ? 100
+      : Math.round((correctAnswers / questions.length) * 100);
+    const completionSummary = shouldShowUntilCorrectProgress
+      ? t("test.completed.scoreLine.untilCorrect", {
+          totalQuestions: totalSessionQuestions,
+          attempts: attemptCount,
+        })
+      : undefined;
 
     return (
       <LearningSessionShell
@@ -1656,8 +1735,9 @@ export default function TestPage() {
           <div className="w-full max-w-3xl">
             <TestCompletedCard
               percentage={percentage}
+              summaryText={completionSummary}
               correctAnswers={correctAnswers}
-              totalQuestions={questions.length}
+              totalQuestions={totalSessionQuestions}
               stackId={stackId}
               studyHref={
                 exitGroupId
@@ -1679,10 +1759,7 @@ export default function TestPage() {
       groupName={groupName}
       stackName={stackName}
       progressValue={progress}
-      progressLabel={t("test.progress.question", {
-        current: currentQuestionIndex + 1,
-        total: questions.length,
-      })}
+      progressLabel={progressLabel}
       backgroundVariant={sessionBackgroundVariant}
       exitHref={exitHref}
     >
@@ -1846,9 +1923,14 @@ export default function TestPage() {
         {answered && (
           <div className="absolute inset-x-0 bottom-0 flex justify-center">
             <Button onClick={handleNext} size="lg">
-              {currentQuestionIndex < questions.length - 1
-                ? t("test.navigation.nextQuestion")
-                : t("test.navigation.finishTest")}
+              {shouldShowUntilCorrectProgress
+                ? lastAnswerCorrect === true &&
+                  correctAnswers >= totalSessionQuestions
+                  ? t("test.navigation.finishTest")
+                  : t("test.navigation.nextQuestion")
+                : currentQuestionIndex < questions.length - 1
+                  ? t("test.navigation.nextQuestion")
+                  : t("test.navigation.finishTest")}
             </Button>
           </div>
         )}
