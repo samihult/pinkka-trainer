@@ -34,7 +34,7 @@ import {
   getStacks,
   createGroup,
   createStack,
-  createEditableGroupFromImportedPinkka,
+  importPinkkaGroup,
   isPinkkaImportInterruptedError,
   refreshEditableGroupFromPinkka,
   refreshEditableStackFromPinkka,
@@ -362,17 +362,12 @@ export default function ManagePage() {
     }
 
     try {
-      const creationResult = await createEditableGroupFromImportedPinkka({
-        sourceGroup,
-        ownerId: user.uid,
-        order: groups.length,
-        includeImages: true,
-      });
+      await importPinkkaGroup(sourceGroup.groupId, user.uid);
 
       setShowPinkkaGroupSelector(false);
       toast({
         title: "Success",
-        description: `Group created from Pinkka import (${creationResult.createdStackCount} stacks, ${creationResult.createdSpeciesCount} species)`,
+        description: "Group imported from Pinkka",
       });
       void loadData();
     } catch (error) {

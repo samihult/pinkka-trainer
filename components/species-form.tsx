@@ -19,7 +19,7 @@ import type {
   SpeciesIdentificationHint,
   SpeciesImage,
 } from "@/lib/types";
-import { uploadSpeciesImage } from "@/lib/firebase/firestore-helpers";
+import { uploadLearningItemImage } from "@/lib/firebase/firestore-helpers";
 import { useToast } from "@/hooks/use-toast";
 import {
   getLocalizedText,
@@ -184,7 +184,7 @@ export function SpeciesForm({
       // For new species, we'll upload after creation
       // For existing species, upload immediately
       if (species?.id) {
-        const newImage = await uploadSpeciesImage(
+        const newImage = await uploadLearningItemImage(
           species.id,
           file,
           images.length,

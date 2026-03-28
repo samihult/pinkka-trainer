@@ -1,70 +1,66 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import { ProtectedRoute } from "@/components/protected-route";
-import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { SpeciesForm } from "@/components/species-form";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth-context";
-import { logFirestoreError } from "@/lib/utils";
 import {
   createLearningItem,
   getLearningItemById,
-  getStack,
   updateLearningItem,
 } from "@/lib/firebase/firestore-helpers";
 import { useI18n } from "@/lib/i18n";
-import type { Species, Stack } from "@/lib/types";
+import type { Species } from "@/lib/types";
+import { logFirestoreError } from "@/lib/utils";
 
-/** Manage a single species within a stack. */
-export default function ManageSpeciesDetailPage() {
+/** Create or edit canonical learning items outside stack-specific linking views. */
+export default function ManageCanonicalSpeciesDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const stackId = decodeURIComponent(params.stackId as string);
-  const speciesId = decodeURIComponent(params.speciesId as string);
   const { user } = useAuth();
   const { toast } = useToast();
   const { t } = useI18n();
+  const speciesId = decodeURIComponent(params.speciesId as string);
+  const isNew = speciesId === "new";
 
-  const [stack, setStack] = useState<Stack | null>(null);
   const [species, setSpecies] = useState<Species | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const isNew = speciesId === "new";
-
   useEffect(() => {
-    void loadData();
-  }, [stackId, speciesId]);
+    const loadData = async () => {
+      if (!user) {
+        return;
+      }
+      try {
+        setSpecies(isNew ? null : await getLearningItemById(speciesId));
+      } catch (error) {
+        logFirestoreError("Failed to load canonical learning item", error);
+        toast({
+          title: t("auth.errorTitle"),
+          description: t("manage.speciesInventory.toast.loadError"),
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const loadData = async () => {
-    try {
-      const [stackData, speciesData] = await Promise.all([
-        getStack(stackId, { includeHidden: true }),
-        isNew ? Promise.resolve(null) : getLearningItemById(speciesId),
-      ]);
-      setStack(stackData);
-      setSpecies(speciesData);
-    } catch (error) {
-      logFirestoreError("Failed to load species", error);
-      toast({
-        title: t("auth.errorTitle"),
-        description: t("manage.stackSpecies.toast.loadError"),
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    void loadData();
+  }, [isNew, speciesId, t, toast, user]);
 
   const handleSubmit = async (payload: {
     data: Species["data"];
     testImageIds: string[];
   }) => {
-    if (!user) return;
+    if (!user) {
+      return;
+    }
 
     try {
       if (isNew) {
@@ -74,13 +70,15 @@ export default function ManageSpeciesDetailPage() {
             testImageIds: payload.testImageIds,
             ownerId: user.uid,
           },
-          [stackId],
+          [],
         );
         toast({
-          title: t("manage.stackSpecies.toast.createSuccessTitle"),
-          description: t("manage.stackSpecies.toast.createSuccessDescription"),
+          title: t("manage.speciesInventory.toast.createSuccessTitle"),
+          description: t(
+            "manage.speciesInventory.toast.createSuccessDescription",
+          ),
         });
-        router.push(`/manage/content/${stackId}/species`);
+        router.push("/manage/species");
         return;
       }
 
@@ -89,12 +87,14 @@ export default function ManageSpeciesDetailPage() {
         testImageIds: payload.testImageIds,
       });
       toast({
-        title: t("manage.stackSpecies.toast.updateSuccessTitle"),
-        description: t("manage.stackSpecies.toast.updateSuccessDescription"),
+        title: t("manage.speciesInventory.toast.updateSuccessTitle"),
+        description: t(
+          "manage.speciesInventory.toast.updateSuccessDescription",
+        ),
       });
-      void loadData();
+      router.push("/manage/species");
     } catch (error) {
-      logFirestoreError("Failed to save species", error);
+      logFirestoreError("Failed to save canonical learning item", error);
       throw error;
     }
   };
@@ -109,20 +109,20 @@ export default function ManageSpeciesDetailPage() {
     );
   }
 
-  if (!stack || (!isNew && !species)) {
+  if (!isNew && !species) {
     return (
       <ProtectedRoute requiredRole="editor">
         <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
           <main className="container mx-auto px-4 py-8">
             <Button variant="ghost" asChild className="mb-4">
-              <Link href={`/manage/content/${stackId}/species`}>
+              <Link href="/manage/species">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                {t("manage.stackSpecies.backToStack")}
+                {t("manage.speciesInventory.backToSpecies")}
               </Link>
             </Button>
             <div className="rounded-lg border border-border bg-background p-6">
               <p className="text-muted-foreground">
-                {t("manage.stackSpecies.notFound")}
+                {t("manage.speciesInventory.notFound")}
               </p>
             </div>
           </main>
@@ -135,11 +135,17 @@ export default function ManageSpeciesDetailPage() {
     <ProtectedRoute requiredRole="editor">
       <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
         <main className="container mx-auto px-4 py-8">
+          <Button variant="ghost" asChild className="mb-4">
+            <Link href="/manage/species">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {t("manage.speciesInventory.backToSpecies")}
+            </Link>
+          </Button>
           <SpeciesForm
-            species={species || undefined}
-            stackId={stackId}
+            species={species ?? undefined}
+            stackId=""
             onSubmit={handleSubmit}
-            onCancel={() => router.push(`/manage/content/${stackId}/species`)}
+            onCancel={() => router.push("/manage/species")}
           />
         </main>
       </div>

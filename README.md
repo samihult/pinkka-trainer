@@ -14,7 +14,7 @@ interactive cards and tests.
 
 ### For Educators (Editor Role)
 
-- Create and organize custom species collections
+- Create and organize custom learning-item collections
 - Upload multiple images per species with reordering
 - Organize species into stacks (pinkka in Finnish)
 - Group stacks into categories

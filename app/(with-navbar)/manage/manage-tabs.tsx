@@ -4,9 +4,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/dist/client/components/navigation";
 import { ButtonConnector } from "@/components/ui/button-connector";
+import { useI18n } from "@/lib/i18n";
 
 export default function ManageTabs() {
   const path = usePathname();
+  const { t } = useI18n();
 
   const contentMatch = path.match(
     new RegExp("^/manage/content(/([^/]+)/species(/([^/]+))?)?"),
@@ -14,6 +16,8 @@ export default function ManageTabs() {
   const stackId = contentMatch?.[2];
   const speciesId = contentMatch?.[4];
 
+  const speciesMatch = path.match(new RegExp("^/manage/species(/([^/]+))?"));
+  const topLevelSpeciesId = speciesMatch?.[2];
   const pinkkaMatch = path.match(new RegExp("/manage/pinkka"));
 
   return (
@@ -21,9 +25,28 @@ export default function ManageTabs() {
       <Button
         asChild
         size="sm"
-        variant={contentMatch && !stackId ? "default" : "secondary"}
+        variant={speciesMatch && !topLevelSpeciesId ? "default" : "secondary"}
       >
-        <Link href="/manage/content">Groups</Link>
+        <Link href="/manage/species">{t("manage.tabs.species")}</Link>
+      </Button>
+      {topLevelSpeciesId && (
+        <>
+          <ButtonConnector />
+          <Button asChild size="sm" variant="default">
+            <Link href={`/manage/species/${topLevelSpeciesId}`}>
+              {t("manage.tabs.speciesDetail")}
+            </Link>
+          </Button>
+        </>
+      )}
+
+      <Button
+        asChild
+        size="sm"
+        variant={contentMatch && !stackId ? "default" : "secondary"}
+        className="ml-3"
+      >
+        <Link href="/manage/content">{t("manage.tabs.groups")}</Link>
       </Button>
       {stackId && (
         <>
@@ -33,7 +56,9 @@ export default function ManageTabs() {
             size="sm"
             variant={stackId && !speciesId ? "default" : "secondary"}
           >
-            <Link href={`/manage/content/${stackId}/species`}>Stack</Link>
+            <Link href={`/manage/content/${stackId}/species`}>
+              {t("manage.tabs.stack")}
+            </Link>
           </Button>
 
           {speciesId && (
@@ -41,7 +66,7 @@ export default function ManageTabs() {
               <ButtonConnector />
               <Button asChild size="sm" variant="default">
                 <Link href={`/manage/content/${stackId}/species/${speciesId}`}>
-                  Species
+                  {t("manage.tabs.speciesDetail")}
                 </Link>
               </Button>
             </>
@@ -55,7 +80,7 @@ export default function ManageTabs() {
         variant={pinkkaMatch ? "default" : "secondary"}
         className="ml-3"
       >
-        <Link href="/manage/pinkka">Pinkka</Link>
+        <Link href="/manage/pinkka">{t("manage.tabs.pinkka")}</Link>
       </Button>
     </nav>
   );

@@ -6,7 +6,7 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import {
   getGroupScientificProgressSummaries,
   getGroups,
-  getSpecies,
+  getLearningItems,
   getStacks,
   getUserHomePreferences,
   updateUserHomePreferences,
@@ -123,7 +123,7 @@ export function HomePageClient() {
           }),
           Promise.allSettled(
             stacksMissingSpeciesCounts.map(async (stack) => {
-              const species = await getSpecies(stack.id);
+              const species = await getLearningItems(stack.id);
               return [stack.id, species.length] as const;
             }),
           ),

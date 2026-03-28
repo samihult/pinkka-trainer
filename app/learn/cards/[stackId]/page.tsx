@@ -11,8 +11,8 @@ import { VerdantScholarPopupMenu } from "@/components/verdant-scholar/molecules/
 import {
   getGroup,
   getGroups,
+  getLearningItems,
   getStack,
-  getSpecies,
 } from "@/lib/firebase/firestore-helpers";
 import { useAuth } from "@/lib/auth-context";
 import type { Group, Stack, Species } from "@/lib/types";
@@ -62,7 +62,7 @@ export default function CardsPage() {
     try {
       const stackData = await getStack(stackId);
       const [speciesData, directGroupData, allGroups] = await Promise.all([
-        getSpecies(stackId),
+        getLearningItems(stackId),
         stackData?.parentGroupId
           ? getGroup(stackData.parentGroupId)
           : Promise.resolve(null),

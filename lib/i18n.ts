@@ -178,6 +178,84 @@ const EN_MESSAGES = {
     "Select one species image for this hint.",
   "manage.speciesHintDialog.imageDialog.gridAria": "Species image selector",
   "manage.speciesHintDialog.imageDialog.action.select": "Select Image",
+  "manage.tabs.species": "Species",
+  "manage.tabs.groups": "Groups",
+  "manage.tabs.stack": "Stack",
+  "manage.tabs.pinkka": "Pinkka",
+  "manage.tabs.speciesDetail": "Species",
+  "manage.speciesInventory.title": "Species",
+  "manage.speciesInventory.description":
+    "Manage the canonical learning-item library organized by taxonomy. Groups and stacks link to these shared species entries.",
+  "manage.speciesInventory.addSpecies": "Add Species",
+  "manage.speciesInventory.empty": "No species available yet.",
+  "manage.speciesInventory.noVernacularName": "No vernacular name",
+  "manage.speciesInventory.hidden": "Hidden",
+  "manage.speciesInventory.visible": "Visible",
+  "manage.speciesInventory.unclassifiedFamily": "Unclassified family",
+  "manage.speciesInventory.unclassifiedGenus": "Unclassified genus",
+  "manage.speciesInventory.backToSpecies": "Back to species",
+  "manage.speciesInventory.notFound": "Species not found.",
+  "manage.speciesInventory.toast.loadError": "Failed to load species.",
+  "manage.speciesInventory.toast.createSuccessTitle": "Success",
+  "manage.speciesInventory.toast.createSuccessDescription":
+    "Species created successfully.",
+  "manage.speciesInventory.toast.updateSuccessTitle": "Success",
+  "manage.speciesInventory.toast.updateSuccessDescription":
+    "Species updated successfully.",
+  "manage.stackSpecies.title": "Manage Species",
+  "manage.stackSpecies.description":
+    "Link, order, and edit the species used in this stack.",
+  "manage.stackSpecies.view.minimal": "Minimal",
+  "manage.stackSpecies.view.detailed": "Detailed",
+  "manage.stackSpecies.sort": "Sort A-Z",
+  "manage.stackSpecies.linkExisting": "Link Existing Species",
+  "manage.stackSpecies.addSpecies": "Add Species",
+  "manage.stackSpecies.addFirstSpecies": "Add First Species",
+  "manage.stackSpecies.empty": "No species linked to this stack yet.",
+  "manage.stackSpecies.backToStack": "Back to the stack",
+  "manage.stackSpecies.notFound": "Species not found for this stack.",
+  "manage.stackSpecies.confirm.unlink":
+    "Are you sure you want to unlink this species from the stack?",
+  "manage.stackSpecies.linkDialog.title": "Link Existing Species",
+  "manage.stackSpecies.linkDialog.description":
+    "Choose a canonical learning-item entry to link into this stack.",
+  "manage.stackSpecies.linkDialog.confirm": "Link Species",
+  "manage.stackSpecies.linkDialog.cancel": "Cancel",
+  "manage.stackSpecies.linkDialog.empty":
+    "No additional species available to link.",
+  "manage.stackSpecies.linkDialog.listAria": "Available species to link",
+  "manage.stackSpecies.toast.loadError": "Failed to load stack species.",
+  "manage.stackSpecies.toast.keepOneTestImage":
+    "At least one image must remain enabled for tests.",
+  "manage.stackSpecies.toast.testImagesError": "Failed to update test images.",
+  "manage.stackSpecies.toast.unlinkSuccessTitle": "Success",
+  "manage.stackSpecies.toast.unlinkSuccessDescription":
+    "Species unlinked from the stack.",
+  "manage.stackSpecies.toast.unlinkError":
+    "Failed to unlink species from the stack.",
+  "manage.stackSpecies.toast.visibilitySuccessTitle": "Success",
+  "manage.stackSpecies.toast.visibilityHidden": "Species hidden from learners.",
+  "manage.stackSpecies.toast.visibilityVisible":
+    "Species is now visible to learners.",
+  "manage.stackSpecies.toast.visibilityError":
+    "Failed to update species visibility.",
+  "manage.stackSpecies.toast.reorderSuccessTitle": "Success",
+  "manage.stackSpecies.toast.reorderSuccessDescription":
+    "Species reordered successfully.",
+  "manage.stackSpecies.toast.sortSuccessTitle": "Success",
+  "manage.stackSpecies.toast.sortSuccessDescription":
+    "Species sorted alphabetically.",
+  "manage.stackSpecies.toast.sortError": "Failed to sort species.",
+  "manage.stackSpecies.toast.linkSuccessTitle": "Success",
+  "manage.stackSpecies.toast.linkSuccessDescription":
+    "Species linked to the stack.",
+  "manage.stackSpecies.toast.linkError": "Failed to link species to the stack.",
+  "manage.stackSpecies.toast.createSuccessTitle": "Success",
+  "manage.stackSpecies.toast.createSuccessDescription":
+    "Species created successfully.",
+  "manage.stackSpecies.toast.updateSuccessTitle": "Success",
+  "manage.stackSpecies.toast.updateSuccessDescription":
+    "Species updated successfully.",
 
   "test.settings.title": "Test Your Knowledge",
   "test.settings.description": "Customize how this test will run.",
@@ -458,6 +536,86 @@ const FI_MESSAGES: TranslationTable = {
     "Valitse yksi lajikuva tälle vihjeelle.",
   "manage.speciesHintDialog.imageDialog.gridAria": "Lajikuvavalitsin",
   "manage.speciesHintDialog.imageDialog.action.select": "Valitse kuva",
+  "manage.tabs.species": "Lajit",
+  "manage.tabs.groups": "Ryhmät",
+  "manage.tabs.stack": "Pino",
+  "manage.tabs.pinkka": "Pinkka",
+  "manage.tabs.speciesDetail": "Laji",
+  "manage.speciesInventory.title": "Lajit",
+  "manage.speciesInventory.description":
+    "Hallitse taksonomisesti järjestettyä lajikirjastoa. Ryhmät ja pinot linkittävät näihin yhteisiin lajitietoihin.",
+  "manage.speciesInventory.addSpecies": "Lisää laji",
+  "manage.speciesInventory.empty": "Lajeja ei ole vielä saatavilla.",
+  "manage.speciesInventory.noVernacularName": "Ei kansankielistä nimeä",
+  "manage.speciesInventory.hidden": "Piilotettu",
+  "manage.speciesInventory.visible": "Näkyvissä",
+  "manage.speciesInventory.unclassifiedFamily": "Luokittelematon heimo",
+  "manage.speciesInventory.unclassifiedGenus": "Luokittelematon suku",
+  "manage.speciesInventory.backToSpecies": "Takaisin lajeihin",
+  "manage.speciesInventory.notFound": "Lajia ei löytynyt.",
+  "manage.speciesInventory.toast.loadError": "Lajien lataus epäonnistui.",
+  "manage.speciesInventory.toast.createSuccessTitle": "Onnistui",
+  "manage.speciesInventory.toast.createSuccessDescription":
+    "Laji luotiin onnistuneesti.",
+  "manage.speciesInventory.toast.updateSuccessTitle": "Onnistui",
+  "manage.speciesInventory.toast.updateSuccessDescription":
+    "Laji päivitettiin onnistuneesti.",
+  "manage.stackSpecies.title": "Hallitse lajeja",
+  "manage.stackSpecies.description":
+    "Linkitä, järjestä ja muokkaa tässä pinossa käytettyjä lajeja.",
+  "manage.stackSpecies.view.minimal": "Tiivis",
+  "manage.stackSpecies.view.detailed": "Yksityiskohtainen",
+  "manage.stackSpecies.sort": "Lajittele A-Ö",
+  "manage.stackSpecies.linkExisting": "Linkitä olemassa oleva laji",
+  "manage.stackSpecies.addSpecies": "Lisää laji",
+  "manage.stackSpecies.addFirstSpecies": "Lisää ensimmäinen laji",
+  "manage.stackSpecies.empty": "Tähän pinoon ei ole vielä linkitetty lajeja.",
+  "manage.stackSpecies.backToStack": "Takaisin pinoon",
+  "manage.stackSpecies.notFound": "Lajia ei löytynyt tästä pinosta.",
+  "manage.stackSpecies.confirm.unlink":
+    "Haluatko varmasti poistaa tämän lajin linkityksen pinosta?",
+  "manage.stackSpecies.linkDialog.title": "Linkitä olemassa oleva laji",
+  "manage.stackSpecies.linkDialog.description":
+    "Valitse yhteisestä lajikirjastosta laji, joka linkitetään tähän pinoon.",
+  "manage.stackSpecies.linkDialog.confirm": "Linkitä laji",
+  "manage.stackSpecies.linkDialog.cancel": "Peruuta",
+  "manage.stackSpecies.linkDialog.empty":
+    "Linkitettäväksi ei ole muita lajeja.",
+  "manage.stackSpecies.linkDialog.listAria": "Linkitettävissä olevat lajit",
+  "manage.stackSpecies.toast.loadError": "Pinon lajien lataus epäonnistui.",
+  "manage.stackSpecies.toast.keepOneTestImage":
+    "Testeihin on jätettävä vähintään yksi kuva käyttöön.",
+  "manage.stackSpecies.toast.testImagesError":
+    "Testikuvien päivittäminen epäonnistui.",
+  "manage.stackSpecies.toast.unlinkSuccessTitle": "Onnistui",
+  "manage.stackSpecies.toast.unlinkSuccessDescription":
+    "Lajin linkitys poistettiin pinosta.",
+  "manage.stackSpecies.toast.unlinkError":
+    "Lajin linkityksen poistaminen epäonnistui.",
+  "manage.stackSpecies.toast.visibilitySuccessTitle": "Onnistui",
+  "manage.stackSpecies.toast.visibilityHidden": "Laji piilotettiin oppijoilta.",
+  "manage.stackSpecies.toast.visibilityVisible":
+    "Laji on nyt näkyvissä oppijoille.",
+  "manage.stackSpecies.toast.visibilityError":
+    "Lajin näkyvyyden päivittäminen epäonnistui.",
+  "manage.stackSpecies.toast.reorderSuccessTitle": "Onnistui",
+  "manage.stackSpecies.toast.reorderSuccessDescription":
+    "Lajien järjestys päivitettiin.",
+  "manage.stackSpecies.toast.sortSuccessTitle": "Onnistui",
+  "manage.stackSpecies.toast.sortSuccessDescription":
+    "Lajit lajiteltiin aakkosjärjestykseen.",
+  "manage.stackSpecies.toast.sortError": "Lajien lajittelu epäonnistui.",
+  "manage.stackSpecies.toast.linkSuccessTitle": "Onnistui",
+  "manage.stackSpecies.toast.linkSuccessDescription":
+    "Laji linkitettiin pinoon.",
+  "manage.stackSpecies.toast.linkError":
+    "Lajin linkittäminen pinoon epäonnistui.",
+  "manage.stackSpecies.toast.createSuccessTitle": "Onnistui",
+  "manage.stackSpecies.toast.createSuccessDescription":
+    "Laji luotiin onnistuneesti.",
+  "manage.stackSpecies.toast.updateSuccessTitle": "Onnistui",
+  "manage.stackSpecies.toast.updateSuccessDescription":
+    "Laji päivitettiin onnistuneesti.",
 
   "test.settings.title": "Testaa osaamistasi",
   "test.settings.description": "Muokkaa testin toimintaa.",
@@ -731,6 +889,84 @@ const SV_MESSAGES: TranslationTable = {
     "Välj en artbild för den här ledtråden.",
   "manage.speciesHintDialog.imageDialog.gridAria": "Artbildsväljare",
   "manage.speciesHintDialog.imageDialog.action.select": "Välj bild",
+  "manage.tabs.species": "Arter",
+  "manage.tabs.groups": "Grupper",
+  "manage.tabs.stack": "Kortlek",
+  "manage.tabs.pinkka": "Pinkka",
+  "manage.tabs.speciesDetail": "Art",
+  "manage.speciesInventory.title": "Arter",
+  "manage.speciesInventory.description":
+    "Hantera det taxonomiskt ordnade artbiblioteket. Grupper och kortlekar länkar till dessa delade artposter.",
+  "manage.speciesInventory.addSpecies": "Lägg till art",
+  "manage.speciesInventory.empty": "Inga arter finns ännu.",
+  "manage.speciesInventory.noVernacularName": "Inget trivialnamn",
+  "manage.speciesInventory.hidden": "Dold",
+  "manage.speciesInventory.visible": "Synlig",
+  "manage.speciesInventory.unclassifiedFamily": "Oklassificerad familj",
+  "manage.speciesInventory.unclassifiedGenus": "Oklassificerat släkte",
+  "manage.speciesInventory.backToSpecies": "Tillbaka till arter",
+  "manage.speciesInventory.notFound": "Arten hittades inte.",
+  "manage.speciesInventory.toast.loadError": "Det gick inte att ladda arter.",
+  "manage.speciesInventory.toast.createSuccessTitle": "Klart",
+  "manage.speciesInventory.toast.createSuccessDescription": "Arten skapades.",
+  "manage.speciesInventory.toast.updateSuccessTitle": "Klart",
+  "manage.speciesInventory.toast.updateSuccessDescription":
+    "Arten uppdaterades.",
+  "manage.stackSpecies.title": "Hantera arter",
+  "manage.stackSpecies.description":
+    "Länka, ordna och redigera de arter som används i denna kortlek.",
+  "manage.stackSpecies.view.minimal": "Minimal",
+  "manage.stackSpecies.view.detailed": "Detaljerad",
+  "manage.stackSpecies.sort": "Sortera A-Ö",
+  "manage.stackSpecies.linkExisting": "Länka befintlig art",
+  "manage.stackSpecies.addSpecies": "Lägg till art",
+  "manage.stackSpecies.addFirstSpecies": "Lägg till första arten",
+  "manage.stackSpecies.empty": "Inga arter är ännu länkade till denna kortlek.",
+  "manage.stackSpecies.backToStack": "Tillbaka till kortleken",
+  "manage.stackSpecies.notFound": "Arten hittades inte i denna kortlek.",
+  "manage.stackSpecies.confirm.unlink":
+    "Vill du verkligen ta bort artens länkning från kortleken?",
+  "manage.stackSpecies.linkDialog.title": "Länka befintlig art",
+  "manage.stackSpecies.linkDialog.description":
+    "Välj en art från det gemensamma artbiblioteket att länka till denna kortlek.",
+  "manage.stackSpecies.linkDialog.confirm": "Länka art",
+  "manage.stackSpecies.linkDialog.cancel": "Avbryt",
+  "manage.stackSpecies.linkDialog.empty":
+    "Det finns inga fler arter att länka.",
+  "manage.stackSpecies.linkDialog.listAria": "Arter som kan länkas",
+  "manage.stackSpecies.toast.loadError":
+    "Det gick inte att ladda kortlekens arter.",
+  "manage.stackSpecies.toast.keepOneTestImage":
+    "Minst en bild måste förbli aktiverad för tester.",
+  "manage.stackSpecies.toast.testImagesError":
+    "Det gick inte att uppdatera testbilderna.",
+  "manage.stackSpecies.toast.unlinkSuccessTitle": "Klart",
+  "manage.stackSpecies.toast.unlinkSuccessDescription":
+    "Artens länkning togs bort från kortleken.",
+  "manage.stackSpecies.toast.unlinkError":
+    "Det gick inte att ta bort artens länkning från kortleken.",
+  "manage.stackSpecies.toast.visibilitySuccessTitle": "Klart",
+  "manage.stackSpecies.toast.visibilityHidden": "Arten doldes för eleverna.",
+  "manage.stackSpecies.toast.visibilityVisible":
+    "Arten är nu synlig för eleverna.",
+  "manage.stackSpecies.toast.visibilityError":
+    "Det gick inte att uppdatera artens synlighet.",
+  "manage.stackSpecies.toast.reorderSuccessTitle": "Klart",
+  "manage.stackSpecies.toast.reorderSuccessDescription":
+    "Artordningen uppdaterades.",
+  "manage.stackSpecies.toast.sortSuccessTitle": "Klart",
+  "manage.stackSpecies.toast.sortSuccessDescription":
+    "Arterna sorterades alfabetiskt.",
+  "manage.stackSpecies.toast.sortError": "Det gick inte att sortera arterna.",
+  "manage.stackSpecies.toast.linkSuccessTitle": "Klart",
+  "manage.stackSpecies.toast.linkSuccessDescription":
+    "Arten länkades till kortleken.",
+  "manage.stackSpecies.toast.linkError":
+    "Det gick inte att länka arten till kortleken.",
+  "manage.stackSpecies.toast.createSuccessTitle": "Klart",
+  "manage.stackSpecies.toast.createSuccessDescription": "Arten skapades.",
+  "manage.stackSpecies.toast.updateSuccessTitle": "Klart",
+  "manage.stackSpecies.toast.updateSuccessDescription": "Arten uppdaterades.",
 
   "test.settings.title": "Testa dina kunskaper",
   "test.settings.description": "Anpassa hur testet ska köras.",

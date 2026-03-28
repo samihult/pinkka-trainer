@@ -15,7 +15,7 @@ import { useAuth } from "@/lib/auth-context";
 import { getLocalizedText } from "@/lib/content/content-display";
 import {
   getGroup,
-  getSpecies,
+  getLearningItems,
   getStackScientificProgressSummaries,
   getStacks,
   getUserHomePreferences,
@@ -136,7 +136,7 @@ export function GroupPageClient({ groupId }: GroupPageClientProps) {
           ),
           Promise.allSettled(
             stacksMissingSpeciesCounts.map(async (stack) => {
-              const species = await getSpecies(stack.id);
+              const species = await getLearningItems(stack.id);
               return [stack.id, species.length] as const;
             }),
           ),

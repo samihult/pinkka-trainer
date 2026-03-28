@@ -10,14 +10,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { DraggableHorizontalItem } from "@/components/draggable-horizontal-item";
 import { ManageSpeciesCardHorizontalContent } from "@/components/manage-species-card-horizontal-content";
+import { SelectFromListDialog } from "@/components/select-from-list-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { logFirestoreError } from "@/lib/utils";
 import {
-  getSpecies,
+  getLearningItems,
   getStack,
-  deleteSpecies,
-  updateSpecies,
-  updateStackSpeciesOrder,
+  linkLearningItemToStack,
+  unlinkLearningItemFromStack,
+  updateLearningItem,
+  updateStackLearningItemOrder,
 } from "@/lib/firebase/firestore-helpers";
 import type { Species, Stack } from "@/lib/types";
 import { ArrowLeft, Plus } from "lucide-react";
@@ -30,9 +32,11 @@ import {
   type ManageSpeciesViewVariant,
 } from "@/lib/local-preferences";
 import { useLanguagePreference } from "@/lib/language-context";
+import { useI18n } from "@/lib/i18n";
 
 export default function ManageSpeciesPage() {
   const { language } = useLanguagePreference();
+  const { t } = useI18n();
   const preferredLanguage = toLanguageCode(language);
   const params = useParams();
   const stackIdParam = params.stackId as string;
@@ -42,11 +46,13 @@ export default function ManageSpeciesPage() {
 
   const [stack, setStack] = useState<Stack | null>(null);
   const [species, setSpecies] = useState<Species[]>([]);
+  const [allSpecies, setAllSpecies] = useState<Species[]>([]);
   const [loading, setLoading] = useState(true);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [cardVariant, setCardVariant] =
     useState<ManageSpeciesViewVariant>("minimal");
   const [localPreferencesLoaded, setLocalPreferencesLoaded] = useState(false);
+  const [showSpeciesLinkDialog, setShowSpeciesLinkDialog] = useState(false);
 
   useEffect(() => {
     void loadData();
@@ -73,17 +79,19 @@ export default function ManageSpeciesPage() {
 
   const loadData = async () => {
     try {
-      const [stackData, speciesData] = await Promise.all([
+      const [stackData, speciesData, allSpeciesData] = await Promise.all([
         getStack(stackId, { includeHidden: true }),
-        getSpecies(stackId, { includeHidden: true }),
+        getLearningItems(stackId, { includeHidden: true }),
+        getLearningItems(undefined, { includeHidden: true }),
       ]);
       setStack(stackData);
       setSpecies(speciesData);
+      setAllSpecies(allSpeciesData);
     } catch (error) {
       logFirestoreError("Failed to load species/stack", error);
       toast({
-        title: "Error",
-        description: "Failed to load data",
+        title: t("auth.errorTitle"),
+        description: t("manage.stackSpecies.toast.loadError"),
         variant: "destructive",
       });
     } finally {
@@ -107,8 +115,8 @@ export default function ManageSpeciesPage() {
 
     if (isEnabled && currentEnabled.length === 1) {
       toast({
-        title: "Select test images",
-        description: "At least one image must remain enabled for tests.",
+        title: t("manage.speciesForm.toast.selectTestImagesTitle"),
+        description: t("manage.stackSpecies.toast.keepOneTestImage"),
         variant: "destructive",
       });
       return;
@@ -129,7 +137,7 @@ export default function ManageSpeciesPage() {
     );
 
     try {
-      await updateSpecies(target.id, { testImageIds: orderedEnabled });
+      await updateLearningItem(target.id, { testImageIds: orderedEnabled });
     } catch (error) {
       logFirestoreError("Failed to update test images", error);
       setSpecies((prev) =>
@@ -140,28 +148,28 @@ export default function ManageSpeciesPage() {
         ),
       );
       toast({
-        title: "Error",
-        description: "Failed to update test images",
+        title: t("auth.errorTitle"),
+        description: t("manage.stackSpecies.toast.testImagesError"),
         variant: "destructive",
       });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this species?")) return;
+    if (!confirm(t("manage.stackSpecies.confirm.unlink"))) return;
 
     try {
-      await deleteSpecies(id);
+      await unlinkLearningItemFromStack(stackId, id);
       toast({
-        title: "Success",
-        description: "Species deleted successfully",
+        title: t("manage.stackSpecies.toast.unlinkSuccessTitle"),
+        description: t("manage.stackSpecies.toast.unlinkSuccessDescription"),
       });
-      loadData();
+      await loadData();
     } catch (error) {
       logFirestoreError("Failed to delete species", error);
       toast({
-        title: "Error",
-        description: "Failed to delete species",
+        title: t("auth.errorTitle"),
+        description: t("manage.stackSpecies.toast.unlinkError"),
         variant: "destructive",
       });
     }
@@ -175,12 +183,12 @@ export default function ManageSpeciesPage() {
       ),
     );
     try {
-      await updateSpecies(item.id, { isHidden: nextHidden });
+      await updateLearningItem(item.id, { isHidden: nextHidden });
       toast({
-        title: "Success",
+        title: t("manage.stackSpecies.toast.visibilitySuccessTitle"),
         description: nextHidden
-          ? "Species hidden from learners"
-          : "Species is now public",
+          ? t("manage.stackSpecies.toast.visibilityHidden")
+          : t("manage.stackSpecies.toast.visibilityVisible"),
       });
     } catch (error) {
       logFirestoreError("Failed to toggle species visibility", error);
@@ -190,8 +198,8 @@ export default function ManageSpeciesPage() {
         ),
       );
       toast({
-        title: "Error",
-        description: "Failed to update species visibility",
+        title: t("auth.errorTitle"),
+        description: t("manage.stackSpecies.toast.visibilityError"),
         variant: "destructive",
       });
     }
@@ -217,10 +225,10 @@ export default function ManageSpeciesPage() {
   const handleDragEnd = async () => {
     if (draggedIndex !== null) {
       const reorderedSpeciesIds = species.map((s) => s.id);
-      await updateStackSpeciesOrder(stackId, reorderedSpeciesIds);
+      await updateStackLearningItemOrder(stackId, reorderedSpeciesIds);
       toast({
-        title: "Success",
-        description: "Species reordered successfully",
+        title: t("manage.stackSpecies.toast.reorderSuccessTitle"),
+        description: t("manage.stackSpecies.toast.reorderSuccessDescription"),
       });
     }
     setDraggedIndex(null);
@@ -239,16 +247,50 @@ export default function ManageSpeciesPage() {
 
     try {
       const reorderedSpeciesIds = sortedSpecies.map((item) => item.id);
-      await updateStackSpeciesOrder(stackId, reorderedSpeciesIds);
+      await updateStackLearningItemOrder(stackId, reorderedSpeciesIds);
       toast({
-        title: "Success",
-        description: "Species sorted alphabetically",
+        title: t("manage.stackSpecies.toast.sortSuccessTitle"),
+        description: t("manage.stackSpecies.toast.sortSuccessDescription"),
       });
     } catch (error) {
       logFirestoreError("Failed to sort species", error);
       toast({
-        title: "Error",
-        description: "Failed to sort species",
+        title: t("auth.errorTitle"),
+        description: t("manage.stackSpecies.toast.sortError"),
+        variant: "destructive",
+      });
+    }
+  };
+
+  const availableSpeciesOptions = allSpecies
+    .filter(
+      (item) => !species.some((linkedSpecies) => linkedSpecies.id === item.id),
+    )
+    .sort((left, right) =>
+      left.data.scientificName.localeCompare(right.data.scientificName),
+    )
+    .map((item) => ({
+      id: item.id,
+      label: item.data.scientificName,
+      description:
+        getLocalizedText(item.data.vernacularName, preferredLanguage) ??
+        t("manage.speciesInventory.noVernacularName"),
+    }));
+
+  const handleLinkSpecies = async (selectedSpeciesId: string) => {
+    try {
+      await linkLearningItemToStack(stackId, selectedSpeciesId);
+      toast({
+        title: t("manage.stackSpecies.toast.linkSuccessTitle"),
+        description: t("manage.stackSpecies.toast.linkSuccessDescription"),
+      });
+      setShowSpeciesLinkDialog(false);
+      await loadData();
+    } catch (error) {
+      logFirestoreError("Failed to link species to stack", error);
+      toast({
+        title: t("auth.errorTitle"),
+        description: t("manage.stackSpecies.toast.linkError"),
         variant: "destructive",
       });
     }
@@ -273,10 +315,10 @@ export default function ManageSpeciesPage() {
               <h1 className="text-3xl font-bold">
                 {stack
                   ? getLocalizedText(stack.data.name, preferredLanguage)
-                  : "Manage Species"}
+                  : t("manage.stackSpecies.title")}
               </h1>
               <p className="text-muted-foreground">
-                Add and edit species in this stack
+                {t("manage.stackSpecies.description")}
               </p>
             </div>
 
@@ -288,7 +330,7 @@ export default function ManageSpeciesPage() {
                   className="h-7 px-3"
                   onClick={() => setCardVariant("minimal")}
                 >
-                  Minimal
+                  {t("manage.stackSpecies.view.minimal")}
                 </Button>
                 <Button
                   size="sm"
@@ -296,7 +338,7 @@ export default function ManageSpeciesPage() {
                   className="h-7 px-3"
                   onClick={() => setCardVariant("detailed")}
                 >
-                  Detailed
+                  {t("manage.stackSpecies.view.detailed")}
                 </Button>
               </div>
               <Button
@@ -304,12 +346,19 @@ export default function ManageSpeciesPage() {
                 onClick={handleSortAlphabetically}
                 disabled={species.length < 2}
               >
-                Sort A-Z
+                {t("manage.stackSpecies.sort")}
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => setShowSpeciesLinkDialog(true)}
+                disabled={availableSpeciesOptions.length === 0}
+              >
+                {t("manage.stackSpecies.linkExisting")}
               </Button>
               <Button asChild>
                 <Link href={`/manage/content/${stackId}/species/new`}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Species
+                  {t("manage.stackSpecies.addSpecies")}
                 </Link>
               </Button>
             </div>
@@ -352,17 +401,38 @@ export default function ManageSpeciesPage() {
             {species.length === 0 && (
               <Card>
                 <CardContent className="py-12 text-center text-muted-foreground">
-                  <p className="mb-4">No species in this stack yet</p>
-                  <Button asChild>
-                    <Link href={`/manage/content/${stackId}/species/new`}>
-                      <Plus className="mr-2 h-4 w-4" />
-                      Add First Species
-                    </Link>
-                  </Button>
+                  <p className="mb-4">{t("manage.stackSpecies.empty")}</p>
+                  <div className="flex justify-center gap-3">
+                    <Button
+                      variant="secondary"
+                      onClick={() => setShowSpeciesLinkDialog(true)}
+                      disabled={availableSpeciesOptions.length === 0}
+                    >
+                      {t("manage.stackSpecies.linkExisting")}
+                    </Button>
+                    <Button asChild>
+                      <Link href={`/manage/content/${stackId}/species/new`}>
+                        <Plus className="mr-2 h-4 w-4" />
+                        {t("manage.stackSpecies.addFirstSpecies")}
+                      </Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             )}
           </div>
+          <SelectFromListDialog
+            open={showSpeciesLinkDialog}
+            onOpenChange={setShowSpeciesLinkDialog}
+            title={t("manage.stackSpecies.linkDialog.title")}
+            description={t("manage.stackSpecies.linkDialog.description")}
+            options={availableSpeciesOptions}
+            onConfirm={handleLinkSpecies}
+            confirmLabel={t("manage.stackSpecies.linkDialog.confirm")}
+            cancelLabel={t("manage.stackSpecies.linkDialog.cancel")}
+            emptyMessage={t("manage.stackSpecies.linkDialog.empty")}
+            listAriaLabel={t("manage.stackSpecies.linkDialog.listAria")}
+          />
         </main>
       </div>
     </ProtectedRoute>

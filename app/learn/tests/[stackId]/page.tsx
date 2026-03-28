@@ -17,10 +17,10 @@ import { useAuth } from "@/lib/auth-context";
 import {
   getGroup,
   getGroups,
+  getLearningItems,
   getLearningProgress,
   getLearningProgressForSpeciesIds,
   getStack,
-  getSpecies,
   getUserTestPreferences,
   upsertLearningProgressBatch,
   upsertStackLearningHistogram,
@@ -236,7 +236,7 @@ export default function TestPage() {
     try {
       const stackData = await getStack(stackId);
       const [speciesData, directGroupData, allGroups] = await Promise.all([
-        getSpecies(stackId),
+        getLearningItems(stackId),
         stackData?.parentGroupId
           ? getGroup(stackData.parentGroupId)
           : Promise.resolve(null),
