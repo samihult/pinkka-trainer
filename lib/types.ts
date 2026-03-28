@@ -362,11 +362,11 @@ export interface LearningItem {
   manualOverrides?: Partial<LearningItemData>;
   /** Optional link back to imported Pinkka entity ids. */
   pinkkaRef?: {
-    /** Linked Pinkka group id. */
+    /** @deprecated Legacy linked Pinkka group id kept for compatibility. */
     groupId?: number;
-    /** Linked Pinkka stack id. */
+    /** @deprecated Legacy linked Pinkka stack id kept for compatibility. */
     stackId?: number;
-    /** Linked Pinkka species id. */
+    /** Stable linked Pinkka species id. */
     speciesId: number;
   };
   /** Image ids enabled for tests; defaults to all images when unset. */

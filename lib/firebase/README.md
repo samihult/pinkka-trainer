@@ -24,4 +24,19 @@ Firebase integration layer for app data and auth-connected persistence.
   time, so Firestore writes and progress updates start incrementally instead of waiting for every stack’s species
   details to be prepared up front. The helper surface now prefers `learning item` naming (`getLearningItems`,
   `createLearningItem`, `updateLearningItem`, etc.) while keeping deprecated `species` aliases available temporarily
-  during migration.
+  during migration. Import entry points also emit immediate fallback entity labels before the first remote Pinkka fetch
+  resolves so the progress dialog does not sit in a blank waiting state, and whole-group refreshes publish stack totals
+  immediately from the visible Pinkka stack list while refining species totals once detailed species payloads arrive.
+  Direct canonical Pinkka imports and refreshes also mirror successful completion markers back into `/pinkka` so the
+  management explorer can show imported/incomplete dots without scanning canonical groups, stacks, and species
+  collections. Those large import and status-mirror writes now use smaller throttled Firestore commit windows so the
+  browser-side write stream does not get exhausted near the end of wide re-imports, and already-complete group
+  re-imports skip redundant descendant status rewrites entirely. Canonical learning items also keep only the stable
+  Pinkka species id on `pinkkaRef` and in their Pinkka source record, so re-importing the same shared species from many
+  stacks does not rewrite the item just to swap stack-local metadata. Batch status lookups for `/manage/pinkka` now read
+  directly from those mirrored `/pinkka` import documents, stack resolution caches nested parent paths for repeated
+  management-page access, `getStacksByParentGroupIds(...)` batches grouped stack inventory reads with chunked
+  `parentGroupId in [...]` queries for `/manage/content`, canonical learning-item ID fetches are chunked with
+  `documentId()` batching to avoid `N` point reads when resolving large linked-species lists, and import batch commits
+  now use workload-based batch sizing plus adaptive retry/backoff for transient Firestore write-stream pressure instead
+  of immediately falling back to many single-document writes.

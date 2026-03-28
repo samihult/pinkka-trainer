@@ -1,3 +1,5 @@
+/** Firestore CRUD, content aggregation, and Pinkka import helpers for management flows. */
+
 import {
   collection,
   collectionGroup,
@@ -253,6 +255,20 @@ const pendingPinkkaSpeciesStatusResolvers = new Map<
 >();
 let pendingPinkkaSpeciesStatusFlush: ReturnType<typeof setTimeout> | undefined;
 const pinkkaImportedImageUrlCache = new Map<string, string>();
+type CachedNestedStackLocation = {
+  groupId: string;
+};
+
+type CachedNestedSpeciesLocation = {
+  groupId: string;
+  stackId: string;
+};
+
+const nestedStackLocationCache = new Map<string, CachedNestedStackLocation>();
+const nestedSpeciesLocationCache = new Map<
+  string,
+  CachedNestedSpeciesLocation
+>();
 const CANONICAL_LEARNING_ITEMS_COLLECTION = "learning-items";
 const LEGACY_CANONICAL_SPECIES_COLLECTION = "species";
 const STACK_LEARNING_ITEM_IDS_FIELD = "learningItemIds";
@@ -323,12 +339,63 @@ function chunkArray<T>(items: T[], size: number): T[][] {
 const FIRESTORE_BATCH_WRITE_MAX = 100;
 const FIRESTORE_COMMIT_PAYLOAD_TARGET_BYTES = 6 * 1024 * 1024;
 const FIRESTORE_BATCH_COMMIT_COOLDOWN_MS = 25;
+const FIRESTORE_BATCH_RETRY_BASE_DELAY_MS = 250;
+const FIRESTORE_BATCH_RETRY_MAX_ATTEMPTS = 4;
+const PINKKA_IMPORT_SMALL_BATCH_WRITE_MAX = 20;
+const PINKKA_IMPORT_SMALL_BATCH_COMMIT_COOLDOWN_MS = 100;
+const PINKKA_IMPORT_MEDIUM_BATCH_WRITE_MAX = 10;
+const PINKKA_IMPORT_MEDIUM_BATCH_COMMIT_COOLDOWN_MS = 250;
+const PINKKA_IMPORT_LARGE_BATCH_WRITE_MAX = 5;
+const PINKKA_IMPORT_LARGE_BATCH_COMMIT_COOLDOWN_MS = 400;
 const firestorePayloadSizeEncoder = new TextEncoder();
 
 type BatchSetOperation = {
   ref: DocumentReference;
   data: Record<string, unknown>;
 };
+
+type BatchCommitOptions = {
+  maxOperationsPerBatch?: number;
+  cooldownMs?: number;
+};
+
+const PINKKA_IMPORT_BATCH_COMMIT_OPTIONS: BatchCommitOptions = {
+  maxOperationsPerBatch: PINKKA_IMPORT_SMALL_BATCH_WRITE_MAX,
+  cooldownMs: PINKKA_IMPORT_SMALL_BATCH_COMMIT_COOLDOWN_MS,
+};
+
+function getPinkkaImportBatchCommitOptions(
+  operationCount: number,
+): BatchCommitOptions {
+  if (operationCount >= 150) {
+    return {
+      maxOperationsPerBatch: PINKKA_IMPORT_LARGE_BATCH_WRITE_MAX,
+      cooldownMs: PINKKA_IMPORT_LARGE_BATCH_COMMIT_COOLDOWN_MS,
+    };
+  }
+
+  if (operationCount >= 50) {
+    return {
+      maxOperationsPerBatch: PINKKA_IMPORT_MEDIUM_BATCH_WRITE_MAX,
+      cooldownMs: PINKKA_IMPORT_MEDIUM_BATCH_COMMIT_COOLDOWN_MS,
+    };
+  }
+
+  return PINKKA_IMPORT_BATCH_COMMIT_OPTIONS;
+}
+
+async function waitForPinkkaImportCommitDrain(
+  operationCount: number,
+): Promise<void> {
+  if (operationCount >= 150) {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    return;
+  }
+
+  if (operationCount >= 50) {
+    await new Promise((resolve) => setTimeout(resolve, 600));
+  }
+}
 
 function estimateBatchSetOperationSize(operation: BatchSetOperation): number {
   return firestorePayloadSizeEncoder.encode(
@@ -339,9 +406,64 @@ function estimateBatchSetOperationSize(operation: BatchSetOperation): number {
   ).length;
 }
 
+function isFirestoreRetriableCommitError(error: unknown): boolean {
+  if (typeof error !== "object" || error === null) {
+    return false;
+  }
+
+  const code =
+    "code" in error && typeof error.code === "string" ? error.code : "";
+  return [
+    "resource-exhausted",
+    "aborted",
+    "deadline-exceeded",
+    "unavailable",
+  ].includes(code);
+}
+
+async function waitForFirestoreCommitRetry(attempt: number): Promise<void> {
+  const delayMs =
+    FIRESTORE_BATCH_RETRY_BASE_DELAY_MS * 2 ** Math.max(0, attempt - 1);
+  await new Promise((resolve) => setTimeout(resolve, delayMs));
+}
+
+async function commitBatchWithAdaptiveRetry(
+  commit: () => Promise<void>,
+): Promise<void> {
+  let lastError: unknown = null;
+
+  for (
+    let attempt = 1;
+    attempt <= FIRESTORE_BATCH_RETRY_MAX_ATTEMPTS;
+    attempt += 1
+  ) {
+    try {
+      await commit();
+      return;
+    } catch (error) {
+      lastError = error;
+      if (
+        attempt >= FIRESTORE_BATCH_RETRY_MAX_ATTEMPTS ||
+        !isFirestoreRetriableCommitError(error)
+      ) {
+        break;
+      }
+      await waitForFirestoreCommitRetry(attempt);
+    }
+  }
+
+  throw lastError;
+}
+
 async function commitSetOperationsInBatches(
   operations: BatchSetOperation[],
+  options?: BatchCommitOptions,
 ): Promise<void> {
+  const maxOperationsPerBatch = Math.min(
+    options?.maxOperationsPerBatch ?? FIRESTORE_BATCH_WRITE_MAX,
+    FIRESTORE_BATCH_WRITE_MAX,
+  );
+  const cooldownMs = options?.cooldownMs ?? FIRESTORE_BATCH_COMMIT_COOLDOWN_MS;
   const batches: BatchSetOperation[][] = [];
   let currentBatch: BatchSetOperation[] = [];
   let currentBatchSize = 0;
@@ -352,7 +474,7 @@ async function commitSetOperationsInBatches(
     // Keep commits comfortably below Firestore's request payload limit.
     if (
       currentBatch.length > 0 &&
-      (currentBatch.length >= FIRESTORE_BATCH_WRITE_MAX ||
+      (currentBatch.length >= maxOperationsPerBatch ||
         currentBatchSize + operationSize >
           FIRESTORE_COMMIT_PAYLOAD_TARGET_BYTES)
     ) {
@@ -371,12 +493,14 @@ async function commitSetOperationsInBatches(
 
   for (let batchIndex = 0; batchIndex < batches.length; batchIndex += 1) {
     const chunk = batches[batchIndex];
-    const batch = writeBatch(db);
-    for (const operation of chunk) {
-      batch.set(operation.ref, operation.data);
-    }
     try {
-      await batch.commit();
+      await commitBatchWithAdaptiveRetry(async () => {
+        const batch = writeBatch(db);
+        for (const operation of chunk) {
+          batch.set(operation.ref, operation.data);
+        }
+        await batch.commit();
+      });
     } catch (error) {
       console.error(
         "[Firestore] Batch set commit failed; retrying operations individually",
@@ -399,23 +523,31 @@ async function commitSetOperationsInBatches(
       }
     }
     if (batchIndex < batches.length - 1) {
-      await new Promise((resolve) =>
-        setTimeout(resolve, FIRESTORE_BATCH_COMMIT_COOLDOWN_MS),
-      );
+      await new Promise((resolve) => setTimeout(resolve, cooldownMs));
     }
   }
 }
 
 async function commitDeleteReferencesInBatches(
   refs: DocumentReference[],
+  options?: BatchCommitOptions,
 ): Promise<void> {
-  for (const chunk of chunkArray(refs, FIRESTORE_BATCH_WRITE_MAX)) {
-    const batch = writeBatch(db);
-    for (const refToDelete of chunk) {
-      batch.delete(refToDelete);
-    }
+  const maxOperationsPerBatch = Math.min(
+    options?.maxOperationsPerBatch ?? FIRESTORE_BATCH_WRITE_MAX,
+    FIRESTORE_BATCH_WRITE_MAX,
+  );
+  const cooldownMs = options?.cooldownMs ?? FIRESTORE_BATCH_COMMIT_COOLDOWN_MS;
+  const refChunks = chunkArray(refs, maxOperationsPerBatch);
+  for (let chunkIndex = 0; chunkIndex < refChunks.length; chunkIndex += 1) {
+    const chunk = refChunks[chunkIndex];
     try {
-      await batch.commit();
+      await commitBatchWithAdaptiveRetry(async () => {
+        const batch = writeBatch(db);
+        for (const refToDelete of chunk) {
+          batch.delete(refToDelete);
+        }
+        await batch.commit();
+      });
     } catch (error) {
       console.error(
         "[Firestore] Batch delete commit failed; retrying operations individually",
@@ -435,6 +567,9 @@ async function commitDeleteReferencesInBatches(
           throw operationError;
         }
       }
+    }
+    if (chunkIndex < refChunks.length - 1) {
+      await new Promise((resolve) => setTimeout(resolve, cooldownMs));
     }
   }
 }
@@ -754,24 +889,44 @@ export async function getPinkkaGroupImportStateMap(
     return statuses;
   }
 
-  const importedIds = new Set<number>();
-  for (const chunk of chunkArray(uniqueIds, FIRESTORE_IN_QUERY_MAX)) {
+  const missingIds = uniqueIds.filter((groupId) => {
+    const cached = pinkkaGroupImportStatusCache.get(groupId);
+    if (cached !== undefined) {
+      statuses[groupId] = cached;
+      return false;
+    }
+    return true;
+  });
+
+  for (const chunk of chunkArray(missingIds, FIRESTORE_IN_QUERY_MAX)) {
     const snapshot = await getDocs(
-      query(collection(db, "groups"), where("pinkkaRef.groupId", "in", chunk)),
+      query(
+        collection(db, PINKKA_COLLECTION),
+        where(
+          documentId(),
+          "in",
+          chunk.map((groupId) => String(groupId)),
+        ),
+      ),
     );
+    const statusById = new Map<number, PinkkaImportStatus>();
     snapshot.docs.forEach((docSnapshot) => {
-      const pinkkaGroupId = docSnapshot.data().pinkkaRef?.groupId;
-      if (typeof pinkkaGroupId === "number") {
-        importedIds.add(pinkkaGroupId);
+      const pinkkaGroupId = Number.parseInt(docSnapshot.id, 10);
+      if (Number.isFinite(pinkkaGroupId)) {
+        statusById.set(
+          pinkkaGroupId,
+          getPinkkaImportStatusFromDocData(docSnapshot.data()),
+        );
       }
     });
+
+    chunk.forEach((groupId) => {
+      const status = statusById.get(groupId) ?? NOT_IMPORTED_STATUS;
+      statuses[groupId] = status;
+      pinkkaGroupImportStatusCache.set(groupId, status);
+    });
   }
-  for (const groupId of uniqueIds) {
-    statuses[groupId] = importedIds.has(groupId)
-      ? IMPORTED_COMPLETE_STATUS
-      : NOT_IMPORTED_STATUS;
-    pinkkaGroupImportStatusCache.set(groupId, statuses[groupId]);
-  }
+
   return statuses;
 }
 
@@ -786,28 +941,44 @@ export async function getPinkkaStackImportStateMap(
     return statuses;
   }
 
-  const canonicalGroup = await findCanonicalGroupByPinkkaGroupId(groupId);
-  if (!canonicalGroup) {
-    for (const stackId of uniqueIds) {
-      statuses[stackId] = NOT_IMPORTED_STATUS;
+  const missingIds = uniqueIds.filter((stackId) => {
+    const cached = pinkkaStackImportStatusCache.get(stackId);
+    if (cached !== undefined) {
+      statuses[stackId] = cached;
+      return false;
     }
-    return statuses;
+    return true;
+  });
+
+  for (const chunk of chunkArray(missingIds, FIRESTORE_IN_QUERY_MAX)) {
+    const snapshot = await getDocs(
+      query(
+        collection(db, PINKKA_COLLECTION, String(groupId), "stacks"),
+        where(
+          documentId(),
+          "in",
+          chunk.map((stackId) => String(stackId)),
+        ),
+      ),
+    );
+    const statusById = new Map<number, PinkkaImportStatus>();
+    snapshot.docs.forEach((docSnapshot) => {
+      const pinkkaStackId = Number.parseInt(docSnapshot.id, 10);
+      if (Number.isFinite(pinkkaStackId)) {
+        statusById.set(
+          pinkkaStackId,
+          getPinkkaImportStatusFromDocData(docSnapshot.data()),
+        );
+      }
+    });
+
+    chunk.forEach((stackId) => {
+      const status = statusById.get(stackId) ?? NOT_IMPORTED_STATUS;
+      statuses[stackId] = status;
+      pinkkaStackImportStatusCache.set(stackId, status);
+    });
   }
 
-  const snapshot = await getDocs(
-    collection(db, "groups", canonicalGroup.id, "stacks"),
-  );
-  const importedIds = new Set(
-    snapshot.docs
-      .map((docSnapshot) => docSnapshot.data().pinkkaRef?.stackId)
-      .filter((value): value is number => typeof value === "number"),
-  );
-  for (const stackId of uniqueIds) {
-    statuses[stackId] = importedIds.has(stackId)
-      ? IMPORTED_COMPLETE_STATUS
-      : NOT_IMPORTED_STATUS;
-    pinkkaStackImportStatusCache.set(stackId, statuses[stackId]);
-  }
   return statuses;
 }
 
@@ -823,40 +994,51 @@ export async function getPinkkaSpeciesImportStateMap(
     return statuses;
   }
 
-  const canonicalGroup = await findCanonicalGroupByPinkkaGroupId(groupId);
-  if (!canonicalGroup) {
-    for (const speciesId of uniqueIds) {
-      statuses[speciesId] = NOT_IMPORTED_STATUS;
+  const missingIds = uniqueIds.filter((speciesId) => {
+    const cached = pinkkaSpeciesImportStatusCache.get(speciesId);
+    if (cached !== undefined) {
+      statuses[speciesId] = cached;
+      return false;
     }
-    return statuses;
+    return true;
+  });
+
+  for (const chunk of chunkArray(missingIds, FIRESTORE_IN_QUERY_MAX)) {
+    const snapshot = await getDocs(
+      query(
+        collection(
+          db,
+          PINKKA_COLLECTION,
+          String(groupId),
+          "stacks",
+          String(stackId),
+          "species",
+        ),
+        where(
+          documentId(),
+          "in",
+          chunk.map((speciesId) => String(speciesId)),
+        ),
+      ),
+    );
+    const statusById = new Map<number, PinkkaImportStatus>();
+    snapshot.docs.forEach((docSnapshot) => {
+      const pinkkaSpeciesId = Number.parseInt(docSnapshot.id, 10);
+      if (Number.isFinite(pinkkaSpeciesId)) {
+        statusById.set(
+          pinkkaSpeciesId,
+          getPinkkaImportStatusFromDocData(docSnapshot.data()),
+        );
+      }
+    });
+
+    chunk.forEach((speciesId) => {
+      const status = statusById.get(speciesId) ?? NOT_IMPORTED_STATUS;
+      statuses[speciesId] = status;
+      pinkkaSpeciesImportStatusCache.set(speciesId, status);
+    });
   }
 
-  const canonicalStack = await findCanonicalStackByPinkkaRef({
-    groupId: canonicalGroup.id,
-    pinkkaGroupId: groupId,
-    pinkkaStackId: stackId,
-  });
-  if (!canonicalStack) {
-    for (const speciesId of uniqueIds) {
-      statuses[speciesId] = NOT_IMPORTED_STATUS;
-    }
-    return statuses;
-  }
-
-  const stackSpecies = await getSpecies(canonicalStack.id, {
-    includeHidden: true,
-  });
-  const importedIds = new Set(
-    stackSpecies
-      .map((species) => species.pinkkaRef?.speciesId)
-      .filter((value): value is number => typeof value === "number"),
-  );
-  for (const speciesId of uniqueIds) {
-    statuses[speciesId] = importedIds.has(speciesId)
-      ? IMPORTED_COMPLETE_STATUS
-      : NOT_IMPORTED_STATUS;
-    pinkkaSpeciesImportStatusCache.set(speciesId, statuses[speciesId]);
-  }
   return statuses;
 }
 
@@ -1412,7 +1594,10 @@ export async function createEditableGroupFromImportedPinkka(params: {
     (left, right) => (left.orderNo ?? 0) - (right.orderNo ?? 0),
   );
 
-  await commitSetOperationsInBatches(operations);
+  await commitSetOperationsInBatches(
+    operations,
+    getPinkkaImportBatchCommitOptions(operations.length),
+  );
 
   let createdSpeciesCount = 0;
   for (let stackIndex = 0; stackIndex < sourceStacks.length; stackIndex += 1) {
@@ -1444,6 +1629,7 @@ export async function createEditableGroupFromImportedPinkka(params: {
       }),
     ];
     const stackSpeciesIds: string[] = [];
+    const pinkkaSpeciesIdsForStatus: number[] = [];
 
     const importedSpecies = await getImportedPinkkaSpeciesEntries(
       resolvedSourceGroup.groupId,
@@ -1498,10 +1684,6 @@ export async function createEditableGroupFromImportedPinkka(params: {
         entityType: "species",
         externalId: importedSpeciesEntry.speciesId,
         data: mappedData,
-        metadata: {
-          groupId: resolvedSourceGroup.groupId,
-          stackId: sourceStack.id,
-        },
       });
       const existingSpecies = canonicalLearningItemsByPinkkaSpeciesId.has(
         importedSpeciesEntry.speciesId,
@@ -1519,8 +1701,6 @@ export async function createEditableGroupFromImportedPinkka(params: {
         ownerId: params.ownerId,
         sourceRecord,
         pinkkaRef: {
-          groupId: resolvedSourceGroup.groupId,
-          stackId: sourceStack.id,
           speciesId: importedSpeciesEntry.speciesId,
         },
         isHidden: existingSpecies?.isHidden ?? false,
@@ -1541,6 +1721,7 @@ export async function createEditableGroupFromImportedPinkka(params: {
           } as Species),
       );
       stackSpeciesIds.push(upsertResult.speciesId);
+      pinkkaSpeciesIdsForStatus.push(importedSpeciesEntry.speciesId);
       if (upsertResult.created) {
         createdSpeciesCount += 1;
       }
@@ -1568,10 +1749,6 @@ export async function createEditableGroupFromImportedPinkka(params: {
         entityType: "species",
         externalId: sourceSpeciesCard.id,
         data: speciesData,
-        metadata: {
-          groupId: resolvedSourceGroup.groupId,
-          stackId: sourceStack.id,
-        },
       });
       const existingSpecies = canonicalLearningItemsByPinkkaSpeciesId.has(
         sourceSpeciesCard.id,
@@ -1588,8 +1765,6 @@ export async function createEditableGroupFromImportedPinkka(params: {
         ownerId: params.ownerId,
         sourceRecord,
         pinkkaRef: {
-          groupId: resolvedSourceGroup.groupId,
-          stackId: sourceStack.id,
           speciesId: sourceSpeciesCard.id,
         },
         isHidden: existingSpecies?.isHidden ?? false,
@@ -1610,6 +1785,7 @@ export async function createEditableGroupFromImportedPinkka(params: {
           } as Species),
       );
       stackSpeciesIds.push(upsertResult.speciesId);
+      pinkkaSpeciesIdsForStatus.push(sourceSpeciesCard.id);
       if (upsertResult.created) {
         createdSpeciesCount += 1;
       }
@@ -1641,13 +1817,22 @@ export async function createEditableGroupFromImportedPinkka(params: {
         updatedAt: now,
       },
     });
-    await commitSetOperationsInBatches(stackOperations);
+    await commitSetOperationsInBatches(
+      stackOperations,
+      getPinkkaImportBatchCommitOptions(stackOperations.length),
+    );
+    await markPinkkaStackAndSpeciesImportCompleted({
+      groupId: resolvedSourceGroup.groupId,
+      stackId: sourceStack.id,
+      speciesIds: pinkkaSpeciesIdsForStatus,
+    });
     markStackCompleted(
       params.progressContext,
       resolvedSourceGroup.groupId,
       sourceStack.id,
       stackName,
     );
+    await waitForPinkkaImportCommitDrain(stackOperations.length);
   }
 
   return {
@@ -1659,6 +1844,8 @@ export async function createEditableGroupFromImportedPinkka(params: {
 
 type EditableStackRefreshOperationsResult = {
   stackId: string;
+  pinkkaStackId: number;
+  pinkkaSpeciesIds: number[];
   createdStack: boolean;
   updatedStack: boolean;
   createdSpeciesCount: number;
@@ -1719,12 +1906,15 @@ async function buildEditableStackRefreshOperations(params: {
     data: DocumentData;
   };
   includeSpeciesImages: boolean;
+  progressContext?: PinkkaImportProgressContext;
   shouldInterrupt?: () => boolean;
 }): Promise<EditableStackRefreshOperationsResult> {
   assertInterrupted(params.shouldInterrupt);
   const now = Timestamp.now();
   const stackId = params.existingStack?.id ?? buildCanonicalId();
   const stackData = params.existingStack?.data ?? {};
+  const stackName = getPinkkaStackDisplayName(params.sourceStack);
+  updateCurrentEntityProgress(params.progressContext, "stacks", stackName);
   const stackImages = await mapPinkkaImageAssetsToEntityImages({
     assets: getPinkkaStackImageAssets(params.sourceStack),
     fallbackIdPrefix:
@@ -1884,6 +2074,20 @@ async function buildEditableStackRefreshOperations(params: {
   ) {
     assertInterrupted(params.shouldInterrupt);
     const sourceSpecies = sourceSpeciesEntries[speciesIndex];
+    updateCurrentEntityProgress(
+      params.progressContext,
+      "species",
+      "detail" in sourceSpecies
+        ? getPinkkaSpeciesDisplayName(
+            sourceSpecies.speciesId,
+            sourceSpecies.detail,
+          )
+        : sourceSpecies.card.scientificName ||
+            `Species ${sourceSpecies.speciesId}`,
+      "detail" in sourceSpecies
+        ? (sourceSpecies.detail.images?.length ?? 0)
+        : 0,
+    );
     const existingSpecies =
       existingLinkedSpeciesByPinkkaId.get(sourceSpecies.speciesId) ??
       preloadedCanonicalLearningItemsByPinkkaSpeciesId.get(
@@ -1950,18 +2154,12 @@ async function buildEditableStackRefreshOperations(params: {
       entityType: "species",
       externalId: sourceSpecies.speciesId,
       data: sourceData,
-      metadata: {
-        groupId: params.pinkkaGroupId,
-        stackId: params.sourceStack.id,
-      },
     });
     const upsertResult = await buildCanonicalLearningItemUpsertOperation({
       existingSpecies,
       ownerId: existingSpecies?.ownerId ?? stackOwnerId,
       sourceRecord,
       pinkkaRef: {
-        groupId: params.pinkkaGroupId,
-        stackId: params.sourceStack.id,
         speciesId: sourceSpecies.speciesId,
       },
       testImageIds: existingTestImageIds,
@@ -1979,6 +2177,10 @@ async function buildEditableStackRefreshOperations(params: {
     stackSpeciesIds.push(upsertResult.speciesId);
 
     seenPinkkaSpeciesIds.add(sourceSpecies.speciesId);
+    if (params.progressContext) {
+      params.progressContext.progress.species.completed += 1;
+      emitPinkkaImportProgress(params.progressContext);
+    }
   }
 
   let deletedSpeciesCount = 0;
@@ -2009,6 +2211,8 @@ async function buildEditableStackRefreshOperations(params: {
 
   return {
     stackId,
+    pinkkaStackId: params.sourceStack.id,
+    pinkkaSpeciesIds: [...seenPinkkaSpeciesIds],
     createdStack: params.existingStack === undefined,
     updatedStack: params.existingStack !== undefined && shouldWriteStack,
     createdSpeciesCount,
@@ -2024,10 +2228,13 @@ export async function refreshEditableGroupFromPinkka(params: {
   groupId: string;
   ownerId: string;
   onProgress?: PinkkaImportProgressCallback;
+  progressContext?: PinkkaImportProgressContext;
   shouldInterrupt?: () => boolean;
   includeSpeciesImages?: boolean;
+  syncPinkkaStatusMarkers?: boolean;
 }): Promise<RefreshGroupFromPinkkaResult> {
   const includeSpeciesImages = params.includeSpeciesImages ?? true;
+  const syncPinkkaStatusMarkers = params.syncPinkkaStatusMarkers ?? true;
   const groupRef = doc(db, "groups", params.groupId);
   const groupDoc = await getDoc(groupRef);
   if (!groupDoc.exists()) {
@@ -2051,14 +2258,38 @@ export async function refreshEditableGroupFromPinkka(params: {
     stackCount: importedGroupEntity.subPinkkas?.length ?? 0,
     isIncomplete: false,
   };
+  updateCurrentEntityProgress(
+    params.progressContext,
+    "groups",
+    getPinkkaGroupDisplayName(importedGroupEntity),
+  );
   const importedStacks = await getImportedPinkkaStackEntries(pinkkaGroupId);
   const sourceStacks = mergeImportedAndGroupStacks({
     sourceGroup,
     importedStacks,
   });
+  extendPinkkaImportProgressTotals(params.progressContext, {
+    stacks: sourceStacks.length,
+    species: sourceStacks.reduce(
+      (total, sourceStack) => total + (sourceStack.speciesCards?.length ?? 0),
+      0,
+    ),
+  });
   const importedSpeciesMap = await getImportedPinkkaSpeciesEntriesByStack({
     groupId: pinkkaGroupId,
     sourceStacks,
+  });
+  extendPinkkaImportProgressTotals(params.progressContext, {
+    species: sourceStacks.reduce(
+      (total, sourceStack) =>
+        total +
+        Math.max(
+          0,
+          (importedSpeciesMap.get(sourceStack.id)?.length ?? 0) -
+            (sourceStack.speciesCards?.length ?? 0),
+        ),
+      0,
+    ),
   });
 
   const now = Timestamp.now();
@@ -2137,9 +2368,6 @@ export async function refreshEditableGroupFromPinkka(params: {
     },
   );
 
-  const operations: BatchSetOperation[] = [];
-  const deleteRefs: DocumentReference[] = [];
-
   const result: RefreshGroupFromPinkkaResult = {
     createdStackCount: 0,
     updatedStackCount: 0,
@@ -2148,6 +2376,10 @@ export async function refreshEditableGroupFromPinkka(params: {
     updatedSpeciesCount: 0,
     deletedSpeciesCount: 0,
   };
+  const completedPinkkaStacks: Array<{
+    stackId: number;
+    speciesIds: number[];
+  }> = [];
 
   const existingStacksSnapshot = await getDocs(
     collection(db, "groups", params.groupId, "stacks"),
@@ -2181,11 +2413,18 @@ export async function refreshEditableGroupFromPinkka(params: {
       order: stackIndex,
       existingStack: existingLinkedStacksByPinkkaId.get(sourceStack.id),
       includeSpeciesImages,
+      progressContext: params.progressContext,
       shouldInterrupt: params.shouldInterrupt,
     });
     seenPinkkaStackIds.add(sourceStack.id);
-    operations.push(...stackRefreshResult.operations);
-    deleteRefs.push(...stackRefreshResult.deleteRefs);
+    await commitSetOperationsInBatches(
+      stackRefreshResult.operations,
+      getPinkkaImportBatchCommitOptions(stackRefreshResult.operations.length),
+    );
+    await commitDeleteReferencesInBatches(
+      stackRefreshResult.deleteRefs,
+      getPinkkaImportBatchCommitOptions(stackRefreshResult.deleteRefs.length),
+    );
     if (stackRefreshResult.createdStack) {
       result.createdStackCount += 1;
     }
@@ -2195,6 +2434,17 @@ export async function refreshEditableGroupFromPinkka(params: {
     result.createdSpeciesCount += stackRefreshResult.createdSpeciesCount;
     result.updatedSpeciesCount += stackRefreshResult.updatedSpeciesCount;
     result.deletedSpeciesCount += stackRefreshResult.deletedSpeciesCount;
+    completedPinkkaStacks.push({
+      stackId: stackRefreshResult.pinkkaStackId,
+      speciesIds: stackRefreshResult.pinkkaSpeciesIds,
+    });
+    markStackCompleted(
+      params.progressContext,
+      pinkkaGroupId,
+      sourceStack.id,
+      getPinkkaStackDisplayName(sourceStack),
+    );
+    await waitForPinkkaImportCommitDrain(stackRefreshResult.operations.length);
   }
 
   for (const [pinkkaStackId, existingStack] of existingLinkedStacksByPinkkaId) {
@@ -2211,11 +2461,17 @@ export async function refreshEditableGroupFromPinkka(params: {
         "species",
       ),
     );
+    const stackDeleteRefs = speciesSnapshot.docs.map(
+      (speciesDoc) => speciesDoc.ref,
+    );
     for (const speciesDoc of speciesSnapshot.docs) {
-      deleteRefs.push(speciesDoc.ref);
       result.deletedSpeciesCount += 1;
     }
-    deleteRefs.push(existingStack.ref);
+    stackDeleteRefs.push(existingStack.ref);
+    await commitDeleteReferencesInBatches(
+      stackDeleteRefs,
+      getPinkkaImportBatchCommitOptions(stackDeleteRefs.length),
+    );
     result.deletedStackCount += 1;
   }
 
@@ -2227,14 +2483,26 @@ export async function refreshEditableGroupFromPinkka(params: {
     result.updatedSpeciesCount > 0 ||
     result.deletedSpeciesCount > 0;
   if (groupCoreDataChanged || groupHasDescendantChanges) {
-    operations.unshift({
-      ref: groupRef,
-      data: groupDocumentData,
-    });
+    await commitSetOperationsInBatches(
+      [
+        {
+          ref: groupRef,
+          data: groupDocumentData,
+        },
+      ],
+      getPinkkaImportBatchCommitOptions(1),
+    );
   }
-
-  await commitSetOperationsInBatches(operations);
-  await commitDeleteReferencesInBatches(deleteRefs);
+  if (syncPinkkaStatusMarkers) {
+    for (const completedStack of completedPinkkaStacks) {
+      await markPinkkaStackAndSpeciesImportCompleted({
+        groupId: pinkkaGroupId,
+        stackId: completedStack.stackId,
+        speciesIds: completedStack.speciesIds,
+      });
+    }
+    await markPinkkaGroupImportCompletedDirect(pinkkaGroupId);
+  }
   return result;
 }
 
@@ -2295,8 +2563,20 @@ export async function refreshEditableStackFromPinkka(params: {
     shouldInterrupt: params.shouldInterrupt,
   });
 
-  await commitSetOperationsInBatches(stackRefreshResult.operations);
-  await commitDeleteReferencesInBatches(stackRefreshResult.deleteRefs);
+  await commitSetOperationsInBatches(
+    stackRefreshResult.operations,
+    getPinkkaImportBatchCommitOptions(stackRefreshResult.operations.length),
+  );
+  await commitDeleteReferencesInBatches(
+    stackRefreshResult.deleteRefs,
+    getPinkkaImportBatchCommitOptions(stackRefreshResult.deleteRefs.length),
+  );
+  await markPinkkaStackAndSpeciesImportCompleted({
+    groupId: pinkkaGroupId,
+    stackId: stackRefreshResult.pinkkaStackId,
+    speciesIds: stackRefreshResult.pinkkaSpeciesIds,
+  });
+  await markPinkkaGroupImportCompletedDirect(pinkkaGroupId);
   return {
     createdSpeciesCount: stackRefreshResult.createdSpeciesCount,
     updatedSpeciesCount: stackRefreshResult.updatedSpeciesCount,
@@ -2434,6 +2714,88 @@ async function markPinkkaSpeciesImportCompleted(
     getPinkkaSpeciesPath(groupId, stackId, speciesId),
   );
   setPinkkaSpeciesImportStatus(speciesId, IMPORTED_COMPLETE_STATUS);
+}
+
+/**
+ * Keep Pinkka management status markers in sync with canonical imports without
+ * issuing one unbounded burst of writes for large stacks.
+ */
+async function markPinkkaStackAndSpeciesImportCompleted(params: {
+  groupId: number;
+  stackId: number;
+  speciesIds: number[];
+}): Promise<void> {
+  const uniqueSpeciesIds = [
+    ...new Set(
+      params.speciesIds.filter((speciesId) => Number.isFinite(speciesId)),
+    ),
+  ];
+  const importCompleted = Timestamp.now();
+  const markerRefs = [
+    ...uniqueSpeciesIds.map((speciesId) =>
+      getPinkkaEntityDocumentRef(
+        getPinkkaSpeciesPath(params.groupId, params.stackId, speciesId),
+      ),
+    ),
+    getPinkkaEntityDocumentRef(
+      getPinkkaStackPath(params.groupId, params.stackId),
+    ),
+  ];
+
+  const markerCommitOptions = getPinkkaImportBatchCommitOptions(
+    markerRefs.length,
+  );
+  const markerChunks = chunkArray(
+    markerRefs,
+    markerCommitOptions.maxOperationsPerBatch ??
+      PINKKA_IMPORT_SMALL_BATCH_WRITE_MAX,
+  );
+  for (
+    let markerChunkIndex = 0;
+    markerChunkIndex < markerChunks.length;
+    markerChunkIndex += 1
+  ) {
+    const markerChunk = markerChunks[markerChunkIndex];
+    await commitBatchWithAdaptiveRetry(async () => {
+      const batch = writeBatch(db);
+      for (const markerRef of markerChunk) {
+        batch.set(
+          markerRef,
+          {
+            importStarted: deleteField(),
+            importCompleted,
+          },
+          { merge: true },
+        );
+      }
+      await batch.commit();
+    });
+    if (markerChunkIndex < markerChunks.length - 1) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, markerCommitOptions.cooldownMs ?? 0),
+      );
+    }
+  }
+
+  uniqueSpeciesIds.forEach((speciesId) => {
+    setPinkkaSpeciesImportStatus(speciesId, IMPORTED_COMPLETE_STATUS);
+  });
+  setPinkkaStackImportStatus(params.stackId, IMPORTED_COMPLETE_STATUS);
+}
+
+/** Mark a Pinkka group as fully imported without descendant rechecks. */
+async function markPinkkaGroupImportCompletedDirect(
+  groupId: number,
+): Promise<void> {
+  await setDoc(
+    getPinkkaEntityDocumentRef(getPinkkaGroupPath(groupId)),
+    {
+      importStarted: deleteField(),
+      importCompleted: Timestamp.now(),
+    },
+    { merge: true },
+  );
+  setPinkkaGroupImportStatus(groupId, IMPORTED_COMPLETE_STATUS);
 }
 
 async function writePinkkaEntity<T>(
@@ -3521,24 +3883,54 @@ async function getCanonicalLearningItemDocsByIds(
     return [];
   }
 
-  const learningItemDocs = await Promise.all(
-    uniqueIds.map(async (learningItemId) => {
-      const canonicalDoc = await getDoc(
-        getCanonicalLearningItemRef(learningItemId),
-      );
-      if (canonicalDoc.exists()) {
-        return canonicalDoc;
-      }
-      const legacyDoc = await getDoc(
-        getLegacyCanonicalSpeciesRef(learningItemId),
-      );
-      return legacyDoc;
-    }),
+  const learningItemsById = new Map<string, LearningItem>();
+  const canonicalSnapshots = await Promise.all(
+    chunkArray(uniqueIds, FIRESTORE_IN_QUERY_MAX).map((chunk) =>
+      getDocs(
+        query(
+          collection(db, CANONICAL_LEARNING_ITEMS_COLLECTION),
+          where(documentId(), "in", chunk),
+        ),
+      ),
+    ),
   );
+  canonicalSnapshots.forEach((snapshot) => {
+    snapshot.docs.forEach((learningItemDoc) => {
+      learningItemsById.set(
+        learningItemDoc.id,
+        toLearningItemFromDoc(learningItemDoc),
+      );
+    });
+  });
 
-  return learningItemDocs
-    .filter((learningItemDoc) => learningItemDoc.exists())
-    .map((learningItemDoc) => toLearningItemFromDoc(learningItemDoc));
+  const missingIds = uniqueIds.filter((learningItemId) => {
+    return !learningItemsById.has(learningItemId);
+  });
+  const legacySnapshots = await Promise.all(
+    chunkArray(missingIds, FIRESTORE_IN_QUERY_MAX).map((chunk) =>
+      getDocs(
+        query(
+          collection(db, LEGACY_CANONICAL_SPECIES_COLLECTION),
+          where(documentId(), "in", chunk),
+        ),
+      ),
+    ),
+  );
+  legacySnapshots.forEach((snapshot) => {
+    snapshot.docs.forEach((learningItemDoc) => {
+      if (!learningItemsById.has(learningItemDoc.id)) {
+        learningItemsById.set(
+          learningItemDoc.id,
+          toLearningItemFromDoc(learningItemDoc),
+        );
+      }
+    });
+  });
+
+  return uniqueIds.flatMap((learningItemId) => {
+    const learningItem = learningItemsById.get(learningItemId);
+    return learningItem ? [learningItem] : [];
+  });
 }
 
 async function getCanonicalLearningItemsByPinkkaSpeciesIds(
@@ -3741,17 +4133,14 @@ async function findCanonicalStackByPinkkaRef(params: {
   pinkkaStackId: number;
 }): Promise<Stack | null> {
   const stacksSnapshot = await getDocs(
-    collection(db, "groups", params.groupId, "stacks"),
+    query(
+      collection(db, "groups", params.groupId, "stacks"),
+      where("pinkkaRef.groupId", "==", params.pinkkaGroupId),
+      where("pinkkaRef.stackId", "==", params.pinkkaStackId),
+      limit(1),
+    ),
   );
-  const stackDoc = stacksSnapshot.docs.find((docSnapshot) => {
-    const pinkkaRef = docSnapshot.data().pinkkaRef as
-      | { groupId?: number; stackId?: number }
-      | undefined;
-    return (
-      pinkkaRef?.groupId === params.pinkkaGroupId &&
-      pinkkaRef?.stackId === params.pinkkaStackId
-    );
-  });
+  const stackDoc = stacksSnapshot.docs[0];
   return stackDoc ? toStackFromDoc(stackDoc) : null;
 }
 
@@ -4080,6 +4469,23 @@ type ResolvedSpeciesLocation = {
 async function resolveNestedStackLocation(
   stackId: string,
 ): Promise<ResolvedStackLocation | null> {
+  const cachedLocation = nestedStackLocationCache.get(stackId);
+  if (cachedLocation) {
+    const nestedStackDoc = await getDoc(
+      doc(db, "groups", cachedLocation.groupId, "stacks", stackId),
+    );
+    if (nestedStackDoc.exists()) {
+      return {
+        groupId: cachedLocation.groupId,
+        stackId: nestedStackDoc.id,
+        doc: nestedStackDoc as FirestoreDocLike & {
+          ref: ReturnType<typeof doc>;
+        },
+      };
+    }
+    nestedStackLocationCache.delete(stackId);
+  }
+
   try {
     const snapshot = await getDocs(
       query(
@@ -4092,6 +4498,7 @@ async function resolveNestedStackLocation(
     if (stackDoc) {
       const groupId = stackDoc.ref.parent.parent?.id;
       if (groupId) {
+        nestedStackLocationCache.set(stackId, { groupId });
         return {
           groupId,
           stackId: stackDoc.id,
@@ -4111,6 +4518,7 @@ async function resolveNestedStackLocation(
     if (!nestedStackDoc.exists()) {
       continue;
     }
+    nestedStackLocationCache.set(stackId, { groupId: groupDoc.id });
     return {
       groupId: groupDoc.id,
       stackId: nestedStackDoc.id,
@@ -4124,6 +4532,32 @@ async function resolveNestedStackLocation(
 async function resolveNestedSpeciesLocation(
   speciesId: string,
 ): Promise<ResolvedSpeciesLocation | null> {
+  const cachedLocation = nestedSpeciesLocationCache.get(speciesId);
+  if (cachedLocation) {
+    const nestedSpeciesDoc = await getDoc(
+      doc(
+        db,
+        "groups",
+        cachedLocation.groupId,
+        "stacks",
+        cachedLocation.stackId,
+        "species",
+        speciesId,
+      ),
+    );
+    if (nestedSpeciesDoc.exists()) {
+      return {
+        groupId: cachedLocation.groupId,
+        stackId: cachedLocation.stackId,
+        speciesId: nestedSpeciesDoc.id,
+        doc: nestedSpeciesDoc as FirestoreDocLike & {
+          ref: ReturnType<typeof doc>;
+        },
+      };
+    }
+    nestedSpeciesLocationCache.delete(speciesId);
+  }
+
   try {
     const snapshot = await getDocs(
       query(
@@ -4137,6 +4571,7 @@ async function resolveNestedSpeciesLocation(
       const stackId = speciesDoc.ref.parent.parent?.id;
       const groupId = speciesDoc.ref.parent.parent?.parent?.parent?.id;
       if (stackId && groupId) {
+        nestedSpeciesLocationCache.set(speciesId, { groupId, stackId });
         return {
           groupId,
           stackId,
@@ -4169,6 +4604,10 @@ async function resolveNestedSpeciesLocation(
       if (!nestedSpeciesDoc.exists()) {
         continue;
       }
+      nestedSpeciesLocationCache.set(speciesId, {
+        groupId: groupDoc.id,
+        stackId: stackDoc.id,
+      });
       return {
         groupId: groupDoc.id,
         stackId: stackDoc.id,
@@ -4353,29 +4792,71 @@ export async function getStacks(
     return includeHidden ? stacks : stacks.filter((stack) => !stack.isHidden);
   }
 
-  const groups = await getGroups(ownerId, { includeHidden: includeHidden });
+  const groups = await getGroups(ownerId, { includeHidden: true });
+  const groupsById = new Map(groups.map((group) => [group.id, group] as const));
   const mergedById = new Map<string, Stack>();
 
-  const groupStackResults = await Promise.allSettled(
-    groups.map((group) =>
-      getStacks(group.id, ownerId, {
-        includeHidden,
-      }),
-    ),
-  );
-  groupStackResults.forEach((result, index) => {
-    if (result.status === "fulfilled") {
-      for (const stack of result.value) {
-        mergedById.set(stack.id, stack);
-      }
+  const addStack = (stack: Stack, options?: { parentGroupId?: string }) => {
+    const resolvedParentGroupId = stack.parentGroupId ?? options?.parentGroupId;
+    const resolvedStack = resolvedParentGroupId
+      ? { ...stack, parentGroupId: resolvedParentGroupId }
+      : stack;
+
+    if (!includeHidden && resolvedStack.isHidden) {
       return;
     }
 
-    console.error(
-      `Failed to fetch stacks for group ${groups[index]?.id ?? "unknown"}`,
-      result.reason,
+    if (options?.parentGroupId) {
+      const parentGroup = groupsById.get(options.parentGroupId);
+      if (!parentGroup) {
+        return;
+      }
+      if (!includeHidden && parentGroup.isHidden) {
+        return;
+      }
+    }
+
+    mergedById.set(resolvedStack.id, resolvedStack);
+  };
+
+  try {
+    const nestedQuery = ownerId
+      ? query(collectionGroup(db, "stacks"), where("ownerId", "==", ownerId))
+      : query(collectionGroup(db, "stacks"));
+    const nestedSnapshot = await getDocs(nestedQuery);
+
+    for (const docSnapshot of nestedSnapshot.docs) {
+      const parentGroupId = docSnapshot.ref.parent.parent?.id;
+      if (!parentGroupId) {
+        continue;
+      }
+
+      addStack(toStackFromDoc(docSnapshot), { parentGroupId });
+    }
+  } catch (error) {
+    console.error("Failed to fetch nested stacks via collection group", error);
+
+    const groupStackResults = await Promise.allSettled(
+      groups.map((group) =>
+        getStacks(group.id, ownerId, {
+          includeHidden: true,
+        }),
+      ),
     );
-  });
+    groupStackResults.forEach((result, index) => {
+      if (result.status === "fulfilled") {
+        for (const stack of result.value) {
+          addStack(stack, { parentGroupId: groups[index]?.id });
+        }
+        return;
+      }
+
+      console.error(
+        `Failed to fetch stacks for group ${groups[index]?.id ?? "unknown"}`,
+        result.reason,
+      );
+    });
+  }
 
   const legacyQuery = ownerId
     ? query(collection(db, "stacks"), where("ownerId", "==", ownerId))
@@ -4383,12 +4864,148 @@ export async function getStacks(
   const legacySnapshot = await getDocs(legacyQuery);
   for (const docSnapshot of legacySnapshot.docs) {
     if (!mergedById.has(docSnapshot.id)) {
-      mergedById.set(docSnapshot.id, toStackFromDoc(docSnapshot));
+      addStack(toStackFromDoc(docSnapshot));
     }
   }
 
   const stacks = sortByOrder([...mergedById.values()]);
   return includeHidden ? stacks : stacks.filter((stack) => !stack.isHidden);
+}
+
+/**
+ * Fetch stacks for a known set of parent groups with chunked `in` queries.
+ *
+ * This avoids the N+1 pattern of loading each group's nested stacks
+ * individually while still limiting payload size by only requesting the
+ * groups currently shown in management UI.
+ */
+export async function getStacksByParentGroupIds(
+  groupIds: string[],
+  ownerId?: string,
+  options?: {
+    includeHidden?: boolean;
+    legacyStackIdsByGroupId?: Record<string, string[]>;
+  },
+): Promise<Record<string, Stack[]>> {
+  const includeHidden = options?.includeHidden ?? false;
+  const uniqueGroupIds = dedupeIds(groupIds);
+  const uniqueGroupIdSet = new Set(uniqueGroupIds);
+  const legacyStackIdsByGroupId = options?.legacyStackIdsByGroupId ?? {};
+  const stacksByGroupId = uniqueGroupIds.reduce<Record<string, Stack[]>>(
+    (accumulator, groupId) => {
+      accumulator[groupId] = [];
+      return accumulator;
+    },
+    {},
+  );
+  const stackMapsByGroupId = uniqueGroupIds.reduce<
+    Record<string, Map<string, Stack>>
+  >((accumulator, groupId) => {
+    accumulator[groupId] = new Map<string, Stack>();
+    return accumulator;
+  }, {});
+
+  if (uniqueGroupIds.length === 0) {
+    return stacksByGroupId;
+  }
+
+  const pushStacks = (stacks: Stack[]) => {
+    for (const stack of stacks) {
+      const parentGroupId = stack.parentGroupId;
+      if (!parentGroupId || !uniqueGroupIdSet.has(parentGroupId)) {
+        continue;
+      }
+      if (!includeHidden && stack.isHidden) {
+        continue;
+      }
+      stackMapsByGroupId[parentGroupId]?.set(stack.id, stack);
+    }
+  };
+
+  const pushLegacyStackForGroup = (groupId: string, stack: Stack) => {
+    if (!uniqueGroupIdSet.has(groupId)) {
+      return;
+    }
+    if (!includeHidden && stack.isHidden) {
+      return;
+    }
+    stackMapsByGroupId[groupId]?.set(stack.id, {
+      ...stack,
+      parentGroupId: stack.parentGroupId ?? groupId,
+    });
+  };
+
+  for (const chunk of chunkArray(uniqueGroupIds, FIRESTORE_IN_QUERY_MAX)) {
+    const nestedQuery = ownerId
+      ? query(
+          collectionGroup(db, "stacks"),
+          where("ownerId", "==", ownerId),
+          where("parentGroupId", "in", chunk),
+        )
+      : query(
+          collectionGroup(db, "stacks"),
+          where("parentGroupId", "in", chunk),
+        );
+    const legacyQuery = ownerId
+      ? query(
+          collection(db, "stacks"),
+          where("ownerId", "==", ownerId),
+          where("parentGroupId", "in", chunk),
+        )
+      : query(collection(db, "stacks"), where("parentGroupId", "in", chunk));
+
+    const [nestedSnapshot, legacySnapshot] = await Promise.all([
+      getDocs(nestedQuery),
+      getDocs(legacyQuery),
+    ]);
+    pushStacks(
+      nestedSnapshot.docs.map((docSnapshot) => toStackFromDoc(docSnapshot)),
+    );
+    pushStacks(
+      legacySnapshot.docs.map((docSnapshot) => toStackFromDoc(docSnapshot)),
+    );
+  }
+
+  const legacyReferencedGroupIds = uniqueGroupIds.filter((groupId) => {
+    return (legacyStackIdsByGroupId[groupId]?.length ?? 0) > 0;
+  });
+  const groupIdsByLegacyStackId = new Map<string, string[]>();
+
+  legacyReferencedGroupIds.forEach((groupId) => {
+    dedupeIds(legacyStackIdsByGroupId[groupId] ?? []).forEach((stackId) => {
+      const currentGroupIds = groupIdsByLegacyStackId.get(stackId) ?? [];
+      groupIdsByLegacyStackId.set(stackId, [...currentGroupIds, groupId]);
+    });
+  });
+
+  const legacyReferencedStackIds = [...groupIdsByLegacyStackId.keys()];
+  for (const chunk of chunkArray(
+    legacyReferencedStackIds,
+    FIRESTORE_IN_QUERY_MAX,
+  )) {
+    const legacySnapshot = await getDocs(
+      query(collection(db, "stacks"), where(documentId(), "in", chunk)),
+    );
+
+    legacySnapshot.docs.forEach((docSnapshot) => {
+      const stack = toStackFromDoc(docSnapshot);
+      if (ownerId && stack.ownerId !== ownerId) {
+        return;
+      }
+
+      (groupIdsByLegacyStackId.get(docSnapshot.id) ?? []).forEach((groupId) => {
+        pushLegacyStackForGroup(groupId, stack);
+      });
+    });
+  }
+
+  for (const groupId of uniqueGroupIds) {
+    stacksByGroupId[groupId] = sortByOrder([
+      ...(stackMapsByGroupId[groupId]?.values() ?? []),
+    ]);
+  }
+
+  return stacksByGroupId;
 }
 
 /** Fetch a single stack by id, respecting visibility by default. */
@@ -4771,18 +5388,28 @@ export async function importPinkkaGroup(
   assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
+  updateCurrentEntityProgress(
+    options?.progressContext,
+    "groups",
+    `Group ${groupId}`,
+  );
   const group = await fetchPinkkaGroupWithStacks(groupId);
   if (!group) return null;
   const groupName = getPinkkaGroupDisplayName(group);
   updateCurrentEntityProgress(options?.progressContext, "groups", groupName);
   const existingGroup = await findCanonicalGroupByPinkkaGroupId(groupId);
   if (existingGroup) {
+    const existingGroupImportStatus = await getPinkkaGroupImportStatus(groupId);
     await refreshEditableGroupFromPinkka({
       groupId: existingGroup.id,
       ownerId,
       onProgress: options?.progressContext?.onProgress,
+      progressContext: options?.progressContext,
       shouldInterrupt: options?.progressContext?.shouldInterrupt,
       includeSpeciesImages: true,
+      syncPinkkaStatusMarkers:
+        !existingGroupImportStatus.isImported ||
+        existingGroupImportStatus.isIncomplete,
     });
     markGroupCompleted(options?.progressContext, group.id, groupName);
     return {
@@ -4811,6 +5438,7 @@ export async function importPinkkaGroup(
     progressContext: options?.progressContext,
     shouldInterrupt: options?.progressContext?.shouldInterrupt,
   });
+  await markPinkkaGroupImportCompletedDirect(groupId);
   markGroupCompleted(options?.progressContext, group.id, groupName);
   return {
     importId: resolvedImportId,
@@ -4839,6 +5467,18 @@ export async function importPinkkaStack(
   assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
+  if (options?.groupId !== undefined) {
+    updateCurrentEntityProgress(
+      options.progressContext,
+      "groups",
+      `Group ${options.groupId}`,
+    );
+  }
+  updateCurrentEntityProgress(
+    options?.progressContext,
+    "stacks",
+    `Stack ${stackId}`,
+  );
   const stackDetail = await fetchPinkkaSubStack(stackId);
   if (!stackDetail) return null;
   const resolvedGroupId =
@@ -4893,8 +5533,20 @@ export async function importPinkkaStack(
     ...(groupUpsert.operation ? [groupUpsert.operation] : []),
     ...stackRefreshResult.operations,
   ];
-  await commitSetOperationsInBatches(operations);
-  await commitDeleteReferencesInBatches(stackRefreshResult.deleteRefs);
+  await commitSetOperationsInBatches(
+    operations,
+    getPinkkaImportBatchCommitOptions(operations.length),
+  );
+  await commitDeleteReferencesInBatches(
+    stackRefreshResult.deleteRefs,
+    getPinkkaImportBatchCommitOptions(stackRefreshResult.deleteRefs.length),
+  );
+  await markPinkkaStackAndSpeciesImportCompleted({
+    groupId: resolvedGroupId,
+    stackId,
+    speciesIds: stackRefreshResult.pinkkaSpeciesIds,
+  });
+  await markPinkkaGroupImportCompletedDirect(resolvedGroupId);
   markGroupCompleted(options?.progressContext, resolvedGroupId, groupName);
   markStackCompleted(
     options?.progressContext,
@@ -4979,6 +5631,25 @@ export async function importPinkkaSpecies(
   assertPinkkaImportNotInterrupted(options?.progressContext);
   const resolvedImportId =
     options?.importId ?? doc(collection(db, "imports")).id;
+  if (options?.groupId !== undefined) {
+    updateCurrentEntityProgress(
+      options.progressContext,
+      "groups",
+      `Group ${options.groupId}`,
+    );
+  }
+  if (options?.stackId !== undefined) {
+    updateCurrentEntityProgress(
+      options.progressContext,
+      "stacks",
+      `Stack ${options.stackId}`,
+    );
+  }
+  updateCurrentEntityProgress(
+    options?.progressContext,
+    "species",
+    `Species ${speciesId}`,
+  );
   const speciesDetail = await fetchPinkkaSpecies(speciesId);
   if (!speciesDetail) return null;
   const speciesLocation =
@@ -5028,10 +5699,6 @@ export async function importPinkkaSpecies(
       includeImages: true,
       resolveStoredImageUrls: false,
     }),
-    metadata: {
-      groupId: speciesLocation.groupId,
-      stackId: speciesLocation.stackId,
-    },
   });
   const upsertSpecies = await buildCanonicalLearningItemUpsertOperation({
     existingSpecies:
@@ -5039,8 +5706,6 @@ export async function importPinkkaSpecies(
     ownerId,
     sourceRecord,
     pinkkaRef: {
-      groupId: speciesLocation.groupId,
-      stackId: speciesLocation.stackId,
       speciesId,
     },
     now,
@@ -5065,7 +5730,22 @@ export async function importPinkkaSpecies(
       stackUpsert.operation,
       upsertSpecies.operation,
     ].filter((operation): operation is BatchSetOperation => Boolean(operation)),
+    getPinkkaImportBatchCommitOptions(
+      [
+        groupUpsert.operation,
+        stackUpsert.operation,
+        upsertSpecies.operation,
+      ].filter((operation): operation is BatchSetOperation =>
+        Boolean(operation),
+      ).length,
+    ),
   );
+  await markPinkkaStackAndSpeciesImportCompleted({
+    groupId: speciesLocation.groupId,
+    stackId: speciesLocation.stackId,
+    speciesIds: [speciesId],
+  });
+  await markPinkkaGroupImportCompletedDirect(speciesLocation.groupId);
   markGroupCompleted(
     options?.progressContext,
     speciesLocation.groupId,
@@ -5250,6 +5930,19 @@ export async function getLearningItems(
       return includeHidden
         ? orderedLinkedSpecies
         : orderedLinkedSpecies.filter((item) => !item.isHidden);
+    }
+
+    const nestedGroupId = stack.parentGroupId;
+    if (nestedGroupId) {
+      const speciesSnapshot = await getDocs(
+        collection(db, "groups", nestedGroupId, "stacks", stackId, "species"),
+      );
+      const species = sortByOrder(
+        speciesSnapshot.docs.map((docSnapshot) =>
+          toSpeciesFromDoc(docSnapshot),
+        ),
+      );
+      return includeHidden ? species : species.filter((item) => !item.isHidden);
     }
 
     const nestedStackLocation = await resolveNestedStackLocation(stackId);

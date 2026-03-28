@@ -1,5 +1,7 @@
 "use client";
 
+/** Stack-linked species management view with lazy loading for linkable species. */
+
 import {
   useCallback,
   useDeferredValue,
@@ -14,7 +16,7 @@ import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Loader2, Plus } from "lucide-react";
 import { ProtectedRoute } from "@/components/protected-route";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { SpeciesTaxonomyTree } from "@/components/species-taxonomy-tree";
@@ -76,18 +78,18 @@ export default function ManageSpeciesPage() {
   const [species, setSpecies] = useState<Species[]>([]);
   const [allSpecies, setAllSpecies] = useState<Species[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingAllSpecies, setLoadingAllSpecies] = useState(false);
+  const [allSpeciesLoaded, setAllSpeciesLoaded] = useState(false);
   const [showSpeciesLinkDialog, setShowSpeciesLinkDialog] = useState(false);
 
   const loadData = useCallback(async () => {
     try {
-      const [stackData, speciesData, allSpeciesData] = await Promise.all([
+      const [stackData, speciesData] = await Promise.all([
         getStack(stackId, { includeHidden: true }),
         getLearningItems(stackId, { includeHidden: true }),
-        getLearningItems(undefined, { includeHidden: true }),
       ]);
       setStack(stackData);
       setSpecies(speciesData);
-      setAllSpecies(allSpeciesData);
     } catch (error) {
       logFirestoreError("Failed to load species/stack", error);
       toast({
@@ -99,6 +101,27 @@ export default function ManageSpeciesPage() {
       setLoading(false);
     }
   }, [stackId, t, toast]);
+
+  const loadAllSpecies = useCallback(async () => {
+    if (loadingAllSpecies || allSpeciesLoaded) {
+      return;
+    }
+
+    setLoadingAllSpecies(true);
+    try {
+      setAllSpecies(await getLearningItems(undefined, { includeHidden: true }));
+      setAllSpeciesLoaded(true);
+    } catch (error) {
+      logFirestoreError("Failed to load all canonical species", error);
+      toast({
+        title: t("auth.errorTitle"),
+        description: t("manage.stackSpecies.toast.loadError"),
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingAllSpecies(false);
+    }
+  }, [allSpeciesLoaded, loadingAllSpecies, t, toast]);
 
   useEffect(() => {
     void loadData();
@@ -220,6 +243,23 @@ export default function ManageSpeciesPage() {
     }
   };
 
+  const handleLinkDialogOpenChange = useCallback(
+    (open: boolean) => {
+      if (open && !allSpeciesLoaded) {
+        void loadAllSpecies().finally(() => {
+          setShowSpeciesLinkDialog(true);
+        });
+        return;
+      }
+      setShowSpeciesLinkDialog(open);
+    },
+    [allSpeciesLoaded, loadAllSpecies],
+  );
+
+  const disableLinkExistingAction =
+    loadingAllSpecies ||
+    (allSpeciesLoaded && availableSpeciesOptions.length === 0);
+
   if (loading) {
     return (
       <ProtectedRoute requiredRole="editor">
@@ -264,9 +304,12 @@ export default function ManageSpeciesPage() {
               <div className="flex flex-wrap items-center gap-3 md:justify-end">
                 <Button
                   variant="secondary"
-                  onClick={() => setShowSpeciesLinkDialog(true)}
-                  disabled={availableSpeciesOptions.length === 0}
+                  onClick={() => handleLinkDialogOpenChange(true)}
+                  disabled={disableLinkExistingAction}
                 >
+                  {loadingAllSpecies ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : null}
                   {t("manage.stackSpecies.linkExisting")}
                 </Button>
                 <Button asChild>
@@ -290,9 +333,12 @@ export default function ManageSpeciesPage() {
                     <div className="flex justify-center gap-3">
                       <Button
                         variant="secondary"
-                        onClick={() => setShowSpeciesLinkDialog(true)}
-                        disabled={availableSpeciesOptions.length === 0}
+                        onClick={() => handleLinkDialogOpenChange(true)}
+                        disabled={disableLinkExistingAction}
                       >
+                        {loadingAllSpecies ? (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : null}
                         {t("manage.stackSpecies.linkExisting")}
                       </Button>
                       <Button asChild>
@@ -326,7 +372,7 @@ export default function ManageSpeciesPage() {
 
           <SelectFromListDialog
             open={showSpeciesLinkDialog}
-            onOpenChange={setShowSpeciesLinkDialog}
+            onOpenChange={handleLinkDialogOpenChange}
             title={t("manage.stackSpecies.linkDialog.title")}
             description={t("manage.stackSpecies.linkDialog.description")}
             options={availableSpeciesOptions}

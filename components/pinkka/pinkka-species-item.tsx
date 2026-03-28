@@ -1,58 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
+/** Pinkka explorer row for a species card with an import-status indicator from context. */
+
 import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
-import {
-  getPinkkaSpeciesImportStatus,
-  type PinkkaImportStatus,
-} from "@/lib/firebase/firestore-helpers";
+import { usePinkkaImportStatusContext } from "@/components/pinkka/pinkka-import-status-context";
 import {
   getLocalizedText,
   type PinkkaSpeciesCard,
 } from "@/lib/pinkka/pinkka-api";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
 
+const DEFAULT_STATUS = {
+  isImported: false,
+  isIncomplete: false,
+} as const;
+
 /** Props for rendering a Pinkka species row. */
 export interface PinkkaSpeciesItemProps {
   /** Pinkka species card payload to display. */
   species: PinkkaSpeciesCard;
-  /** Optional selected parent group id. */
-  groupId?: number | null;
-  /** Optional selected parent stack id. */
-  stackId?: number | null;
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
-  /** Optional version to refresh import status indicators. */
-  importStatusVersion?: number;
 }
 
 /** Display scientific and vernacular names for a Pinkka species. */
 export function PinkkaSpeciesItem({
   species,
-  groupId,
-  stackId,
   preferredLang,
-  importStatusVersion,
 }: PinkkaSpeciesItemProps) {
+  const { selectedStackId, speciesImportStatusesByStack } =
+    usePinkkaImportStatusContext();
+  const status =
+    typeof selectedStackId === "number"
+      ? (speciesImportStatusesByStack[selectedStackId]?.[species.id] ??
+        DEFAULT_STATUS)
+      : DEFAULT_STATUS;
   const vernacular = getLocalizedText(species.vernacularName, preferredLang);
-  const [status, setStatus] = useState<PinkkaImportStatus>({
-    isImported: false,
-    isIncomplete: false,
-  });
-
-  useEffect(() => {
-    let isMounted = true;
-    void getPinkkaSpeciesImportStatus(species.id, {
-      groupId: groupId ?? undefined,
-      stackId: stackId ?? undefined,
-    }).then((nextStatus) => {
-      if (!isMounted) return;
-      setStatus(nextStatus);
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, [groupId, importStatusVersion, species.id, stackId]);
 
   return (
     <div className="flex items-start gap-2">

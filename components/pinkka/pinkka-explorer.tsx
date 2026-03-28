@@ -1,5 +1,7 @@
 "use client";
 
+/** Finder-style Pinkka explorer that keeps content loaders stable during status refreshes. */
+
 import { useCallback, useMemo } from "react";
 import {
   fetchPinkkaGroups,
@@ -11,6 +13,7 @@ import {
 import {
   FinderColumns,
   type FinderItem,
+  type FinderSelectionChangeMeta,
   type FinderSelectionState,
 } from "@/components/finder-columns";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
@@ -18,6 +21,7 @@ import { usePinkkaRootGroups } from "@/hooks/use-pinkka-root-groups";
 import { usePinkkaGroupStacks } from "@/hooks/use-pinkka-group-stacks";
 import { usePinkkaStackSpecies } from "@/hooks/use-pinkka-stack-species";
 import { usePinkkaSpeciesDetail } from "@/hooks/use-pinkka-species-detail";
+import { PinkkaImportStatusProvider } from "@/components/pinkka/pinkka-import-status-context";
 import { createRootTypeConfig } from "@/components/pinkka/type-configs/root-type-config";
 import { createGroupTypeConfig } from "@/components/pinkka/type-configs/group-type-config";
 import { createStackTypeConfig } from "@/components/pinkka/type-configs/stack-type-config";
@@ -89,11 +93,23 @@ export function PinkkaExplorer({
     [api],
   );
 
-  const { loadRootGroups } = usePinkkaRootGroups(pinkkaApi.fetchGroups);
-  const { loadGroupStacks } = usePinkkaGroupStacks(
-    pinkkaApi.fetchGroupWithStacks,
+  const { loadRootGroups, groupImportStatuses } = usePinkkaRootGroups(
+    pinkkaApi.fetchGroups,
+    {
+      importStatusVersion,
+    },
   );
-  const { loadStackSpecies } = usePinkkaStackSpecies(pinkkaApi.fetchSubStack);
+  const { loadGroupStacks, stackImportStatusesByGroup } = usePinkkaGroupStacks(
+    pinkkaApi.fetchGroupWithStacks,
+    {
+      importStatusVersion,
+    },
+  );
+  const { loadStackSpecies, speciesImportStatusesByStack } =
+    usePinkkaStackSpecies(pinkkaApi.fetchSubStack, {
+      groupId: selectedGroupId,
+      importStatusVersion,
+    });
   const { loadSpeciesDetail } = usePinkkaSpeciesDetail(pinkkaApi.fetchSpecies);
   const rootItem = useMemo<FinderItem<null>>(
     () => ({
@@ -138,39 +154,27 @@ export function PinkkaExplorer({
     () =>
       createGroupTypeConfig({
         preferredLang,
-        importStatusVersion,
         loadChildren: loadGroupStacks,
       }),
-    [preferredLang, importStatusVersion, loadGroupStacks],
+    [preferredLang, loadGroupStacks],
   );
 
   const stackTypeConfig = useMemo(
     () =>
       createStackTypeConfig({
         preferredLang,
-        selectedGroupId,
-        importStatusVersion,
         loadChildren: loadStackSpecies,
       }),
-    [preferredLang, selectedGroupId, importStatusVersion, loadStackSpecies],
+    [loadStackSpecies, preferredLang],
   );
 
   const speciesTypeConfig = useMemo(
     () =>
       createSpeciesTypeConfig({
         preferredLang,
-        selectedGroupId,
-        selectedStackId,
-        importStatusVersion,
         loadChildren: loadSpeciesDetail,
       }),
-    [
-      preferredLang,
-      selectedGroupId,
-      selectedStackId,
-      importStatusVersion,
-      loadSpeciesDetail,
-    ],
+    [loadSpeciesDetail, preferredLang],
   );
 
   const speciesDetailTypeConfig = useMemo(
@@ -196,8 +200,15 @@ export function PinkkaExplorer({
   );
 
   const handleSelectionChange = useCallback(
-    (state: FinderSelectionState) => {
+    (
+      state: FinderSelectionState,
+      meta: FinderSelectionChangeMeta = { source: "system" },
+    ) => {
       onSelectionChange?.(state);
+
+      if (meta.source !== "user") {
+        return;
+      }
 
       const selectedItems = state.selectedItemsByColumn.flat();
       const groupItem = selectedItems.find((item) => item.type === "group");
@@ -224,16 +235,37 @@ export function PinkkaExplorer({
     [onSelectSpecies, onSelectedIdsChange, onSelectionChange],
   );
 
+  const importStatusContextValue = useMemo(
+    () => ({
+      version: importStatusVersion ?? 0,
+      selectedGroupId: selectedGroupId ?? null,
+      selectedStackId: selectedStackId ?? null,
+      groupImportStatuses,
+      stackImportStatusesByGroup,
+      speciesImportStatusesByStack,
+    }),
+    [
+      groupImportStatuses,
+      importStatusVersion,
+      selectedGroupId,
+      selectedStackId,
+      speciesImportStatusesByStack,
+      stackImportStatusesByGroup,
+    ],
+  );
+
   return (
     <div className="relative flex h-full min-h-0 border border-border bg-background">
-      <FinderColumns
-        className="flex-1"
-        rootItem={rootItem}
-        typeConfigs={typeConfigs}
-        onSelectionChange={handleSelectionChange}
-        selectedPath={selectedPath}
-        selectionMode={isControlledSelection ? "single" : "multiple"}
-      />
+      <PinkkaImportStatusProvider value={importStatusContextValue}>
+        <FinderColumns
+          className="flex-1"
+          rootItem={rootItem}
+          typeConfigs={typeConfigs}
+          onSelectionChange={handleSelectionChange}
+          selectedPath={selectedPath}
+          selectionMode={isControlledSelection ? "single" : "multiple"}
+        />
+      </PinkkaImportStatusProvider>
     </div>
   );
 }

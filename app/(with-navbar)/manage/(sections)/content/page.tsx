@@ -33,7 +33,7 @@ import { useAuth } from "@/lib/auth-context";
 import { logFirestoreError } from "@/lib/utils";
 import {
   getGroups,
-  getStacks,
+  getStacksByParentGroupIds,
   createGroup,
   createStack,
   importPinkkaGroup,
@@ -143,43 +143,21 @@ export default function ManagePage() {
     if (!user) return;
 
     try {
-      const [groupsData, importedPinkkaGroupsData] = await Promise.all([
-        getGroups(undefined, { includeHidden: true }),
-        loadImportedPinkkaGroupEntries(),
-      ]);
+      const groupsData = await getGroups(undefined, { includeHidden: true });
       setGroups(groupsData);
-      setImportedPinkkaGroups(importedPinkkaGroupsData);
-
-      const stackResults = await Promise.allSettled(
-        groupsData.map((group) =>
-          getStacks(group.id, undefined, { includeHidden: true }),
-        ),
-      );
-      const nextStacks = groupsData.reduce<Record<string, Stack[]>>(
-        (accumulator, group, index) => {
-          const groupStackResult = stackResults[index];
-          if (groupStackResult?.status === "fulfilled") {
-            accumulator[group.id] = groupStackResult.value;
-            return accumulator;
-          }
-
-          const stackLoadError =
-            groupStackResult?.status === "rejected"
-              ? groupStackResult.reason
-              : new Error("Stack query result missing");
-          logFirestoreError(
-            `Failed to load stacks for group ${group.id}`,
-            stackLoadError,
-          );
-          accumulator[group.id] = [];
-          return accumulator;
+      const nextStacks = await getStacksByParentGroupIds(
+        groupsData.map((group) => group.id),
+        undefined,
+        {
+          includeHidden: true,
+          legacyStackIdsByGroupId: Object.fromEntries(
+            groupsData.map((group) => [group.id, group.stackIds ?? []]),
+          ),
         },
-        {},
       );
       setStacks(nextStacks);
     } catch (error) {
       logFirestoreError("Failed to load groups/stacks", error);
-      setImportedPinkkaGroups([]);
       toast({
         title: "Error",
         description: "Failed to load data",
@@ -188,17 +166,22 @@ export default function ManagePage() {
     } finally {
       setLoading(false);
     }
-  }, [loadImportedPinkkaGroupEntries, toast, user]);
+  }, [toast, user]);
 
   useEffect(() => {
     void loadData();
   }, [loadData]);
 
   const handleOpenPinkkaGroupSelector = useCallback(() => {
+    if (importedPinkkaGroups.length > 0) {
+      setShowPinkkaGroupSelector(true);
+      return;
+    }
+
     void loadImportedPinkkaGroupEntries().finally(() =>
       setShowPinkkaGroupSelector(true),
     );
-  }, [loadImportedPinkkaGroupEntries]);
+  }, [importedPinkkaGroups.length, loadImportedPinkkaGroupEntries]);
 
   const buildLocalizedValue = (values: {
     fi?: string;

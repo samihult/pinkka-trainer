@@ -94,6 +94,15 @@ export type FinderSelectionState = {
   selectedItemsByColumn: FinderItem[][];
 };
 
+/** Source that produced the current finder selection state. */
+export type FinderSelectionChangeSource = "controlled" | "system" | "user";
+
+/** Metadata for a finder selection change notification. */
+export type FinderSelectionChangeMeta = {
+  /** Whether the selection came from the user or from internal path hydration. */
+  source: FinderSelectionChangeSource;
+};
+
 type FinderColumnsProps = {
   /** Virtual root item used to populate the first column. */
   rootItem: FinderItem;
@@ -104,7 +113,10 @@ type FinderColumnsProps = {
   /** Called when the active item changes. */
   onActiveItemChange?: (item: FinderItem | null) => void;
   /** Called when selection state changes. */
-  onSelectionChange?: (state: FinderSelectionState) => void;
+  onSelectionChange?: (
+    state: FinderSelectionState,
+    meta: FinderSelectionChangeMeta,
+  ) => void;
   /** Optional controlled path of selected ids by column depth. */
   selectedPath?: Array<string | number | null | undefined>;
   /** Selection interaction mode for list rows. */
@@ -196,6 +208,9 @@ export function FinderColumns({
   );
   const loadTokenRef = useRef(0);
   const pendingLoadRef = useRef<Record<number, number>>({});
+  const selectionChangeSourceRef = useRef<FinderSelectionChangeSource>(
+    selectedPath !== undefined ? "controlled" : "system",
+  );
   const resizeStateRef = useRef<{
     index: number;
     startX: number;
@@ -207,6 +222,7 @@ export function FinderColumns({
       return;
     }
 
+    selectionChangeSourceRef.current = "system";
     setColumns([
       {
         ...createEmptyColumn(),
@@ -261,6 +277,7 @@ export function FinderColumns({
 
     const token = (loadTokenRef.current += 1);
     pendingLoadRef.current = {};
+    selectionChangeSourceRef.current = "controlled";
 
     const applyControlledPath = async () => {
       const rootItems = rootTypeConfig?.loadChildren
@@ -477,6 +494,7 @@ export function FinderColumns({
     const typeConfig = typeConfigs[item.type];
     const shouldLoad = nextSelectedIds.length === 1 && typeConfig?.loadChildren;
     const nextColumnIndex = columnIndex + 1;
+    selectionChangeSourceRef.current = "user";
     setColumns((prev) => {
       const baseColumns = prev.slice(0, columnIndex + 1).map((column, index) =>
         index === columnIndex
@@ -598,7 +616,9 @@ export function FinderColumns({
 
   useEffect(() => {
     if (!onSelectionChange) return;
-    onSelectionChange(selectionState);
+    onSelectionChange(selectionState, {
+      source: selectionChangeSourceRef.current,
+    });
   }, [onSelectionChange, selectionState]);
 
   return (

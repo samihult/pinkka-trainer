@@ -1,13 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+/** Pinkka explorer row for a group with an import-status indicator from context. */
+
 import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
-import {
-  getPinkkaGroupImportStatus,
-  type PinkkaImportStatus,
-} from "@/lib/firebase/firestore-helpers";
+import { usePinkkaImportStatusContext } from "@/components/pinkka/pinkka-import-status-context";
 import { getLocalizedText, type PinkkaGroup } from "@/lib/pinkka/pinkka-api";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
+
+const DEFAULT_STATUS = {
+  isImported: false,
+  isIncomplete: false,
+} as const;
 
 /** Props for rendering a Pinkka group row. */
 export interface PinkkaGroupItemProps {
@@ -15,32 +18,16 @@ export interface PinkkaGroupItemProps {
   group: PinkkaGroup;
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
-  /** Optional version to refresh import status indicators. */
-  importStatusVersion?: number;
 }
 
 /** Display label for a Pinkka group item. */
 export function PinkkaGroupItem({
   group,
   preferredLang,
-  importStatusVersion,
 }: PinkkaGroupItemProps) {
+  const { groupImportStatuses } = usePinkkaImportStatusContext();
+  const status = groupImportStatuses[group.id] ?? DEFAULT_STATUS;
   const label = getLocalizedText(group.name, preferredLang);
-  const [status, setStatus] = useState<PinkkaImportStatus>({
-    isImported: false,
-    isIncomplete: false,
-  });
-
-  useEffect(() => {
-    let isMounted = true;
-    void getPinkkaGroupImportStatus(group.id).then((nextStatus) => {
-      if (!isMounted) return;
-      setStatus(nextStatus);
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, [group.id, importStatusVersion]);
 
   return (
     <div className="flex items-center gap-2">

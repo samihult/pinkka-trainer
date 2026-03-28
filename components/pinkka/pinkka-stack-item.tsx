@@ -1,51 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
+/** Pinkka explorer row for a stack with an import-status indicator from context. */
+
 import { MiddleEllipsisText } from "@/components/middle-ellipsis-text";
-import {
-  getPinkkaStackImportStatus,
-  type PinkkaImportStatus,
-} from "@/lib/firebase/firestore-helpers";
+import { usePinkkaImportStatusContext } from "@/components/pinkka/pinkka-import-status-context";
 import { getLocalizedText, type PinkkaSubStack } from "@/lib/pinkka/pinkka-api";
 import type { PinkkaLanguage } from "@/components/pinkka/pinkka-types";
+
+const DEFAULT_STATUS = {
+  isImported: false,
+  isIncomplete: false,
+} as const;
 
 /** Props for rendering a Pinkka stack row. */
 export interface PinkkaStackItemProps {
   /** Pinkka stack payload to display. */
   stack: PinkkaSubStack;
-  /** Optional selected parent group id. */
-  groupId?: number | null;
   /** Preferred language for localized fields. */
   preferredLang: PinkkaLanguage;
-  /** Optional version to refresh import status indicators. */
-  importStatusVersion?: number;
 }
 
 /** Display label and description for a Pinkka stack item. */
 export function PinkkaStackItem({
   stack,
-  groupId,
   preferredLang,
-  importStatusVersion,
 }: PinkkaStackItemProps) {
+  const { selectedGroupId, stackImportStatusesByGroup } =
+    usePinkkaImportStatusContext();
+  const status =
+    typeof selectedGroupId === "number"
+      ? (stackImportStatusesByGroup[selectedGroupId]?.[stack.id] ??
+        DEFAULT_STATUS)
+      : DEFAULT_STATUS;
   const label = getLocalizedText(stack.name, preferredLang);
-  const [status, setStatus] = useState<PinkkaImportStatus>({
-    isImported: false,
-    isIncomplete: false,
-  });
-
-  useEffect(() => {
-    let isMounted = true;
-    void getPinkkaStackImportStatus(stack.id, {
-      groupId: groupId ?? stack.pinkka?.id,
-    }).then((nextStatus) => {
-      if (!isMounted) return;
-      setStatus(nextStatus);
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, [groupId, importStatusVersion, stack.id, stack.pinkka?.id]);
 
   return (
     <div className="flex items-start gap-2">

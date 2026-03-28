@@ -19,6 +19,9 @@ export function usePinkkaSpeciesDetail(
   const speciesDetailsRef = useRef<Record<number, PinkkaSpeciesDetail | null>>(
     {},
   );
+  const speciesDetailPromiseRef = useRef<
+    Record<number, Promise<PinkkaSpeciesDetail | null>>
+  >({});
 
   const loadSpeciesDetail = useCallback<LoadSpeciesDetail>(
     async (item) => {
@@ -32,7 +35,13 @@ export function usePinkkaSpeciesDetail(
         };
       }
 
-      const detail = await fetchSpecies(speciesId);
+      const detailPromise =
+        speciesDetailPromiseRef.current[speciesId] ??
+        fetchSpecies(speciesId).finally(() => {
+          delete speciesDetailPromiseRef.current[speciesId];
+        });
+      speciesDetailPromiseRef.current[speciesId] = detailPromise;
+      const detail = await detailPromise;
       if (!detail) {
         throw new Error("Failed to load species details.");
       }

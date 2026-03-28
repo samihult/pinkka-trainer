@@ -21,6 +21,9 @@ Reusable UI building blocks for app pages.
   line before empty/non-empty checks. Empty-text mode hides the text box/placeholder, keeps arrow starts at the exact
   anchor point, and shows a square anchor handle plus add-arrow and "T" edit handles.
 - `ui/`: Shared shadcn/ui primitives and micro-components (for example keyboard shortcut hints).
+- `finder-columns.tsx`: Finder-style multicolumn browser primitive used by Pinkka and similar management flows. In
+  controlled mode it now suppresses transitional selection-change notifications while the requested path is still
+  hydrating, so URL-backed pages do not thrash between partial and final selections.
 - `species-taxonomy-tree.tsx`: Verdant Scholar-inspired taxonomy tree for the canonical species inventory, built from
   shared hierarchy helpers and shadcn-compatible collapsible surfaces. It is reused by both the canonical species
   inventory and stack-specific content-management views, starts collapsed by default, keeps one URL-selected path open,
@@ -46,4 +49,6 @@ Reusable UI building blocks for app pages.
   the viewport settle back to centered position on release with ease-out motion. This sits alongside
   `learning-session-shell.tsx` for shared learning session chrome with either the original top-header layout or a
   bottom-console layout variant, segmented species progress integration, and optional full-viewport Verdant Scholar
-  atmospheric backgrounds.
+  atmospheric backgrounds. Pinkka explorer status dots are now resolved through the Pinkka loader hooks in batched
+  column-level reads, which avoids one Firestore status effect per rendered row while still keeping the finder loaders
+  stable across import-progress refreshes.
