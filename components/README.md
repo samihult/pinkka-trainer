@@ -21,6 +21,10 @@ Reusable UI building blocks for app pages.
   line before empty/non-empty checks. Empty-text mode hides the text box/placeholder, keeps arrow starts at the exact
   anchor point, and shows a square anchor handle plus add-arrow and "T" edit handles.
 - `ui/`: Shared shadcn/ui primitives and micro-components (for example keyboard shortcut hints).
+- `species-taxonomy-tree.tsx`: Verdant Scholar-inspired taxonomy tree for the canonical species inventory, built from
+  shared hierarchy helpers and shadcn-compatible collapsible surfaces. It is reused by both the canonical species
+  inventory and stack-specific content-management views, starts collapsed by default, keeps one URL-selected path open,
+  auto-cascades through one-child branches, and exposes explicit edit buttons on species leaves.
 - `verdant-scholar/`: Storybook-first design system draft modeled from the Stitch export for "The Living Archive". It
   contains scoped editorial tokens plus atom/molecule/organism components for all designed layouts and is intentionally
   not wired into the production app yet. The backlog of currently used but undesigned production components remains

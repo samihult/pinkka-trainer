@@ -3,6 +3,8 @@
 Helpers for test-session answer grading, session flow, and preference normalization.
 
 - `scoring.ts`: Fuzzy string scoring helpers used for typed-answer checks.
+- `species-taxonomy-tree.test.ts`: coverage for the fixed-rank taxonomy hierarchy builder used by the canonical species
+  inventory page.
 - `test-session.ts`: Weighted question selection that favors less-learned species and delayed retry queue helpers for
   until-correct sessions.
 - `test-preferences.ts`: Default/normalized test preferences with backward-compatible migration from legacy answer modes

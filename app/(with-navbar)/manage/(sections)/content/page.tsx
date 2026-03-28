@@ -2,6 +2,8 @@
 
 import type React from "react";
 
+/** Shared editor page for managing groups and stacks backed by canonical content. */
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProtectedRoute } from "@/components/protected-route";
 import { Button } from "@/components/ui/button";
@@ -123,15 +125,17 @@ export default function ManagePage() {
   const loadImportedPinkkaGroupEntries = useCallback(async () => {
     if (!user) {
       setImportedPinkkaGroups([]);
-      return;
+      return [];
     }
 
     try {
       const importedPinkkaGroupsData = await getImportedPinkkaGroups();
       setImportedPinkkaGroups(importedPinkkaGroupsData);
+      return importedPinkkaGroupsData;
     } catch (error) {
       logFirestoreError("Failed to load imported Pinkka groups", error);
       setImportedPinkkaGroups([]);
+      return [];
     }
   }, [user]);
 
@@ -139,30 +143,40 @@ export default function ManagePage() {
     if (!user) return;
 
     try {
-      const [groupsData, allStacks] = await Promise.all([
-        getGroups(user.uid, { includeHidden: true }),
-        getStacks(undefined, user.uid, { includeHidden: true }),
+      const [groupsData, importedPinkkaGroupsData] = await Promise.all([
+        getGroups(undefined, { includeHidden: true }),
+        loadImportedPinkkaGroupEntries(),
       ]);
       setGroups(groupsData);
-      await loadImportedPinkkaGroupEntries();
+      setImportedPinkkaGroups(importedPinkkaGroupsData);
 
-      const stacksData = groupsData.reduce<{ [key: string]: Stack[] }>(
-        (acc, group) => {
-          const legacyStackIds = new Set(group.stackIds ?? []);
-          const orderedStacks = [...allStacks]
-            .filter(
-              (stack) =>
-                stack.parentGroupId === group.id ||
-                (stack.parentGroupId === undefined &&
-                  legacyStackIds.has(stack.id)),
-            )
-            .sort((left, right) => (left.order ?? 0) - (right.order ?? 0));
-          acc[group.id] = orderedStacks;
-          return acc;
+      const stackResults = await Promise.allSettled(
+        groupsData.map((group) =>
+          getStacks(group.id, undefined, { includeHidden: true }),
+        ),
+      );
+      const nextStacks = groupsData.reduce<Record<string, Stack[]>>(
+        (accumulator, group, index) => {
+          const groupStackResult = stackResults[index];
+          if (groupStackResult?.status === "fulfilled") {
+            accumulator[group.id] = groupStackResult.value;
+            return accumulator;
+          }
+
+          const stackLoadError =
+            groupStackResult?.status === "rejected"
+              ? groupStackResult.reason
+              : new Error("Stack query result missing");
+          logFirestoreError(
+            `Failed to load stacks for group ${group.id}`,
+            stackLoadError,
+          );
+          accumulator[group.id] = [];
+          return accumulator;
         },
         {},
       );
-      setStacks(stacksData);
+      setStacks(nextStacks);
     } catch (error) {
       logFirestoreError("Failed to load groups/stacks", error);
       setImportedPinkkaGroups([]);
