@@ -98,6 +98,31 @@ service cloud.firestore {
       allow write: if isEditorOrAdmin();
     }
 
+    // Backend Pinkka import jobs - admins enqueue and can request interruption
+    // for their own jobs; functions write server-side progress and terminal
+    // state updates with admin privileges.
+    match /pinkkaImportJobs/{jobId} {
+      allow read: if isEditorOrAdmin() || (
+        request.auth != null &&
+        resource.data.requesterId == request.auth.uid
+      );
+      allow create: if isEditorOrAdmin() &&
+        request.resource.data.requesterId == request.auth.uid;
+      allow update: if request.auth != null &&
+        (
+          isEditorOrAdmin() ||
+          (
+            resource.data.requesterId == request.auth.uid &&
+            request.resource.data.requesterId == resource.data.requesterId &&
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+              'interruptRequestedAt',
+              'updatedAt'
+            ])
+          )
+        );
+      allow delete: if false;
+    }
+
     // Learning progress collection - users can read/write their own progress
     match /learningProgress/{progressId} {
       allow read: if request.auth != null &&

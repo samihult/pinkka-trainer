@@ -28,6 +28,11 @@ Reusable UI building blocks for app pages.
   shared hierarchy helpers and shadcn-compatible collapsible surfaces. It is reused by both the canonical species
   inventory and stack-specific content-management views, starts collapsed by default, keeps one URL-selected path open,
   auto-cascades through one-child branches, and exposes explicit edit buttons on species leaves.
+- `manage-pinkka-import-toast-provider.tsx`: management-shell provider that subscribes to Firestore-backed Pinkka import
+  jobs for the current user, exposes both the full job feed and the active/latest job state to `/manage/*` pages, and
+  renders a dedicated pinned lower-right toaster across route changes. The toaster supports multiple concurrent import
+  jobs, keeps terminal jobs visible until the user dismisses them, and includes a direct deep link back into the Pinkka
+  browser for completed jobs instead of relying on the generic one-slot application toast queue.
 - `verdant-scholar/`: Storybook-first design system draft modeled from the Stitch export for "The Living Archive". It
   contains scoped editorial tokens plus atom/molecule/organism components for all designed layouts and is intentionally
   not wired into the production app yet. The backlog of currently used but undesigned production components remains

@@ -1,6 +1,10 @@
-const { onDocumentWritten } = require("firebase-functions/v2/firestore");
+const {
+  onDocumentCreated,
+  onDocumentWritten,
+} = require("firebase-functions/v2/firestore");
 const { logger } = require("firebase-functions");
 const admin = require("firebase-admin");
+const { processPinkkaImportJob } = require("./pinkka-import-jobs");
 
 if (!admin.apps.length) {
   admin.initializeApp();
@@ -8,6 +12,14 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 const { FieldValue } = admin.firestore;
+
+exports.onPinkkaImportJobCreated = onDocumentCreated(
+  {
+    document: "pinkkaImportJobs/{jobId}",
+    region: "us-central1",
+  },
+  processPinkkaImportJob,
+);
 
 const DAY_MS = 1000 * 60 * 60 * 24;
 const MIN_STABILITY_DAYS = 0.25;

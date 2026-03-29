@@ -1,5 +1,6 @@
 import React from "react";
 import ManageTabs from "@/app/(with-navbar)/manage/manage-tabs";
+import { ManagePinkkaImportToastProvider } from "@/components/manage-pinkka-import-toast-provider";
 
 export default function ManageLayout({
   children,
@@ -7,9 +8,11 @@ export default function ManageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section>
-      <ManageTabs />
-      {children}
-    </section>
+    <ManagePinkkaImportToastProvider>
+      <section>
+        <ManageTabs />
+        {children}
+      </section>
+    </ManagePinkkaImportToastProvider>
   );
 }

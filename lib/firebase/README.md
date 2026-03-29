@@ -39,4 +39,8 @@ Firebase integration layer for app data and auth-connected persistence.
   `parentGroupId in [...]` queries for `/manage/content`, canonical learning-item ID fetches are chunked with
   `documentId()` batching to avoid `N` point reads when resolving large linked-species lists, and import batch commits
   now use workload-based batch sizing plus adaptive retry/backoff for transient Firestore write-stream pressure instead
-  of immediately falling back to many single-document writes.
+  of immediately falling back to many single-document writes. Pinkka management now queues `/pinkkaImportJobs` documents
+  for backend processing instead of writing canonical imports directly from the browser, and those job docs also act as
+  the shared progress channel for the management-wide pinned import toaster that follows the initiating user across
+  `/manage/*` routes. The Pinkka job subscription now keeps a larger recent-job window so concurrent imports can stay
+  visible in the management toaster instead of falling out of the feed too early.

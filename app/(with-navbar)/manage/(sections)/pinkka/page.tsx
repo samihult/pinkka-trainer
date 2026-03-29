@@ -9,24 +9,22 @@ import {
   useState,
 } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useManagePinkkaImportToast } from "@/components/manage-pinkka-import-toast-provider";
 import { ProtectedRoute } from "@/components/protected-route";
 import { PinkkaExplorer } from "@/components/pinkka/pinkka-explorer";
-import { PinkkaImportProgressDialog } from "@/components/pinkka/pinkka-import-progress-dialog";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 import { useToast } from "@/hooks/use-toast";
-import { useLanguagePreference } from "@/lib/language-context";
-import { toLanguageCode } from "@/lib/local-preferences";
 import {
+  enqueuePinkkaImportJob,
   getPinkkaGroupImportStateMap,
-  isPinkkaImportInterruptedError,
-  type PinkkaImportProgress,
   getPinkkaSpeciesImportStateMap,
   getPinkkaStackImportStateMap,
-  importPinkkaGroups,
-  importPinkkaSpeciesList,
-  importPinkkaStacks,
+  type PinkkaImportJobAction,
 } from "@/lib/firebase/firestore-helpers";
+import { useI18n } from "@/lib/i18n";
+import { useLanguagePreference } from "@/lib/language-context";
+import { toLanguageCode } from "@/lib/local-preferences";
 import { logFirestoreError } from "@/lib/utils";
 
 function parseNumericParam(value: string | null): number | null {
@@ -35,36 +33,26 @@ function parseNumericParam(value: string | null): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function createEmptyProgressLevel() {
-  return {
-    completed: 0,
-    total: 0,
-    currentEntityName: "",
-    imageDownloadsCompleted: 0,
-    imageDownloadsTotal: 0,
-  };
-}
-
-function createEmptyPinkkaImportProgress(): PinkkaImportProgress {
-  return {
-    groups: createEmptyProgressLevel(),
-    stacks: createEmptyProgressLevel(),
-    species: createEmptyProgressLevel(),
-  };
+function hasSameEntityIds(left: number[], right: number[]): boolean {
+  if (left.length !== right.length) {
+    return false;
+  }
+  const leftSorted = [...left].sort((a, b) => a - b);
+  const rightSorted = [...right].sort((a, b) => a - b);
+  return leftSorted.every((value, index) => value === rightSorted[index]);
 }
 
 /** Admin-facing page for browsing Pinkka content. */
 function PinkkaContentPageContent() {
+  const { t } = useI18n();
   const { language } = useLanguagePreference();
   const preferredLanguage = toLanguageCode(language);
   const { user } = useAuth();
+  const { activeJobs, jobs } = useManagePinkkaImportToast();
   const { toast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [activeImportAction, setActiveImportAction] = useState<
-    "import" | "reimport" | "importmissing" | null
-  >(null);
   const [isCheckingImportStatus, setIsCheckingImportStatus] = useState(false);
   const [importedSelectedIds, setImportedSelectedIds] = useState<number[]>([]);
   const [reimportableSelectedIds, setReimportableSelectedIds] = useState<
@@ -76,31 +64,8 @@ function PinkkaContentPageContent() {
   const [unimportedSelectedIds, setUnimportedSelectedIds] = useState<number[]>(
     [],
   );
-  const [importProgress, setImportProgress] = useState<PinkkaImportProgress>(
-    createEmptyPinkkaImportProgress(),
-  );
   const [importStatusVersion, setImportStatusVersion] = useState(0);
-  const interruptRequestedRef = useRef(false);
-  const progressIndicatorKeyRef = useRef("");
-
-  const handleImportProgress = useCallback((progress: PinkkaImportProgress) => {
-    setImportProgress(progress);
-    const indicatorKey = [
-      progress.groups.completed,
-      progress.groups.currentEntityName,
-      progress.stacks.completed,
-      progress.stacks.currentEntityName,
-      progress.species.completed,
-      progress.species.currentEntityName,
-    ].join("|");
-
-    if (indicatorKey === progressIndicatorKeyRef.current) {
-      return;
-    }
-
-    progressIndicatorKeyRef.current = indicatorKey;
-    setImportStatusVersion((prev) => prev + 1);
-  }, []);
+  const handledTerminalJobIdsRef = useRef<Set<string>>(new Set());
 
   const selectedGroupId = useMemo(
     () => parseNumericParam(searchParams.get("group")),
@@ -192,13 +157,55 @@ function PinkkaContentPageContent() {
     return [];
   }, [importTarget, selectedGroupIds, selectedSpeciesIds, selectedStackIds]);
 
+  useEffect(() => {
+    const nextTerminalJobIds = jobs
+      .filter(
+        (job) =>
+          job.status === "completed" ||
+          job.status === "failed" ||
+          job.status === "interrupted",
+      )
+      .map((job) => job.id);
+
+    const hasNewTerminalJob = nextTerminalJobIds.some(
+      (jobId) => !handledTerminalJobIdsRef.current.has(jobId),
+    );
+    if (!hasNewTerminalJob) {
+      return;
+    }
+
+    handledTerminalJobIdsRef.current = new Set(nextTerminalJobIds);
+    setImportStatusVersion((prev) => prev + 1);
+  }, [jobs]);
+
   const hasImportedSelection = importedSelectedIds.length > 0;
   const hasReimportableSelection = reimportableSelectedIds.length > 0;
   const hasIncompleteSelection = incompleteSelectedIds.length > 0;
   const hasUnimportedSelection = unimportedSelectedIds.length > 0;
   const hasMixedSelection = hasImportedSelection && hasUnimportedSelection;
   const hasSelection = selectedTargetIds.length > 0;
-  const isImporting = activeImportAction !== null;
+  const matchingActiveJob = useMemo(() => {
+    if (!importTarget || selectedTargetIds.length === 0) {
+      return null;
+    }
+    return (
+      activeJobs.find(
+        (job) =>
+          job.target === importTarget &&
+          job.groupId === (selectedGroupId ?? undefined) &&
+          job.stackId === (selectedStackId ?? undefined) &&
+          hasSameEntityIds(job.entityIds, selectedTargetIds),
+      ) ?? null
+    );
+  }, [
+    activeJobs,
+    importTarget,
+    selectedGroupId,
+    selectedStackId,
+    selectedTargetIds,
+  ]);
+  const isImporting = matchingActiveJob !== null;
+  const activeImportAction = matchingActiveJob?.action ?? null;
   const importCount = unimportedSelectedIds.length;
   const importMissingSelectedIds = useMemo(
     () => [...new Set([...unimportedSelectedIds, ...incompleteSelectedIds])],
@@ -212,18 +219,18 @@ function PinkkaContentPageContent() {
   const showReimportButton =
     hasReimportableSelection && !hasIncompleteSelection;
 
-  const importLabels = useMemo(() => {
+  const selectionTargetLabel = useMemo(() => {
     if (importTarget === "species") {
-      return { title: "Species", singular: "species", plural: "species" };
+      return t("manage.pinkkaImport.target.speciesPlural");
     }
     if (importTarget === "stack") {
-      return { title: "Stacks", singular: "stack", plural: "stacks" };
+      return t("manage.pinkkaImport.target.stackPlural");
     }
     if (importTarget === "group") {
-      return { title: "Groups", singular: "group", plural: "groups" };
+      return t("manage.pinkkaImport.target.groupPlural");
     }
-    return { title: "Items", singular: "item", plural: "items" };
-  }, [importTarget]);
+    return t("manage.pinkkaImport.target.itemPlural");
+  }, [importTarget, t]);
 
   useEffect(() => {
     let isMounted = true;
@@ -315,233 +322,66 @@ function PinkkaContentPageContent() {
     selectedTargetIds,
   ]);
 
-  const handleImport = async () => {
-    if (!user || !importTarget) return;
+  const enqueueImportJob = useCallback(
+    async (action: PinkkaImportJobAction, entityIds: number[]) => {
+      if (!user || !importTarget) {
+        return;
+      }
+
+      try {
+        await enqueuePinkkaImportJob({
+          requesterId: user.uid,
+          action,
+          target: importTarget,
+          entityIds,
+          ...(selectedGroupId !== null ? { groupId: selectedGroupId } : {}),
+          ...(selectedStackId !== null ? { stackId: selectedStackId } : {}),
+        });
+      } catch (error) {
+        logFirestoreError("Failed to enqueue Pinkka import job", error);
+        toast({
+          title: t("manage.pinkka.toast.jobFailedTitle"),
+          description: t("manage.pinkka.toast.jobFailedDescription"),
+          variant: "destructive",
+        });
+      }
+    },
+    [importTarget, selectedGroupId, selectedStackId, t, toast, user],
+  );
+
+  const handleImport = useCallback(async () => {
     if (unimportedSelectedIds.length === 0) {
       toast({
-        title: "Nothing to import",
-        description: "All selected entities are already imported.",
+        title: t("manage.pinkka.toast.nothingToImportTitle"),
+        description: t("manage.pinkka.toast.nothingToImportDescription"),
       });
       return;
     }
 
-    setActiveImportAction("import");
-    interruptRequestedRef.current = false;
-    setImportProgress(createEmptyPinkkaImportProgress());
-    progressIndicatorKeyRef.current = "";
-    try {
-      let results = [];
-      if (importTarget === "species") {
-        results = await importPinkkaSpeciesList(
-          unimportedSelectedIds,
-          user.uid,
-          undefined,
-          {
-            groupId: selectedGroupId ?? undefined,
-            stackId: selectedStackId ?? undefined,
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
-      } else if (importTarget === "stack") {
-        results = await importPinkkaStacks(
-          unimportedSelectedIds,
-          user.uid,
-          undefined,
-          {
-            groupId: selectedGroupId ?? undefined,
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
-      } else {
-        results = await importPinkkaGroups(
-          unimportedSelectedIds,
-          user.uid,
-          undefined,
-          {
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
-      }
-      toast({
-        title: "Import complete",
-        description: `Imported ${results.length} ${
-          results.length === 1 ? importLabels.singular : importLabels.plural
-        }.`,
-      });
-      setImportStatusVersion((prev) => prev + 1);
-    } catch (error) {
-      if (isPinkkaImportInterruptedError(error)) {
-        setImportStatusVersion((prev) => prev + 1);
-        toast({
-          title: "Import interrupted",
-          description: "The Pinkka import was interrupted.",
-        });
-        return;
-      }
-      setImportStatusVersion((prev) => prev + 1);
-      logFirestoreError("Failed to import Pinkka entities", error);
-      toast({
-        title: "Import failed",
-        description: "Unable to import the selected entities.",
-        variant: "destructive",
-      });
-    } finally {
-      interruptRequestedRef.current = false;
-      setActiveImportAction(null);
-    }
-  };
+    await enqueueImportJob("import", unimportedSelectedIds);
+  }, [enqueueImportJob, t, toast, unimportedSelectedIds]);
 
-  const handleReimport = async () => {
-    if (!user || !importTarget) return;
+  const handleReimport = useCallback(async () => {
     const reimportIds = hasMixedSelection
       ? selectedTargetIds
       : reimportableSelectedIds;
-    if (reimportIds.length === 0) return;
-
-    setActiveImportAction("reimport");
-    interruptRequestedRef.current = false;
-    setImportProgress(createEmptyPinkkaImportProgress());
-    progressIndicatorKeyRef.current = "";
-    try {
-      let results = [];
-      if (importTarget === "species") {
-        results = await importPinkkaSpeciesList(
-          reimportIds,
-          user.uid,
-          undefined,
-          {
-            groupId: selectedGroupId ?? undefined,
-            stackId: selectedStackId ?? undefined,
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
-      } else if (importTarget === "stack") {
-        results = await importPinkkaStacks(reimportIds, user.uid, undefined, {
-          groupId: selectedGroupId ?? undefined,
-          onProgress: handleImportProgress,
-          shouldInterrupt: () => interruptRequestedRef.current,
-        });
-      } else {
-        results = await importPinkkaGroups(reimportIds, user.uid, undefined, {
-          onProgress: handleImportProgress,
-          shouldInterrupt: () => interruptRequestedRef.current,
-        });
-      }
-      toast({
-        title: hasMixedSelection
-          ? "Import/Reimport complete"
-          : "Re-import complete",
-        description: `${hasMixedSelection ? "Imported/Re-imported" : "Re-imported"} ${
-          results.length
-        } ${results.length === 1 ? importLabels.singular : importLabels.plural}.`,
-      });
-      setImportStatusVersion((prev) => prev + 1);
-    } catch (error) {
-      if (isPinkkaImportInterruptedError(error)) {
-        setImportStatusVersion((prev) => prev + 1);
-        toast({
-          title: hasMixedSelection
-            ? "Import/Reimport interrupted"
-            : "Re-import interrupted",
-          description: "The Pinkka import was interrupted.",
-        });
-        return;
-      }
-      setImportStatusVersion((prev) => prev + 1);
-      logFirestoreError("Failed to re-import Pinkka entities", error);
-      toast({
-        title: hasMixedSelection
-          ? "Import/Reimport failed"
-          : "Re-import failed",
-        description: "Unable to import/re-import the selected entities.",
-        variant: "destructive",
-      });
-    } finally {
-      interruptRequestedRef.current = false;
-      setActiveImportAction(null);
+    if (reimportIds.length === 0) {
+      return;
     }
-  };
+    await enqueueImportJob("reimport", reimportIds);
+  }, [
+    enqueueImportJob,
+    hasMixedSelection,
+    reimportableSelectedIds,
+    selectedTargetIds,
+  ]);
 
-  const handleImportMissing = async () => {
-    if (!user || !importTarget) return;
-    if (importMissingSelectedIds.length === 0) return;
-
-    setActiveImportAction("importmissing");
-    interruptRequestedRef.current = false;
-    setImportProgress(createEmptyPinkkaImportProgress());
-    progressIndicatorKeyRef.current = "";
-    try {
-      let results = [];
-      if (importTarget === "species") {
-        results = await importPinkkaSpeciesList(
-          importMissingSelectedIds,
-          user.uid,
-          undefined,
-          {
-            groupId: selectedGroupId ?? undefined,
-            stackId: selectedStackId ?? undefined,
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
-      } else if (importTarget === "stack") {
-        results = await importPinkkaStacks(
-          importMissingSelectedIds,
-          user.uid,
-          undefined,
-          {
-            groupId: selectedGroupId ?? undefined,
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
-      } else {
-        results = await importPinkkaGroups(
-          importMissingSelectedIds,
-          user.uid,
-          undefined,
-          {
-            onProgress: handleImportProgress,
-            shouldInterrupt: () => interruptRequestedRef.current,
-          },
-        );
-      }
-      toast({
-        title: "Import missing complete",
-        description: `Imported missing ${results.length} ${
-          results.length === 1 ? importLabels.singular : importLabels.plural
-        }.`,
-      });
-      setImportStatusVersion((prev) => prev + 1);
-    } catch (error) {
-      if (isPinkkaImportInterruptedError(error)) {
-        setImportStatusVersion((prev) => prev + 1);
-        toast({
-          title: "Import missing interrupted",
-          description: "The Pinkka import was interrupted.",
-        });
-        return;
-      }
-      setImportStatusVersion((prev) => prev + 1);
-      logFirestoreError("Failed to import missing Pinkka entities", error);
-      toast({
-        title: "Import missing failed",
-        description: "Unable to import missing entities for the selection.",
-        variant: "destructive",
-      });
-    } finally {
-      interruptRequestedRef.current = false;
-      setActiveImportAction(null);
+  const handleImportMissing = useCallback(async () => {
+    if (importMissingSelectedIds.length === 0) {
+      return;
     }
-  };
-
-  const handleInterruptImport = useCallback(() => {
-    interruptRequestedRef.current = true;
-  }, []);
+    await enqueueImportJob("importmissing", importMissingSelectedIds);
+  }, [enqueueImportJob, importMissingSelectedIds]);
 
   const handleSelectedIdsChange = useCallback(
     (ids: {
@@ -600,9 +440,11 @@ function PinkkaContentPageContent() {
       <main className="container mx-auto flex flex-1 flex-col px-4 py-6">
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold">Pinkka Content</h1>
+            <h1 className="text-2xl font-semibold">
+              {t("manage.pinkka.title")}
+            </h1>
             <p className="text-sm text-muted-foreground">
-              Browse Pinkka groups, stacks, and species details.
+              {t("manage.pinkka.description")}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -618,8 +460,11 @@ function PinkkaContentPageContent() {
                 }
               >
                 {activeImportAction === "import"
-                  ? "Importing..."
-                  : `Import Selected ${importLabels.title} (${importCount})`}
+                  ? t("manage.pinkka.button.importing")
+                  : t("manage.pinkka.button.importSelected", {
+                      target: selectionTargetLabel,
+                      count: importCount,
+                    })}
               </Button>
             )}
             {hasIncompleteSelection && (
@@ -635,8 +480,11 @@ function PinkkaContentPageContent() {
                 }
               >
                 {activeImportAction === "importmissing"
-                  ? "Importing Missing..."
-                  : `Import Missing Selected ${importLabels.title} (${importMissingCount})`}
+                  ? t("manage.pinkka.button.importingMissing")
+                  : t("manage.pinkka.button.importMissingSelected", {
+                      target: selectionTargetLabel,
+                      count: importMissingCount,
+                    })}
               </Button>
             )}
             {showReimportButton && (
@@ -653,11 +501,19 @@ function PinkkaContentPageContent() {
               >
                 {activeImportAction === "reimport"
                   ? hasMixedSelection
-                    ? "Importing/Reimporting..."
-                    : "Re-importing..."
+                    ? t("manage.pinkka.button.importingReimporting")
+                    : t("manage.pinkka.button.reimporting")
                   : `${
-                      hasMixedSelection ? "Import/Reimport" : "Re-import"
-                    } Selected ${importLabels.title} (${reimportCount})`}
+                      hasMixedSelection
+                        ? t("manage.pinkka.button.importReimportSelected", {
+                            target: selectionTargetLabel,
+                            count: reimportCount,
+                          })
+                        : t("manage.pinkka.button.reimportSelected", {
+                            target: selectionTargetLabel,
+                            count: reimportCount,
+                          })
+                    }`}
               </Button>
             )}
           </div>
@@ -675,22 +531,21 @@ function PinkkaContentPageContent() {
           </div>
         </div>
       </main>
-      <PinkkaImportProgressDialog
-        open={isImporting}
-        progress={importProgress}
-        onInterrupt={handleInterruptImport}
-      />
     </div>
   );
 }
 
 function PinkkaContentPageFallback() {
+  const { t } = useI18n();
+
   return (
     <div className="min-h-screen bg-background">
       <main className="container mx-auto flex flex-1 flex-col px-4 py-6">
         <div className="mb-4">
-          <h1 className="text-2xl font-semibold">Pinkka Content</h1>
-          <p className="text-sm text-muted-foreground">Loading content...</p>
+          <h1 className="text-2xl font-semibold">{t("manage.pinkka.title")}</h1>
+          <p className="text-sm text-muted-foreground">
+            {t("manage.pinkka.loading")}
+          </p>
         </div>
         <div className="h-[70vh] rounded-md border border-border bg-muted/20" />
       </main>

@@ -31,6 +31,14 @@
         { "fieldPath": "userId", "order": "ASCENDING" },
         { "fieldPath": "groupId", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "pinkkaImportJobs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "requesterId", "order": "ASCENDING" },
+        { "fieldPath": "updatedAt", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

@@ -8,6 +8,8 @@ import {
   deleteField,
   getDoc,
   getDocs,
+  onSnapshot,
+  orderBy,
   setDoc,
   updateDoc,
   deleteDoc,
@@ -102,10 +104,88 @@ export interface PinkkaImportProgress {
   species: PinkkaImportProgressLevel;
 }
 
+/** Firestore-backed lifecycle states for a Pinkka import job. */
+export type PinkkaImportJobStatus =
+  | "queued"
+  | "running"
+  | "completed"
+  | "failed"
+  | "interrupted";
+
+/** User-requested Pinkka import operation kind. */
+export type PinkkaImportJobAction = "import" | "reimport" | "importmissing";
+
+/** Pinkka entity level targeted by an import job. */
+export type PinkkaImportJobTarget = "group" | "stack" | "species";
+
+/** Result summary stored when a Pinkka import job completes. */
+export interface PinkkaImportJobSummary {
+  /** Number of requested entities processed by the job. */
+  completedEntityCount: number;
+  /** Imported canonical group ids created or refreshed by the job. */
+  groupIds: string[];
+  /** Imported canonical stack ids created or refreshed by the job. */
+  stackIds: string[];
+  /** Imported canonical learning-item ids created or refreshed by the job. */
+  learningItemIds: string[];
+}
+
+/** Firestore document persisted for a Pinkka import job. */
+export interface PinkkaImportJob {
+  /** Firestore document id. */
+  id: string;
+  /** UID of the user who started the job. */
+  requesterId: string;
+  /** User-requested operation kind. */
+  action: PinkkaImportJobAction;
+  /** Target entity level for the job. */
+  target: PinkkaImportJobTarget;
+  /** Pinkka ids requested for import or re-import. */
+  entityIds: number[];
+  /** Optional parent Pinkka group id for stack/species jobs. */
+  groupId?: number;
+  /** Optional parent Pinkka stack id for species jobs. */
+  stackId?: number;
+  /** Current job lifecycle state. */
+  status: PinkkaImportJobStatus;
+  /** Hierarchical import progress snapshot. */
+  progress: PinkkaImportProgress;
+  /** Completion summary when the job finishes successfully. */
+  summary?: PinkkaImportJobSummary;
+  /** Error message when the job fails. */
+  errorMessage?: string;
+  /** Timestamp when interruption was requested by the user. */
+  interruptRequestedAt?: Date;
+  /** Timestamp when the job was created. */
+  createdAt: Date;
+  /** Timestamp when the job started processing. */
+  startedAt?: Date;
+  /** Timestamp when the job reached a terminal state. */
+  completedAt?: Date;
+  /** Timestamp when the job was last updated. */
+  updatedAt: Date;
+}
+
 /** Callback for receiving Pinkka import progress updates. */
 export type PinkkaImportProgressCallback = (
   progress: PinkkaImportProgress,
 ) => void;
+
+/** Parameters for enqueueing a Firestore-backed Pinkka import job. */
+export interface EnqueuePinkkaImportJobParams {
+  /** UID of the user requesting the import. */
+  requesterId: string;
+  /** Requested operation kind. */
+  action: PinkkaImportJobAction;
+  /** Target entity level. */
+  target: PinkkaImportJobTarget;
+  /** Pinkka ids to import or re-import. */
+  entityIds: number[];
+  /** Optional parent Pinkka group id for stack/species jobs. */
+  groupId?: number;
+  /** Optional parent Pinkka stack id for species jobs. */
+  stackId?: number;
+}
 
 /** Import status for a Pinkka entity document. */
 export interface PinkkaImportStatus {
@@ -629,12 +709,17 @@ function createEmptyProgressLevel(): PinkkaImportProgressLevel {
   };
 }
 
-function createInitialPinkkaImportProgress(): PinkkaImportProgress {
+/** Create an empty hierarchical Pinkka import-progress snapshot. */
+export function createEmptyPinkkaImportProgress(): PinkkaImportProgress {
   return {
     groups: createEmptyProgressLevel(),
     stacks: createEmptyProgressLevel(),
     species: createEmptyProgressLevel(),
   };
+}
+
+function createInitialPinkkaImportProgress(): PinkkaImportProgress {
+  return createEmptyPinkkaImportProgress();
 }
 
 function clonePinkkaImportProgress(
@@ -5863,6 +5948,149 @@ export async function importPinkkaGroups(
   }
 
   return results;
+}
+
+function toPinkkaImportJobFromDoc(jobDoc: FirestoreDocLike): PinkkaImportJob {
+  const data = jobDoc.data() ?? {};
+  const progress =
+    typeof data.progress === "object" && data.progress !== null
+      ? (data.progress as PinkkaImportProgress)
+      : createEmptyPinkkaImportProgress();
+
+  return {
+    id: jobDoc.id,
+    requesterId: typeof data.requesterId === "string" ? data.requesterId : "",
+    action:
+      data.action === "reimport" || data.action === "importmissing"
+        ? data.action
+        : "import",
+    target:
+      data.target === "stack" || data.target === "species"
+        ? data.target
+        : "group",
+    entityIds: Array.isArray(data.entityIds)
+      ? data.entityIds.filter((value): value is number =>
+          Number.isFinite(value),
+        )
+      : [],
+    ...(typeof data.groupId === "number" ? { groupId: data.groupId } : {}),
+    ...(typeof data.stackId === "number" ? { stackId: data.stackId } : {}),
+    status:
+      data.status === "running" ||
+      data.status === "completed" ||
+      data.status === "failed" ||
+      data.status === "interrupted"
+        ? data.status
+        : "queued",
+    progress,
+    ...(data.summary && typeof data.summary === "object"
+      ? {
+          summary: {
+            completedEntityCount:
+              typeof data.summary.completedEntityCount === "number"
+                ? data.summary.completedEntityCount
+                : 0,
+            groupIds: Array.isArray(data.summary.groupIds)
+              ? data.summary.groupIds.filter(
+                  (value: unknown): value is string =>
+                    typeof value === "string",
+                )
+              : [],
+            stackIds: Array.isArray(data.summary.stackIds)
+              ? data.summary.stackIds.filter(
+                  (value: unknown): value is string =>
+                    typeof value === "string",
+                )
+              : [],
+            learningItemIds: Array.isArray(data.summary.learningItemIds)
+              ? data.summary.learningItemIds.filter(
+                  (value: unknown): value is string =>
+                    typeof value === "string",
+                )
+              : [],
+          },
+        }
+      : {}),
+    ...(typeof data.errorMessage === "string"
+      ? { errorMessage: data.errorMessage }
+      : {}),
+    ...(data.interruptRequestedAt
+      ? { interruptRequestedAt: toDate(data.interruptRequestedAt) }
+      : {}),
+    createdAt: toDate(data.createdAt),
+    ...(data.startedAt ? { startedAt: toDate(data.startedAt) } : {}),
+    ...(data.completedAt ? { completedAt: toDate(data.completedAt) } : {}),
+    updatedAt: toDate(data.updatedAt),
+  };
+}
+
+/** Queue a backend Pinkka import job that will be processed by Cloud Functions. */
+export async function enqueuePinkkaImportJob(
+  params: EnqueuePinkkaImportJobParams,
+): Promise<PinkkaImportJob> {
+  const jobRef = doc(collection(db, "pinkkaImportJobs"));
+  const now = Timestamp.now();
+  const progress = createEmptyPinkkaImportProgress();
+  await setDoc(jobRef, {
+    requesterId: params.requesterId,
+    action: params.action,
+    target: params.target,
+    entityIds: [...new Set(params.entityIds)].filter((value) =>
+      Number.isFinite(value),
+    ),
+    ...(typeof params.groupId === "number" ? { groupId: params.groupId } : {}),
+    ...(typeof params.stackId === "number" ? { stackId: params.stackId } : {}),
+    status: "queued" satisfies PinkkaImportJobStatus,
+    progress,
+    createdAt: now,
+    updatedAt: now,
+  });
+
+  return {
+    id: jobRef.id,
+    requesterId: params.requesterId,
+    action: params.action,
+    target: params.target,
+    entityIds: [...new Set(params.entityIds)].filter((value) =>
+      Number.isFinite(value),
+    ),
+    ...(typeof params.groupId === "number" ? { groupId: params.groupId } : {}),
+    ...(typeof params.stackId === "number" ? { stackId: params.stackId } : {}),
+    status: "queued",
+    progress,
+    createdAt: now.toDate(),
+    updatedAt: now.toDate(),
+  };
+}
+
+/** Subscribe to the latest Pinkka import jobs for one requester. */
+export function subscribePinkkaImportJobs(
+  requesterId: string,
+  onJobs: (jobs: PinkkaImportJob[]) => void,
+  onError?: (error: unknown) => void,
+): () => void {
+  return onSnapshot(
+    query(
+      collection(db, "pinkkaImportJobs"),
+      where("requesterId", "==", requesterId),
+      orderBy("updatedAt", "desc"),
+      limit(20),
+    ),
+    (snapshot) => {
+      onJobs(snapshot.docs.map((jobDoc) => toPinkkaImportJobFromDoc(jobDoc)));
+    },
+    onError,
+  );
+}
+
+/** Request interruption for an in-flight Pinkka import job. */
+export async function requestPinkkaImportJobInterrupt(
+  jobId: string,
+): Promise<void> {
+  await updateDoc(doc(db, "pinkkaImportJobs", jobId), {
+    interruptRequestedAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  });
 }
 
 // Learning-item operations
