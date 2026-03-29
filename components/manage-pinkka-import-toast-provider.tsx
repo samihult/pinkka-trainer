@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -22,6 +23,8 @@ import {
 } from "@/components/ui/toast";
 import { useAuth } from "@/lib/auth-context";
 import {
+  acknowledgePinkkaImportJob,
+  finalizeInterruptedPinkkaImportJob,
   requestPinkkaImportJobInterrupt,
   subscribePinkkaImportJobs,
   type PinkkaImportJob,
@@ -47,6 +50,7 @@ const TERMINAL_JOB_STATUSES = new Set<PinkkaImportJob["status"]>([
   "failed",
   "interrupted",
 ]);
+const INTERRUPT_RECOVERY_GRACE_MS = 15_000;
 
 function toPercent(completed: number, total: number): number {
   if (total <= 0) {
@@ -198,14 +202,15 @@ export function ManagePinkkaImportToastProvider({
 }) {
   const { user } = useAuth();
   const [jobs, setJobs] = useState<PinkkaImportJob[]>([]);
-  const [dismissedTerminalJobIds, setDismissedTerminalJobIds] = useState<
+  const [pendingAcknowledgedJobIds, setPendingAcknowledgedJobIds] = useState<
     string[]
   >([]);
+  const recoveringInterruptedJobIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     if (!user) {
       setJobs([]);
-      setDismissedTerminalJobIds([]);
+      setPendingAcknowledgedJobIds([]);
       return;
     }
 
@@ -213,6 +218,40 @@ export function ManagePinkkaImportToastProvider({
       logFirestoreError("Failed to subscribe to Pinkka import jobs", error);
     });
   }, [user]);
+
+  useEffect(() => {
+    if (!user) {
+      recoveringInterruptedJobIdsRef.current.clear();
+      return;
+    }
+
+    const now = Date.now();
+    const staleInterruptedJobs = jobs.filter(
+      (job) =>
+        isPinkkaJobActive(job) &&
+        Boolean(job.interruptRequestedAt) &&
+        now - job.updatedAt.getTime() > INTERRUPT_RECOVERY_GRACE_MS &&
+        !recoveringInterruptedJobIdsRef.current.has(job.id),
+    );
+
+    if (staleInterruptedJobs.length === 0) {
+      return;
+    }
+
+    staleInterruptedJobs.forEach((job) => {
+      recoveringInterruptedJobIdsRef.current.add(job.id);
+      void finalizeInterruptedPinkkaImportJob(job.id)
+        .catch((error) => {
+          logFirestoreError(
+            "Failed to recover stale interrupted Pinkka import job",
+            error,
+          );
+        })
+        .finally(() => {
+          recoveringInterruptedJobIdsRef.current.delete(job.id);
+        });
+    });
+  }, [jobs, user]);
 
   const activeJob = useMemo(
     () => jobs.find((job) => isPinkkaJobActive(job)) ?? null,
@@ -230,7 +269,8 @@ export function ManagePinkkaImportToastProvider({
         (job) =>
           isPinkkaJobActive(job) ||
           (isPinkkaJobTerminal(job) &&
-            !dismissedTerminalJobIds.includes(job.id)),
+            !job.acknowledgedAt &&
+            !pendingAcknowledgedJobIds.includes(job.id)),
       )
       .sort((left, right) => {
         const statusDifference =
@@ -240,10 +280,24 @@ export function ManagePinkkaImportToastProvider({
         }
         return right.updatedAt.getTime() - left.updatedAt.getTime();
       });
-  }, [dismissedTerminalJobIds, jobs]);
+  }, [jobs, pendingAcknowledgedJobIds]);
 
   const requestInterrupt = async (jobId: string) => {
     await requestPinkkaImportJobInterrupt(jobId);
+  };
+
+  const acknowledgeTerminalJob = async (jobId: string) => {
+    setPendingAcknowledgedJobIds((current) =>
+      current.includes(jobId) ? current : [...current, jobId],
+    );
+    try {
+      await acknowledgePinkkaImportJob(jobId);
+    } catch (error) {
+      setPendingAcknowledgedJobIds((current) =>
+        current.filter((currentJobId) => currentJobId !== jobId),
+      );
+      throw error;
+    }
   };
 
   const contextValue = useMemo(
@@ -262,11 +316,7 @@ export function ManagePinkkaImportToastProvider({
       {children}
       <ManagePinkkaImportToaster
         jobs={visibleJobs}
-        onDismissTerminalJob={(jobId) => {
-          setDismissedTerminalJobIds((current) =>
-            current.includes(jobId) ? current : [...current, jobId],
-          );
-        }}
+        onDismissTerminalJob={acknowledgeTerminalJob}
         onRequestInterrupt={requestInterrupt}
       />
     </ManagePinkkaImportToastContext.Provider>
@@ -279,7 +329,7 @@ function ManagePinkkaImportToaster({
   onRequestInterrupt,
 }: {
   jobs: PinkkaImportJob[];
-  onDismissTerminalJob: (jobId: string) => void;
+  onDismissTerminalJob: (jobId: string) => Promise<void>;
   onRequestInterrupt: (jobId: string) => Promise<void>;
 }) {
   const { t } = useI18n();
@@ -322,6 +372,13 @@ function ManagePinkkaImportToaster({
               }}
             >
               {t("manage.pinkkaImport.toast.interrupt")}
+            </ToastAction>
+          ) : isPinkkaJobActive(job) && job.interruptRequestedAt ? (
+            <ToastAction
+              altText={t("manage.pinkkaImport.toast.interruptPending")}
+              disabled
+            >
+              {t("manage.pinkkaImport.toast.interruptPending")}
             </ToastAction>
           ) : job.status === "completed" && href ? (
             <ToastAction
@@ -400,8 +457,10 @@ function ManagePinkkaImportToaster({
                 </div>
               </ToastDescription>
             </div>
-            {action}
-            {isPinkkaJobTerminal(job) ? <ToastClose /> : null}
+            <div className="flex items-center gap-2">{action}</div>
+            {isPinkkaJobTerminal(job) ? (
+              <ToastClose className="opacity-100 focus:opacity-100 group-hover:opacity-100 hover:text-foreground" />
+            ) : null}
           </Toast>
         );
       })}

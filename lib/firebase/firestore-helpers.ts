@@ -40,6 +40,9 @@ import type {
   LearningNameType,
   LearningProgress,
   LearningProgressState,
+  LocalizedText,
+  SpeciesDescriptionSection,
+  SpeciesIdentificationHint,
   StackScientificProgress,
   StackLearningHistogram,
   TestPreferences,
@@ -148,6 +151,8 @@ export interface PinkkaImportJob {
   stackId?: number;
   /** Current job lifecycle state. */
   status: PinkkaImportJobStatus;
+  /** Timestamp when the requester acknowledged a terminal job toast. */
+  acknowledgedAt?: Date;
   /** Hierarchical import progress snapshot. */
   progress: PinkkaImportProgress;
   /** Completion summary when the job finishes successfully. */
@@ -3700,6 +3705,242 @@ function toDate(value: unknown): Date {
   return new Date(0);
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function normalizeLocalizedTextValue(
+  value: unknown,
+): LocalizedText | undefined {
+  if (typeof value === "string") {
+    return value.trim().length > 0 ? { fi: value } : undefined;
+  }
+
+  if (!isRecord(value)) {
+    return undefined;
+  }
+
+  const localizedValue: LocalizedText = {
+    ...(typeof value.fi === "string" ? { fi: value.fi } : {}),
+    ...(typeof value.en === "string" ? { en: value.en } : {}),
+    ...(typeof value.sv === "string" ? { sv: value.sv } : {}),
+  };
+
+  return Object.keys(localizedValue).length > 0 ? localizedValue : undefined;
+}
+
+function normalizeSpeciesDescription(
+  value: unknown,
+): SpeciesDescriptionSection[] | undefined {
+  const normalizeSection = (
+    section: unknown,
+  ): SpeciesDescriptionSection | null => {
+    if (!isRecord(section)) {
+      const localizedBody = normalizeLocalizedTextValue(section);
+      return localizedBody
+        ? {
+            title: {},
+            body: localizedBody,
+          }
+        : null;
+    }
+
+    const localizedBody = normalizeLocalizedTextValue(section.body);
+    if (!localizedBody) {
+      return null;
+    }
+
+    const localizedTitle = normalizeLocalizedTextValue(section.title) ?? {};
+    return {
+      title: localizedTitle,
+      body: localizedBody,
+      ...(typeof section.predicate === "string"
+        ? { predicate: section.predicate }
+        : {}),
+    };
+  };
+
+  if (!Array.isArray(value)) {
+    const normalizedSection = normalizeSection(value);
+    return normalizedSection ? [normalizedSection] : undefined;
+  }
+
+  const normalizedSections = value.flatMap((section) => {
+    const normalizedSection = normalizeSection(section);
+    return normalizedSection ? [normalizedSection] : [];
+  });
+
+  return normalizedSections.length > 0 ? normalizedSections : undefined;
+}
+
+function normalizeIdentificationHints(
+  value: unknown,
+  docId: string,
+): SpeciesIdentificationHint[] | undefined {
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+
+  const hints = value.flatMap((hint, index) => {
+    if (!isRecord(hint)) {
+      const localizedText = normalizeLocalizedTextValue(hint);
+      return localizedText
+        ? [
+            {
+              id: `legacy-hint-${docId}-${index}`,
+              text: localizedText,
+            },
+          ]
+        : [];
+    }
+
+    if ("text" in hint) {
+      const localizedText = normalizeLocalizedTextValue(hint.text);
+      if (!localizedText) {
+        return [];
+      }
+
+      return [
+        {
+          id:
+            typeof hint.id === "string" && hint.id.trim().length > 0
+              ? hint.id
+              : `legacy-hint-${docId}-${index}`,
+          text: localizedText,
+          ...(typeof hint.imageId === "string"
+            ? { imageId: hint.imageId }
+            : {}),
+        },
+      ];
+    }
+
+    const localizedText = normalizeLocalizedTextValue(hint);
+    return localizedText
+      ? [
+          {
+            id: `legacy-hint-${docId}-${index}`,
+            text: localizedText,
+          },
+        ]
+      : [];
+  });
+
+  return hints.length > 0 ? hints : undefined;
+}
+
+function normalizeGroupDataFromDocument(data: DocumentData): GroupData {
+  const nestedData = isRecord(data.data) ? data.data : {};
+  const description = normalizeLocalizedTextValue(
+    nestedData.description ?? data.description,
+  );
+
+  return {
+    name:
+      normalizeLocalizedTextValue(nestedData.name ?? data.name) ??
+      ({
+        fi: "",
+      } satisfies LocalizedText),
+    ...(description ? { description } : {}),
+  };
+}
+
+function normalizeStackDataFromDocument(data: DocumentData): StackData {
+  const nestedData = isRecord(data.data) ? data.data : {};
+  const description = normalizeLocalizedTextValue(
+    nestedData.description ?? data.description,
+  );
+  const images =
+    Array.isArray(nestedData.images) && nestedData.images.length > 0
+      ? nestedData.images
+      : Array.isArray(data.images)
+        ? data.images
+        : [];
+
+  return {
+    name:
+      normalizeLocalizedTextValue(nestedData.name ?? data.name) ??
+      ({
+        fi: "",
+      } satisfies LocalizedText),
+    ...(description ? { description } : {}),
+    images: images as SpeciesImage[],
+  };
+}
+
+function normalizeLearningItemDataFromDocument(
+  docId: string,
+  data: DocumentData,
+): LearningItemData {
+  const nestedData = isRecord(data.data) ? data.data : {};
+  const description = normalizeSpeciesDescription(
+    nestedData.description ?? data.description,
+  );
+  const genusVernacularName = normalizeLocalizedTextValue(
+    nestedData.genusVernacularName ?? data.genusVernacularName,
+  );
+  const familyVernacularName = normalizeLocalizedTextValue(
+    nestedData.familyVernacularName ?? data.familyVernacularName,
+  );
+  const vernacularName = normalizeLocalizedTextValue(
+    nestedData.vernacularName ?? data.vernacularName,
+  );
+  const identificationHints = normalizeIdentificationHints(
+    nestedData.identificationHints ?? data.identificationHints,
+    docId,
+  );
+  const identificationTips = Array.isArray(
+    nestedData.identificationTips ?? data.identificationTips,
+  )
+    ? (nestedData.identificationTips ?? data.identificationTips).filter(
+        (tip: unknown): tip is string =>
+          typeof tip === "string" && tip.trim().length > 0,
+      )
+    : undefined;
+
+  return {
+    taxonId:
+      typeof (nestedData.taxonId ?? data.taxonId) === "string"
+        ? (nestedData.taxonId ?? data.taxonId)
+        : "",
+    scientificName:
+      typeof (nestedData.scientificName ?? data.scientificName) === "string"
+        ? (nestedData.scientificName ?? data.scientificName)
+        : "",
+    ...(typeof (nestedData.genusScientificName ?? data.genusScientificName) ===
+    "string"
+      ? {
+          genusScientificName: (nestedData.genusScientificName ??
+            data.genusScientificName) as string,
+        }
+      : {}),
+    ...(genusVernacularName ? { genusVernacularName } : {}),
+    ...(typeof (
+      nestedData.familyScientificName ?? data.familyScientificName
+    ) === "string"
+      ? {
+          familyScientificName: (nestedData.familyScientificName ??
+            data.familyScientificName) as string,
+        }
+      : {}),
+    ...(familyVernacularName ? { familyVernacularName } : {}),
+    ...(Array.isArray(nestedData.taxonomy ?? data.taxonomy)
+      ? {
+          taxonomy: (nestedData.taxonomy ??
+            data.taxonomy) as SpeciesData["taxonomy"],
+        }
+      : {}),
+    ...(vernacularName ? { vernacularName } : {}),
+    ...(description ? { description } : {}),
+    images: (Array.isArray(nestedData.images)
+      ? nestedData.images
+      : Array.isArray(data.images)
+        ? data.images
+        : []) as SpeciesImage[],
+    ...(identificationHints ? { identificationHints } : {}),
+    ...(identificationTips ? { identificationTips } : {}),
+  };
+}
+
 type FirestoreDocLike = {
   id: string;
   data: () => DocumentData | undefined;
@@ -3711,6 +3952,7 @@ function toGroupFromDoc(groupDoc: FirestoreDocLike): Group {
   return {
     id: groupDoc.id,
     ...data,
+    data: normalizeGroupDataFromDocument(data),
     createdAt: toDate(data.createdAt),
     updatedAt: toDate(data.updatedAt),
   } as Group;
@@ -3722,6 +3964,7 @@ function toStackFromDoc(stackDoc: FirestoreDocLike): Stack {
   return {
     id: stackDoc.id,
     ...data,
+    data: normalizeStackDataFromDocument(data),
     ...(learningItemIds.length > 0
       ? {
           learningItemIds,
@@ -3740,6 +3983,7 @@ function toLearningItemFromDoc(
   return {
     id: learningItemDoc.id,
     ...data,
+    data: normalizeLearningItemDataFromDocument(learningItemDoc.id, data),
     createdAt: toDate(data.createdAt),
     updatedAt: toDate(data.updatedAt),
   } as LearningItem;
@@ -3804,6 +4048,30 @@ function sortByOrder<T extends { order?: number }>(items: T[]): T[] {
   return [...items].sort(
     (left, right) => (left.order ?? 0) - (right.order ?? 0),
   );
+}
+
+function isFirestorePermissionDeniedError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: unknown }).code === "permission-denied"
+  );
+}
+
+async function retryFirestoreReadAfterPermissionDenied<T>(
+  reader: () => Promise<T>,
+): Promise<T> {
+  try {
+    return await reader();
+  } catch (error) {
+    if (!isFirestorePermissionDeniedError(error)) {
+      throw error;
+    }
+  }
+
+  await new Promise((resolve) => globalThis.setTimeout(resolve, 250));
+  return reader();
 }
 
 type ContentSourceKeyParams = {
@@ -4734,7 +5002,9 @@ export async function getGroups(
   const groupsQuery = ownerId
     ? query(collection(db, "groups"), where("ownerId", "==", ownerId))
     : query(collection(db, "groups"));
-  const snapshot = await getDocs(groupsQuery);
+  const snapshot = await retryFirestoreReadAfterPermissionDenied(() =>
+    getDocs(groupsQuery),
+  );
   const groups = sortByOrder(
     snapshot.docs.map((docSnapshot) => toGroupFromDoc(docSnapshot)),
   );
@@ -4908,7 +5178,9 @@ export async function getStacks(
     const nestedQuery = ownerId
       ? query(collectionGroup(db, "stacks"), where("ownerId", "==", ownerId))
       : query(collectionGroup(db, "stacks"));
-    const nestedSnapshot = await getDocs(nestedQuery);
+    const nestedSnapshot = await retryFirestoreReadAfterPermissionDenied(() =>
+      getDocs(nestedQuery),
+    );
 
     for (const docSnapshot of nestedSnapshot.docs) {
       const parentGroupId = docSnapshot.ref.parent.parent?.id;
@@ -4919,7 +5191,12 @@ export async function getStacks(
       addStack(toStackFromDoc(docSnapshot), { parentGroupId });
     }
   } catch (error) {
-    console.error("Failed to fetch nested stacks via collection group", error);
+    if (!isFirestorePermissionDeniedError(error)) {
+      console.error(
+        "Failed to fetch nested stacks via collection group",
+        error,
+      );
+    }
 
     const groupStackResults = await Promise.allSettled(
       groups.map((group) =>
@@ -5020,35 +5297,73 @@ export async function getStacksByParentGroupIds(
     });
   };
 
-  for (const chunk of chunkArray(uniqueGroupIds, FIRESTORE_IN_QUERY_MAX)) {
-    const nestedQuery = ownerId
-      ? query(
-          collectionGroup(db, "stacks"),
-          where("ownerId", "==", ownerId),
-          where("parentGroupId", "in", chunk),
-        )
-      : query(
-          collectionGroup(db, "stacks"),
-          where("parentGroupId", "in", chunk),
-        );
-    const legacyQuery = ownerId
-      ? query(
-          collection(db, "stacks"),
-          where("ownerId", "==", ownerId),
-          where("parentGroupId", "in", chunk),
-        )
-      : query(collection(db, "stacks"), where("parentGroupId", "in", chunk));
+  const fallbackToPerGroupReads = async () => {
+    const perGroupResults = await Promise.allSettled(
+      uniqueGroupIds.map((groupId) =>
+        getStacks(groupId, ownerId, {
+          includeHidden,
+        }),
+      ),
+    );
 
-    const [nestedSnapshot, legacySnapshot] = await Promise.all([
-      getDocs(nestedQuery),
-      getDocs(legacyQuery),
-    ]);
-    pushStacks(
-      nestedSnapshot.docs.map((docSnapshot) => toStackFromDoc(docSnapshot)),
-    );
-    pushStacks(
-      legacySnapshot.docs.map((docSnapshot) => toStackFromDoc(docSnapshot)),
-    );
+    perGroupResults.forEach((result, index) => {
+      if (result.status === "fulfilled") {
+        const groupId = uniqueGroupIds[index];
+        if (!groupId) {
+          return;
+        }
+        result.value.forEach((stack) =>
+          pushLegacyStackForGroup(groupId, stack),
+        );
+        return;
+      }
+
+      console.error(
+        `Failed to fetch stacks for group ${uniqueGroupIds[index] ?? "unknown"}`,
+        result.reason,
+      );
+    });
+  };
+
+  try {
+    for (const chunk of chunkArray(uniqueGroupIds, FIRESTORE_IN_QUERY_MAX)) {
+      const nestedQuery = ownerId
+        ? query(
+            collectionGroup(db, "stacks"),
+            where("ownerId", "==", ownerId),
+            where("parentGroupId", "in", chunk),
+          )
+        : query(
+            collectionGroup(db, "stacks"),
+            where("parentGroupId", "in", chunk),
+          );
+      const legacyQuery = ownerId
+        ? query(
+            collection(db, "stacks"),
+            where("ownerId", "==", ownerId),
+            where("parentGroupId", "in", chunk),
+          )
+        : query(collection(db, "stacks"), where("parentGroupId", "in", chunk));
+
+      const [nestedSnapshot, legacySnapshot] = await Promise.all([
+        retryFirestoreReadAfterPermissionDenied(() => getDocs(nestedQuery)),
+        retryFirestoreReadAfterPermissionDenied(() => getDocs(legacyQuery)),
+      ]);
+      pushStacks(
+        nestedSnapshot.docs.map((docSnapshot) => toStackFromDoc(docSnapshot)),
+      );
+      pushStacks(
+        legacySnapshot.docs.map((docSnapshot) => toStackFromDoc(docSnapshot)),
+      );
+    }
+  } catch (error) {
+    if (!isFirestorePermissionDeniedError(error)) {
+      console.error(
+        "Failed to fetch grouped stacks by parent group ids",
+        error,
+      );
+    }
+    await fallbackToPerGroupReads();
   }
 
   const legacyReferencedGroupIds = uniqueGroupIds.filter((groupId) => {
@@ -5103,7 +5418,11 @@ export async function getStack(
   let stack: Stack | null = null;
 
   if (nestedLocation) {
-    stack = toStackFromDoc(nestedLocation.doc);
+    const nestedStack = toStackFromDoc(nestedLocation.doc);
+    stack = {
+      ...nestedStack,
+      parentGroupId: nestedStack.parentGroupId ?? nestedLocation.groupId,
+    };
   } else {
     const stackDoc = await getDoc(doc(db, "stacks", stackId));
     if (!stackDoc.exists()) return null;
@@ -6014,6 +6333,9 @@ function toPinkkaImportJobFromDoc(jobDoc: FirestoreDocLike): PinkkaImportJob {
     ...(typeof data.errorMessage === "string"
       ? { errorMessage: data.errorMessage }
       : {}),
+    ...(data.acknowledgedAt
+      ? { acknowledgedAt: toDate(data.acknowledgedAt) }
+      : {}),
     ...(data.interruptRequestedAt
       ? { interruptRequestedAt: toDate(data.interruptRequestedAt) }
       : {}),
@@ -6093,6 +6415,25 @@ export async function requestPinkkaImportJobInterrupt(
   });
 }
 
+/** Persist acknowledgement for a terminal Pinkka import job. */
+export async function acknowledgePinkkaImportJob(jobId: string): Promise<void> {
+  await updateDoc(doc(db, "pinkkaImportJobs", jobId), {
+    acknowledgedAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  });
+}
+
+/** Recover a stale interrupted Pinkka import job into a terminal state. */
+export async function finalizeInterruptedPinkkaImportJob(
+  jobId: string,
+): Promise<void> {
+  await updateDoc(doc(db, "pinkkaImportJobs", jobId), {
+    status: "interrupted",
+    completedAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  });
+}
+
 // Learning-item operations
 /** Create a learning item and link it to the provided stacks. */
 export async function createLearningItem(
@@ -6151,7 +6492,12 @@ export async function getLearningItems(
       >((acc, speciesId, index) => {
         const species = speciesById.get(speciesId);
         if (species) {
-          acc.push({ ...species, order: index });
+          acc.push({
+            ...species,
+            parentStackId: species.parentStackId ?? stackId,
+            parentGroupId: species.parentGroupId ?? stack.parentGroupId,
+            order: index,
+          });
         }
         return acc;
       }, []);
@@ -6166,9 +6512,14 @@ export async function getLearningItems(
         collection(db, "groups", nestedGroupId, "stacks", stackId, "species"),
       );
       const species = sortByOrder(
-        speciesSnapshot.docs.map((docSnapshot) =>
-          toSpeciesFromDoc(docSnapshot),
-        ),
+        speciesSnapshot.docs.map((docSnapshot) => {
+          const species = toSpeciesFromDoc(docSnapshot);
+          return {
+            ...species,
+            parentStackId: species.parentStackId ?? stackId,
+            parentGroupId: species.parentGroupId ?? nestedGroupId,
+          };
+        }),
       );
       return includeHidden ? species : species.filter((item) => !item.isHidden);
     }
@@ -6186,9 +6537,14 @@ export async function getLearningItems(
         ),
       );
       const species = sortByOrder(
-        speciesSnapshot.docs.map((docSnapshot) =>
-          toSpeciesFromDoc(docSnapshot),
-        ),
+        speciesSnapshot.docs.map((docSnapshot) => {
+          const species = toSpeciesFromDoc(docSnapshot);
+          return {
+            ...species,
+            parentStackId: species.parentStackId ?? stackId,
+            parentGroupId: species.parentGroupId ?? nestedStackLocation.groupId,
+          };
+        }),
       );
       return includeHidden ? species : species.filter((item) => !item.isHidden);
     }
@@ -6200,9 +6556,14 @@ export async function getLearningItems(
       ),
     );
     const species = sortByOrder(
-      hierarchicalSnapshot.docs.map((docSnapshot) =>
-        toSpeciesFromDoc(docSnapshot),
-      ),
+      hierarchicalSnapshot.docs.map((docSnapshot) => {
+        const species = toSpeciesFromDoc(docSnapshot);
+        return {
+          ...species,
+          parentStackId: species.parentStackId ?? stackId,
+          parentGroupId: species.parentGroupId ?? stack.parentGroupId,
+        };
+      }),
     );
     return includeHidden ? species : species.filter((item) => !item.isHidden);
   }

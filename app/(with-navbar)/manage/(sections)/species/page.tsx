@@ -178,6 +178,8 @@ export default function ManageSpeciesInventoryPage() {
             </div>
             <div className="flex w-full flex-col gap-3 md:w-auto md:min-w-[22rem]">
               <VerdantScholarInput
+                id="species-inventory-search"
+                name="species-inventory-search"
                 value={searchQuery}
                 onChange={(event) => handleSearchChange(event.target.value)}
                 onKeyDown={(event) => {

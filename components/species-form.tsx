@@ -41,11 +41,18 @@ function createHintId(): string {
   return `hint-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
+/** Detect current structured hint payloads before reading object fields. */
+function isStructuredIdentificationHint(
+  hint: SpeciesIdentificationHint | LocalizedText,
+): hint is SpeciesIdentificationHint {
+  return typeof hint === "object" && hint !== null && "text" in hint;
+}
+
 /** Normalize legacy hint payloads into the current structured hint format. */
 function normalizeIdentificationHint(
   hint: SpeciesIdentificationHint | LocalizedText,
 ): SpeciesIdentificationHint {
-  if ("text" in hint) {
+  if (isStructuredIdentificationHint(hint)) {
     return {
       id: hint.id || createHintId(),
       text: hint.text,

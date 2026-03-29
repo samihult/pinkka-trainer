@@ -226,6 +226,7 @@ const EN_MESSAGES = {
     "{action} {target} was interrupted.",
   "manage.pinkkaImport.toast.description.failed": "{action} {target} failed.",
   "manage.pinkkaImport.toast.interrupt": "Interrupt",
+  "manage.pinkkaImport.toast.interruptPending": "Interrupt requested",
   "manage.pinkkaImport.toast.openPinkka": "Open in Pinkka",
   "manage.pinkkaImport.progress.groups": "Groups",
   "manage.pinkkaImport.progress.stacks": "Stacks",
@@ -646,6 +647,7 @@ const FI_MESSAGES: TranslationTable = {
   "manage.pinkkaImport.toast.description.failed":
     "{action} {target} epäonnistui.",
   "manage.pinkkaImport.toast.interrupt": "Keskeytä",
+  "manage.pinkkaImport.toast.interruptPending": "Keskeytystä pyydetty",
   "manage.pinkkaImport.toast.openPinkka": "Avaa Pinkassa",
   "manage.pinkkaImport.progress.groups": "Ryhmät",
   "manage.pinkkaImport.progress.stacks": "Pinot",
@@ -1064,6 +1066,7 @@ const SV_MESSAGES: TranslationTable = {
   "manage.pinkkaImport.toast.description.failed":
     "{action} {target} misslyckades.",
   "manage.pinkkaImport.toast.interrupt": "Avbryt",
+  "manage.pinkkaImport.toast.interruptPending": "Avbrott begärt",
   "manage.pinkkaImport.toast.openPinkka": "Öppna i Pinkka",
   "manage.pinkkaImport.progress.groups": "Grupper",
   "manage.pinkkaImport.progress.stacks": "Kortlekar",

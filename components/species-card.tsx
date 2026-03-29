@@ -56,6 +56,12 @@ interface ResolvedIdentificationHint {
   imageIndex?: number;
 }
 
+function isStructuredIdentificationHint(
+  hint: SpeciesIdentificationHint | LocalizedText,
+): hint is SpeciesIdentificationHint {
+  return typeof hint === "object" && hint !== null && "text" in hint;
+}
+
 /** Interactive learning view with image navigation and side info pane controls. */
 export function SpeciesCard({
   species,
@@ -130,15 +136,21 @@ export function SpeciesCard({
     >;
     const localizedHints = rawHints
       .map((hint, index) => {
-        const textSource = "text" in hint ? hint.text : hint;
+        const textSource = isStructuredIdentificationHint(hint)
+          ? hint.text
+          : hint;
         const text = getLocalizedText(textSource, preferredLanguage).trim();
         if (!text) return null;
 
-        const imageId = "imageId" in hint ? hint.imageId : undefined;
+        const imageId = isStructuredIdentificationHint(hint)
+          ? hint.imageId
+          : undefined;
         const imageIndex = imageId ? carouselImageIds.indexOf(imageId) : -1;
 
         return {
-          id: "id" in hint ? hint.id : `legacy-hint-${index}`,
+          id: isStructuredIdentificationHint(hint)
+            ? hint.id
+            : `legacy-hint-${index}`,
           text,
           ...(imageIndex >= 0 ? { imageIndex } : {}),
         };

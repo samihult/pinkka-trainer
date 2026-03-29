@@ -1379,6 +1379,14 @@ async function processPinkkaImportJob(event) {
     return;
   }
 
+  logger.info("Pinkka import job started", {
+    jobId: snapshot.id,
+    target: job.target,
+    groupId: job.groupId ?? null,
+    stackId: job.stackId ?? null,
+    entityCount: Array.isArray(job.entityIds) ? job.entityIds.length : 0,
+  });
+
   await claimPinkkaImportJob(jobRef);
   const reporter = createProgressReporter(jobRef, createInitialProgress(job));
   await reporter.initialize();
@@ -1402,6 +1410,11 @@ async function processPinkkaImportJob(event) {
       },
       { merge: true },
     );
+    logger.info("Pinkka import job completed", {
+      jobId: snapshot.id,
+      target: job.target,
+      summary,
+    });
   } catch (error) {
     await reporter.flush(true).catch(() => {
       // best effort
@@ -1416,6 +1429,10 @@ async function processPinkkaImportJob(event) {
         },
         { merge: true },
       );
+      logger.info("Pinkka import job interrupted", {
+        jobId: snapshot.id,
+        target: job.target,
+      });
       return;
     }
 

@@ -116,6 +116,7 @@ service cloud.firestore {
             request.resource.data.requesterId == resource.data.requesterId &&
             request.resource.data.diff(resource.data).affectedKeys().hasOnly([
               'interruptRequestedAt',
+              'acknowledgedAt',
               'updatedAt'
             ])
           )

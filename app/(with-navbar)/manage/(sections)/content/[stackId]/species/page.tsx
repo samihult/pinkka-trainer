@@ -296,6 +296,8 @@ export default function ManageSpeciesPage() {
 
             <div className="flex w-full flex-col gap-3 md:w-auto md:min-w-[22rem]">
               <VerdantScholarInput
+                id="stack-species-search"
+                name="stack-species-search"
                 value={searchQuery}
                 onChange={(event) => handleSearchChange(event.target.value)}
                 placeholder={t("manage.stackSpecies.searchPlaceholder")}

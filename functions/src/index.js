@@ -17,6 +17,8 @@ exports.onPinkkaImportJobCreated = onDocumentCreated(
   {
     document: "pinkkaImportJobs/{jobId}",
     region: "us-central1",
+    memory: "512MiB",
+    timeoutSeconds: 540,
   },
   processPinkkaImportJob,
 );

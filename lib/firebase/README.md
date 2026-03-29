@@ -43,4 +43,12 @@ Firebase integration layer for app data and auth-connected persistence.
   for backend processing instead of writing canonical imports directly from the browser, and those job docs also act as
   the shared progress channel for the management-wide pinned import toaster that follows the initiating user across
   `/manage/*` routes. The Pinkka job subscription now keeps a larger recent-job window so concurrent imports can stay
-  visible in the management toaster instead of falling out of the feed too early.
+  visible in the management toaster instead of falling out of the feed too early, and terminal jobs persist
+  acknowledgement back into Firestore through `acknowledgedAt` so dismissed import toasts do not return after refresh.
+  Management toasts also recover stale active jobs that already have `interruptRequestedAt` set by finalizing them to
+  `interrupted`, which prevents dead "running" toasts from lingering indefinitely after an old worker timeout. Learner
+  stack inventory reads now retry one broad nested-stack query before falling back, which avoids noisy permission-denied
+  console errors during auth-token startup races on the home page while keeping the grouped query as the preferred
+  lower-request fast path. Management group and grouped-stack reads use the same retry strategy and fall back to
+  per-group stack reads if the batched grouped query still fails, so `/manage/content` no longer loses all stacks when
+  Firestore auth startup briefly lags behind the page render.
