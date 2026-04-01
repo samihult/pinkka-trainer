@@ -384,7 +384,7 @@ export function SpeciesCard({
           </div>
           <aside className="z-30 flex min-h-0 flex-col overflow-hidden rounded-[var(--vs-radius-md)] border border-[color:rgba(67,73,57,0.22)] bg-[var(--vs-color-surface-container-lowest)] text-[var(--vs-color-on-surface)] shadow-[0_14px_30px_rgba(28,27,27,0.12)]">
             <div className="flex items-center justify-between gap-3 border-b border-[color:rgba(67,73,57,0.2)] px-5 py-4">
-              <div className="min-w-0">
+              <div className="min-w-0 w-full">
                 {familyName ? (
                   <p className="line-clamp-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--vs-color-on-surface-variant)]">
                     {familyName}
@@ -393,11 +393,31 @@ export function SpeciesCard({
                 <h2 className="line-clamp-2 text-2xl [font-family:var(--vs-font-display-family)] font-extrabold tracking-tight text-[var(--vs-color-on-surface)]">
                   {species.data.scientificName}
                 </h2>
-                {vernacularName ? (
-                  <p className="text-base font-medium text-[var(--vs-color-primary)]">
-                    {vernacularName}
-                  </p>
-                ) : null}
+                <div className="flex justify-between">
+                  {vernacularName ? (
+                    <p className="text-base font-medium text-[var(--vs-color-primary)]">
+                      {vernacularName}
+                    </p>
+                  ) : null}
+                  {pinkkaSpeciesId ? (
+                    <Button
+                      type="button"
+                      variant="link"
+                      size="sm"
+                      className="h-auto p-0 text-sm font-medium text-[var(--vs-color-primary)]"
+                      asChild
+                    >
+                      <a
+                        href={`https://pinkka.laji.fi/pinkat/#/speciescards/${pinkkaSpeciesId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Pinkka
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    </Button>
+                  ) : null}
+                </div>
               </div>
             </div>
             <div className="border-b border-[color:rgba(67,73,57,0.2)] px-5 py-3">
@@ -456,24 +476,6 @@ export function SpeciesCard({
                 )
               ) : (
                 <div className="space-y-3">
-                  {pinkkaSpeciesId ? (
-                    <Button
-                      type="button"
-                      variant="link"
-                      size="sm"
-                      className="h-auto p-0 text-sm font-medium text-[var(--vs-color-primary)]"
-                      asChild
-                    >
-                      <a
-                        href={`https://pinkka.laji.fi/pinkat/#/speciescards/${pinkkaSpeciesId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        pinkka
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    </Button>
-                  ) : null}
                   {pinkkaLoading ? (
                     <div className="flex justify-center py-3">
                       <LoadingSpinner />

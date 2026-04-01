@@ -26,6 +26,7 @@ import { useI18n } from "@/lib/i18n";
 import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
 import { logFirestoreError } from "@/lib/utils";
+import { PinkkaContentPageFallback } from "../components/PinkkaContentPageFallback";
 
 function parseNumericParam(value: string | null): number | null {
   if (!value) return null;
@@ -530,24 +531,6 @@ function PinkkaContentPageContent() {
             />
           </div>
         </div>
-      </main>
-    </div>
-  );
-}
-
-function PinkkaContentPageFallback() {
-  const { t } = useI18n();
-
-  return (
-    <div className="min-h-screen bg-background">
-      <main className="container mx-auto flex flex-1 flex-col px-4 py-6">
-        <div className="mb-4">
-          <h1 className="text-2xl font-semibold">{t("manage.pinkka.title")}</h1>
-          <p className="text-sm text-muted-foreground">
-            {t("manage.pinkka.loading")}
-          </p>
-        </div>
-        <div className="h-[70vh] rounded-md border border-border bg-muted/20" />
       </main>
     </div>
   );

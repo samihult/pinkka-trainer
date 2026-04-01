@@ -328,8 +328,8 @@ const EN_MESSAGES = {
     "Randomly selected from {speciesCount} species.",
   "test.settings.allSpecies": "All {speciesCount} species.",
   "test.settings.mode": "Test mode",
-  "test.settings.mode.multipleChoice": "Pick from four options",
-  "test.settings.mode.writeName": "Write the species name",
+  "test.settings.mode.multipleChoice": "One out of four",
+  "test.settings.mode.writeName": "Write the name",
   "test.settings.mode.description":
     "Pick a multiple-choice answer or type the name yourself.",
   "test.settings.sessionMode": "Goal",
@@ -753,8 +753,8 @@ const FI_MESSAGES: TranslationTable = {
     "Valitaan satunnaisesti yhteensä {speciesCount} lajista.",
   "test.settings.allSpecies": "Kaikki {speciesCount} lajia.",
   "test.settings.mode": "Testitapa",
-  "test.settings.mode.multipleChoice": "Valitse neljästä vaihtoehdosta",
-  "test.settings.mode.writeName": "Kirjoita lajin nimi",
+  "test.settings.mode.multipleChoice": "Yksi neljästä",
+  "test.settings.mode.writeName": "Kirjoita nimi",
   "test.settings.mode.description":
     "Valitse oikea vaihtoehto tai kirjoita nimi itse.",
   "test.settings.sessionMode": "Tavoite",
@@ -1170,8 +1170,8 @@ const SV_MESSAGES: TranslationTable = {
     "Slumpmässigt valda från {speciesCount} arter.",
   "test.settings.allSpecies": "Alla {speciesCount} arter.",
   "test.settings.mode": "Testläge",
-  "test.settings.mode.multipleChoice": "Välj bland fyra alternativ",
-  "test.settings.mode.writeName": "Skriv artens namn",
+  "test.settings.mode.multipleChoice": "En av fyra",
+  "test.settings.mode.writeName": "Skriv namn",
   "test.settings.mode.description":
     "Välj ett flervalsalternativ eller skriv namnet själv.",
   "test.settings.sessionMode": "Målsättning",

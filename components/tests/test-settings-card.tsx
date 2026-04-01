@@ -104,7 +104,6 @@ export function TestSettingsCard({
 
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <Filter className="size-4 text-[var(--vs-color-primary)]" />
               <VerdantScholarHeading asChild variant="subheadline">
                 <h2>{t("test.settings.numberOfSpecies")}</h2>
               </VerdantScholarHeading>
@@ -136,7 +135,6 @@ export function TestSettingsCard({
 
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <Lightbulb className="size-4 text-[var(--vs-color-primary)]" />
               <VerdantScholarHeading asChild variant="subheadline">
                 <h2>{t("test.settings.mode")}</h2>
               </VerdantScholarHeading>
@@ -167,7 +165,6 @@ export function TestSettingsCard({
 
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <Repeat className="size-4 text-[var(--vs-color-primary)]" />
               <VerdantScholarHeading asChild variant="subheadline">
                 <h2>{t("test.settings.sessionMode")}</h2>
               </VerdantScholarHeading>
@@ -211,7 +208,6 @@ export function TestSettingsCard({
 
           <section className="space-y-4">
             <div className="flex items-center gap-2">
-              <Globe2 className="size-4 text-[var(--vs-color-primary)]" />
               <VerdantScholarHeading asChild variant="subheadline">
                 <h2>{t("test.settings.answerScope")}</h2>
               </VerdantScholarHeading>
@@ -259,6 +255,7 @@ export function TestSettingsCard({
                 }
                 selected={testPreferences.answerNameMode === "scientific"}
                 title={t("test.settings.nameMode.scientific")}
+                leading="🏆"
                 trailing={
                   testPreferences.answerNameMode === "scientific" ? (
                     <CheckCircle2 className="size-4 text-[var(--vs-color-primary)]" />

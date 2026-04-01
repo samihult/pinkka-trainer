@@ -2,7 +2,13 @@
 
 /** Canonical species inventory rendered as a fixed-rank taxonomy hierarchy. */
 
-import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import {
+  Suspense,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Plus } from "lucide-react";
@@ -25,6 +31,7 @@ import { useLanguagePreference } from "@/lib/language-context";
 import { toLanguageCode } from "@/lib/local-preferences";
 import type { Species } from "@/lib/types";
 import { logFirestoreError } from "@/lib/utils";
+import { PinkkaContentPageFallback } from "../components/PinkkaContentPageFallback";
 
 function getSpeciesSearchTokens(
   species: Species,
@@ -47,7 +54,7 @@ function getSpeciesSearchTokens(
 }
 
 /** Render the canonical learning-item inventory grouped by taxonomy. */
-export default function ManageSpeciesInventoryPage() {
+export function ManageSpeciesInventoryPage() {
   const { user } = useAuth();
   const { toast } = useToast();
   const { language } = useLanguagePreference();
@@ -230,6 +237,17 @@ export default function ManageSpeciesInventoryPage() {
           )}
         </main>
       </div>
+    </ProtectedRoute>
+  );
+}
+
+/** Admin-facing page for browsing Pinkka content. */
+export default function PinkkaContentPage() {
+  return (
+    <ProtectedRoute requiredRole="admin">
+      <Suspense fallback={<PinkkaContentPageFallback />}>
+        <ManageSpeciesInventoryPage />
+      </Suspense>
     </ProtectedRoute>
   );
 }
